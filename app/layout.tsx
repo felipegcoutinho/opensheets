@@ -1,27 +1,25 @@
-import { GeistSans } from "geist/font/sans";
+import { Fira_Sans, Gabarito, Inter } from "next/font/google";
 import "./globals.css";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+
+const inter = Inter({ subsets: ["latin"] });
+const gabarito = Gabarito({ subsets: ["latin"] });
+const firaSans = Fira_Sans({ subsets: ["latin"], weight: ["400", "600"] });
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
+  title: "OpenSheets",
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
+    <html lang="pt-BR" className={`${inter.className}`}>
+      <body>
+        <main className="max-w-screen-xl flex flex-col items-center mx-auto">{children}</main>
+        {/* <SpeedInsights /> */}
+        {/* <Toaster /> */}
       </body>
     </html>
   );
