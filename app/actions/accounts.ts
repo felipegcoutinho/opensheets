@@ -46,7 +46,7 @@ export async function updateAccount(formData: FormData) {
   revalidatePath("/contas");
 }
 
-export async function getAccountDetail(month, id) {
+export async function getAccountDetail(month: string, id) {
   "use server";
   const cookiestore = cookies();
 
