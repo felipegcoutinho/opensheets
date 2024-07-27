@@ -39,7 +39,7 @@ export async function updateAccount(formData: FormData) {
   "use server";
   const cookieStore = cookies();
 
-  const { id, descricao, status, saldo_inicial, cor_padrao, tipo_conta, anotacao } = Object.fromEntries(formData: FormData.entries());
+  const { id, descricao, status, saldo_inicial, cor_padrao, tipo_conta, anotacao } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
   await supabase.from("contas").update({ id, descricao, status, saldo_inicial, cor_padrao, tipo_conta, anotacao }).eq("id", id);
