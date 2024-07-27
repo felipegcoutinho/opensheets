@@ -17,7 +17,7 @@ export async function addAccount(formData: FormData) {
   "use server";
   const cookieStore = cookies();
 
-  const { descricao, status, saldo_inicial, cor_padrao, tipo_conta, anotacao } = Object.fromEntries(formData: FormData.entries());
+  const { descricao, status, saldo_inicial, cor_padrao, tipo_conta, anotacao } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
   await supabase.from("contas").insert({ descricao, status, saldo_inicial, cor_padrao, tipo_conta, anotacao });

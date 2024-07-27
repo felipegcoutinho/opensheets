@@ -38,7 +38,7 @@ export async function addBills(formData: FormData) {
     responsavel,
     segundo_responsavel,
     dividir_boleto,
-  } = Object.fromEntries(formData: FormData.entries());
+  } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
   const boletos = [];
@@ -129,7 +129,7 @@ export async function updateBills(formData: FormData) {
     anotacao,
     responsavel,
     segundo_responsavel,
-  } = Object.fromEntries(formData: FormData.entries());
+  } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
   await supabase

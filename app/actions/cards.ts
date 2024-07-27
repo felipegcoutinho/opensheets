@@ -56,7 +56,7 @@ export async function addCards(formData: FormData) {
   "use server";
   const cookieStore = cookies();
 
-  const { descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData: FormData.entries());
+  const { descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
   await supabase.from("cartoes").insert({ descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id });
