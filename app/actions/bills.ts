@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 export async function getBills(month) {
   const cookiestore = cookies();
 
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
   const { data: bills } = await supabase
     .from("boletos")
     .select(
@@ -40,7 +40,7 @@ export async function addBills(formData) {
     dividir_boleto,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   const boletos = [];
 
   function adicionarBoleto(valor, responsavel, periodo, dt_vencimento) {
@@ -106,7 +106,7 @@ export async function deleteBills(formData) {
 
   const excluir = formData.get("excluir");
 
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   await supabase.from("boletos").delete().eq("id", excluir);
   revalidatePath("/boletos");
 }
@@ -131,7 +131,7 @@ export async function updateBills(formData) {
     segundo_responsavel,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   await supabase
     .from("boletos")
     .update({
