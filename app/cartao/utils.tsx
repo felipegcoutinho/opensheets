@@ -3,7 +3,7 @@ import { useState } from "react";
 import { addCards, updateCards } from "../actions/cards";
 
 function Utils() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
 

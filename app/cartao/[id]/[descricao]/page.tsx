@@ -1,10 +1,7 @@
-import { getCardsDetails, getTransactionInvoice } from "@/app/actions/cards_actions";
-import { addFaturas, deleteFaturas, getFaturas } from "@/app/actions/invoices_actions";
-import DatePicker from "@/app/components/date-picker";
-import Header from "@/app/components/header";
-import { UseDates } from "@/app/hooks/UseDates";
-import DetailsTransactions from "@/app/transacoes/details-transactions";
-import { Button, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from "@tremor/react";
+import { getCardsDetails, getTransactionInvoice } from "@/app/actions/cards";
+import Header from "@/components/Header";
+import MonthPicker from "@/components/MonthPicker";
+import { UseDates } from "@/hooks/UseDates";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
@@ -17,15 +14,15 @@ export default async function page({ params, searchParams }) {
 
   const getTransactionInvoiceMap = await getTransactionInvoice(month, params.id);
 
-  const fatura_status = await getFaturas(month, params.id);
+  // const fatura_status = await getFaturas(month, params.id);
 
   return (
     <>
       <Header month={month} />
 
-      <DatePicker />
+      <MonthPicker />
 
-      <div className="flex justify-start w-full">
+      {/* <div className="flex justify-start w-full">
         {getCardsMap?.map((item) => (
           <div className={`bg-${item.cor_padrao}-200 flex gap-8 `} key={item.id}>
             <div className={`bg-${item.cor_padrao}-200`}>
@@ -44,9 +41,9 @@ export default async function page({ params, searchParams }) {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
-      {fatura_status && fatura_status.length > 0 ? (
+      {/* {fatura_status && fatura_status.length > 0 ? (
         fatura_status.map(
           (item) =>
             item.status_pagamento === "Pago" && (
@@ -91,9 +88,9 @@ export default async function page({ params, searchParams }) {
             </Button>
           </form>
         </>
-      )}
+      )} */}
 
-      <Table className="mt-6 w-full">
+      {/* <Table className="mt-6 w-full">
         <TableHead>
           <TableRow className="border-b text-xs">
             <TableHeaderCell>Data</TableHeaderCell>
@@ -130,7 +127,7 @@ export default async function page({ params, searchParams }) {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table> */}
     </>
   );
 }
