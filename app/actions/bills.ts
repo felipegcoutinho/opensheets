@@ -20,7 +20,7 @@ export async function getBills(month) {
   return bills;
 }
 
-export async function addBills(formData) {
+export async function addBills(formData: FormData) {
   const cookieStore = cookies();
 
   const {
@@ -38,7 +38,7 @@ export async function addBills(formData) {
     responsavel,
     segundo_responsavel,
     dividir_boleto,
-  } = Object.fromEntries(formData.entries());
+  } = Object.fromEntries(formData: FormData.entries());
 
   const supabase = createClient();
   const boletos = [];
@@ -101,7 +101,7 @@ export async function addBills(formData) {
   }
 }
 
-export async function deleteBills(formData) {
+export async function deleteBills(formData: FormData) {
   const cookieStore = cookies();
 
   const excluir = formData.get("excluir");
@@ -111,7 +111,7 @@ export async function deleteBills(formData) {
   revalidatePath("/boletos");
 }
 
-export async function updateBills(formData) {
+export async function updateBills(formData: FormData) {
   const cookieStore = cookies();
 
   const {
@@ -129,7 +129,7 @@ export async function updateBills(formData) {
     anotacao,
     responsavel,
     segundo_responsavel,
-  } = Object.fromEntries(formData.entries());
+  } = Object.fromEntries(formData: FormData.entries());
 
   const supabase = createClient();
   await supabase

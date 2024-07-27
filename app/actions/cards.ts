@@ -52,18 +52,18 @@ export async function getCardsDetails(id) {
   return cards;
 }
 
-export async function addCards(formData) {
+export async function addCards(formData: FormData) {
   "use server";
   const cookieStore = cookies();
 
-  const { descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData.entries());
+  const { descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData: FormData.entries());
 
   const supabase = createClient();
   await supabase.from("cartoes").insert({ descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id });
   revalidatePath("/cartoes");
 }
 
-export async function deleteCards(formData) {
+export async function deleteCards(formData: FormData) {
   "use server";
   const cookieStore = cookies();
 
@@ -74,7 +74,7 @@ export async function deleteCards(formData) {
   revalidatePath("/dashboard");
 }
 
-export async function updateCards(formData) {
+export async function updateCards(formData: FormData) {
   "use server";
   const cookieStore = cookies();
 
