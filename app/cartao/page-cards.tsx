@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
 import { deleteCards, getCards } from "../actions/cards";
@@ -57,7 +56,7 @@ async function PageCards({ month }) {
               <p className="text-sm">Vencimento: Dia {item.dt_vencimento}</p>
             </CardContent>
             <CardFooter>
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 <UpdateCard
                   itemContaId={item.contas?.id}
                   itemDescricao={item.descricao}
@@ -74,11 +73,11 @@ async function PageCards({ month }) {
                   itemCorPadrao={item.cor_padrao}
                 />
                 <form action={deleteCards}>
-                  <Button variant="link" value={item.id} name="excluir">
-                    <Trash2Icon />
+                  <Button className="p-0" variant="link" value={item.id} name="excluir">
+                    Excluir
                   </Button>
                 </form>
-                <Button variant="link" className="p-0">
+                <Button className="p-0" variant="link">
                   <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>Ver</Link>
                 </Button>
               </div>

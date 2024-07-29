@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectItemColor, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PenLine } from "lucide-react";
 import Utils from "../utils";
 
 export default function UpdateCard({
@@ -29,8 +28,8 @@ export default function UpdateCard({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger>
-          <PenLine />
+        <DialogTrigger className="p-0" asChild>
+          <Button variant="link">Editar</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
