@@ -3,12 +3,10 @@ import { createClient } from "@/utils/supabase/server";
 import { addMonths, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export async function getBills(month) {
-  const cookiestore = cookies();
-
   const supabase = createClient();
+
   const { data: bills } = await supabase
     .from("boletos")
     .select(
@@ -21,8 +19,6 @@ export async function getBills(month) {
 }
 
 export async function addBills(formData: FormData) {
-  const cookieStore = cookies();
-
   const {
     descricao,
     dt_vencimento,
@@ -102,8 +98,6 @@ export async function addBills(formData: FormData) {
 }
 
 export async function deleteBills(formData: FormData) {
-  const cookieStore = cookies();
-
   const excluir = formData.get("excluir");
 
   const supabase = createClient();
@@ -112,8 +106,6 @@ export async function deleteBills(formData: FormData) {
 }
 
 export async function updateBills(formData: FormData) {
-  const cookieStore = cookies();
-
   const {
     id,
     descricao,

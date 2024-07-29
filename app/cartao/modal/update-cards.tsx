@@ -4,64 +4,83 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectItemColor, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PenSquareIcon } from "lucide-react";
+import { PenLine } from "lucide-react";
 import Utils from "../utils";
 
 export default function UpdateCard({
   itemId,
   itemDescricao,
-  itemPeriodo,
   itemDtVencimento,
-  itemCategoria,
-  itemValor,
-  itemResponsavel,
-  itemStatusPagamento,
+  itemDtFechamento,
   itemDtPagamento,
   itemAnotacao,
-  itemCondicao,
-  itemQtdeRecorrencia,
+  itemLimite,
+  itemBandeira,
+  itemStatusPagamento,
+  itemTipo,
   itemContaId,
   getAccountMap,
+  itemCorPadrao,
 }) {
-  const { loading, getMonthOptions, categoriasDespesa, handleUpdate, setStatusPagamento, statusPagamento, handleCondicaoChange, isOpen, setIsOpen } =
-    Utils();
+  const { isOpen, setIsOpen, statusPagamento, setStatusPagamento, handleUpdate, loading, colorMap } = Utils();
 
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger>
-          <PenSquareIcon color="blue" />
+          <PenLine />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar Boleto</DialogTitle>
+            <DialogTitle>Editar Cartão</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleUpdate}>
             <input type="hidden" name="id" value={itemId} />
 
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-1/2">
-                <Label>Descrição</Label>
-                <Required />
-                <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" />
-              </div>
+            <div className="w-full">
+              <Label>Descrição</Label>
+              <Required />
+              <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" required />
+            </div>
 
+            <div className="flex gap-2 w-full">
               <div className="w-1/2">
-                <Label>Período</Label>
+                <Label>Data de Fechamento</Label>
                 <Required />
-                <Select defaultValue={itemPeriodo} name="periodo">
+                <Select defaultValue={itemDtFechamento} name="dt_fechamento" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {getMonthOptions().map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="1">Dia 1</SelectItem>
+                    <SelectItem value="5">Dia 5</SelectItem>
+                    <SelectItem value="10">Dia 10</SelectItem>
+                    <SelectItem value="15">Dia 15</SelectItem>
+                    <SelectItem value="20">Dia 20</SelectItem>
+                    <SelectItem value="25">Dia 25</SelectItem>
+                    <SelectItem value="30">Dia 30</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="w-1/2">
+                <Label>Data de Vencimento</Label>
+                <Required />
+                <Select defaultValue={itemDtVencimento} name="dt_vencimento" required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">Dia 1</SelectItem>
+                    <SelectItem value="5">Dia 5</SelectItem>
+                    <SelectItem value="10">Dia 10</SelectItem>
+                    <SelectItem value="15">Dia 15</SelectItem>
+                    <SelectItem value="20">Dia 20</SelectItem>
+                    <SelectItem value="25">Dia 25</SelectItem>
+                    <SelectItem value="30">Dia 30</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -69,120 +88,47 @@ export default function UpdateCard({
 
             <div className="flex gap-2 w-full">
               <div className="w-1/2">
-                <Label>Data de Vencimento</Label>
+                <Label>Bandeira</Label>
                 <Required />
-                <Input defaultValue={itemDtVencimento} name="dt_vencimento" type="date" />
-              </div>
-
-              {/* <div className="w-1/2">
-                <Label>Categoria</Label>
-                <Required />
-                <Select defaultValue={itemCategoria} name="categoria">
+                <Select defaultValue={itemBandeira} name="bandeira" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categoriasDespesa.map((item) => (
-                      <SelectItem key={item.id} value={item.name}>
-                        {item.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>*/}
-            </div>
-
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
-                <Label>Valor</Label>
-                <Required />
-                {/* <NumberInput icon={CircleDollarSignIcon} enableStepper={false} placeholder="R$ 0,00" name="valor" /> */}
-                <Input defaultValue={itemValor} name="valor" placeholder="R$ 0,00" type="number" />
-              </div>
-            </div>
-
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
-                <Label>Responsável</Label>
-                <Required />
-                <Input defaultValue={itemResponsavel} name="responsavel" placeholder="Responsável" type="text" />
-              </div>
-            </div>
-
-            <div className={`${itemCondicao === "Recorrente" && "flex gap-2"} w-full`}>
-              <div className={`${itemCondicao === "Recorrente" ? "w-1/2" : "w-full"}`}>
-                <Label>Condição</Label>
-                <Required />
-                <Select defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Vista">À Vista</SelectItem>
-                    <SelectItem value="Recorrente">Recorrente</SelectItem>
+                    <SelectItem value="Visa">Visa</SelectItem>
+                    <SelectItem value="Mastercard">Mastercard</SelectItem>
+                    <SelectItem value="Elo">Elo</SelectItem>
+                    <SelectItem value="Amex">Amex</SelectItem>
+                    <SelectItem value="Hipercard">Hipercard</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {itemCondicao === "Recorrente" && (
-                <div className="w-1/2">
-                  <Label>Quant. recorrencia</Label>
-                  <Select defaultValue={itemQtdeRecorrencia} name="qtde_recorrencia">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="2">Por 2 meses</SelectItem>
-                      <SelectItem value="3">Por 3 meses</SelectItem>
-                      <SelectItem value="4">Por 4 meses</SelectItem>
-                      <SelectItem value="5">Por 5 meses</SelectItem>
-                      <SelectItem value="6">Por 6 meses</SelectItem>
-                      <SelectItem value="7">Por 7 meses</SelectItem>
-                      <SelectItem value="8">Por 8 meses</SelectItem>
-                      <SelectItem value="9">Por 9 meses</SelectItem>
-                      <SelectItem value="10">Por 10 meses</SelectItem>
-                      <SelectItem value="11">Por 11 meses</SelectItem>
-                      <SelectItem value="12">Por 12 meses</SelectItem>
-                      <SelectItem value="13">Por 13 meses</SelectItem>
-                      <SelectItem value="14">Por 14 meses</SelectItem>
-                      <SelectItem value="15">Por 15 meses</SelectItem>
-                      <SelectItem value="16">Por 16 meses</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            </div>
-
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
-                <Label>Status de Pagamento</Label>
+              <div className="w-1/2">
+                <Label>Tipo do Cartão</Label>
                 <Required />
-                <Select defaultValue={itemStatusPagamento} name="status_pagamento" onValueChange={(e) => setStatusPagamento(e)}>
+                <Select defaultValue={itemTipo} name="tipo" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Pendente">Pendente</SelectItem>
-                    <SelectItem value="Pago">Pago</SelectItem>
+                    <SelectItem value="Virtual">Virtual</SelectItem>
+                    <SelectItem value="Físico">Físico</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            {statusPagamento === "Pago" && (
-              <div className="flex w-full gap-2 mb-1">
-                <div className="w-full">
-                  <Label>Data de Pagamento</Label>
-                  <Input defaultValue={itemDtPagamento} name="dt_pagamento" type="date" />
-                </div>
-              </div>
-            )}
+            <div className="w-full">
+              <Label>Limite</Label>
+              <Required />
+              <Input defaultValue={itemLimite} name="limite" placeholder="Descrição" type="number" />
+            </div>
 
             <div className="w-full">
               <Label>Conta Padrão</Label>
               <Required />
-
-              <Select defaultValue={itemContaId.toString()} name="conta_id">
+              <Select defaultValue={itemContaId.toString()} name="conta_id" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -196,11 +142,28 @@ export default function UpdateCard({
               </Select>
             </div>
 
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
-                <Label>Anotação</Label>
-                <Textarea defaultValue={itemAnotacao} name="anotacao" placeholder="Anotação" />
-              </div>
+            <div className="w-full">
+              <Label>Aparencia</Label>
+              <Required />
+              <Select defaultValue={itemCorPadrao} name="cor_padrao" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {colorMap.map((color) => (
+                      <SelectItemColor key={color.name} value={color.name} color={color.hex}>
+                        {color.label}
+                      </SelectItemColor>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="w-full">
+              <Label>Anotação</Label>
+              <Textarea defaultValue={itemAnotacao} name="anotacao" placeholder="Anotação" />
             </div>
 
             <DialogFooter className="flex gap-2 mt-4">

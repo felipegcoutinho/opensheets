@@ -1,3 +1,4 @@
+import { useToast } from "@/components/ui/use-toast";
 import UseOptions from "@/hooks/UseOptions";
 import { useState } from "react";
 import { addCards, updateCards } from "../actions/cards";
@@ -9,26 +10,26 @@ function Utils() {
 
   const [statusPagamento, setStatusPagamento] = useState(false);
 
-  const [openImg, setOpenImg] = useState(false);
+  const { toast } = useToast();
 
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleImageSelect = (imgSrc) => {
-    setSelectedImage(imgSrc);
-    setOpenImg(false);
-  };
-
-  const handleSubmit = async (e, selectedColor) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-    formData.append("cor_padrao", selectedColor);
     try {
       await addCards(formData);
-      alert("Cartão adicionado com sucesso!");
+      toast({
+        variant: "success",
+        title: "Sucesso!",
+        description: "Cartão adicionado com sucesso!",
+      });
       setIsOpen(false);
     } catch (error) {
-      alert("Erro ao adicionar Cartão.");
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Erro ao adicionar Cartão.",
+      });
     } finally {
       setLoading(false);
     }
@@ -40,10 +41,18 @@ function Utils() {
     const formData = new FormData(e.target);
     try {
       await updateCards(formData);
-      alert("Cartão adicionado com sucesso!");
+      toast({
+        variant: "updated",
+        title: "Sucesso!",
+        description: "Cartão atualizado com sucesso!",
+      });
       setIsOpen(false);
     } catch (error) {
-      alert("Erro ao adicionar Cartão.");
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Erro ao atualizar Cartão.",
+      });
     } finally {
       setLoading(false);
     }
@@ -65,36 +74,25 @@ function Utils() {
     return options;
   };
 
-  const [selectedColor, setSelectedColor] = useState("");
-
-  const ColorCircle = ({ color, selected, onClick }) => (
-    <div
-      className={`w-10 h-8 rounded-full cursor-pointer ${
-        selected && "outline outline-2 outline-black saturate-200"
-      } bg-${color}-500 hover:saturate-200 hover:shadow-lg`}
-      onClick={onClick}
-    />
-  );
-
-  const colors = [
-    "zinc",
-    "red",
-    "orange",
-    "amber",
-    "yellow",
-    "lime",
-    "green",
-    "emerald",
-    "teal",
-    "cyan",
-    "sky",
-    "blue",
-    "indigo",
-    "violet",
-    "purple",
-    "fuchsia",
-    "pink",
-    "rose",
+  const colorMap = [
+    { name: "zinc", hex: "#71717a", label: "Zinco" },
+    { name: "red", hex: "#ff0000", label: "Vermelho" },
+    { name: "orange", hex: "#ff7f00", label: "Laranja" },
+    { name: "amber", hex: "#ffbf00", label: "Âmbar" },
+    { name: "yellow", hex: "#ffff00", label: "Amarelo" },
+    { name: "lime", hex: "#bfff00", label: "Lima" },
+    { name: "green", hex: "#00ff00", label: "Verde" },
+    { name: "emerald", hex: "#50c878", label: "Esmeralda" },
+    { name: "teal", hex: "#008080", label: "Verde-azulado" },
+    { name: "cyan", hex: "#00ffff", label: "Ciano" },
+    { name: "sky", hex: "#87ceeb", label: "Céu" },
+    { name: "blue", hex: "#0000ff", label: "Azul" },
+    { name: "indigo", hex: "#4b0082", label: "Índigo" },
+    { name: "violet", hex: "#8a2be2", label: "Violeta" },
+    { name: "purple", hex: "#800080", label: "Roxo" },
+    { name: "fuchsia", hex: "#ff00ff", label: "Fúcsia" },
+    { name: "pink", hex: "#ffc0cb", label: "Rosa" },
+    { name: "rose", hex: "#ff007f", label: "Rosa" },
   ];
 
   return {
@@ -106,15 +104,7 @@ function Utils() {
     getMonthOptions,
     statusPagamento,
     setStatusPagamento,
-    openImg,
-    setOpenImg,
-    selectedImage,
-    setSelectedImage,
-    handleImageSelect,
-    selectedColor,
-    setSelectedColor,
-    ColorCircle,
-    colors,
+    colorMap,
   };
 }
 

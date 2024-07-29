@@ -8,31 +8,46 @@ import { deleteCards, getCards } from "../actions/cards";
 import CreateCard from "./modal/create-cards";
 import UpdateCard from "./modal/update-cards";
 
-const colorVariants = {
-  lime: "bg-lime-500 hover:bg-lime-500 text-white",
-  purple: "bg-purple-500 hover:bg-purple-500 text-white",
-  orange: "bg-orange-500 hover:bg-orange-500 text-white",
-};
-
-function Color({ color }) {
-  return <div className={cn(colorVariants[color], "w-6 h-6 rounded-full")} />;
-}
-
 async function PageCards({ month }) {
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount();
+
+  const colorVariants = {
+    zinc: "bg-zinc-500 ",
+    red: "bg-red-500 ",
+    orange: "bg-orange-500 ",
+    amber: "bg-amber-500 ",
+    yellow: "bg-yellow-500 ",
+    lime: "bg-lime-500 ",
+    green: "bg-green-500 ",
+    emerald: "bg-emerald-500 ",
+    teal: "bg-teal-500 ",
+    cyan: "bg-cyan-500 ",
+    sky: "bg-sky-500 ",
+    blue: "bg-blue-500 ",
+    indigo: "bg-indigo-500 ",
+    violet: "bg-violet-500 ",
+    purple: "bg-purple-500 ",
+    fuchsia: "bg-fuchsia-500 ",
+    pink: "bg-pink-500 ",
+    rose: "bg-rose-500 ",
+  };
+
+  function Color({ color }) {
+    return <div className={cn(colorVariants[color], "w-5 h-5 rounded-full")} />;
+  }
 
   return (
     <div className="mt-4 w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
-      <div className="grid grid-cols-4 gap-4 mt-4">
+      <div className="grid grid-cols-4 gap-4 mt-4 ">
         {getCardsMap?.map((item) => (
           <Card className="bg-neutral-100" key={item.id}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Color color={item.cor_padrao} />
-                <Link href={`/cartoes/${item.id}/${item.descricao}?periodo=${month}`}>{item.descricao}</Link>
+                {item.descricao}
               </CardTitle>
               <CardDescription>{item.bandeira}</CardDescription>
             </CardHeader>
@@ -60,9 +75,12 @@ async function PageCards({ month }) {
                 />
                 <form action={deleteCards}>
                   <Button variant="link" value={item.id} name="excluir">
-                    <Trash2Icon className="h-5 w-5" />
+                    <Trash2Icon />
                   </Button>
                 </form>
+                <Button variant="link" className="p-0">
+                  <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>Ver</Link>
+                </Button>
               </div>
             </CardFooter>
           </Card>

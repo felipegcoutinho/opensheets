@@ -1,13 +1,10 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export async function getCards() {
-  "use server";
-  const cookiestore = cookies();
-
   const supabase = createClient();
+
   const { data: cards } = await supabase
     .from("cartoes")
     .select(`id, descricao, dt_vencimento, cor_padrao, dt_fechamento,  anotacao, limite, bandeira, tipo, contas (id, descricao)`);
@@ -16,10 +13,8 @@ export async function getCards() {
 }
 
 export async function getTransactionInvoice(month, cartao_id) {
-  "use server";
-  const cookiestore = cookies();
-
   const supabase = createClient();
+
   const { data: transacao, error } = await supabase
     .from("transacoes")
     .select(
@@ -40,10 +35,8 @@ export async function getTransactionInvoice(month, cartao_id) {
 }
 
 export async function getCardsDetails(id) {
-  "use server";
-  const cookiestore = cookies();
-
   const supabase = createClient();
+
   const { data: cards } = await supabase
     .from("cartoes")
     .select(`id, descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
@@ -53,20 +46,15 @@ export async function getCardsDetails(id) {
 }
 
 export async function addCards(formData: FormData) {
-  "use server";
-  const cookieStore = cookies();
-
   const { descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
+  2;
   await supabase.from("cartoes").insert({ descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id });
   revalidatePath("/cartoes");
 }
 
 export async function deleteCards(formData: FormData) {
-  "use server";
-  const cookieStore = cookies();
-
   const excluir = formData.get("excluir");
 
   const supabase = createClient();
@@ -75,9 +63,6 @@ export async function deleteCards(formData: FormData) {
 }
 
 export async function updateCards(formData: FormData) {
-  "use server";
-  const cookieStore = cookies();
-
   const { id, descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(
     formData.entries()
   );

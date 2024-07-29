@@ -22,6 +22,21 @@ export default async function page({ params, searchParams }) {
 
       <MonthPicker />
 
+      {getCardsMap?.map((item) => (
+        <div key={item.id}>
+          <h1>{item.descricao}</h1>
+          <p>{item.status}</p>
+          <p>Data de Vencimento: {item.dt_vencimento}</p>
+          <p>Data de fechamento: {item.dt_fechamento}</p>
+          <p>Bandeira: {item.bandeira}</p>
+          <p>{item.status_pagamento}</p>
+          <p>Anotação: {item.anotacao}</p>
+          <p>Limite: {item.limite}</p>
+          <p>Tipo: {item.tipo}</p>
+          <p>Conta: {item.contas.descricao}</p>
+        </div>
+      ))}
+
       {/* <div className="flex justify-start w-full">
         {getCardsMap?.map((item) => (
           <div className={`bg-${item.cor_padrao}-200 flex gap-8 `} key={item.id}>
