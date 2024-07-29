@@ -1,5 +1,4 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-// import { getAccount } from "../actions/accounts_actions";
 import { getAccount } from "../actions/accounts";
 import { getBills } from "../actions/bills";
 import CreateBills from "./modal/create-bills";

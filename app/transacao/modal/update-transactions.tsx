@@ -6,37 +6,76 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PenSquareIcon } from "lucide-react";
+import { PenLine } from "lucide-react";
 import Utils from "../utils";
 
-export default function UpdateBills({
+export default function UpdateTransactions({
   itemId,
-  itemDescricao,
-  itemPeriodo,
-  itemDtVencimento,
   itemCategoria,
-  itemValor,
-  itemResponsavel,
-  itemStatusPagamento,
-  itemDtPagamento,
-  itemAnotacao,
   itemCondicao,
+  itemDescricao,
+  itemNotas,
+  itemDate,
+  itemResponsavel,
+  itemSegundoResponsavel,
+  itemTipoTransacao,
+  itemValor,
+  itemFormaPagamento,
+  itemCartao,
+  itemConta,
+  itemQtdeParcelas,
+  dataAccounts,
+  dataCards,
+  itemPeriodo,
+  itemRecorrencia,
   itemQtdeRecorrencia,
-  itemContaId,
-  getAccountMap,
+  updateTransaction,
 }) {
-  const { loading, getMonthOptions, categoriasDespesa, handleUpdate, setStatusPagamento, statusPagamento, handleCondicaoChange, isOpen, setIsOpen } =
-    Utils();
+  const {
+    isOpen,
+    setIsOpen,
+    tipoTransacao,
+    setTipoTransacao,
+    quantidadeParcelas,
+    setQuantidadeParcelas,
+    showParcelas,
+    showRecorrencia,
+    showConta,
+    showCartao,
+    handleCondicaoChange,
+    handleTipoTransacaoChange,
+    handleFormaPagamentoChange,
+    getMonthOptions,
+    categoriasReceita,
+    categoriasDespesa,
+    handleUpdate,
+    isEfetivadoChecked,
+    setIsEfetivadoChecked,
+    loading,
+    setShowConta,
+    setShowCartao,
+    setShowParcelas,
+    setShowRecorrencia,
+  } = Utils();
+
+  const handleDialogClose = (val) => {
+    setIsOpen(val);
+    setShowConta(false);
+    setShowCartao(false);
+    setShowParcelas(false);
+    setShowRecorrencia(false);
+    setIsEfetivadoChecked(true);
+  };
 
   return (
     <>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger>
-          <PenSquareIcon color="blue" />
+      <Dialog open={isOpen} onOpenChange={handleDialogClose}>
+        <DialogTrigger asChild>
+          <PenLine size={16} />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar Boleto</DialogTitle>
+            <DialogTitle>Nova Transação</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleUpdate}>
@@ -44,9 +83,9 @@ export default function UpdateBills({
 
             <div className="flex w-full gap-2 mb-1">
               <div className="w-1/2">
-                <Label>Descrição</Label>
+                <Label>Data da Compra</Label>
                 <Required />
-                <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" />
+                <Input defaultValue={itemDate} name="data_compra" type="date" />
               </div>
 
               <div className="w-1/2">
@@ -67,64 +106,170 @@ export default function UpdateBills({
               </div>
             </div>
 
-            <div className="flex gap-2 w-full">
+            <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Data de Vencimento</Label>
+                <Label>Descrição</Label>
                 <Required />
-                <Input defaultValue={itemDtVencimento} name="dt_vencimento" type="date" />
+                <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" />
               </div>
 
               <div className="w-1/2">
-                <Label>Categoria</Label>
+                <Label>Valor</Label>
                 <Required />
-                <Select defaultValue={itemCategoria} name="categoria">
+                <Input defaultValue={itemValor} name="valor" placeholder="Valor" type="number" disabled={itemCondicao === "Parcelado"} />
+              </div>
+            </div>
+
+            <div className="flex w-full gap-2 mt-1">
+              <div className="w-1/2">
+                <Label>Tipo de Transação</Label>
+                <Select defaultValue={itemTipoTransacao} name="tipo_transacao" onValueChange={handleTipoTransacaoChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categoriasDespesa.map((item) => (
-                      <SelectItem key={item.id} value={item.name}>
-                        {item.name}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="Receita">Receita</SelectItem>
+                    <SelectItem value="Despesa">Despesa</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="w-1/2">
+                <Label>Categoria</Label>
+                <Select defaultValue={itemCategoria} name="categoria" disabled={itemTipoTransacao !== "Receita" && itemTipoTransacao !== "Despesa"}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {tipoTransacao === "Receita" &&
+                      categoriasReceita.map((item) => (
+                        <SelectItem key={item.id} value={item.name}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+
+                    {tipoTransacao === "Despesa" &&
+                      categoriasDespesa.map((item) => (
+                        <SelectItem key={item.id} value={item.name}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
-                <Label>Valor</Label>
-                <Required />
-                {/* <NumberInput icon={CircleDollarSignIcon} enableStepper={false} placeholder="R$ 0,00" name="valor" /> */}
-                <Input defaultValue={itemValor} name="valor" placeholder="R$ 0,00" type="number" />
-              </div>
+            <div className="w-full">
+              <Label>Responsável</Label>
+              <Required />
+              <Input defaultValue={itemResponsavel} name="responsavel" placeholder="Responsável" type="text" />
             </div>
 
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
-                <Label>Responsável</Label>
+            <div className="flex gap-2">
+              <div className={showConta || showCartao ? "w-1/2" : "w-full"}>
+                <Label>Forma de Pagamento</Label>
                 <Required />
-                <Input defaultValue={itemResponsavel} name="responsavel" placeholder="Responsável" type="text" />
+                <Select defaultValue={itemFormaPagamento} name="forma_pagamento" onValueChange={(value) => handleFormaPagamentoChange(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Pix">Pix</SelectItem>
+                    <SelectItem value="Dinheiro">Dinheiro</SelectItem>
+                    <SelectItem value="Cartão de Débito">Cartão de Débito</SelectItem>
+                    <SelectItem value="Cartão de Crédito">Cartão de Crédito</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
+
+              {itemFormaPagamento !== "Cartão de Crédito" && (
+                <div className="w-1/2">
+                  <Label>Contas</Label>
+                  <Required />
+                  <Select defaultValue={itemConta.toString()} name="conta_id" placeholder="Selecione">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {dataAccounts.map((item) => (
+                        <SelectItem key={item.id} value={item.id.toString()}>
+                          {item.descricao}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {itemFormaPagamento === "Cartão de Crédito" && (
+                <div className="w-1/2">
+                  <Label>Cartão</Label>
+                  <Required />
+                  <Select defaultValue={itemCartao.toString()} name="cartao_id">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {dataCards.map((item) => (
+                        <SelectItem key={item.id} value={item.id.toString()}>
+                          {item.descricao}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
 
-            <div className={`${itemCondicao === "Recorrente" && "flex gap-2"} w-full`}>
-              <div className={`${itemCondicao === "Recorrente" ? "w-1/2" : "w-full"}`}>
+            <div className="flex w-full gap-2">
+              <div className={showParcelas || showRecorrencia ? "w-1/2" : "w-full"}>
                 <Label>Condição</Label>
-                <Required />
-                <Select defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange}>
+                <Select disabled defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Vista">À Vista</SelectItem>
+                    <SelectItem value="Parcelado">Parcelado</SelectItem>
                     <SelectItem value="Recorrente">Recorrente</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {itemCondicao === "Recorrente" && (
+              {showParcelas && (
+                <div className="w-1/2">
+                  <Label>Quantidade de Parcelas</Label>
+                  <Select
+                    defaultValue={itemQtdeParcelas}
+                    name="qtde_parcela"
+                    value={quantidadeParcelas}
+                    onValueChange={(value) => setQuantidadeParcelas(value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2">2x</SelectItem>
+                      <SelectItem value="3">3x</SelectItem>
+                      <SelectItem value="4">4x</SelectItem>
+                      <SelectItem value="5">5x</SelectItem>
+                      <SelectItem value="6">6x</SelectItem>
+                      <SelectItem value="7">7x</SelectItem>
+                      <SelectItem value="8">8x</SelectItem>
+                      <SelectItem value="9">9x</SelectItem>
+                      <SelectItem value="10">10x</SelectItem>
+                      <SelectItem value="11">11x</SelectItem>
+                      <SelectItem value="12">12x</SelectItem>
+                      <SelectItem value="13">13x</SelectItem>
+                      <SelectItem value="14">14x</SelectItem>
+                      <SelectItem value="15">15x</SelectItem>
+                      <SelectItem value="16">16x</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {showRecorrencia && (
                 <div className="w-1/2">
                   <Label>Quant. recorrencia</Label>
                   <Select defaultValue={itemQtdeRecorrencia} name="qtde_recorrencia">
@@ -155,51 +300,8 @@ export default function UpdateBills({
 
             <div className="flex w-full gap-2 mb-1">
               <div className="w-full">
-                <Label>Status de Pagamento</Label>
-                <Required />
-                <Select defaultValue={itemStatusPagamento} name="status_pagamento" onValueChange={(e) => setStatusPagamento(e)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Pendente">Pendente</SelectItem>
-                    <SelectItem value="Pago">Pago</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {statusPagamento === "Pago" && (
-              <div className="flex w-full gap-2 mb-1">
-                <div className="w-full">
-                  <Label>Data de Pagamento</Label>
-                  <Input defaultValue={itemDtPagamento} name="dt_pagamento" type="date" />
-                </div>
-              </div>
-            )}
-
-            <div className="w-full">
-              <Label>Conta Padrão</Label>
-              <Required />
-
-              <Select defaultValue={itemContaId.toString()} name="conta_id">
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {getAccountMap?.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.descricao}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex w-full gap-2 mb-1">
-              <div className="w-full">
                 <Label>Anotação</Label>
-                <Textarea defaultValue={itemAnotacao} name="anotacao" placeholder="Anotação" />
+                <Textarea defaultValue={itemNotas} name="anotacao" placeholder="Anotação" />
               </div>
             </div>
 
@@ -209,8 +311,9 @@ export default function UpdateBills({
                   Cancelar
                 </Button>
               </DialogClose>
+
               <Button className="w-1/2" type="submit" disabled={loading}>
-                {loading ? "Atualizando..." : "Atualizar"}
+                {loading ? "Salvando..." : "Salvar"}
               </Button>
             </DialogFooter>
           </form>

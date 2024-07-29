@@ -3,13 +3,11 @@ import { createClient } from "@/utils/supabase/server";
 import { addMonths, format, parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export async function getTransaction(month) {
-  const cookiestore = cookies();
+  const supabase = createClient();
 
-  const supabase = createClient(cookiestore);
-  const { data: transacao } = await supabase
+  const { data: transacao, error } = await supabase
     .from("transacoes")
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
@@ -19,12 +17,15 @@ export async function getTransaction(month) {
     .order("created_at", { ascending: false })
     .eq("periodo", month);
 
+  if (error) {
+    console.error("Erro ao buscar transações:", error);
+    return [];
+  }
+
   return transacao;
 }
 
-export async function addTransaction(formData) {
-  const cookieStore = cookies();
-
+export async function addTransaction(formData: FormData) {
   const {
     data_compra,
     descricao,
@@ -46,7 +47,7 @@ export async function addTransaction(formData) {
     dividir_lancamento,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const transacoes = [];
 
@@ -131,19 +132,15 @@ export async function addTransaction(formData) {
   }
 }
 
-export async function deleteTransaction(formData) {
-  const cookieStore = cookies();
-
+export async function deleteTransaction(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   await supabase.from("transacoes").delete().eq("id", excluir);
   revalidatePath("/dashboard");
 }
 
-export async function updateTransaction(formData) {
-  const cookieStore = cookies();
-
+export async function updateTransaction(formData: FormData) {
   const {
     id,
     data_compra,
@@ -165,7 +162,7 @@ export async function updateTransaction(formData) {
     conta_id,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   try {
     await supabase

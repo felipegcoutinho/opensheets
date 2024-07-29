@@ -1,9 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-// import { getAccount } from "../actions/accounts_actions";
 import { getAccount } from "../actions/accounts";
 import { getCards } from "../actions/cards";
-import { getTransaction } from "../actions/transactions";
+import { getTransaction, updateTransaction } from "../actions/transactions";
 import CreateTransactions from "./modal/create-transactions";
+import DetailsTransactions from "./modal/details-transactions";
 import UpdateTransactions from "./modal/update-transactions";
 
 async function PageTransactions({ month }) {
@@ -32,7 +32,7 @@ async function PageTransactions({ month }) {
             <TableHead>Responsável</TableHead>
             <TableHead>Valor</TableHead>
             <TableHead>Conta/Cartão</TableHead>
-            <TableHead className="text-center">Ações</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -53,7 +53,7 @@ async function PageTransactions({ month }) {
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.valor}</TableCell>
               <TableCell>{getDescricao(item)}</TableCell>
-              <TableCell className="p-1 text-center">
+              <TableCell className="text-center flex gap-2">
                 <DetailsTransactions />
 
                 <UpdateTransactions
@@ -76,11 +76,10 @@ async function PageTransactions({ month }) {
                   dataAccounts={getAccountMap}
                   dataCards={getCardsMap}
                   itemPeriodo={item.periodo}
-                  itemEfetivado={item.efetivado}
                   updateTransaction={updateTransaction}
                 />
 
-                <DeleteTransactions itemId={item.id} />
+                {/* <DeleteTransactions itemId={item.id} /> */}
               </TableCell>
             </TableRow>
           ))}

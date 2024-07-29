@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import { Fira_Sans, Gabarito, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -19,7 +20,7 @@ export default function RootLayout({ children }) {
       <body>
         <main className="max-w-screen-xl flex flex-col items-center mx-auto">{children}</main>
         {/* <SpeedInsights /> */}
-        {/* <Toaster /> */}
+        <Toaster />
       </body>
     </html>
   );

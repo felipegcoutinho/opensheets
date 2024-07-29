@@ -292,23 +292,6 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             )}
           </div>
 
-          <div className="w-full">
-            <Label>Conta Padrão</Label>
-            <Required />
-            <Select name="conta_id">
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione" />
-              </SelectTrigger>
-              <SelectContent>
-                {getAccountMap?.map((item) => (
-                  <SelectItem key={item.id} value={item.id.toString()}>
-                    {item.descricao}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <div className="flex w-full gap-2 mb-1">
             <div className="w-full">
               <Label>Anotação</Label>
