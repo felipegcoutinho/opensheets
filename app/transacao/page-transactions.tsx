@@ -1,8 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getAccount } from "../actions/accounts";
 import { getCards } from "../actions/cards";
-import { getTransaction, updateTransaction } from "../actions/transactions";
+import { getTransaction } from "../actions/transactions";
 import CreateTransactions from "./modal/create-transactions";
+import DeleteTransactions from "./modal/delete-transactions";
 import DetailsTransactions from "./modal/details-transactions";
 import UpdateTransactions from "./modal/update-transactions";
 
@@ -16,6 +17,7 @@ async function PageTransactions({ month }) {
     const cartaoDescricao = item.cartoes?.descricao;
     return contaDescricao ?? cartaoDescricao;
   }
+
   return (
     <div className="mt-4 w-full">
       <CreateTransactions getCardsMap={getCardsMap} getAccountMap={getAccountMap} />
@@ -58,6 +60,7 @@ async function PageTransactions({ month }) {
 
                 <UpdateTransactions
                   itemId={item.id}
+                  itemPeriodo={item.periodo}
                   itemNotas={item.notas}
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
@@ -68,18 +71,16 @@ async function PageTransactions({ month }) {
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
-                  itemCartao={getDescricao(item)}
-                  itemConta={getDescricao(item)}
                   itemQtdeParcelas={item.qtde_parcela}
                   itemRecorrencia={item.recorrencia}
                   itemQtdeRecorrencia={item.qtde_recorrencia}
-                  dataAccounts={getAccountMap}
-                  dataCards={getCardsMap}
-                  itemPeriodo={item.periodo}
-                  updateTransaction={updateTransaction}
+                  getAccountMap={getAccountMap}
+                  getCardsMap={getCardsMap}
+                  itemCartao={item.cartoes?.id}
+                  itemConta={item.contas?.id}
                 />
 
-                {/* <DeleteTransactions itemId={item.id} /> */}
+                <DeleteTransactions itemId={item.id} />
               </TableCell>
             </TableRow>
           ))}

@@ -1,6 +1,7 @@
-import Header from "@/components/Header";
+import Header from "@/components/main-header";
 import { UseDates } from "@/hooks/UseDates";
 import PageCards from "./page-cards";
+";
 
 export default function Page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();

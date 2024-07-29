@@ -13,8 +13,8 @@ import { createClient } from "@/utils/supabase/server";
 import { CircleUser, Menu, Package2 } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import AuthButton from "./AuthButton";
-import HeaderLinks from "./HeaderLinks";
+import AuthButton from "./auth-button";
+import LinkOnHeader from "./link-on-header";
 
 export default async function Header({ month }) {
   const cookieStore = cookies();
@@ -31,7 +31,7 @@ export default async function Header({ month }) {
           <span className="font-bold text-lg">Opensheets</span>
         </Link>
 
-        <HeaderLinks month={month} user={user} />
+        <LinkOnHeader month={month} user={user} />
       </nav>
       <Sheet>
         <SheetTrigger asChild>

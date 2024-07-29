@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { SubmitButton } from "../../../components/SubmitButton";
+import { SubmitButton } from "../../../components/submit-button";
 
 export default function Login({ searchParams }) {
   const signUp = async (formData) => {

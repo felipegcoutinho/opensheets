@@ -1,5 +1,5 @@
 "use client";
-import Required from "@/components/Required";
+import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -96,7 +96,6 @@ export default function UpdateBills({
               <div className="w-full">
                 <Label>Valor</Label>
                 <Required />
-                {/* <NumberInput icon={CircleDollarSignIcon} enableStepper={false} placeholder="R$ 0,00" name="valor" /> */}
                 <Input defaultValue={itemValor} name="valor" placeholder="R$ 0,00" type="number" />
               </div>
             </div>
@@ -181,7 +180,6 @@ export default function UpdateBills({
             <div className="w-full">
               <Label>Conta Padrão</Label>
               <Required />
-
               <Select defaultValue={itemContaId.toString()} name="conta_id">
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />

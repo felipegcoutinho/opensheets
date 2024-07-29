@@ -1,6 +1,6 @@
-import Banner from "@/components/Banner";
-import Header from "@/components/Header";
-import MonthPicker from "@/components/MonthPicker";
+import Banner from "@/components/main-banner";
+import Header from "@/components/main-header";
+import MonthPicker from "@/components/month-picker";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { UseDates } from "@/hooks/UseDates";

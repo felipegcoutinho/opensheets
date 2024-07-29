@@ -1,6 +1,7 @@
+import { useToast } from "@/components/ui/use-toast";
 import UseOptions from "@/hooks/UseOptions";
 import { useState } from "react";
-import { addTransaction, updateTransaction } from "../actions/transactions";
+import { addTransaction, deleteTransaction, updateTransaction } from "../actions/transactions";
 
 export default function Utils() {
   const { categoriasReceita, categoriasDespesa } = UseOptions();
@@ -24,6 +25,8 @@ export default function Utils() {
   const [loading, setLoading] = useState(false);
 
   const [isDividedChecked, setIsDividedChecked] = useState(false);
+
+  const { toast } = useToast();
 
   const handleCondicaoChange = (value: string) => {
     setShowParcelas(value === "Parcelado");
@@ -64,7 +67,6 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-    formData.append("efetivado", isEfetivadoChecked);
     try {
       await addTransaction(formData);
       alert("Transação adicionada com sucesso!");
@@ -80,7 +82,6 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-    formData.append("efetivado", isEfetivadoChecked);
     try {
       await updateTransaction(formData);
       alert("Transação atualizada com sucesso!");
@@ -90,6 +91,18 @@ export default function Utils() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDelete = (itemId) => async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("excluir", itemId);
+    await deleteTransaction(formData);
+    toast({
+      variant: "success",
+      title: "Sucesso!",
+      description: "Transação removida com sucesso!",
+    });
   };
 
   function formatDate(dateString) {
@@ -120,6 +133,7 @@ export default function Utils() {
     handleFormaPagamentoChange,
     getMonthOptions,
     handleSubmit,
+    handleDelete,
     loading,
     setLoading,
     handleUpdate,

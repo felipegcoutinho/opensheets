@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { SubmitButton } from "../../components/SubmitButton";
+import { SubmitButton } from "../../components/submit-button";
 
 export default function Login() {
   const signIn = async (formData) => {

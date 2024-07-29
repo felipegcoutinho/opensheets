@@ -1,5 +1,5 @@
-import Header from "@/components/Header";
-import MonthPicker from "@/components/MonthPicker";
+import Header from "@/components/main-header";
+import MonthPicker from "@/components/month-picker";
 import { UseDates } from "@/hooks/UseDates";
 import PageBills from "./page-bills";
 

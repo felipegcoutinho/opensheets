@@ -1,5 +1,6 @@
 "use client";
-import Required from "@/components/Required";
+
+import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -24,17 +25,15 @@ export default function UpdateTransactions({
   itemCartao,
   itemConta,
   itemQtdeParcelas,
-  dataAccounts,
-  dataCards,
+  getAccountMap,
+  getCardsMap,
   itemPeriodo,
   itemRecorrencia,
   itemQtdeRecorrencia,
-  updateTransaction,
 }) {
   const {
     isOpen,
     setIsOpen,
-    tipoTransacao,
     setTipoTransacao,
     quantidadeParcelas,
     setQuantidadeParcelas,
@@ -49,8 +48,6 @@ export default function UpdateTransactions({
     categoriasReceita,
     categoriasDespesa,
     handleUpdate,
-    isEfetivadoChecked,
-    setIsEfetivadoChecked,
     loading,
     setShowConta,
     setShowCartao,
@@ -64,7 +61,6 @@ export default function UpdateTransactions({
     setShowCartao(false);
     setShowParcelas(false);
     setShowRecorrencia(false);
-    setIsEfetivadoChecked(true);
   };
 
   return (
@@ -136,19 +132,19 @@ export default function UpdateTransactions({
 
               <div className="w-1/2">
                 <Label>Categoria</Label>
-                <Select defaultValue={itemCategoria} name="categoria" disabled={itemTipoTransacao !== "Receita" && itemTipoTransacao !== "Despesa"}>
+                <Select defaultValue={itemCategoria} name="categoria">
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {tipoTransacao === "Receita" &&
+                    {itemTipoTransacao === "Receita" &&
                       categoriasReceita.map((item) => (
                         <SelectItem key={item.id} value={item.name}>
                           {item.name}
                         </SelectItem>
                       ))}
 
-                    {tipoTransacao === "Despesa" &&
+                    {itemTipoTransacao === "Despesa" &&
                       categoriasDespesa.map((item) => (
                         <SelectItem key={item.id} value={item.name}>
                           {item.name}
@@ -166,10 +162,15 @@ export default function UpdateTransactions({
             </div>
 
             <div className="flex gap-2">
-              <div className={showConta || showCartao ? "w-1/2" : "w-full"}>
+              <div className="w-1/2">
                 <Label>Forma de Pagamento</Label>
                 <Required />
-                <Select defaultValue={itemFormaPagamento} name="forma_pagamento" onValueChange={(value) => handleFormaPagamentoChange(value)}>
+                <Select
+                  defaultValue={itemFormaPagamento}
+                  name="forma_pagamento"
+                  onValueChange={(value) => handleFormaPagamentoChange(value)}
+                  disabled
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -186,12 +187,12 @@ export default function UpdateTransactions({
                 <div className="w-1/2">
                   <Label>Contas</Label>
                   <Required />
-                  <Select defaultValue={itemConta.toString()} name="conta_id" placeholder="Selecione">
+                  <Select defaultValue={itemConta.toString()} name="conta_id">
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
-                      {dataAccounts.map((item) => (
+                      {getAccountMap.map((item) => (
                         <SelectItem key={item.id} value={item.id.toString()}>
                           {item.descricao}
                         </SelectItem>
@@ -210,7 +211,7 @@ export default function UpdateTransactions({
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
-                      {dataCards.map((item) => (
+                      {getCardsMap.map((item) => (
                         <SelectItem key={item.id} value={item.id.toString()}>
                           {item.descricao}
                         </SelectItem>
@@ -224,7 +225,7 @@ export default function UpdateTransactions({
             <div className="flex w-full gap-2">
               <div className={showParcelas || showRecorrencia ? "w-1/2" : "w-full"}>
                 <Label>Condição</Label>
-                <Select disabled defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange}>
+                <Select defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange} disabled>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>

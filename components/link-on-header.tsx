@@ -4,7 +4,7 @@ import { ArrowDownUpIcon, CreditCard, FileSpreadsheetIcon, Home, NotebookPenIcon
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-function HeaderLinks({ month, user }) {
+function LinkOnHeader({ month, user }) {
   const pathname = usePathname();
 
   const isHomePage = pathname === "/";
@@ -46,7 +46,7 @@ function HeaderLinks({ month, user }) {
   );
 }
 
-export default HeaderLinks;
+export default LinkOnHeader;
 
 export function LinkNavButton({ Icon, LinkName }) {
   return (

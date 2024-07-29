@@ -1,5 +1,5 @@
 "use client";
-import Required from "@/components/Required";
+import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
