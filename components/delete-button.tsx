@@ -17,7 +17,7 @@ export default function DeleteButton({ handleDelete }) {
   return (
     <Dialog>
       <DialogTrigger>
-        <Trash2Icon color="red" />
+        <Trash2Icon size={16} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

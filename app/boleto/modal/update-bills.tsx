@@ -32,7 +32,7 @@ export default function UpdateBills({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger>
-          <PenSquareIcon color="blue" />
+          <PenSquareIcon size={16} />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

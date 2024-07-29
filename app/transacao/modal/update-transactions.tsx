@@ -66,7 +66,7 @@ export default function UpdateTransactions({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-        <DialogTrigger asChild>
+        <DialogTrigger>
           <PenLine size={16} />
         </DialogTrigger>
         <DialogContent>

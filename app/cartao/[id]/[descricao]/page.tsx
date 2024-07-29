@@ -2,7 +2,6 @@ import { getCardsDetails, getTransactionInvoice } from "@/app/actions/cards";
 import Header from "@/components/main-header";
 import MonthPicker from "@/components/MonthPicker";
 import { UseDates } from "@/hooks/UseDates";
-";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
