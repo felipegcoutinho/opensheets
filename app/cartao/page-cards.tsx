@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { UseColors } from "@/hooks/UseColors";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
@@ -10,42 +11,18 @@ import UpdateCard from "./modal/update-cards";
 async function PageCards({ month }) {
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount();
-
-  const colorVariants = {
-    zinc: "bg-zinc-500 ",
-    red: "bg-red-500 ",
-    orange: "bg-orange-500 ",
-    amber: "bg-amber-500 ",
-    yellow: "bg-yellow-500 ",
-    lime: "bg-lime-500 ",
-    green: "bg-green-500 ",
-    emerald: "bg-emerald-500 ",
-    teal: "bg-teal-500 ",
-    cyan: "bg-cyan-500 ",
-    sky: "bg-sky-500 ",
-    blue: "bg-blue-500 ",
-    indigo: "bg-indigo-500 ",
-    violet: "bg-violet-500 ",
-    purple: "bg-purple-500 ",
-    fuchsia: "bg-fuchsia-500 ",
-    pink: "bg-pink-500 ",
-    rose: "bg-rose-500 ",
-  };
-
-  function Color({ color }) {
-    return <div className={cn(colorVariants[color], "w-5 h-5 rounded-full")} />;
-  }
+  const { colorVariants, colorVariantsCard } = UseColors();
 
   return (
     <div className="mt-4 w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
-      <div className="grid grid-cols-4 gap-4 mt-4 ">
+      <div className="grid grid-cols-4 gap-4 mt-4">
         {getCardsMap?.map((item) => (
-          <Card className="bg-neutral-100" key={item.id}>
+          <Card key={item.id} className={cn(colorVariantsCard[item.cor_padrao])}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Color color={item.cor_padrao} />
+                <div className={cn(colorVariants[item.cor_padrao], "w-5 h-5 rounded-full")} />
                 {item.descricao}
               </CardTitle>
               <CardDescription>{item.bandeira}</CardDescription>
@@ -74,11 +51,11 @@ async function PageCards({ month }) {
                 />
                 <form action={deleteCards}>
                   <Button className="p-0" variant="link" value={item.id} name="excluir">
-                    Excluir
+                    excluir
                   </Button>
                 </form>
                 <Button className="p-0" variant="link">
-                  <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>Ver</Link>
+                  <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>fatura</Link>
                 </Button>
               </div>
             </CardFooter>

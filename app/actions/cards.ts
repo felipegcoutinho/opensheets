@@ -7,7 +7,7 @@ export async function getCards() {
 
   const { data: cards } = await supabase
     .from("cartoes")
-    .select(`id, descricao, dt_vencimento, cor_padrao, dt_fechamento,  anotacao, limite, bandeira, tipo, contas (id, descricao)`);
+    .select(`id, descricao, dt_vencimento, cor_padrao, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`);
 
   return cards;
 }
@@ -19,7 +19,7 @@ export async function getTransactionInvoice(month, cartao_id) {
     .from("transacoes")
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
-      forma_pagamento, notas, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
       qtde_recorrencia`
     )
     .order("data_compra", { ascending: false })

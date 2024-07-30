@@ -8,8 +8,7 @@ export default async function Banner() {
 
   const { data, error } = await supabase.auth.getUser();
 
-  const displayName = data.user.user_metadata.displayName;
-
+  const displayName = "felipe";
   if (error) {
     return <p>Erro ao buscar usuário</p>;
   }

@@ -1,20 +1,23 @@
 import { getCardsDetails, getTransactionInvoice } from "@/app/actions/cards";
+import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import Header from "@/components/main-header";
 import MonthPicker from "@/components/month-picker";
+import { Card } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { UseColors } from "@/hooks/UseColors";
 import { UseDates } from "@/hooks/UseDates";
+import { cn } from "@/lib/utils";
+import InvoicePayment from "../../invoice-payment";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
+  const { colorVariants, colorVariantsCard } = UseColors();
 
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   const getCardsMap = await getCardsDetails(params.id);
-
   const getTransactionInvoiceMap = await getTransactionInvoice(month, params.id);
-
-  // const fatura_status = await getFaturas(month, params.id);
 
   return (
     <>
@@ -23,104 +26,44 @@ export default async function page({ params, searchParams }) {
       <MonthPicker />
 
       {getCardsMap?.map((item) => (
-        <div key={item.id}>
-          <h1>{item.descricao}</h1>
-          <p>{item.status}</p>
-          <p>Data de Vencimento: {item.dt_vencimento}</p>
-          <p>Data de fechamento: {item.dt_fechamento}</p>
-          <p>Bandeira: {item.bandeira}</p>
-          <p>{item.status_pagamento}</p>
-          <p>Anotação: {item.anotacao}</p>
-          <p>Limite: {item.limite}</p>
-          <p>Tipo: {item.tipo}</p>
-          <p>Conta: {item.contas.descricao}</p>
-        </div>
+        <Card key={item.id} className="flex gap-10 h-32 w-full items-center bg-zinc-200 text-zinc-600">
+          <div className="text-xl px-16 flex items-center gap-2">
+            <div className={cn(colorVariants[item.cor_padrao], "w-8 h-8 rounded-full")} />
+            {item.descricao}
+          </div>
+          <div className="leading-relaxed">
+            <p>Vence dia {item.dt_vencimento}</p>
+            <p>Fecha dia {item.dt_fechamento}</p>
+            <p>{item.bandeira}</p>
+          </div>
+          <div className="leading-relaxed">
+            <p>{item.limite}</p>
+            <p>{item.tipo}</p>
+            <p>{item.contas.descricao}</p>
+            <p>{item.anotacao}</p>
+          </div>
+          <div className="leading-relaxed">
+            <InvoicePayment month={month} paramsId={params.id} />
+          </div>
+        </Card>
       ))}
 
-      {/* <div className="flex justify-start w-full">
-        {getCardsMap?.map((item) => (
-          <div className={`bg-${item.cor_padrao}-200 flex gap-8 `} key={item.id}>
-            <div className={`bg-${item.cor_padrao}-200`}>
-              <p className="font-bold">{item.descricao}</p>
-              <p>{item.status}</p>
-              <p>Data de Vencimento: {item.dt_vencimento}</p>
-              <p>Data de fechamento: {item.dt_fechamento}</p>
-              <p>Bandeira: {item.bandeira}</p>
-              <p>{item.status_pagamento}</p>
-            </div>
-            <div className={`bg-${item.cor_padrao}-200 p-6`}>
-              <p>Anotação: {item.anotacao}</p>
-              <p>Limite: {item.limite}</p>
-              <p>Tipo: {item.tipo}</p>
-              <p>Conta: {item.contas.descricao}</p>
-            </div>
-          </div>
-        ))}
-      </div> */}
-
-      {/* {fatura_status && fatura_status.length > 0 ? (
-        fatura_status.map(
-          (item) =>
-            item.status_pagamento === "Pago" && (
-              <>
-                <div className="bg-green-400 p-4 rounded-lg" key={item.id}>
-                  <p>{item.status_pagamento}</p>
-                </div>
-
-                <form action={deleteFaturas}>
-                  <input type="hidden" name="excluir" value={item.id} />
-
-                  <select hidden name="status_pagamento" defaultValue={"Pendente"} placeholder="pagar">
-                    <option value="Pendente">Pendente</option>
-                  </select>
-
-                  <input type="hidden" name="periodo" defaultValue={month} />
-                  <input type="hidden" name="id_cartao" defaultValue={params.id} />
-
-                  <Button type="submit" color="orange" className="mt-6">
-                    Atualizar status para Pendente
-                  </Button>
-                </form>
-              </>
-            )
-        )
-      ) : (
-        <>
-          <div className="bg-orange-600 text-white p-4 rounded-lg">
-            <p>Pendente</p>
-          </div>
-
-          <form action={addFaturas}>
-            <select hidden name="status_pagamento" defaultValue={"Pago"} placeholder="pagar">
-              <option value="Pago">Pagar</option>
-            </select>
-
-            <input type="hidden" name="periodo" defaultValue={month} />
-            <input type="hidden" name="id_cartao" defaultValue={params.id} />
-
-            <Button type="submit" color="green" className="mt-6">
-              Pagar
-            </Button>
-          </form>
-        </>
-      )} */}
-
-      {/* <Table className="mt-6 w-full">
-        <TableHead>
+      <Table className="mt-6">
+        <TableHeader>
           <TableRow className="border-b text-xs">
-            <TableHeaderCell>Data</TableHeaderCell>
-            <TableHeaderCell>Descrição</TableHeaderCell>
-            <TableHeaderCell>Transação</TableHeaderCell>
-            <TableHeaderCell>Condição</TableHeaderCell>
-            <TableHeaderCell>Pagamento</TableHeaderCell>
-            <TableHeaderCell>Categoria</TableHeaderCell>
-            <TableHeaderCell>Responsável</TableHeaderCell>
-            <TableHeaderCell>Valor</TableHeaderCell>
-            <TableHeaderCell>Conta/Cartão</TableHeaderCell>
-            <TableHeaderCell className="text-center">Ações</TableHeaderCell>
+            <TableHead>Data</TableHead>
+            <TableHead>Descrição</TableHead>
+            <TableHead>Transação</TableHead>
+            <TableHead>Condição</TableHead>
+            <TableHead>Pagamento</TableHead>
+            <TableHead>Categoria</TableHead>
+            <TableHead>Responsável</TableHead>
+            <TableHead>Valor</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
-        </TableHead>
-        <TableBody className="mt-20">
+        </TableHeader>
+
+        <TableBody>
           {getTransactionInvoiceMap?.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.data_compra}</TableCell>
@@ -130,19 +73,19 @@ export default async function page({ params, searchParams }) {
                   {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
-              <TableCell>{item.tipo_transacao}</TableCell>
+              <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.categoria}</TableCell>
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.valor}</TableCell>
-              <TableCell className="p-1 text-center">
+              <TableCell className="text-center flex gap-2">
                 <DetailsTransactions />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </Table> */}
+      </Table>
     </>
   );
 }
