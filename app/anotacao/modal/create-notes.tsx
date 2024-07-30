@@ -8,14 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import Utils from "../utils";
 
-export default function CreateNotes({ getAccountMap }) {
+export default function CreateNotes({ getAccountMap, children }) {
   const { loading, getMonthOptions, handleSubmit, isOpen, setIsOpen } = Utils();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button>Nova Anotação</Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Nova Anotação</DialogTitle>
@@ -26,13 +24,13 @@ export default function CreateNotes({ getAccountMap }) {
             <div className="w-1/2">
               <Label>Título</Label>
               <Required />
-              <Input name="descricao" placeholder="Descrição" type="text" />
+              <Input maxLength={24} name="descricao" placeholder="Descrição" type="text" required />
             </div>
 
             <div className="w-1/2">
               <Label>Período</Label>
               <Required />
-              <Select name="periodo">
+              <Select name="periodo" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -50,7 +48,7 @@ export default function CreateNotes({ getAccountMap }) {
           <div className="flex w-full gap-2 mb-1">
             <div className="w-full">
               <Label>Anotação</Label>
-              <Textarea maxLength={512} className="h-64" name="anotacao" placeholder="Anotação" />
+              <Textarea required maxLength={512} className="h-64" name="anotacao" placeholder="Anotação" />
             </div>
           </div>
 

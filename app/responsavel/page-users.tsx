@@ -14,7 +14,7 @@ async function PageUsers({ month }) {
   }, {});
 
   return (
-    <div className="mt-6 w-full">
+    <div className=" w-full">
       <div className="grid grid-cols-4 gap-4 mt-4">
         {TransactionListMap?.map((item) => (
           <CardComponent key={item.id} responsavel={item.responsavel} valorCartao={item.sum} valorBoleto={billMap[item.responsavel] || 0} />

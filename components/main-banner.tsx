@@ -8,21 +8,18 @@ export default async function Banner() {
 
   const { data, error } = await supabase.auth.getUser();
 
-  const displayName = "felipe";
+  const displayName = "Felipe Coutinho";
   if (error) {
     return <p>Erro ao buscar usuário</p>;
   }
 
   return (
-    <Card className="h-32 bg-violet-100 ring-0 w-full my-2">
+    <Card className="h-32 p-6 bg-violet-100 ring-0 w-full">
       <div className="flex justify-between items-center">
         <div>
           <p>Olá, {displayName}</p>
-          <p>ID</p>
-          <p>EMAIL</p>
-        </div>
-        <div>
-          <p className="font-bold text-2xl">Saldo: R$ 2000</p>
+          <p>{data?.user.id}</p>
+          <p>{data?.user.email}</p>
         </div>
       </div>
     </Card>

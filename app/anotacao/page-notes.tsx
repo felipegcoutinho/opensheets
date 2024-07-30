@@ -9,7 +9,9 @@ async function PageNotes({ month }) {
 
   return (
     <div className="mt-4 w-full">
-      <CreateNotes />
+      <CreateNotes>
+        <Button>Nova Anotação</Button>
+      </CreateNotes>
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
         {getNotesMap?.map((item) => (
