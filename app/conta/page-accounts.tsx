@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
 import { deleteCards } from "../actions/cards";
@@ -20,11 +20,9 @@ async function PageAccount({ month }) {
               <CardTitle className="flex items-center gap-2">{item.descricao}</CardTitle>
               <CardDescription>{item.tipo_conta}</CardDescription>
             </CardHeader>
-            {/* <CardContent>
-              <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
-              <p className="text-sm">Vence dia {item.dt_vencimento}</p>
-              <p className="text-sm">Cartão {item.tipo}</p>
-            </CardContent> */}
+            <CardContent>
+              <p className="text-sm">Saldo R$ 2.000,00 </p>
+            </CardContent>
             <CardFooter>
               <div className="flex gap-4">
                 <UpdateCard

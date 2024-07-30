@@ -1,6 +1,7 @@
 "use client";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -139,10 +140,10 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             </div>
           </div>
 
-          <div className="flex items-center mt-2 justify-between rounded-lg bg-zinc-100 p-2">
-            <Label>Dividir Boleto</Label>
+          <Card className="flex items-center mt-2 justify-between rounded-lg bg-transparent border p-2">
+            <Label>Dividir Lançamento</Label>
             <Switch name="dividir_lancamento" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
-          </div>
+          </Card>
 
           <div className="flex w-full gap-2">
             <div className="w-full">

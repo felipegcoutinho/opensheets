@@ -32,7 +32,7 @@ async function PageDashboards({ month }) {
   const previsto = calculateForecast(balancoAnterior, receitas, despesasTotal);
 
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <Card>
         <CardHeader className="pb-2">
           <CardDescription>Receitas</CardDescription>
@@ -63,7 +63,7 @@ async function PageDashboards({ month }) {
         </CardContent>
       </Card>
 
-      <Card>
+      {/* <Card>
         <CardHeader className="pb-2">
           <CardDescription>Previsto</CardDescription>
           <CardTitle className="text-4xl">{previsto}</CardTitle>
@@ -71,7 +71,7 @@ async function PageDashboards({ month }) {
         <CardContent>
           <div className="text-xs text-muted-foreground">-</div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }
