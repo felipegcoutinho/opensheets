@@ -7,7 +7,8 @@ export async function getCards() {
 
   const { data: cards } = await supabase
     .from("cartoes")
-    .select(`id, descricao, dt_vencimento, cor_padrao, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`);
+    .select(`id, descricao, dt_vencimento, cor_padrao, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
+    .order("descricao", { ascending: true });
 
   return cards;
 }

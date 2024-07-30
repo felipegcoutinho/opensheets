@@ -6,18 +6,17 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseColors } from "@/hooks/UseColors";
 import { UseDates } from "@/hooks/UseDates";
-import { cn } from "@/lib/utils";
 import InvoicePayment from "../../invoice-payment";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
-  const { colorVariants, colorVariantsCard } = UseColors();
-
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   const getCardsMap = await getCardsDetails(params.id);
   const getTransactionInvoiceMap = await getTransactionInvoice(month, params.id);
+
+  const { colorVariants, colorVariantsCard } = UseColors();
 
   return (
     <>
@@ -26,9 +25,10 @@ export default async function page({ params, searchParams }) {
       <MonthPicker />
 
       {getCardsMap?.map((item) => (
-        <Card key={item.id} className="flex gap-10 h-32 w-full items-center bg-zinc-200 text-zinc-600">
+        <Card key={item.id} className="flex gap-10 h-32 w-full items-center">
           <div className="text-xl px-16 flex items-center gap-2">
-            <div className={cn(colorVariants[item.cor_padrao], "w-8 h-8 rounded-full")} />
+            {/* <div className={cn(colorVariants[item.cor_padrao], "w-8 h-8 rounded-full")} /> */}
+            <div className="bg-black w-8 h-8 rounded-full" />
             {item.descricao}
           </div>
           <div className="leading-relaxed">

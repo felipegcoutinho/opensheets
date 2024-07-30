@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { UseColors } from "@/hooks/UseColors";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
 import { deleteCards, getCards } from "../actions/cards";
@@ -11,7 +9,6 @@ import UpdateCard from "./modal/update-cards";
 async function PageCards({ month }) {
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount();
-  const { colorVariants, colorVariantsCard } = UseColors();
 
   return (
     <div className="mt-4 w-full">
@@ -19,10 +16,11 @@ async function PageCards({ month }) {
 
       <div className="grid grid-cols-4 gap-4 mt-4">
         {getCardsMap?.map((item) => (
-          <Card key={item.id} className={cn(colorVariantsCard[item.cor_padrao])}>
+          // <Card key={item.id} className={cn(colorVariantsCard[item.cor_padrao])}>
+          <Card key={item.id}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <div className={cn(colorVariants[item.cor_padrao], "w-5 h-5 rounded-full")} />
+                {/* <div className={cn(colorVariants[item.cor_padrao], "w-5 h-5 rounded-full")} /> */}
                 {item.descricao}
               </CardTitle>
               <CardDescription>{item.bandeira}</CardDescription>

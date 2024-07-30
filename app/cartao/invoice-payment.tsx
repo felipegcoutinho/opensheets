@@ -11,7 +11,7 @@ export default async function InvoicePayment({ month, paramsId }) {
           (item) =>
             item.status_pagamento === "Pago" && (
               <>
-                <div className="bg-green-400 p-4 rounded-lg" key={item.id}>
+                <div className="text-green-400 p-4 rounded-lg" key={item.id}>
                   <p>{item.status_pagamento}</p>
                 </div>
 
@@ -34,7 +34,7 @@ export default async function InvoicePayment({ month, paramsId }) {
         )
       ) : (
         <>
-          <div className="bg-orange-600 text-white p-4 rounded-lg">
+          <div className="text-orange-600  p-4 rounded-lg">
             <p>Pendente</p>
           </div>
 
