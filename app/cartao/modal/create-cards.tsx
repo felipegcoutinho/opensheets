@@ -127,7 +127,7 @@ export default function CreateCard({ getAccountMap }) {
           <div className="w-full">
             <Label>Aparencia</Label>
             <Required />
-            <Select name="cor_padrao" required>
+            <Select name="aparencia" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>

@@ -1,4 +1,4 @@
-import { getCardDetail, getCardInvoice } from "@/app/actions/cards";
+import { getAccountDetail, getAccountExpense, getAccountInvoice } from "@/app/actions/accounts";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import Header from "@/components/main-header";
 import MonthPicker from "@/components/month-picker";
@@ -6,15 +6,15 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseColors } from "@/hooks/UseColors";
 import { UseDates } from "@/hooks/UseDates";
-import InvoicePayment from "../../invoice-payment";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  const getCardDetailMap = await getCardDetail(params.id);
-  const getCardInvoiceMap = await getCardInvoice(month, params.id);
+  const getAccountDetailMap = await getAccountDetail(params.id);
+  const getAccountExpenseMap = await getAccountExpense(params.id);
+  const getTransactionInvoiceMap = await getAccountInvoice(month, params.id);
 
   const { colorVariants, colorVariantsCard } = UseColors();
 
@@ -24,7 +24,7 @@ export default async function page({ params, searchParams }) {
 
       <MonthPicker />
 
-      {getCardDetailMap?.map((item) => (
+      {getAccountDetailMap?.map((item) => (
         <Card key={item.id} className="flex gap-10 h-32 w-full items-center">
           <div className="text-xl px-16 flex items-center gap-2">
             {/* <div className={cn(colorVariants[item.aparencia], "w-8 h-8 rounded-full")} /> */}
@@ -32,18 +32,8 @@ export default async function page({ params, searchParams }) {
             {item.descricao}
           </div>
           <div className="leading-relaxed">
-            <p>Vence dia {item.dt_vencimento}</p>
-            <p>Fecha dia {item.dt_fechamento}</p>
-            <p>{item.bandeira}</p>
-          </div>
-          <div className="leading-relaxed">
-            <p>{item.limite}</p>
-            <p>{item.tipo}</p>
-            <p>{item.contas.descricao}</p>
-            <p>{item.anotacao}</p>
-          </div>
-          <div className="leading-relaxed">
-            <InvoicePayment month={month} paramsId={params.id} />
+            <p>Conta {item.tipo_conta}</p>
+            <p className="text-2xl"> Despesas {getAccountExpenseMap?.map((item) => item.sum)}</p>
           </div>
         </Card>
       ))}
@@ -64,7 +54,7 @@ export default async function page({ params, searchParams }) {
         </TableHeader>
 
         <TableBody>
-          {getCardInvoiceMap?.map((item) => (
+          {getTransactionInvoiceMap?.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.data_compra}</TableCell>
               <TableCell>

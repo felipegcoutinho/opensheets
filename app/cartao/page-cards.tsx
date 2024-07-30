@@ -16,19 +16,27 @@ async function PageCards({ month }) {
 
       <div className="grid grid-cols-4 gap-4 mt-4">
         {getCardsMap?.map((item) => (
-          // <Card key={item.id} className={cn(colorVariantsCard[item.cor_padrao])}>
+          // <Card key={item.id} className={cn(colorVariantsCard[item.aparencia])}>
           <Card key={item.id}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                {/* <div className={cn(colorVariants[item.cor_padrao], "w-5 h-5 rounded-full")} /> */}
+                {/* <div className={cn(colorVariants[item.aparencia], "w-5 h-5 rounded-full")} /> */}
                 {item.descricao}
               </CardTitle>
+              {/* <InvoicePayment month={month} paramsId={item.id} /> */}
               <CardDescription>{item.bandeira}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm">{item.tipo}</p>
-              <p className="text-sm">Fechamento: Dia {item.dt_fechamento}</p>
-              <p className="text-sm">Vencimento: Dia {item.dt_vencimento}</p>
+              {/* <span className="flex items-center gap-2">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <p className="text-green-500 text-sm">ativo</p>
+              </span> */}
+              <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
+              <p className="text-sm">Vence dia {item.dt_vencimento}</p>
+              <p className="text-sm">Cartão {item.tipo}</p>
             </CardContent>
             <CardFooter>
               <div className="flex gap-4">
@@ -45,7 +53,7 @@ async function PageCards({ month }) {
                   itemDtVencimento={item.dt_vencimento}
                   itemAnotacao={item.anotacao}
                   getAccountMap={getAccountMap}
-                  itemCorPadrao={item.cor_padrao}
+                  itemAparencia={item.aparencia}
                 />
                 <form action={deleteCards}>
                   <Button className="p-0" variant="link" value={item.id} name="excluir">

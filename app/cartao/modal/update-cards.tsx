@@ -21,7 +21,7 @@ export default function UpdateCard({
   itemTipo,
   itemContaId,
   getAccountMap,
-  itemCorPadrao,
+  itemAparencia,
 }) {
   const { isOpen, setIsOpen, statusPagamento, setStatusPagamento, handleUpdate, loading, colorMap } = Utils();
 
@@ -144,7 +144,7 @@ export default function UpdateCard({
             <div className="w-full">
               <Label>Aparencia</Label>
               <Required />
-              <Select defaultValue={itemCorPadrao} name="cor_padrao" required>
+              <Select defaultValue={itemAparencia} name="aparencia" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>

@@ -26,7 +26,7 @@ export default async function InvoicePayment({ month, paramsId }) {
                   <input type="hidden" name="cartao_id" defaultValue={paramsId} />
 
                   <Button type="submit" className="mt-6">
-                    Atualizar status para Pendente
+                    Atualizar para Pendente
                   </Button>
                 </form>
               </>

@@ -35,7 +35,7 @@ function LinkOnHeader({ month, user }) {
         <LinkNavButton Icon={PiggyBank} LinkName="Contas" />
       </Link>
 
-      <Link href={`/responsaveis?periodo=${month}`}>
+      <Link href={`/responsavel?periodo=${month}`}>
         <LinkNavButton Icon={Users} LinkName="Responsáveis" />
       </Link>
 

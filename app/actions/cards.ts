@@ -7,13 +7,13 @@ export async function getCards() {
 
   const { data: cards } = await supabase
     .from("cartoes")
-    .select(`id, descricao, dt_vencimento, cor_padrao, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
+    .select(`id, descricao, dt_vencimento, aparencia, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
     .order("descricao", { ascending: true });
 
   return cards;
 }
 
-export async function getTransactionInvoice(month, cartao_id) {
+export async function getCardInvoice(month, cartao_id) {
   const supabase = createClient();
 
   const { data: transacao, error } = await supabase
@@ -35,23 +35,23 @@ export async function getTransactionInvoice(month, cartao_id) {
   return transacao;
 }
 
-export async function getCardsDetails(id) {
+export async function getCardDetail(id) {
   const supabase = createClient();
 
   const { data: cards } = await supabase
     .from("cartoes")
-    .select(`id, descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
+    .select(`id, descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
     .eq("id", id);
 
   return cards;
 }
 
 export async function addCards(formData: FormData) {
-  const { descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData.entries());
+  const { descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
   2;
-  await supabase.from("cartoes").insert({ descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id });
+  await supabase.from("cartoes").insert({ descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, conta_id });
   revalidatePath("/cartoes");
 }
 
@@ -64,7 +64,7 @@ export async function deleteCards(formData: FormData) {
 }
 
 export async function updateCards(formData: FormData) {
-  const { id, descricao, dt_vencimento, dt_fechamento, cor_padrao, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(
+  const { id, descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(
     formData.entries()
   );
 
@@ -76,7 +76,7 @@ export async function updateCards(formData: FormData) {
       descricao,
       dt_vencimento,
       dt_fechamento,
-      cor_padrao,
+      aparencia,
       anotacao,
       limite,
       bandeira,
