@@ -1,8 +1,8 @@
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
-import Link from "next/link";
 import { getExpense, getExpenseBill, getIncome, getIncomeInitialBalance, getInvoiceList } from "../actions/dashboards";
-import InvoicePayment from "../cartao/invoice-payment";
 
 async function PageDashboards({ month }) {
   const { getPreviousMonth, getPreviousTwoMonth } = UseDates();
@@ -33,7 +33,7 @@ async function PageDashboards({ month }) {
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Receitas</CardDescription>
@@ -74,16 +74,34 @@ async function PageDashboards({ month }) {
           </CardContent>
         </Card>
       </div>
-      <div>
-        {invoices.map((item) => (
-          <Card className="flex gap-2 mt-2" key={item.cartao_id}>
-            <Link href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}`}>{item.descricao}</Link>
-            <div>{item.total_valor}</div>
-            <div>{item.status_pagamento}</div>
-            <div>{item.dt_vencimento}</div>
-            <InvoicePayment month={month} paramsId={item.cartao_id} />
-          </Card>
-        ))}
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2  mb-10">
+        {/* <InvoiceList month={month} /> */}
+        <Card className="space-y-4 p-6">
+          <div className="flex items-center gap-4 bg-slate-200 rounded-lg p-4" key="01">
+            <Avatar className="h-9 w-9">
+              <AvatarFallback>OM</AvatarFallback>
+            </Avatar>
+            <div className="ml-4 space-y-1">
+              <p className="text-lg font-medium leading-none">Nubank</p>
+              <Button variant="link">Pagar</Button>
+              <p className="text-sm text-muted-foreground">Dia 10</p>
+              {/* <InvoicePayment month={month} paramsId={item.cartao_id} /> */}
+            </div>
+            <div className="ml-auto font-bold text-2xl">R$ 111</div>
+          </div>
+          <div className="flex items-center gap-4 bg-slate-200 rounded-lg p-4" key="01">
+            <Avatar className="h-9 w-9">
+              <AvatarFallback>OM</AvatarFallback>
+            </Avatar>
+            <div className="ml-4 space-y-1">
+              <p className="text-lg font-medium leading-none">Nubank</p>
+              <Button variant="link">Pagar</Button>
+              <p className="text-sm text-muted-foreground">Dia 10</p>
+              {/* <InvoicePayment month={month} paramsId={item.cartao_id} /> */}
+            </div>
+            <div className="ml-auto font-bold text-2xl">R$ 111</div>
+          </div>
+        </Card>
       </div>
     </>
   );
