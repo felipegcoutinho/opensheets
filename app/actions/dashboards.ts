@@ -8,7 +8,12 @@ export async function getIncome(month) {
   const cookiestore = cookies();
   const supabase = createClient(cookiestore);
 
-  const { data: income, error } = await supabase.from("transacoes").select("valor").eq("tipo_transacao", "Receita").eq("periodo", month);
+  const { data: income, error } = await supabase
+    .from("transacoes")
+    .select("valor")
+    .eq("tipo_transacao", "Receita")
+    .eq("periodo", month)
+    .neq("categoria", "Saldo Anterior");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);
@@ -18,6 +23,28 @@ export async function getIncome(month) {
   const totalIncome = income.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
 
   return totalIncome;
+}
+
+export async function getIncomeInitialBalance(month) {
+  "use server";
+  const cookiestore = cookies();
+  const supabase = createClient(cookiestore);
+
+  const { data: incomeInitialBalance, error } = await supabase
+    .from("transacoes")
+    .select("valor")
+    .eq("tipo_transacao", "Receita")
+    .eq("periodo", month)
+    .eq("categoria", "Saldo Anterior");
+
+  if (error) {
+    console.error("Erro ao buscar receitas:", error);
+    return null;
+  }
+
+  const totalIncomeInitialBalance = incomeInitialBalance.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+
+  return totalIncomeInitialBalance;
 }
 
 export async function getExpense(month) {
@@ -153,23 +180,4 @@ export async function getInvoiceList(month) {
 //   });
 
 //   return limitesDisponiveis;
-// }
-
-// export async function getInvoiceList(month) {
-//   "use server";
-//   const cookiestore = cookies();
-//   const supabase = createClient(cookiestore);
-
-//   const { data: invoiceList, error } = await supabase
-//     .from("transacoes")
-//     .select("valor, cartoes (descricao)")
-//     .eq("forma_pagamento", "Cartão de Crédito")
-//     .eq("periodo", month);
-
-//   if (error) {
-//     console.error("Erro ao buscar despesas:", error);
-//     return null;
-//   }
-
-//   return invoiceList;
 // }

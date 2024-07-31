@@ -14,7 +14,8 @@ export default function UseOptions() {
     { id: 6, name: "Presente" },
     { id: 7, name: "PLR" },
     { id: 8, name: "Reembolso" },
-    { id: 9, name: "Outros" },
+    { id: 9, name: "Saldo Anterior" },
+    { id: 10, name: "Outros" },
   ];
 
   const categoriasDespesa = [

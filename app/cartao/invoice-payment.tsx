@@ -34,10 +34,6 @@ export default async function InvoicePayment({ month, paramsId }) {
         )
       ) : (
         <>
-          <div className="text-orange-600  p-4 rounded-lg">
-            <p>Pendente</p>
-          </div>
-
           <form action={addFaturas}>
             <select hidden name="status_pagamento" defaultValue={"Pago"} placeholder="pagar">
               <option value="Pago">Pagar</option>

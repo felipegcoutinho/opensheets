@@ -40,7 +40,7 @@ async function PageTransactions({ month }) {
 
         <TableBody>
           {getTransactionMap?.map((item) => (
-            <TableRow key={item.id}>
+            <TableRow className={`${item.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-50 to-white text-green-700"}`} key={item.id}>
               <TableCell>{item.data_compra}</TableCell>
               <TableCell>
                 {item.descricao}

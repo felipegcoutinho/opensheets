@@ -5,7 +5,7 @@ import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], weight: ["500", "600"] });
 const gabarito = Gabarito({ subsets: ["latin"] });
 const firaSans = Fira_Sans({ subsets: ["latin"], weight: ["400", "600"] });
 
@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${inter.className}`}>
+    <html lang="pt-BR" className={`${firaSans.className}`}>
       <body>
         <main className="max-w-screen-xl flex flex-col items-center mx-auto">{children}</main>
         <SpeedInsights />

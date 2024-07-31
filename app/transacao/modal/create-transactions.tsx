@@ -140,7 +140,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             </div>
           </div>
 
-          <Card className="flex items-center mt-2 justify-between rounded-lg bg-transparent border p-2">
+          <Card className="flex items-center shadow-none mt-2 justify-between bg-transparent border p-2">
             <Label>Dividir Lançamento</Label>
             <Switch name="dividir_lancamento" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
           </Card>

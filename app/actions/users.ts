@@ -8,13 +8,13 @@ export async function getResponsavelTransactionList(month) {
 
   const { data: users, error } = await supabase
     .from("transacoes")
-    .select(`responsavel, valor.sum()`)
+    .select("responsavel, cartoes (descricao), valor")
     .order("responsavel", { ascending: true })
     .eq("periodo", month)
     .eq("tipo_transacao", "Despesa");
 
   if (error) {
-    console.error("Erro ao buscar usuarios:", error);
+    console.error("Erro ao buscar transações:", error);
     return null;
   }
 
@@ -25,18 +25,18 @@ export async function getResponsavelBillList(month) {
   "use server";
   const supabase = createClient();
 
-  const { data: users, error } = await supabase
+  const { data: bills, error } = await supabase
     .from("boletos")
-    .select(`responsavel, valor.sum()`)
+    .select("responsavel, descricao, valor")
     .order("responsavel", { ascending: true })
     .eq("periodo", month);
 
   if (error) {
-    console.error("Erro ao buscar usuarios:", error);
+    console.error("Erro ao buscar boletos:", error);
     return null;
   }
 
-  return users;
+  return bills;
 }
 
 // export async function getUsers() {
