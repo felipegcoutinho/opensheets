@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${firaSans.className}`}>
       <body>
-        <main className="max-w-screen-xl flex flex-col items-center mx-auto">{children}</main>
+        <main className="max-w-screen-1xl flex flex-col items-center mx-auto">{children}</main>
         <SpeedInsights />
         <Analytics />
         <Toaster />

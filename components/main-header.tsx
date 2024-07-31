@@ -25,7 +25,7 @@ export default async function Header({ month }) {
   } = await supabase.auth.getUser();
 
   return (
-    <Card className="flex h-16 items-center gap-4 bg-zinc-100 text-black p-10 md:px-6 w-full my-2">
+    <Card className="flex h-16 items-center gap-4  text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
         <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
           <span className="font-bold text-lg">Opensheets</span>
@@ -63,7 +63,6 @@ export default async function Header({ month }) {
             <Link href="/contas" className="text-black transition-colors hover:text-muted-foreground">
               Contas
             </Link>
-            
           </nav>
         </SheetContent>
       </Sheet>
