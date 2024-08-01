@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { UseDates } from "@/hooks/UseDates";
 import { getExpense, getExpenseBill, getIncome, getIncomeInitialBalance, getInvoiceList } from "../actions/dashboards";
 
-async function PageDashboards({ searchParams }) {
+export default async function page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -110,5 +110,3 @@ async function PageDashboards({ searchParams }) {
     </>
   );
 }
-
-export default PageDashboards;

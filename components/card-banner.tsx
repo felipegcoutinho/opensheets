@@ -4,9 +4,9 @@ import { Card } from "./ui/card";
 
 function CardBanner({ children }) {
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
+  const isNotDashboard = pathname !== "/dashboard";
 
-  if (isHomePage) {
+  if (isNotDashboard) {
     return null;
   }
   return (

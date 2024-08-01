@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={`${firaSans.className}`}>
       <body>
         <div className="bg-red-500 text-center">dev.</div>
-        <main className="max-w-screen-1xl flex flex-col mx-auto">
+        <main className="animate-in max-w-screen-1xl flex flex-col mx-auto">
           <Header />
           <Banner />
           <MonthPicker />
