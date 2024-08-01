@@ -1,5 +1,3 @@
-import Header from "@/components/main-header";
-import MonthPicker from "@/components/month-picker";
 import { UseDates } from "@/hooks/UseDates";
 import PageBills from "./page-bills";
 
@@ -12,10 +10,6 @@ export default function boleto({ searchParams }) {
 
   return (
     <>
-      <Header month={month} />
-
-      <MonthPicker />
-
       <PageBills month={month} />
     </>
   );

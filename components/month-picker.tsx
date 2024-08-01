@@ -54,6 +54,12 @@ export default function MonthPicker() {
 
   const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
+  const isHomePage = pathname === "/cartao" || pathname === "/conta" || pathname === "/";
+
+  if (isHomePage) {
+    return null;
+  }
+
   return (
     <div className="flex justify-start w-full py-8 my-2 px-4 rounded-lg bg-gradient-to-r from-red-50 to-orange-200">
       <button onClick={goToPreviousMonth}>

@@ -2,9 +2,9 @@
 
 import { ArrowDownUpIcon, CreditCard, FileSpreadsheetIcon, Home, NotebookPenIcon, PiggyBank, Users } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
-function LinkOnHeader({ month, user }) {
+function LinkOnHeader({ user }) {
   const pathname = usePathname();
 
   const isHomePage = pathname === "/";
@@ -13,8 +13,14 @@ function LinkOnHeader({ month, user }) {
     return null;
   }
 
+  const searchParams = useSearchParams();
+
+  const month = searchParams.get("periodo");
+
   return (
     <>
+      <p className="font-bold text-lg">Opensheets</p>
+
       <Link href={`/dashboard?periodo=${month}`}>
         <LinkNavButton Icon={Home} LinkName="Home" />
       </Link>
@@ -27,11 +33,11 @@ function LinkOnHeader({ month, user }) {
         <LinkNavButton Icon={FileSpreadsheetIcon} LinkName="Boletos" />
       </Link>
 
-      <Link href={`/cartao`}>
+      <Link href={`/cartao?periodo=${month}`}>
         <LinkNavButton Icon={CreditCard} LinkName="Cartões" />
       </Link>
 
-      <Link href="/conta">
+      <Link href="/conta?periodo=${month}">
         <LinkNavButton Icon={PiggyBank} LinkName="Contas" />
       </Link>
 
@@ -39,7 +45,7 @@ function LinkOnHeader({ month, user }) {
         <LinkNavButton Icon={Users} LinkName="Responsáveis" />
       </Link>
 
-      <Link href="/anotacao">
+      <Link href="/anotacao?periodo=${month}">
         <LinkNavButton Icon={NotebookPenIcon} LinkName="Anotações" />
       </Link>
     </>

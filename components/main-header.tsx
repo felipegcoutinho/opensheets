@@ -16,7 +16,7 @@ import Link from "next/link";
 import AuthButton from "./auth-button";
 import LinkOnHeader from "./link-on-header";
 
-export default async function Header({ month }) {
+export default async function Header() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -27,11 +27,7 @@ export default async function Header({ month }) {
   return (
     <Card className="flex h-16 items-center gap-4  text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
-        <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
-          <span className="font-bold text-lg">Opensheets</span>
-        </Link>
-
-        <LinkOnHeader month={month} user={user} />
+        <LinkOnHeader user={user} />
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -51,12 +47,12 @@ export default async function Header({ month }) {
             <Link href="/" className="text-black transition-colors hover:text-muted-foreground">
               Home
             </Link>
-            <Link href={`/transacoes?periodo=${month}`} className="text-black transition-colors hover:text-muted-foreground">
+            {/* <Link href={`/transacoes?periodo=${month}`} className="text-black transition-colors hover:text-muted-foreground">
               Transações
             </Link>
             <Link href={`/boleto?periodo=${month}`} className="text-black transition-colors hover:text-muted-foreground">
               boleto
-            </Link>
+            </Link> */}
             <Link href="/cartoes" className="text-black transition-colors hover:text-muted-foreground">
               Cartões
             </Link>

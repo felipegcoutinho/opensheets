@@ -1,13 +1,17 @@
+import Banner from "@/components/main-banner";
+import Header from "@/components/main-header";
+import MonthPicker from "@/components/month-picker";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Fira_Sans, Gabarito, Inter } from "next/font/google";
+// import { Fira_Sans, Gabarito, Inter } from "next/font/google";
+import { Fira_Sans } from "next/font/google";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
 
-const inter = Inter({ subsets: ["latin"], weight: ["500", "600"] });
-const gabarito = Gabarito({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"], weight: ["500", "600"] });
+// const gabarito = Gabarito({ subsets: ["latin"] });
 const firaSans = Fira_Sans({ subsets: ["latin"], weight: ["400", "600"] });
 
 export const metadata = {
@@ -16,11 +20,18 @@ export const metadata = {
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, params }) {
   return (
     <html lang="pt-BR" className={`${firaSans.className}`}>
       <body>
-        <main className="max-w-screen-1xl flex flex-col items-center mx-auto">{children}</main>
+        <main className="max-w-screen-1xl flex flex-col items-center mx-auto">
+          <Header />
+
+          <Banner />
+
+          <MonthPicker />
+          {children}
+        </main>
         <SpeedInsights />
         <Analytics />
         <Toaster />

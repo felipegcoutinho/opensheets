@@ -1,4 +1,3 @@
-import Header from "@/components/main-header";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Index() {
@@ -22,7 +21,7 @@ export default async function Index() {
         </div>
       </nav> */}
 
-      <Header />
+      {/* <Header /> */}
 
       <div className="animate-in flex-1 flex flex-col gap-20 max-w-4xl px-3">
         <main className="flex-1 flex flex-col gap-6">

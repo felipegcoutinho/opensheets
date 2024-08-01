@@ -1,5 +1,3 @@
-import Header from "@/components/main-header";
-import MonthPicker from "@/components/month-picker";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { UseDates } from "@/hooks/UseDates";
 import PageUsers from "./page-users";
@@ -13,8 +11,6 @@ export default function page({ searchParams }) {
 
   return (
     <>
-      <Header month={month} />
-
       <div className="w-full">
         <Breadcrumb className="py-6">
           <BreadcrumbList>
@@ -28,8 +24,6 @@ export default function page({ searchParams }) {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
-      <MonthPicker />
 
       <PageUsers month={month} />
     </>
