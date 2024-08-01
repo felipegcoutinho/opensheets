@@ -25,8 +25,9 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <Card className="flex h-16 items-center gap-4  text-black p-10 md:px-6 w-full my-2">
+    <Card className="bg-red-200 border border-red-400 flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
+        <p className="font-bold text-lg">Opensheets</p>
         <LinkOnHeader user={user} />
       </nav>
       <Sheet>

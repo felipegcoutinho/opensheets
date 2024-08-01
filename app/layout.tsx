@@ -20,15 +20,13 @@ export const metadata = {
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 
-export default function RootLayout({ children, params }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${firaSans.className}`}>
       <body>
         <main className="max-w-screen-1xl flex flex-col items-center mx-auto">
           <Header />
-
           <Banner />
-
           <MonthPicker />
           {children}
         </main>

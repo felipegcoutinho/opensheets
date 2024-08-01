@@ -16,13 +16,18 @@ export const updateSession = async (request: NextRequest) => {
       },
     });
 
+    // Obtém a sessão do usuário
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    // Se a rota atual for "/" e o usuário estiver logado, redireciona para "/dashboard"
+    if (request.nextUrl.pathname === "/" && session) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
     // Verifica se a rota atual está protegida
     if (protectedRoutes.includes(request.nextUrl.pathname)) {
-      // Obtém a sessão do usuário
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
       // Se a sessão não existir, redireciona para a página de login
       if (!session) {
         return NextResponse.redirect(new URL("/login", request.url));

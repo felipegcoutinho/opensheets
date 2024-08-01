@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import Teste from "./teste";
+import CardBanner from "./card-banner";
 
 export default async function Banner() {
   const cookieStore = cookies();
@@ -10,16 +10,16 @@ export default async function Banner() {
 
   const displayName = "Felipe Coutinho";
   if (error) {
-    return <p>Erro ao buscar usuário</p>;
+    return null;
   }
 
   return (
-    <Teste>
+    <CardBanner>
       <div>
         <p>Olá, {displayName}</p>
         <p>{data?.user.id}</p>
         <p>{data?.user.email}</p>
       </div>
-    </Teste>
+    </CardBanner>
   );
 }

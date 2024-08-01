@@ -1,7 +1,5 @@
 import { getAccountDetail, getAccountExpense, getAccountInvoice } from "@/app/actions/accounts";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
-import Header from "@/components/main-header";
-import MonthPicker from "@/components/month-picker";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseColors } from "@/hooks/UseColors";
@@ -20,10 +18,6 @@ export default async function page({ params, searchParams }) {
 
   return (
     <>
-      <Header month={month} />
-
-      <MonthPicker />
-
       {getAccountDetailMap?.map((item) => (
         <Card key={item.id} className="flex gap-10 h-32 w-full items-center">
           <div className="text-xl px-16 flex items-center gap-2">
