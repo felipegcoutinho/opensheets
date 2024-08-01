@@ -1,18 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
 import { CircleUser, Menu, Package2 } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import AuthButton from "./auth-button";
 import LinkOnHeader from "./link-on-header";
 
@@ -24,8 +18,16 @@ export default async function Header() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const signOut = async () => {
+    "use server";
+
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    return redirect("/login");
+  };
+
   return (
-    <Card className="bg-red-200 border border-red-400 flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
+    <Card className="flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
         <p className="font-bold text-lg">Opensheets</p>
         <LinkOnHeader user={user} />
@@ -81,13 +83,9 @@ export default async function Header() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="bg-white" align="end">
-            <AuthButton />
-
-            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>Ajustes</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Sair</DropdownMenuItem>
+            {/* <DropdownMenuSeparator /> */}
+            {/* <AuthButton /> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
