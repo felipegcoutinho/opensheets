@@ -10,7 +10,7 @@ export async function getTransaction(month) {
   const { data: transacao, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
+      `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, segundo_responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
       qtde_recorrencia, cartoes (id, descricao), contas (id, descricao)`
     )
@@ -32,6 +32,7 @@ export async function addTransaction(formData: FormData) {
     tipo_transacao,
     periodo,
     categoria,
+    realizado,
     condicao,
     forma_pagamento,
     anotacao,
@@ -58,6 +59,7 @@ export async function addTransaction(formData: FormData) {
       tipo_transacao,
       periodo,
       categoria,
+      realizado,
       condicao,
       forma_pagamento,
       anotacao,
@@ -148,6 +150,7 @@ export async function updateTransaction(formData: FormData) {
     tipo_transacao,
     periodo,
     categoria,
+    realizado,
     condicao,
     forma_pagamento,
     anotacao,
@@ -173,6 +176,7 @@ export async function updateTransaction(formData: FormData) {
         tipo_transacao,
         periodo,
         categoria,
+        realizado,
         condicao,
         forma_pagamento,
         anotacao,

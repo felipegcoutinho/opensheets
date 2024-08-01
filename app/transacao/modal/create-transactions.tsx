@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { Toggle } from "@/components/ui/toggle";
+import { ThumbsUp } from "lucide-react";
 import Utils from "../utils";
 
 export default function CreateTransactions({ getCardsMap, getAccountMap }) {
@@ -72,7 +74,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             <div className="w-1/2">
               <Label>Período</Label>
               <Required />
-              <Select name="periodo">
+              <Select name="periodo" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -140,10 +142,34 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             </div>
           </div>
 
-          <Card className="flex items-center shadow-none mt-2 justify-between bg-transparent border p-2">
-            <Label>Dividir Lançamento</Label>
-            <Switch name="dividir_lancamento" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
-          </Card>
+          <div className="flex w-full items-center mt-2 gap-2">
+            <Card className="flex w-5/6 gap-2 p-2 items-center justify-between">
+              <p className="text-sm text-neutral-600 font-medium">Dividir Lançamento</p>
+              <Switch name="dividir_lancamento" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
+            </Card>
+
+            <div className="w-1/6">
+              <Toggle
+                defaultPressed={true}
+                name="realizado"
+                className="data-[state=on]:bg-green-100 data-[state=on]:text-green-500 data-[state=off]:text-zinc-400 "
+              >
+                <ThumbsUp className="h-4 w-4 " />
+              </Toggle>
+            </div>
+
+            {/* <Card className="flex w-1/2 gap-2 items-center justify-between">
+              <Select name="realizado" defaultValue={showCartao ? "Pendente" : "Pago"} disabled={showCartao}>
+                <SelectTrigger className="border-none bg-transparent text-neutral-600">
+                  <SelectValue placeholder="Marcar como" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Pago">Pago</SelectItem>
+                  <SelectItem value="Pendente">Pendente</SelectItem>
+                </SelectContent>
+              </Select>
+            </Card> */}
+          </div>
 
           <div className="flex w-full gap-2">
             <div className="w-full">
@@ -219,7 +245,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
           <div className="flex w-full gap-2">
             <div className={showParcelas || showRecorrencia ? "w-1/2" : "w-full"}>
               <Label>Condição</Label>
-              <Select name="condicao" onValueChange={handleCondicaoChange} defaultValue="Vista">
+              <Select name="condicao" onValueChange={handleCondicaoChange} defaultValue="Vista" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -233,7 +259,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
 
             {showParcelas && (
               <div className="w-1/2">
-                <Label>Quantidade de Parcelas</Label>
+                <Label>Parcelado em</Label>
                 <Select
                   name="qtde_parcela"
                   value={quantidadeParcelas}
@@ -266,7 +292,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
 
             {showRecorrencia && (
               <div className="w-1/2">
-                <Label>Quant. recorrencia</Label>
+                <Label>Lançamento fixo</Label>
                 <Select name="qtde_recorrencia">
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />

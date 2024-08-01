@@ -61,7 +61,7 @@ async function PageTransactions({ month }) {
                 <UpdateTransactions
                   itemId={item.id}
                   itemPeriodo={item.periodo}
-                  itemNotas={item.notas}
+                  itemNotas={item.anotacao}
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
                   itemCategoria={item.categoria}

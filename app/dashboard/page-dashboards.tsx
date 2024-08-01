@@ -33,14 +33,14 @@ async function PageDashboards({ month }) {
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Receitas</CardDescription>
             <CardTitle className="text-4xl">{receitas}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">{receitasAnterior}</div>
+            <div className="text-xs text-muted-foreground">anterior R$ {receitasAnterior}</div>
           </CardContent>
         </Card>
 
@@ -50,7 +50,7 @@ async function PageDashboards({ month }) {
             <CardTitle className="text-4xl">{despesasTotal}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">{despesasTotalAnterior}</div>
+            <div className="text-xs text-muted-foreground">anterior R$ {despesasTotalAnterior}</div>
           </CardContent>
         </Card>
 
@@ -60,7 +60,7 @@ async function PageDashboards({ month }) {
             <CardTitle className="text-4xl">{balanco}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">{balancoAnterior}</div>
+            <div className="text-xs text-muted-foreground">anterior R$ {balancoAnterior}</div>
           </CardContent>
         </Card>
 
@@ -70,7 +70,7 @@ async function PageDashboards({ month }) {
             <CardTitle className="text-4xl">{previsto}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">{saldoAnterior}</div>
+            <div className="text-xs text-muted-foreground">anterior R$ {saldoAnterior}</div>
           </CardContent>
         </Card>
       </div>
