@@ -2,12 +2,14 @@
 
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PenLine } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
+import { CheckCircle2, PenLine } from "lucide-react";
 import Utils from "../utils";
 
 export default function UpdateTransactions({
@@ -30,6 +32,7 @@ export default function UpdateTransactions({
   itemPeriodo,
   itemRecorrencia,
   itemQtdeRecorrencia,
+  itemPaid,
 }) {
   const {
     isOpen,
@@ -53,6 +56,8 @@ export default function UpdateTransactions({
     setShowCartao,
     setShowParcelas,
     setShowRecorrencia,
+    isPaid,
+    setIsPaid,
   } = Utils();
 
   const handleDialogClose = (val) => {
@@ -61,6 +66,7 @@ export default function UpdateTransactions({
     setShowCartao(false);
     setShowParcelas(false);
     setShowRecorrencia(false);
+    setIsPaid(true);
   };
 
   return (
@@ -154,6 +160,19 @@ export default function UpdateTransactions({
                 </Select>
               </div>
             </div>
+
+            <Card className=" w-full mt-2 gap-2 flex px-2 items-center justify-between">
+              <Label className="text-sm text-neutral-600 font-medium">Marcar lançamento como Pago </Label>
+
+              <Toggle
+                onPressedChange={() => setIsPaid(!itemPaid)}
+                defaultPressed={itemPaid}
+                name="realizado"
+                className="hover:bg-transparent data-[state=on]:text-green-500 data-[state=off]:text-zinc-400"
+              >
+                <CheckCircle2 strokeWidth={2} className="h-5 w-5" />
+              </Toggle>
+            </Card>
 
             <div className="w-full">
               <Label>Responsável</Label>

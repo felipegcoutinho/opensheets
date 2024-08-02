@@ -45,9 +45,42 @@ export async function getAccountInvoice(month, id) {
   return transacoes;
 }
 
-export async function getAccountExpense(id) {
+export async function getSumAccountExpense(month, id) {
+  "use server";
   const supabase = createClient();
-  const { data: accountsSum } = await supabase.from("transacoes").select(`valor.sum()`).eq("conta_id", id).eq("tipo_transacao", "Despesa");
+  const { error, data: accountExpense } = await supabase
+    .from("transacoes")
+    .select(`valor`)
+    .eq("conta_id", id)
+    .eq("periodo", month)
+    .eq("tipo_transacao", "Despesa");
 
-  return accountsSum;
+  if (error) {
+    console.error("Erro ao buscar receitas:", error);
+    return null;
+  }
+
+  const sumAccountExpense = accountExpense.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  console.log(sumAccountExpense);
+  return sumAccountExpense;
+}
+
+export async function getSumAccountIncome(month, id) {
+  "use server";
+  const supabase = createClient();
+  const { error, data: accountIncome } = await supabase
+    .from("transacoes")
+    .select(`valor`)
+    .eq("conta_id", id)
+    .eq("periodo", month)
+    .eq("tipo_transacao", "Receita");
+
+  if (error) {
+    console.error("Erro ao buscar receitas:", error);
+    return null;
+  }
+
+  const sumAccountIncome = accountIncome.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+
+  return sumAccountIncome;
 }

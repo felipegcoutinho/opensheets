@@ -1,8 +1,7 @@
-import { getAccountDetail, getAccountExpense, getAccountInvoice } from "@/app/actions/accounts";
+import { getAccountDetail, getAccountInvoice, getSumAccountExpense, getSumAccountIncome } from "@/app/actions/accounts";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UseColors } from "@/hooks/UseColors";
 import { UseDates } from "@/hooks/UseDates";
 
 export default async function page({ params, searchParams }) {
@@ -11,10 +10,10 @@ export default async function page({ params, searchParams }) {
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   const getAccountDetailMap = await getAccountDetail(params.id);
-  const getAccountExpenseMap = await getAccountExpense(params.id);
   const getTransactionInvoiceMap = await getAccountInvoice(month, params.id);
 
-  const { colorVariants, colorVariantsCard } = UseColors();
+  const accountExpense = await getSumAccountExpense(month, params.id);
+  const sumAccountIncome = await getSumAccountIncome(month, params.id);
 
   return (
     <>
@@ -27,7 +26,9 @@ export default async function page({ params, searchParams }) {
           </div>
           <div className="leading-relaxed">
             <p>Conta {item.tipo_conta}</p>
-            <p className="text-2xl"> Despesas {getAccountExpenseMap?.map((item) => item.sum)}</p>
+            <p className="text-2xl"> Despesas {accountExpense}</p>
+            <p className="text-2xl"> Receitas {sumAccountIncome}</p>
+            <p className="text-2xl"> Balanço {sumAccountIncome - accountExpense}</p>
           </div>
         </Card>
       ))}

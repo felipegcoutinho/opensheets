@@ -83,6 +83,7 @@ async function PageTransactions({ searchParams }) {
                   getCardsMap={getCardsMap}
                   itemCartao={item.cartoes?.id}
                   itemConta={item.contas?.id}
+                  itemPaid={item.realizado}
                 />
 
                 <DeleteTransactions itemId={item.id} />

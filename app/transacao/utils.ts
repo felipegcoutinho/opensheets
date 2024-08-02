@@ -26,6 +26,8 @@ export default function Utils() {
 
   const [isDividedChecked, setIsDividedChecked] = useState(false);
 
+  const [isPaid, setIsPaid] = useState(true);
+
   const { toast } = useToast();
 
   const handleCondicaoChange = (value: string) => {
@@ -47,27 +49,12 @@ export default function Utils() {
     setShowCartao(!isConta);
   };
 
-  const getMonthOptions = () => {
-    const options = [];
-    const currentDate = new Date();
-    const { optionsMeses } = UseOptions();
-
-    for (let i = -2; i <= 2; i++) {
-      const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
-      const month = optionsMeses[newDate.getMonth()];
-      const year = newDate.getFullYear();
-      const value = `${month}-${year}`;
-      options.push({ value, label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}` });
-    }
-
-    return options;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
     try {
+      formData.append("realizado", isPaid);
       await addTransaction(formData);
       alert("Transação adicionada com sucesso!");
       setIsOpen(false);
@@ -83,6 +70,7 @@ export default function Utils() {
     setLoading(true);
     const formData = new FormData(e.target);
     try {
+      formData.append("realizado", isPaid);
       await updateTransaction(formData);
       alert("Transação atualizada com sucesso!");
       setIsOpen(false);
@@ -110,6 +98,22 @@ export default function Utils() {
     const date = new Date(year, month - 1, day);
     return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
   }
+
+  const getMonthOptions = () => {
+    const options = [];
+    const currentDate = new Date();
+    const { optionsMeses } = UseOptions();
+
+    for (let i = -2; i <= 2; i++) {
+      const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
+      const month = optionsMeses[newDate.getMonth()];
+      const year = newDate.getFullYear();
+      const value = `${month}-${year}`;
+      options.push({ value, label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}` });
+    }
+
+    return options;
+  };
 
   return {
     categoriasReceita,
@@ -142,5 +146,8 @@ export default function Utils() {
     setIsEfetivadoChecked,
     isDividedChecked,
     setIsDividedChecked,
+
+    isPaid,
+    setIsPaid,
   };
 }

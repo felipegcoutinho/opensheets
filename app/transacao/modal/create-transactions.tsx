@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { ThumbsUp } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import Utils from "../utils";
 
 export default function CreateTransactions({ getCardsMap, getAccountMap }) {
@@ -41,6 +41,9 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     setIsDividedChecked,
     setShowParcelas,
     setShowRecorrencia,
+
+    isPaid,
+    setIsPaid,
   } = Utils();
 
   const handleDialogClose = (val) => {
@@ -51,7 +54,13 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     setShowParcelas(false);
     setShowRecorrencia(false);
     setIsEfetivadoChecked(true);
+    setIsPaid(true);
   };
+
+  // Se showCartao for true, garanta que isPaid seja false
+  if (showCartao && isPaid) {
+    setIsPaid(false);
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -143,19 +152,28 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
           </div>
 
           <div className="flex w-full items-center mt-2 gap-2">
-            <Card className="flex w-5/6 gap-2 p-2 items-center justify-between">
-              <p className="text-sm text-neutral-600 font-medium">Dividir Lançamento</p>
+            <Card className="flex w-1/2 gap-2 p-2 items-center justify-between">
+              <Label className="text-sm text-neutral-600 font-medium">Dividir Lançamento</Label>
               <Switch name="dividir_lancamento" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
             </Card>
 
-            <div className="w-1/6">
-              <Toggle
-                defaultPressed={true}
-                name="realizado"
-                className="data-[state=on]:bg-green-100 data-[state=on]:text-green-500 data-[state=off]:text-zinc-400 "
-              >
-                <ThumbsUp className="h-4 w-4 " />
-              </Toggle>
+            <div className="w-1/2">
+              {!showCartao && (
+                <>
+                  <Label className="text-sm text-neutral-600 font-medium">Status do Lançamento</Label>
+
+                  <Toggle
+                    disabled={showCartao}
+                    onPressedChange={() => setIsPaid(!isPaid)}
+                    defaultPressed={true}
+                    pressed={isPaid}
+                    name="realizado"
+                    className="hover:bg-transparent data-[state=on]:text-green-500 data-[state=off]:text-zinc-400"
+                  >
+                    <CheckCircle2 strokeWidth={2} className="h-5 w-5" />
+                  </Toggle>
+                </>
+              )}
             </div>
 
             {/* <Card className="flex w-1/2 gap-2 items-center justify-between">
