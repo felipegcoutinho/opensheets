@@ -3,11 +3,12 @@ import { Card } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
-import { CircleUser, Menu, Package2 } from "lucide-react";
+import { Menu, Package2 } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import AuthButton from "./auth-button";
+import { ModeToggle } from "./darkmode-button";
 import LinkOnHeader from "./link-on-header";
 
 export default async function Header() {
@@ -29,7 +30,7 @@ export default async function Header() {
   return (
     <Card className="flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
-        <p className="font-bold text-lg">Opensheets</p>
+        <p className="font-bold text-lg dark:text-white">Opensheets</p>
         <LinkOnHeader user={user} />
       </nav>
       <Sheet>
@@ -50,16 +51,16 @@ export default async function Header() {
             <Link href="/" className="text-black transition-colors hover:text-muted-foreground">
               Home
             </Link>
-            {/* <Link href={`/transacoes?periodo=${month}`} className="text-black transition-colors hover:text-muted-foreground">
+            <Link href={`/transacao`} className="text-black transition-colors hover:text-muted-foreground">
               Transações
             </Link>
-            <Link href={`/boleto?periodo=${month}`} className="text-black transition-colors hover:text-muted-foreground">
+            <Link href={`/boleto`} className="text-black transition-colors hover:text-muted-foreground">
               boleto
-            </Link> */}
-            <Link href="/cartoes" className="text-black transition-colors hover:text-muted-foreground">
+            </Link>
+            <Link href="/cartao" className="text-black transition-colors hover:text-muted-foreground">
               Cartões
             </Link>
-            <Link href="/contas" className="text-black transition-colors hover:text-muted-foreground">
+            <Link href="/conta" className="text-black transition-colors hover:text-muted-foreground">
               Contas
             </Link>
           </nav>
@@ -69,23 +70,25 @@ export default async function Header() {
       <div className="sm:hidden">
         <p>Opensheets</p>
       </div>
-      <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <form className="ml-auto flex-1 sm:flex-initial">
-          <div className="relative"></div>
-        </form>
-        <AuthButton />
+
+      <div className="flex w-full items-center gap-2 md:ml-auto md:gap-2 lg:gap-4">
+        <div className="ml-auto">
+          <div className="relative">
+            <ModeToggle />
+          </div>
+        </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
+            <Button variant="secondary" size="icon">
+              <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="bg-white" align="end">
+          <DropdownMenuContent align="end">
             <DropdownMenuItem>Ajustes</DropdownMenuItem>
-            {/* <DropdownMenuSeparator /> */}
-            {/* <AuthButton /> */}
+            <AuthButton />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

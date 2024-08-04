@@ -23,6 +23,12 @@ async function PageTransactions({ searchParams }) {
     return contaDescricao ?? cartaoDescricao;
   }
 
+  function DateFormat(dateString) {
+    const [year, month, day] = dateString.split("-");
+    const date = new Date(year, month - 1, day);
+    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
+  }
+
   return (
     <div className="mt-4 w-full">
       <CreateTransactions getCardsMap={getCardsMap} getAccountMap={getAccountMap} />
@@ -35,7 +41,7 @@ async function PageTransactions({ searchParams }) {
             <TableHead>Transação</TableHead>
             <TableHead>Condição</TableHead>
             <TableHead>Pagamento</TableHead>
-            <TableHead>Categoria</TableHead>
+            {/* <TableHead>Categoria</TableHead> */}
             <TableHead>Responsável</TableHead>
             <TableHead>Valor</TableHead>
             <TableHead>Conta/Cartão</TableHead>
@@ -46,17 +52,19 @@ async function PageTransactions({ searchParams }) {
         <TableBody>
           {getTransactionMap?.map((item) => (
             <TableRow className={`${item.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-50 to-white text-green-700"}`} key={item.id}>
-              <TableCell>{item.data_compra}</TableCell>
+              <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
+
                 <span className="text-neutral-400 text-xs px-1">
                   {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
+
               <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
-              <TableCell>{item.categoria}</TableCell>
+              {/* <TableCell>{item.categoria}</TableCell> */}
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.valor}</TableCell>
               <TableCell>{getDescricao(item)}</TableCell>

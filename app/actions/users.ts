@@ -11,7 +11,8 @@ export async function getResponsavelTransactionList(month) {
     .select("responsavel, cartoes (descricao), valor")
     .order("responsavel", { ascending: true })
     .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa");
+    .eq("tipo_transacao", "Despesa")
+    .neq("responsavel", "Sistema");
 
   if (error) {
     console.error("Erro ao buscar transações:", error);

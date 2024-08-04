@@ -1,36 +1,55 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
 
+// Busca a receita total do mês
 export async function getIncome(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
 
-  const { data: income, error } = await supabase
+  const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
     .eq("tipo_transacao", "Receita")
     .eq("periodo", month)
-    .neq("categoria", "Saldo Anterior");
+    .neq("categoria", "Saldo Anterior")
+    .neq("responsavel", "Sistema");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);
     return null;
   }
 
-  const totalIncome = income.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const income = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 
-  return totalIncome;
+  return income;
 }
 
-export async function getIncomeInitialBalance(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+// Busca a despesa total do mês
+export async function getExpense(month) {
+  const supabase = createClient();
 
-  const { data: incomeInitialBalance, error } = await supabase
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("valor")
+    .eq("tipo_transacao", "Despesa")
+    .eq("periodo", month)
+    .neq("responsavel", "Sistema");
+
+  if (error) {
+    console.error("Erro ao buscar despesas:", error);
+    return null;
+  }
+
+  const expense = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  return expense;
+}
+
+// Busca o saldo anterior
+export async function getLastPrevious(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
     .eq("tipo_transacao", "Receita")
@@ -38,55 +57,35 @@ export async function getIncomeInitialBalance(month) {
     .eq("categoria", "Saldo Anterior");
 
   if (error) {
-    console.error("Erro ao buscar receitas:", error);
+    console.error("Erro ao buscar saldo anterior:", error);
     return null;
   }
 
-  const totalIncomeInitialBalance = incomeInitialBalance.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const lastPrevious = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 
-  return totalIncomeInitialBalance;
+  return lastPrevious;
 }
 
-export async function getExpense(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
-
-  const { data: expense, error } = await supabase.from("transacoes").select("valor").eq("tipo_transacao", "Despesa").eq("periodo", month);
-
-  if (error) {
-    console.error("Erro ao buscar despesas:", error);
-    return null;
-  }
-
-  const totalExpense = expense.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
-
-  return totalExpense;
-}
-
+// Busca o valor total das despesas dos boletos
 export async function getExpenseBill(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
 
-  const { data: expensebills, error } = await supabase.from("boletos").select("valor").eq("periodo", month);
+  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month);
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
-  const totalExpensebills = expensebills.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const expenseBills = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 
-  return totalExpensebills;
+  return expenseBills;
 }
 
 export async function getExpensePaid(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
 
-  const { data: expense_paid, error } = await supabase
+  const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
     .eq("tipo_transacao", "Despesa")
@@ -99,85 +98,50 @@ export async function getExpensePaid(month) {
     return null;
   }
 
-  const totalExpensePaid = expense_paid.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const totalExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 
   return totalExpensePaid;
 }
 
 export async function getExpenseBillPaid(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
 
-  const { data: expensebills_paid, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("status_pagamento", "Pago");
+  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("status_pagamento", "Pago");
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
-  const totalExpensebillsPaid = expensebills_paid.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const totalExpensebillsPaid = data.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
 
   return totalExpensebillsPaid;
 }
 
 export async function getInvoicesPaid(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
 
-  const { data: getInvoicesPaid, error } = await supabase.from("faturas").select("status_pagamento, valor");
+  const { data, error } = await supabase.from("faturas").select("status_pagamento, valor");
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
-  const totalExpensePaid = getInvoicesPaid.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const totalExpensePaid = data.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
 
   return totalExpensePaid;
 }
 
 export async function getInvoiceList(month) {
-  "use server";
-  const cookiestore = cookies();
-  const supabase = createClient(cookiestore);
+  const supabase = createClient();
 
-  const { data: invoiceList, error } = await supabase.rpc("getinvoicelists", { month });
+  const { data, error } = await supabase.rpc("getinvoicelists", { month });
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
-  return invoiceList;
+  return data;
 }
-
-// export async function getLimiteDisponivelCartoes() {
-//   "use server";
-//   const cookiestore = cookies();
-//   const supabase = createClient(cookiestore);
-
-//   // Fazer uma consulta para obter os limites dos cartões e as despesas totais agrupadas por cartão
-//   const { data: cartoes, error } = await supabase
-//     .from("cartoes")
-//     .select(`id, limite, transacoes!inner(cartao_id,valor)`)
-//     .eq("transacoes.tipo_transacao", "Despesa");
-
-//   if (error) {
-//     console.error("Erro ao buscar dados dos cartões e transações:", error);
-//     return null;
-//   }
-
-//   // Calcular o limite disponível para cada cartão
-//   const limitesDisponiveis = cartoes.map((cartao) => {
-//     const totalDespesas = cartao.transacoes.reduce((sum, transacao) => sum + parseFloat(transacao.valor), 0);
-//     const limiteDisponivel = parseFloat(cartao.limite) - totalDespesas;
-//     return {
-//       cartao_id: cartao.id,
-//       limite_disponivel: limiteDisponivel,
-//     };
-//   });
-
-//   return limitesDisponiveis;
-// }

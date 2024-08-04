@@ -5,14 +5,25 @@ import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 // import { Fira_Sans, Gabarito, Inter } from "next/font/google";
-import { Fira_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
+// import localFont from "next/font/local"; //TODO: Implementar fontfile
+
+import { ThemeProvider } from "@/hooks/UseDarkMode";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
 
-// const inter = Inter({ subsets: ["latin"], weight: ["500", "600"] });
+const inter = Inter({ subsets: ["latin"], weight: ["500", "600"], fallback: ["system-ui", "arial"] });
 // const gabarito = Gabarito({ subsets: ["latin"] });
-const firaSans = Fira_Sans({ subsets: ["latin"], weight: ["400", "600"] });
+// const firaSans = Fira_Sans({ subsets: ["latin"], weight: ["400", "600"] });
+
+// const uiSans = localFont({
+//   src: [
+//     { path: "/fonts/ui-sans-v9-regular.woff2", weight: "400", style: "normal" },
+//     { path: "/fonts/ui-sans-v9-medium.woff2", weight: "500", style: "normal" },
+//     { path: "/fonts/ui-sans-v9-bold.woff2", weight: "600", style: "normal" },
+//   ],
+// });
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -22,18 +33,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${firaSans.className}`}>
+    <html lang="pt-BR" className={`${inter.className}`}>
       <body>
-        <div className="bg-red-500 text-center text-white text-xs">Working in Progress</div>
-        <main className="animate-in max-w-screen-1xl flex flex-col mx-auto">
-          <Header />
-          <Banner />
-          <MonthPicker />
-          {children}
-        </main>
-        <SpeedInsights />
-        <Analytics />
-        <Toaster />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="bg-red-500 dark:bg-orange-800 text-center text-white text-xs">Working in Progress</div>
+          <main className="animate-in max-w-screen-1xl flex flex-col mx-auto">
+            <Header />
+            <Banner />
+            <MonthPicker />
+            {children}
+          </main>
+          <SpeedInsights />
+          <Analytics />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
-import { getExpense, getExpenseBill, getIncome, getIncomeInitialBalance, getInvoiceList } from "../actions/dashboards";
+import { getExpense, getExpenseBill, getIncome, getInvoiceList, getLastPrevious } from "../actions/dashboards";
 
 export default async function page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
@@ -27,7 +27,7 @@ export default async function page({ searchParams }) {
 
   // Calcular balanços
   const balanco = receitas - despesasTotal;
-  const saldoAnterior = await getIncomeInitialBalance(month);
+  const saldoAnterior = await getLastPrevious(month);
   const balancoAnterior = receitasAnterior - despesasTotalAnterior;
 
   // Calcular previsões

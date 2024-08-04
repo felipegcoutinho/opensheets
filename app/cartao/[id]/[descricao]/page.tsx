@@ -1,4 +1,4 @@
-import { getCardDetail, getCardInvoice } from "@/app/actions/cards";
+import { getCardDetails, getCardInvoice, getCardSum } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -11,8 +11,9 @@ export default async function page({ params, searchParams }) {
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  const getCardDetailMap = await getCardDetail(params.id);
+  const getCardDetailMap = await getCardDetails(params.id);
   const getCardInvoiceMap = await getCardInvoice(month, params.id);
+  const sumCardSum = await getCardSum(month, params.id);
 
   const { colorVariants, colorVariantsCard } = UseColors();
 
@@ -39,6 +40,7 @@ export default async function page({ params, searchParams }) {
           <div className="leading-relaxed">
             <InvoicePayment month={month} paramsId={params.id} />
           </div>
+          Valor da fatura: R$ {sumCardSum}
         </Card>
       ))}
 

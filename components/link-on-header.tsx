@@ -50,7 +50,7 @@ export default LinkOnHeader;
 
 export function LinkNavButton({ Icon, LinkName }) {
   return (
-    <span className="flex items-center gap-1">
+    <span className="flex items-center gap-1 dark:text-white">
       <Icon size={14} /> {LinkName}
     </span>
   );

@@ -4,10 +4,11 @@ import { addMonths, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { revalidatePath } from "next/cache";
 
+// Busca a lista de boletos salvos
 export async function getBills(month) {
   const supabase = createClient();
 
-  const { data: bills } = await supabase
+  const { data, error } = await supabase
     .from("boletos")
     .select(
       `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
@@ -15,9 +16,15 @@ export async function getBills(month) {
     )
     .eq("periodo", month);
 
-  return bills;
+  if (error) {
+    console.error("Erro em buscar boletos:", error);
+    return null;
+  }
+
+  return data;
 }
 
+// Adiciona um novo boleto
 export async function addBills(formData: FormData) {
   const {
     descricao,
@@ -91,20 +98,27 @@ export async function addBills(formData: FormData) {
 
   try {
     await supabase.from("boletos").insert(boletos);
-    revalidatePath("/boletos");
+    revalidatePath("/boleto");
   } catch (error) {
-    console.error("Error adding bill:", error);
+    console.error("Erro ao adicionar boleto:", error);
   }
 }
 
+// Deleta um boleto
 export async function deleteBills(formData: FormData) {
   const excluir = formData.get("excluir");
 
   const supabase = createClient();
-  await supabase.from("boletos").delete().eq("id", excluir);
-  revalidatePath("/boletos");
+
+  try {
+    await supabase.from("boletos").delete().eq("id", excluir);
+    revalidatePath("/boleto");
+  } catch (error) {
+    console.error("Erro ao adicionar boleto:", error);
+  }
 }
 
+// Atualiza um boleto
 export async function updateBills(formData: FormData) {
   const {
     id,
@@ -124,24 +138,29 @@ export async function updateBills(formData: FormData) {
   } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
-  await supabase
-    .from("boletos")
-    .update({
-      id,
-      descricao,
-      dt_vencimento,
-      periodo,
-      categoria,
-      status_pagamento,
-      dt_pagamento,
-      valor,
-      conta_id,
-      qtde_recorrencia,
-      condicao,
-      anotacao,
-      responsavel,
-      segundo_responsavel,
-    })
-    .eq("id", id);
-  revalidatePath("/boletos");
+
+  try {
+    await supabase
+      .from("boletos")
+      .update({
+        id,
+        descricao,
+        dt_vencimento,
+        periodo,
+        categoria,
+        status_pagamento,
+        dt_pagamento,
+        valor,
+        conta_id,
+        qtde_recorrencia,
+        condicao,
+        anotacao,
+        responsavel,
+        segundo_responsavel,
+      })
+      .eq("id", id);
+    revalidatePath("/boleto");
+  } catch (error) {
+    console.error("Erro ao atualizar boleto:", error);
+  }
 }
