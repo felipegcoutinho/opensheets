@@ -26,8 +26,8 @@ export default async function page({ params, searchParams }) {
           </div>
           <div className="leading-relaxed">
             <p>Conta {item.tipo_conta}</p>
-            <p className="text-2xl"> Despesas {accountExpense}</p>
             <p className="text-2xl"> Receitas {sumAccountIncome}</p>
+            <p className="text-2xl"> Despesas {accountExpense}</p>
             <p className="text-2xl"> Saldo {sumAccountIncome - accountExpense}</p>
           </div>
         </Card>

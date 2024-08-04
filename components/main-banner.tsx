@@ -19,8 +19,10 @@ export default async function Banner() {
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
 
-  const accountExpense = await getSumAccountExpensePaid(defaultPeriodo);
+  const sumAccountExpense = await getSumAccountExpensePaid(defaultPeriodo);
   const sumAccountIncome = await getSumAccountIncomePaid(defaultPeriodo);
+
+  const saldo = sumAccountIncome - sumAccountExpense;
 
   return (
     <CardBanner>
@@ -32,9 +34,10 @@ export default async function Banner() {
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <p>
-              Saldo atual ({defaultPeriodo}): R$ {sumAccountIncome - accountExpense}
-            </p>
+            <div>
+              Saldo atual {defaultPeriodo}
+              <p className="text-3xl">R$ {saldo.toFixed(2, 0)}</p>
+            </div>
           </TooltipTrigger>
           <TooltipContent>
             <p>Saldo das contas somadas</p>

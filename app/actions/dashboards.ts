@@ -82,6 +82,7 @@ export async function getExpenseBill(month) {
   return expenseBills;
 }
 
+// Busca o valor total das despesas pagas que não são cartao de credito.
 export async function getExpensePaid(month) {
   const supabase = createClient();
 
@@ -91,7 +92,7 @@ export async function getExpensePaid(month) {
     .eq("tipo_transacao", "Despesa")
     .neq("forma_pagamento", "Cartão de Crédito")
     .eq("periodo", month)
-    .eq("efetivado", true);
+    .eq("realizado", true);
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
@@ -99,47 +100,33 @@ export async function getExpensePaid(month) {
   }
 
   const totalExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
-
   return totalExpensePaid;
 }
 
+// Busca o valor total das boletos pagos no mês
 export async function getExpenseBillPaid(month) {
   const supabase = createClient();
 
   const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("status_pagamento", "Pago");
 
   if (error) {
-    console.error("Erro ao buscar despesas:", error);
+    console.error("Erro ao buscar boletos pagos:", error);
     return null;
   }
 
-  const totalExpensebillsPaid = data.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
+  const expensebillsPaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 
-  return totalExpensebillsPaid;
+  return expensebillsPaid;
 }
 
-export async function getInvoicesPaid(month) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.from("faturas").select("status_pagamento, valor");
-
-  if (error) {
-    console.error("Erro ao buscar despesas:", error);
-    return null;
-  }
-
-  const totalExpensePaid = data.reduce((sum, transaction) => sum + parseFloat(transaction.valor), 0);
-
-  return totalExpensePaid;
-}
-
+// Busca o valor total das faturas
 export async function getInvoiceList(month) {
   const supabase = createClient();
 
   const { data, error } = await supabase.rpc("getinvoicelists", { month });
 
   if (error) {
-    console.error("Erro ao buscar despesas:", error);
+    console.error("Erro ao buscar faturas:", error);
     return null;
   }
 

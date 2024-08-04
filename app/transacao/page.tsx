@@ -51,16 +51,19 @@ async function PageTransactions({ searchParams }) {
 
         <TableBody>
           {getTransactionMap?.map((item) => (
-            <TableRow className={`${item.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-50 to-white text-green-700"}`} key={item.id}>
+            <TableRow
+              className={`${
+                item.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-50 to-white text-green-700  dark:from-green-950 dark:to-black"
+              }`}
+              key={item.id}
+            >
               <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
-
                 <span className="text-neutral-400 text-xs px-1">
                   {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
-
               <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>

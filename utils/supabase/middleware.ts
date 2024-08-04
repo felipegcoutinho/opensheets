@@ -22,7 +22,7 @@ export const updateSession = async (request: NextRequest) => {
     } = await supabase.auth.getSession();
 
     // Se a rota atual for "/" e o usuário estiver logado, redireciona para "/dashboard"
-    if (request.nextUrl.pathname === "/" && session) {
+    if ((request.nextUrl.pathname === "/" || request.nextUrl.pathname === "/login") && session) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 

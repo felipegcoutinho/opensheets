@@ -41,7 +41,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Receitas</CardDescription>
-            <CardTitle className="text-4xl">{receitas}</CardTitle>
+            <CardTitle className="text-4xl">{receitas.toFixed(2, 0)}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">anterior R$ {receitasAnterior}</div>
@@ -51,7 +51,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Despesas</CardDescription>
-            <CardTitle className="text-4xl">{despesasTotal}</CardTitle>
+            <CardTitle className="text-4xl">{despesasTotal.toFixed(2, 0)}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">anterior R$ {despesasTotalAnterior}</div>
@@ -61,7 +61,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Balanço</CardDescription>
-            <CardTitle className="text-4xl">{balanco}</CardTitle>
+            <CardTitle className="text-4xl">{balanco.toFixed(2, 0)}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">anterior R$ {balancoAnterior}</div>
@@ -71,7 +71,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Previsto</CardDescription>
-            <CardTitle className="text-4xl">{previsto}</CardTitle>
+            <CardTitle className="text-4xl">{previsto.toFixed(2, 0)}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">anterior R$ {saldoAnterior}</div>
@@ -81,7 +81,7 @@ export default async function page({ searchParams }) {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2  mb-10">
         {/* <InvoiceList month={month} /> */}
         <Card className="space-y-4 p-6">
-          <div className="flex items-center gap-4 bg-slate-200 rounded-lg p-4" key="01">
+          <div className="flex items-center gap-4  rounded-lg p-4" key="01">
             <Avatar className="h-9 w-9">
               <AvatarFallback>OM</AvatarFallback>
             </Avatar>
@@ -93,7 +93,7 @@ export default async function page({ searchParams }) {
             </div>
             <div className="ml-auto font-bold text-2xl">R$ 111</div>
           </div>
-          <div className="flex items-center gap-4 bg-slate-200 rounded-lg p-4" key="01">
+          <div className="flex items-center gap-4 rounded-lg p-4" key="01">
             <Avatar className="h-9 w-9">
               <AvatarFallback>OM</AvatarFallback>
             </Avatar>

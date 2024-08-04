@@ -126,7 +126,8 @@ export async function getSumAccountExpensePaid(month) {
     .select(`valor`)
     .eq("periodo", month)
     .eq("tipo_transacao", "Despesa")
-    .eq("realizado", true);
+    .eq("realizado", true)
+    .neq("responsavel", "Sistema");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);
