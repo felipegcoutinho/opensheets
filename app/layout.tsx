@@ -36,7 +36,6 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={`${inter.className}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="bg-red-500 dark:bg-orange-800 text-center text-white text-xs">Working in Progress</div>
           <main className="animate-in max-w-screen-1xl flex flex-col mx-auto">
             <Header />
             <Banner />
