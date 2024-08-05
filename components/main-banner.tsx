@@ -1,4 +1,5 @@
 import { getSumAccountExpensePaid, getSumAccountIncomePaid } from "@/app/actions/accounts";
+import { getSumBillsExpensePaid } from "@/app/actions/bills";
 import { UseDates } from "@/hooks/UseDates";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
@@ -21,8 +22,9 @@ export default async function Banner() {
 
   const sumAccountExpense = await getSumAccountExpensePaid(defaultPeriodo);
   const sumAccountIncome = await getSumAccountIncomePaid(defaultPeriodo);
+  const sumBillsIncome = await getSumBillsExpensePaid(defaultPeriodo);
 
-  const saldo = sumAccountIncome - sumAccountExpense;
+  const saldo = sumAccountIncome - sumAccountExpense - sumBillsIncome;
 
   return (
     <CardBanner>

@@ -1,6 +1,7 @@
 "use client";
 
 import { UseDates } from "@/hooks/UseDates";
+import { getMonth } from "date-fns";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
@@ -11,6 +12,8 @@ export default function MonthPicker() {
   const { replace } = useRouter();
 
   const { optionsMeses } = UseDates();
+
+  console.log(getMonth);
 
   const defaultMonth = new Date().toLocaleString("pt-BR", { month: "long" });
   const defaultYear = new Date().getFullYear();
@@ -54,7 +57,7 @@ export default function MonthPicker() {
 
   const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
-  const isHomePage = pathname === "/cartao" || pathname === "/conta" || pathname === "/" || pathname === "/login";
+  const isHomePage = pathname === "/cartao" || pathname === "/conta";
 
   if (isHomePage) {
     return null;

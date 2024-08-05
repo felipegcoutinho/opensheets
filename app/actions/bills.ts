@@ -164,3 +164,19 @@ export async function updateBills(formData: FormData) {
     console.error("Erro ao atualizar boleto:", error);
   }
 }
+
+// Busca apenas despesas realizadas de uma conta bancária específica e soma os valores
+export async function getSumBillsExpensePaid(month) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase.from("boletos").select(`valor`).eq("periodo", month).eq("status_pagamento", "Pago");
+
+  if (error) {
+    console.error("Erro ao buscar boletos pagos:", error);
+    return null;
+  }
+
+  const sumBillsExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  return sumBillsExpensePaid;
+}

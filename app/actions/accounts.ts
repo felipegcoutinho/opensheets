@@ -92,7 +92,7 @@ export async function getSumAccountExpense(month, id) {
   const { error, data } = await supabase.from("transacoes").select(`valor`).eq("conta_id", id).eq("periodo", month).eq("tipo_transacao", "Despesa");
 
   if (error) {
-    console.error("Erro ao buscar receitas:", error);
+    console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
@@ -130,7 +130,7 @@ export async function getSumAccountExpensePaid(month) {
     .neq("responsavel", "Sistema");
 
   if (error) {
-    console.error("Erro ao buscar receitas:", error);
+    console.error("Erro ao buscar despesas:", error);
     return null;
   }
 

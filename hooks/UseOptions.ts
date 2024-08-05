@@ -32,8 +32,9 @@ export default function UseOptions() {
     { id: 11, name: "Outros" },
     { id: 12, name: "Roupas" },
     { id: 13, name: "Saúde" },
-    { id: 14, name: "Transporte" },
-    { id: 15, name: "Viagem" },
+    { id: 14, name: "Pagamentos" },
+    { id: 15, name: "Transporte" },
+    { id: 16, name: "Viagem" },
   ];
 
   return {

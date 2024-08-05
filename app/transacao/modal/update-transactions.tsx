@@ -72,8 +72,8 @@ export default function UpdateTransactions({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-        <DialogTrigger>
-          <PenLine size={16} />
+        <DialogTrigger disabled={itemResponsavel === "Sistema"}>
+          <PenLine size={16} className={`${itemResponsavel === "Sistema" && "hidden"}`} />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
