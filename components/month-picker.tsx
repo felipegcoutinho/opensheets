@@ -1,7 +1,6 @@
 "use client";
 
 import { UseDates } from "@/hooks/UseDates";
-import { getMonth } from "date-fns";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
@@ -12,8 +11,6 @@ export default function MonthPicker() {
   const { replace } = useRouter();
 
   const { optionsMeses } = UseDates();
-
-  console.log(getMonth);
 
   const defaultMonth = new Date().toLocaleString("pt-BR", { month: "long" });
   const defaultYear = new Date().getFullYear();
@@ -57,14 +54,15 @@ export default function MonthPicker() {
 
   const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
-  const isHomePage = pathname === "/cartao" || pathname === "/conta";
+  const isHomePage = pathname === "/cartao" || pathname === "/conta" || pathname === "/" || pathname === "/login";
 
   if (isHomePage) {
     return null;
   }
 
   return (
-    <div className="flex justify-start w-full py-8 my-2 px-4 rounded-lg bg-gradient-to-r from-red-50 to-orange-200 dark:from-blue-800 dark:to-orange-900">
+    // <div className="flex justify-start w-full py-8 my-2 px-4 rounded-lg bg-gradient-to-r from-red-50 to-orange-200 dark:from-blue-800 dark:to-orange-900">
+    <div className="flex justify-start w-full py-8 my-2 px-4 rounded-lg">
       <button onClick={goToPreviousMonth}>
         <ArrowLeftCircle />
       </button>

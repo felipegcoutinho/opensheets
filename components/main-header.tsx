@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
@@ -10,6 +9,7 @@ import { redirect } from "next/navigation";
 import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
 import LinkOnHeader from "./link-on-header";
+import { Card } from "./ui/card";
 
 export default async function Header() {
   const cookieStore = cookies();
@@ -28,7 +28,7 @@ export default async function Header() {
   };
 
   return (
-    <Card className="flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
+    <Card className="dark:bg-gradient-to-t dark:from-zinc-900 dark:to-black flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
         <p className="font-bold text-lg dark:text-white">Opensheets</p>
         <LinkOnHeader user={user} />
@@ -80,8 +80,8 @@ export default async function Header() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon">
-              <Menu className="h-5 w-5" />
+            <Button variant="link" size="icon">
+              <Menu className="bg-transparent h-5 w-5" />
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>

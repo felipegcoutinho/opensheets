@@ -32,10 +32,10 @@ async function PageTransactions({ searchParams }) {
   function getRowClassNames(item) {
     let classNames = "";
     if (item.categoria === "Saldo Anterior") {
-      classNames += " bg-gradient-to-r from-green-50 to-white text-green-700 dark:from-green-950 dark:to-black";
+      classNames += " bg-gradient-to-r from-green-50 to-white text-green-700 dark:from-[#0c1c0b] dark:to-black";
     }
     if (item.responsavel === "Sistema") {
-      classNames += " text-neutral-500";
+      classNames += "bg-gradient-to-r from-neutral-50 to-white text-neutral-500 dark:from-neutral-900 dark:to-black";
     }
     return classNames.trim();
   }

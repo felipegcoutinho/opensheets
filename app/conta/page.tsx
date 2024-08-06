@@ -1,5 +1,6 @@
+import CardColor, { ColorDot } from "@/components/card-color";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
 import Link from "next/link";
 import { deleteAccount, getAccount, getSumAccountExpense, getSumAccountIncome } from "../actions/accounts";
@@ -23,9 +24,9 @@ async function PageAccount({ searchParams }) {
           const sumAccountIncome = await getSumAccountIncome(month, item.id);
 
           return (
-            <Card key={item.id}>
+            <CardColor aparencia={item.aparencia} id={item.id}>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">{item.descricao}</CardTitle>
+                <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
                 <CardDescription>{item.tipo_conta}</CardDescription>
               </CardHeader>
               <CardContent>
@@ -51,7 +52,7 @@ async function PageAccount({ searchParams }) {
                   </Button>
                 </div>
               </CardFooter>
-            </Card>
+            </CardColor>
           );
         })}
       </div>

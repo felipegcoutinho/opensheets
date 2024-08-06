@@ -1,6 +1,6 @@
 import { getAccountDetails, getAccountInvoice, getSumAccountExpense, getSumAccountIncome } from "@/app/actions/accounts";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
-import { Card } from "@/components/ui/card";
+import CardColor, { ColorDot } from "@/components/card-color";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 
@@ -18,19 +18,17 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getAccountDetailMap?.map((item) => (
-        <Card key={item.id} className="flex gap-10 h-32 w-full items-center">
-          <div className="text-xl px-16 flex items-center gap-2">
-            {/* <div className={cn(colorVariants[item.aparencia], "w-8 h-8 rounded-full")} /> */}
-            <div className="bg-black w-8 h-8 rounded-full" />
-            {item.descricao}
+        <CardColor styles="flex gap-10 h-32 w-full items-center" aparencia={item.aparencia} id={item.id}>
+          <div className="px-16 flex items-center gap-2">
+            <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
           </div>
           <div className="leading-relaxed">
             <p>Conta {item.tipo_conta}</p>
-            <p className="text-2xl"> Receitas {sumAccountIncome}</p>
-            <p className="text-2xl"> Despesas {accountExpense}</p>
-            <p className="text-2xl"> Saldo {sumAccountIncome - accountExpense}</p>
+            <p className="text-xl"> Receitas {sumAccountIncome}</p>
+            <p className="text-xl"> Despesas {accountExpense}</p>
+            <p className="text-xl"> Saldo {sumAccountIncome - accountExpense}</p>
           </div>
-        </Card>
+        </CardColor>
       ))}
 
       <Table className="mt-6">
