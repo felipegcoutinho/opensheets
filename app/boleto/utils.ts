@@ -5,15 +5,10 @@ import { addBills, deleteBills, updateBills } from "../actions/bills";
 
 export default function Utils() {
   const [isOpen, setIsOpen] = useState(false);
-
   const [loading, setLoading] = useState(false);
-
   const [isDividedChecked, setIsDividedChecked] = useState(false);
-
   const [statusPagamento, setStatusPagamento] = useState(false);
-
   const { categoriasDespesa } = UseOptions();
-
   const [showRecorrencia, setShowRecorrencia] = useState(false);
 
   const { toast } = useToast();

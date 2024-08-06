@@ -93,12 +93,6 @@ export default function Utils() {
     });
   };
 
-  function formatDate(dateString) {
-    const [year, month, day] = dateString.split("-");
-    const date = new Date(year, month - 1, day);
-    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
-  }
-
   const getMonthOptions = () => {
     const options = [];
     const currentDate = new Date();
@@ -113,6 +107,17 @@ export default function Utils() {
     }
 
     return options;
+  };
+
+  const handleDialogClose = (val) => {
+    setIsOpen(val);
+    setIsDividedChecked(false);
+    setShowConta(false);
+    setShowCartao(false);
+    setShowParcelas(false);
+    setShowRecorrencia(false);
+    setIsEfetivadoChecked(true);
+    setIsPaid(true);
   };
 
   return {
@@ -141,12 +146,11 @@ export default function Utils() {
     loading,
     setLoading,
     handleUpdate,
-    formatDate,
     isEfetivadoChecked,
     setIsEfetivadoChecked,
     isDividedChecked,
     setIsDividedChecked,
-
+    handleDialogClose,
     isPaid,
     setIsPaid,
   };

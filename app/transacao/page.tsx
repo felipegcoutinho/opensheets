@@ -17,16 +17,12 @@ async function PageTransactions({ searchParams }) {
   const getAccountMap = await getAccount();
   const getTransactionMap = await getTransaction(month);
 
+  const { DateFormat } = UseDates();
+
   function getDescricao(item) {
     const contaDescricao = item.contas?.descricao;
     const cartaoDescricao = item.cartoes?.descricao;
     return contaDescricao ?? cartaoDescricao;
-  }
-
-  function DateFormat(dateString) {
-    const [year, month, day] = dateString.split("-");
-    const date = new Date(year, month - 1, day);
-    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
   }
 
   function getRowClassNames(item) {
@@ -76,7 +72,28 @@ async function PageTransactions({ searchParams }) {
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{getDescricao(item)}</TableCell>
               <TableCell className="text-center flex gap-2">
-                <DetailsTransactions />
+                <DetailsTransactions
+                  itemId={item.id}
+                  itemPeriodo={item.periodo}
+                  itemNotas={item.anotacao}
+                  itemDate={item.data_compra}
+                  itemDescricao={item.descricao}
+                  itemCategoria={item.categoria}
+                  itemCondicao={item.condicao}
+                  itemResponsavel={item.responsavel}
+                  itemSegundoResponsavel={item.segundo_responsavel}
+                  itemTipoTransacao={item.tipo_transacao}
+                  itemValor={item.valor}
+                  itemFormaPagamento={item.forma_pagamento}
+                  itemQtdeParcelas={item.qtde_parcela}
+                  itemRecorrencia={item.recorrencia}
+                  itemQtdeRecorrencia={item.qtde_recorrencia}
+                  getAccountMap={getAccountMap}
+                  getCardsMap={getCardsMap}
+                  itemCartao={item.cartoes?.id}
+                  itemConta={item.contas?.id}
+                  itemPaid={item.realizado}
+                />
 
                 <UpdateTransactions
                   itemId={item.id}

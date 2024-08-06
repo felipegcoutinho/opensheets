@@ -91,7 +91,6 @@ export default function CreateBills({ getAccountMap }) {
             <div className="w-full">
               <Label>Valor</Label>
               <Required />
-              {/* <NumberInput icon={CircleDollarSignIcon} enableStepper={false} placeholder="R$ 0,00" name="valor" /> */}
               <Input name="valor" placeholder="R$ 0,00" type="number" />
             </div>
           </div>

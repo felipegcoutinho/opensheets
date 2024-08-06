@@ -17,6 +17,12 @@ export function UseDates() {
   // Obtém o nome do mês atual
   const currentMonthName = optionsMeses[currentDate.getMonth()];
 
+  function DateFormat(dateString) {
+    const [year, month, day] = dateString.split("-");
+    const date = new Date(year, month - 1, day);
+    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
+  }
+
   const getPreviousMonth = (currentMonth) => {
     const [monthName, year] = currentMonth.split("-");
     const monthIndex = optionsMeses.findIndex((m) => m.toLowerCase() === monthName.toLowerCase());
@@ -49,5 +55,5 @@ export function UseDates() {
     return `${previousMonth}-${previousYear}`;
   };
 
-  return { currentDate, currentYear, currentMonthName, optionsMeses, optionsAnos, diasDaSemana, getPreviousMonth, getPreviousTwoMonth };
+  return { currentDate, currentYear, currentMonthName, optionsMeses, optionsAnos, diasDaSemana, getPreviousMonth, getPreviousTwoMonth, DateFormat };
 }

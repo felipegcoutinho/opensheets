@@ -41,21 +41,10 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     setIsDividedChecked,
     setShowParcelas,
     setShowRecorrencia,
-
+    handleDialogClose,
     isPaid,
     setIsPaid,
   } = Utils();
-
-  const handleDialogClose = (val) => {
-    setIsOpen(val);
-    setIsDividedChecked(false);
-    setShowConta(false);
-    setShowCartao(false);
-    setShowParcelas(false);
-    setShowRecorrencia(false);
-    setIsEfetivadoChecked(true);
-    setIsPaid(true);
-  };
 
   // Se showCartao for true, garanta que isPaid seja false
   if (showCartao && isPaid) {
@@ -193,7 +182,10 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             <div className="w-full">
               <Label>Responsável</Label>
               <Required />
-              <Input name="responsavel" placeholder="Responsável" type="text" />
+              <Input list="responsavel-list" name="responsavel" placeholder="Responsável" type="text" />
+              <datalist id="responsavel-list">
+                <option value="Você" />
+              </datalist>
             </div>
 
             {isDividedChecked && (

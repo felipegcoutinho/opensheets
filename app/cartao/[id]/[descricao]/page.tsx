@@ -1,4 +1,5 @@
-import { getCardDetails, getCardInvoice, getCardSum } from "@/app/actions/cards";
+import { getAccount } from "@/app/actions/accounts";
+import { getCardDetails, getCardInvoice, getCards, getCardSum } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -13,6 +14,9 @@ export default async function page({ params, searchParams }) {
   const getCardDetailMap = await getCardDetails(params.id);
   const getCardInvoiceMap = await getCardInvoice(month, params.id);
   const sumCardSum = await getCardSum(month, params.id);
+
+  const getCardsMap = await getCards(month);
+  const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
 
   return (
     <>
@@ -71,7 +75,28 @@ export default async function page({ params, searchParams }) {
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.valor}</TableCell>
               <TableCell className="text-center flex gap-2">
-                <DetailsTransactions />
+                <DetailsTransactions
+                  itemId={item.id}
+                  itemPeriodo={item.periodo}
+                  itemNotas={item.anotacao}
+                  itemDate={item.data_compra}
+                  itemDescricao={item.descricao}
+                  itemCategoria={item.categoria}
+                  itemCondicao={item.condicao}
+                  itemResponsavel={item.responsavel}
+                  itemSegundoResponsavel={item.segundo_responsavel}
+                  itemTipoTransacao={item.tipo_transacao}
+                  itemValor={item.valor}
+                  itemFormaPagamento={item.forma_pagamento}
+                  itemQtdeParcelas={item.qtde_parcela}
+                  itemRecorrencia={item.recorrencia}
+                  itemQtdeRecorrencia={item.qtde_recorrencia}
+                  getAccountMap={getAccountMap}
+                  getCardsMap={getCardsMap}
+                  itemCartao={item.cartoes?.id}
+                  itemConta={item.contas?.id}
+                  itemPaid={item.realizado}
+                />
               </TableCell>
             </TableRow>
           ))}
