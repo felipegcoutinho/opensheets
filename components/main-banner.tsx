@@ -29,16 +29,16 @@ export default async function Banner() {
   return (
     <CardBanner>
       <div>
-        <p>Olá, {displayName}</p>
-        <p>{data?.user.id}</p>
+        <p className="text-2xl">Olá, {displayName}</p>
+        {/* <p>{data?.user.id}</p> */}
         <p>{data?.user.email}</p>
       </div>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div>
-              Saldo atual {defaultPeriodo}
-              <p className="text-3xl">R$ {saldo.toFixed(2, 0)}</p>
+            <div className="text-right">
+              Saldo Atual
+              <p className="text-2xl">R$ {saldo.toFixed(2, 0)}</p>
             </div>
           </TooltipTrigger>
           <TooltipContent>
