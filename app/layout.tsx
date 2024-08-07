@@ -1,13 +1,13 @@
 import Banner from "@/components/main-banner";
 import Header from "@/components/main-header";
 import MonthPicker from "@/components/month-picker";
-import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 // import { Fira_Sans, Gabarito, Inter } from "next/font/google";
 import { Inter } from "next/font/google";
 // import localFont from "next/font/local"; //TODO: Implementar fontfile
 
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/hooks/UseDarkMode";
 import "./globals.css";
 
@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={`${inter.className}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <main className="animate-in max-w-screen-1xl flex flex-col mx-auto">
+          <main className="animate-in max-w-screen-xl flex flex-col mx-auto backdrop-blur-lg">
             <Header />
             <Banner />
             <MonthPicker />
@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
           </main>
           <SpeedInsights />
           <Analytics />
-          <Toaster />
+          <Toaster position="top-right" richColors duration={2500} />
         </ThemeProvider>
       </body>
     </html>

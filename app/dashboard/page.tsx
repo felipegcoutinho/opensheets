@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
 import { getExpense, getExpenseBill, getIncome, getInvoiceList, getLastPrevious } from "../actions/dashboards";
+import { BIllsList } from "./bills-list";
+import { InvoiceList } from "./invoices-list";
 
 export default async function page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
@@ -78,34 +78,9 @@ export default async function page({ searchParams }) {
           </CardContent>
         </Card>
       </div>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2  mb-10">
-        {/* <InvoiceList month={month} /> */}
-        <Card className="space-y-4 p-6">
-          <div className="flex items-center gap-4  rounded-lg p-4" key="01">
-            <Avatar className="h-9 w-9">
-              <AvatarFallback>OM</AvatarFallback>
-            </Avatar>
-            <div className="ml-4 space-y-1">
-              <p className="text-lg font-medium leading-none">Nubank</p>
-              <Button variant="link">Pagar</Button>
-              <p className="text-sm text-muted-foreground">Dia 10</p>
-              {/* <InvoicePayment month={month} paramsId={item.cartao_id} /> */}
-            </div>
-            <div className="ml-auto font-bold text-2xl">R$ 111</div>
-          </div>
-          <div className="flex items-center gap-4 rounded-lg p-4" key="01">
-            <Avatar className="h-9 w-9">
-              <AvatarFallback>OM</AvatarFallback>
-            </Avatar>
-            <div className="ml-4 space-y-1">
-              <p className="text-lg font-medium leading-none">Nubank</p>
-              <Button variant="link">Pagar</Button>
-              <p className="text-sm text-muted-foreground">Dia 10</p>
-              {/* <InvoicePayment month={month} paramsId={item.cartao_id} /> */}
-            </div>
-            <div className="ml-auto font-bold text-2xl">R$ 111</div>
-          </div>
-        </Card>
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2 mb-10">
+        <InvoiceList month={month} />
+        <BIllsList month={month} />
       </div>
     </>
   );
