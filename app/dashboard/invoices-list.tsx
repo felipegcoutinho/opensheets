@@ -14,13 +14,14 @@ export async function InvoiceList({ month }) {
       </CardHeader>
       <CardContent>
         {invoices.map((item) => (
-          <div className="flex items-center gap-4 mb-4" key={item.cartao_id}>
+          <div className="flex gap-4 mb-4" key={item.cartao_id}>
             <div className="space-y-1">
-              <p className="font-bold text-xl leading-none hover:underline">
+              <p className="font-bold text-lg hover:underline">
                 <Link href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}`}>{item.descricao}</Link>
               </p>
               <p className="text-sm text-muted-foreground">{item.status_pagamento}</p>
               {item.status_pagamento != "Pago" && <p className="text-sm text-muted-foreground">Vence dia {item.dt_vencimento}</p>}
+
               <InvoicePayment month={month} paramsId={item.cartao_id} />
             </div>
             <p className="ml-auto font-bold text-lg">R$ {item.total_valor}</p>
