@@ -2,7 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { UseDates } from "@/hooks/UseDates";
 import { getExpense, getExpenseBill, getIncome, getInvoiceList, getLastPrevious } from "../actions/dashboards";
 import { BIllsList } from "./bills-list";
+import { ConditionList } from "./condition-list";
+import CountList from "./count-list";
 import { InvoiceList } from "./invoices-list";
+import { PaymentList } from "./payment-list";
 
 export default async function page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
@@ -82,6 +85,11 @@ export default async function page({ searchParams }) {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-2 mb-10">
         <InvoiceList month={month} />
         <BIllsList month={month} />
+        <div className="flex flex-col gap-2">
+          <ConditionList month={month} />
+          <PaymentList month={month} />
+        </div>
+        <CountList month={month} />
       </div>
     </>
   );

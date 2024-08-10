@@ -132,3 +132,77 @@ export async function getInvoiceList(month) {
 
   return data;
 }
+
+export async function getConditions(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("condicao, valor.sum()")
+    .eq("tipo_transacao", "Despesa")
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .order("condicao", { ascending: true });
+
+  if (error) {
+    console.error("Erro ao buscar condições:", error);
+    return null;
+  }
+
+  console.log(data);
+
+  return data;
+}
+
+export async function getPayment(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("forma_pagamento, valor.sum()")
+    .eq("tipo_transacao", "Despesa")
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .order("forma_pagamento", { ascending: true });
+
+  if (error) {
+    console.error("Erro ao buscar pagamentos:", error);
+    return null;
+  }
+
+  return data;
+}
+
+// export async function getExpenseByCategory(month) {
+//   const supabase = createClient();
+
+//   const { data, error } = await supabase
+//     .from("transacoes")
+//     .select("categoria, valor.sum()")
+//     .eq("tipo_transacao", "Despesa")
+//     .eq("periodo", month)
+//     .eq("responsavel", "Você")
+//     .order("categoria", { ascending: true });
+
+//   if (error) {
+//     console.error("Erro ao buscar despesas por categoria:", error);
+//     return null;
+//   }
+//   console.log(data);
+//   return data;
+// }
+
+export async function getTransactionsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("transacoes").select("count()").eq("periodo", month).eq("responsavel", "Você");
+
+  if (error) {
+    console.error("Erro ao buscar transações:", error);
+    return null;
+  }
+
+  console.log(data);
+
+  return data;
+}
