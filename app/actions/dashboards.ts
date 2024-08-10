@@ -12,7 +12,7 @@ export async function getIncome(month) {
     .eq("tipo_transacao", "Receita")
     .eq("periodo", month)
     .neq("categoria", "Saldo Anterior")
-    .neq("responsavel", "Sistema");
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);
@@ -33,7 +33,7 @@ export async function getExpense(month) {
     .select("valor")
     .eq("tipo_transacao", "Despesa")
     .eq("periodo", month)
-    .neq("responsavel", "Sistema");
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
@@ -70,10 +70,10 @@ export async function getLastPrevious(month) {
 export async function getExpenseBill(month) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month);
+  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("responsavel", "Você");
 
   if (error) {
-    console.error("Erro ao buscar despesas:", error);
+    console.error("Erro ao buscar despesas de boletos:", error);
     return null;
   }
 
