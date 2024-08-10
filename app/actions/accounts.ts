@@ -127,6 +127,7 @@ export async function getSumAccountExpensePaid(month) {
     .eq("periodo", month)
     .eq("tipo_transacao", "Despesa")
     .eq("realizado", true)
+    .eq("responsavel", "Você")
     .neq("responsavel", "Sistema");
 
   if (error) {

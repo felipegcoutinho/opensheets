@@ -169,7 +169,12 @@ export async function updateBills(formData: FormData) {
 export async function getSumBillsExpensePaid(month) {
   const supabase = createClient();
 
-  const { error, data } = await supabase.from("boletos").select(`valor`).eq("periodo", month).eq("status_pagamento", "Pago");
+  const { error, data } = await supabase
+    .from("boletos")
+    .select(`valor`)
+    .eq("periodo", month)
+    .eq("status_pagamento", "Pago")
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar boletos pagos:", error);
