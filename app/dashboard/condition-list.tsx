@@ -11,16 +11,22 @@ export async function ConditionList({ month }) {
         <CardDescription>Total de Boletos</CardDescription>
       </CardHeader>
 
-      {condicoes?.map((item) => (
-        <CardContent className="grid gap-2 py-1">
-          <div className="grid">
-            <div className="flex items-center justify-between">
-              <span className="text-md">{item.condicao}</span>
-              <span className="text-muted-foreground">R$ {item.sum}</span>
+      {condicoes?.length > 0 ? (
+        condicoes?.map((item) => (
+          <CardContent className="grid gap-2 py-1">
+            <div className="grid">
+              <div className="flex items-center justify-between">
+                <span className="text-md">{item.condicao}</span>
+                <span className="text-muted-foreground">R$ {item.sum}</span>
+              </div>
             </div>
-          </div>
+          </CardContent>
+        ))
+      ) : (
+        <CardContent className="flex items-center justify-start">
+          <span className="text-muted-foreground text-lg">Não há condições disponíveis.</span>
         </CardContent>
-      ))}
+      )}
     </Card>
   );
 }

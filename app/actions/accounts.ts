@@ -149,7 +149,8 @@ export async function getSumAccountIncomePaid(month) {
     .select(`valor`)
     .eq("periodo", month)
     .eq("tipo_transacao", "Receita")
-    .eq("realizado", true);
+    .eq("realizado", true)
+    .neq("responsavel", "Sistema");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);

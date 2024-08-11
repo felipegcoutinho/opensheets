@@ -23,6 +23,20 @@ export function UseDates() {
     return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
   }
 
+  function fliendlyDate(date) {
+    const dayOfWeek = diasDaSemana[date.getDay()];
+    const day = date.getDate();
+    const month = optionsMeses[date.getMonth()];
+    const year = date.getFullYear();
+    return `${dayOfWeek}, ${day} de ${month} de ${year}`;
+  }
+
+  function getGreeting() {
+    const currentHour = currentDate.getHours();
+    const greeting = currentHour >= 5 && currentHour < 12 ? "Bom dia" : currentHour >= 12 && currentHour < 18 ? "Boa tarde" : "Boa noite";
+    return greeting;
+  }
+
   const getPreviousMonth = (currentMonth) => {
     const [monthName, year] = currentMonth.split("-");
     const monthIndex = optionsMeses.findIndex((m) => m.toLowerCase() === monthName.toLowerCase());
@@ -55,5 +69,17 @@ export function UseDates() {
     return `${previousMonth}-${previousYear}`;
   };
 
-  return { currentDate, currentYear, currentMonthName, optionsMeses, optionsAnos, diasDaSemana, getPreviousMonth, getPreviousTwoMonth, DateFormat };
+  return {
+    currentDate,
+    currentYear,
+    currentMonthName,
+    optionsMeses,
+    optionsAnos,
+    diasDaSemana,
+    getPreviousMonth,
+    getPreviousTwoMonth,
+    DateFormat,
+    fliendlyDate,
+    getGreeting,
+  };
 }

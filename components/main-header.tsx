@@ -30,7 +30,9 @@ export default async function Header() {
   return (
     <Card className="bg-transparent shadow-none dark:bg-gradient-to-t dark:from-zinc-900 dark:to-black flex h-16 items-center gap-4 text-black p-10 md:px-6 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
-        <p className="font-bold text-lg dark:text-white">Opensheets</p>
+        <Link href="/" className="font-bold text-lg dark:text-white">
+          Opensheets
+        </Link>
         <LinkOnHeader user={user} />
       </nav>
       <Sheet>

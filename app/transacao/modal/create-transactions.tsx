@@ -164,18 +164,6 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 </>
               )}
             </div>
-
-            {/* <Card className="flex w-1/2 gap-2 items-center justify-between">
-              <Select name="realizado" defaultValue={showCartao ? "Pendente" : "Pago"} disabled={showCartao}>
-                <SelectTrigger className="border-none bg-transparent text-neutral-600">
-                  <SelectValue placeholder="Marcar como" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Pago">Pago</SelectItem>
-                  <SelectItem value="Pendente">Pendente</SelectItem>
-                </SelectContent>
-              </Select>
-            </Card> */}
           </div>
 
           <div className="flex w-full gap-2">

@@ -104,7 +104,10 @@ export default function CreateBills({ getAccountMap }) {
             <div className="w-full">
               <Label>Responsável</Label>
               <Required />
-              <Input name="responsavel" placeholder="Responsável" type="text" />
+              <Input list="responsavel-list" name="responsavel" placeholder="Responsável" type="text" />
+              <datalist id="responsavel-list">
+                <option value="Você" />
+              </datalist>
             </div>
 
             {isDividedChecked && (
