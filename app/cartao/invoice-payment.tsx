@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { CircleCheck, Hourglass } from "lucide-react";
 import { addFaturas, deleteFaturas, getFaturas } from "../actions/invoices";
 
 export default async function InvoicePayment({ month, paramsId }) {
@@ -14,8 +15,9 @@ export default async function InvoicePayment({ month, paramsId }) {
                 <form action={deleteFaturas}>
                   <input type="hidden" name="excluir" value={item.id} />
 
-                  <Button variant="link" type="submit" className="h-0 p-0">
-                    Desfazer Pagamento
+                  <Button variant="link" type="submit" className="h-0 p-0 text-green-500">
+                    <CircleCheck className="mr-1" size={14} />
+                    Pago
                   </Button>
                 </form>
               </>
@@ -28,8 +30,9 @@ export default async function InvoicePayment({ month, paramsId }) {
             <input type="hidden" name="periodo" defaultValue={month} />
             <input type="hidden" name="cartao_id" defaultValue={paramsId} />
 
-            <Button variant="link" type="submit" className="h-0 p-0 text-green-500">
-              Pagar
+            <Button variant="link" type="submit" className="h-0 p-0 hover:underline text-xs text-orange-500">
+              <Hourglass className="mr-1" size={14} />
+              Pagar Fatura
             </Button>
           </form>
         </>

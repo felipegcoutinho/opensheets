@@ -5,7 +5,7 @@ export async function PaymentList({ month }) {
   const payment = await getPayment(month);
 
   return (
-    <Card className="h-1/2 max-sm:h-max overflow-y-auto bg-gradient-to-bl from-blue-50 from-5%">
+    <Card className="h-1/2 max-sm:h-max overflow-y-auto">
       <CardHeader className="pb-3">
         <CardTitle>Pagamentos</CardTitle>
         <CardDescription>Total de Boletos</CardDescription>

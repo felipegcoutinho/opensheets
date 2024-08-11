@@ -5,7 +5,7 @@ export async function ConditionList({ month }) {
   const condicoes = await getConditions(month);
 
   return (
-    <Card className="h-1/2 max-sm:h-max overflow-y-auto bg-gradient-to-bl from-orange-50 from-5%">
+    <Card className="h-1/2 max-sm:h-max overflow-y-auto">
       <CardHeader className="pb-3">
         <CardTitle>Condições</CardTitle>
         <CardDescription>Total de Boletos</CardDescription>

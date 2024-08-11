@@ -13,15 +13,15 @@ export async function InvoiceList({ month }) {
         <CardDescription>Total da faturas</CardDescription>
       </CardHeader>
       {invoices.map((item) => (
-        <CardContent className="grid gap-2 ">
+        <CardContent className="grid gap-2 pb-2">
           <div className="grid">
             <div className="flex items-center justify-between">
               <span className="text-xl">
                 <Link href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}`}>{item.descricao}</Link>
               </span>
-              <span className="">R$ {item.total_valor}</span>
+              <span className="text-lg text-right p-0 text-muted-foreground">R$ {item.total_valor}</span>
             </div>
-            <span className="text-muted-foreground text-sm">{item.status_pagamento}</span>
+            {/* <span className="text-muted-foreground text-sm">{item.status_pagamento}</span> */}
             <InvoicePayment month={month} paramsId={item.cartao_id} />
           </div>
         </CardContent>

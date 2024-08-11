@@ -202,7 +202,51 @@ export async function getTransactionsCount(month) {
     return null;
   }
 
-  console.log(data);
+  return data;
+}
+
+export async function getBillsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("boletos").select("count()").eq("periodo", month).eq("responsavel", "Você");
+
+  if (error) {
+    console.error("Erro ao buscar boletos:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getCardsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("cartoes").select("count()");
+
+  if (error) {
+    console.error("Erro ao buscar cartoes:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getBillsByResponsavel(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("boletos")
+    .select(
+      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
+      qtde_recorrencia, anotacao, responsavel, segundo_responsavel, contas ( id, descricao)`
+    )
+    .eq("periodo", month)
+    .eq("responsavel", "Você");
+
+  if (error) {
+    console.error("Erro em buscar boletos:", error);
+    return null;
+  }
 
   return data;
 }
