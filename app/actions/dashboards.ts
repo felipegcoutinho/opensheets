@@ -12,7 +12,7 @@ export async function getIncome(month) {
     .eq("tipo_transacao", "Receita")
     .eq("periodo", month)
     .neq("categoria", "Saldo Anterior")
-    .neq("responsavel", "Sistema");
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);
@@ -33,7 +33,7 @@ export async function getExpense(month) {
     .select("valor")
     .eq("tipo_transacao", "Despesa")
     .eq("periodo", month)
-    .neq("responsavel", "Sistema");
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
@@ -70,10 +70,10 @@ export async function getLastPrevious(month) {
 export async function getExpenseBill(month) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month);
+  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("responsavel", "Você");
 
   if (error) {
-    console.error("Erro ao buscar despesas:", error);
+    console.error("Erro ao buscar despesas de boletos:", error);
     return null;
   }
 
@@ -127,6 +127,122 @@ export async function getInvoiceList(month) {
 
   if (error) {
     console.error("Erro ao buscar faturas:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getConditions(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("condicao, valor.sum()")
+    .eq("tipo_transacao", "Despesa")
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .order("condicao", { ascending: true });
+
+  if (error) {
+    console.error("Erro ao buscar condições:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getPayment(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("forma_pagamento, valor.sum()")
+    .eq("tipo_transacao", "Despesa")
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .order("forma_pagamento", { ascending: true });
+
+  if (error) {
+    console.error("Erro ao buscar pagamentos:", error);
+    return null;
+  }
+
+  return data;
+}
+
+// export async function getExpenseByCategory(month) {
+//   const supabase = createClient();
+
+//   const { data, error } = await supabase
+//     .from("transacoes")
+//     .select("categoria, valor.sum()")
+//     .eq("tipo_transacao", "Despesa")
+//     .eq("periodo", month)
+//     .eq("responsavel", "Você")
+//     .order("categoria", { ascending: true });
+
+//   if (error) {
+//     console.error("Erro ao buscar despesas por categoria:", error);
+//     return null;
+//   }
+//   console.log(data);
+//   return data;
+// }
+
+export async function getTransactionsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("transacoes").select("count()").eq("periodo", month).eq("responsavel", "Você");
+
+  if (error) {
+    console.error("Erro ao buscar transações:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getBillsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("boletos").select("count()").eq("periodo", month).eq("responsavel", "Você");
+
+  if (error) {
+    console.error("Erro ao buscar boletos:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getCardsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("cartoes").select("count()");
+
+  if (error) {
+    console.error("Erro ao buscar cartoes:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getBillsByResponsavel(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("boletos")
+    .select(
+      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
+      qtde_recorrencia, anotacao, responsavel, segundo_responsavel, contas ( id, descricao)`
+    )
+    .eq("periodo", month)
+    .eq("responsavel", "Você");
+
+  if (error) {
+    console.error("Erro em buscar boletos:", error);
     return null;
   }
 

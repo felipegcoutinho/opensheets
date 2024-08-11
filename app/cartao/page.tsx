@@ -1,5 +1,6 @@
+import CardColor, { ColorDot } from "@/components/card-color";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
@@ -21,27 +22,23 @@ async function PageCards({ searchParams }) {
 
       <div className="grid grid-cols-4 gap-4 mt-4">
         {getCardsMap?.map((item) => (
-          // <Card key={item.id} className={cn(colorVariantsCard[item.aparencia])}>
-          <Card key={item.id}>
+          <CardColor aparencia={item.aparencia} id={item.id}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                {/* <div className={cn(colorVariants[item.aparencia], "w-5 h-5 rounded-full")} /> */}
-                {item.descricao}
-              </CardTitle>
+              <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
               {/* <InvoicePayment month={month} paramsId={item.id} /> */}
               <CardDescription>{item.bandeira}</CardDescription>
             </CardHeader>
             <CardContent>
-              {/* <span className="flex items-center gap-2">
+              <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
+              <p className="text-sm">Vence dia {item.dt_vencimento}</p>
+              <p className="text-sm">Cartão {item.tipo}</p>
+              <span className="flex items-center gap-2 mt-2">
                 <span class="relative flex h-2 w-2">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
                 <p className="text-green-500 text-sm">ativo</p>
-              </span> */}
-              <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
-              <p className="text-sm">Vence dia {item.dt_vencimento}</p>
-              <p className="text-sm">Cartão {item.tipo}</p>
+              </span>
             </CardContent>
             <CardFooter>
               <div className="flex gap-4">
@@ -70,7 +67,7 @@ async function PageCards({ searchParams }) {
                 </Button>
               </div>
             </CardFooter>
-          </Card>
+          </CardColor>
         ))}
       </div>
     </div>

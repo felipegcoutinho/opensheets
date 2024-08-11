@@ -41,21 +41,10 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     setIsDividedChecked,
     setShowParcelas,
     setShowRecorrencia,
-
+    handleDialogClose,
     isPaid,
     setIsPaid,
   } = Utils();
-
-  const handleDialogClose = (val) => {
-    setIsOpen(val);
-    setIsDividedChecked(false);
-    setShowConta(false);
-    setShowCartao(false);
-    setShowParcelas(false);
-    setShowRecorrencia(false);
-    setIsEfetivadoChecked(true);
-    setIsPaid(true);
-  };
 
   // Se showCartao for true, garanta que isPaid seja false
   if (showCartao && isPaid) {
@@ -175,25 +164,16 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 </>
               )}
             </div>
-
-            {/* <Card className="flex w-1/2 gap-2 items-center justify-between">
-              <Select name="realizado" defaultValue={showCartao ? "Pendente" : "Pago"} disabled={showCartao}>
-                <SelectTrigger className="border-none bg-transparent text-neutral-600">
-                  <SelectValue placeholder="Marcar como" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Pago">Pago</SelectItem>
-                  <SelectItem value="Pendente">Pendente</SelectItem>
-                </SelectContent>
-              </Select>
-            </Card> */}
           </div>
 
           <div className="flex w-full gap-2">
             <div className="w-full">
               <Label>Responsável</Label>
               <Required />
-              <Input name="responsavel" placeholder="Responsável" type="text" />
+              <Input list="responsavel-list" name="responsavel" placeholder="Responsável" type="text" />
+              <datalist id="responsavel-list">
+                <option value="Você" />
+              </datalist>
             </div>
 
             {isDividedChecked && (

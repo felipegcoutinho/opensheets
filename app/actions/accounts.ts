@@ -92,7 +92,7 @@ export async function getSumAccountExpense(month, id) {
   const { error, data } = await supabase.from("transacoes").select(`valor`).eq("conta_id", id).eq("periodo", month).eq("tipo_transacao", "Despesa");
 
   if (error) {
-    console.error("Erro ao buscar receitas:", error);
+    console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
@@ -127,10 +127,11 @@ export async function getSumAccountExpensePaid(month) {
     .eq("periodo", month)
     .eq("tipo_transacao", "Despesa")
     .eq("realizado", true)
+    .eq("responsavel", "Você")
     .neq("responsavel", "Sistema");
 
   if (error) {
-    console.error("Erro ao buscar receitas:", error);
+    console.error("Erro ao buscar despesas:", error);
     return null;
   }
 
@@ -148,7 +149,8 @@ export async function getSumAccountIncomePaid(month) {
     .select(`valor`)
     .eq("periodo", month)
     .eq("tipo_transacao", "Receita")
-    .eq("realizado", true);
+    .eq("realizado", true)
+    .neq("responsavel", "Sistema");
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);

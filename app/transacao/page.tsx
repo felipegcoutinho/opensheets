@@ -17,16 +17,23 @@ async function PageTransactions({ searchParams }) {
   const getAccountMap = await getAccount();
   const getTransactionMap = await getTransaction(month);
 
+  const { DateFormat } = UseDates();
+
   function getDescricao(item) {
     const contaDescricao = item.contas?.descricao;
     const cartaoDescricao = item.cartoes?.descricao;
     return contaDescricao ?? cartaoDescricao;
   }
 
-  function DateFormat(dateString) {
-    const [year, month, day] = dateString.split("-");
-    const date = new Date(year, month - 1, day);
-    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
+  function getRowClassNames(item) {
+    let classNames = "";
+    if (item.categoria === "Saldo Anterior") {
+      classNames += " bg-gradient-to-r from-green-50 to-white text-green-700 dark:from-[#0c1c0b] dark:to-black";
+    }
+    if (item.responsavel === "Sistema") {
+      classNames += "bg-gradient-to-r from-neutral-50 to-white text-neutral-500 dark:from-neutral-900 dark:to-black";
+    }
+    return classNames.trim();
   }
 
   return (
@@ -39,11 +46,10 @@ async function PageTransactions({ searchParams }) {
             <TableHead>Data</TableHead>
             <TableHead>Descrição</TableHead>
             <TableHead>Transação</TableHead>
+            <TableHead>Valor</TableHead>
             <TableHead>Condição</TableHead>
             <TableHead>Pagamento</TableHead>
-            {/* <TableHead>Categoria</TableHead> */}
             <TableHead>Responsável</TableHead>
-            <TableHead>Valor</TableHead>
             <TableHead>Conta/Cartão</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
@@ -51,12 +57,7 @@ async function PageTransactions({ searchParams }) {
 
         <TableBody>
           {getTransactionMap?.map((item) => (
-            <TableRow
-              className={`${
-                item.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-50 to-white text-green-700  dark:from-green-950 dark:to-black"
-              }`}
-              key={item.id}
-            >
+            <TableRow className={getRowClassNames(item)} key={item.id}>
               <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
@@ -65,14 +66,34 @@ async function PageTransactions({ searchParams }) {
                 </span>
               </TableCell>
               <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
+              <TableCell>{item.valor}</TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
-              {/* <TableCell>{item.categoria}</TableCell> */}
               <TableCell>{item.responsavel}</TableCell>
-              <TableCell>{item.valor}</TableCell>
               <TableCell>{getDescricao(item)}</TableCell>
               <TableCell className="text-center flex gap-2">
-                <DetailsTransactions />
+                <DetailsTransactions
+                  itemId={item.id}
+                  itemPeriodo={item.periodo}
+                  itemNotas={item.anotacao}
+                  itemDate={item.data_compra}
+                  itemDescricao={item.descricao}
+                  itemCategoria={item.categoria}
+                  itemCondicao={item.condicao}
+                  itemResponsavel={item.responsavel}
+                  itemSegundoResponsavel={item.segundo_responsavel}
+                  itemTipoTransacao={item.tipo_transacao}
+                  itemValor={item.valor}
+                  itemFormaPagamento={item.forma_pagamento}
+                  itemQtdeParcelas={item.qtde_parcela}
+                  itemRecorrencia={item.recorrencia}
+                  itemQtdeRecorrencia={item.qtde_recorrencia}
+                  getAccountMap={getAccountMap}
+                  getCardsMap={getCardsMap}
+                  itemCartao={item.cartoes?.id}
+                  itemConta={item.contas?.id}
+                  itemPaid={item.realizado}
+                />
 
                 <UpdateTransactions
                   itemId={item.id}

@@ -1,6 +1,7 @@
-import { getAccountDetails, getAccountInvoice, getSumAccountExpense, getSumAccountIncome } from "@/app/actions/accounts";
+import { getAccount, getAccountDetails, getAccountInvoice, getSumAccountExpense, getSumAccountIncome } from "@/app/actions/accounts";
+import { getCards } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
-import { Card } from "@/components/ui/card";
+import CardColor, { ColorDot } from "@/components/card-color";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 
@@ -15,22 +16,23 @@ export default async function page({ params, searchParams }) {
   const accountExpense = await getSumAccountExpense(month, params.id);
   const sumAccountIncome = await getSumAccountIncome(month, params.id);
 
+  const getCardsMap = await getCards(month);
+  const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
+
   return (
     <>
       {getAccountDetailMap?.map((item) => (
-        <Card key={item.id} className="flex gap-10 h-32 w-full items-center">
-          <div className="text-xl px-16 flex items-center gap-2">
-            {/* <div className={cn(colorVariants[item.aparencia], "w-8 h-8 rounded-full")} /> */}
-            <div className="bg-black w-8 h-8 rounded-full" />
-            {item.descricao}
+        <CardColor styles="flex gap-10 h-32 w-full items-center" aparencia={item.aparencia} id={item.id}>
+          <div className="px-16 flex items-center gap-2">
+            <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
           </div>
           <div className="leading-relaxed">
             <p>Conta {item.tipo_conta}</p>
-            <p className="text-2xl"> Receitas {sumAccountIncome}</p>
-            <p className="text-2xl"> Despesas {accountExpense}</p>
-            <p className="text-2xl"> Saldo {sumAccountIncome - accountExpense}</p>
+            <p className="text-xl"> Receitas {sumAccountIncome}</p>
+            <p className="text-xl"> Despesas {accountExpense}</p>
+            <p className="text-xl"> Saldo {sumAccountIncome - accountExpense}</p>
           </div>
-        </Card>
+        </CardColor>
       ))}
 
       <Table className="mt-6">
@@ -65,7 +67,28 @@ export default async function page({ params, searchParams }) {
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.valor}</TableCell>
               <TableCell className="text-center flex gap-2">
-                <DetailsTransactions />
+                <DetailsTransactions
+                  itemId={item.id}
+                  itemPeriodo={item.periodo}
+                  itemNotas={item.anotacao}
+                  itemDate={item.data_compra}
+                  itemDescricao={item.descricao}
+                  itemCategoria={item.categoria}
+                  itemCondicao={item.condicao}
+                  itemResponsavel={item.responsavel}
+                  itemSegundoResponsavel={item.segundo_responsavel}
+                  itemTipoTransacao={item.tipo_transacao}
+                  itemValor={item.valor}
+                  itemFormaPagamento={item.forma_pagamento}
+                  itemQtdeParcelas={item.qtde_parcela}
+                  itemRecorrencia={item.recorrencia}
+                  itemQtdeRecorrencia={item.qtde_recorrencia}
+                  getAccountMap={getAccountMap}
+                  getCardsMap={getCardsMap}
+                  itemCartao={item.cartoes?.id}
+                  itemConta={item.contas?.id}
+                  itemPaid={item.realizado}
+                />
               </TableCell>
             </TableRow>
           ))}

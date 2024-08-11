@@ -4,5 +4,5 @@ export const metadata = {
 };
 
 export default function LoginLayout({ children }) {
-  return <>{children}</>;
+  return <main className="flex justify-center mt-20">{children}</main>;
 }

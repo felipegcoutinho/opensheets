@@ -13,9 +13,9 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2Icon } from "lucide-react";
 
-export default function DeleteButton({ handleDelete }) {
+export default function DeleteButton({ handleDelete, isOpen, setIsOpen }) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
         <Trash2Icon size={16} />
       </DialogTrigger>

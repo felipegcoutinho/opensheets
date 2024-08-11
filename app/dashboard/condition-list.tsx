@@ -1,0 +1,32 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getConditions } from "../actions/dashboards";
+
+export async function ConditionList({ month }) {
+  const condicoes = await getConditions(month);
+
+  return (
+    <Card className="h-1/2 max-sm:h-max overflow-y-auto">
+      <CardHeader className="pb-3">
+        <CardTitle>Condições</CardTitle>
+        <CardDescription>Total de Boletos</CardDescription>
+      </CardHeader>
+
+      {condicoes?.length > 0 ? (
+        condicoes?.map((item) => (
+          <CardContent className="grid gap-2 py-1">
+            <div className="grid">
+              <div className="flex items-center justify-between">
+                <span className="text-md">{item.condicao}</span>
+                <span className="text-muted-foreground">R$ {item.sum}</span>
+              </div>
+            </div>
+          </CardContent>
+        ))
+      ) : (
+        <CardContent className="flex items-center justify-start">
+          <span className="text-muted-foreground text-lg">Não há condições disponíveis.</span>
+        </CardContent>
+      )}
+    </Card>
+  );
+}

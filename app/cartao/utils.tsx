@@ -1,16 +1,12 @@
-import { useToast } from "@/components/ui/use-toast";
 import UseOptions from "@/hooks/UseOptions";
 import { useState } from "react";
+import { toast } from "sonner";
 import { addCards, updateCards } from "../actions/cards";
 
 function Utils() {
   const [isOpen, setIsOpen] = useState(false);
-
   const [loading, setLoading] = useState(false);
-
   const [statusPagamento, setStatusPagamento] = useState(false);
-
-  const { toast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,18 +14,10 @@ function Utils() {
     const formData = new FormData(e.target);
     try {
       await addCards(formData);
-      toast({
-        variant: "success",
-        title: "Sucesso!",
-        description: "Cartão adicionado com sucesso!",
-      });
+      toast.success("Cartão adicionado com sucesso!");
       setIsOpen(false);
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Erro ao adicionar Cartão.",
-      });
+      toast.error("Erro ao adicionar Cartão.");
     } finally {
       setLoading(false);
     }
@@ -41,18 +29,10 @@ function Utils() {
     const formData = new FormData(e.target);
     try {
       await updateCards(formData);
-      toast({
-        variant: "updated",
-        title: "Sucesso!",
-        description: "Cartão atualizado com sucesso!",
-      });
+      toast.info("Cartão atualizado com sucesso!");
       setIsOpen(false);
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Erro ao atualizar Cartão.",
-      });
+      toast.error("Erro ao atualizar Cartão.");
     } finally {
       setLoading(false);
     }
@@ -91,8 +71,8 @@ function Utils() {
     { name: "violet", hex: "#8a2be2", label: "Violeta" },
     { name: "purple", hex: "#800080", label: "Roxo" },
     { name: "fuchsia", hex: "#ff00ff", label: "Fúcsia" },
-    { name: "pink", hex: "#ffc0cb", label: "Rosa" },
-    { name: "rose", hex: "#ff007f", label: "Rosa" },
+    { name: "pink", hex: "#ffc0cb", label: "Rosa Claro" },
+    { name: "rose", hex: "#ff007f", label: "Rosa Escuro" },
   ];
 
   return {

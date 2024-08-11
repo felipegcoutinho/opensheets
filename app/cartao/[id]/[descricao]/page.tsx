@@ -1,8 +1,8 @@
-import { getCardDetails, getCardInvoice, getCardSum } from "@/app/actions/cards";
+import { getAccount } from "@/app/actions/accounts";
+import { getCardDetails, getCardInvoice, getCards, getCardSum } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
-import { Card } from "@/components/ui/card";
+import CardColor, { ColorDot } from "@/components/card-color";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UseColors } from "@/hooks/UseColors";
 import { UseDates } from "@/hooks/UseDates";
 import InvoicePayment from "../../invoice-payment";
 
@@ -15,16 +15,15 @@ export default async function page({ params, searchParams }) {
   const getCardInvoiceMap = await getCardInvoice(month, params.id);
   const sumCardSum = await getCardSum(month, params.id);
 
-  const { colorVariants, colorVariantsCard } = UseColors();
+  const getCardsMap = await getCards(month);
+  const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
 
   return (
     <>
       {getCardDetailMap?.map((item) => (
-        <Card key={item.id} className="flex gap-10 h-32 w-full items-center">
+        <CardColor styles="flex gap-10 h-32 w-full items-center" aparencia={item.aparencia} id={item.id}>
           <div className="text-xl px-16 flex items-center gap-2">
-            {/* <div className={cn(colorVariants[item.aparencia], "w-8 h-8 rounded-full")} /> */}
-            <div className="bg-black w-8 h-8 rounded-full" />
-            {item.descricao}
+            <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
           </div>
           <div className="leading-relaxed">
             <p>Vence dia {item.dt_vencimento}</p>
@@ -41,7 +40,7 @@ export default async function page({ params, searchParams }) {
             <InvoicePayment month={month} paramsId={params.id} />
           </div>
           Valor da fatura: R$ {sumCardSum}
-        </Card>
+        </CardColor>
       ))}
 
       <Table className="mt-6">
@@ -76,7 +75,28 @@ export default async function page({ params, searchParams }) {
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.valor}</TableCell>
               <TableCell className="text-center flex gap-2">
-                <DetailsTransactions />
+                <DetailsTransactions
+                  itemId={item.id}
+                  itemPeriodo={item.periodo}
+                  itemNotas={item.anotacao}
+                  itemDate={item.data_compra}
+                  itemDescricao={item.descricao}
+                  itemCategoria={item.categoria}
+                  itemCondicao={item.condicao}
+                  itemResponsavel={item.responsavel}
+                  itemSegundoResponsavel={item.segundo_responsavel}
+                  itemTipoTransacao={item.tipo_transacao}
+                  itemValor={item.valor}
+                  itemFormaPagamento={item.forma_pagamento}
+                  itemQtdeParcelas={item.qtde_parcela}
+                  itemRecorrencia={item.recorrencia}
+                  itemQtdeRecorrencia={item.qtde_recorrencia}
+                  getAccountMap={getAccountMap}
+                  getCardsMap={getCardsMap}
+                  itemCartao={item.cartoes?.id}
+                  itemConta={item.contas?.id}
+                  itemPaid={item.realizado}
+                />
               </TableCell>
             </TableRow>
           ))}

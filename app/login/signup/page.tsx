@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -38,21 +40,17 @@ export default function Login({ searchParams }) {
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
-        <label className="text-md" htmlFor="nome">
-          Seu nome
-        </label>
-        <input className="rounded-md px-4 py-2 bg-inherit border mb-6" name="first_name" required />
-        <input className="rounded-md px-4 py-2 bg-inherit border mb-6" name="last_name" required />
+        <Label>Seu nome</Label>
+        <div className="flex gap-2 mb-3">
+          <Input name="first_name" required />
+          <Input name="last_name" required />
+        </div>
 
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input className="rounded-md px-4 py-2 bg-inherit border mb-6" name="email" placeholder="you@example.com" required />
+        <Label>Email</Label>
+        <Input name="email" placeholder="bill@gates.com" className="mb-3" required />
 
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input className="rounded-md px-4 py-2 bg-inherit border mb-6" type="password" name="password" placeholder="••••••••" required />
+        <Label>Password</Label>
+        <Input type="password" name="password" placeholder="••••••••" className="mb-5" required />
 
         <SubmitButton formAction={signUp} pendingText="Signing Up...">
           Sign Up

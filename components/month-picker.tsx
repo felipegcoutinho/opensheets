@@ -54,14 +54,14 @@ export default function MonthPicker() {
 
   const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
-  const isHomePage = pathname === "/cartao" || pathname === "/conta" || pathname === "/" || pathname === "/login";
+  const isHomePage = pathname === "/cartao" || pathname === "/conta" || pathname === "/" || pathname === "/login" || pathname === "/login/signup";
 
   if (isHomePage) {
     return null;
   }
 
   return (
-    <div className="flex justify-start w-full py-8 my-2 px-4 rounded-lg bg-gradient-to-r from-red-50 to-orange-200 dark:from-blue-800 dark:to-orange-900">
+    <div className="flex justify-start w-full py-8 mb-2 px-4 rounded-lg bg-gradient-to-r from-red-50 to-orange-200 dark:from-blue-800 dark:to-orange-900">
       <button onClick={goToPreviousMonth}>
         <ArrowLeftCircle />
       </button>

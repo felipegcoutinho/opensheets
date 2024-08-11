@@ -10,7 +10,7 @@ function CardBanner({ children }) {
     return null;
   }
   return (
-    <Card className="h-32 p-6 bg-violet-200 dark:bg-blue-950 ring-0 w-full">
+    <Card className="px-6 py-10 bg-emerald-100 dark:bg-orange-950 w-full mb-2">
       <div className="flex justify-between items-center">{children}</div>
     </Card>
   );

@@ -91,7 +91,6 @@ export default function CreateBills({ getAccountMap }) {
             <div className="w-full">
               <Label>Valor</Label>
               <Required />
-              {/* <NumberInput icon={CircleDollarSignIcon} enableStepper={false} placeholder="R$ 0,00" name="valor" /> */}
               <Input name="valor" placeholder="R$ 0,00" type="number" />
             </div>
           </div>
@@ -105,7 +104,10 @@ export default function CreateBills({ getAccountMap }) {
             <div className="w-full">
               <Label>Responsável</Label>
               <Required />
-              <Input name="responsavel" placeholder="Responsável" type="text" />
+              <Input list="responsavel-list" name="responsavel" placeholder="Responsável" type="text" />
+              <datalist id="responsavel-list">
+                <option value="Você" />
+              </datalist>
             </div>
 
             {isDividedChecked && (

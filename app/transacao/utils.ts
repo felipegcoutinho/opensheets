@@ -1,6 +1,6 @@
-import { useToast } from "@/components/ui/use-toast";
 import UseOptions from "@/hooks/UseOptions";
 import { useState } from "react";
+import { toast } from "sonner";
 import { addTransaction, deleteTransaction, updateTransaction } from "../actions/transactions";
 
 export default function Utils() {
@@ -28,8 +28,6 @@ export default function Utils() {
 
   const [isPaid, setIsPaid] = useState(true);
 
-  const { toast } = useToast();
-
   const handleCondicaoChange = (value: string) => {
     setShowParcelas(value === "Parcelado");
     setShowRecorrencia(value === "Recorrente");
@@ -56,10 +54,10 @@ export default function Utils() {
     try {
       formData.append("realizado", isPaid);
       await addTransaction(formData);
-      alert("Transação adicionada com sucesso!");
+      toast.success("Transação adicionada com sucesso!");
       setIsOpen(false);
     } catch (error) {
-      alert("Erro ao adicionar transação.");
+      toast.error("Erro ao adicionar transação.");
     } finally {
       setLoading(false);
     }
@@ -72,10 +70,10 @@ export default function Utils() {
     try {
       formData.append("realizado", isPaid);
       await updateTransaction(formData);
-      alert("Transação atualizada com sucesso!");
+      toast.success("Transação atualizada com sucesso!");
       setIsOpen(false);
     } catch (error) {
-      alert("Erro ao atualizar transação.");
+      toast.error("Erro ao atualizar transação.");
     } finally {
       setLoading(false);
     }
@@ -86,18 +84,9 @@ export default function Utils() {
     const formData = new FormData();
     formData.append("excluir", itemId);
     await deleteTransaction(formData);
-    toast({
-      variant: "success",
-      title: "Sucesso!",
-      description: "Transação removida com sucesso!",
-    });
+    toast.success("Transação removida com sucesso!");
+    setIsOpen(false);
   };
-
-  function formatDate(dateString) {
-    const [year, month, day] = dateString.split("-");
-    const date = new Date(year, month - 1, day);
-    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
-  }
 
   const getMonthOptions = () => {
     const options = [];
@@ -113,6 +102,17 @@ export default function Utils() {
     }
 
     return options;
+  };
+
+  const handleDialogClose = (val) => {
+    setIsOpen(val);
+    setIsDividedChecked(false);
+    setShowConta(false);
+    setShowCartao(false);
+    setShowParcelas(false);
+    setShowRecorrencia(false);
+    setIsEfetivadoChecked(true);
+    setIsPaid(true);
   };
 
   return {
@@ -141,12 +141,11 @@ export default function Utils() {
     loading,
     setLoading,
     handleUpdate,
-    formatDate,
     isEfetivadoChecked,
     setIsEfetivadoChecked,
     isDividedChecked,
     setIsDividedChecked,
-
+    handleDialogClose,
     isPaid,
     setIsPaid,
   };
