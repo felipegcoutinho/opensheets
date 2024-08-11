@@ -149,8 +149,6 @@ export async function getConditions(month) {
     return null;
   }
 
-  console.log(data);
-
   return data;
 }
 
