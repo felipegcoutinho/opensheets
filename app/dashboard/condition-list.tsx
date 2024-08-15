@@ -8,7 +8,7 @@ export async function ConditionList({ month }) {
     <Card className="h-1/2 max-sm:h-max overflow-y-auto">
       <CardHeader className="pb-3">
         <CardTitle>Condições</CardTitle>
-        <CardDescription>Total de Boletos</CardDescription>
+        <CardDescription>Condições em destaque</CardDescription>
       </CardHeader>
 
       {condicoes?.length > 0 ? (

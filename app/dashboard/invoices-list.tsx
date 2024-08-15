@@ -22,7 +22,6 @@ export async function InvoiceList({ month }) {
                 </span>
                 <span className="text-lg text-right p-0 text-muted-foreground">R$ {item.total_valor}</span>
               </div>
-              {/* <span className="text-muted-foreground text-sm">{item.status_pagamento}</span> */}
               <InvoicePayment month={month} paramsId={item.cartao_id} />
             </div>
           </CardContent>

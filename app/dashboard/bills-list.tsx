@@ -8,7 +8,7 @@ export async function BIllsList({ month }) {
     <Card className="h-96 max-sm:h-max overflow-y-auto">
       <CardHeader>
         <CardTitle>Boletos</CardTitle>
-        <CardDescription>Total de Boletos</CardDescription>
+        <CardDescription>Total de boletos</CardDescription>
       </CardHeader>
 
       {invoices.length > 0 ? (

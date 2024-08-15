@@ -9,6 +9,8 @@ import DetailsTransactions from "./modal/details-transactions";
 import UpdateTransactions from "./modal/update-transactions";
 
 async function PageTransactions({ searchParams }) {
+  const { DateFormat } = UseDates();
+
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -16,8 +18,6 @@ async function PageTransactions({ searchParams }) {
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount();
   const getTransactionMap = await getTransaction(month);
-
-  const { DateFormat } = UseDates();
 
   function getDescricao(item) {
     const contaDescricao = item.contas?.descricao;

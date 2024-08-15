@@ -12,10 +12,9 @@ export default async function page({ searchParams }) {
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  const { getPreviousMonth, getPreviousTwoMonth } = UseDates();
+  const { getPreviousMonth } = UseDates();
 
   const previousMonth = getPreviousMonth(month);
-  const previousTwoMonth = getPreviousTwoMonth(month);
 
   // Obter dados do mês atual
   const receitas = await getIncome(month);
@@ -36,7 +35,6 @@ export default async function page({ searchParams }) {
 
   // Calcular previsões
   const previsto = saldoAnterior + receitas - despesasTotal;
-
   const invoices = await getInvoiceList(month);
 
   return (
@@ -83,7 +81,7 @@ export default async function page({ searchParams }) {
         </Card>
       </div>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-2 gap-2 mb-10">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-2 gap-2 mb-10">
         <InvoiceList month={month} />
         <BIllsList month={month} />
 
@@ -91,16 +89,6 @@ export default async function page({ searchParams }) {
           <ConditionList month={month} />
           <PaymentList month={month} />
         </div>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardDescription>Resumo</CardDescription>
-            <CardTitle className="text-4xl">Resumo</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">anterior R$ {saldoAnterior}</div>
-          </CardContent>
-        </Card>
 
         <CountList month={month} />
       </div>

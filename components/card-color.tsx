@@ -56,7 +56,7 @@ export default CardColor;
 export function ColorDot({ aparencia, descricao }) {
   return (
     <CardTitle className="flex items-center gap-2">
-      <div className={cn(colorVariants[aparencia], "w-6 h-6 rounded-full")} />
+      <div className={cn(colorVariants[aparencia], "w-4 h-4 rounded-full")} />
       {descricao}
     </CardTitle>
   );

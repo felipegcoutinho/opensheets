@@ -96,9 +96,6 @@ export default function UpdateCard({
                   <SelectContent>
                     <SelectItem value="Visa">Visa</SelectItem>
                     <SelectItem value="Mastercard">Mastercard</SelectItem>
-                    <SelectItem value="Elo">Elo</SelectItem>
-                    <SelectItem value="Amex">Amex</SelectItem>
-                    <SelectItem value="Hipercard">Hipercard</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
