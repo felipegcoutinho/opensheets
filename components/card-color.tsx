@@ -45,7 +45,7 @@ const colorVariants = {
 
 function CardColor({ aparencia, id, children, styles }) {
   return (
-    <Card className={`${colorVariantsCard[aparencia]}, ${styles}`} key={id}>
+    <Card className={`${colorVariantsCard[aparencia]} ${styles}`} key={id}>
       {children}
     </Card>
   );

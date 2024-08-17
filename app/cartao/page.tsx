@@ -32,7 +32,7 @@ async function PageCards({ searchParams }) {
                 <Image className="mt-0" src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={50} height={50} />
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="leading-relaxed">
               <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
               <p className="text-sm">Vence dia {item.dt_vencimento}</p>
               <p className="text-sm">Cartão {item.tipo}</p>

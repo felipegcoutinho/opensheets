@@ -2,7 +2,7 @@
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
@@ -91,12 +91,12 @@ export default function CreateBills({ getAccountMap }) {
             <div className="w-full">
               <Label>Valor</Label>
               <Required />
-              <Input name="valor" placeholder="R$ 0,00" type="number" />
+              <MoneyInput name="valor" placeholder="R$ 0,00" />
             </div>
           </div>
 
           <div className="flex items-center mt-2 justify-between rounded-lg bg-zinc-100 p-2">
-            <Label>Dividir Boleto</Label>
+            <Label className="text-sm text-neutral-600 font-medium">Dividir Boleto</Label>
             <Switch name="dividir_boleto" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
           </div>
 

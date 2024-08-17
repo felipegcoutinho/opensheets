@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { CheckCircle2, PenLine } from "lucide-react";
+import { PenLine, ThumbsUp } from "lucide-react";
 import Utils from "../utils";
 
 export default function UpdateTransactions({
@@ -119,8 +119,6 @@ export default function UpdateTransactions({
                 <Label>Valor</Label>
                 <Required />
                 <MoneyInput defaultValue={itemValor} name="valor" disabled={itemCondicao === "Parcelado"} />
-
-                <Input defaultValue={itemValor} name="valor" placeholder="Valor" type="number" />
               </div>
             </div>
 
@@ -170,9 +168,9 @@ export default function UpdateTransactions({
                 onPressedChange={() => setIsPaid(!itemPaid)}
                 defaultPressed={itemPaid}
                 name="realizado"
-                className="hover:bg-transparent data-[state=on]:text-green-500 data-[state=off]:text-zinc-400"
+                className="hover:bg-transparent data-[state=on]:text-green-400 data-[state=on]:bg-transparent data-[state=off]:text-zinc-400"
               >
-                <CheckCircle2 strokeWidth={2} className="h-5 w-5" />
+                <ThumbsUp strokeWidth={2} className="h-6 w-6" />
               </Toggle>
             </Card>
 

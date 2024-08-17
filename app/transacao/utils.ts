@@ -40,6 +40,14 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
+    // Formatação do valor antes de enviar
+    const valorFormatado = formData
+      .get("valor")
+      .replace(/[R$\.\s]/g, "")
+      .replace(",", ".");
+    formData.set("valor", valorFormatado);
+
     try {
       formData.append("realizado", isPaid);
       await addTransaction(formData);
@@ -56,6 +64,14 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
+    // Formatação do valor antes de enviar
+    const valorFormatado = formData
+      .get("valor")
+      .replace(/[R$\.\s]/g, "")
+      .replace(",", ".");
+    formData.set("valor", valorFormatado);
+
     try {
       formData.append("realizado", isPaid);
       await updateTransaction(formData);

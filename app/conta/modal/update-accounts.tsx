@@ -32,7 +32,7 @@ export default function UpdateAccount({ itemId, itemDescricao, itemAnotacao, ite
             </div>
 
             <div className="w-full">
-              <Label>Tipo do Cartão</Label>
+              <Label>Tipo da Conta</Label>
               <Required />
               <Select defaultValue={itemTipoConta} name="tipo_conta" required>
                 <SelectTrigger>
@@ -47,7 +47,7 @@ export default function UpdateAccount({ itemId, itemDescricao, itemAnotacao, ite
             </div>
 
             <div className="w-full">
-              <Label>Aparencia</Label>
+              <Label>Aparência</Label>
               <Required />
               <Select defaultValue={itemAparencia} name="aparencia" required>
                 <SelectTrigger>
