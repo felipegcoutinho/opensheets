@@ -28,7 +28,7 @@ export default function CreateBills({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Novo Boleto</Button>
+        <Button variant="mytheme">Novo Boleto</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -53,7 +53,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger asChild>
-        <Button>Nova Transação</Button>
+        <Button variant="mytheme">Nova Transação</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -39,6 +39,7 @@ export default async function page({ searchParams }) {
 
   return (
     <>
+      <h2 className="p-4 text-2xl font-bold tracking-tight first:mt-0">Overview</h2>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <Card>
           <CardHeader className="pb-2">

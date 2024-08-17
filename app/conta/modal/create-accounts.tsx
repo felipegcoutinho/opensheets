@@ -14,7 +14,7 @@ export default function CreateAccount() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Nova Conta</Button>
+        <Button variant="mytheme">Nova Conta</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
