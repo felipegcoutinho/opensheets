@@ -19,7 +19,9 @@ export async function BIllsList({ month }) {
                 <span className="text-xl">
                   <span>{item.descricao}</span>
                 </span>
-                <span className="text-lg text-right p-0 text-muted-foreground">R$ {item.valor}</span>
+                <span className="text-lg text-right p-0 text-muted-foreground">
+                  {Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                </span>
               </div>
 
               <span className="text-muted-foreground text-sm">{item.status_pagamento}</span>

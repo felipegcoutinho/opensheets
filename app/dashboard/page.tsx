@@ -43,40 +43,48 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Receitas</CardDescription>
-            <CardTitle className="text-4xl">{receitas.toFixed(2, 0)}</CardTitle>
+            <CardTitle className="text-4xl">{Number(receitas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">anterior R$ {receitasAnterior}</div>
+            <div className="text-xs text-muted-foreground">
+              anterior {Number(receitasAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Despesas</CardDescription>
-            <CardTitle className="text-4xl">{despesasTotal.toFixed(2, 0)}</CardTitle>
+            <CardTitle className="text-4xl">{Number(despesasTotal).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">anterior R$ {despesasTotalAnterior}</div>
+            <div className="text-xs text-muted-foreground">
+              anterior {Number(despesasTotalAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Balanço</CardDescription>
-            <CardTitle className="text-4xl">{balanco.toFixed(2, 0)}</CardTitle>
+            <CardTitle className="text-4xl">{Number(balanco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">anterior R$ {balancoAnterior}</div>
+            <div className="text-xs text-muted-foreground">
+              anterior {Number(balancoAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Previsto</CardDescription>
-            <CardTitle className="text-4xl">{previsto.toFixed(2, 0)}</CardTitle>
+            <CardTitle className="text-4xl">{Number(previsto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">anterior R$ {saldoAnterior}</div>
+            <div className="text-xs text-muted-foreground">
+              anterior {Number(saldoAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </div>
           </CardContent>
         </Card>
       </div>

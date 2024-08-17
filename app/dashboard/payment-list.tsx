@@ -17,7 +17,7 @@ export async function PaymentList({ month }) {
             <div className="grid">
               <div className="flex items-center justify-between">
                 <span className="text-md">{item.forma_pagamento}</span>
-                <span className="text-muted-foreground">R$ {item.sum}</span>
+                <span className="text-muted-foreground"> {Number(item.sum).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
               </div>
             </div>
           </CardContent>
