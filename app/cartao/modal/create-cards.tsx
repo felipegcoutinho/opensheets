@@ -14,7 +14,7 @@ export default function CreateCard({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="mytheme">Novo Cartão</Button>
+        <Button variant="default">Novo Cartão</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

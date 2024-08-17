@@ -42,15 +42,15 @@ export default function Login({ searchParams }) {
       <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
         <Label>Seu nome</Label>
         <div className="flex gap-2 mb-3">
-          <Input name="first_name" required />
-          <Input name="last_name" required />
+          <Input placeholder="Primeiro nome" name="first_name" required />
+          <Input placeholder="Sobrenome" name="last_name" required />
         </div>
 
         <Label>Email</Label>
-        <Input name="email" placeholder="bill@gates.com" className="mb-3" required />
+        <Input name="email" placeholder="email@opensheets.com" className="mb-3" required />
 
         <Label>Password</Label>
-        <Input type="password" name="password" placeholder="••••••••" className="mb-5" required />
+        <Input type="password" name="password" placeholder="••••••••••••••••" className="mb-5" required />
 
         <SubmitButton formAction={signUp} pendingText="Signing Up...">
           Sign Up
