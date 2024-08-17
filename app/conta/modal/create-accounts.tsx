@@ -14,7 +14,7 @@ export default function CreateAccount() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Nova Conta</Button>
+        <Button variant="mytheme">Nova Conta</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -29,7 +29,7 @@ export default function CreateAccount() {
           </div>
 
           <div className="w-full">
-            <Label>Tipo do Cartão</Label>
+            <Label>Tipo da Conta</Label>
             <Required />
             <Select name="tipo_conta" required>
               <SelectTrigger>
@@ -44,7 +44,7 @@ export default function CreateAccount() {
           </div>
 
           <div className="w-full">
-            <Label>Aparencia</Label>
+            <Label>Aparência</Label>
             <Required />
             <Select name="aparencia" required>
               <SelectTrigger>

@@ -2,6 +2,9 @@ import CardColor, { ColorDot } from "@/components/card-color";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
+import mastercard from "@/public/mastercard.svg";
+import visa from "@/public/visa.png";
+import Image from "next/image";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
 import { deleteCards, getCards } from "../actions/cards";
@@ -23,22 +26,16 @@ async function PageCards({ searchParams }) {
       <div className="grid grid-cols-4 gap-4 mt-4">
         {getCardsMap?.map((item) => (
           <CardColor aparencia={item.aparencia} id={item.id}>
-            <CardHeader>
+            <CardHeader className="flex-row justify-between">
               <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
-              {/* <InvoicePayment month={month} paramsId={item.id} /> */}
-              <CardDescription>{item.bandeira}</CardDescription>
+              <CardDescription>
+                <Image className="mt-0" src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={50} height={50} />
+              </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="leading-relaxed">
               <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
               <p className="text-sm">Vence dia {item.dt_vencimento}</p>
               <p className="text-sm">Cartão {item.tipo}</p>
-              <span className="flex items-center gap-2 mt-2">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                <p className="text-green-500 text-sm">ativo</p>
-              </span>
             </CardContent>
             <CardFooter>
               <div className="flex gap-4">

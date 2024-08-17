@@ -15,7 +15,7 @@ async function PageNotes({ searchParams }) {
   return (
     <div className="mt-4 w-full">
       <CreateNotes>
-        <Button>Nova Anotação</Button>
+        <Button variant="mytheme">Nova Anotação</Button>
       </CreateNotes>
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">

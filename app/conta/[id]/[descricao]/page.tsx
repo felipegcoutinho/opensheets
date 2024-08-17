@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { UseDates } from "@/hooks/UseDates";
 
 export default async function page({ params, searchParams }) {
-  const { currentMonthName, currentYear } = UseDates();
+  const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
@@ -22,15 +22,16 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getAccountDetailMap?.map((item) => (
-        <CardColor styles="flex gap-10 h-32 w-full items-center" aparencia={item.aparencia} id={item.id}>
-          <div className="px-16 flex items-center gap-2">
-            <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
-          </div>
-          <div className="leading-relaxed">
+        <CardColor styles="flex gap-10 p-10 w-full items-center" aparencia={item.aparencia} id={item.id}>
+          <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
+
+          <div className="leading-loose">
             <p>Conta {item.tipo_conta}</p>
-            <p className="text-xl"> Receitas {sumAccountIncome}</p>
-            <p className="text-xl"> Despesas {accountExpense}</p>
-            <p className="text-xl"> Saldo {sumAccountIncome - accountExpense}</p>
+            <p className="text-xl">Receitas {Number(sumAccountIncome).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            <p className="text-xl">Despesas {Number(accountExpense).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            <p className="text-xl">
+              Saldo {Number(sumAccountIncome - accountExpense).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </p>
           </div>
         </CardColor>
       ))}
@@ -53,7 +54,7 @@ export default async function page({ params, searchParams }) {
         <TableBody>
           {getTransactionInvoiceMap?.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>{item.data_compra}</TableCell>
+              <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
                 <span className="text-neutral-400 text-xs px-1">
@@ -65,7 +66,7 @@ export default async function page({ params, searchParams }) {
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.categoria}</TableCell>
               <TableCell>{item.responsavel}</TableCell>
-              <TableCell>{item.valor}</TableCell>
+              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
               <TableCell className="text-center flex gap-2">
                 <DetailsTransactions
                   itemId={item.id}

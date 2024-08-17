@@ -4,12 +4,12 @@ import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { CheckCircle2, PenLine } from "lucide-react";
+import { PenLine, ThumbsUp } from "lucide-react";
 import Utils from "../utils";
 
 export default function UpdateTransactions({
@@ -118,7 +118,7 @@ export default function UpdateTransactions({
               <div className="w-1/2">
                 <Label>Valor</Label>
                 <Required />
-                <Input defaultValue={itemValor} name="valor" placeholder="Valor" type="number" disabled={itemCondicao === "Parcelado"} />
+                <MoneyInput defaultValue={itemValor} name="valor" disabled={itemCondicao === "Parcelado"} />
               </div>
             </div>
 
@@ -168,9 +168,9 @@ export default function UpdateTransactions({
                 onPressedChange={() => setIsPaid(!itemPaid)}
                 defaultPressed={itemPaid}
                 name="realizado"
-                className="hover:bg-transparent data-[state=on]:text-green-500 data-[state=off]:text-zinc-400"
+                className="hover:bg-transparent data-[state=on]:text-green-400 data-[state=on]:bg-transparent data-[state=off]:text-zinc-400"
               >
-                <CheckCircle2 strokeWidth={2} className="h-5 w-5" />
+                <ThumbsUp strokeWidth={2} className="h-6 w-6" />
               </Toggle>
             </Card>
 

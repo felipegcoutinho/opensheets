@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowDownUp } from "lucide-react";
+import { ArrowDownUp, CreditCard, FileSpreadsheetIcon } from "lucide-react";
 import { getBillsCount, getCardsCount, getTransactionsCount } from "../actions/dashboards";
 
 async function CountList({ month }) {
@@ -26,7 +26,7 @@ async function CountList({ month }) {
       <Card className="">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center text-base gap-1">
-            <ArrowDownUp size={16} />
+            <FileSpreadsheetIcon size={16} />
             Boletos
           </CardTitle>
         </CardHeader>
@@ -40,7 +40,7 @@ async function CountList({ month }) {
       <Card className="">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center text-base gap-1">
-            <ArrowDownUp size={16} />
+            <CreditCard size={16} />
             Cartões
           </CardTitle>
         </CardHeader>

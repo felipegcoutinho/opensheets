@@ -12,6 +12,13 @@ function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
+    const limiteFormatado = formData
+      .get("limite")
+      .replace(/[R$\.\s]/g, "")
+      .replace(",", ".");
+    formData.set("limite", limiteFormatado);
+
     try {
       await addCards(formData);
       toast.success("Cartão adicionado com sucesso!");
@@ -27,6 +34,13 @@ function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
+    const limiteFormatado = formData
+      .get("limite")
+      .replace(/[R$\.\s]/g, "")
+      .replace(",", ".");
+    formData.set("limite", limiteFormatado);
+
     try {
       await updateCards(formData);
       toast.info("Cartão atualizado com sucesso!");

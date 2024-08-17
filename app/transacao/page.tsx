@@ -9,15 +9,13 @@ import DetailsTransactions from "./modal/details-transactions";
 import UpdateTransactions from "./modal/update-transactions";
 
 async function PageTransactions({ searchParams }) {
-  const { currentMonthName, currentYear } = UseDates();
+  const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount();
   const getTransactionMap = await getTransaction(month);
-
-  const { DateFormat } = UseDates();
 
   function getDescricao(item) {
     const contaDescricao = item.contas?.descricao;
@@ -66,7 +64,7 @@ async function PageTransactions({ searchParams }) {
                 </span>
               </TableCell>
               <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
-              <TableCell>{item.valor}</TableCell>
+              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.responsavel}</TableCell>

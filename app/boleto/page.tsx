@@ -7,7 +7,7 @@ import DeleteBills from "./modal/delete-bills";
 import UpdateBills from "./modal/update-bills";
 
 async function PageBills({ searchParams }) {
-  const { currentMonthName, currentYear } = UseDates();
+  const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
@@ -23,11 +23,11 @@ async function PageBills({ searchParams }) {
           <TableRow className="border-b text-xs">
             <TableHead>Descrição</TableHead>
             <TableHead>Data de Vencimento</TableHead>
+            <TableHead>Valor</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Responsável</TableHead>
             <TableHead>Categoria</TableHead>
             <TableHead>Condição</TableHead>
-            <TableHead>Valor</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -36,12 +36,12 @@ async function PageBills({ searchParams }) {
           {getBillsMap?.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.descricao}</TableCell>
-              <TableCell>{item.dt_vencimento}</TableCell>
+              <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
+              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
               <TableCell>{item.status_pagamento}</TableCell>
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.categoria}</TableCell>
               <TableCell>{item.condicao}</TableCell>
-              <TableCell>{item.valor}</TableCell>
 
               <TableCell className="flex gap-2">
                 <UpdateBills

@@ -46,7 +46,7 @@ export default async function Banner() {
           <TooltipTrigger asChild>
             <div className="text-right">
               Saldo Atual
-              <p className="text-2xl">R$ {saldo.toFixed(2, 0)}</p>
+              <p className="text-2xl font-bold"> {Number(saldo).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
             </div>
           </TooltipTrigger>
           <TooltipContent>

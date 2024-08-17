@@ -3,13 +3,13 @@ import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { CheckCircle2 } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import Utils from "../utils";
 
 export default function CreateTransactions({ getCardsMap, getAccountMap }) {
@@ -46,7 +46,6 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     setIsPaid,
   } = Utils();
 
-  // Se showCartao for true, garanta que isPaid seja false
   if (showCartao && isPaid) {
     setIsPaid(false);
   }
@@ -54,7 +53,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger asChild>
-        <Button>Nova Transação</Button>
+        <Button variant="mytheme">Nova Transação</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -97,7 +96,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             <div className="w-1/2">
               <Label>Valor</Label>
               <Required />
-              <Input name="valor" placeholder="Valor" type="number" />
+              <MoneyInput name="valor" placeholder="R$ 0,00" />
             </div>
           </div>
 
@@ -141,29 +140,27 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
           </div>
 
           <div className="flex w-full items-center mt-2 gap-2">
-            <Card className="flex w-1/2 gap-2 p-2 items-center justify-between">
-              <Label className="text-sm text-neutral-600 font-medium">Dividir Lançamento</Label>
+            <Card className={`flex gap-2 p-2 items-center justify-between ${showCartao ? "w-full" : "w-1/2"}`}>
+              <Label className="text-sm text-muted-foreground font-medium">Dividir Lançamento</Label>
               <Switch name="dividir_lancamento" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
             </Card>
 
-            <div className="w-1/2">
-              {!showCartao && (
-                <>
-                  <Label className="text-sm text-neutral-600 font-medium">Status do Lançamento</Label>
+            {!showCartao && (
+              <Card className="flex gap-2 w-1/2 px-2 items-center justify-between">
+                <Label className="text-sm text-muted-foreground font-medium">Status do Lançamento</Label>
 
-                  <Toggle
-                    disabled={showCartao}
-                    onPressedChange={() => setIsPaid(!isPaid)}
-                    defaultPressed={true}
-                    pressed={isPaid}
-                    name="realizado"
-                    className="hover:bg-transparent data-[state=on]:text-green-500 data-[state=off]:text-zinc-400"
-                  >
-                    <CheckCircle2 strokeWidth={2} className="h-5 w-5" />
-                  </Toggle>
-                </>
-              )}
-            </div>
+                <Toggle
+                  disabled={showCartao}
+                  onPressedChange={() => setIsPaid(!isPaid)}
+                  defaultPressed={true}
+                  pressed={isPaid}
+                  name="realizado"
+                  className="hover:bg-transparent data-[state=on]:text-green-400 data-[state=on]:bg-transparent data-[state=off]:text-zinc-400"
+                >
+                  <ThumbsUp strokeWidth={2} className="h-6 w-6" />
+                </Toggle>
+              </Card>
+            )}
           </div>
 
           <div className="flex w-full gap-2">

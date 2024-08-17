@@ -137,3 +137,24 @@ export async function getCardSum(month, cartao_id) {
 
   return getCardSum;
 }
+
+export async function getLimite(cartao_id) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("transacoes")
+    .select(`valor`)
+    .eq("cartao_id", cartao_id)
+    .eq("tipo_transacao", "Despesa")
+    .eq("forma_pagamento", "Cartão de Crédito")
+    .eq("realizado", false);
+
+  if (error) {
+    console.error("Erro ao buscar limite:", error);
+    return null;
+  }
+
+  const getLimite = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  return getLimite;
+}

@@ -5,27 +5,16 @@ import { addTransaction, deleteTransaction, updateTransaction } from "../actions
 
 export default function Utils() {
   const { categoriasReceita, categoriasDespesa } = UseOptions();
-
   const [isOpen, setIsOpen] = useState(false);
-
   const [isEfetivadoChecked, setIsEfetivadoChecked] = useState(true);
-
   const [tipoTransacao, setTipoTransacao] = useState("");
-
   const [quantidadeParcelas, setQuantidadeParcelas] = useState("");
-
   const [showParcelas, setShowParcelas] = useState(false);
-
   const [showRecorrencia, setShowRecorrencia] = useState(false);
-
   const [showConta, setShowConta] = useState(false);
-
   const [showCartao, setShowCartao] = useState(false);
-
   const [loading, setLoading] = useState(false);
-
   const [isDividedChecked, setIsDividedChecked] = useState(false);
-
   const [isPaid, setIsPaid] = useState(true);
 
   const handleCondicaoChange = (value: string) => {
@@ -51,6 +40,14 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
+    // Formatação do valor antes de enviar
+    const valorFormatado = formData
+      .get("valor")
+      .replace(/[R$\.\s]/g, "")
+      .replace(",", ".");
+    formData.set("valor", valorFormatado);
+
     try {
       formData.append("realizado", isPaid);
       await addTransaction(formData);
@@ -67,6 +64,14 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
+    // Formatação do valor antes de enviar
+    const valorFormatado = formData
+      .get("valor")
+      .replace(/[R$\.\s]/g, "")
+      .replace(",", ".");
+    formData.set("valor", valorFormatado);
+
     try {
       formData.append("realizado", isPaid);
       await updateTransaction(formData);
