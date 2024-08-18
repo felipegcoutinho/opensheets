@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 import { getAccount } from "../actions/accounts";
@@ -57,7 +58,7 @@ async function PageTransactions({ searchParams }) {
           {getTransactionMap?.map((item) => (
             <TableRow className={getRowClassNames(item)} key={item.id}>
               <TableCell>{DateFormat(item.data_compra)}</TableCell>
-              <TableCell>
+              <TableCell className="font-bold">
                 {item.descricao}
                 <span className="text-muted-foreground text-xs px-1">
                   {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
@@ -67,8 +68,19 @@ async function PageTransactions({ searchParams }) {
               <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
-              <TableCell>{item.responsavel}</TableCell>
+              <TableCell>
+                <Badge
+                  className={`${
+                    item.responsavel === "Você"
+                      ? "bg-transparent bg-blue-100 text-blue-500 hover:bg-transparent"
+                      : "bg-transparent bg-orange-100 text-orange-500 hover:bg-transparent"
+                  }`}
+                >
+                  {item.responsavel}
+                </Badge>
+              </TableCell>
               <TableCell>{getDescricao(item)}</TableCell>
+
               <TableCell className="text-center flex gap-2">
                 <DetailsTransactions
                   itemId={item.id}

@@ -17,10 +17,10 @@ export async function InvoiceList({ month }) {
           <CardContent key={item.cartao_id} className="grid gap-2 pb-2">
             <div className="grid">
               <div className="flex items-center justify-between">
-                <span className="text-xl">
+                <span className="text-xl font-bold">
                   <Link href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}`}>{item.descricao}</Link>
                 </span>
-                <span className="text-lg text-right p-0 text-muted-foreground">
+                <span className="text-xl font-bold text-right p-0 text-muted-foreground">
                   {Number(item.total_valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                 </span>
               </div>
