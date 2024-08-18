@@ -16,15 +16,17 @@ export async function BIllsList({ month }) {
           <CardContent className="grid gap-2 pb-2">
             <div className="grid">
               <div className="flex items-center justify-between">
-                <span className="text-xl">
+                <span className="text-xl font-bold">
                   <span>{item.descricao}</span>
                 </span>
-                <span className="text-lg text-right p-0 text-muted-foreground">
+                <span className="text-xl font-bold text-right p-0 text-muted-foreground">
                   {Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                 </span>
               </div>
 
-              <span className="text-muted-foreground text-sm">{item.status_pagamento}</span>
+              <span className={`text-muted-foreground text-sm ${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
+                {item.status_pagamento}
+              </span>
             </div>
           </CardContent>
         ))
