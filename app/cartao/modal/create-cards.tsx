@@ -32,39 +32,13 @@ export default function CreateCard({ getAccountMap }) {
             <div className="w-1/2">
               <Label>Data de Fechamento</Label>
               <Required />
-              <Select name="dt_fechamento" required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">Dia 1</SelectItem>
-                  <SelectItem value="5">Dia 5</SelectItem>
-                  <SelectItem value="10">Dia 10</SelectItem>
-                  <SelectItem value="15">Dia 15</SelectItem>
-                  <SelectItem value="20">Dia 20</SelectItem>
-                  <SelectItem value="25">Dia 25</SelectItem>
-                  <SelectItem value="30">Dia 30</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input min={1} max={31} name="dt_fechamento" placeholder="Data de Fechamento" type="number" required />
             </div>
 
             <div className="w-1/2">
               <Label>Data de Vencimento</Label>
               <Required />
-              <Select name="dt_vencimento" required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">Dia 1</SelectItem>
-                  <SelectItem value="5">Dia 5</SelectItem>
-                  <SelectItem value="10">Dia 10</SelectItem>
-                  <SelectItem value="15">Dia 15</SelectItem>
-                  <SelectItem value="20">Dia 20</SelectItem>
-                  <SelectItem value="25">Dia 25</SelectItem>
-                  <SelectItem value="30">Dia 30</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input min={1} max={31} name="dt_vencimento" placeholder="Data de Vencimento" type="number" required />
             </div>
           </div>
 

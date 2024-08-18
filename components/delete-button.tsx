@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2Icon } from "lucide-react";
 
-export default function DeleteButton({ handleDelete, isOpen, setIsOpen }) {
+export default function DeleteButton({ handleDelete, isOpen, setIsOpen, itemResponsavel }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <Trash2Icon size={16} />
+        <Trash2Icon size={16} className={`${itemResponsavel === "Sistema" && "hidden"}`} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
