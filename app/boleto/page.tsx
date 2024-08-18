@@ -35,10 +35,10 @@ async function PageBills({ searchParams }) {
         <TableBody>
           {getBillsMap?.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>{item.descricao}</TableCell>
+              <TableCell className="font-bold">{item.descricao}</TableCell>
               <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
               <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
-              <TableCell>{item.status_pagamento}</TableCell>
+              <TableCell className={`${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>{item.status_pagamento}</TableCell>
               <TableCell>{item.responsavel}</TableCell>
               <TableCell>{item.categoria}</TableCell>
               <TableCell>{item.condicao}</TableCell>

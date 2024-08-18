@@ -48,16 +48,11 @@ export default function Utils() {
       .replace(",", ".");
     formData.set("valor", valorFormatado);
 
-    try {
-      formData.append("realizado", isPaid);
-      await addTransaction(formData);
-      toast.success("Transação adicionada com sucesso!");
-      setIsOpen(false);
-    } catch (error) {
-      toast.error("Erro ao adicionar transação.");
-    } finally {
-      setLoading(false);
-    }
+    formData.append("realizado", isPaid);
+    await addTransaction(formData);
+    toast.success("Transação adicionada com sucesso!");
+    setIsOpen(false);
+    setLoading(false);
   };
 
   const handleUpdate = async (e) => {
@@ -65,23 +60,17 @@ export default function Utils() {
     setLoading(true);
     const formData = new FormData(e.target);
 
-    // Formatação do valor antes de enviar
     const valorFormatado = formData
       .get("valor")
       .replace(/[R$\.\s]/g, "")
       .replace(",", ".");
     formData.set("valor", valorFormatado);
 
-    try {
-      formData.append("realizado", isPaid);
-      await updateTransaction(formData);
-      toast.success("Transação atualizada com sucesso!");
-      setIsOpen(false);
-    } catch (error) {
-      toast.error("Erro ao atualizar transação.");
-    } finally {
-      setLoading(false);
-    }
+    formData.append("realizado", isPaid);
+    await updateTransaction(formData);
+    toast.success("Transação atualizada com sucesso!");
+    setIsOpen(false);
+    setLoading(false);
   };
 
   const handleDelete = (itemId) => async (event) => {

@@ -59,7 +59,7 @@ async function PageTransactions({ searchParams }) {
               <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
-                <span className="text-neutral-400 text-xs px-1">
+                <span className="text-muted-foreground text-xs px-1">
                   {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
@@ -116,7 +116,7 @@ async function PageTransactions({ searchParams }) {
                   itemPaid={item.realizado}
                 />
 
-                <DeleteTransactions itemId={item.id} />
+                <DeleteTransactions itemResponsavel={item.responsavel} itemId={item.id} />
               </TableCell>
             </TableRow>
           ))}

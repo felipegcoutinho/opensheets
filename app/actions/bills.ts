@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
-import { addMonths, parse } from "date-fns";
+import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { revalidatePath } from "next/cache";
 
@@ -25,6 +25,7 @@ export async function getBills(month) {
 }
 
 // Adiciona um novo boleto
+
 export async function addBills(formData: FormData) {
   const {
     descricao,
@@ -69,9 +70,6 @@ export async function addBills(formData: FormData) {
     adicionarBoleto(valor / 2, segundo_responsavel, periodo, dt_vencimento);
   }
 
-  const [mesInicial, anoInicial] = periodo.split("-");
-  const dataInicial = parse(`01-${mesInicial}-${anoInicial}`, "dd-MMMM-yyyy", new Date(), { locale: ptBR });
-
   if (condicao === "Vista") {
     if (dividir_boleto === "on") {
       dividirBoleto(valor, periodo, dt_vencimento);
@@ -81,12 +79,20 @@ export async function addBills(formData: FormData) {
   } else if (condicao === "Recorrente") {
     const quantidadeRecorrencias = parseInt(qtde_recorrencia, 10);
 
+    const [mesInicial, anoInicial] = periodo.split("-");
+    const dataInicial = parse(`01-${mesInicial}-${anoInicial}`, "dd-MMMM-yyyy", new Date(), { locale: ptBR });
+
     for (let i = 0; i < quantidadeRecorrencias; i++) {
       const dataRecorrente = addMonths(dataInicial, i);
-      const mesRecorrente = dataRecorrente.toLocaleString("pt-BR", { month: "long" });
-      const anoRecorrente = dataRecorrente.getFullYear();
-      const periodoRecorrente = `${mesRecorrente}-${anoRecorrente}`;
-      const dt_vencimentoRecorrente = dataRecorrente.toISOString().split("T")[0];
+
+      const diaOriginal = new Date(dt_vencimento).getUTCDate();
+      const mesRecorrente = dataRecorrente.getUTCMonth();
+      const anoRecorrente = dataRecorrente.getUTCFullYear();
+
+      const dataRecorrenteComDia = new Date(Date.UTC(anoRecorrente, mesRecorrente, diaOriginal));
+
+      const periodoRecorrente = format(dataRecorrenteComDia, "MMMM-yyyy", { locale: ptBR });
+      const dt_vencimentoRecorrente = dataRecorrenteComDia.toISOString().split("T")[0];
 
       if (dividir_boleto === "on") {
         dividirBoleto(valor, periodoRecorrente, dt_vencimentoRecorrente);

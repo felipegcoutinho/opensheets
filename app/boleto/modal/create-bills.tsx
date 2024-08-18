@@ -71,7 +71,6 @@ export default function CreateBills({ getAccountMap }) {
             <div className="w-1/2">
               <Label>Categoria</Label>
               <Required />
-
               <Select name="categoria">
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
