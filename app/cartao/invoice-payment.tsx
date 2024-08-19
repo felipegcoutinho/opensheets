@@ -31,7 +31,7 @@ export default async function InvoicePayment({ month, paramsId }) {
             <input type="hidden" name="cartao_id" defaultValue={paramsId} />
 
             <Button variant="link" type="submit" className="h-0 p-0 hover:underline text-orange-500 text-sm font-normal">
-              Pagar Fatura
+              Pagar
             </Button>
           </form>
         </>

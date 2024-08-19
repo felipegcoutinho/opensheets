@@ -1,3 +1,4 @@
+import { ColorDot } from "@/components/card-color";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { getInvoiceList } from "../actions/dashboards";
@@ -15,12 +16,19 @@ export async function InvoiceList({ month }) {
       {invoices.length > 0 ? (
         invoices.map((item) => (
           <CardContent key={item.cartao_id} className="grid gap-2 pb-2">
-            <div className="grid">
+            <div className="grid border-b">
               <div className="flex items-center justify-between">
                 <span className="text-xl font-bold">
-                  <Link href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}`}>{item.descricao}</Link>
+                  <ColorDot
+                    aparencia={item.aparencia}
+                    descricao={
+                      <Link className="hover:underline" href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}`}>
+                        {item.descricao}
+                      </Link>
+                    }
+                  />
                 </span>
-                <span className="text-xl font-bold text-right p-0 text-muted-foreground">
+                <span className="text-lg font-bold text-right p-0">
                   {Number(item.total_valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                 </span>
               </div>

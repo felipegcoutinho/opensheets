@@ -14,12 +14,12 @@ export async function BIllsList({ month }) {
       {invoices.length > 0 ? (
         invoices.map((item) => (
           <CardContent className="grid gap-2 pb-2">
-            <div className="grid">
+            <div className="grid border-b">
               <div className="flex items-center justify-between">
-                <span className="text-xl font-bold">
+                <span className="text-lg font-bold">
                   <span>{item.descricao}</span>
                 </span>
-                <span className="text-xl font-bold text-right p-0 text-muted-foreground">
+                <span className="text-lg font-bold text-right p-0">
                   {Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                 </span>
               </div>

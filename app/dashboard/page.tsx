@@ -44,7 +44,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Receitas</CardDescription>
-            <CardTitle className="text-4xl">{Number(receitas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-3xl">{Number(receitas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
@@ -56,7 +56,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Despesas</CardDescription>
-            <CardTitle className="text-4xl">{Number(despesasTotal).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-3xl">{Number(despesasTotal).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
@@ -68,7 +68,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Balanço</CardDescription>
-            <CardTitle className="text-4xl">{Number(balanco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-3xl">{Number(balanco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
@@ -80,7 +80,7 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Previsto</CardDescription>
-            <CardTitle className="text-4xl">{Number(previsto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-3xl">{Number(previsto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
@@ -90,7 +90,7 @@ export default async function page({ searchParams }) {
         </Card>
       </div>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-2 gap-2 mb-10">
+      <div className="w-full grid  sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 mt-2 gap-2 mb-10">
         <InvoiceList month={month} />
         <BIllsList month={month} />
 

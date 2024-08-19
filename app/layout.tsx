@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={`${uiSans.className}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <main className="animate-in max-w-screen-xl flex flex-col mx-auto">
+          <main className="animate-in max-w-screen-xl flex flex-col mx-auto antialiased">
             <Header />
             <Banner />
             <MonthPicker />
