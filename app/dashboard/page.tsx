@@ -1,10 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
-import { getExpense, getExpenseBill, getIncome, getInvoiceList, getLastPrevious } from "../actions/dashboards";
+import { Suspense } from "react";
+import CardComponent from "../../components/card-component";
+import {
+  getBillsByResponsavel,
+  getExpense,
+  getExpenseBill,
+  getExpenseByCategory,
+  getIncome,
+  getIncomeByCategory,
+  getInvoiceList,
+  getLastPrevious,
+} from "../actions/dashboards";
 import { BIllsList } from "./bills-list";
+import Category from "./category";
 import { ConditionList } from "./condition-list";
 import CountList from "./count-list";
-import { InvoiceList } from "./invoices-list";
+import Invoice from "./invoice-list";
 import { PaymentList } from "./payment-list";
 
 export default async function page({ searchParams }) {
@@ -13,7 +25,6 @@ export default async function page({ searchParams }) {
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   const { getPreviousMonth } = UseDates();
-
   const previousMonth = getPreviousMonth(month);
 
   // Obter dados do mês atual
@@ -37,9 +48,16 @@ export default async function page({ searchParams }) {
   const previsto = saldoAnterior + receitas - despesasTotal;
   const invoices = await getInvoiceList(month);
 
+  // Obter dados por categoria
+  const expenseByCategory = await getExpenseByCategory(month);
+  const incomeByCategory = await getIncomeByCategory(month);
+
+  const invoiceCard = await getInvoiceList(month);
+  const invoiceBill = await getBillsByResponsavel(month);
+
   return (
-    <>
-      <h2 className="p-2 text-2xl font-bold tracking-tight first:mt-0">Visão Geral</h2>
+    <Suspense fallback={<span>Carregando...</span>}>
+      <h2 className="p-2 text-2xl font-bold">Visão Geral</h2>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <Card>
           <CardHeader className="pb-2">
@@ -90,17 +108,24 @@ export default async function page({ searchParams }) {
         </Card>
       </div>
 
-      <div className="w-full grid  sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 mt-2 gap-2 mb-10">
-        <InvoiceList month={month} />
-        <BIllsList month={month} />
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-2 gap-2 mb-10">
+        <CardComponent title="Faturas" subtitle="Total de faturas">
+          <Invoice month={month} data={invoiceCard} />
+        </CardComponent>
+
+        <CardComponent title="Boletos" subtitle="Total de boletos">
+          <BIllsList month={month} data={invoiceBill} />
+        </CardComponent>
 
         <div className="flex flex-col gap-2">
           <ConditionList month={month} />
           <PaymentList month={month} />
         </div>
 
+        <Category data={incomeByCategory} title="Receitas por Categorias" />
+        <Category data={expenseByCategory} title="Despesas por Categorias" />
         <CountList month={month} />
       </div>
-    </>
+    </Suspense>
   );
 }

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { CreditCard } from "lucide-react";
 import { Card, CardTitle } from "./ui/card";
 
 const colorVariantsCard = {
@@ -56,7 +57,18 @@ export default CardColor;
 export function ColorDot({ aparencia, descricao }) {
   return (
     <CardTitle className="flex items-center gap-2">
-      <div className={cn(colorVariants[aparencia], "w-4 h-4 rounded-full")} />
+      <div className={cn(colorVariants[aparencia], "w-3 h-3 rounded-full")} />
+      {descricao}
+    </CardTitle>
+  );
+}
+
+export function ColorDotInvoice({ aparencia, descricao }) {
+  return (
+    <CardTitle className="flex gap-2 items-end text-lg">
+      <div className={cn(colorVariants[aparencia], `w-6 h-6 rounded-full flex items-center justify-center`)}>
+        <CreditCard className="w-3 h-3 text-white" />
+      </div>
       {descricao}
     </CardTitle>
   );

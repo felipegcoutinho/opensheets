@@ -18,14 +18,13 @@ import { Row } from "@tanstack/react-table";
 import { ArrowDownLeftFromSquare } from "lucide-react";
 
 import { labels } from "../data/data";
-import { taskSchema } from "../data/schema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
 
 export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original);
+  const task = row.original;
 
   return (
     <DropdownMenu>

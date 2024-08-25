@@ -8,9 +8,9 @@ async function CountList({ month }) {
   const cartoes = await getCardsCount(month);
 
   return (
-    <div className="grid grid-cols-3 col-span-3 gap-2">
-      <Card className="">
-        <CardHeader className="pb-2">
+    <div className="grid grid-cols-1 gap-2">
+      <Card>
+        <CardHeader className="pb-0">
           <CardTitle className="flex items-center text-base gap-1">
             <ArrowDownUp size={16} />
             Transações
@@ -23,8 +23,8 @@ async function CountList({ month }) {
         </CardContent>
       </Card>
 
-      <Card className="">
-        <CardHeader className="pb-2">
+      <Card>
+        <CardHeader className="pb-0">
           <CardTitle className="flex items-center text-base gap-1">
             <FileSpreadsheetIcon size={16} />
             Boletos
@@ -37,8 +37,8 @@ async function CountList({ month }) {
         </CardContent>
       </Card>
 
-      <Card className="">
-        <CardHeader className="pb-2">
+      <Card>
+        <CardHeader className="pb-0">
           <CardTitle className="flex items-center text-base gap-1">
             <CreditCard size={16} />
             Cartões
