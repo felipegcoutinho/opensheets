@@ -7,7 +7,6 @@ export default function UseOptions() {
 
   const categoriasReceita = [
     { id: 1, name: "Salário" },
-    { id: 2, name: "Saldo Inicial" },
     { id: 3, name: "Investimentos" },
     { id: 4, name: "Vendas" },
     { id: 5, name: "Prêmios" },
@@ -35,6 +34,7 @@ export default function UseOptions() {
     { id: 14, name: "Pagamentos" },
     { id: 15, name: "Transporte" },
     { id: 16, name: "Viagem" },
+    { id: 17, name: "Terceiros" },
   ];
 
   return {

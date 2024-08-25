@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/UseDates";
-import { User } from "lucide-react";
+import { CreditCard, FileSpreadsheetIcon, User } from "lucide-react";
 import { getResponsavelBillList, getResponsavelTransactionList } from "../actions/users";
 
 async function PageUsers({ searchParams }) {
@@ -58,39 +57,65 @@ export default PageUsers;
 
 function CardComponent({ responsavel, cartoes, totalCartao, boletos, totalBoleto }) {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-2xl font-bold">{responsavel}</CardTitle>
-        <User size={24} />
+    <Card className="overflow-hidden">
+      <CardHeader className="flex flex-row items-start">
+        <CardTitle className="flex items-center gap-2 text-2xl">
+          <User className="h-6 w-6" />
+          {responsavel}
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <Section title="Transações" total={totalCartao} items={cartoes} />
+
+      <CardContent className="px-6 text-sm">
+        <div className="grid gap-3">
+          <li className="flex items-center justify-between">
+            <span className="text-muted-foreground flex items-center gap-2">
+              <CreditCard size={14} />
+              Cartões
+            </span>
+            <span className="text-lg font-bold text-muted-foreground">
+              {Number(totalCartao).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </span>
+          </li>
+          <ul className="grid gap-3">
+            {Object.entries(cartoes).map(([descricao, valor]) => (
+              <li className="flex items-center justify-between" key={descricao}>
+                <span>{descricao}</span>
+                <span>{Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Separator className="my-4" />
+        <div className="grid gap-3">
+          <li className="flex items-center justify-between">
+            <span className="text-muted-foreground flex items-center gap-2">
+              <FileSpreadsheetIcon size={14} />
+              Boletos
+            </span>
+            <span className="text-lg font-bold text-muted-foreground">
+              {Number(totalBoleto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </span>
+          </li>
+          <ul className="grid gap-3">
+            {Object.entries(boletos).map(([descricao, valor]) => (
+              <li className="flex items-center justify-between" key={descricao}>
+                <span>{descricao}</span>
+                <span>{Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <Separator className="my-2" />
-        <Section title="Boletos" total={totalBoleto} items={boletos} />
-        <Separator className="my-2" />
-        <div className="text-xl font-bold">Total: {totalCartao + totalBoleto}</div>
+
+        <div className="grid gap-3">
+          <li className="flex items-center justify-between font-semibold">
+            <span className="text-muted-foreground">Total</span>
+            <span className="text-xl">{Number(totalCartao + totalBoleto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+          </li>
+        </div>
       </CardContent>
     </Card>
-  );
-}
-
-function Section({ title, total, items }) {
-  return (
-    <>
-      <Popover>
-        <PopoverTrigger>
-          {title}: {total}
-        </PopoverTrigger>
-        <PopoverContent>
-          <p className="font-bold">{title}</p>
-
-          {Object.entries(items).map(([descricao, valor]) => (
-            <p key={descricao}>
-              {descricao}: {valor}
-            </p>
-          ))}
-        </PopoverContent>
-      </Popover>
-    </>
   );
 }
