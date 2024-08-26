@@ -5,7 +5,7 @@ import CardColor, { ColorDot } from "@/components/card-color";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 import mastercard from "@/public/mastercard.svg";
-import visa from "@/public/visa.png";
+import visa from "@/public/visa.svg";
 import Image from "next/image";
 import InvoicePayment from "../../invoice-payment";
 
