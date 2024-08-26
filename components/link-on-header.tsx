@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownUpIcon, CreditCard, FileSpreadsheetIcon, Home, NotebookPenIcon, PiggyBank, Users } from "lucide-react";
+import { ArrowDownUpIcon, BadgeCentIcon, CreditCard, FileSpreadsheetIcon, Home, NotebookPenIcon, PiggyBank, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -42,6 +42,12 @@ function LinkOnHeader({ user }) {
       <Link href="/anotacao">
         <LinkNavButton Icon={NotebookPenIcon} LinkName="Anotações" />
       </Link>
+
+      {user.email === "coutinho@outlook.com" && (
+        <Link href="/investimentos">
+          <LinkNavButton Icon={BadgeCentIcon} LinkName="Investimentos" />
+        </Link>
+      )}
     </>
   );
 }

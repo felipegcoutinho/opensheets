@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2Icon } from "lucide-react";
 import Utils from "../utils";
 
 export default function DeleteCard({ itemId }) {
@@ -19,8 +18,8 @@ export default function DeleteCard({ itemId }) {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Trash2Icon color="red" />
+      <DialogTrigger className="p-0" asChild>
+        <Button variant="link">remover</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

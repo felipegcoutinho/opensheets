@@ -6,21 +6,21 @@ export default function UseOptions() {
   const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 
   const categoriasReceita = [
-    { id: 1, name: "Salário" },
-    { id: 3, name: "Investimentos" },
-    { id: 4, name: "Vendas" },
-    { id: 5, name: "Prêmios" },
-    { id: 6, name: "Presente" },
-    { id: 7, name: "PLR" },
-    { id: 8, name: "Reembolso" },
-    { id: 9, name: "Saldo Anterior" },
-    { id: 10, name: "Outros" },
+    { id: 1, name: "Investimentos" },
+    { id: 2, name: "PLR" },
+    { id: 3, name: "Prêmios" },
+    { id: 4, name: "Presente" },
+    { id: 5, name: "Reembolso" },
+    { id: 6, name: "Salário" },
+    { id: 7, name: "Saldo Anterior" },
+    { id: 8, name: "Vendas" },
+    { id: 9, name: "Outros" },
   ];
 
   const categoriasDespesa = [
     { id: 1, name: "Alimentação" },
     { id: 2, name: "Assinaturas" },
-    { id: 3, name: "Restaurantes" },
+    { id: 3, name: "Bares" },
     { id: 4, name: "Compras" },
     { id: 5, name: "Cuidados pessoais" },
     { id: 6, name: "Educação" },
@@ -29,12 +29,14 @@ export default function UseOptions() {
     { id: 9, name: "Mercado" },
     { id: 10, name: "Moradia" },
     { id: 11, name: "Outros" },
-    { id: 12, name: "Roupas" },
-    { id: 13, name: "Saúde" },
-    { id: 14, name: "Pagamentos" },
-    { id: 15, name: "Transporte" },
-    { id: 16, name: "Viagem" },
-    { id: 17, name: "Terceiros" },
+    { id: 12, name: "Pagamentos" },
+    { id: 13, name: "Restaurantes" },
+    { id: 14, name: "Roupas" },
+    { id: 15, name: "Saúde" },
+    { id: 16, name: "Terceiros" },
+    { id: 17, name: "Trabalho" },
+    { id: 18, name: "Transporte" },
+    { id: 19, name: "Viagem" },
   ];
 
   return {

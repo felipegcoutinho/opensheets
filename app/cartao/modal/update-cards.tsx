@@ -31,6 +31,7 @@ export default function UpdateCard({
         <DialogTrigger className="p-0" asChild>
           <Button variant="link">editar</Button>
         </DialogTrigger>
+
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Editar Cartão</DialogTitle>

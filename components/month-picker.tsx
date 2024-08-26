@@ -54,7 +54,13 @@ export default function MonthPicker() {
 
   const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
-  const isHomePage = pathname === "/cartao" || pathname === "/conta" || pathname === "/" || pathname === "/login" || pathname === "/login/signup";
+  const isHomePage =
+    pathname === "/cartao" ||
+    pathname === "/conta" ||
+    pathname === "/" ||
+    pathname === "/login" ||
+    pathname === "/login/signup" ||
+    pathname === "/investimentos";
 
   if (isHomePage) {
     return null;
