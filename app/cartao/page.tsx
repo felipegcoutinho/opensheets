@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
 import mastercard from "@/public/mastercard.svg";
-import visa from "@/public/visa.png";
+import visa from "@/public/visa.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { getAccount } from "../actions/accounts";
@@ -29,7 +29,7 @@ async function PageCards({ searchParams }) {
             <CardHeader className="flex-row justify-between">
               <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
               <CardDescription>
-                <Image className="mt-0" src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={50} height={50} />
+                <Image className="mt-0" src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={65} height={65} />
               </CardDescription>
             </CardHeader>
             <CardContent className="leading-relaxed">
