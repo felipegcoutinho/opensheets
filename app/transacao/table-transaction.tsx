@@ -7,9 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UseDates } from "@/hooks/UseDates";
 import {
-  ColumnFiltersState,
+  FilterFn,
   PaginationState,
   SortingState,
   VisibilityState,
@@ -20,8 +21,23 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MessageSquareText } from "lucide-react";
 import * as React from "react";
+
+// Função personalizada para filtrar em várias colunas
+const customGlobalFilter: FilterFn<any> = (row, columnId, filterValue) => {
+  const searchValue = filterValue.toLowerCase();
+
+  return (
+    row.original.contaCartao?.toLowerCase().includes(searchValue) ||
+    row.original.descricao?.toLowerCase().includes(searchValue) ||
+    row.original.condicao?.toLowerCase().includes(searchValue) ||
+    row.original.forma_pagamento?.toLowerCase().includes(searchValue) ||
+    row.original.responsavel?.toLowerCase().includes(searchValue) ||
+    row.original.tipo_transacao?.toLowerCase().includes(searchValue) ||
+    row.original.valor?.toString().toLowerCase().includes(searchValue)
+  );
+};
 
 function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -41,8 +57,30 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
     accessorKey: "descricao",
     header: "Descrição",
-    cell: ({ row }) => <span className="capitalize font-bold">{row.getValue("descricao")}</span>,
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <span>
+          <span className="capitalize font-bold">{row.getValue("descricao")}</span>
+          <span className="text-muted-foreground font-bold text-xs px-1">
+            {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
+          </span>
+
+          {item.anotacao != "" && (
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <MessageSquareText className="text-muted-foreground" size={14} />
+                </TooltipTrigger>
+                <TooltipContent>{item.anotacao}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </span>
+      );
+    },
   },
+
   {
     accessorKey: "tipo_transacao",
     header: "Transacao",
@@ -79,9 +117,17 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     header: () => <div>Pagamento</div>,
     cell: ({ row }) => <div className="capitalize">{row.getValue("forma_pagamento")}</div>,
   },
+
   {
     accessorKey: "responsavel",
-    header: "Responsável",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" className="text-xs p-0" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Responsável
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -91,6 +137,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       );
     },
   },
+
   {
     accessorKey: "contaCartao",
     header: () => <span>Conta/Cartão</span>,
@@ -168,7 +215,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
 export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = React.useState(""); // Estado para filtro global
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState<PaginationState>({
@@ -183,53 +230,40 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    onPaginationChange: setPagination,
     state: {
       sorting,
-      columnFilters,
+      globalFilter,
       columnVisibility,
       rowSelection,
       pagination,
     },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setGlobalFilter, // Adiciona o filtro global
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: customGlobalFilter, // Aplica a função de filtro global personalizada
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
   });
 
   return (
     <div className="w-full">
       <div className="flex gap-2 justify-end items-center py-2">
-        <Input
-          placeholder="Filtrar Responsável"
-          value={(table.getColumn("responsavel")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("responsavel")?.setFilterValue(event.target.value)}
-          className="max-w-44"
-        />
-
-        <Input
-          placeholder="Filtrar Conta/Cartão"
-          value={(table.getColumn("contaCartao")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("contaCartao")?.setFilterValue(event.target.value)}
-          className="max-w-44"
-        />
+        <Input placeholder="Pesquisar" value={globalFilter} onChange={(event) => setGlobalFilter(event.target.value)} className="max-w-52" />
       </div>
       <>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow className="text-xs" key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>

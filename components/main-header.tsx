@@ -89,7 +89,7 @@ export default async function Header() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Ajustes</DropdownMenuItem>
+            {user && <DropdownMenuItem>Ajustes</DropdownMenuItem>}
             <AuthButton />
           </DropdownMenuContent>
         </DropdownMenu>
