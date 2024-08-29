@@ -14,7 +14,7 @@ export async function getTransaction(month) {
       forma_pagamento, anotacao, responsavel, segundo_responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
       qtde_recorrencia, cartoes (id, descricao), contas (id, descricao)`
     )
-    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false })
     .eq("periodo", month);
 
   if (error) {

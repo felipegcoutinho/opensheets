@@ -24,26 +24,29 @@ import {
 import { ArrowUpDown, MessageSquareText } from "lucide-react";
 import * as React from "react";
 
-// Função personalizada para filtrar em várias colunas
-const customGlobalFilter: FilterFn<any> = (row, columnId, filterValue) => {
-  const searchValue = filterValue.toLowerCase();
-
-  return (
-    row.original.contaCartao?.toLowerCase().includes(searchValue) ||
-    row.original.descricao?.toLowerCase().includes(searchValue) ||
-    row.original.condicao?.toLowerCase().includes(searchValue) ||
-    row.original.forma_pagamento?.toLowerCase().includes(searchValue) ||
-    row.original.responsavel?.toLowerCase().includes(searchValue) ||
-    row.original.tipo_transacao?.toLowerCase().includes(searchValue) ||
-    row.original.valor?.toString().toLowerCase().includes(searchValue)
-  );
-};
-
 function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
   const cartaoDescricao = row.cartoes?.descricao;
   return contaDescricao ?? cartaoDescricao;
 }
+
+// Função personalizada para filtrar em várias colunas
+const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
+  const searchValue = filterValue.toLowerCase();
+
+  // Pega a descrição da conta ou cartão
+  const descricaoContaCartao = getDescricao(row.original).toLowerCase();
+
+  return (
+    row.original.descricao?.toLowerCase().includes(searchValue) ||
+    row.original.condicao?.toLowerCase().includes(searchValue) ||
+    row.original.forma_pagamento?.toLowerCase().includes(searchValue) ||
+    row.original.responsavel?.toLowerCase().includes(searchValue) ||
+    row.original.tipo_transacao?.toLowerCase().includes(searchValue) ||
+    row.original.valor?.toString().toLowerCase().includes(searchValue) ||
+    descricaoContaCartao.includes(searchValue)
+  );
+};
 
 export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
@@ -144,14 +147,10 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       const descricao = getDescricao(item);
-
       return <div className="capitalize">{descricao}</div>;
     },
-    filterFn: (row, columnId, filterValue) => {
-      const descricao = getDescricao(row.original);
-      return descricao.toLowerCase().includes(filterValue.toLowerCase());
-    },
   },
+
   {
     id: "actions",
     header: () => <span>Ações</span>,
@@ -215,7 +214,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
 export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = React.useState(""); // Estado para filtro global
+  const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState<PaginationState>({
