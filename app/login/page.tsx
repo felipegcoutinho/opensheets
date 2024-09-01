@@ -6,7 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "../../components/submit-button";
 
-export default function Login() {
+export default function Login({ searchParams }) {
   const signIn = async (formData) => {
     "use server";
 
@@ -38,6 +38,12 @@ export default function Login() {
         <SubmitButton formAction={signIn} pendingText="Signing In...">
           Sign In
         </SubmitButton>
+
+        {searchParams?.message && (
+          <p className="mt-4 p-4 bg-red-50 text-foreground text-center">
+            Não foi possível autenticar o usuário. Por favor, tente novamente ou verifique suas credenciais.
+          </p>
+        )}
 
         <Button variant={"link"} asChild className="w-full">
           <Link href="/login/signup">Não possui conta? Faça o cadastro</Link>

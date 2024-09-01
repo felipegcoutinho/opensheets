@@ -84,17 +84,13 @@ export default async function page({ params, searchParams }) {
                   itemCategoria={item.categoria}
                   itemCondicao={item.condicao}
                   itemResponsavel={item.responsavel}
-                  itemSegundoResponsavel={item.segundo_responsavel}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
                   itemQtdeParcelas={item.qtde_parcela}
                   itemRecorrencia={item.recorrencia}
                   itemQtdeRecorrencia={item.qtde_recorrencia}
-                  getAccountMap={getAccountMap}
-                  getCardsMap={getCardsMap}
-                  itemCartao={item.cartoes?.id}
-                  itemConta={item.contas?.id}
+                  itemConta={item.contas?.descricao}
                   itemPaid={item.realizado}
                 />
               </TableCell>

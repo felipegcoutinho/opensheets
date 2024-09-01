@@ -62,11 +62,14 @@ export default function Utils() {
     setLoading(true);
     const formData = new FormData(e.target);
 
-    const valorFormatado = formData
-      .get("valor")
-      .replace(/[R$\.\s]/g, "")
-      .replace(",", ".");
-    formData.set("valor", valorFormatado);
+    const condicao = formData.get("condicao");
+    if (condicao !== "Parcelado") {
+      const valorFormatado = formData
+        .get("valor")
+        .replace(/[R$\.\s]/g, "")
+        .replace(",", ".");
+      formData.set("valor", valorFormatado);
+    }
 
     formData.append("realizado", isPaid);
     await updateTransaction(formData);
