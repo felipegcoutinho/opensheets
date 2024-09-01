@@ -24,7 +24,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MessageSquareText } from "lucide-react";
+import { ArrowUpDown, CalendarClockIcon, Check, MessageSquareText, RefreshCw, Users } from "lucide-react";
 import * as React from "react";
 
 function getDescricao(row) {
@@ -72,17 +72,33 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <span>
+        <span className="flex items-center gap-1">
           <span className="capitalize font-bold">{row.getValue("descricao")}</span>
-          <span className="text-muted-foreground font-bold text-xs px-1">
-            {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
-          </span>
+
+          {item.condicao === "Parcelado" && (
+            <span className="text-muted-foreground text-xs">
+              {item.parcela_atual} de {item.qtde_parcela}
+            </span>
+          )}
+
+          {item.dividir_lancamento === true && (
+            <span className="px-1">
+              <TooltipProvider delayDuration={300}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Users className="text-muted-foreground" size={12} />
+                  </TooltipTrigger>
+                  <TooltipContent>Conta Dividida</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </span>
+          )}
 
           {item.anotacao != "" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
-                  <MessageSquareText className="text-muted-foreground" size={14} />
+                  <MessageSquareText className="text-muted-foreground" size={12} />
                 </TooltipTrigger>
                 <TooltipContent>{item.anotacao}</TooltipContent>
               </Tooltip>
@@ -125,6 +141,18 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     accessorKey: "condicao",
     header: () => <div>Condição</div>,
     cell: ({ row }) => <div className="capitalize">{row.getValue("condicao")}</div>,
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <span className="flex items-center gap-1">
+          {item.condicao === "Parcelado" && <CalendarClockIcon size={12} />}
+          {item.condicao === "Recorrente" && <RefreshCw size={12} />}
+          {item.condicao === "Vista" && <Check size={12} />}
+
+          <span className="capitalize">{row.getValue("condicao")}</span>
+        </span>
+      );
+    },
   },
   {
     accessorKey: "forma_pagamento",
@@ -205,7 +233,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             itemCategoria={item.categoria}
             itemCondicao={item.condicao}
             itemResponsavel={item.responsavel}
-            itemSegundoResponsavel={item.segundo_responsavel}
             itemTipoTransacao={item.tipo_transacao}
             itemValor={item.valor}
             itemFormaPagamento={item.forma_pagamento}

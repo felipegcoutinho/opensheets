@@ -84,7 +84,6 @@ export default async function page({ params, searchParams }) {
                   itemCategoria={item.categoria}
                   itemCondicao={item.condicao}
                   itemResponsavel={item.responsavel}
-                  itemSegundoResponsavel={item.segundo_responsavel}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
