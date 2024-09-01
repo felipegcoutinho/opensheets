@@ -76,7 +76,7 @@ export function ColorDotInvoice({ aparencia, descricao }) {
 
 export function ColorDotTable({ aparencia, descricao }) {
   return (
-    <CardTitle className="flex gap-2 items-end text-md items-center">
+    <CardTitle className="flex gap-2 text-md items-center">
       <div className={cn(colorVariants[aparencia], `w-3 h-3 rounded-full`)}></div>
       {descricao}
     </CardTitle>

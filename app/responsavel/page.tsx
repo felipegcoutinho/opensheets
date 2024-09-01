@@ -1,4 +1,4 @@
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/UseDates";

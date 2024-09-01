@@ -1,4 +1,4 @@
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";

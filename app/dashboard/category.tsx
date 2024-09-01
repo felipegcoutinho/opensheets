@@ -1,7 +1,7 @@
 "use client";
 
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 

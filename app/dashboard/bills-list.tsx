@@ -1,5 +1,5 @@
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BIllsList({ month }) {

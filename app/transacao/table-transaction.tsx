@@ -5,7 +5,7 @@ import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import UpdateTransactions from "@/app/transacao/modal/update-transactions";
 import { ColorDotTable } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
