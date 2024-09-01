@@ -28,7 +28,7 @@ export async function getCardInvoice(month, cartao_id) {
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao, aparencia), contas (id, descricao, aparencia)`
+      qtde_recorrencia, cartoes (id, descricao, aparencia)`
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)

@@ -2,6 +2,7 @@ import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
+import { createClient } from "@/utils/supabase/server";
 import { getInvest } from "../actions/invest";
 import InvestComponent from "./chart";
 import CreateInvestimento from "./modal/create-invest";
@@ -15,6 +16,16 @@ async function page() {
   const calculateDifference = (currentValue, previousValue) => {
     return currentValue - previousValue;
   };
+
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user?.id !== "3e531380-1b62-4364-914f-f16c44e57272") {
+    return <div>Você não tem permissão para acessar essa página</div>;
+  }
 
   return (
     <div className="mt-4 w-full">
@@ -46,14 +57,12 @@ async function page() {
 
             return (
               <TableRow key={item.id} className="whitespace-nowrap">
-                <TableCell className="font-bold">{item.id}</TableCell>
+                <TableCell className="font-bold">#{item.id}</TableCell>
                 <TableCell>{DateFormat(item.data)}</TableCell>
                 <TableCell>
                   <Numbers number={item.valor} />
                 </TableCell>
-                <TableCell className={differenceClass}>
-                  {difference ? difference.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) : "-"}
-                </TableCell>
+                <TableCell className={differenceClass}>{difference ? <Numbers number={difference} /> : "-"}</TableCell>
                 <TableCell>
                   <UpdateInvest itemId={item.id} itemData={item.data} itemValor={item.valor} />
                   <span className="pl-2">

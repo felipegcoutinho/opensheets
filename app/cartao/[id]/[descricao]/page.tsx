@@ -116,7 +116,6 @@ export default async function page({ params, searchParams }) {
                   itemRecorrencia={item.recorrencia}
                   itemQtdeRecorrencia={item.qtde_recorrencia}
                   itemCartao={item.cartoes?.descricao}
-                  itemConta={item.contas?.descricao}
                   itemPaid={item.realizado}
                 />
               </TableCell>
