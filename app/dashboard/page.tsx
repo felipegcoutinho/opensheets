@@ -1,3 +1,4 @@
+import Numbers from "@/components/Numbers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/UseDates";
 import { Suspense } from "react";
@@ -62,11 +63,13 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Receitas</CardDescription>
-            <CardTitle className="text-3xl">{Number(receitas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-2xl">
+              <Numbers number={receitas} />
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
-              anterior {Number(receitasAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              anterior <Numbers number={receitasAnterior} />
             </div>
           </CardContent>
         </Card>
@@ -74,11 +77,13 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Despesas</CardDescription>
-            <CardTitle className="text-3xl">{Number(despesasTotal).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-2xl">
+              <Numbers number={despesasTotal} />
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
-              anterior {Number(despesasTotalAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              anterior <Numbers number={despesasTotalAnterior} />
             </div>
           </CardContent>
         </Card>
@@ -86,11 +91,13 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Balanço</CardDescription>
-            <CardTitle className="text-3xl">{Number(balanco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-2xl">
+              <Numbers number={balanco} />
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
-              anterior {Number(balancoAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              anterior <Numbers number={balancoAnterior} />
             </div>
           </CardContent>
         </Card>
@@ -98,11 +105,13 @@ export default async function page({ searchParams }) {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Previsto</CardDescription>
-            <CardTitle className="text-3xl">{Number(previsto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
+            <CardTitle className="text-2xl">
+              <Numbers number={previsto} />
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-xs text-muted-foreground">
-              anterior {Number(saldoAnterior).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              anterior <Numbers number={saldoAnterior} />
             </div>
           </CardContent>
         </Card>

@@ -1,3 +1,5 @@
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import { Fira_Sans, Gabarito, Inter } from "next/font/google";
 import localFont from "next/font/local";
 
@@ -12,4 +14,4 @@ const uiSans = localFont({
     { path: "../fonts/ui-sans-v9-bold.woff2", weight: "600", style: "normal" },
   ],
 });
-export { firaSans, gabarito, inter, uiSans };
+export { firaSans, gabarito, GeistMono, GeistSans, inter, uiSans };

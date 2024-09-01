@@ -1,3 +1,5 @@
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/Numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 import { getAccount } from "../actions/accounts";
@@ -31,41 +33,52 @@ async function PageBills({ searchParams }) {
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
-
         <TableBody>
-          {getBillsMap?.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell className="font-bold">{item.descricao}</TableCell>
-              <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
-              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
-              <TableCell className={`${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>{item.status_pagamento}</TableCell>
-              <TableCell>{item.responsavel}</TableCell>
-              <TableCell>{item.categoria}</TableCell>
-              <TableCell>{item.condicao}</TableCell>
+          {getBillsMap?.length !== 0 ? (
+            getBillsMap?.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="font-bold">{item.descricao}</TableCell>
+                <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
+                <TableCell>
+                  <Numbers number={item.valor} />
+                </TableCell>
+                <TableCell className={`${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
+                  {item.status_pagamento}
+                </TableCell>
+                <TableCell>{item.responsavel}</TableCell>
+                <TableCell>{item.categoria}</TableCell>
+                <TableCell>{item.condicao}</TableCell>
 
-              <TableCell className="flex gap-2">
-                <UpdateBills
-                  itemId={item.id}
-                  itemDescricao={item.descricao}
-                  itemPeriodo={item.periodo}
-                  itemDtVencimento={item.dt_vencimento}
-                  itemStatusPagamento={item.status_pagamento}
-                  itemResponsavel={item.responsavel}
-                  itemSegundoResponsavel={item.segundo_responsavel}
-                  itemCategoria={item.categoria}
-                  itemValor={item.valor}
-                  itemDtPagamento={item.dt_pagamento}
-                  itemAnotacao={item.anotacao}
-                  itemCondicao={item.condicao}
-                  itemQtdeRecorrencia={item.qtde_recorrencia}
-                  getAccountMap={getAccountMap}
-                  itemContaId={item.contas?.id}
-                />
+                <TableCell className="flex gap-2">
+                  <UpdateBills
+                    itemId={item.id}
+                    itemDescricao={item.descricao}
+                    itemPeriodo={item.periodo}
+                    itemDtVencimento={item.dt_vencimento}
+                    itemStatusPagamento={item.status_pagamento}
+                    itemResponsavel={item.responsavel}
+                    itemSegundoResponsavel={item.segundo_responsavel}
+                    itemCategoria={item.categoria}
+                    itemValor={item.valor}
+                    itemDtPagamento={item.dt_pagamento}
+                    itemAnotacao={item.anotacao}
+                    itemCondicao={item.condicao}
+                    itemQtdeRecorrencia={item.qtde_recorrencia}
+                    getAccountMap={getAccountMap}
+                    itemContaId={item.contas?.id}
+                  />
 
-                <DeleteBills itemId={item.id} />
+                  <DeleteBills itemId={item.id} />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={8} className="text-center">
+                <EmptyCard width={100} height={100} />
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>

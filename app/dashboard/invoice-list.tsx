@@ -1,5 +1,7 @@
 import { ColorDotInvoice } from "@/components/card-color";
-import { ArrowUpRight, ShieldQuestion } from "lucide-react";
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/Numbers";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import InvoicePayment from "../cartao/invoice-payment";
 
@@ -30,17 +32,16 @@ export default function Invoice({ data, month }) {
                 )}
               </div>
               <div className="text-right">
-                <p className="font-bold">{Number(item.total_valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                <p className="font-bold">
+                  <Numbers number={item.total_valor} />
+                </p>
                 <InvoicePayment month={month} paramsId={item.cartao_id} />
               </div>
             </div>
           </li>
         ))
       ) : (
-        <div className="flex flex-col items-center justify-center h-64">
-          <ShieldQuestion className="h-8 w-8 text-muted-foreground" />
-          <span className="text-muted-foreground">Não há dados disponíveis.</span>
-        </div>
+        <EmptyCard width={100} height={100} />
       )}
     </ul>
   );

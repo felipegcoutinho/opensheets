@@ -6,11 +6,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 
 export default function MonthPicker() {
+  const { optionsMeses } = UseDates();
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
-  const { optionsMeses } = UseDates();
 
   const defaultMonth = new Date().toLocaleString("pt-BR", { month: "long" });
   const defaultYear = new Date().getFullYear();
@@ -67,7 +67,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex justify-start w-full py-8 mb-2 px-4 rounded-lg bg-violet-50 dark:bg-stone-900">
+    <div className="flex justify-start w-full py-8 mb-2 px-4 rounded-lg bg-orange-50 dark:bg-stone-900">
       <button onClick={goToPreviousMonth}>
         <ArrowLeftCircle />
       </button>
