@@ -1,4 +1,5 @@
-import { ShieldQuestion } from "lucide-react";
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/Numbers";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BIllsList({ month }) {
@@ -12,7 +13,9 @@ export async function BIllsList({ month }) {
             <div className="grid">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-bold">{item.descricao}</p>
-                <p className="font-bold">{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                <p className="font-bold">
+                  <Numbers number={item.valor} />
+                </p>
               </div>
 
               <p className={`text-muted-foreground text-sm ${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
@@ -22,10 +25,7 @@ export async function BIllsList({ month }) {
           </div>
         ))
       ) : (
-        <div className="flex flex-col items-center justify-center h-64">
-          <ShieldQuestion className="h-8 w-8 text-muted-foreground" />
-          <span className="text-muted-foreground">Não há dados disponíveis.</span>
-        </div>
+        <EmptyCard width={100} height={100} />
       )}
     </>
   );

@@ -1,4 +1,6 @@
 import UseOptions from "@/hooks/UseOptions";
+import { addMonths, format, parse } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
 import { addTransaction, deleteTransaction, updateTransaction } from "../actions/transactions";
@@ -98,6 +100,30 @@ export default function Utils() {
     return options;
   };
 
+  function MonthUppercase(itemPeriodo) {
+    const data = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
+    let periodoFormatado = format(data, "MMMM 'de' yyyy", { locale: ptBR });
+    periodoFormatado = periodoFormatado.charAt(0).toUpperCase() + periodoFormatado.slice(1);
+
+    return periodoFormatado;
+  }
+
+  function calcularMesFinal(itemPeriodo, itemQtdeParcelas) {
+    // Parse o itemPeriodo para um objeto Date
+    const dataInicial = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
+
+    // Adicione a quantidade de parcelas à data inicial
+    const dataFinal = addMonths(dataInicial, itemQtdeParcelas - 1);
+
+    // Formate a data final para o formato "MMMM 'de' yyyy"
+    let mesFinal = format(dataFinal, "MMMM 'de' yyyy", { locale: ptBR });
+
+    // Capitaliza a primeira letra do mês
+    mesFinal = mesFinal.charAt(0).toUpperCase() + mesFinal.slice(1);
+
+    return mesFinal;
+  }
+
   const handleDialogClose = (val) => {
     setIsOpen(val);
     setIsDividedChecked(false);
@@ -142,5 +168,7 @@ export default function Utils() {
     handleDialogClose,
     isPaid,
     setIsPaid,
+    MonthUppercase,
+    calcularMesFinal,
   };
 }

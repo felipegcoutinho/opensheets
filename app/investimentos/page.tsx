@@ -1,3 +1,4 @@
+import Numbers from "@/components/Numbers";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
@@ -47,7 +48,9 @@ async function page() {
               <TableRow key={item.id} className="whitespace-nowrap">
                 <TableCell className="font-bold">{item.id}</TableCell>
                 <TableCell>{DateFormat(item.data)}</TableCell>
-                <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
+                <TableCell>
+                  <Numbers number={item.valor} />
+                </TableCell>
                 <TableCell className={differenceClass}>
                   {difference ? difference.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) : "-"}
                 </TableCell>

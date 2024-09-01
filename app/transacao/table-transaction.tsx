@@ -3,6 +3,9 @@
 import DeleteTransactions from "@/app/transacao/modal/delete-transactions";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import UpdateTransactions from "@/app/transacao/modal/update-transactions";
+import { ColorDotTable } from "@/components/card-color";
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/Numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +31,12 @@ function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
   const cartaoDescricao = row.cartoes?.descricao;
   return contaDescricao ?? cartaoDescricao;
+}
+
+function getColor(row) {
+  const contaAparencia = row.contas?.aparencia;
+  const cartaoAparencia = row.cartoes?.aparencia;
+  return contaAparencia ?? cartaoAparencia;
 }
 
 // Função personalizada para filtrar em várias colunas
@@ -107,7 +116,9 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{Number(row.getValue("valor")).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</div>
+      <div className="capitalize">
+        <Numbers number={row.getValue("valor")} />
+      </div>
     ),
   },
   {
@@ -147,7 +158,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       const descricao = getDescricao(item);
-      return <div className="capitalize">{descricao}</div>;
+      const aparencia = getColor(item);
+      return (
+        <div className="flex items-center gap-2">
+          <ColorDotTable aparencia={aparencia} descricao={descricao} />
+        </div>
+      );
     },
   },
 
@@ -168,17 +184,15 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             itemCategoria={item.categoria}
             itemCondicao={item.condicao}
             itemResponsavel={item.responsavel}
-            itemSegundoResponsavel={item.segundo_responsavel}
             itemTipoTransacao={item.tipo_transacao}
             itemValor={item.valor}
             itemFormaPagamento={item.forma_pagamento}
             itemQtdeParcelas={item.qtde_parcela}
+            itemParcelaAtual={item.parcela_atual}
             itemRecorrencia={item.recorrencia}
             itemQtdeRecorrencia={item.qtde_recorrencia}
-            getAccountMap={getAccountMap}
-            getCardsMap={getCardsMap}
-            itemCartao={item.cartoes?.id}
-            itemConta={item.contas?.id}
+            itemCartao={item.cartoes?.descricao}
+            itemConta={item.contas?.descricao}
             itemPaid={item.realizado}
           />
 
@@ -278,7 +292,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  <EmptyCard width={100} height={100} />
                 </TableCell>
               </TableRow>
             )}

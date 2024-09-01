@@ -12,7 +12,7 @@ export async function getTransaction(month) {
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, segundo_responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao), contas (id, descricao)`
+      qtde_recorrencia, cartoes (id, descricao, aparencia), contas (id, descricao, aparencia)`
     )
     .order("created_at", { ascending: false })
     .eq("periodo", month);

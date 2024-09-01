@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={`${uiSans.className}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <div className="bg-orange-400 h-2 absolute inset-0"></div>
+          <div className="bg-green-500 h-1 absolute inset-0"></div>
           <main className="animate-in max-w-screen-xl flex flex-col mx-auto antialiased">
             <Header />
             <Banner />
