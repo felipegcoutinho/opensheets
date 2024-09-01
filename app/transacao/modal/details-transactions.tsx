@@ -1,6 +1,6 @@
 "use client";
 
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import Timeline from "@/components/timeline-orders";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

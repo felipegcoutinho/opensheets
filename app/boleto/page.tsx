@@ -1,5 +1,5 @@
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 import { getAccount } from "../actions/accounts";

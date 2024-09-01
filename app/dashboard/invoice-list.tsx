@@ -1,6 +1,6 @@
 import { ColorDotInvoice } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import InvoicePayment from "../cartao/invoice-payment";

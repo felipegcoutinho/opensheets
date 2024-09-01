@@ -2,7 +2,7 @@ import { getAccount } from "@/app/actions/accounts";
 import { getCardDetails, getCardInvoice, getCards, getCardSum, getLimite } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 import mastercard from "@/public/mastercard.svg";

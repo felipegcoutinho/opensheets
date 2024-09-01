@@ -1,6 +1,6 @@
 "use client";
 
-import Numbers from "@/components/Numbers";
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import React from "react";
