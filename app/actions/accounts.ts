@@ -81,6 +81,7 @@ export async function getAccountInvoice(month, id) {
       "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao, aparencia)"
     )
     .eq("periodo", month)
+    .or("responsavel.eq.Você,responsavel.eq.Sistema")
     .eq("conta_id", id);
 
   if (error) {
@@ -101,6 +102,7 @@ export async function getSumAccountExpense(month, id) {
     .eq("conta_id", id)
     .eq("periodo", month)
     .eq("tipo_transacao", "Despesa")
+    .or("responsavel.eq.Você,responsavel.eq.Sistema")
     .eq("realizado", true);
 
   if (error) {
@@ -123,6 +125,7 @@ export async function getSumAccountIncome(month, id) {
     .eq("conta_id", id)
     .eq("periodo", month)
     .eq("tipo_transacao", "Receita")
+    .or("responsavel.eq.Você,responsavel.eq.Sistema")
     .eq("realizado", true);
 
   if (error) {

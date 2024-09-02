@@ -14,8 +14,8 @@ export default async function page({ params, searchParams }) {
   const getAccountDetailMap = await getAccountDetails(params.id);
   const getTransactionInvoiceMap = await getAccountInvoice(month, params.id);
 
-  const accountExpense = await getSumAccountExpense(month, params.id);
   const sumAccountIncome = await getSumAccountIncome(month, params.id);
+  const accountExpense = await getSumAccountExpense(month, params.id);
 
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used

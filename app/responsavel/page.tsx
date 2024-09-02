@@ -66,11 +66,11 @@ function CardComponent({ responsavel, cartoes, totalCartao, boletos, totalBoleto
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="px-6 text-sm">
-        <div className="grid gap-3">
+      <CardContent className="text-sm">
+        <div className="grid gap-1">
           <li className="flex items-center justify-between">
             <span className="text-blue-700 flex items-center gap-1">
-              <CreditCard className="fill-blue-700 text-blue-50" size={16} />
+              <CreditCard size={16} />
               Cartões
             </span>
             <span className="text-lg text-blue-700">
@@ -90,12 +90,12 @@ function CardComponent({ responsavel, cartoes, totalCartao, boletos, totalBoleto
           </ul>
         </div>
 
-        <Separator className="my-2" />
+        <Separator className="my-3" />
 
-        <div className="grid gap-3">
+        <div className="grid gap-1">
           <li className="flex items-center justify-between">
             <span className="text-orange-600 flex items-center gap-1">
-              <File className="fill-orange-600 text-orange-50" size={16} />
+              <File size={16} />
               Boletos
             </span>
             <span className="text-lg text-orange-600">
