@@ -19,6 +19,7 @@ export default function Category({ data, title }) {
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
+
       <CardContent className="overflow-y-auto max-h-[calc(100%-5rem)] pr-4 space-y-2 scrollbar-hide" onScroll={handleScroll}>
         {data.length > 0 ? (
           data.map((item, index) => (
