@@ -2,6 +2,7 @@ import { getAccount, getAccountDetails, getAccountInvoice, getSumAccountExpense,
 import { getCards } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
+import Numbers from "@/components/numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 
@@ -13,8 +14,8 @@ export default async function page({ params, searchParams }) {
   const getAccountDetailMap = await getAccountDetails(params.id);
   const getTransactionInvoiceMap = await getAccountInvoice(month, params.id);
 
-  const accountExpense = await getSumAccountExpense(month, params.id);
   const sumAccountIncome = await getSumAccountIncome(month, params.id);
+  const accountExpense = await getSumAccountExpense(month, params.id);
 
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
@@ -27,10 +28,14 @@ export default async function page({ params, searchParams }) {
 
           <div className="leading-loose">
             <p>Conta {item.tipo_conta}</p>
-            <p className="text-xl">Receitas {Number(sumAccountIncome).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-            <p className="text-xl">Despesas {Number(accountExpense).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
             <p className="text-xl">
-              Saldo {Number(sumAccountIncome - accountExpense).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              Receitas <Numbers number={sumAccountIncome} />
+            </p>
+            <p className="text-xl">
+              Despesas <Numbers number={accountExpense} />
+            </p>
+            <p className="text-xl">
+              Saldo <Numbers number={sumAccountIncome - accountExpense} />
             </p>
           </div>
         </CardColor>
@@ -66,7 +71,9 @@ export default async function page({ params, searchParams }) {
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.categoria}</TableCell>
               <TableCell>{item.responsavel}</TableCell>
-              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
+              <TableCell>
+                <Numbers number={item.valor} />
+              </TableCell>
               <TableCell className="text-center flex gap-2">
                 <DetailsTransactions
                   itemId={item.id}
@@ -77,17 +84,13 @@ export default async function page({ params, searchParams }) {
                   itemCategoria={item.categoria}
                   itemCondicao={item.condicao}
                   itemResponsavel={item.responsavel}
-                  itemSegundoResponsavel={item.segundo_responsavel}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
                   itemQtdeParcelas={item.qtde_parcela}
                   itemRecorrencia={item.recorrencia}
                   itemQtdeRecorrencia={item.qtde_recorrencia}
-                  getAccountMap={getAccountMap}
-                  getCardsMap={getCardsMap}
-                  itemCartao={item.cartoes?.id}
-                  itemConta={item.contas?.id}
+                  itemConta={item.contas?.descricao}
                   itemPaid={item.realizado}
                 />
               </TableCell>

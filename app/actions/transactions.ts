@@ -11,8 +11,8 @@ export async function getTransaction(month) {
     .from("transacoes")
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
-      forma_pagamento, anotacao, responsavel, segundo_responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao), contas (id, descricao)`
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, aparencia), contas (id, descricao, aparencia)`
     )
     .order("created_at", { ascending: false })
     .eq("periodo", month);
@@ -49,7 +49,6 @@ export async function addTransaction(formData: FormData) {
   } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
-
   const transacoes = [];
 
   function adicionarTransacao(valor, responsavel, periodo, parcela_atual) {
@@ -71,15 +70,16 @@ export async function addTransaction(formData: FormData) {
       qtde_recorrencia,
       cartao_id,
       conta_id,
+      dividir_lancamento,
     });
   }
 
   if (condicao === "Vista") {
     if (dividir_lancamento === "on") {
-      adicionarTransacao(valor / 2, responsavel, periodo, parcela_atual);
-      adicionarTransacao(valor / 2, segundo_responsavel, periodo, parcela_atual);
+      adicionarTransacao(valor / 2, responsavel, periodo, null);
+      adicionarTransacao(valor / 2, segundo_responsavel, periodo, null);
     } else {
-      adicionarTransacao(valor, responsavel, periodo, parcela_atual);
+      adicionarTransacao(valor, responsavel, periodo, null);
     }
   } else if (condicao === "Parcelado") {
     const parcelas = parseInt(qtde_parcela, 10);
@@ -155,7 +155,6 @@ export async function updateTransaction(formData: FormData) {
     forma_pagamento,
     anotacao,
     responsavel,
-    segundo_responsavel,
     valor,
     qtde_parcela,
     parcela_atual,
@@ -181,7 +180,6 @@ export async function updateTransaction(formData: FormData) {
         forma_pagamento,
         anotacao,
         responsavel,
-        segundo_responsavel,
         valor,
         qtde_parcela,
         parcela_atual,

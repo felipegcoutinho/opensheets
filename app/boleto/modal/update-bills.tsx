@@ -108,7 +108,7 @@ export default function UpdateBills({
               </div>
             </div>
 
-            <div className={`${itemCondicao === "Recorrente" && "flex gap-2"} w-full`}>
+            <div className={`${itemCondicao === "Recorrente" && "flex gap-2"} w-full hidden`}>
               <div className={`${itemCondicao === "Recorrente" ? "w-1/2" : "w-full"}`}>
                 <Label>Condição</Label>
                 <Required />

@@ -3,6 +3,9 @@
 import DeleteTransactions from "@/app/transacao/modal/delete-transactions";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import UpdateTransactions from "@/app/transacao/modal/update-transactions";
+import { ColorDotTable } from "@/components/card-color";
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,13 +24,19 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MessageSquareText } from "lucide-react";
+import { ArrowUpDown, CalendarClockIcon, Check, MessageSquareText, RefreshCw, Users } from "lucide-react";
 import * as React from "react";
 
 function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
   const cartaoDescricao = row.cartoes?.descricao;
   return contaDescricao ?? cartaoDescricao;
+}
+
+function getColor(row) {
+  const contaAparencia = row.contas?.aparencia;
+  const cartaoAparencia = row.cartoes?.aparencia;
+  return contaAparencia ?? cartaoAparencia;
 }
 
 // Função personalizada para filtrar em várias colunas
@@ -63,17 +72,33 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <span>
+        <span className="flex items-center gap-1">
           <span className="capitalize font-bold">{row.getValue("descricao")}</span>
-          <span className="text-muted-foreground font-bold text-xs px-1">
-            {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
-          </span>
+
+          {item.condicao === "Parcelado" && (
+            <span className="text-muted-foreground text-xs">
+              {item.parcela_atual} de {item.qtde_parcela}
+            </span>
+          )}
+
+          {item.dividir_lancamento === true && (
+            <span className="px-1">
+              <TooltipProvider delayDuration={300}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Users className="text-muted-foreground" size={12} />
+                  </TooltipTrigger>
+                  <TooltipContent>Conta Dividida</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </span>
+          )}
 
           {item.anotacao != "" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
-                  <MessageSquareText className="text-muted-foreground" size={14} />
+                  <MessageSquareText className="text-muted-foreground" size={12} />
                 </TooltipTrigger>
                 <TooltipContent>{item.anotacao}</TooltipContent>
               </Tooltip>
@@ -107,13 +132,27 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{Number(row.getValue("valor")).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</div>
+      <div className="capitalize">
+        <Numbers number={row.getValue("valor")} />
+      </div>
     ),
   },
   {
     accessorKey: "condicao",
     header: () => <div>Condição</div>,
     cell: ({ row }) => <div className="capitalize">{row.getValue("condicao")}</div>,
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <span className="flex items-center gap-1">
+          {item.condicao === "Parcelado" && <CalendarClockIcon size={12} />}
+          {item.condicao === "Recorrente" && <RefreshCw size={12} />}
+          {item.condicao === "Vista" && <Check size={12} />}
+
+          <span className="capitalize">{row.getValue("condicao")}</span>
+        </span>
+      );
+    },
   },
   {
     accessorKey: "forma_pagamento",
@@ -147,7 +186,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       const descricao = getDescricao(item);
-      return <div className="capitalize">{descricao}</div>;
+      const aparencia = getColor(item);
+      return (
+        <div className="flex items-center gap-2">
+          <ColorDotTable aparencia={aparencia} descricao={descricao} />
+        </div>
+      );
     },
   },
 
@@ -168,17 +212,15 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             itemCategoria={item.categoria}
             itemCondicao={item.condicao}
             itemResponsavel={item.responsavel}
-            itemSegundoResponsavel={item.segundo_responsavel}
             itemTipoTransacao={item.tipo_transacao}
             itemValor={item.valor}
             itemFormaPagamento={item.forma_pagamento}
             itemQtdeParcelas={item.qtde_parcela}
+            itemParcelaAtual={item.parcela_atual}
             itemRecorrencia={item.recorrencia}
             itemQtdeRecorrencia={item.qtde_recorrencia}
-            getAccountMap={getAccountMap}
-            getCardsMap={getCardsMap}
-            itemCartao={item.cartoes?.id}
-            itemConta={item.contas?.id}
+            itemCartao={item.cartoes?.descricao}
+            itemConta={item.contas?.descricao}
             itemPaid={item.realizado}
           />
 
@@ -191,7 +233,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             itemCategoria={item.categoria}
             itemCondicao={item.condicao}
             itemResponsavel={item.responsavel}
-            itemSegundoResponsavel={item.segundo_responsavel}
             itemTipoTransacao={item.tipo_transacao}
             itemValor={item.valor}
             itemFormaPagamento={item.forma_pagamento}
@@ -278,7 +319,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  <EmptyCard width={100} height={100} />
                 </TableCell>
               </TableRow>
             )}

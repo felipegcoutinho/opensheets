@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownUpIcon, BadgeCentIcon, CreditCard, FileSpreadsheetIcon, Home, NotebookPenIcon, PiggyBank, Users } from "lucide-react";
+import { ArrowDownUpIcon, BadgeCentIcon, CreditCard, File, Home, NotebookPenIcon, PiggyBank, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -24,7 +24,7 @@ function LinkOnHeader({ user }) {
       </Link>
 
       <Link href={`/boleto`}>
-        <LinkNavButton Icon={FileSpreadsheetIcon} LinkName="Boletos" />
+        <LinkNavButton Icon={File} LinkName="Boletos" />
       </Link>
 
       <Link href={`/cartao`}>

@@ -1,7 +1,11 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Numbers from "@/components/numbers";
+import Timeline from "@/components/timeline-orders";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/UseDates";
 import { Eye } from "lucide-react";
 import Utils from "../utils";
@@ -14,120 +18,140 @@ export default function DetailsTransactions({
   itemNotas,
   itemDate,
   itemResponsavel,
-  itemSegundoResponsavel,
   itemTipoTransacao,
   itemValor,
   itemFormaPagamento,
   itemCartao,
   itemConta,
   itemQtdeParcelas,
-  getAccountMap,
-  getCardsMap,
+  itemParcelaAtual,
   itemPeriodo,
   itemRecorrencia,
   itemQtdeRecorrencia,
   itemPaid,
 }) {
-  const {
-    isOpen,
-    setIsOpen,
-    setTipoTransacao,
-    quantidadeParcelas,
-    setQuantidadeParcelas,
-    showParcelas,
-    showRecorrencia,
-    showConta,
-    showCartao,
-    handleCondicaoChange,
-    handleTipoTransacaoChange,
-    handleFormaPagamentoChange,
-    getMonthOptions,
-    categoriasReceita,
-    categoriasDespesa,
-    handleUpdate,
-    loading,
-    setShowConta,
-    setShowCartao,
-    setShowParcelas,
-    setShowRecorrencia,
-    isPaid,
-    setIsPaid,
-  } = Utils();
-
-  const handleDialogClose = (val) => {
-    setIsOpen(val);
-    setShowConta(false);
-    setShowCartao(false);
-    setShowParcelas(false);
-    setShowRecorrencia(false);
-    setIsPaid(true);
-  };
+  const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } = Utils();
 
   const { DateFormat } = UseDates();
 
+  const handleDialogClose = (val) => {
+    setIsOpen(val);
+  };
+
   return (
-    <>
-      <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-        <DialogTrigger>
-          <Eye size={16} />
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Detalhes da Transação</DialogTitle>
-          </DialogHeader>
-
-          <Card className="p-4 space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="text-left text-muted-foreground">Data da Compra:</div>
-              <div className="text-right">{DateFormat(itemDate)}</div>
-
-              <div className="text-left text-muted-foreground">Descrição:</div>
-              <div className="text-right">{itemDescricao}</div>
-
-              <div className="text-left text-muted-foreground">Valor:</div>
-              <div className="text-right">{itemValor}</div>
-
-              <div className="text-left text-muted-foreground">Categoria:</div>
-              <div className="text-right">{itemCategoria}</div>
-
-              <div className="text-left text-muted-foreground">Tipo de Transação:</div>
-              <div className="text-right">{itemTipoTransacao}</div>
-
-              <div className="text-left text-muted-foreground">Condição:</div>
-              <div className="text-right">{itemCondicao}</div>
-
-              {itemCondicao === "Parcelado" && (
-                <>
-                  <div className="text-left text-muted-foreground">Quantidade de Parcelas:</div>
-                  <div className="text-right">{itemQtdeParcelas}</div>
-                </>
-              )}
-
-              {itemCondicao === "Recorrente" && (
-                <>
-                  <div className="text-left text-muted-foreground">Quantidade de Recorrências:</div>
-                  <div className="text-right">{itemQtdeRecorrencia}</div>
-                </>
-              )}
-
-              <div className="text-left text-muted-foreground">Forma de Pagamento:</div>
-              <div className="text-right">{itemFormaPagamento}</div>
-
-              <div className="text-left text-muted-foreground">Responsável:</div>
-              <div className="text-right">{itemResponsavel}</div>
-
-              <div className="text-left text-muted-foreground">Segundo Responsável:</div>
-              <div className="text-right">{itemSegundoResponsavel}</div>
-
-              <div className="text-left text-muted-foreground">Notas:</div>
-              <div className="text-right">{itemNotas}</div>
-
-              <div className="text-left text-muted-foreground">Status:</div>
-              <div className="text-right">{itemPaid ? "Pago" : "Pendente"}</div>
+    <Dialog open={isOpen} onOpenChange={handleDialogClose}>
+      <DialogTrigger>
+        <Eye size={16} />
+      </DialogTrigger>
+      <DialogContent className="p-0">
+        <Card className="p-1 space-y-4">
+          <CardHeader className="flex flex-row items-start bg-muted/50">
+            <div className="grid gap-0.5">
+              <CardTitle className="group flex items-center gap-2 text-lg">ID {itemId}</CardTitle>
+              <CardDescription>{DateFormat(itemDate)}</CardDescription>
             </div>
-          </Card>
-        </DialogContent>
-      </Dialog>
-    </>
+          </CardHeader>
+          <CardContent className="py-0 text-sm">
+            <div className="grid gap-3">
+              <div className="font-semibold">Detalhes da Transação</div>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Descrição</span>
+                  <span>{itemDescricao}</span>
+                </li>
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Período</span>
+                  <span>{MonthUppercase(itemPeriodo)}</span>
+                </li>
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Forma de Pagamento</span>
+                  <span>{itemFormaPagamento}</span>
+                </li>
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">{itemCartao ? "Cartão" : "Conta"}</span>
+                  <span>{itemCartao ?? itemConta}</span>
+                </li>
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Categoria</span>
+                  <span>{itemCategoria}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Tipo de Transação</span>
+                  <span>{itemTipoTransacao}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Condição</span>
+                  <span>{itemCondicao}</span>
+                </li>
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Responsável</span>
+                  <span>{itemResponsavel}</span>
+                </li>
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Status</span>
+                  <span>{itemPaid ? "Pago" : "Pendente"}</span>
+                </li>
+
+                {itemNotas && (
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Notas</span>
+                    <span>{itemNotas}</span>
+                  </li>
+                )}
+              </ul>
+
+              <ul className="grid gap-3 mb-6">
+                {itemCondicao === "Parcelado" && (
+                  <Timeline
+                    DataCompra={itemDate}
+                    ParcelaAtual={itemParcelaAtual}
+                    QtdeParcela={itemQtdeParcelas}
+                    DataFim={calcularMesFinal(itemPeriodo, itemQtdeParcelas)}
+                  />
+                )}
+
+                <Separator className="my-2" />
+
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Valor {itemCondicao === "Parcelado" && "da Parcela"}</span>
+                  <span>
+                    <Numbers number={itemValor} />
+                  </span>
+                </li>
+
+                {itemCondicao === "Recorrente" && (
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Quantidade de Recorrências</span>
+                    <span>{itemQtdeRecorrencia} meses</span>
+                  </li>
+                )}
+
+                {itemCondicao !== "Parcelado" && <Separator className="my-2" />}
+
+                <li className="flex items-center justify-between font-semibold">
+                  <span className="text-muted-foreground">Total da Compra</span>
+                  <span className="text-lg">
+                    {itemCondicao === "Parcelado" ? <Numbers number={itemValor * itemQtdeParcelas} /> : <Numbers number={itemValor} />}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <DialogFooter className="mb-4">
+              <DialogClose asChild>
+                <Button className="w-full" type="button" variant="secondary">
+                  Cancelar
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </CardContent>
+        </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -10,7 +10,7 @@ function CardBanner({ children }) {
     return null;
   }
   return (
-    <Card className="px-6 py-8 bg-gradient-to-bl from-emerald-200 via-green-500 to-orange-200 dark:bg-stone-800 w-full mb-2 dark:text-white">
+    <Card className="px-6 py-8 bg-gradient-to-tl from-violet-100 dark:from-blue-900 via-emerald-400 dark:via-emerald-900 to-orange-300 dark:to-orange-800 w-full mb-2 dark:text-white">
       <div className="flex justify-between items-center">{children}</div>
     </Card>
   );

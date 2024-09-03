@@ -12,7 +12,7 @@ export async function getBills(month) {
     .from("boletos")
     .select(
       `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
-      qtde_recorrencia, anotacao, responsavel, segundo_responsavel, contas ( id, descricao)`
+      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`
     )
     .eq("periodo", month);
 
@@ -25,7 +25,6 @@ export async function getBills(month) {
 }
 
 // Adiciona um novo boleto
-
 export async function addBills(formData: FormData) {
   const {
     descricao,
@@ -61,18 +60,13 @@ export async function addBills(formData: FormData) {
       condicao,
       anotacao,
       responsavel,
-      segundo_responsavel,
     });
-  }
-
-  function dividirBoleto(valor, periodo, dt_vencimento) {
-    adicionarBoleto(valor / 2, responsavel, periodo, dt_vencimento);
-    adicionarBoleto(valor / 2, segundo_responsavel, periodo, dt_vencimento);
   }
 
   if (condicao === "Vista") {
     if (dividir_boleto === "on") {
-      dividirBoleto(valor, periodo, dt_vencimento);
+      adicionarBoleto(valor / 2, responsavel, periodo, dt_vencimento);
+      adicionarBoleto(valor / 2, segundo_responsavel, periodo, dt_vencimento);
     } else {
       adicionarBoleto(valor, responsavel, periodo, dt_vencimento);
     }
@@ -95,7 +89,8 @@ export async function addBills(formData: FormData) {
       const dt_vencimentoRecorrente = dataRecorrenteComDia.toISOString().split("T")[0];
 
       if (dividir_boleto === "on") {
-        dividirBoleto(valor, periodoRecorrente, dt_vencimentoRecorrente);
+        adicionarBoleto(valor / 2, responsavel, periodoRecorrente, dt_vencimentoRecorrente);
+        adicionarBoleto(valor / 2, segundo_responsavel, periodoRecorrente, dt_vencimentoRecorrente);
       } else {
         adicionarBoleto(valor, responsavel, periodoRecorrente, dt_vencimentoRecorrente);
       }
@@ -140,7 +135,6 @@ export async function updateBills(formData: FormData) {
     condicao,
     anotacao,
     responsavel,
-    segundo_responsavel,
   } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
@@ -162,7 +156,6 @@ export async function updateBills(formData: FormData) {
         condicao,
         anotacao,
         responsavel,
-        segundo_responsavel,
       })
       .eq("id", id);
     revalidatePath("/boleto");

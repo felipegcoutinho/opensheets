@@ -1,7 +1,8 @@
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/UseDates";
-import { CreditCard, FileSpreadsheetIcon, User } from "lucide-react";
+import { CreditCard, File, User } from "lucide-react";
 import { getResponsavelBillList, getResponsavelTransactionList } from "../actions/users";
 
 async function PageUsers({ searchParams }) {
@@ -58,50 +59,57 @@ export default PageUsers;
 function CardComponent({ responsavel, cartoes, totalCartao, boletos, totalBoleto }) {
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="flex flex-row items-start">
-        <CardTitle className="flex items-center gap-2 text-2xl">
+      <CardHeader className="flex w-full">
+        <CardTitle className="flex justify-between gap-2 text-2xl">
+          <p>{responsavel}</p>
           <User className="h-6 w-6" />
-          {responsavel}
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="px-6 text-sm">
-        <div className="grid gap-3">
+      <CardContent className="text-sm">
+        <div className="grid gap-1">
           <li className="flex items-center justify-between">
-            <span className="text-muted-foreground flex items-center gap-2">
-              <CreditCard size={14} />
+            <span className="text-blue-700 flex items-center gap-1">
+              <CreditCard size={16} />
               Cartões
             </span>
-            <span className="text-lg font-bold text-muted-foreground">
-              {Number(totalCartao).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            <span className="text-lg text-blue-700">
+              <Numbers number={totalCartao} />
             </span>
           </li>
-          <ul className="grid gap-3">
+
+          <ul className="grid gap-2 p-2">
             {Object.entries(cartoes).map(([descricao, valor]) => (
               <li className="flex items-center justify-between" key={descricao}>
-                <span>{descricao}</span>
-                <span>{Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+                <span className="text-muted-foreground">{descricao}</span>
+                <span>
+                  <Numbers number={valor} />
+                </span>
               </li>
             ))}
           </ul>
         </div>
 
-        <Separator className="my-4" />
-        <div className="grid gap-3">
+        <Separator className="my-3" />
+
+        <div className="grid gap-1">
           <li className="flex items-center justify-between">
-            <span className="text-muted-foreground flex items-center gap-2">
-              <FileSpreadsheetIcon size={14} />
+            <span className="text-orange-600 flex items-center gap-1">
+              <File size={16} />
               Boletos
             </span>
-            <span className="text-lg font-bold text-muted-foreground">
-              {Number(totalBoleto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            <span className="text-lg text-orange-600">
+              <Numbers number={totalBoleto} />
             </span>
           </li>
-          <ul className="grid gap-3">
+
+          <ul className="grid gap-2 p-2">
             {Object.entries(boletos).map(([descricao, valor]) => (
               <li className="flex items-center justify-between" key={descricao}>
-                <span>{descricao}</span>
-                <span>{Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+                <span className="text-muted-foreground">{descricao}</span>
+                <span>
+                  <Numbers number={valor} />
+                </span>
               </li>
             ))}
           </ul>
@@ -109,10 +117,12 @@ function CardComponent({ responsavel, cartoes, totalCartao, boletos, totalBoleto
 
         <Separator className="my-2" />
 
-        <div className="grid gap-3">
-          <li className="flex items-center justify-between font-semibold">
-            <span className="text-muted-foreground">Total</span>
-            <span className="text-xl">{Number(totalCartao + totalBoleto).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+        <div className="mt-4">
+          <li className="flex items-center justify-between font-bold">
+            <span className="text-muted-foreground text-lg">Total</span>
+            <span className="text-xl">
+              <Numbers number={totalCartao + totalBoleto} />
+            </span>
           </li>
         </div>
       </CardContent>

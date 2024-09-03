@@ -77,7 +77,7 @@ export default function UpdateTransactions({
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Nova Transação</DialogTitle>
+            <DialogTitle>Atualizar Transação</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleUpdate}>
@@ -123,7 +123,7 @@ export default function UpdateTransactions({
             </div>
 
             <div className="flex w-full gap-2 mt-1">
-              <div className="w-1/2">
+              <div className="w-1/2 hidden">
                 <Label>Tipo de Transação</Label>
                 <Select defaultValue={itemTipoTransacao} name="tipo_transacao" onValueChange={handleTipoTransacaoChange}>
                   <SelectTrigger>
@@ -136,7 +136,7 @@ export default function UpdateTransactions({
                 </Select>
               </div>
 
-              <div className="w-1/2">
+              <div className="w-full">
                 <Label>Categoria</Label>
                 <Select defaultValue={itemCategoria} name="categoria">
                   <SelectTrigger>
@@ -181,7 +181,7 @@ export default function UpdateTransactions({
             </div>
 
             <div className="flex gap-2">
-              <div className="w-1/2">
+              <div className="w-1/2 hidden">
                 <Label>Forma de Pagamento</Label>
                 <Required />
                 <Select
@@ -203,7 +203,7 @@ export default function UpdateTransactions({
               </div>
 
               {itemFormaPagamento !== "Cartão de Crédito" && (
-                <div className="w-1/2">
+                <div className="w-full">
                   <Label>Contas</Label>
                   <Required />
                   <Select defaultValue={itemConta.toString()} name="conta_id">
@@ -222,7 +222,7 @@ export default function UpdateTransactions({
               )}
 
               {itemFormaPagamento === "Cartão de Crédito" && (
-                <div className="w-1/2">
+                <div className="w-full">
                   <Label>Cartão</Label>
                   <Required />
                   <Select defaultValue={itemCartao.toString()} name="cartao_id">
@@ -241,10 +241,10 @@ export default function UpdateTransactions({
               )}
             </div>
 
-            <div className="flex w-full gap-2">
+            <div className="w-full gap-2 hidden">
               <div className={showParcelas || showRecorrencia ? "w-1/2" : "w-full"}>
                 <Label>Condição</Label>
-                <Select defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange} disabled>
+                <Select defaultValue={itemCondicao} name="condicao" onValueChange={handleCondicaoChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>

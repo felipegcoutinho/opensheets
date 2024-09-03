@@ -1,5 +1,9 @@
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/numbers";
+import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
+import { Check, RefreshCw } from "lucide-react";
 import { getAccount } from "../actions/accounts";
 import { getBills } from "../actions/bills";
 import CreateBills from "./modal/create-bills";
@@ -21,8 +25,8 @@ async function PageBills({ searchParams }) {
       <Table className="mt-6">
         <TableHeader>
           <TableRow className="border-b text-xs">
-            <TableHead>Descrição</TableHead>
             <TableHead>Data de Vencimento</TableHead>
+            <TableHead>Descrição</TableHead>
             <TableHead>Valor</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Responsável</TableHead>
@@ -31,41 +35,62 @@ async function PageBills({ searchParams }) {
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
-
         <TableBody>
-          {getBillsMap?.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell className="font-bold">{item.descricao}</TableCell>
-              <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
-              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
-              <TableCell className={`${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>{item.status_pagamento}</TableCell>
-              <TableCell>{item.responsavel}</TableCell>
-              <TableCell>{item.categoria}</TableCell>
-              <TableCell>{item.condicao}</TableCell>
+          {getBillsMap?.length !== 0 ? (
+            getBillsMap?.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
+                <TableCell className="font-bold capitalize">{item.descricao}</TableCell>
+                <TableCell>
+                  <Numbers number={item.valor} />
+                </TableCell>
+                <TableCell className={`${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
+                  {item.status_pagamento}
+                </TableCell>
+                <TableCell>
+                  <Badge variant="outline" className={item.responsavel === "Você" ? "text-blue-500" : "text-orange-500"}>
+                    {item.responsavel}
+                  </Badge>
+                </TableCell>
+                <TableCell>{item.categoria}</TableCell>
+                <TableCell>
+                  <span className="flex items-center gap-1">
+                    {item.condicao === "Recorrente" && <RefreshCw size={12} />}
+                    {item.condicao === "Vista" && <Check size={12} />}
 
-              <TableCell className="flex gap-2">
-                <UpdateBills
-                  itemId={item.id}
-                  itemDescricao={item.descricao}
-                  itemPeriodo={item.periodo}
-                  itemDtVencimento={item.dt_vencimento}
-                  itemStatusPagamento={item.status_pagamento}
-                  itemResponsavel={item.responsavel}
-                  itemSegundoResponsavel={item.segundo_responsavel}
-                  itemCategoria={item.categoria}
-                  itemValor={item.valor}
-                  itemDtPagamento={item.dt_pagamento}
-                  itemAnotacao={item.anotacao}
-                  itemCondicao={item.condicao}
-                  itemQtdeRecorrencia={item.qtde_recorrencia}
-                  getAccountMap={getAccountMap}
-                  itemContaId={item.contas?.id}
-                />
+                    <span className="capitalize">{item.condicao}</span>
+                  </span>
+                </TableCell>
 
-                <DeleteBills itemId={item.id} />
+                <TableCell className="flex gap-2">
+                  <UpdateBills
+                    itemId={item.id}
+                    itemDescricao={item.descricao}
+                    itemPeriodo={item.periodo}
+                    itemDtVencimento={item.dt_vencimento}
+                    itemStatusPagamento={item.status_pagamento}
+                    itemResponsavel={item.responsavel}
+                    itemCategoria={item.categoria}
+                    itemValor={item.valor}
+                    itemDtPagamento={item.dt_pagamento}
+                    itemAnotacao={item.anotacao}
+                    itemCondicao={item.condicao}
+                    itemQtdeRecorrencia={item.qtde_recorrencia}
+                    getAccountMap={getAccountMap}
+                    itemContaId={item.contas?.id}
+                  />
+
+                  <DeleteBills itemId={item.id} />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={8} className="text-center">
+                <EmptyCard width={100} height={100} />
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>

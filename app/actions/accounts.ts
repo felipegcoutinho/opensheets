@@ -75,7 +75,14 @@ export async function updateAccount(formData: FormData) {
 export async function getAccountInvoice(month, id) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("transacoes").select("*").eq("periodo", month).eq("conta_id", id);
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select(
+      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao, aparencia)"
+    )
+    .eq("periodo", month)
+    .or("responsavel.eq.Você,responsavel.eq.Sistema")
+    .eq("conta_id", id);
 
   if (error) {
     console.error("Erro ao buscar transações:", error);
@@ -89,7 +96,14 @@ export async function getAccountInvoice(month, id) {
 export async function getSumAccountExpense(month, id) {
   const supabase = createClient();
 
-  const { error, data } = await supabase.from("transacoes").select(`valor`).eq("conta_id", id).eq("periodo", month).eq("tipo_transacao", "Despesa");
+  const { error, data } = await supabase
+    .from("transacoes")
+    .select(`valor`)
+    .eq("conta_id", id)
+    .eq("periodo", month)
+    .eq("tipo_transacao", "Despesa")
+    .or("responsavel.eq.Você,responsavel.eq.Sistema")
+    .eq("realizado", true);
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);
@@ -105,7 +119,14 @@ export async function getSumAccountExpense(month, id) {
 export async function getSumAccountIncome(month, id) {
   const supabase = createClient();
 
-  const { error, data } = await supabase.from("transacoes").select(`valor`).eq("conta_id", id).eq("periodo", month).eq("tipo_transacao", "Receita");
+  const { error, data } = await supabase
+    .from("transacoes")
+    .select(`valor`)
+    .eq("conta_id", id)
+    .eq("periodo", month)
+    .eq("tipo_transacao", "Receita")
+    .or("responsavel.eq.Você,responsavel.eq.Sistema")
+    .eq("realizado", true);
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);

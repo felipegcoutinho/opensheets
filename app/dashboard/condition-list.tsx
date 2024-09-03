@@ -1,3 +1,4 @@
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getConditions } from "../actions/dashboards";
 
@@ -17,7 +18,9 @@ export async function ConditionList({ month }) {
             <div className="grid">
               <div className="flex items-center justify-between">
                 <span className="text-md">{item.condicao}</span>
-                <span className="text-muted-foreground">{Number(item.sum).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+                <span className="text-muted-foreground">
+                  <Numbers number={item.sum} />
+                </span>
               </div>
             </div>
           </CardContent>

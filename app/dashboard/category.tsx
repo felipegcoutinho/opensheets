@@ -1,7 +1,8 @@
 "use client";
 
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShieldQuestion } from "lucide-react";
 import { useState } from "react";
 
 export default function Category({ data, title }) {
@@ -23,14 +24,13 @@ export default function Category({ data, title }) {
           data.map((item, index) => (
             <div key={index} className="flex items-center justify-between">
               <p>{item.categoria}</p>
-              <p className="text-muted-foreground">{Number(item.sum).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+              <p className="text-muted-foreground">
+                <Numbers number={item.sum} />
+              </p>
             </div>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center h-64">
-            <ShieldQuestion className="h-8 w-8 text-muted-foreground" />
-            <span className="text-muted-foreground">Não há dados disponíveis.</span>
-          </div>
+          <EmptyCard width={100} height={100} />
         )}
       </CardContent>
       <div

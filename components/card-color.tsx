@@ -46,7 +46,7 @@ const colorVariants = {
 
 function CardColor({ aparencia, id, children, styles }) {
   return (
-    <Card className={`${colorVariantsCard[aparencia]} ${styles}`} key={id}>
+    <Card className={`${colorVariantsCard[aparencia]} ${styles} overflow-hidden`} key={id}>
       {children}
     </Card>
   );
@@ -57,7 +57,7 @@ export default CardColor;
 export function ColorDot({ aparencia, descricao }) {
   return (
     <CardTitle className="flex items-center gap-2">
-      <div className={cn(colorVariants[aparencia], "w-3 h-3 rounded-full")} />
+      <div className={cn(colorVariants[aparencia], "w-5 h-5 rounded-full")} />
       {descricao}
     </CardTitle>
   );
@@ -69,6 +69,15 @@ export function ColorDotInvoice({ aparencia, descricao }) {
       <div className={cn(colorVariants[aparencia], `w-6 h-6 rounded-full flex items-center justify-center`)}>
         <CreditCard className="w-3 h-3 text-white" />
       </div>
+      {descricao}
+    </CardTitle>
+  );
+}
+
+export function ColorDotTable({ aparencia, descricao }) {
+  return (
+    <CardTitle className="flex gap-2 text-md items-center">
+      <div className={cn(colorVariants[aparencia], `w-3 h-3 rounded-full`)}></div>
       {descricao}
     </CardTitle>
   );

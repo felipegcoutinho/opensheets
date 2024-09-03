@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
 import LinkOnHeader from "./link-on-header";
+import Logo from "./logo";
 import { Card } from "./ui/card";
 
 export default async function Header() {
@@ -30,8 +31,8 @@ export default async function Header() {
   return (
     <Card className="bg-transparent shadow-none flex h-16 items-center gap-4 text-black p-2 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
-        <Link href="/" className="font-bold text-lg dark:text-white">
-          Opensheets
+        <Link href="/">
+          <Logo />
         </Link>
         <LinkOnHeader user={user} />
       </nav>

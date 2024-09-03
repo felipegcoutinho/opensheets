@@ -4,6 +4,7 @@ import { UseDates } from "@/hooks/UseDates";
 import { createClient } from "@/utils/supabase/server";
 import CardBanner from "./card-banner";
 import DataName from "./data-name";
+import Numbers from "./numbers";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 export default async function Banner() {
@@ -46,7 +47,9 @@ export default async function Banner() {
           <TooltipTrigger asChild>
             <div className="text-right">
               Saldo Atual
-              <p className="text-2xl font-bold"> {Number(saldo).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+              <p className="text-2xl font-bold">
+                <Numbers number={saldo} />
+              </p>
             </div>
           </TooltipTrigger>
           <TooltipContent>

@@ -1,5 +1,6 @@
 "use client";
 
+import Numbers from "@/components/numbers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import React from "react";
@@ -30,7 +31,7 @@ export default function InvestComponent({ data }) {
           <div className="flex flex-1 flex-col justify-center gap-1 border-t py-4 text-left sm:border-t-0 sm:px-6 sm:py-6">
             <span className="text-xs text-muted-foreground">Valor Atual</span>
             <span className="text-lg font-bold leading-none sm:text-2xl">
-              {Number(valorAtual).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              <Numbers number={valorAtual} />
             </span>
           </div>
         </div>

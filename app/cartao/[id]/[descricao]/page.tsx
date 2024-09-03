@@ -2,6 +2,7 @@ import { getAccount } from "@/app/actions/accounts";
 import { getCardDetails, getCardInvoice, getCards, getCardSum, getLimite } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
+import Numbers from "@/components/numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/UseDates";
 import mastercard from "@/public/mastercard.svg";
@@ -35,8 +36,9 @@ export default async function page({ params, searchParams }) {
           </div>
 
           <div className="leading-relaxed">
+            <p>Limite Disponível</p>
             <p>
-              Limite Disponível <span>{Number(item.limite - limite).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+              <Numbers number={item.limite - limite} />
             </p>
             <p>{item.contas.descricao}</p>
           </div>
@@ -55,7 +57,9 @@ export default async function page({ params, searchParams }) {
 
           <div className="ml-auto">
             Total da fatura
-            <p className="text-2xl font-bold">{Number(sumCardSum).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            <p className="text-2xl font-bold">
+              <Numbers number={sumCardSum} />
+            </p>
             <InvoicePayment month={month} paramsId={params.id} />
           </div>
         </CardColor>
@@ -91,7 +95,9 @@ export default async function page({ params, searchParams }) {
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.categoria}</TableCell>
               <TableCell>{item.responsavel}</TableCell>
-              <TableCell>{Number(item.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</TableCell>
+              <TableCell>
+                <Numbers number={item.valor} />
+              </TableCell>
               <TableCell className="text-center flex gap-2">
                 <DetailsTransactions
                   itemId={item.id}
@@ -102,17 +108,14 @@ export default async function page({ params, searchParams }) {
                   itemCategoria={item.categoria}
                   itemCondicao={item.condicao}
                   itemResponsavel={item.responsavel}
-                  itemSegundoResponsavel={item.segundo_responsavel}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
                   itemQtdeParcelas={item.qtde_parcela}
+                  itemParcelaAtual={item.parcela_atual}
                   itemRecorrencia={item.recorrencia}
                   itemQtdeRecorrencia={item.qtde_recorrencia}
-                  getAccountMap={getAccountMap}
-                  getCardsMap={getCardsMap}
-                  itemCartao={item.cartoes?.id}
-                  itemConta={item.contas?.id}
+                  itemCartao={item.cartoes?.descricao}
                   itemPaid={item.realizado}
                 />
               </TableCell>
