@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 
-export default function CardComponent({ title, subtitle, children }) {
+export default function CardInvoices({ title, subtitle, children }) {
   const [hasOverflow, setHasOverflow] = useState(true);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {

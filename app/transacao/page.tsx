@@ -1,4 +1,4 @@
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { getAccount } from "../actions/accounts";
 import { getCards } from "../actions/cards";
 import { getTransaction } from "../actions/transactions";

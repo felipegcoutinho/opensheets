@@ -1,4 +1,4 @@
-import UseOptions from "@/hooks/UseOptions";
+import UseOptions from "@/hooks/use-options";
 import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";

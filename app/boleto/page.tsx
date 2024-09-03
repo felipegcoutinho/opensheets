@@ -2,7 +2,7 @@ import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { Check, RefreshCw } from "lucide-react";
 import { getAccount } from "../actions/accounts";
 import { getBills } from "../actions/bills";

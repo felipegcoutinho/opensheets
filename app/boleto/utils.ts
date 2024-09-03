@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
-import UseOptions from "@/hooks/UseOptions";
+import UseOptions from "@/hooks/use-options";
 import { useState } from "react";
 import { addBills, deleteBills, updateBills } from "../actions/bills";
 

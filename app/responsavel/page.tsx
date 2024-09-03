@@ -1,7 +1,7 @@
 import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { CreditCard, File, User } from "lucide-react";
 import { getResponsavelBillList, getResponsavelTransactionList } from "../actions/users";
 

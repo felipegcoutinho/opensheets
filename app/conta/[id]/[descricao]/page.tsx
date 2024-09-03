@@ -4,7 +4,7 @@ import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
 import Numbers from "@/components/numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear, DateFormat } = UseDates();
