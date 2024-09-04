@@ -27,7 +27,7 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getCardDetailMap?.map((item) => (
-        <CardColor styles="flex gap-10 p-10 w-full items-center" aparencia={item.aparencia} id={item.id}>
+        <CardColor styles="flex gap-10 p-10 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
           <div className="leading-relaxed">
