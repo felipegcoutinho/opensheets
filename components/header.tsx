@@ -46,7 +46,7 @@ export default async function Header() {
           )}
         </SheetTrigger>
         <SheetContent side="left" className="bg-white">
-          <nav className="grid gap-6 text-lg font-medium ">
+          <nav className="grid gap-6 text-lg">
             <Link href="#" className="flex items-center gap-2 text-lg font-semibold">
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Sheets</span>
@@ -58,13 +58,19 @@ export default async function Header() {
               Transações
             </Link>
             <Link href={`/boleto`} className="text-black transition-colors hover:text-muted-foreground">
-              boleto
+              Boletos
             </Link>
             <Link href="/cartao" className="text-black transition-colors hover:text-muted-foreground">
               Cartões
             </Link>
             <Link href="/conta" className="text-black transition-colors hover:text-muted-foreground">
               Contas
+            </Link>
+            <Link href="/responsavel" className="text-black transition-colors hover:text-muted-foreground">
+              Responsável
+            </Link>
+            <Link href="/anotacao" className="text-black transition-colors hover:text-muted-foreground">
+              Anotações
             </Link>
           </nav>
         </SheetContent>
