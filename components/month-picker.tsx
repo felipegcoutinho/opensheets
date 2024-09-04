@@ -1,6 +1,6 @@
 "use client";
 
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
@@ -67,7 +67,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex justify-start w-full py-8 mb-2 px-4 rounded-lg bg-orange-50 dark:bg-stone-900">
+    <div className="flex justify-start w-full py-8 px-4 rounded-lg bg-orange-100 dark:bg-card">
       <button onClick={goToPreviousMonth}>
         <ArrowLeftCircle />
       </button>

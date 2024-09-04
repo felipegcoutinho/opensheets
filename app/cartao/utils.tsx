@@ -1,4 +1,4 @@
-import UseOptions from "@/hooks/UseOptions";
+import UseOptions from "@/hooks/use-options";
 import { useState } from "react";
 import { toast } from "sonner";
 import { addCards, updateCards } from "../actions/cards";

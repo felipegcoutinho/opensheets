@@ -1,8 +1,8 @@
 import Numbers from "@/components/numbers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { Suspense } from "react";
-import CardComponent from "../../components/card-component";
+import CardInvoices from "../../components/card-invoices";
 import {
   getBillsByResponsavel,
   getExpense,
@@ -13,7 +13,7 @@ import {
   getInvoiceList,
   getLastPrevious,
 } from "../actions/dashboards";
-import { BIllsList } from "./bills-list";
+import { BillsList } from "./bills-list";
 import Category from "./category";
 import { ConditionList } from "./condition-list";
 import CountList from "./count-list";
@@ -25,6 +25,7 @@ export default async function page({ searchParams }) {
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
+  // Obter mês anterior
   const { getPreviousMonth } = UseDates();
   const previousMonth = getPreviousMonth(month);
 
@@ -53,12 +54,13 @@ export default async function page({ searchParams }) {
   const expenseByCategory = await getExpenseByCategory(month);
   const incomeByCategory = await getIncomeByCategory(month);
 
+  // Obter faturas e boletos
   const invoiceCard = await getInvoiceList(month);
   const invoiceBill = await getBillsByResponsavel(month);
 
   return (
     <Suspense fallback={<span>Carregando...</span>}>
-      <h2 className="p-2 text-2xl font-bold">Visão Geral</h2>
+      <h2 className="py-4 px-2 text-2xl font-bold">Visão Geral</h2>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <Card>
           <CardHeader className="pb-2">
@@ -67,10 +69,8 @@ export default async function page({ searchParams }) {
               <Numbers number={receitas} />
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">
-              anterior <Numbers number={receitasAnterior} />
-            </div>
+          <CardContent className="text-xs text-muted-foreground">
+            anterior <Numbers number={receitasAnterior} />
           </CardContent>
         </Card>
 
@@ -81,10 +81,8 @@ export default async function page({ searchParams }) {
               <Numbers number={despesasTotal} />
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">
-              anterior <Numbers number={despesasTotalAnterior} />
-            </div>
+          <CardContent className="text-xs text-muted-foreground">
+            anterior <Numbers number={despesasTotalAnterior} />
           </CardContent>
         </Card>
 
@@ -95,10 +93,8 @@ export default async function page({ searchParams }) {
               <Numbers number={balanco} />
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">
-              anterior <Numbers number={balancoAnterior} />
-            </div>
+          <CardContent className="text-xs text-muted-foreground">
+            anterior <Numbers number={balancoAnterior} />
           </CardContent>
         </Card>
 
@@ -109,22 +105,20 @@ export default async function page({ searchParams }) {
               <Numbers number={previsto} />
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">
-              anterior <Numbers number={saldoAnterior} />
-            </div>
+          <CardContent className="text-xs text-muted-foreground">
+            anterior <Numbers number={saldoAnterior} />
           </CardContent>
         </Card>
       </div>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-2 gap-2 mb-10">
-        <CardComponent title="Faturas" subtitle="Total de faturas">
+        <CardInvoices title="Faturas" subtitle="Total de faturas">
           <Invoice month={month} data={invoiceCard} />
-        </CardComponent>
+        </CardInvoices>
 
-        <CardComponent title="Boletos" subtitle="Total de boletos">
-          <BIllsList month={month} data={invoiceBill} />
-        </CardComponent>
+        <CardInvoices title="Boletos" subtitle="Total de boletos">
+          <BillsList month={month} data={invoiceBill} />
+        </CardInvoices>
 
         <div className="flex flex-col gap-2">
           <ConditionList month={month} />

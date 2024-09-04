@@ -1,4 +1,4 @@
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { CircleCheck, CircleEllipsisIcon } from "lucide-react";
 
 export default function Timeline({ DataCompra, ParcelaAtual, DataFim, QtdeParcela }) {

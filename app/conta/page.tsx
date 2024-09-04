@@ -3,7 +3,7 @@ import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import Link from "next/link";
 import { deleteAccount, getAccount, getSumAccountExpense, getSumAccountIncome } from "../actions/accounts";
 import CreateAccount from "./modal/create-accounts";

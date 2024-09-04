@@ -1,7 +1,7 @@
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
 import { getInvest } from "../actions/invest";
 import InvestComponent from "./chart";

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
-import LinkOnHeader from "./link-on-header";
+import LinkOnHeader from "./links-on-header";
 import Logo from "./logo";
 import { Card } from "./ui/card";
 

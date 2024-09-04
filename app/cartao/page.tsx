@@ -2,7 +2,7 @@ import CardColor, { ColorDot } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
 import Image from "next/image";

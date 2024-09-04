@@ -1,9 +1,9 @@
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
-import { UseDates } from "@/hooks/UseDates";
+import { UseDates } from "@/hooks/use-dates";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
-export async function BIllsList({ month }) {
+export async function BillsList({ month }) {
   const invoices = await getBillsByResponsavel(month);
 
   const { DateFormat } = UseDates();
@@ -24,7 +24,7 @@ export async function BIllsList({ month }) {
                 <p className={`text-muted-foreground text-sm ${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
                   {item.status_pagamento}
                 </p>
-                <span className="text-muted-foreground text-sm">|</span>
+                <p className="text-muted-foreground text-sm">|</p>
                 <p className="text-muted-foreground text-sm">{DateFormat(item.dt_vencimento)}</p>
               </div>
             </div>

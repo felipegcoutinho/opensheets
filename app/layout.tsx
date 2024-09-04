@@ -1,8 +1,8 @@
-import Banner from "@/components/main-banner";
-import Header from "@/components/main-header";
+import Banner from "@/components/banner";
+import Header from "@/components/header";
 import MonthPicker from "@/components/month-picker";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/hooks/UseDarkMode";
+import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { uiSans } from "./fonts/font";
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={`${uiSans.className}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <div className="bg-green-500 h-1 absolute inset-0"></div>
+          <div className="bg-green-500 dark:bg-gradient-to-r dark:from-orange-800 dark:via-emerald-800 dark:to-blue-800 h-1 absolute inset-0"></div>
           <main className="animate-in max-w-screen-xl flex flex-col mx-auto antialiased">
             <Header />
             <Banner />
