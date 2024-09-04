@@ -5,7 +5,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { CreditCard, File, User } from "lucide-react";
 import { getResponsavelBillList, getResponsavelTransactionList } from "../actions/users";
 
-async function PageUsers({ searchParams }) {
+async function page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -37,24 +37,22 @@ async function PageUsers({ searchParams }) {
   });
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-4 gap-4 mt-4">
-        {Object.entries(groupedData).map(([responsavel, data]) => (
-          <CardComponent
-            key={responsavel}
-            responsavel={responsavel}
-            cartoes={data.cartoes}
-            totalCartao={data.totalCartao}
-            boletos={data.boletos}
-            totalBoleto={data.totalBoleto}
-          />
-        ))}
-      </div>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 my-4">
+      {Object.entries(groupedData).map(([responsavel, data]) => (
+        <CardComponent
+          key={responsavel}
+          responsavel={responsavel}
+          cartoes={data.cartoes}
+          totalCartao={data.totalCartao}
+          boletos={data.boletos}
+          totalBoleto={data.totalBoleto}
+        />
+      ))}
     </div>
   );
 }
 
-export default PageUsers;
+export default page;
 
 function CardComponent({ responsavel, cartoes, totalCartao, boletos, totalBoleto }) {
   return (
