@@ -60,7 +60,11 @@ export default async function page({ searchParams }) {
 
   return (
     <Suspense fallback={<span>Carregando...</span>}>
-      <h2 className="py-4 px-2 text-2xl font-bold">Visão Geral</h2>
+      <div className="py-6 px-1">
+        <h1 className="text-xl font-bold">Visão Geral</h1>
+        <h2 className="text-muted-foreground">Aqui está seus principais números do mês.</h2>
+      </div>
+
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <Card>
           <CardHeader className="pb-2">
