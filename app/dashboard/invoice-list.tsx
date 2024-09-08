@@ -1,9 +1,9 @@
 import { ColorDotInvoice } from "@/components/card-color";
+import DialogPayment from "@/components/dialog-payment";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import InvoicePayment from "../cartao/invoice-payment";
 
 export default function Invoice({ data, month }) {
   return (
@@ -35,7 +35,7 @@ export default function Invoice({ data, month }) {
                 <p className="font-bold">
                   <Numbers number={item.total_valor} />
                 </p>
-                <InvoicePayment month={month} paramsId={item.cartao_id} />
+                <DialogPayment descricao={item.descricao} valor={item.total_valor} month={month} paramsId={item.cartao_id} />
               </div>
             </div>
           </li>

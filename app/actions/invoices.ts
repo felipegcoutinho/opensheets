@@ -45,7 +45,7 @@ export async function updateFaturas(formData: FormData) {
 }
 
 export async function deleteFaturas(formData: FormData) {
-  const excluir = formData.get("excluir") as string;
+  const excluir = formData.get("excluir");
 
   const supabase = createClient();
   const { error } = await supabase.from("faturas").delete().eq("id", excluir);
@@ -53,6 +53,8 @@ export async function deleteFaturas(formData: FormData) {
   if (error) {
     console.error(error);
   }
+
+  console.log("Deleted fatura", excluir);
 
   revalidatePath("/cartao");
 }

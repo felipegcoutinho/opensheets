@@ -1,14 +1,16 @@
 import { getAccount } from "@/app/actions/accounts";
 import { getCardDetails, getCardInvoice, getCards, getCardSum, getLimite } from "@/app/actions/cards";
+import { getFaturas } from "@/app/actions/invoices";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
+import ButtonUndoPayment from "@/components/button-undo-payment";
 import CardColor, { ColorDot } from "@/components/card-color";
+import DialogPayment from "@/components/dialog-payment";
 import Numbers from "@/components/numbers";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
 import Image from "next/image";
-import InvoicePayment from "../../invoice-payment";
 
 export default async function page({ params, searchParams }) {
   const { currentMonthName, currentYear, DateFormat } = UseDates();
@@ -23,6 +25,8 @@ export default async function page({ params, searchParams }) {
   const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
 
   const limite = await getLimite(params.id);
+
+  const fatura_status = await getFaturas(month, params.id);
 
   return (
     <>
@@ -56,11 +60,12 @@ export default async function page({ params, searchParams }) {
           )}
 
           <div className="ml-auto">
-            Total da fatura
+            Total da Fatura
             <p className="text-2xl font-bold">
               <Numbers number={sumCardSum} />
             </p>
-            <InvoicePayment month={month} paramsId={params.id} />
+            <DialogPayment descricao={item.descricao} valor={sumCardSum} month={month} paramsId={item.id} />
+            <ButtonUndoPayment fatura_status={fatura_status} />
           </div>
         </CardColor>
       ))}
