@@ -1,31 +1,38 @@
-import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
+import { Button } from "@/components/ui/button";
 import { UseDates } from "@/hooks/use-dates";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BillsList({ month }) {
-  const invoices = await getBillsByResponsavel(month);
-
+  const data = await getBillsByResponsavel(month);
   const { DateFormat } = UseDates();
 
   return (
     <>
-      {invoices.length > 0 ? (
-        invoices.map((item) => (
-          <div className="grid gap-2 pb-2">
-            <div className="grid">
-              <div className="flex items-center justify-between">
+      {data.length > 0 ? (
+        data.map((item) => (
+          <div key={item.cartao_id}>
+            <div className="flex justify-between items-start mb-2">
+              <div>
                 <p className="text-lg font-bold">{item.descricao}</p>
+                {item.status_pagamento === "Pendente" ? (
+                  <p className="text-muted-foreground text-sm">Vence {DateFormat(item.dt_vencimento)}</p>
+                ) : null}
+              </div>
+
+              <div className="text-right">
                 <p className="font-bold">
                   <Numbers number={item.valor} />
                 </p>
-              </div>
-              <div className="flex items-center gap-1">
-                <p className={`text-muted-foreground text-sm ${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
-                  {item.status_pagamento}
-                </p>
-                <p className="text-muted-foreground text-sm">|</p>
-                <p className="text-muted-foreground text-sm">{DateFormat(item.dt_vencimento)}</p>
+                {item.status_pagamento === "Pago" ? (
+                  <Button className="h-6" variant="success" type="button">
+                    Pago
+                  </Button>
+                ) : (
+                  <Button className="h-6" variant="warning" type="button">
+                    Pendente
+                  </Button>
+                )}
               </div>
             </div>
           </div>
