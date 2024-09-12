@@ -12,7 +12,7 @@ export async function BillsList({ month }) {
       {data.length > 0 ? (
         data.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex justify-between items-start mb-2">
+            <div className="flex justify-between items-center border-b border-dashed">
               <div>
                 <p className="text-lg font-bold">{item.descricao}</p>
                 {item.status_pagamento === "Pendente" ? (
@@ -20,7 +20,7 @@ export async function BillsList({ month }) {
                 ) : null}
               </div>
 
-              <div className="text-right">
+              <div className="text-right py-1">
                 <p className="font-bold">
                   <Numbers number={item.valor} />
                 </p>
