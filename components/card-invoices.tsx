@@ -18,7 +18,7 @@ export default function CardInvoices({ title, subtitle, children }) {
         <CardTitle>{title}</CardTitle>
         <CardDescription>{subtitle}</CardDescription>
       </CardHeader>
-      <CardContent className="overflow-y-auto max-h-[calc(100%-5rem)] pr-4 space-y-2 scrollbar-hide" onScroll={handleScroll}>
+      <CardContent className="overflow-y-auto max-h-[calc(100%-5rem)] pr-4 scrollbar-hide" onScroll={handleScroll}>
         {children}
       </CardContent>
       <div
