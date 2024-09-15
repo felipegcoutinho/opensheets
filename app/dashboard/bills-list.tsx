@@ -1,3 +1,4 @@
+import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { UseDates } from "@/hooks/use-dates";

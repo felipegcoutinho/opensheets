@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 import { getConditions } from "../actions/dashboards";
 
-export function Component({ month }) {
+export function ChartConditions({ month }) {
   const [condicoes, setCondicoes] = useState([]);
 
   useEffect(() => {
