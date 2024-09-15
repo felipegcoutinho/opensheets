@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
 import { Menu, Package2 } from "lucide-react";
@@ -96,7 +96,13 @@ export default async function Header() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            {user && <DropdownMenuItem>Ajustes</DropdownMenuItem>}
+            {user && (
+              <Link href="/ajustes" className="text-black transition-colors hover:text-muted-foreground">
+                <Button className="px-2" variant="link">
+                  Ajustes
+                </Button>
+              </Link>
+            )}
             <AuthButton />
           </DropdownMenuContent>
         </DropdownMenu>
