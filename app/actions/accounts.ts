@@ -158,8 +158,6 @@ export async function getSumAccountExpensePaid(month) {
 
   const sumAccountExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 
-  console.log(sumAccountExpensePaid);
-
   return sumAccountExpensePaid;
 }
 
