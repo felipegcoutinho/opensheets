@@ -24,7 +24,18 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, CalendarClockIcon, Check, MessageSquareText, RefreshCw, Users } from "lucide-react";
+import {
+  ArrowUpDown,
+  CalendarClockIcon,
+  Check,
+  CheckCircle2Icon,
+  MessageSquareText,
+  PartyPopper,
+  RefreshCw,
+  ThumbsDown,
+  ThumbsUp,
+  Users,
+} from "lucide-react";
 import * as React from "react";
 
 function getDescricao(row) {
@@ -81,6 +92,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </span>
           )}
 
+          {item.responsavel === "Sistema" && (
+            <span className="text-muted-foreground text-xs">
+              <CheckCircle2Icon fill="green" className="text-white" size={14} />
+            </span>
+          )}
+
           {item.dividir_lancamento === true && (
             <span className="px-1">
               <TooltipProvider delayDuration={300}>
@@ -94,7 +111,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </span>
           )}
 
-          {item.anotacao != "" && (
+          {item.anotacao != "" && item.responsavel != "Sistema" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
@@ -104,6 +121,8 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               </Tooltip>
             </TooltipProvider>
           )}
+
+          {item.condicao === "Parcelado" && item.parcela_atual === item.qtde_parcela && <PartyPopper color="pink" size={16} />}
         </span>
       );
     },
@@ -247,6 +266,21 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           />
 
           <DeleteTransactions itemResponsavel={item.responsavel} itemId={item.id} />
+
+          {item.responsavel != "Sistema" && (
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger>
+                  {item.realizado ? (
+                    <ThumbsUp fill="green" className="stroke-none" size={14} />
+                  ) : (
+                    <ThumbsDown fill="orange" className="stroke-none" size={14} />
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>{item.realizado ? "Compra Paga" : "Compra Pendente"}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
       );
     },
@@ -310,7 +344,12 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow className="whitespace-nowrap" key={row.id}>
+                <TableRow
+                  className={`whitespace-nowrap ${
+                    row.original?.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-400/10 to-transparent"
+                  }`}
+                  key={row.id}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}

@@ -63,6 +63,7 @@ export default function Utils() {
     const formData = new FormData(e.target);
 
     const condicao = formData.get("condicao");
+
     if (condicao !== "Parcelado") {
       const valorFormatado = formData
         .get("valor")

@@ -92,29 +92,6 @@ export async function getAccountInvoice(month, id) {
   return data;
 }
 
-// Busca as despesas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpense(month, id) {
-  const supabase = createClient();
-
-  const { error, data } = await supabase
-    .from("transacoes")
-    .select(`valor`)
-    .eq("conta_id", id)
-    .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
-    .or("responsavel.eq.Você,responsavel.eq.Sistema")
-    .eq("realizado", true);
-
-  if (error) {
-    console.error("Erro ao buscar despesas:", error);
-    return null;
-  }
-
-  const sumAccountExpense = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
-
-  return sumAccountExpense;
-}
-
 // Busca as receitas de uma conta bancária específica e soma os valores
 export async function getSumAccountIncome(month, id) {
   const supabase = createClient();
@@ -138,6 +115,29 @@ export async function getSumAccountIncome(month, id) {
   return sumAccountIncome;
 }
 
+// Busca as despesas de uma conta bancária específica e soma os valores
+export async function getSumAccountExpense(month, id) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("transacoes")
+    .select(`valor`)
+    .eq("conta_id", id)
+    .eq("periodo", month)
+    .eq("tipo_transacao", "Despesa")
+    .or("responsavel.eq.Você, responsavel.eq.Sistema")
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar despesas:", error);
+    return null;
+  }
+
+  const sumAccountExpense = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  return sumAccountExpense;
+}
+
 // Busca apenas despesas realizadas de uma conta bancária específica e soma os valores
 export async function getSumAccountExpensePaid(month) {
   const supabase = createClient();
@@ -157,6 +157,8 @@ export async function getSumAccountExpensePaid(month) {
   }
 
   const sumAccountExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  console.log(sumAccountExpensePaid);
 
   return sumAccountExpensePaid;
 }
