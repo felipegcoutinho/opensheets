@@ -18,11 +18,11 @@ export default async function Banner() {
     return null;
   }
 
-  const sumAccountExpense = await getSumAccountExpensePaid(defaultPeriodo);
   const sumAccountIncome = await getSumAccountIncomePaid(defaultPeriodo);
-  const sumBillsIncome = await getSumBillsExpensePaid(defaultPeriodo);
+  const sumAccountExpense = await getSumAccountExpensePaid(defaultPeriodo);
+  const sumBillsExpense = await getSumBillsExpensePaid(defaultPeriodo);
 
-  const saldo = sumAccountIncome - sumAccountExpense - sumBillsIncome;
+  const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
 
   const { currentDate, fliendlyDate, getGreeting } = UseDates();
 

@@ -87,6 +87,7 @@ export default function UpdateCard({
                   <SelectContent>
                     <SelectItem value="Visa">Visa</SelectItem>
                     <SelectItem value="Mastercard">Mastercard</SelectItem>
+                    <SelectItem value="Vuoncard">VuonCard</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
