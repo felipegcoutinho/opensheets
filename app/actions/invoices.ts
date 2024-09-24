@@ -54,7 +54,7 @@ export async function deleteFaturas(formData: FormData) {
     console.error(error);
   }
 
-  console.log("Deleted fatura", excluir);
+  // console.log("Deleted fatura", excluir);
 
   revalidatePath("/cartao");
 }
