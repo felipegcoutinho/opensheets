@@ -191,8 +191,18 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     },
     cell: ({ row }) => {
       const item = row.original;
+      let badgeClass = "";
+
+      if (item.responsavel === "Você") {
+        badgeClass = "text-blue-500";
+      } else if (item.responsavel === "Sistema") {
+        badgeClass = "text-black";
+      } else {
+        badgeClass = "text-orange-500";
+      }
+
       return (
-        <Badge variant="outline" className={item.responsavel === "Você" ? "text-blue-500" : "text-orange-500"}>
+        <Badge variant="outline" className={badgeClass}>
           {row.getValue("responsavel")}
         </Badge>
       );

@@ -31,24 +31,29 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getCardDetailMap?.map((item) => (
-        <CardColor styles="flex gap-10 p-10 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
+        <CardColor styles="flex gap-10 px-8 py-6 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
           <div className="leading-relaxed">
-            <p>Vence dia {item.dt_vencimento}</p>
-            <p>Fecha dia {item.dt_fechamento}</p>
+            <p className="font-bold">Vencimento</p>
+            <p>{item.dt_vencimento}</p>
+            <p className="font-bold">Fechamento</p>
+            <p>{item.dt_fechamento}</p>
           </div>
 
           <div className="leading-relaxed">
-            <p>Limite Disponível</p>
+            <p className="font-bold">Limite Disponível</p>
             <p>
               <Numbers number={item.limite - limite} />
             </p>
+            <p className="font-bold">Conta de Pagamento</p>
             <p>{item.contas.descricao}</p>
           </div>
 
           <div className="leading-relaxed">
+            <p className="font-bold">Tipo do Cartão</p>
             <p>Cartão {item.tipo}</p>
+            <p className="font-bold">Bandeira</p>
             <Image src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={40} height={40} />
           </div>
 
