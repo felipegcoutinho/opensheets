@@ -13,7 +13,7 @@ export async function BillsList({ month }) {
       {data.length > 0 ? (
         data.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex justify-between items-center border-b border-dashed">
+            <div className="flex justify-between items-center border-b border-neutral-100">
               <div>
                 <p className="text-lg font-bold">{item.descricao}</p>
                 {item.status_pagamento === "Pendente" ? (
