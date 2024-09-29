@@ -29,7 +29,7 @@ export default async function Header() {
   };
 
   return (
-    <Card className="bg-transparent shadow-none flex h-16 items-center gap-4 text-black p-2 w-full my-2">
+    <Card className="bg-transparent border-none shadow-none flex h-16 items-center gap-4 text-black p-2 w-full my-2">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
         <Link href="/">
           <Logo />

@@ -4,6 +4,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -62,11 +63,11 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex justify-start w-full py-8 px-4 rounded-lg bg-orange-100 dark:bg-card">
+    <Card className="flex justify-start w-full py-4 px-4 bg-amber-100 dark:bg-card text-yellow-800 dark:text-white border-none">
       <button onClick={goToPreviousMonth}>
         <ArrowLeftCircle />
       </button>
-      <span className="mx-4 text-xl capitalize font-bold">
+      <span className="mx-4 text-lg capitalize">
         {currentMonth} {currentYear}
       </span>
       <button onClick={goToNextMonth}>
@@ -77,6 +78,6 @@ export default function MonthPicker() {
           Ir para o mês atual
         </Button>
       )}
-    </div>
+    </Card>
   );
 }

@@ -1,8 +1,8 @@
-import CardColor, { ColorDot } from "@/components/card-color";
+import { ColorDot } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
-import { CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import Link from "next/link";
 import { deleteAccount, getAccount, getSumAccountExpense, getSumAccountIncome } from "../actions/accounts";
@@ -34,7 +34,7 @@ async function PageAccount({ searchParams }) {
       <div className="grid grid-cols-4 gap-4 mt-4">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
-            <CardColor key={item.id} aparencia={item.aparencia} id={item.id}>
+            <Card key={item.id} aparencia={item.aparencia} id={item.id}>
               <CardContent className="p-6 space-y-4">
                 <div className="flex justify-between items-center">
                   <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
@@ -45,8 +45,8 @@ async function PageAccount({ searchParams }) {
                   </p>
                 </div>
               </CardContent>
-              <CardFooter className="bg-zinc-600/10 py-1 px-6 flex justify-between">
-                <Button className="p-0" variant="link">
+              <CardFooter className="py-1 px-6 flex justify-between ">
+                <Button className="p-0 font-bold" variant="link">
                   <Link href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}>extrato</Link>
                 </Button>
 
@@ -65,7 +65,7 @@ async function PageAccount({ searchParams }) {
                   </Button>
                 </form>
               </CardFooter>
-            </CardColor>
+            </Card>
           ))
         ) : (
           <EmptyCard height={100} width={100} />
