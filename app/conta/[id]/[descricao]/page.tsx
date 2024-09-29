@@ -23,19 +23,25 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getAccountDetailMap?.map((item) => (
-        <CardColor styles="flex gap-10 p-10 w-full items-center" aparencia={item.aparencia} id={item.id}>
+        <CardColor styles="flex gap-10 px-8 py-6 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
-          <div className="leading-loose">
-            <p>Conta {item.tipo_conta}</p>
-            <p className="text-xl">
-              Receitas <Numbers number={sumAccountIncome} />
+          <div className="leading-relaxed">
+            <p className="font-bold">Conta {item.tipo_conta}</p>
+          </div>
+
+          <div className="leading-relaxed">
+            <p className="text-xs">Receitas</p>
+            <p className="font-bold">
+              <Numbers number={sumAccountIncome} />
             </p>
-            <p className="text-xl">
-              Despesas <Numbers number={accountExpense} />
+            <p className="text-xs">Despesas</p>
+            <p className="font-bold">
+              <Numbers number={accountExpense} />
             </p>
-            <p className="text-xl">
-              Saldo <Numbers number={sumAccountIncome - accountExpense} />
+            <p className="text-xs">Saldo</p>
+            <p className="font-bold">
+              <Numbers number={sumAccountIncome - accountExpense} />
             </p>
           </div>
         </CardColor>

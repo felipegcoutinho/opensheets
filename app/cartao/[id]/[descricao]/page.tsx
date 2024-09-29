@@ -34,31 +34,31 @@ export default async function page({ params, searchParams }) {
         <CardColor styles="flex gap-10 px-8 py-6 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
-          <div className="leading-relaxed">
-            <p className="font-bold">Vencimento</p>
-            <p>{item.dt_vencimento}</p>
-            <p className="font-bold">Fechamento</p>
-            <p>{item.dt_fechamento}</p>
+          <div className="leading-loose">
+            <p className="text-xs">Vencimento</p>
+            <p className="font-bold">{item.dt_vencimento}</p>
+            <p className="text-xs">Fechamento</p>
+            <p className="font-bold">{item.dt_fechamento}</p>
           </div>
 
-          <div className="leading-relaxed">
-            <p className="font-bold">Limite Disponível</p>
-            <p>
+          <div className="leading-loose">
+            <p className="text-xs">Limite Disponível</p>
+            <p className="font-bold">
               <Numbers number={item.limite - limite} />
             </p>
-            <p className="font-bold">Conta de Pagamento</p>
-            <p>{item.contas.descricao}</p>
+            <p className="text-xs">Conta de Pagamento</p>
+            <p className="font-bold">{item.contas.descricao}</p>
           </div>
 
-          <div className="leading-relaxed">
-            <p className="font-bold">Tipo do Cartão</p>
-            <p>Cartão {item.tipo}</p>
-            <p className="font-bold">Bandeira</p>
+          <div className="leading-loose">
+            <p className="text-xs">Tipo do Cartão</p>
+            <p className="font-bold">Cartão {item.tipo}</p>
+            <p className="text-xs">Bandeira</p>
             <Image src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={40} height={40} />
           </div>
 
           {item.anotacao && (
-            <div className="leading-relaxed ">
+            <div className="leading-loose ">
               <p>Notas:</p>
               <p className="text-lg">{item.anotacao}</p>
             </div>
@@ -69,8 +69,10 @@ export default async function page({ params, searchParams }) {
             <p className="text-2xl font-bold">
               <Numbers number={sumCardSum} />
             </p>
-            <DialogPayment descricao={item.descricao} valor={sumCardSum} month={month} paramsId={item.id} />
-            <ButtonUndoPayment fatura_status={fatura_status} />
+            <div className="flex items-center gap-2">
+              <DialogPayment descricao={item.descricao} valor={sumCardSum} month={month} paramsId={item.id} />
+              <ButtonUndoPayment fatura_status={fatura_status} />
+            </div>
           </div>
         </CardColor>
       ))}
