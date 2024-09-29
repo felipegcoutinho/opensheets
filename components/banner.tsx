@@ -26,16 +26,9 @@ export default async function Banner() {
 
   const { currentDate, fliendlyDate, getGreeting } = UseDates();
 
-  // // Utilize a geolocalização para obter a cidade
-  // const city = "Florianópolis";
-
-  // // Faz a requisição da API do clima com a cidade obtida
-  // let weatherData = await fetch(`http://api.weatherapi.com/v1/current.json?key=cc27c4e4fcdf4a44a6d175112242509&q=${city}&aqi=no`);
-  // let weatherInfo = await weatherData.json();
-
   return (
     <CardBanner>
-      <div className="flex flex-col text-white">
+      <div className="flex flex-col ">
         <span className="text-sm">{fliendlyDate(currentDate)}</span>
 
         <span className="text-xl">
@@ -43,10 +36,6 @@ export default async function Banner() {
         </span>
 
         <span>{data?.user.email}</span>
-
-        {/* <span>
-          Clima atual em {city}: {weatherInfo.current.temp_c}°C
-        </span> */}
       </div>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
