@@ -20,7 +20,7 @@ export default function ButtonUndoPayment({ fatura_status }) {
 
                 <Button className="p-0 m-0 text-xs" variant="link" type="submit">
                   <Undo size={16} className="mr-1" />
-                  Desfazer Pagamento
+                  Desfazer
                 </Button>
               </form>
             )

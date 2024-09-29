@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-async function DataName() {
+async function GetUserName() {
   const supabase = createClient();
 
   const { data, error } = await supabase.auth.getUser();
@@ -12,4 +12,4 @@ async function DataName() {
   return displayName;
 }
 
-export default DataName;
+export default GetUserName;

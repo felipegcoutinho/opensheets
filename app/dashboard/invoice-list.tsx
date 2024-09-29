@@ -11,7 +11,7 @@ export default function Invoice({ data, month }) {
       {data.length > 0 ? (
         data.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex justify-between items-center border-b border-dashed">
+            <div className="flex justify-between items-center border-b border-neutral-100 dark:border-neutral-800">
               <div>
                 <ColorDotInvoice
                   aparencia={item.aparencia}
@@ -25,7 +25,7 @@ export default function Invoice({ data, month }) {
                     </Link>
                   }
                 />
-                {item.status_pagamento === "Pendente" ? <p className="text-muted-foreground text-sm pl-8">Vence dia {item.dt_vencimento}</p> : null}
+                {item.status_pagamento === "Pendente" ? <p className="text-muted-foreground text-sm pl-7">Vence dia {item.dt_vencimento}</p> : null}
               </div>
               <div className="text-right py-1">
                 <p className="font-bold">
