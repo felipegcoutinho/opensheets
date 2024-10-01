@@ -15,7 +15,8 @@ export default function MonthPicker() {
 
   const defaultMonth = new Date().toLocaleString("pt-BR", { month: "long" });
   const defaultYear = new Date().getFullYear();
-  const monthYearParam = searchParams.get("periodo") || `${defaultMonth}-${defaultYear}`;
+  const monthYearParam =
+    searchParams.get("periodo") || `${defaultMonth}-${defaultYear}`;
   const [currentMonth, currentYear] = monthYearParam.split("-");
 
   const currentMonthIndex = optionsMeses.indexOf(currentMonth);
@@ -53,17 +54,22 @@ export default function MonthPicker() {
     replace(`${pathname}?periodo=${newParam}`);
   };
 
-  const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
+  const isDifferentFromCurrent =
+    currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
   const isHomePage =
-    pathname === "/dashboard" || pathname === "/transacao" || pathname === "/boleto" || pathname === "/responsavel" || pathname === "/anotacao";
+    pathname === "/dashboard" ||
+    pathname === "/transacao" ||
+    pathname === "/boleto" ||
+    pathname === "/responsavel" ||
+    pathname === "/anotacao";
 
   if (!isHomePage) {
     return null;
   }
 
   return (
-    <Card className="flex justify-start w-full py-4 px-4 bg-amber-100 dark:bg-card text-yellow-800 dark:text-white border-none">
+    <Card className="flex justify-start w-full py-4 px-4 bg-amber-100 dark:bg-card border-none text-yellow-800 dark:text-white">
       <button onClick={goToPreviousMonth}>
         <ArrowLeftCircle />
       </button>
@@ -74,7 +80,13 @@ export default function MonthPicker() {
         <ArrowRightCircle />
       </button>
       {isDifferentFromCurrent && (
-        <Button variant="light" color="zinc" size="xs" className="ml-4 underline" onClick={goToCurrentMonthYear}>
+        <Button
+          variant="light"
+          color="zinc"
+          size="xs"
+          className="ml-4 underline"
+          onClick={goToCurrentMonthYear}
+        >
           Ir para o mês atual
         </Button>
       )}

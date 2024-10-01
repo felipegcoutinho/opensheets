@@ -1,4 +1,5 @@
 "use client";
+
 import { usePathname } from "next/navigation";
 import { Card } from "./ui/card";
 
@@ -11,7 +12,7 @@ function CardBanner({ children }) {
   }
 
   return (
-    <Card className="px-6 py-8 text-black w-full mb-2 dark:text-white">
+    <Card className="w-full px-6 py-8 mb-2 text-black dark:text-white">
       <div className="flex justify-between items-center">{children}</div>
     </Card>
   );

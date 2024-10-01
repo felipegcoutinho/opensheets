@@ -1,11 +1,19 @@
-import { getSumAccountExpensePaid, getSumAccountIncomePaid } from "@/app/actions/accounts";
+import {
+  getSumAccountExpensePaid,
+  getSumAccountIncomePaid,
+} from "@/app/actions/accounts";
 import { getSumBillsExpensePaid } from "@/app/actions/bills";
 import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
 import CardBanner from "./card-banner";
 import GetUserName from "./data-name";
 import Numbers from "./numbers";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export default async function Banner() {
   const { currentMonthName, currentYear } = UseDates();
@@ -37,6 +45,7 @@ export default async function Banner() {
 
         <span>{data?.user.email}</span>
       </div>
+
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
