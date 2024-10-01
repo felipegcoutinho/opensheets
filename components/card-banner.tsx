@@ -11,7 +11,7 @@ function CardBanner({ children }) {
   }
 
   return (
-    <Card className="px-6 py-8 bg-neutral-100 dark:bg-emerald-950 border-none text-cyan-950 w-full mb-2 dark:text-white">
+    <Card className="px-6 py-8 text-black w-full mb-2 dark:text-white">
       <div className="flex justify-between items-center">{children}</div>
     </Card>
   );

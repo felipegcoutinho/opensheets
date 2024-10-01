@@ -28,7 +28,7 @@ export default async function Banner() {
 
   return (
     <CardBanner>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <span className="text-sm">{fliendlyDate(currentDate)}</span>
 
         <span className="text-xl">

@@ -7,7 +7,6 @@ import { addNotes, updateNotes } from "../actions/notes";
 export default function Utils() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const { toast } = useToast();
 
   const handleSubmit = async (e) => {

@@ -64,6 +64,7 @@ const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
     row.original.responsavel?.toLowerCase().includes(searchValue) ||
     row.original.tipo_transacao?.toLowerCase().includes(searchValue) ||
     row.original.valor?.toString().toLowerCase().includes(searchValue) ||
+    row.original.categoria?.toLowerCase().includes(searchValue) ||
     descricaoContaCartao.includes(searchValue)
   );
 };
@@ -221,6 +222,15 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           <ColorDotTable aparencia={aparencia} descricao={descricao} />
         </div>
       );
+    },
+  },
+
+  {
+    accessorKey: "categoria",
+    header: () => <span>Categoria</span>,
+    cell: ({ row }) => {
+      const item = row.original;
+      return <span className="capitalize">{row.getValue("categoria")}</span>;
     },
   },
 
