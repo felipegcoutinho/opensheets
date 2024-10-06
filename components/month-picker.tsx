@@ -1,10 +1,10 @@
 "use client";
 
 import { UseDates } from "@/hooks/use-dates";
-import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
+import { GeistMono } from "geist/font/mono";
+import { ChevronLeftSquare, ChevronRightSquare } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -69,27 +69,31 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex justify-start w-full py-4 px-4 bg-amber-100 dark:bg-card border-none text-yellow-800 dark:text-white">
+    <div className="bg-lime-3000 flex w-full justify-start px-4 py-4 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
       <button onClick={goToPreviousMonth}>
-        <ArrowLeftCircle />
+        <ChevronLeftSquare size={16} />
       </button>
-      <span className="mx-4 text-lg capitalize">
+
+      <span
+        className={`${GeistMono.className} mx-2 font-mono font-bold uppercase`}
+      >
         {currentMonth} {currentYear}
       </span>
+
       <button onClick={goToNextMonth}>
-        <ArrowRightCircle />
+        <ChevronRightSquare size={16} />
       </button>
+
       {isDifferentFromCurrent && (
         <Button
-          variant="light"
-          color="zinc"
+          variant="outline"
           size="xs"
-          className="ml-4 underline"
+          className="ml-4 border border-black px-1"
           onClick={goToCurrentMonthYear}
         >
-          Ir para o mês atual
+          <span className="pl-1">Retornar ao Mês Atual</span>
         </Button>
       )}
-    </Card>
+    </div>
   );
 }

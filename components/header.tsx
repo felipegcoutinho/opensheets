@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
 import { Menu, Package2 } from "lucide-react";
@@ -29,8 +33,8 @@ export default async function Header() {
   };
 
   return (
-    <Card className="bg-transparent border-none shadow-none flex h-16 items-center gap-4 text-black p-2 w-full my-2">
-      <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5 ">
+    <Card className="flex h-16 w-full items-center gap-4 border-none bg-transparent py-2 text-black shadow-none">
+      <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5">
         <Link href="/">
           <Logo />
         </Link>
@@ -47,29 +51,53 @@ export default async function Header() {
         </SheetTrigger>
         <SheetContent side="left" className="bg-white">
           <nav className="grid gap-6 text-lg">
-            <Link href="#" className="flex items-center gap-2 text-lg font-semibold">
+            <Link
+              href="#"
+              className="flex items-center gap-2 text-lg font-semibold"
+            >
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Sheets</span>
             </Link>
-            <Link href="/" className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href="/"
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Home
             </Link>
-            <Link href={`/transacao`} className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href={`/transacao`}
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Transações
             </Link>
-            <Link href={`/boleto`} className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href={`/boleto`}
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Boletos
             </Link>
-            <Link href="/cartao" className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href="/cartao"
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Cartões
             </Link>
-            <Link href="/conta" className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href="/conta"
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Contas
             </Link>
-            <Link href="/responsavel" className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href="/responsavel"
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Responsável
             </Link>
-            <Link href="/anotacao" className="text-black transition-colors hover:text-muted-foreground">
+            <Link
+              href="/anotacao"
+              className="text-black transition-colors hover:text-muted-foreground"
+            >
               Anotações
             </Link>
           </nav>
@@ -90,14 +118,17 @@ export default async function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="link" size="icon">
-              <Menu className="bg-transparent h-5 w-5" />
+              <Menu className="h-5 w-5 bg-transparent" />
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
             {user && (
-              <Link href="/ajustes" className="text-black transition-colors hover:text-muted-foreground">
+              <Link
+                href="/ajustes"
+                className="text-black transition-colors hover:text-muted-foreground"
+              >
                 <Button className="px-2" variant="link">
                   Ajustes
                 </Button>

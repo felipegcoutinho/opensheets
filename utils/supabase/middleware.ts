@@ -2,19 +2,34 @@ import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const updateSession = async (request: NextRequest) => {
-  const protectedRoutes = ["/dashboard", "/transacao", "/cartao", "/boleto", "/responsaveis", "/anotacoes", "/contas", "/investimentos"];
+  const protectedRoutes = [
+    "/dashboard",
+    "/transacao",
+    "/cartao",
+    "/boleto",
+    "/responsaveis",
+    "/anotacoes",
+    "/contas",
+    "/investimentos",
+  ];
 
   try {
-    const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) =>
+              request.cookies.set(name, value),
+            );
+          },
         },
       },
-    });
+    );
 
     // Obtém a sessão do usuário
     const {
@@ -22,7 +37,19 @@ export const updateSession = async (request: NextRequest) => {
     } = await supabase.auth.getSession();
 
     // Se a rota atual for "/" e o usuário estiver logado, redireciona para "/dashboard"
-    if ((request.nextUrl.pathname === "/" || request.nextUrl.pathname === "/login") && session) {
+    if (
+      (request.nextUrl.pathname === "/" ||
+        request.nextUrl.pathname === "/login") &&
+      session
+    ) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
+    // Se a rota atual for "/investimentos" e o usuário não for "3e531380...", redireciona para "/dashboard"
+    if (
+      request.nextUrl.pathname === "/investimentos" &&
+      session?.user.id !== "3e531380-1b62-4364-914f-f16c44e57272"
+    ) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
@@ -43,7 +70,9 @@ export const updateSession = async (request: NextRequest) => {
 
     // Atualiza os cookies no response
     const cookiesToSet = request.cookies.getAll();
-    cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+    cookiesToSet.forEach(({ name, value, options }) =>
+      response.cookies.set(name, value, options),
+    );
 
     return response;
   } catch (e) {

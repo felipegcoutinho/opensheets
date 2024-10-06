@@ -9,8 +9,20 @@ import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { UseDates } from "@/hooks/use-dates";
 import {
   FilterFn,
@@ -85,16 +97,18 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
       return (
         <span className="flex items-center gap-1">
-          <span className="capitalize font-bold">{row.getValue("descricao")}</span>
+          <span className="font-bold capitalize">
+            {row.getValue("descricao")}
+          </span>
 
           {item.condicao === "Parcelado" && (
-            <span className="text-muted-foreground text-xs">
+            <span className="text-xs text-muted-foreground">
               {item.parcela_atual} de {item.qtde_parcela}
             </span>
           )}
 
           {item.responsavel === "Sistema" && (
-            <span className="text-muted-foreground text-xs">
+            <span className="text-xs text-muted-foreground">
               <CheckCircle2Icon fill="green" className="text-white" size={14} />
             </span>
           )}
@@ -116,14 +130,20 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
-                  <MessageSquareText className="text-muted-foreground" size={12} />
+                  <MessageSquareText
+                    className="text-muted-foreground"
+                    size={12}
+                  />
                 </TooltipTrigger>
                 <TooltipContent>{item.anotacao}</TooltipContent>
               </Tooltip>
             </TooltipProvider>
           )}
 
-          {item.condicao === "Parcelado" && item.parcela_atual === item.qtde_parcela && <PartyPopper color="pink" size={16} />}
+          {item.condicao === "Parcelado" &&
+            item.parcela_atual === item.qtde_parcela && (
+              <PartyPopper color="pink" size={16} />
+            )}
         </span>
       );
     },
@@ -135,7 +155,14 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Badge variant="outline" className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>
+        <Badge
+          variant="outline"
+          className={
+            item.tipo_transacao === "Receita"
+              ? "text-green-500"
+              : "text-red-500"
+          }
+        >
           {row.getValue("tipo_transacao")}
         </Badge>
       );
@@ -145,7 +172,11 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     accessorKey: "valor",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" className="text-xs p-0" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        <Button
+          variant="ghost"
+          className="p-0 text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
           Valor
           <ArrowUpDown className="ml-2 h-3 w-3" />
         </Button>
@@ -160,7 +191,9 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
     accessorKey: "condicao",
     header: () => <div>Condição</div>,
-    cell: ({ row }) => <div className="capitalize">{row.getValue("condicao")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("condicao")}</div>
+    ),
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -177,14 +210,20 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
     accessorKey: "forma_pagamento",
     header: () => <div>Pagamento</div>,
-    cell: ({ row }) => <div className="capitalize">{row.getValue("forma_pagamento")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("forma_pagamento")}</div>
+    ),
   },
 
   {
     accessorKey: "responsavel",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" className="text-xs p-0" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        <Button
+          variant="ghost"
+          className="p-0 text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
           Responsável
           <ArrowUpDown className="ml-2 h-3 w-3" />
         </Button>
@@ -241,7 +280,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <div className="text-center flex gap-2">
+        <div className="flex gap-2 text-center">
           <DetailsTransactions
             itemId={item.id}
             itemPeriodo={item.periodo}
@@ -285,7 +324,10 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             itemPaid={item.realizado}
           />
 
-          <DeleteTransactions itemResponsavel={item.responsavel} itemId={item.id} />
+          <DeleteTransactions
+            itemResponsavel={item.responsavel}
+            itemId={item.id}
+          />
 
           {item.responsavel != "Sistema" && (
             <TooltipProvider delayDuration={300}>
@@ -294,10 +336,16 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                   {item.realizado ? (
                     <ThumbsUp fill="green" className="stroke-none" size={14} />
                   ) : (
-                    <ThumbsDown fill="orange" className="stroke-none" size={14} />
+                    <ThumbsDown
+                      fill="orange"
+                      className="stroke-none"
+                      size={14}
+                    />
                   )}
                 </TooltipTrigger>
-                <TooltipContent>{item.realizado ? "Compra Paga" : "Compra Pendente"}</TooltipContent>
+                <TooltipContent>
+                  {item.realizado ? "Compra Paga" : "Compra Pendente"}
+                </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           )}
@@ -310,7 +358,8 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
@@ -345,8 +394,13 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
 
   return (
     <div className="w-full">
-      <div className="flex gap-2 justify-end items-center py-2">
-        <Input placeholder="Pesquisar" value={globalFilter} onChange={(event) => setGlobalFilter(event.target.value)} className="max-w-52" />
+      <div className="flex items-center justify-end gap-2 py-2">
+        <Input
+          placeholder="Pesquisar"
+          value={globalFilter}
+          onChange={(event) => setGlobalFilter(event.target.value)}
+          className="max-w-52"
+        />
       </div>
       <>
         <Table>
@@ -355,7 +409,12 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
               <TableRow className="text-xs" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -366,18 +425,27 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   className={`whitespace-nowrap ${
-                    row.original?.categoria === "Saldo Anterior" && "bg-gradient-to-r from-green-400/10 to-transparent"
+                    row.original?.categoria === "Saldo Anterior" &&
+                    "bg-gradient-to-r from-green-400/10 to-transparent"
                   }`}
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   <EmptyCard width={100} height={100} />
                 </TableCell>
               </TableRow>
@@ -386,12 +454,24 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
         </Table>
       </>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">{table.getFilteredRowModel().rows.length} transações</div>
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredRowModel().rows.length} transações
+        </div>
         <div className="space-x-2">
-          <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
             Previous
           </Button>
-          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
             Next
           </Button>
         </div>
