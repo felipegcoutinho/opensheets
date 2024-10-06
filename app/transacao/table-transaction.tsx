@@ -6,8 +6,8 @@ import UpdateTransactions from "@/app/transacao/modal/update-transactions";
 import { ColorDotTable } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -155,16 +155,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Badge
-          variant="outline"
-          className={
-            item.tipo_transacao === "Receita"
-              ? "text-green-500"
-              : "text-red-500"
-          }
-        >
+        <CardTitle className="text-md flex items-center gap-1 capitalize">
+          <div
+            className={`h-2 w-2 rounded-full ${item.tipo_transacao === "Receita" ? "bg-green-500" : "bg-red-500"} `}
+          />
           {row.getValue("tipo_transacao")}
-        </Badge>
+        </CardTitle>
       );
     },
   },
@@ -242,9 +238,14 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       }
 
       return (
-        <Badge variant="outline" className={badgeClass}>
+        <CardTitle
+          className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : item.responsavel === "Sistema" ? "text-black" : "text-orange-500"}`}
+        >
+          <div
+            className={`h-2 w-2 rounded-full ${item.responsavel === "Você" ? "bg-blue-600" : item.responsavel === "Sistema" ? "bg-black" : "bg-orange-500"} `}
+          />
           {row.getValue("responsavel")}
-        </Badge>
+        </CardTitle>
       );
     },
   },

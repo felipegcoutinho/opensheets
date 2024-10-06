@@ -1,7 +1,14 @@
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
-import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 import { Check, RefreshCw } from "lucide-react";
 import { getAccount } from "../actions/accounts";
@@ -40,17 +47,29 @@ async function PageBills({ searchParams }) {
             getBillsMap?.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
-                <TableCell className="font-bold capitalize">{item.descricao}</TableCell>
+                <TableCell className="font-bold capitalize">
+                  {item.descricao}
+                </TableCell>
                 <TableCell>
                   <Numbers number={item.valor} />
                 </TableCell>
-                <TableCell className={`${item.status_pagamento === "Pago" ? "text-green-500" : "text-orange-500"}`}>
-                  {item.status_pagamento}
+                <TableCell>
+                  <CardTitle className="text-md flex items-center gap-1 capitalize">
+                    <div
+                      className={`h-2 w-2 rounded-full ${item.status_pagamento === "Pago" ? "bg-green-500" : "bg-red-500"} `}
+                    />
+                    {item.status_pagamento}
+                  </CardTitle>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline" className={item.responsavel === "Você" ? "text-blue-500" : "text-orange-500"}>
+                  <CardTitle
+                    className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : "text-orange-500"}`}
+                  >
+                    <div
+                      className={`h-2 w-2 rounded-full ${item.responsavel === "Você" ? "bg-blue-600" : "bg-orange-500"} `}
+                    />
                     {item.responsavel}
-                  </Badge>
+                  </CardTitle>
                 </TableCell>
                 <TableCell>{item.categoria}</TableCell>
                 <TableCell>

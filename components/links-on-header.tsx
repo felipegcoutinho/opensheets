@@ -11,7 +11,8 @@ import {
   NotebookPenIcon,
   PiggyBank,
   Users,
-} from "lucide-react"; // Ícones
+} from "lucide-react";
+
 import Link from "next/link"; // Componente de Link do Next.js
 import { usePathname, useSearchParams } from "next/navigation"; // Hooks do Next.js para obter pathname e parâmetros de busca
 
