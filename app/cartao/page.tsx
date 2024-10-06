@@ -1,7 +1,7 @@
-import { ColorDot } from "@/components/card-color";
+import CardColor, { ColorDot } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { CardContent, CardFooter } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
@@ -39,26 +39,40 @@ async function PageCards({ searchParams }) {
     <div className="mt-4 w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
-      <div className="grid grid-cols-3 gap-4 mt-4">
+      <div className="mt-4 grid grid-cols-3 gap-4">
         {getCardsMap?.length !== 0 ? (
           getCardsMap?.map((item) => (
-            <Card key={item.id}>
-              <CardContent className="p-6 space-y-4">
-                <div className="flex justify-between items-center">
-                  <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
+            <CardColor aparencia={item.aparencia} key={item.id}>
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center justify-between">
+                  <ColorDot
+                    aparencia={item.aparencia}
+                    descricao={item.descricao}
+                  />
                   <div className="flex space-x-1">
-                    <Image className="mt-0" src={getCardLogo(item.bandeira)} alt={`Logo da bandeira ${item.bandeira}`} width={65} height={65} />
+                    <Image
+                      className="mt-0"
+                      src={getCardLogo(item.bandeira)}
+                      alt={`Logo da bandeira ${item.bandeira}`}
+                      width={65}
+                      height={65}
+                    />
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
                   <p className="text-sm">Vence dia {item.dt_vencimento}</p>
                   <p className="text-sm">Cartão {item.tipo}</p>
                 </div>
               </CardContent>
-              <CardFooter className="py-1 px-6 flex justify-between">
+              <CardFooter className="flex justify-between bg-black px-6 py-1 text-white dark:bg-neutral-700">
                 <Button className="p-0 font-bold" variant="link">
-                  <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>fatura</Link>
+                  <Link
+                    className="p-0 font-bold text-white"
+                    href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}
+                  >
+                    fatura
+                  </Link>
                 </Button>
 
                 <UpdateCard
@@ -78,12 +92,17 @@ async function PageCards({ searchParams }) {
                 />
 
                 <form action={deleteCards}>
-                  <Button className="p-0" variant="link" value={item.id} name="excluir">
+                  <Button
+                    className="p-0 font-bold text-white"
+                    variant="link"
+                    value={item.id}
+                    name="excluir"
+                  >
                     excluir
                   </Button>
                 </form>
               </CardFooter>
-            </Card>
+            </CardColor>
           ))
         ) : (
           <EmptyCard height={100} width={100} />

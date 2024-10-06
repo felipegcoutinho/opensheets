@@ -1,10 +1,10 @@
 "use client";
 
 import { UseDates } from "@/hooks/use-dates";
-import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
+import { GeistMono } from "geist/font/mono";
+import { ChevronLeftSquare, ChevronRightSquare } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -15,7 +15,8 @@ export default function MonthPicker() {
 
   const defaultMonth = new Date().toLocaleString("pt-BR", { month: "long" });
   const defaultYear = new Date().getFullYear();
-  const monthYearParam = searchParams.get("periodo") || `${defaultMonth}-${defaultYear}`;
+  const monthYearParam =
+    searchParams.get("periodo") || `${defaultMonth}-${defaultYear}`;
   const [currentMonth, currentYear] = monthYearParam.split("-");
 
   const currentMonthIndex = optionsMeses.indexOf(currentMonth);
@@ -53,31 +54,46 @@ export default function MonthPicker() {
     replace(`${pathname}?periodo=${newParam}`);
   };
 
-  const isDifferentFromCurrent = currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
+  const isDifferentFromCurrent =
+    currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
   const isHomePage =
-    pathname === "/dashboard" || pathname === "/transacao" || pathname === "/boleto" || pathname === "/responsavel" || pathname === "/anotacao";
+    pathname === "/dashboard" ||
+    pathname === "/transacao" ||
+    pathname === "/boleto" ||
+    pathname === "/responsavel" ||
+    pathname === "/anotacao";
 
   if (!isHomePage) {
     return null;
   }
 
   return (
-    <Card className="flex justify-start w-full py-4 px-4 bg-amber-100 dark:bg-card text-yellow-800 dark:text-white border-none">
+    <div className="bg-lime-3000 flex w-full justify-start px-4 py-4 text-neutral-700 dark:bg-violet-600 dark:text-neutral-800">
       <button onClick={goToPreviousMonth}>
-        <ArrowLeftCircle />
+        <ChevronLeftSquare size={16} />
       </button>
-      <span className="mx-4 text-lg capitalize">
+
+      <span
+        className={`${GeistMono.className} mx-2 font-mono font-bold uppercase`}
+      >
         {currentMonth} {currentYear}
       </span>
+
       <button onClick={goToNextMonth}>
-        <ArrowRightCircle />
+        <ChevronRightSquare size={16} />
       </button>
+
       {isDifferentFromCurrent && (
-        <Button variant="light" color="zinc" size="xs" className="ml-4 underline" onClick={goToCurrentMonthYear}>
-          Ir para o mês atual
+        <Button
+          variant="link"
+          size="xs"
+          className="ml-4 border border-black px-1 dark:text-black"
+          onClick={goToCurrentMonthYear}
+        >
+          <span className="pl-1">Retornar ao Mês Atual</span>
         </Button>
       )}
-    </Card>
+    </div>
   );
 }

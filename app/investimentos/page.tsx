@@ -1,8 +1,14 @@
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
-import { createClient } from "@/utils/supabase/server";
 import { getInvest } from "../actions/invest";
 import InvestComponent from "./chart";
 import CreateInvestimento from "./modal/create-invest";
@@ -17,27 +23,17 @@ async function page() {
     return currentValue - previousValue;
   };
 
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (user?.id !== "3e531380-1b62-4364-914f-f16c44e57272") {
-    return <div>Você não tem permissão para acessar essa página</div>;
-  }
-
   return (
     <div className="mt-4 w-full">
       <CreateInvestimento>
         <Button variant="default">Lançar Investimento</Button>
       </CreateInvestimento>
 
-      <div className="w-full mt-4">
+      <div className="mt-4 w-full">
         <InvestComponent data={investData} />
       </div>
 
-      <Table className="w-full mt-4">
+      <Table className="mt-4 w-full">
         <TableHeader>
           <TableRow>
             <TableHead>Id</TableHead>
@@ -50,10 +46,17 @@ async function page() {
         <TableBody>
           {investData.map((item, index) => {
             const previousItem = investData[index - 1];
-            const difference = previousItem ? calculateDifference(item.valor, previousItem.valor) : 0;
+            const difference = previousItem
+              ? calculateDifference(item.valor, previousItem.valor)
+              : 0;
 
             // Classe CSS condicional com base na diferença
-            const differenceClass = difference > 0 ? "text-green-500" : difference < 0 ? "text-red-500" : "text-black dark:text-white";
+            const differenceClass =
+              difference > 0
+                ? "text-green-500"
+                : difference < 0
+                  ? "text-red-500"
+                  : "text-black dark:text-white";
 
             return (
               <TableRow key={item.id} className="whitespace-nowrap">
@@ -62,9 +65,15 @@ async function page() {
                 <TableCell>
                   <Numbers number={item.valor} />
                 </TableCell>
-                <TableCell className={differenceClass}>{difference ? <Numbers number={difference} /> : "-"}</TableCell>
+                <TableCell className={differenceClass}>
+                  {difference ? <Numbers number={difference} /> : "-"}
+                </TableCell>
                 <TableCell>
-                  <UpdateInvest itemId={item.id} itemData={item.data} itemValor={item.valor} />
+                  <UpdateInvest
+                    itemId={item.id}
+                    itemData={item.data}
+                    itemValor={item.valor}
+                  />
                   <span className="pl-2">
                     <DeleteInvest itemId={item.id} />
                   </span>

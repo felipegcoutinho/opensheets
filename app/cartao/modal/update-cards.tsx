@@ -1,10 +1,26 @@
 "use client";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectItemColor, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectItemColor,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import Utils from "../utils";
 
@@ -23,13 +39,23 @@ export default function UpdateCard({
   getAccountMap,
   itemAparencia,
 }) {
-  const { isOpen, setIsOpen, statusPagamento, setStatusPagamento, handleUpdate, loading, colorMap } = Utils();
+  const {
+    isOpen,
+    setIsOpen,
+    statusPagamento,
+    setStatusPagamento,
+    handleUpdate,
+    loading,
+    colorMap,
+  } = Utils();
 
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger className="p-0" asChild>
-          <Button variant="link">editar</Button>
+          <Button className={"font-bold text-white"} variant="link">
+            editar
+          </Button>
         </DialogTrigger>
 
         <DialogContent>
@@ -43,10 +69,16 @@ export default function UpdateCard({
             <div className="w-full">
               <Label>Descrição</Label>
               <Required />
-              <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" required />
+              <Input
+                defaultValue={itemDescricao}
+                name="descricao"
+                placeholder="Descrição"
+                type="text"
+                required
+              />
             </div>
 
-            <div className="flex gap-2 w-full">
+            <div className="flex w-full gap-2">
               <div className="w-1/2">
                 <Label>Data de Fechamento</Label>
                 <Required />
@@ -76,7 +108,7 @@ export default function UpdateCard({
               </div>
             </div>
 
-            <div className="flex gap-2 w-full">
+            <div className="flex w-full gap-2">
               <div className="w-1/2">
                 <Label>Bandeira</Label>
                 <Required />
@@ -110,13 +142,21 @@ export default function UpdateCard({
             <div className="w-full">
               <Label>Limite</Label>
               <Required />
-              <MoneyInput defaultValue={itemLimite} name="limite" placeholder="R$ 0,00" />
+              <MoneyInput
+                defaultValue={itemLimite}
+                name="limite"
+                placeholder="R$ 0,00"
+              />
             </div>
 
             <div className="w-full">
               <Label>Conta Padrão</Label>
               <Required />
-              <Select defaultValue={itemContaId.toString()} name="conta_id" required>
+              <Select
+                defaultValue={itemContaId.toString()}
+                name="conta_id"
+                required
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -140,7 +180,11 @@ export default function UpdateCard({
                 <SelectContent>
                   <SelectGroup>
                     {colorMap.map((color) => (
-                      <SelectItemColor key={color.name} value={color.name} color={color.hex}>
+                      <SelectItemColor
+                        key={color.name}
+                        value={color.name}
+                        color={color.hex}
+                      >
                         {color.label}
                       </SelectItemColor>
                     ))}
@@ -151,10 +195,14 @@ export default function UpdateCard({
 
             <div className="w-full">
               <Label>Anotação</Label>
-              <Textarea defaultValue={itemAnotacao} name="anotacao" placeholder="Anotação" />
+              <Textarea
+                defaultValue={itemAnotacao}
+                name="anotacao"
+                placeholder="Anotação"
+              />
             </div>
 
-            <DialogFooter className="flex gap-2 mt-4">
+            <DialogFooter className="mt-4 flex gap-2">
               <DialogClose asChild>
                 <Button className="w-1/2" type="button" variant="secondary">
                   Cancelar

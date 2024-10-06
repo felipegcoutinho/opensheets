@@ -1,11 +1,16 @@
-import { ColorDot } from "@/components/card-color";
+import CardColor, { ColorDot } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { CardContent, CardFooter } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import Link from "next/link";
-import { deleteAccount, getAccount, getSumAccountExpense, getSumAccountIncome } from "../actions/accounts";
+import {
+  deleteAccount,
+  getAccount,
+  getSumAccountExpense,
+  getSumAccountIncome,
+} from "../actions/accounts";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
@@ -24,20 +29,23 @@ async function PageAccount({ searchParams }) {
         ...item,
         saldo: sumAccountIncome - accountExpense,
       };
-    })
+    }),
   );
 
   return (
     <div className="mt-4 w-full">
       <CreateAccount />
 
-      <div className="grid grid-cols-4 gap-4 mt-4">
+      <div className="mt-4 grid grid-cols-4 gap-4">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
-            <Card key={item.id} aparencia={item.aparencia} id={item.id}>
-              <CardContent className="p-6 space-y-4">
-                <div className="flex justify-between items-center">
-                  <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
+            <CardColor key={item.id} aparencia={item.aparencia} id={item.id}>
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center justify-between">
+                  <ColorDot
+                    aparencia={item.aparencia}
+                    descricao={item.descricao}
+                  />
                 </div>
                 <div>
                   <p className="text-sm">
@@ -45,9 +53,13 @@ async function PageAccount({ searchParams }) {
                   </p>
                 </div>
               </CardContent>
-              <CardFooter className="py-1 px-6 flex justify-between ">
-                <Button className="p-0 font-bold" variant="link">
-                  <Link href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}>extrato</Link>
+              <CardFooter className="flex justify-between bg-black px-6 py-1 text-white dark:bg-neutral-700">
+                <Button className="p-0 font-bold text-white" variant="link">
+                  <Link
+                    href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}
+                  >
+                    extrato
+                  </Link>
                 </Button>
 
                 <UpdateCard
@@ -60,12 +72,17 @@ async function PageAccount({ searchParams }) {
                 />
 
                 <form action={deleteAccount}>
-                  <Button className="p-0" variant="link" value={item.id} name="excluir">
+                  <Button
+                    className="p-0 text-white"
+                    variant="link"
+                    value={item.id}
+                    name="excluir"
+                  >
                     excluir
                   </Button>
                 </form>
               </CardFooter>
-            </Card>
+            </CardColor>
           ))
         ) : (
           <EmptyCard height={100} width={100} />

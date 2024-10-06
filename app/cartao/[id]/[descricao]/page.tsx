@@ -1,12 +1,25 @@
 import { getAccount } from "@/app/actions/accounts";
-import { getCardDetails, getCardInvoice, getCards, getCardSum, getLimite } from "@/app/actions/cards";
+import {
+  getCardDetails,
+  getCardInvoice,
+  getCards,
+  getCardSum,
+  getLimite,
+} from "@/app/actions/cards";
 import { getFaturas } from "@/app/actions/invoices";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import ButtonUndoPayment from "@/components/button-undo-payment";
 import CardColor, { ColorDot } from "@/components/card-color";
 import DialogPayment from "@/components/dialog-payment";
 import Numbers from "@/components/numbers";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
@@ -31,7 +44,11 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getCardDetailMap?.map((item) => (
-        <CardColor styles="flex gap-10 px-8 py-6 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
+        <CardColor
+          styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
+          aparencia={item.aparencia}
+          id={item.id}
+        >
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
           <div className="leading-loose">
@@ -54,7 +71,12 @@ export default async function page({ params, searchParams }) {
             <p className="text-xs">Tipo do Cartão</p>
             <p className="font-bold">Cartão {item.tipo}</p>
             <p className="text-xs">Bandeira</p>
-            <Image src={item.bandeira === "Mastercard" ? mastercard : visa} alt="Logo da Bandeira" width={40} height={40} />
+            <Image
+              src={item.bandeira === "Mastercard" ? mastercard : visa}
+              alt="Logo da Bandeira"
+              width={40}
+              height={40}
+            />
           </div>
 
           {item.anotacao && (
@@ -70,7 +92,12 @@ export default async function page({ params, searchParams }) {
               <Numbers number={sumCardSum} />
             </p>
             <div className="flex items-center gap-2">
-              <DialogPayment descricao={item.descricao} valor={sumCardSum} month={month} paramsId={item.id} />
+              <DialogPayment
+                descricao={item.descricao}
+                valor={sumCardSum}
+                month={month}
+                paramsId={item.id}
+              />
               <ButtonUndoPayment fatura_status={fatura_status} />
             </div>
           </div>
@@ -99,10 +126,19 @@ export default async function page({ params, searchParams }) {
               <TableCell>
                 {item.descricao}
                 <span className="text-neutral-400 text-xs px-1">
-                  {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
+                  {item.condicao === "Parcelado" &&
+                    `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
-              <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
+              <TableCell
+                className={
+                  item.tipo_transacao === "Receita"
+                    ? "text-green-500"
+                    : "text-red-500"
+                }
+              >
+                {item.tipo_transacao}
+              </TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.categoria}</TableCell>

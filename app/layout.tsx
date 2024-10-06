@@ -17,9 +17,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${uiSans.className}`}>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {/* <div className="bg-orange-600 dark:bg-transparent h-1 absolute inset-0"></div> */}
-          <main className="animate-in max-w-screen-xl flex flex-col mx-auto antialiased px-2">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* <div className="absolute inset-0 h-1 bg-orange-400 dark:bg-transparent"></div> */}
+          <main className="mx-auto flex max-w-screen-xl flex-col px-2 antialiased animate-in">
             <Header />
             <Banner />
             <MonthPicker />

@@ -1,53 +1,56 @@
 import { cn } from "@/lib/utils";
-import { Card, CardTitle } from "./ui/card";
+import { CardTitle, CreditCard } from "./ui/card";
 
 const colorVariantsCard = {
-  amber: "bg-gradient-to-tl from-amber-200 to-amber-100 dark:bg-gradient-to-tl dark:from-amber-900 dark:to-neutral-900",
-  blue: "bg-gradient-to-tl from-blue-200 to-blue-100 dark:bg-gradient-to-tl dark:from-blue-900 dark:to-neutral-900",
-  cyan: "bg-gradient-to-tl from-cyan-200 to-cyan-100 dark:bg-gradient-to-tl dark:from-cyan-900 dark:to-neutral-900",
-  emerald: "bg-gradient-to-tl from-emerald-200 to-emerald-100 dark:bg-gradient-to-tl dark:from-emerald-900 dark:to-neutral-900",
-  fuchsia: "bg-gradient-to-tl from-fuchsia-200 to-fuchsia-100 dark:bg-gradient-to-tl dark:from-fuchsia-900 dark:to-neutral-900",
-  green: "bg-gradient-to-tl from-green-200 to-green-100 dark:bg-gradient-to-tl dark:from-green-900 dark:to-neutral-900",
-  indigo: "bg-gradient-to-tl from-indigo-200 to-indigo-100 dark:bg-gradient-to-tl dark:from-indigo-900 dark:to-neutral-900",
-  lime: "bg-gradient-to-tl from-lime-200 to-lime-100 dark:bg-gradient-to-tl dark:from-lime-900 dark:to-neutral-900",
-  orange: "bg-gradient-to-tl from-orange-200 to-orange-100 dark:bg-gradient-to-tl dark:from-orange-900 dark:to-neutral-900",
-  pink: "bg-gradient-to-tl from-pink-200 to-pink-100 dark:bg-gradient-to-tl dark:from-pink-900 dark:to-neutral-900",
-  purple: "bg-gradient-to-tl from-purple-200 to-purple-100 dark:bg-gradient-to-tl dark:from-purple-900 dark:to-neutral-900",
-  red: "bg-gradient-to-tl from-red-200 to-red-100 dark:bg-gradient-to-tl dark:from-red-900 dark:to-neutral-900",
-  rose: "bg-gradient-to-tl from-rose-200 to-rose-100 dark:bg-gradient-to-tl dark:from-rose-900 dark:to-neutral-900",
-  sky: "bg-gradient-to-tl from-sky-200 to-sky-100 dark:bg-gradient-to-tl dark:from-sky-900 dark:to-neutral-900",
-  teal: "bg-gradient-to-tl from-teal-200 to-teal-100 dark:bg-gradient-to-tl dark:from-teal-900 dark:to-neutral-900",
-  violet: "bg-gradient-to-tl from-violet-200 to-violet-100 dark:bg-gradient-to-tl dark:from-violet-900 dark:to-neutral-900",
-  yellow: "bg-gradient-to-tl from-yellow-200 to-yellow-100 dark:bg-gradient-to-tl dark:from-yellow-900 dark:to-neutral-900",
-  zinc: "bg-gradient-to-tl from-zinc-200 to-zinc-100 dark:bg-gradient-to-tl dark:from-zinc-900 dark:to-neutral-900",
+  amber: "bg-amber-400 text-black",
+  blue: "bg-blue-600 text-white",
+  cyan: "bg-cyan-400 text-black",
+  emerald: "bg-emerald-400 text-black",
+  fuchsia: "bg-fuchsia-600 text-black",
+  green: "bg-green-400 text-black",
+  indigo: "bg-indigo-500 text-white",
+  lime: "bg-lime-2000 text-black",
+  orange: "bg-orange-1000 text-white",
+  pink: "bg-pink-600 text-white",
+  purple: "bg-purple-600 text-white",
+  red: "bg-red-600 text-white",
+  rose: "bg-rose-600 text-white",
+  sky: "bg-sky-600 text-white",
+  teal: "bg-teal-400 text-black",
+  violet: "bg-violet-600 text-white",
+  yellow: "bg-yellow-1000 text-black",
+  zinc: "bg-neutral-800 text-white",
 };
 
 const colorVariants = {
-  zinc: "bg-zinc-500",
-  red: "bg-red-500",
-  orange: "bg-orange-500",
-  amber: "bg-amber-500",
-  yellow: "bg-yellow-500",
-  lime: "bg-lime-500",
-  green: "bg-green-500",
-  emerald: "bg-emerald-500",
-  teal: "bg-teal-500",
-  cyan: "bg-cyan-500",
-  sky: "bg-sky-500",
-  blue: "bg-blue-500",
+  zinc: "bg-neutral-800",
+  red: "bg-red-600",
+  orange: "bg-orange-1000",
+  amber: "bg-amber-400",
+  yellow: "bg-yellow-1000",
+  lime: "bg-lime-2000",
+  green: "bg-green-400",
+  emerald: "bg-emerald-400",
+  teal: "bg-teal-400",
+  cyan: "bg-cyan-400",
+  sky: "bg-sky-600",
+  blue: "bg-blue-600",
   indigo: "bg-indigo-500",
-  violet: "bg-violet-500",
-  purple: "bg-purple-500",
-  fuchsia: "bg-fuchsia-500",
-  pink: "bg-pink-500",
-  rose: "bg-rose-500",
+  violet: "bg-violet-600",
+  purple: "bg-purple-600",
+  fuchsia: "bg-fuchsia-600",
+  pink: "bg-pink-600",
+  rose: "bg-rose-600",
 };
 
 function CardColor({ aparencia, id, children, styles }) {
   return (
-    <Card className={`${colorVariantsCard[aparencia]} ${styles} overflow-hidden`} key={id}>
+    <CreditCard
+      className={`${colorVariantsCard[aparencia]} ${styles} overflow-hidden`}
+      key={id}
+    >
       {children}
-    </Card>
+    </CreditCard>
   );
 }
 
@@ -55,16 +58,21 @@ export default CardColor;
 
 export function ColorDot({ aparencia, descricao }) {
   return (
-    <CardTitle className="flex items-center gap-2">
-      <div className={cn(colorVariants[aparencia], "w-max h-8 p-1 rounded-sm text-white")}>{descricao}</div>
+    <CardTitle className="flex items-center gap-2 text-2xl">
+      {descricao}
     </CardTitle>
   );
 }
 
 export function ColorDotInvoice({ aparencia, descricao }) {
   return (
-    <CardTitle className="flex gap-2 items-center text-lg">
-      <div className={cn(colorVariants[aparencia], `w-5 h-5 rounded-full flex items-center justify-center`)}></div>
+    <CardTitle className="flex items-center gap-2 text-lg">
+      <div
+        className={cn(
+          colorVariants[aparencia],
+          `flex h-5 w-5 items-center justify-center rounded-full`,
+        )}
+      ></div>
       {descricao}
     </CardTitle>
   );
@@ -72,8 +80,10 @@ export function ColorDotInvoice({ aparencia, descricao }) {
 
 export function ColorDotTable({ aparencia, descricao }) {
   return (
-    <CardTitle className="flex gap-2 text-md items-center">
-      <div className={cn(colorVariants[aparencia], `w-3 h-3 rounded-full`)}></div>
+    <CardTitle className="text-md flex items-center gap-1">
+      <div
+        className={cn(colorVariants[aparencia], `h-2 w-2 rounded-full`)}
+      ></div>
       {descricao}
     </CardTitle>
   );

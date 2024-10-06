@@ -6,6 +6,7 @@ import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BillsList({ month }) {
   const data = await getBillsByResponsavel(month);
+
   const { DateFormat } = UseDates();
 
   return (

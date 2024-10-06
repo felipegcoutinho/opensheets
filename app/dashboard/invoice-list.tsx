@@ -11,13 +11,13 @@ export default function Invoice({ data, month }) {
       {data.length > 0 ? (
         data.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex justify-between items-center border-b border-neutral-100 dark:border-neutral-800">
+            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800">
               <div>
                 <ColorDotInvoice
                   aparencia={item.aparencia}
                   descricao={
                     <Link
-                      className="hover:underline flex items-center gap-1"
+                      className="flex items-center gap-1 hover:underline"
                       href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
                     >
                       {item.descricao}
@@ -25,13 +25,22 @@ export default function Invoice({ data, month }) {
                     </Link>
                   }
                 />
-                {item.status_pagamento === "Pendente" ? <p className="text-muted-foreground text-sm pl-7">Vence dia {item.dt_vencimento}</p> : null}
+                {item.status_pagamento === "Pendente" ? (
+                  <p className="pl-7 text-sm text-muted-foreground">
+                    Vence dia {item.dt_vencimento}
+                  </p>
+                ) : null}
               </div>
-              <div className="text-right py-1">
+              <div className="py-1 text-right">
                 <p className="font-bold">
                   <Numbers number={item.total_valor} />
                 </p>
-                <DialogPayment descricao={item.descricao} valor={item.total_valor} month={month} paramsId={item.cartao_id} />
+                <DialogPayment
+                  descricao={item.descricao}
+                  valor={item.total_valor}
+                  month={month}
+                  paramsId={item.cartao_id}
+                />
               </div>
             </div>
           </div>
