@@ -31,7 +31,7 @@ export default async function Banner() {
           <div>
             <p className="text-muted-foreground">{fliendlyDate(currentDate)}</p>
             <h1 className="text-2xl font-bold">
-              Boa noite, <GetUserName />
+            {getGreeting()}, <GetUserName />
             </h1>
           </div>
         </div>
