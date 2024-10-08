@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 
 export default function CardInvoices({ title, subtitle, children }) {
@@ -24,7 +18,7 @@ export default function CardInvoices({ title, subtitle, children }) {
     <Card className="relative h-96 w-full overflow-hidden">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{subtitle}</CardDescription>
+        {/* <CardDescription>{subtitle}</CardDescription> */}
       </CardHeader>
       <CardContent
         className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto pr-4"

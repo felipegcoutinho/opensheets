@@ -9,9 +9,11 @@ export default async function page({ searchParams }) {
 
   return (
     <main>
-      <div className="py-6 px-1">
-        <h1 className="text-xl font-bold">Visão Geral</h1>
-        <h2 className="text-muted-foreground">Aqui está seus principais números do mês.</h2>
+      <div className="px-1 py-6">
+        <h1 className="text-lg font-bold">Visão Geral</h1>
+        <h2 className="text-muted-foreground">
+          Aqui está seus principais números do mês.
+        </h2>
       </div>
 
       <FinancialSummary month={month} />

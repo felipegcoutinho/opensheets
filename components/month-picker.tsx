@@ -69,7 +69,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="bg-lime-3000 flex w-full justify-start px-4 py-4 text-black dark:bg-violet-600 dark:text-neutral-800">
+    <div className="flex w-full justify-start bg-lime-3000 px-4 py-4 text-black dark:bg-violet-600">
       <button onClick={goToPreviousMonth}>
         <ChevronLeftSquare size={16} />
       </button>
