@@ -1,9 +1,22 @@
-import { getAccount, getAccountDetails, getAccountInvoice, getSumAccountExpense, getSumAccountIncome } from "@/app/actions/accounts";
+import {
+  getAccount,
+  getAccountDetails,
+  getAccountInvoice,
+  getSumAccountExpense,
+  getSumAccountIncome,
+} from "@/app/actions/accounts";
 import { getCards } from "@/app/actions/cards";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
 import Numbers from "@/components/numbers";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 
 export default async function page({ params, searchParams }) {
@@ -16,6 +29,7 @@ export default async function page({ params, searchParams }) {
 
   const sumAccountIncome = await getSumAccountIncome(month, params.id);
   const accountExpense = await getSumAccountExpense(month, params.id);
+  const saldo = sumAccountIncome - accountExpense;
 
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
@@ -23,7 +37,11 @@ export default async function page({ params, searchParams }) {
   return (
     <>
       {getAccountDetailMap?.map((item) => (
-        <CardColor styles="flex gap-10 px-8 py-6 mt-4 w-full items-center" aparencia={item.aparencia} id={item.id}>
+        <CardColor
+          styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
+          aparencia={item.aparencia}
+          id={item.id}
+        >
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
           <div className="leading-relaxed">
@@ -41,7 +59,7 @@ export default async function page({ params, searchParams }) {
             </p>
             <p className="text-xs">Saldo</p>
             <p className="font-bold">
-              <Numbers number={sumAccountIncome - accountExpense} />
+              <Numbers number={saldo} />
             </p>
           </div>
         </CardColor>
@@ -68,11 +86,20 @@ export default async function page({ params, searchParams }) {
               <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
-                <span className="text-neutral-400 text-xs px-1">
-                  {item.condicao === "Parcelado" && `${item.parcela_atual} de ${item.qtde_parcela}`}
+                <span className="px-1 text-xs text-neutral-400">
+                  {item.condicao === "Parcelado" &&
+                    `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
-              <TableCell className={item.tipo_transacao === "Receita" ? "text-green-500" : "text-red-500"}>{item.tipo_transacao}</TableCell>
+              <TableCell
+                className={
+                  item.tipo_transacao === "Receita"
+                    ? "text-green-500"
+                    : "text-red-500"
+                }
+              >
+                {item.tipo_transacao}
+              </TableCell>
               <TableCell>{item.condicao}</TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
               <TableCell>{item.categoria}</TableCell>
@@ -80,7 +107,7 @@ export default async function page({ params, searchParams }) {
               <TableCell>
                 <Numbers number={item.valor} />
               </TableCell>
-              <TableCell className="text-center flex gap-2">
+              <TableCell className="flex gap-2 text-center">
                 <DetailsTransactions
                   itemId={item.id}
                   itemPeriodo={item.periodo}

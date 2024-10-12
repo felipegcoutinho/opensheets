@@ -1,5 +1,6 @@
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
+import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -55,10 +56,15 @@ async function PageBills({ searchParams }) {
                 </TableCell>
                 <TableCell>
                   <CardTitle className="text-md flex items-center gap-1 capitalize">
-                    <div
-                      className={`h-2 w-2 rounded-full ${item.status_pagamento === "Pago" ? "bg-green-500" : "bg-red-500"} `}
-                    />
-                    {item.status_pagamento}
+                    {item.status_pagamento === "Pago" ? (
+                      <Button className="h-6" variant="success" type="button">
+                        Pago
+                      </Button>
+                    ) : (
+                      <Button className="h-6" variant="warning" type="button">
+                        Pendente
+                      </Button>
+                    )}
                   </CardTitle>
                 </TableCell>
                 <TableCell>
@@ -66,7 +72,7 @@ async function PageBills({ searchParams }) {
                     className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : "text-orange-500"}`}
                   >
                     <div
-                      className={`h-2 w-2 rounded-full ${item.responsavel === "Você" ? "bg-blue-600" : "bg-orange-500"} `}
+                      className={`h-2 w-2 rounded-none ${item.responsavel === "Você" ? "bg-blue-600" : "bg-orange-500"} `}
                     />
                     {item.responsavel}
                   </CardTitle>

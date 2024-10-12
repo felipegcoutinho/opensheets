@@ -26,7 +26,7 @@ export default function Invoice({ data, month }) {
                   }
                 />
                 {item.status_pagamento === "Pendente" ? (
-                  <p className="pl-7 text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     Vence dia {item.dt_vencimento}
                   </p>
                 ) : null}

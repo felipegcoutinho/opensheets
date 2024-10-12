@@ -1,15 +1,15 @@
 import Numbers from "@/components/numbers";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getConditions } from "../actions/dashboards";
 
 export async function ConditionList({ month }) {
   const condicoes = await getConditions(month);
 
   return (
-    <Card className="h-1/2 max-sm:h-max overflow-y-auto">
+    <Card className="h-1/2 overflow-y-auto max-sm:h-max">
       <CardHeader className="pb-3">
         <CardTitle>Condições</CardTitle>
-        <CardDescription>Condições em destaque</CardDescription>
+        {/* <CardDescription>Condições em destaque</CardDescription> */}
       </CardHeader>
 
       {condicoes?.length > 0 ? (
@@ -27,7 +27,9 @@ export async function ConditionList({ month }) {
         ))
       ) : (
         <CardContent className="flex items-center justify-start">
-          <span className="text-muted-foreground text-lg">Não há condições disponíveis.</span>
+          <span className="text-lg text-muted-foreground">
+            Não há condições disponíveis.
+          </span>
         </CardContent>
       )}
     </Card>

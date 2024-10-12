@@ -6,7 +6,9 @@ import { revalidatePath } from "next/cache";
 // Busca a lista de contas bancárias salvas
 export async function getAccount() {
   const supabase = createClient();
-  const { data, error } = await supabase.from("contas").select(`id, descricao, status, aparencia, tipo_conta, anotacao`);
+  const { data, error } = await supabase
+    .from("contas")
+    .select(`id, descricao, status, aparencia, tipo_conta, anotacao`);
 
   if (error) {
     console.error("Erro ao buscar contas:", error);
@@ -19,7 +21,10 @@ export async function getAccount() {
 // Busca detalhes de uma conta bancária específica
 export async function getAccountDetails(id) {
   const supabase = createClient();
-  const { data, error } = await supabase.from("contas").select(`id, descricao, status, aparencia, tipo_conta, anotacao`).eq("id", id);
+  const { data, error } = await supabase
+    .from("contas")
+    .select(`id, descricao, status, aparencia, tipo_conta, anotacao`)
+    .eq("id", id);
 
   if (error) {
     console.error("Erro ao buscar detalhes das contas:", error);
@@ -31,12 +36,15 @@ export async function getAccountDetails(id) {
 
 // Adiciona uma nova conta bancária
 export async function addAccount(formData: FormData) {
-  const { descricao, status, aparencia, tipo_conta, anotacao } = Object.fromEntries(formData.entries());
+  const { descricao, status, aparencia, tipo_conta, anotacao } =
+    Object.fromEntries(formData.entries());
 
   const supabase = createClient();
 
   try {
-    await supabase.from("contas").insert({ descricao, status, aparencia, tipo_conta, anotacao });
+    await supabase
+      .from("contas")
+      .insert({ descricao, status, aparencia, tipo_conta, anotacao });
     revalidatePath("/conta");
   } catch (error) {
     console.error("Erro em adicionar conta:", error);
@@ -59,12 +67,16 @@ export async function deleteAccount(formData: FormData) {
 
 // Atualiza uma conta bancária
 export async function updateAccount(formData: FormData) {
-  const { id, descricao, status, aparencia, tipo_conta, anotacao } = Object.fromEntries(formData.entries());
+  const { id, descricao, status, aparencia, tipo_conta, anotacao } =
+    Object.fromEntries(formData.entries());
 
   const supabase = createClient();
 
   try {
-    await supabase.from("contas").update({ id, descricao, status, aparencia, tipo_conta, anotacao }).eq("id", id);
+    await supabase
+      .from("contas")
+      .update({ id, descricao, status, aparencia, tipo_conta, anotacao })
+      .eq("id", id);
     revalidatePath("/conta");
   } catch (error) {
     console.error("Erro ao atualizar conta:", error);
@@ -78,7 +90,7 @@ export async function getAccountInvoice(month, id) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao, aparencia)"
+      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao, aparencia)",
     )
     .eq("periodo", month)
     .or("responsavel.eq.Você,responsavel.eq.Sistema")
@@ -110,7 +122,10 @@ export async function getSumAccountIncome(month, id) {
     return null;
   }
 
-  const sumAccountIncome = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const sumAccountIncome = data.reduce((sum, item) => {
+    const valor = parseFloat(item.valor);
+    return sum + (isNaN(valor) ? 0 : valor);
+  }, 0);
 
   return sumAccountIncome;
 }
@@ -133,7 +148,10 @@ export async function getSumAccountExpense(month, id) {
     return null;
   }
 
-  const sumAccountExpense = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const sumAccountExpense = data.reduce((sum, item) => {
+    const valor = parseFloat(item.valor);
+    return sum + (isNaN(valor) ? 0 : valor);
+  }, 0);
 
   return sumAccountExpense;
 }
@@ -156,7 +174,10 @@ export async function getSumAccountExpensePaid(month) {
     return null;
   }
 
-  const sumAccountExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const sumAccountExpensePaid = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return sumAccountExpensePaid;
 }
@@ -178,7 +199,10 @@ export async function getSumAccountIncomePaid(month) {
     return null;
   }
 
-  const sumAccountIncomePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const sumAccountIncomePaid = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return sumAccountIncomePaid;
 }
