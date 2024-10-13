@@ -14,7 +14,6 @@ import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
 import LinkOnHeader from "./links-on-header";
 import Logo from "./logo";
-import { Card } from "./ui/card";
 
 export default async function Header() {
   const cookieStore = cookies();
@@ -33,7 +32,7 @@ export default async function Header() {
   };
 
   return (
-    <Card className="flex h-16 w-full items-center gap-4 border-none bg-transparent py-2 text-black shadow-none">
+    <div className="my-1 flex h-16 w-full items-center gap-4 rounded py-2 text-black shadow-none">
       <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5">
         <Link href="/">
           <Logo />
@@ -138,6 +137,6 @@ export default async function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </Card>
+    </div>
   );
 }

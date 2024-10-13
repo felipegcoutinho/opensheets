@@ -8,7 +8,7 @@ export async function ConditionList({ month }) {
   return (
     <Card className="h-1/2 overflow-y-auto max-sm:h-max">
       <CardHeader className="pb-3">
-        <CardTitle>Condições</CardTitle>
+        <CardTitle className="text-sm uppercase">Condições</CardTitle>
         {/* <CardDescription>Condições em destaque</CardDescription> */}
       </CardHeader>
 

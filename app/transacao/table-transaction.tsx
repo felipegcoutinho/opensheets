@@ -157,7 +157,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return (
         <CardTitle className="text-md flex items-center gap-1 capitalize">
           <div
-            className={`h-2 w-2 rounded-none ${item.tipo_transacao === "Receita" ? "bg-green-500" : "bg-red-500"} `}
+            className={`h-2 w-2 rounded ${item.tipo_transacao === "Receita" ? "bg-green-500" : "bg-red-500"} `}
           />
           {row.getValue("tipo_transacao")}
         </CardTitle>
@@ -242,7 +242,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : item.responsavel === "Sistema" ? "text-black" : "text-orange-500"}`}
         >
           <div
-            className={`h-2 w-2 rounded-none ${item.responsavel === "Você" ? "bg-blue-600" : item.responsavel === "Sistema" ? "bg-black" : "bg-orange-500"} `}
+            className={`h-2 w-2 rounded ${item.responsavel === "Você" ? "bg-blue-600" : item.responsavel === "Sistema" ? "bg-black" : "bg-orange-500"} `}
           />
           {row.getValue("responsavel")}
         </CardTitle>
