@@ -1,9 +1,12 @@
-import { GeistMono } from "geist/font/mono";
+import Image from "next/image";
 
 function Logo() {
   return (
-    <div className={`${GeistMono.className} text-lg dark:text-white tracking-tighter`}>
-      open<span className="font-bold">sheets</span>
+    <div className="flex items-center gap-1 text-xl tracking-tighter dark:text-white">
+      <Image src="/logo.png" alt="openSheets" width={32} height={32} />
+      <span>
+        open<span className="font-bold">sheets</span>
+      </span>
     </div>
   );
 }

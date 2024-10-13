@@ -72,7 +72,7 @@ async function PageBills({ searchParams }) {
                     className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : "text-orange-500"}`}
                   >
                     <div
-                      className={`h-2 w-2 rounded-none ${item.responsavel === "Você" ? "bg-blue-600" : "bg-orange-500"} `}
+                      className={`h-2 w-2 rounded ${item.responsavel === "Você" ? "bg-blue-600" : "bg-orange-500"} `}
                     />
                     {item.responsavel}
                   </CardTitle>

@@ -15,7 +15,7 @@ async function CountList({ month }) {
     <div className="grid grid-cols-1 gap-2">
       <Card>
         <CardHeader className="pb-0">
-          <CardTitle className="flex items-center gap-1">
+          <CardTitle className="flex items-center gap-1 text-sm uppercase">
             <ArrowDownUp size={16} />
             Transações
           </CardTitle>
@@ -31,7 +31,7 @@ async function CountList({ month }) {
 
       <Card>
         <CardHeader className="pb-0">
-          <CardTitle className="flex items-center gap-1">
+          <CardTitle className="flex items-center gap-1 text-sm uppercase">
             <File size={16} />
             Boletos
           </CardTitle>
@@ -47,7 +47,7 @@ async function CountList({ month }) {
 
       <Card>
         <CardHeader className="pb-0">
-          <CardTitle className="flex items-center gap-1">
+          <CardTitle className="flex items-center gap-1 text-sm uppercase">
             <CreditCard size={16} />
             Cartões
           </CardTitle>

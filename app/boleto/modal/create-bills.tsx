@@ -1,10 +1,24 @@
 "use client";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import Utils from "../utils";
@@ -36,7 +50,7 @@ export default function CreateBills({ getAccountMap }) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          <div className="flex w-full gap-2 mb-1">
+          <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
               <Label>Descrição</Label>
               <Required />
@@ -61,7 +75,7 @@ export default function CreateBills({ getAccountMap }) {
             </div>
           </div>
 
-          <div className="flex gap-2 w-full">
+          <div className="flex w-full gap-2">
             <div className="w-1/2">
               <Label>Data de Vencimento</Label>
               <Required />
@@ -86,7 +100,7 @@ export default function CreateBills({ getAccountMap }) {
             </div>
           </div>
 
-          <div className="flex w-full gap-2 mb-1">
+          <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Valor</Label>
               <Required />
@@ -94,16 +108,27 @@ export default function CreateBills({ getAccountMap }) {
             </div>
           </div>
 
-          <div className="flex items-center mt-2 justify-between rounded-lg bg-zinc-100 p-2">
-            <Label className="text-sm text-neutral-600 font-medium">Dividir Boleto</Label>
-            <Switch name="dividir_boleto" checked={isDividedChecked} onCheckedChange={() => setIsDividedChecked(!isDividedChecked)} />
+          <div className="mt-2 flex items-center justify-between rounded bg-zinc-100 p-2">
+            <Label className="text-sm font-medium text-neutral-600">
+              Dividir Boleto
+            </Label>
+            <Switch
+              name="dividir_boleto"
+              checked={isDividedChecked}
+              onCheckedChange={() => setIsDividedChecked(!isDividedChecked)}
+            />
           </div>
 
           <div className="flex w-full gap-2">
             <div className="w-full">
               <Label>Responsável</Label>
               <Required />
-              <Input list="responsavel-list" name="responsavel" placeholder="Responsável" type="text" />
+              <Input
+                list="responsavel-list"
+                name="responsavel"
+                placeholder="Responsável"
+                type="text"
+              />
               <datalist id="responsavel-list">
                 <option value="Você" />
               </datalist>
@@ -112,7 +137,11 @@ export default function CreateBills({ getAccountMap }) {
             {isDividedChecked && (
               <div className="w-full">
                 <Label>Segundo Responsável</Label>
-                <Input name="segundo_responsavel" placeholder="Segundo Responsável" type="text" />
+                <Input
+                  name="segundo_responsavel"
+                  placeholder="Segundo Responsável"
+                  type="text"
+                />
               </div>
             )}
           </div>
@@ -122,7 +151,11 @@ export default function CreateBills({ getAccountMap }) {
               <Label>Condição</Label>
               <Required />
 
-              <Select name="condicao" onValueChange={handleCondicaoChange} defaultValue="Vista">
+              <Select
+                name="condicao"
+                onValueChange={handleCondicaoChange}
+                defaultValue="Vista"
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -162,12 +195,16 @@ export default function CreateBills({ getAccountMap }) {
             )}
           </div>
 
-          <div className="flex w-full gap-2 mb-1">
+          <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Status de Pagamento</Label>
               <Required />
 
-              <Select name="status_pagamento" onValueChange={(e) => setStatusPagamento(e)} defaultValue="Pendente">
+              <Select
+                name="status_pagamento"
+                onValueChange={(e) => setStatusPagamento(e)}
+                defaultValue="Pendente"
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -180,7 +217,7 @@ export default function CreateBills({ getAccountMap }) {
           </div>
 
           {statusPagamento === "Pago" && (
-            <div className="flex w-full gap-2 mb-1">
+            <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
                 <Label>Data de Pagamento</Label>
                 <Input name="dt_pagamento" type="date" />
@@ -206,14 +243,14 @@ export default function CreateBills({ getAccountMap }) {
             </Select>
           </div>
 
-          <div className="flex w-full gap-2 mb-1">
+          <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Anotação</Label>
               <Textarea name="anotacao" placeholder="Anotação" />
             </div>
           </div>
 
-          <DialogFooter className="flex gap-2 mt-4">
+          <DialogFooter className="mt-4 flex gap-2">
             <DialogClose asChild>
               <Button className="w-1/2" type="button" variant="secondary">
                 Cancelar

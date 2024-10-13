@@ -17,8 +17,7 @@ export default function CardInvoices({ title, subtitle, children }) {
   return (
     <Card className="relative h-96 w-full overflow-hidden">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        {/* <CardDescription>{subtitle}</CardDescription> */}
+        <CardTitle className="text-sm uppercase">{title}</CardTitle>
       </CardHeader>
       <CardContent
         className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto pr-4"

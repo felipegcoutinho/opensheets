@@ -8,10 +8,11 @@ import { PaymentList } from "./payment-list";
 import Utils from "./utils";
 
 export default async function FinancialSummaryCards({ month }) {
-  const { incomeByCategory, invoiceCard, invoiceBill, expenseByCategory } = await Utils(month);
+  const { incomeByCategory, invoiceCard, invoiceBill, expenseByCategory } =
+    await Utils(month);
 
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-2 gap-2 mb-10">
+    <div className="mb-10 mt-2 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <CardInvoices title="Faturas" subtitle="Total de faturas">
         <Invoice month={month} data={invoiceCard} />
       </CardInvoices>
