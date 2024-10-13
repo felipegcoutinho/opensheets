@@ -33,8 +33,8 @@ export default async function Header() {
 
   return (
     <div className="my-1 flex h-16 w-full items-center gap-4 rounded py-2 text-black shadow-none">
-      <nav className="hidden flex-col gap-4 font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-5">
-        <Link href="/">
+      <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
+        <Link href="/" className="pr-10">
           <Logo />
         </Link>
         <LinkOnHeader user={user} />
