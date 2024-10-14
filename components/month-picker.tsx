@@ -88,7 +88,7 @@ export default function MonthPicker() {
         <Button
           variant="link"
           size="xs"
-          className="ml-4 border border-black px-1 dark:text-black"
+          className="ml-4 border border-black px-1 dark:border-white dark:text-white"
           onClick={goToCurrentMonthYear}
         >
           <span className="pl-1">Retornar ao Mês Atual</span>
