@@ -242,7 +242,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : item.responsavel === "Sistema" ? "text-black dark:text-white" : "text-orange-500"}`}
         >
           <div
-            className={`h-2 w-2 rounded ${item.responsavel === "Você" ? "bg-blue-600" : item.responsavel === "Sistema" ? "bg-black bg-white" : "bg-orange-500"} `}
+            className={`h-2 w-2 rounded ${item.responsavel === "Você" ? "bg-blue-600" : item.responsavel === "Sistema" ? "bg-black dark:bg-white" : "bg-orange-500"} `}
           />
           {row.getValue("responsavel")}
         </CardTitle>

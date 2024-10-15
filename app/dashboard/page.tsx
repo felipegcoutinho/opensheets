@@ -12,7 +12,7 @@ export default async function page({ searchParams }) {
       <div className="px-1 py-6">
         <h1 className="text-lg font-bold">Visão Geral</h1>
         <h2 className="text-muted-foreground">
-          Aqui está seus principais números do mês.
+          Aqui estão seus principais números de {currentMonthName}.
         </h2>
       </div>
 
