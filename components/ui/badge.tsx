@@ -16,17 +16,17 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
         defaultGreen:
-          "border-transparent bg-green-100 text-green-800 hover:bg-green-200/80 rounded-full",
+          "border-transparent bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 hover:bg-green-200/80 rounded-full",
         defaultRed:
-          "border-transparent bg-red-100 text-red-800 hover:bg-red-200/80 rounded-full",
+          "border-transparent bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 hover:bg-red-200/80 rounded-full",
         defaultBlue:
-          "border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200/80 rounded-full",
+          "border-transparent bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-blue-800 hover:bg-blue-200/80 rounded-full",
         defaultOrange:
-          "border-transparent bg-orange-100 text-orange-800 hover:bg-orange-200/80 rounded-full",
+          "border-transparent bg-orange-100  dark:bg-orange-900 text-orange-800 dark:text-orange-200 hover:bg-orange-200/80 rounded-full",
         defaultPurple:
-          "border-transparent bg-purple-100 text-purple-800 hover:bg-purple-200/80 rounded-full",
+          "border-transparent bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 hover:bg-purple-200/80 rounded-full",
         defaultGray:
-          "border-transparent bg-gray-200 text-gray-800 hover:bg-gray-300/80 rounded-full",
+          "border-transparent bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 hover:bg-gray-300/80 rounded-full",
       },
     },
     defaultVariants: {
