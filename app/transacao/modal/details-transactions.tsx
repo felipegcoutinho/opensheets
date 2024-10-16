@@ -3,11 +3,22 @@
 import Numbers from "@/components/numbers";
 import Timeline from "@/components/timeline-orders";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/use-dates";
-import { Eye } from "lucide-react";
 import Utils from "../utils";
 
 export default function DetailsTransactions({
@@ -40,14 +51,14 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>
-        <Eye size={16} />
-      </DialogTrigger>
+      <DialogTrigger>Ver detalhes</DialogTrigger>
       <DialogContent className="p-0">
-        <Card className="p-1 space-y-4">
+        <Card className="space-y-4 p-1">
           <CardHeader className="flex flex-row items-start bg-muted/50">
             <div className="grid gap-0.5">
-              <CardTitle className="group flex items-center gap-2 text-lg">ID {itemId}</CardTitle>
+              <CardTitle className="group flex items-center gap-2 text-lg">
+                ID {itemId}
+              </CardTitle>
               <CardDescription>{DateFormat(itemDate)}</CardDescription>
             </div>
           </CardHeader>
@@ -66,12 +77,16 @@ export default function DetailsTransactions({
                 </li>
 
                 <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Forma de Pagamento</span>
+                  <span className="text-muted-foreground">
+                    Forma de Pagamento
+                  </span>
                   <span>{itemFormaPagamento}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">{itemCartao ? "Cartão" : "Conta"}</span>
+                  <span className="text-muted-foreground">
+                    {itemCartao ? "Cartão" : "Conta"}
+                  </span>
                   <span>{itemCartao ?? itemConta}</span>
                 </li>
 
@@ -80,7 +95,9 @@ export default function DetailsTransactions({
                   <span>{itemCategoria}</span>
                 </li>
                 <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Tipo de Transação</span>
+                  <span className="text-muted-foreground">
+                    Tipo de Transação
+                  </span>
                   <span>{itemTipoTransacao}</span>
                 </li>
                 <li className="flex items-center justify-between">
@@ -106,7 +123,7 @@ export default function DetailsTransactions({
                 )}
               </ul>
 
-              <ul className="grid gap-3 mb-6">
+              <ul className="mb-6 grid gap-3">
                 {itemCondicao === "Parcelado" && (
                   <Timeline
                     DataCompra={itemDate}
@@ -119,7 +136,9 @@ export default function DetailsTransactions({
                 <Separator className="my-2" />
 
                 <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Valor {itemCondicao === "Parcelado" && "da Parcela"}</span>
+                  <span className="text-muted-foreground">
+                    Valor {itemCondicao === "Parcelado" && "da Parcela"}
+                  </span>
                   <span>
                     <Numbers number={itemValor} />
                   </span>
@@ -127,7 +146,9 @@ export default function DetailsTransactions({
 
                 {itemCondicao === "Recorrente" && (
                   <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Quantidade de Recorrências</span>
+                    <span className="text-muted-foreground">
+                      Quantidade de Recorrências
+                    </span>
                     <span>{itemQtdeRecorrencia} meses</span>
                   </li>
                 )}
@@ -137,7 +158,11 @@ export default function DetailsTransactions({
                 <li className="flex items-center justify-between font-semibold">
                   <span className="text-muted-foreground">Total da Compra</span>
                   <span className="text-lg">
-                    {itemCondicao === "Parcelado" ? <Numbers number={itemValor * itemQtdeParcelas} /> : <Numbers number={itemValor} />}
+                    {itemCondicao === "Parcelado" ? (
+                      <Numbers number={itemValor * itemQtdeParcelas} />
+                    ) : (
+                      <Numbers number={itemValor} />
+                    )}
                   </span>
                 </li>
               </ul>

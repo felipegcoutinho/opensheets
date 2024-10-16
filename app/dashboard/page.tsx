@@ -8,7 +8,7 @@ export default async function page({ searchParams }) {
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   return (
-    <main>
+    <>
       <div className="px-1 py-6">
         <h1 className="text-lg font-bold">Visão Geral</h1>
         <h2 className="text-muted-foreground">
@@ -18,6 +18,6 @@ export default async function page({ searchParams }) {
 
       <FinancialSummary month={month} />
       <FinancialSummaryCards month={month} />
-    </main>
+    </>
   );
 }

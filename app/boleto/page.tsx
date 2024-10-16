@@ -30,7 +30,7 @@ async function PageBills({ searchParams }) {
     <div className="mt-4 w-full">
       <CreateBills getAccountMap={getAccountMap} />
 
-      <Table className="mt-6">
+      <Table className="mt-4">
         <TableHeader>
           <TableRow className="border-b text-xs">
             <TableHead>Data de Vencimento</TableHead>

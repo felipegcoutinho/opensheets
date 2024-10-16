@@ -11,24 +11,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2Icon } from "lucide-react";
 
-export default function DeleteButton({ handleDelete, isOpen, setIsOpen, itemResponsavel }) {
+export default function DeleteButton({
+  handleDelete,
+  isOpen,
+  setIsOpen,
+  itemResponsavel,
+}) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <Trash2Icon size={16} className={`${itemResponsavel === "Sistema" && "hidden"}`} />
+        <span className={`${itemResponsavel === "Sistema" && "hidden"}`}>
+          Remover
+        </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
           <DialogDescription>
             <p>
-              Isso não pode ser desfeito. Isso excluirá <strong>permanentemente</strong> seu lançamento e removerá seus dados de nossos servidores.
+              Isso não pode ser desfeito. Isso excluirá{" "}
+              <strong>permanentemente</strong> seu lançamento e removerá seus
+              dados de nossos servidores.
             </p>
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="w-full flex gap-2">
+        <DialogFooter className="flex w-full gap-2">
           <DialogClose className="w-1/2" asChild>
             <Button type="button" variant="secondary">
               Cancelar

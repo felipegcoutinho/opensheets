@@ -10,7 +10,8 @@ import "./globals.css";
 
 export const metadata = {
   title: "OpenSheets",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  description:
+    "Planilhas financeiras para pessoas que querem ter controle sobre suas finanças.",
 };
 
 export default function RootLayout({ children }) {
@@ -23,7 +24,6 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          {/* <div className="absolute inset-0 h-1 bg-orange-400 dark:bg-transparent"></div> */}
           <main className="mx-auto flex max-w-screen-xl flex-col px-2 antialiased animate-in">
             <Header />
             <Banner />

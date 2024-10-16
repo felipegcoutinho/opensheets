@@ -3,13 +3,27 @@
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { PenLine, ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import { useEffect } from "react";
 import Utils from "../utils";
 
@@ -81,7 +95,9 @@ export default function UpdateTransactions({
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger disabled={itemResponsavel === "Sistema"}>
-        <PenLine size={16} className={`${itemResponsavel === "Sistema" && "hidden"}`} />
+        <span className={`${itemResponsavel === "Sistema" && "hidden"}`}>
+          Editar
+        </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -91,7 +107,7 @@ export default function UpdateTransactions({
         <form onSubmit={handleUpdate}>
           <input type="hidden" name="id" value={itemId} />
 
-          <div className="flex w-full gap-2 mb-1">
+          <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
               <Label>Data da Compra</Label>
               <Required />
@@ -120,17 +136,26 @@ export default function UpdateTransactions({
             <div className="w-1/2">
               <Label>Descrição</Label>
               <Required />
-              <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" />
+              <Input
+                defaultValue={itemDescricao}
+                name="descricao"
+                placeholder="Descrição"
+                type="text"
+              />
             </div>
 
             <div className="w-1/2">
               <Label>Valor</Label>
               <Required />
-              <MoneyInput defaultValue={itemValor} name="valor" disabled={itemCondicao === "Parcelado"} />
+              <MoneyInput
+                defaultValue={itemValor}
+                name="valor"
+                disabled={itemCondicao === "Parcelado"}
+              />
             </div>
           </div>
 
-          <div className="flex w-full gap-2 mt-1">
+          <div className="mt-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Categoria</Label>
               <Select defaultValue={itemCategoria} name="categoria">
@@ -156,13 +181,15 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          <Card className="w-full mt-2 gap-2 flex px-2 items-center justify-between">
-            <Label className="text-sm text-neutral-600 font-medium">Marcar lançamento como Pago </Label>
+          <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
+            <Label className="text-sm font-medium text-neutral-600">
+              Marcar lançamento como Pago{" "}
+            </Label>
             <Toggle
               onPressedChange={() => setIsPaid(!isPaid)} // Altere o valor apenas quando o usuário interagir
               defaultPressed={isPaid} // Valor inicial vem da transação atual
               name="realizado"
-              className="hover:bg-transparent data-[state=on]:text-green-400 data-[state=on]:bg-transparent data-[state=off]:text-zinc-400"
+              className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
             >
               <ThumbsUp strokeWidth={2} className="h-6 w-6" />
             </Toggle>
@@ -171,17 +198,26 @@ export default function UpdateTransactions({
           <div className="w-full">
             <Label>Responsável</Label>
             <Required />
-            <Input defaultValue={itemResponsavel} name="responsavel" placeholder="Responsável" type="text" />
+            <Input
+              defaultValue={itemResponsavel}
+              name="responsavel"
+              placeholder="Responsável"
+              type="text"
+            />
           </div>
 
-          <div className="flex w-full gap-2 mb-1">
+          <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Anotação</Label>
-              <Textarea defaultValue={itemNotas} name="anotacao" placeholder="Anotação" />
+              <Textarea
+                defaultValue={itemNotas}
+                name="anotacao"
+                placeholder="Anotação"
+              />
             </div>
           </div>
 
-          <DialogFooter className="flex gap-2 mt-4">
+          <DialogFooter className="mt-4 flex gap-2">
             <DialogClose asChild>
               <Button className="w-1/2" type="button" variant="secondary">
                 Cancelar

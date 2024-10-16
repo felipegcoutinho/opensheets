@@ -1,13 +1,17 @@
 "use client";
 
-import DeleteTransactions from "@/app/transacao/modal/delete-transactions";
-import DetailsTransactions from "@/app/transacao/modal/details-transactions";
-import UpdateTransactions from "@/app/transacao/modal/update-transactions";
-import { ColorDotTable } from "@/components/card-color";
+import { BadgeCardTable } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CardTitle } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -41,6 +45,7 @@ import {
   CalendarClockIcon,
   Check,
   CheckCircle2Icon,
+  Ellipsis,
   MessageSquareText,
   PartyPopper,
   RefreshCw,
@@ -48,7 +53,11 @@ import {
   ThumbsUp,
   Users,
 } from "lucide-react";
-import * as React from "react";
+import { useState } from "react";
+import CreateTransactions from "./modal/create-transactions";
+import DeleteTransactions from "./modal/delete-transactions";
+import DetailsTransactions from "./modal/details-transactions";
+import UpdateTransactions from "./modal/update-transactions";
 
 function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -155,12 +164,13 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <CardTitle className="text-md flex items-center gap-1 capitalize">
-          <div
-            className={`h-2 w-2 rounded ${item.tipo_transacao === "Receita" ? "bg-green-500" : "bg-red-500"} `}
-          />
-          {row.getValue("tipo_transacao")}
-        </CardTitle>
+        <Badge
+          variant={
+            item.tipo_transacao === "Receita" ? "defaultGreen" : "defaultRed"
+          }
+        >
+          {item.tipo_transacao}
+        </Badge>
       );
     },
   },
@@ -227,26 +237,8 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     },
     cell: ({ row }) => {
       const item = row.original;
-      let badgeClass = "";
 
-      if (item.responsavel === "Você") {
-        badgeClass = "text-blue-500";
-      } else if (item.responsavel === "Sistema") {
-        badgeClass = "text-black";
-      } else {
-        badgeClass = "text-orange-500";
-      }
-
-      return (
-        <CardTitle
-          className={`text-md flex items-center gap-1 capitalize ${item.responsavel === "Você" ? "text-blue-600" : item.responsavel === "Sistema" ? "text-black dark:text-white" : "text-orange-500"}`}
-        >
-          <div
-            className={`h-2 w-2 rounded ${item.responsavel === "Você" ? "bg-blue-600" : item.responsavel === "Sistema" ? "bg-black dark:bg-white" : "bg-orange-500"} `}
-          />
-          {row.getValue("responsavel")}
-        </CardTitle>
-      );
+      return <>{item.responsavel}</>;
     },
   },
 
@@ -259,7 +251,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const aparencia = getColor(item);
       return (
         <div className="flex items-center gap-2">
-          <ColorDotTable aparencia={aparencia} descricao={descricao} />
+          <BadgeCardTable aparencia={aparencia} descricao={descricao} />
         </div>
       );
     },
@@ -281,88 +273,112 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <div className="flex gap-2 text-center">
-          <DetailsTransactions
-            itemId={item.id}
-            itemPeriodo={item.periodo}
-            itemNotas={item.anotacao}
-            itemDate={item.data_compra}
-            itemDescricao={item.descricao}
-            itemCategoria={item.categoria}
-            itemCondicao={item.condicao}
-            itemResponsavel={item.responsavel}
-            itemTipoTransacao={item.tipo_transacao}
-            itemValor={item.valor}
-            itemFormaPagamento={item.forma_pagamento}
-            itemQtdeParcelas={item.qtde_parcela}
-            itemParcelaAtual={item.parcela_atual}
-            itemRecorrencia={item.recorrencia}
-            itemQtdeRecorrencia={item.qtde_recorrencia}
-            itemCartao={item.cartoes?.descricao}
-            itemConta={item.contas?.descricao}
-            itemPaid={item.realizado}
-          />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            >
+              <Ellipsis className="h-4 w-4" />
+              <span className="sr-only">Open menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-[160px]">
+            <DropdownMenuItem>
+              <DetailsTransactions
+                itemId={item.id}
+                itemPeriodo={item.periodo}
+                itemNotas={item.anotacao}
+                itemDate={item.data_compra}
+                itemDescricao={item.descricao}
+                itemCategoria={item.categoria}
+                itemCondicao={item.condicao}
+                itemResponsavel={item.responsavel}
+                itemTipoTransacao={item.tipo_transacao}
+                itemValor={item.valor}
+                itemFormaPagamento={item.forma_pagamento}
+                itemQtdeParcelas={item.qtde_parcela}
+                itemParcelaAtual={item.parcela_atual}
+                itemRecorrencia={item.recorrencia}
+                itemQtdeRecorrencia={item.qtde_recorrencia}
+                itemCartao={item.cartoes?.descricao}
+                itemConta={item.contas?.descricao}
+                itemPaid={item.realizado}
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <UpdateTransactions
+                itemId={item.id}
+                itemPeriodo={item.periodo}
+                itemNotas={item.anotacao}
+                itemDate={item.data_compra}
+                itemDescricao={item.descricao}
+                itemCategoria={item.categoria}
+                itemCondicao={item.condicao}
+                itemResponsavel={item.responsavel}
+                itemTipoTransacao={item.tipo_transacao}
+                itemValor={item.valor}
+                itemFormaPagamento={item.forma_pagamento}
+                itemQtdeParcelas={item.qtde_parcela}
+                itemRecorrencia={item.recorrencia}
+                itemQtdeRecorrencia={item.qtde_recorrencia}
+                getAccountMap={getAccountMap}
+                getCardsMap={getCardsMap}
+                itemCartao={item.cartoes?.id}
+                itemConta={item.contas?.id}
+                itemPaid={item.realizado}
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <div className="flex gap-2 text-center">
+                {item.responsavel != "Sistema" && (
+                  <TooltipProvider delayDuration={300}>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        {item.realizado ? (
+                          <ThumbsUp
+                            fill="green"
+                            className="stroke-none"
+                            size={14}
+                          />
+                        ) : (
+                          <ThumbsDown
+                            fill="orange"
+                            className="stroke-none"
+                            size={14}
+                          />
+                        )}
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {item.realizado ? "Compra Paga" : "Compra Pendente"}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </div>
+            </DropdownMenuItem>
 
-          <UpdateTransactions
-            itemId={item.id}
-            itemPeriodo={item.periodo}
-            itemNotas={item.anotacao}
-            itemDate={item.data_compra}
-            itemDescricao={item.descricao}
-            itemCategoria={item.categoria}
-            itemCondicao={item.condicao}
-            itemResponsavel={item.responsavel}
-            itemTipoTransacao={item.tipo_transacao}
-            itemValor={item.valor}
-            itemFormaPagamento={item.forma_pagamento}
-            itemQtdeParcelas={item.qtde_parcela}
-            itemRecorrencia={item.recorrencia}
-            itemQtdeRecorrencia={item.qtde_recorrencia}
-            getAccountMap={getAccountMap}
-            getCardsMap={getCardsMap}
-            itemCartao={item.cartoes?.id}
-            itemConta={item.contas?.id}
-            itemPaid={item.realizado}
-          />
+            <DropdownMenuSeparator />
 
-          <DeleteTransactions
-            itemResponsavel={item.responsavel}
-            itemId={item.id}
-          />
-
-          {item.responsavel != "Sistema" && (
-            <TooltipProvider delayDuration={300}>
-              <Tooltip>
-                <TooltipTrigger>
-                  {item.realizado ? (
-                    <ThumbsUp fill="green" className="stroke-none" size={14} />
-                  ) : (
-                    <ThumbsDown
-                      fill="orange"
-                      className="stroke-none"
-                      size={14}
-                    />
-                  )}
-                </TooltipTrigger>
-                <TooltipContent>
-                  {item.realizado ? "Compra Paga" : "Compra Pendente"}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </div>
+            <DropdownMenuItem>
+              <DeleteTransactions
+                itemResponsavel={item.responsavel}
+                itemId={item.id}
+              />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },
 ];
 
 export function TableTransaction({ data, getAccountMap, getCardsMap }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = React.useState("");
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [pagination, setPagination] = React.useState<PaginationState>({
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 50,
   });
@@ -394,8 +410,13 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   });
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-end gap-2 py-2">
+    <div className="mt-4 w-full">
+      <div className="flex items-center justify-between">
+        <CreateTransactions
+          getCardsMap={getCardsMap}
+          getAccountMap={getAccountMap}
+        />
+
         <Input
           placeholder="Pesquisar"
           value={globalFilter}
@@ -404,7 +425,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
         />
       </div>
       <>
-        <Table>
+        <Table className="mt-4">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow className="text-xs" key={headerGroup.id}>
