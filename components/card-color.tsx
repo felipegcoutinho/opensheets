@@ -104,7 +104,7 @@ export function BadgeCardTable({ aparencia, descricao }) {
   return (
     <Badge
       className={cn(
-        `rounded-full border-transparent ${colorBadgeTable[aparencia]} hover:${colorBadgeTable[aparencia]}`,
+        `rounded border-transparent ${colorBadgeTable[aparencia]} hover:${colorBadgeTable[aparencia]}`,
       )}
     >
       {descricao}

@@ -49,9 +49,8 @@ import {
   MessageSquareText,
   PartyPopper,
   RefreshCw,
-  ThumbsDown,
   ThumbsUp,
-  Users,
+  Users
 } from "lucide-react";
 import { useState } from "react";
 import CreateTransactions from "./modal/create-transactions";
@@ -238,7 +237,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
 
-      return <>{item.responsavel}</>;
+      return <span>{item.responsavel}</span>;
     },
   },
 
@@ -273,101 +272,103 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-            >
-              <Ellipsis className="h-4 w-4" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[160px]">
-            <DropdownMenuItem>
-              <DetailsTransactions
-                itemId={item.id}
-                itemPeriodo={item.periodo}
-                itemNotas={item.anotacao}
-                itemDate={item.data_compra}
-                itemDescricao={item.descricao}
-                itemCategoria={item.categoria}
-                itemCondicao={item.condicao}
-                itemResponsavel={item.responsavel}
-                itemTipoTransacao={item.tipo_transacao}
-                itemValor={item.valor}
-                itemFormaPagamento={item.forma_pagamento}
-                itemQtdeParcelas={item.qtde_parcela}
-                itemParcelaAtual={item.parcela_atual}
-                itemRecorrencia={item.recorrencia}
-                itemQtdeRecorrencia={item.qtde_recorrencia}
-                itemCartao={item.cartoes?.descricao}
-                itemConta={item.contas?.descricao}
-                itemPaid={item.realizado}
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <UpdateTransactions
-                itemId={item.id}
-                itemPeriodo={item.periodo}
-                itemNotas={item.anotacao}
-                itemDate={item.data_compra}
-                itemDescricao={item.descricao}
-                itemCategoria={item.categoria}
-                itemCondicao={item.condicao}
-                itemResponsavel={item.responsavel}
-                itemTipoTransacao={item.tipo_transacao}
-                itemValor={item.valor}
-                itemFormaPagamento={item.forma_pagamento}
-                itemQtdeParcelas={item.qtde_parcela}
-                itemRecorrencia={item.recorrencia}
-                itemQtdeRecorrencia={item.qtde_recorrencia}
-                getAccountMap={getAccountMap}
-                getCardsMap={getCardsMap}
-                itemCartao={item.cartoes?.id}
-                itemConta={item.contas?.id}
-                itemPaid={item.realizado}
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <div className="flex gap-2 text-center">
-                {item.responsavel != "Sistema" && (
-                  <TooltipProvider delayDuration={300}>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        {item.realizado ? (
-                          <ThumbsUp
-                            fill="green"
-                            className="stroke-none"
-                            size={14}
-                          />
-                        ) : (
-                          <ThumbsDown
-                            fill="orange"
-                            className="stroke-none"
-                            size={14}
-                          />
-                        )}
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        {item.realizado ? "Compra Paga" : "Compra Pendente"}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
-              </div>
-            </DropdownMenuItem>
+        <div className="flex">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+              >
+                <Ellipsis size={16} />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[160px]">
 
-            <DropdownMenuSeparator />
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <DetailsTransactions
+                  itemId={item.id}
+                  itemPeriodo={item.periodo}
+                  itemNotas={item.anotacao}
+                  itemDate={item.data_compra}
+                  itemDescricao={item.descricao}
+                  itemCategoria={item.categoria}
+                  itemCondicao={item.condicao}
+                  itemResponsavel={item.responsavel}
+                  itemTipoTransacao={item.tipo_transacao}
+                  itemValor={item.valor}
+                  itemFormaPagamento={item.forma_pagamento}
+                  itemQtdeParcelas={item.qtde_parcela}
+                  itemParcelaAtual={item.parcela_atual}
+                  itemRecorrencia={item.recorrencia}
+                  itemQtdeRecorrencia={item.qtde_recorrencia}
+                  itemCartao={item.cartoes?.descricao}
+                  itemConta={item.contas?.descricao}
+                  itemPaid={item.realizado}
+                />
+              </DropdownMenuItem>
 
-            <DropdownMenuItem>
-              <DeleteTransactions
-                itemResponsavel={item.responsavel}
-                itemId={item.id}
-              />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              {item.responsavel != "Sistema" && (
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  <UpdateTransactions
+                    itemId={item.id}
+                    itemPeriodo={item.periodo}
+                    itemNotas={item.anotacao}
+                    itemDate={item.data_compra}
+                    itemDescricao={item.descricao}
+                    itemCategoria={item.categoria}
+                    itemCondicao={item.condicao}
+                    itemResponsavel={item.responsavel}
+                    itemTipoTransacao={item.tipo_transacao}
+                    itemValor={item.valor}
+                    itemFormaPagamento={item.forma_pagamento}
+                    itemQtdeParcelas={item.qtde_parcela}
+                    itemRecorrencia={item.recorrencia}
+                    itemQtdeRecorrencia={item.qtde_recorrencia}
+                    getAccountMap={getAccountMap}
+                    getCardsMap={getCardsMap}
+                    itemCartao={item.cartoes?.id}
+                    itemConta={item.contas?.id}
+                    itemPaid={item.realizado}
+                  />
+                </DropdownMenuItem>
+              )}
+
+              {item.responsavel != "Sistema" && (
+                <>
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <DeleteTransactions
+                      itemResponsavel={item.responsavel}
+                      itemId={item.id}
+                    />
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {item.responsavel != "Sistema" && (
+            <div className="flex gap-2 text-center">
+
+              <TooltipProvider delayDuration={300}>
+                <Tooltip>
+                  <TooltipTrigger>
+                      <ThumbsUp
+                        fill={item.realizado ? "green" : "gray"}
+                        className="stroke-none"
+                        size={16}
+                      />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {item.realizado ? "Compra Paga" : "Compra Pendente"}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
+        </div>
       );
     },
   },
@@ -434,9 +435,9 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -446,10 +447,9 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className={`whitespace-nowrap ${
-                    row.original?.categoria === "Saldo Anterior" &&
+                  className={`whitespace-nowrap ${row.original?.categoria === "Saldo Anterior" &&
                     "bg-gradient-to-r from-green-400/10 to-transparent"
-                  }`}
+                    }`}
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -486,7 +486,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Anterior
           </Button>
           <Button
             variant="outline"
@@ -494,7 +494,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Próximo
           </Button>
         </div>
       </div>

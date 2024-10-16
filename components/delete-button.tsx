@@ -20,10 +20,8 @@ export default function DeleteButton({
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
-        <span className={`${itemResponsavel === "Sistema" && "hidden"}`}>
+      <DialogTrigger className="text-red-500">
           Remover
-        </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

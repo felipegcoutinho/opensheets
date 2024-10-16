@@ -51,13 +51,16 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>Ver detalhes</DialogTrigger>
+      <DialogTrigger>
+        Detalhes
+        </DialogTrigger>
+      
       <DialogContent className="p-0">
         <Card className="space-y-4 p-1">
           <CardHeader className="flex flex-row items-start bg-muted/50">
             <div className="grid gap-0.5">
               <CardTitle className="group flex items-center gap-2 text-lg">
-                ID {itemId}
+                #{itemId}
               </CardTitle>
               <CardDescription>{DateFormat(itemDate)}</CardDescription>
             </div>
