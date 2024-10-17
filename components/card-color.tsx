@@ -45,7 +45,7 @@ const colorVariants = {
 };
 
 const colorBadgeTable = {
-  zinc: "bg-neutral-200 text-neutral-800 hover:bg-neutral-900",
+  zinc: "bg-neutral-200 text-neutral-800 hover:bg-neutral-900 hover:text-white",
   red: "bg-red-100 text-red-800 hover:bg-red-200",
   orange: "bg-orange-100 text-orange-800 hover:bg-orange-200",
   amber: "bg-amber-100 text-amber-800 hover:bg-amber-200",

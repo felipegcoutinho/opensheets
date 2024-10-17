@@ -50,7 +50,7 @@ import {
   PartyPopper,
   RefreshCw,
   ThumbsUp,
-  Users
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -285,7 +285,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
-
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <DetailsTransactions
                   itemId={item.id}
@@ -352,15 +351,14 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
           {item.responsavel != "Sistema" && (
             <div className="flex gap-2 text-center">
-
               <TooltipProvider delayDuration={300}>
                 <Tooltip>
                   <TooltipTrigger>
-                      <ThumbsUp
-                        fill={item.realizado ? "green" : "gray"}
-                        className="stroke-none"
-                        size={16}
-                      />
+                    <ThumbsUp
+                      fill={item.realizado ? "green" : "gray"}
+                      className="stroke-none"
+                      size={16}
+                    />
                   </TooltipTrigger>
                   <TooltipContent>
                     {item.realizado ? "Compra Paga" : "Compra Pendente"}
@@ -419,9 +417,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           getAccountMap={getAccountMap}
         />
 
-        <Link href={`/transacao/novo`}>
-        criar transação
-        </Link>
+        <Link href={`/transacao/novo`}>criar transação</Link>
 
         <Input
           placeholder="Pesquisar"
@@ -430,56 +426,51 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           className="max-w-52"
         />
       </div>
-      <>
-        <Table className="mt-4">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow className="text-xs" key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
+
+      <Table className="mt-4">
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow className="text-xs" key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
                       )}
-                  </TableHead>
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                className={`whitespace-nowrap ${
+                  row.original?.categoria === "Saldo Anterior" &&
+                  "bg-gradient-to-r from-green-400/10 to-transparent"
+                }`}
+                key={row.id}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
                 ))}
               </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  className={`whitespace-nowrap ${row.original?.categoria === "Saldo Anterior" &&
-                    "bg-gradient-to-r from-green-400/10 to-transparent"
-                    }`}
-                  key={row.id}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  <EmptyCard width={100} height={100} />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                <EmptyCard width={100} height={100} />
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredRowModel().rows.length} transações
