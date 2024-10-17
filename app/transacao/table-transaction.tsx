@@ -52,6 +52,7 @@ import {
   ThumbsUp,
   Users
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import CreateTransactions from "./modal/create-transactions";
 import DeleteTransactions from "./modal/delete-transactions";
@@ -417,6 +418,10 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           getCardsMap={getCardsMap}
           getAccountMap={getAccountMap}
         />
+
+        <Link href={`/transacao/novo`}>
+        criar transação
+        </Link>
 
         <Input
           placeholder="Pesquisar"

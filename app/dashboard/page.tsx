@@ -1,6 +1,8 @@
+
 import { UseDates } from "@/hooks/use-dates";
 import FinancialSummary from "./financial-summary";
 import FinancialSummaryCards from "./financial-summary-cards";
+
 
 export default async function page({ searchParams }) {
   const { currentMonthName, currentYear } = UseDates();
@@ -15,6 +17,8 @@ export default async function page({ searchParams }) {
           Aqui estão seus principais números de {currentMonthName}.
         </h2>
       </div>
+
+      
 
       <FinancialSummary month={month} />
       <FinancialSummaryCards month={month} />
