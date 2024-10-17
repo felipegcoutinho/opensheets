@@ -148,7 +148,7 @@ export default function UpdateTransactions({
               <MoneyInput
                 defaultValue={itemValor}
                 name="valor"
-                disabled={itemCondicao === "Parcelado"}
+                // disabled={itemCondicao === "Parcelado"}
               />
             </div>
           </div>

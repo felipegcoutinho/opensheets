@@ -11,6 +11,7 @@ import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import ButtonUndoPayment from "@/components/button-undo-payment";
 import CardColor, { ColorDot } from "@/components/card-color";
 import DialogPayment from "@/components/dialog-payment";
+import MonthPicker from "@/components/month-picker";
 import Numbers from "@/components/numbers";
 import {
   Table,
@@ -43,6 +44,7 @@ export default async function page({ params, searchParams }) {
 
   return (
     <>
+    <MonthPicker   />
       {getCardDetailMap?.map((item) => (
         <CardColor
           styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
