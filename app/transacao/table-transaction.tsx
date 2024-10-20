@@ -52,7 +52,6 @@ import {
   ThumbsUp,
   Users,
 } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
 import CreateTransactions from "./modal/create-transactions";
 import DeleteTransactions from "./modal/delete-transactions";
@@ -417,8 +416,11 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           getAccountMap={getAccountMap}
         />
 
+<<<<<<< HEAD
         <Link href={`/transacao/novo`}>criar transação</Link>
 
+=======
+>>>>>>> parent of 2f69611 (Refactor page component to use current month and year for default period)
         <Input
           placeholder="Pesquisar"
           value={globalFilter}
