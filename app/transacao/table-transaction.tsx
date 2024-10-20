@@ -416,12 +416,6 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           getAccountMap={getAccountMap}
         />
 
-        <Link href={`/transacao/novo`}>
-        criar transação
-        </Link>
-
-=======
->>>>>>> parent of 2f69611 (Refactor page component to use current month and year for default period)
         <Input
           placeholder="Pesquisar"
           value={globalFilter}
