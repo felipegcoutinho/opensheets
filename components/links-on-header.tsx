@@ -94,8 +94,8 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
       className={clsx(
         "flex items-center gap-1 rounded px-2 py-1 transition-colors duration-700",
         isActive
-          ? "bg-violet-200 font-bold text-black dark:bg-orange-900 dark:text-white" // Estilo para link ativo
-          : "text-neutral-700 hover:bg-orange-100 hover:text-black dark:text-white dark:hover:bg-neutral-600", // Estilo para link inativo
+          ? "font-bold text-black underline underline-offset-4 dark:bg-transparent dark:text-orange-400" // Estilo para link ativo
+          : "text-neutral-700 hover:bg-violet-100 hover:text-black dark:text-white dark:hover:bg-neutral-800", // Estilo para link inativo
       )}
     >
       <Icon size={12} />

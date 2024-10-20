@@ -5,7 +5,10 @@ import { revalidatePath } from "next/cache";
 
 export async function getInvest() {
   const supabase = createClient();
-  const { data } = await supabase.from("investimentos").select(`id, data, valor`).order("data", { ascending: true });
+  const { data } = await supabase
+    .from("investimentos")
+    .select(`id, data, valor`)
+    .order("data", { ascending: false });
 
   return data;
 }
