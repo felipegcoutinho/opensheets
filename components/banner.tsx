@@ -30,8 +30,8 @@ export default async function Banner() {
         <div className="flex items-center space-x-4">
           <div>
             <p className="text-muted-foreground">{fliendlyDate(currentDate)}</p>
-            <h1 className="text-2xl font-bold">
-            {getGreeting()}, <GetUserName />
+            <h1 className="text-xl">
+              {getGreeting()}, <GetUserName />
             </h1>
           </div>
         </div>
