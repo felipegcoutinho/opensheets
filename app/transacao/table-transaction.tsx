@@ -216,7 +216,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     accessorKey: "forma_pagamento",
     header: () => <div>Pagamento</div>,
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("forma_pagamento")}</div>
+      <span className="capitalize">{row.getValue("forma_pagamento")}</span>
     ),
   },
 
@@ -237,7 +237,13 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
 
-      return <span>{item.responsavel}</span>;
+      return (
+        <span
+          className={`${item.responsavel === "Você" ? "text-black" : "text-orange-600"} font-bold`}
+        >
+          {item.responsavel}
+        </span>
+      );
     },
   },
 

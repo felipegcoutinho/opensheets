@@ -34,8 +34,8 @@ export const updateSession = async (request: NextRequest) => {
 
     // Obtém a sessão do usuário
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user: session },
+    } = await supabase.auth.getUser();
 
     const currentPath = request.nextUrl.pathname;
 

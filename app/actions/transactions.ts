@@ -12,9 +12,9 @@ export async function getTransaction(month) {
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, aparencia), contas (id, descricao, aparencia)`
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, aparencia), contas (id, descricao, aparencia)`,
     )
-    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false })
     .eq("periodo", month);
 
   if (error) {
@@ -85,10 +85,17 @@ export async function addTransaction(formData: FormData) {
     const parcelas = parseInt(qtde_parcela, 10);
     const valorTotal = parseFloat(valor);
     const valorParcela = parseFloat((valorTotal / parcelas).toFixed(2));
-    const valorUltimaParcela = parseFloat((valorTotal - valorParcela * (parcelas - 1)).toFixed(2));
+    const valorUltimaParcela = parseFloat(
+      (valorTotal - valorParcela * (parcelas - 1)).toFixed(2),
+    );
 
     const [mesInicial, anoInicial] = periodo.split("-");
-    const dataInicial = parse(`01-${mesInicial}-${anoInicial}`, "dd-MMMM-yyyy", new Date(), { locale: ptBR });
+    const dataInicial = parse(
+      `01-${mesInicial}-${anoInicial}`,
+      "dd-MMMM-yyyy",
+      new Date(),
+      { locale: ptBR },
+    );
 
     for (let i = 0; i < parcelas; i++) {
       const dataParcela = addMonths(dataInicial, i);
@@ -99,17 +106,37 @@ export async function addTransaction(formData: FormData) {
       const valorAtual = i === parcelas - 1 ? valorUltimaParcela : valorParcela;
 
       if (dividir_lancamento === "on") {
-        adicionarTransacao(valorAtual / 2, responsavel, periodoParcela, parcelaAtual);
-        adicionarTransacao(valorAtual / 2, segundo_responsavel, periodoParcela, parcelaAtual);
+        adicionarTransacao(
+          valorAtual / 2,
+          responsavel,
+          periodoParcela,
+          parcelaAtual,
+        );
+        adicionarTransacao(
+          valorAtual / 2,
+          segundo_responsavel,
+          periodoParcela,
+          parcelaAtual,
+        );
       } else {
-        adicionarTransacao(valorAtual, responsavel, periodoParcela, parcelaAtual);
+        adicionarTransacao(
+          valorAtual,
+          responsavel,
+          periodoParcela,
+          parcelaAtual,
+        );
       }
     }
   } else if (condicao === "Recorrente") {
     const quantidadeRecorrencias = parseInt(qtde_recorrencia, 10);
 
     const [mesInicial, anoInicial] = periodo.split("-");
-    const dataInicial = parse(`01-${mesInicial}-${anoInicial}`, "dd-MMMM-yyyy", new Date(), { locale: ptBR });
+    const dataInicial = parse(
+      `01-${mesInicial}-${anoInicial}`,
+      "dd-MMMM-yyyy",
+      new Date(),
+      { locale: ptBR },
+    );
 
     for (let i = 0; i < quantidadeRecorrencias; i++) {
       const dataRecorrente = addMonths(dataInicial, i);
@@ -119,7 +146,12 @@ export async function addTransaction(formData: FormData) {
 
       if (dividir_lancamento === "on") {
         adicionarTransacao(valor / 2, responsavel, periodoRecorrente, null);
-        adicionarTransacao(valor / 2, segundo_responsavel, periodoRecorrente, null);
+        adicionarTransacao(
+          valor / 2,
+          segundo_responsavel,
+          periodoRecorrente,
+          null,
+        );
       } else {
         adicionarTransacao(valor, responsavel, periodoRecorrente, null);
       }
