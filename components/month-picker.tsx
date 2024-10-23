@@ -58,11 +58,12 @@ export default function MonthPicker() {
     currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
   const isHomePage =
-    pathname === "/dashboard" ||
-    pathname === "/transacao" ||
-    pathname === "/boleto" ||
-    pathname === "/responsavel" ||
-    pathname === "/anotacao";
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/transacao") ||
+    pathname.startsWith("/boleto") ||
+    pathname.startsWith("/responsavel") ||
+    pathname.startsWith("/anotacao") ||
+    (pathname.startsWith("/cartao/") && pathname !== "/cartao");
 
   if (!isHomePage) {
     return null;

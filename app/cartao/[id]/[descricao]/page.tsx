@@ -8,10 +8,9 @@ import {
 } from "@/app/actions/cards";
 import { getFaturas } from "@/app/actions/invoices";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
+import ButtonPayment from "@/components/button-payment";
 import ButtonUndoPayment from "@/components/button-undo-payment";
 import CardColor, { ColorDot } from "@/components/card-color";
-import DialogPayment from "@/components/dialog-payment";
-import MonthPicker from "@/components/month-picker";
 import Numbers from "@/components/numbers";
 import {
   Table,
@@ -44,7 +43,6 @@ export default async function page({ params, searchParams }) {
 
   return (
     <>
-    <MonthPicker   />
       {getCardDetailMap?.map((item) => (
         <CardColor
           styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
@@ -82,7 +80,7 @@ export default async function page({ params, searchParams }) {
           </div>
 
           {item.anotacao && (
-            <div className="leading-loose ">
+            <div className="leading-loose">
               <p>Notas:</p>
               <p className="text-lg">{item.anotacao}</p>
             </div>
@@ -93,18 +91,32 @@ export default async function page({ params, searchParams }) {
             <p className="text-2xl font-bold">
               <Numbers number={sumCardSum} />
             </p>
-            <div className="flex items-center gap-2">
-              <DialogPayment
-                descricao={item.descricao}
-                valor={sumCardSum}
-                month={month}
-                paramsId={item.id}
-              />
-              <ButtonUndoPayment fatura_status={fatura_status} />
-            </div>
           </div>
         </CardColor>
       ))}
+
+      <div
+        className={`mt-4 rounded p-2 ${
+          fatura_status &&
+          fatura_status.some((item) => item.status_pagamento === "Pago")
+            ? "border-green-500 bg-green-400"
+            : "border-orange-500 bg-orange-400"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          {getCardDetailMap?.map((item) => (
+            <ButtonPayment
+              fatura_status={fatura_status}
+              month={month}
+              paramsId={params.id}
+              descricao={item.descricao}
+              valor={sumCardSum}
+            />
+          ))}
+
+          <ButtonUndoPayment fatura_status={fatura_status} />
+        </div>
+      </div>
 
       <Table className="mt-6">
         <TableHeader>
@@ -127,7 +139,7 @@ export default async function page({ params, searchParams }) {
               <TableCell>{DateFormat(item.data_compra)}</TableCell>
               <TableCell>
                 {item.descricao}
-                <span className="text-neutral-400 text-xs px-1">
+                <span className="px-1 text-xs text-neutral-400">
                   {item.condicao === "Parcelado" &&
                     `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
@@ -148,7 +160,7 @@ export default async function page({ params, searchParams }) {
               <TableCell>
                 <Numbers number={item.valor} />
               </TableCell>
-              <TableCell className="text-center flex gap-2">
+              <TableCell className="flex gap-2 text-center">
                 <DetailsTransactions
                   itemId={item.id}
                   itemPeriodo={item.periodo}

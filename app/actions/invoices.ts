@@ -16,7 +16,9 @@ export async function getFaturas(month, cartao_id) {
 export async function addFaturas(formData: FormData) {
   const supabase = createClient();
 
-  const { status_pagamento, periodo, cartao_id } = Object.fromEntries(formData.entries());
+  const { status_pagamento, periodo, cartao_id } = Object.fromEntries(
+    formData.entries(),
+  );
 
   const { error } = await supabase.from("faturas").insert({
     status_pagamento,
@@ -35,7 +37,10 @@ export async function updateFaturas(formData: FormData) {
   const { id, status_pagamento } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
-  const { error } = await supabase.from("faturas").update({ id, status_pagamento }).eq("id", id);
+  const { error } = await supabase
+    .from("faturas")
+    .update({ id, status_pagamento })
+    .eq("id", id);
 
   if (error) {
     console.error(error);
@@ -53,8 +58,6 @@ export async function deleteFaturas(formData: FormData) {
   if (error) {
     console.error(error);
   }
-
-  // console.log("Deleted fatura", excluir);
 
   revalidatePath("/cartao");
 }

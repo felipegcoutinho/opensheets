@@ -414,6 +414,8 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
     onPaginationChange: setPagination,
   });
 
+  
+
   return (
     <div className="mt-4 w-full">
       <div className="flex items-center justify-between">

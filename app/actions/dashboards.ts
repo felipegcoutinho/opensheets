@@ -61,7 +61,10 @@ export async function getLastPrevious(month) {
     return null;
   }
 
-  const lastPrevious = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const lastPrevious = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return lastPrevious;
 }
@@ -70,14 +73,21 @@ export async function getLastPrevious(month) {
 export async function getExpenseBill(month) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("responsavel", "Você");
+  const { data, error } = await supabase
+    .from("boletos")
+    .select("valor")
+    .eq("periodo", month)
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar despesas de boletos:", error);
     return null;
   }
 
-  const expenseBills = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const expenseBills = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return expenseBills;
 }
@@ -99,7 +109,10 @@ export async function getExpensePaid(month) {
     return null;
   }
 
-  const totalExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const totalExpensePaid = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
   return totalExpensePaid;
 }
 
@@ -107,14 +120,21 @@ export async function getExpensePaid(month) {
 export async function getExpenseBillPaid(month) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("boletos").select("valor").eq("periodo", month).eq("status_pagamento", "Pago");
+  const { data, error } = await supabase
+    .from("boletos")
+    .select("valor")
+    .eq("periodo", month)
+    .eq("status_pagamento", "Pago");
 
   if (error) {
     console.error("Erro ao buscar boletos pagos:", error);
     return null;
   }
 
-  const expensebillsPaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const expensebillsPaid = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return expensebillsPaid;
 }
@@ -174,7 +194,11 @@ export async function getPayment(month) {
 export async function getTransactionsCount(month) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("transacoes").select("count()").eq("periodo", month).eq("responsavel", "Você");
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("count()")
+    .eq("periodo", month)
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar transações:", error);
@@ -187,7 +211,11 @@ export async function getTransactionsCount(month) {
 export async function getBillsCount(month) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("boletos").select("count()").eq("periodo", month).eq("responsavel", "Você");
+  const { data, error } = await supabase
+    .from("boletos")
+    .select("count()")
+    .eq("periodo", month)
+    .eq("responsavel", "Você");
 
   if (error) {
     console.error("Erro ao buscar boletos:", error);
@@ -217,7 +245,7 @@ export async function getBillsByResponsavel(month) {
     .from("boletos")
     .select(
       `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
-      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`
+      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
     )
     .eq("periodo", month)
     .eq("responsavel", "Você");
@@ -234,7 +262,7 @@ export async function getExpenseByCategory(month) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("transacoes")
-    .select("categoria, valor.sum()")
+    .select("categoria, tipo_transacao, valor.sum()")
     .eq("tipo_transacao", "Despesa")
     .eq("periodo", month)
     .eq("responsavel", "Você")
@@ -252,7 +280,7 @@ export async function getIncomeByCategory(month) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("transacoes")
-    .select("categoria, valor.sum()")
+    .select("categoria, tipo_transacao, valor.sum()")
     .eq("tipo_transacao", "Receita")
     .eq("periodo", month)
     .eq("responsavel", "Você")
