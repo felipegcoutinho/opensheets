@@ -29,7 +29,7 @@ async function Page({ params, searchParams }) {
 
   return (
     <>
-      <Table className="mt-6">
+      <Table className="my-6">
         <TableHeader>
           <TableRow className="border-b text-xs">
             <TableHead>Data</TableHead>
@@ -92,6 +92,7 @@ async function Page({ params, searchParams }) {
                   itemQtdeRecorrencia={item.qtde_recorrencia}
                   itemCartao={item.cartoes?.descricao}
                   itemPaid={item.realizado}
+                  itemConta={item.contas?.descricao}
                 />
               </TableCell>
             </TableRow>

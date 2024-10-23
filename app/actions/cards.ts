@@ -72,7 +72,7 @@ export async function getCategoria(month, categoriaId, tipo_transacao) {
     .select(
       `id, data_compra, realizado, periodo, descricao, tipo_transacao, categoria, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao, aparencia)`,
+      qtde_recorrencia, cartoes (id, descricao, aparencia), contas (id, descricao)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)

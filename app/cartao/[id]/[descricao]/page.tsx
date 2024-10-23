@@ -1,4 +1,3 @@
-import { getAccount } from "@/app/actions/accounts";
 import {
   getCardDetails,
   getCardInvoice,
@@ -35,7 +34,6 @@ export default async function page({ params, searchParams }) {
   const sumCardSum = await getCardSum(month, params.id);
 
   const getCardsMap = await getCards(month);
-  const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
 
   const limite = await getLimite(params.id);
 

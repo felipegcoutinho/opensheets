@@ -70,6 +70,12 @@ function getColor(row) {
   return contaAparencia ?? cartaoAparencia;
 }
 
+const getResponsavelClass = (responsavel) => {
+  if (responsavel === "Você") return "text-blue-600";
+  if (responsavel === "Sistema") return "text-neutral-600";
+  return "text-orange-600";
+};
+
 // Função personalizada para filtrar em várias colunas
 const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
   const searchValue = filterValue.toLowerCase();
@@ -238,9 +244,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <span
-          className={`${item.responsavel === "Você" ? "text-black" : "text-orange-600"} font-bold`}
-        >
+        <span className={`font-bold ${getResponsavelClass(item.responsavel)}`}>
           {item.responsavel}
         </span>
       );
@@ -413,8 +417,6 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
   });
-
-  
 
   return (
     <div className="mt-4 w-full">
