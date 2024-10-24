@@ -1,8 +1,12 @@
 "use client";
 
+import { inter } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
-import { GeistMono } from "geist/font/mono";
-import { ChevronLeftSquare, ChevronRightSquare } from "lucide-react";
+import {
+  CalendarFoldIcon,
+  ChevronLeftSquare,
+  ChevronRightSquare,
+} from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 
@@ -70,14 +74,14 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex w-full justify-start rounded bg-lime-3000 px-4 py-4 text-black dark:bg-violet-600 dark:text-white">
+    <div className="flex w-full items-center justify-start rounded bg-neutral-800 p-4 text-white dark:bg-violet-600 dark:text-white">
+      <CalendarFoldIcon size={28} className="mr-4" />
+
       <button onClick={goToPreviousMonth}>
         <ChevronLeftSquare size={16} />
       </button>
 
-      <span
-        className={`${GeistMono.className} mx-2 font-mono font-bold uppercase`}
-      >
+      <span className={`${inter.className} mx-2 font-bold capitalize`}>
         {currentMonth} {currentYear}
       </span>
 
@@ -89,7 +93,7 @@ export default function MonthPicker() {
         <Button
           variant="link"
           size="xs"
-          className="ml-4 border border-black px-1 dark:border-white dark:text-white"
+          className="ml-4 border border-white px-1 text-white dark:border-white dark:text-white"
           onClick={goToCurrentMonthYear}
         >
           <span className="pl-1">Retornar ao Mês Atual</span>

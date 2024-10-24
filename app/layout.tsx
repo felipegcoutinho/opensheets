@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { uiSans } from "./fonts/font";
+import { inter } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -16,7 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${uiSans.className}`}>
+    <html lang="pt-BR" className={`${inter.className}`}>
       <body>
         <ThemeProvider
           attribute="class"
