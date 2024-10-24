@@ -14,7 +14,7 @@ export default function CategoriesList({ data, month }) {
           <div key={index} className="flex items-center justify-between py-1">
             <Link
               className="flex items-center gap-1"
-              href={`/transacao/${item.categoria.toLowerCase()}/${item.tipo_transacao.toLowerCase()}?periodo=${month}`}
+              href={`/transacao/${encodeURIComponent(item.categoria.toLowerCase())}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
             >
               <p>{item.categoria}</p>
               <ArrowUpRight className="h-3 w-3 text-muted-foreground" />

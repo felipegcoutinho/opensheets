@@ -72,7 +72,7 @@ export default async function FinancialSummary({ month }) {
         <CardHeader className="pb-2">
           <CardDescription className="flex items-center gap-1">
             <Ping color={"bg-cyan-400"} />
-            Previsto
+            Saldo Previsto
           </CardDescription>
           <CardTitle className="text-2xl">
             <Numbers number={previsto} />

@@ -22,14 +22,17 @@ async function Page({ params, searchParams }) {
   };
 
   // Capitalizando a primeira letra de params.categoria
-  const categoria = capitalizeFirstLetter(params.categoria);
-  const tipoTransacao = capitalizeFirstLetter(params.tipo_transacao);
+  const categoria = capitalizeFirstLetter(decodeURIComponent(params.categoria));
+  const tipoTransacao = capitalizeFirstLetter(
+    decodeURIComponent(params.tipo_transacao),
+  );
 
   const getCategoriaMap = await getCategoria(month, categoria, tipoTransacao);
 
   return (
     <>
-      <Table className="my-6">
+      <h1 className="my-6">Categoria | {categoria}</h1>
+      <Table>
         <TableHeader>
           <TableRow className="border-b text-xs">
             <TableHead>Data</TableHead>
