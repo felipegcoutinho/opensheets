@@ -1,12 +1,7 @@
 "use client";
 
-import { inter } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
-import {
-  CalendarFoldIcon,
-  ChevronLeftSquare,
-  ChevronRightSquare,
-} from "lucide-react";
+import { ChevronLeftSquare, ChevronRightSquare } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 
@@ -74,26 +69,24 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex w-full items-center justify-start rounded bg-neutral-800 p-4 text-white dark:bg-violet-600 dark:text-white">
-      <CalendarFoldIcon size={28} className="mr-4" />
-
+    <div className="flex w-full items-center justify-start rounded bg-blue-100 p-4 dark:bg-violet-600 dark:text-white">
       <button onClick={goToPreviousMonth}>
-        <ChevronLeftSquare size={16} />
+        <ChevronLeftSquare className="text-blue-400" size={16} />
       </button>
 
-      <span className={`${inter.className} mx-2 font-bold capitalize`}>
+      <span className={`mx-2 text-lg font-bold capitalize`}>
         {currentMonth} {currentYear}
       </span>
 
       <button onClick={goToNextMonth}>
-        <ChevronRightSquare size={16} />
+        <ChevronRightSquare className="text-blue-400" size={16} />
       </button>
 
       {isDifferentFromCurrent && (
         <Button
           variant="link"
           size="xs"
-          className="ml-4 border border-white px-1 text-white dark:border-white dark:text-white"
+          className="ml-4 border border-black px-1 text-black dark:border-white dark:text-white"
           onClick={goToCurrentMonthYear}
         >
           <span className="pl-1">Retornar ao Mês Atual</span>

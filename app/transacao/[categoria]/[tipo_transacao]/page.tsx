@@ -1,5 +1,6 @@
 import { getCategoria } from "@/app/actions/cards";
 import Numbers from "@/components/numbers";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import DetailsTransactions from "../../modal/details-transactions";
 
 async function Page({ params, searchParams }) {
@@ -40,9 +42,10 @@ async function Page({ params, searchParams }) {
             <TableHead>Transação</TableHead>
             <TableHead>Condição</TableHead>
             <TableHead>Pagamento</TableHead>
-            <TableHead>Categoria</TableHead>
+
             <TableHead>Responsável</TableHead>
             <TableHead>Valor</TableHead>
+            <TableHead>Categoria</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -60,23 +63,41 @@ async function Page({ params, searchParams }) {
                     `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
-              <TableCell
-                className={
-                  item.tipo_transacao === "Receita"
-                    ? "text-green-500"
-                    : "text-red-500"
-                }
-              >
-                {item.tipo_transacao}
+              <TableCell>
+                <Badge
+                  variant={
+                    item.tipo_transacao === "Receita"
+                      ? "defaultGreen"
+                      : "defaultRed"
+                  }
+                >
+                  {item.tipo_transacao}
+                </Badge>
               </TableCell>
-              <TableCell>{item.condicao}</TableCell>
+              <TableCell>
+                <span className="flex items-center gap-1">
+                  {item.condicao === "Parcelado" && (
+                    <CalendarClockIcon size={12} />
+                  )}
+                  {item.condicao === "Recorrente" && <RefreshCw size={12} />}
+                  {item.condicao === "Vista" && <Check size={12} />}
+
+                  <span className="capitalize"> {item.condicao}</span>
+                </span>
+              </TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
-              <TableCell>{item.categoria}</TableCell>
-              <TableCell>{item.responsavel}</TableCell>
+
+              <TableCell className="font-bold text-blue-600">
+                {item.responsavel}
+              </TableCell>
+
               <TableCell>
                 <Numbers number={item.valor} />
               </TableCell>
-              <TableCell className="flex gap-2 text-center">
+
+              <TableCell>{item.categoria}</TableCell>
+
+              <TableCell className="flex text-center">
                 <DetailsTransactions
                   itemId={item.id}
                   itemPeriodo={item.periodo}

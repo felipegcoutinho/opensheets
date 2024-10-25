@@ -26,13 +26,15 @@ export default async function Banner() {
 
   return (
     <CardBanner>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div>
-            <p className="text-muted-foreground">{fliendlyDate(currentDate)}</p>
-            <h1 className="text-xl">
+            <p className="text-sm text-neutral-500">
+              {fliendlyDate(currentDate)}
+            </p>
+            <p className="text-xl">
               {getGreeting()}, <GetUserName />
-            </h1>
+            </p>
           </div>
         </div>
         <div className="flex space-x-2">

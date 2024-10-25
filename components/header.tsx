@@ -32,7 +32,7 @@ export default async function Header() {
   };
 
   return (
-    <div className="my-1 flex h-16 w-full items-center gap-4 rounded py-2 text-black shadow-none">
+    <div className="my-2 flex h-16 w-full items-center gap-4 rounded bg-neutral-100 px-4">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />
@@ -123,7 +123,7 @@ export default async function Header() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            {user && (
+            {/* {user && (
               <Link
                 href="/ajustes"
                 className="text-black transition-colors hover:text-muted-foreground"
@@ -132,7 +132,7 @@ export default async function Header() {
                   Ajustes
                 </Button>
               </Link>
-            )}
+            )} */}
             <AuthButton />
           </DropdownMenuContent>
         </DropdownMenu>
