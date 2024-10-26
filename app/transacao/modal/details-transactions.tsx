@@ -51,10 +51,8 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>
-        Detalhes
-        </DialogTrigger>
-      
+      <DialogTrigger>Detalhes</DialogTrigger>
+
       <DialogContent className="p-0">
         <Card className="space-y-4 p-1">
           <CardHeader className="flex flex-row items-start bg-muted/50">

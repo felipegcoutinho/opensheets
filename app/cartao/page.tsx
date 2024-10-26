@@ -37,7 +37,7 @@ async function PageCards({ searchParams }) {
   const getAccountMap = await getAccount();
 
   return (
-    <div className="mt-4 w-full">
+    <div className="w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
       <div className="mt-4 grid grid-cols-3 gap-4">

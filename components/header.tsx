@@ -32,7 +32,7 @@ export default async function Header() {
   };
 
   return (
-    <div className="mt-2 flex h-16 w-full items-center gap-4 bg-transparent px-1">
+    <div className="mx-auto mb-2 flex h-20 w-full max-w-screen-2xl items-center border-b border-neutral-100 bg-transparent dark:border-none sm:px-2">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />

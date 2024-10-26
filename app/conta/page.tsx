@@ -33,7 +33,7 @@ async function PageAccount({ searchParams }) {
   );
 
   return (
-    <div className="mt-4 w-full">
+    <div className="w-full">
       <CreateAccount />
 
       <div className="mt-4 grid grid-cols-4 gap-4">

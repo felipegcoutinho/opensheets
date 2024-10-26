@@ -69,10 +69,10 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex w-full items-center justify-start rounded bg-blue-100 p-4 dark:bg-blue-950 dark:text-white">
+    <div className="bg-onsen flex w-full items-center justify-start rounded p-4 dark:bg-blue-950 dark:text-white">
       <button onClick={goToPreviousMonth}>
         <ChevronLeftSquare
-          className="text-blue-400 dark:text-blue-200"
+          className="text-lusty-lavender dark:text-blue-200"
           size={16}
         />
       </button>
@@ -83,7 +83,7 @@ export default function MonthPicker() {
 
       <button onClick={goToNextMonth}>
         <ChevronRightSquare
-          className="text-blue-400 dark:text-blue-200"
+          className="text-lusty-lavender dark:text-blue-200"
           size={16}
         />
       </button>
