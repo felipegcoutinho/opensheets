@@ -3,7 +3,11 @@ import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
-import { addTransaction, deleteTransaction, updateTransaction } from "../actions/transactions";
+import {
+  addTransaction,
+  deleteTransaction,
+  updateTransaction,
+} from "../actions/transactions";
 
 export default function Utils() {
   const { categoriasReceita, categoriasDespesa } = UseOptions();
@@ -94,11 +98,18 @@ export default function Utils() {
     const { optionsMeses } = UseOptions();
 
     for (let i = -2; i <= 2; i++) {
-      const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
+      const newDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + i,
+        1,
+      );
       const month = optionsMeses[newDate.getMonth()];
       const year = newDate.getFullYear();
       const value = `${month}-${year}`;
-      options.push({ value, label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}` });
+      options.push({
+        value,
+        label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}`,
+      });
     }
 
     return options;
@@ -107,14 +118,17 @@ export default function Utils() {
   function MonthUppercase(itemPeriodo) {
     const data = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
     let periodoFormatado = format(data, "MMMM 'de' yyyy", { locale: ptBR });
-    periodoFormatado = periodoFormatado.charAt(0).toUpperCase() + periodoFormatado.slice(1);
+    periodoFormatado =
+      periodoFormatado.charAt(0).toUpperCase() + periodoFormatado.slice(1);
 
     return periodoFormatado;
   }
 
   function calcularMesFinal(itemPeriodo, itemQtdeParcelas) {
     // Parse o itemPeriodo para um objeto Date
-    const dataInicial = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
+    const dataInicial = parse(itemPeriodo, "MMMM-yyyy", new Date(), {
+      locale: ptBR,
+    });
 
     // Adicione a quantidade de parcelas à data inicial
     const dataFinal = addMonths(dataInicial, itemQtdeParcelas - 1);
