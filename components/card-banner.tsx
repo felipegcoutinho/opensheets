@@ -11,7 +11,7 @@ function CardBanner({ children }) {
   }
 
   return (
-    <div className="mx-auto mb-4 mt-2 w-full rounded bg-violet-100 px-4 py-10">
+    <div className="mx-auto my-4 w-full rounded bg-violet-100 px-4 py-10 dark:bg-violet-950">
       {children}
     </div>
   );

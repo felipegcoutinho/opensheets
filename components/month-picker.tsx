@@ -69,9 +69,12 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex w-full items-center justify-start rounded bg-blue-100 p-4 dark:bg-violet-600 dark:text-white">
+    <div className="flex w-full items-center justify-start rounded bg-blue-100 p-4 dark:bg-blue-950 dark:text-white">
       <button onClick={goToPreviousMonth}>
-        <ChevronLeftSquare className="text-blue-400" size={16} />
+        <ChevronLeftSquare
+          className="text-blue-400 dark:text-blue-200"
+          size={16}
+        />
       </button>
 
       <span className={`mx-2 text-lg font-bold capitalize`}>
@@ -79,7 +82,10 @@ export default function MonthPicker() {
       </span>
 
       <button onClick={goToNextMonth}>
-        <ChevronRightSquare className="text-blue-400" size={16} />
+        <ChevronRightSquare
+          className="text-blue-400 dark:text-blue-200"
+          size={16}
+        />
       </button>
 
       {isDifferentFromCurrent && (

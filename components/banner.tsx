@@ -29,7 +29,7 @@ export default async function Banner() {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div>
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500 dark:text-neutral-300">
               {fliendlyDate(currentDate)}
             </p>
             <p className="text-xl">
