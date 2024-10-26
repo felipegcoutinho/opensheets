@@ -3,8 +3,11 @@ import Image from "next/image";
 
 function EmptyCard({ width, height }) {
   return (
-    <div className="flex flex-col items-center justify-center h-60">
+    <div className="flex h-60 flex-col items-center justify-center">
       <Image src={empty} alt="Empty" width={width} height={height} />
+      <p className="mt-2 text-sm text-muted-foreground">
+        Sem dados encontrados
+      </p>
     </div>
   );
 }
