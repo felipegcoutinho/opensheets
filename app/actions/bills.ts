@@ -214,3 +214,20 @@ export async function getSumBillsExpensePaid(month) {
 
   return sumBillsExpensePaid;
 }
+
+export async function payBills(formData: FormData, id) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("boletos")
+    .update({ status_pagamento: "Pago" })
+    .eq("status_pagamento", "Pendente")
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao pagar boletos:", error);
+    return null;
+  }
+
+  return data;
+}

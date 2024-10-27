@@ -5,7 +5,8 @@ import { deleteNotes, getNotes } from "../actions/notes";
 import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 
-async function PageNotes({ searchParams }) {
+async function PageNotes(props) {
+  const searchParams = await props.searchParams;
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;

@@ -2,7 +2,7 @@ import { ColorDotInvoice } from "@/components/card-color";
 import DialogPayment from "@/components/dialog-payment";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import Link from "next/link";
 
 export default function Invoice({ data, month }) {
@@ -29,7 +29,9 @@ export default function Invoice({ data, month }) {
                   <p className="text-sm text-muted-foreground">
                     Vence dia {item.dt_vencimento}
                   </p>
-                ) : null}
+                ) : (
+                  <Check className="text-green-500" size={16} />
+                )}
               </div>
               <div className="py-1 text-right">
                 <p className="font-bold">

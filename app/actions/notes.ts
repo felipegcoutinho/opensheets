@@ -14,7 +14,9 @@ export async function getNotes(month) {
 }
 
 export async function addNotes(formData: FormData) {
-  const { descricao, periodo, anotacao } = Object.fromEntries(formData.entries());
+  const { descricao, periodo, anotacao } = Object.fromEntries(
+    formData.entries(),
+  );
 
   const supabase = createClient();
   await supabase.from("anotacoes").insert({ descricao, periodo, anotacao });
@@ -30,9 +32,14 @@ export async function deleteNotes(formData: FormData) {
 }
 
 export async function updateNotes(formData: FormData) {
-  const { id, descricao, periodo, anotacao } = Object.fromEntries(formData.entries());
+  const { id, descricao, periodo, anotacao } = Object.fromEntries(
+    formData.entries(),
+  );
 
   const supabase = createClient();
-  await supabase.from("anotacoes").update({ id, descricao, periodo, anotacao }).eq("id", id);
+  await supabase
+    .from("anotacoes")
+    .update({ id, descricao, periodo, anotacao })
+    .eq("id", id);
   revalidatePath("/anotacoes");
 }

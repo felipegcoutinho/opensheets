@@ -28,7 +28,8 @@ function getCardLogo(bandeira) {
   }
 }
 
-async function PageCards({ searchParams }) {
+async function PageCards(props) {
+  const searchParams = await props.searchParams;
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;

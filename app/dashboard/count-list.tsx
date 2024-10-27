@@ -22,7 +22,10 @@ async function CountList({ month }) {
         </CardHeader>
         <CardContent>
           {transacoes?.map((item) => (
-            <span className="mt-4 block text-2xl text-muted-foreground">
+            <span
+              key={item.count}
+              className="mt-4 block text-2xl text-muted-foreground"
+            >
               {item.count}
             </span>
           ))}
@@ -38,7 +41,10 @@ async function CountList({ month }) {
         </CardHeader>
         <CardContent>
           {boletos?.map((item) => (
-            <span className="mt-4 block text-2xl text-muted-foreground">
+            <span
+              key={item.count}
+              className="mt-4 block text-2xl text-muted-foreground"
+            >
               {item.count}
             </span>
           ))}
@@ -54,7 +60,10 @@ async function CountList({ month }) {
         </CardHeader>
         <CardContent>
           {cartoes?.map((item) => (
-            <span className="mt-4 block text-2xl text-muted-foreground">
+            <span
+              key={item.count}
+              className="mt-4 block text-2xl text-muted-foreground"
+            >
               {item.count}
             </span>
           ))}

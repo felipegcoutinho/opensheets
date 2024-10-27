@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Fragment } from "react";
 import Numbers from "./numbers";
 import Utils from "./utils";
 
@@ -29,11 +30,11 @@ export default function ButtonPayment({
         fatura_status.map(
           (item) =>
             item.status_pagamento === "Pago" && (
-              <>
+              <Fragment key={item.id}>
                 <Button className="h-6" variant="success" type="button">
                   Pago
                 </Button>
-              </>
+              </Fragment>
             ),
         )
       ) : (

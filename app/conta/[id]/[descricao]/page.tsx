@@ -20,7 +20,9 @@ import {
 import { UseDates } from "@/hooks/use-dates";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 
-export default async function page({ params, searchParams }) {
+export default async function page(props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -46,7 +48,7 @@ export default async function page({ params, searchParams }) {
         <CardColor
           styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
           aparencia={item.aparencia}
-          id={item.id}
+          key={item.id}
         >
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 

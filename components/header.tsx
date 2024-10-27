@@ -16,7 +16,7 @@ import LinkOnHeader from "./links-on-header";
 import Logo from "./logo";
 
 export default async function Header() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const {
@@ -32,7 +32,7 @@ export default async function Header() {
   };
 
   return (
-    <div className="mx-auto mb-2 flex h-20 w-full max-w-screen-2xl items-center border-b border-neutral-100 bg-transparent dark:border-none sm:px-2">
+    <div className="mx-auto mb-2 flex h-20 w-full items-center border-b border-neutral-100 bg-transparent dark:border-none">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />

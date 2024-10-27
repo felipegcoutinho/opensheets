@@ -14,7 +14,7 @@ export async function ConditionList({ month }) {
 
       {condicoes?.length > 0 ? (
         condicoes?.map((item) => (
-          <CardContent className="grid gap-2 py-1">
+          <CardContent key={item.condicao} className="grid gap-2 py-1">
             <div className="grid">
               <div className="flex items-center justify-between">
                 <span className="text-md">{item.condicao}</span>

@@ -23,10 +23,17 @@ import {
 import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
-import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
+import {
+  CalendarClockIcon,
+  Check,
+  CheckCircle2,
+  RefreshCw,
+} from "lucide-react";
 import Image from "next/image";
 
-export default async function page({ params, searchParams }) {
+export default async function page(props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -54,6 +61,7 @@ export default async function page({ params, searchParams }) {
           styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
           aparencia={item.aparencia}
           id={item.id}
+          key={item.id}
         >
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
@@ -102,23 +110,30 @@ export default async function page({ params, searchParams }) {
       ))}
 
       <div
-        className={`mt-4 p-2 ${
+        className={`mt-4 rounded p-2 ${
           fatura_status &&
           fatura_status.some((item) => item.status_pagamento === "Pago")
-            ? "border-l-2 border-green-500 bg-green-100"
-            : "border-l-2 border-orange-500 bg-orange-100"
+            ? "border border-green-500 bg-green-50"
+            : "border border-orange-500 bg-orange-50"
         }`}
       >
         <div className="flex items-center justify-between">
-          {getCardDetailMap?.map((item) => (
-            <ButtonPayment
-              fatura_status={fatura_status}
-              month={month}
-              paramsId={params.id}
-              descricao={item.descricao}
-              valor={sumCardSum}
-            />
-          ))}
+          <div className="flex items-center gap-2">
+            {fatura_status && fatura_status.length > 0 && (
+              <CheckCircle2 size={24} className="text-green-100" fill="green" />
+            )}
+
+            {getCardDetailMap?.map((item) => (
+              <ButtonPayment
+                key={item.id}
+                fatura_status={fatura_status}
+                month={month}
+                paramsId={params.id}
+                descricao={item.descricao}
+                valor={sumCardSum}
+              />
+            ))}
+          </div>
 
           <ButtonUndoPayment fatura_status={fatura_status} />
         </div>

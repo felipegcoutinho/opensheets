@@ -72,18 +72,20 @@ export default function MonthPicker() {
     <div className="bg-onsen flex w-full items-center justify-start rounded p-4 dark:bg-blue-950 dark:text-white">
       <button onClick={goToPreviousMonth}>
         <ChevronLeftSquare
-          className="text-lusty-lavender dark:text-blue-200"
+          className="text-foggy-amethyst dark:text-blue-200"
           size={16}
         />
       </button>
 
-      <span className={`mx-2 text-lg font-bold capitalize`}>
+      <span
+        className={`text-foggy-amethyst mx-2 text-lg font-bold capitalize dark:text-blue-200`}
+      >
         {currentMonth} {currentYear}
       </span>
 
       <button onClick={goToNextMonth}>
         <ChevronRightSquare
-          className="text-lusty-lavender dark:text-blue-200"
+          className="text-foggy-amethyst dark:text-blue-200"
           size={16}
         />
       </button>

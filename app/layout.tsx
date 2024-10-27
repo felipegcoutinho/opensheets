@@ -24,8 +24,8 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="mx-auto flex max-w-screen-1xl flex-col px-2 antialiased animate-in">
+          <main className="mx-auto flex max-w-screen-1xl flex-col px-2 antialiased animate-in max-sm:px-2">
+            <Header />
             <Banner />
             <MonthPicker />
             {children}

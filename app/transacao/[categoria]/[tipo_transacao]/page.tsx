@@ -13,7 +13,9 @@ import { UseDates } from "@/hooks/use-dates";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import DetailsTransactions from "../../modal/details-transactions";
 
-async function Page({ params, searchParams }) {
+async function Page(props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -33,7 +35,11 @@ async function Page({ params, searchParams }) {
 
   return (
     <>
-      <h1 className="my-6">Categoria | {categoria}</h1>
+      <h1 className="mt-6 text-xl">Categoria | {tipoTransacao}</h1>
+      <h2 className="mb-6 mt-2">
+        <Badge className="text-sm">{categoria}</Badge>
+      </h2>
+
       <Table>
         <TableHeader>
           <TableRow className="border-b text-xs">

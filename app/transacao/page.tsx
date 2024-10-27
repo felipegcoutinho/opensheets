@@ -4,7 +4,8 @@ import { getCards } from "../actions/cards";
 import { getTransaction } from "../actions/transactions";
 import { TableTransaction } from "./table-transaction";
 
-async function PageTransactions({ searchParams }) {
+async function PageTransactions(props) {
+  const searchParams = await props.searchParams;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;

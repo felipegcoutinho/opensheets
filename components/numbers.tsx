@@ -1,3 +1,5 @@
+"use client";
+
 import { uiSans } from "@/app/fonts/font";
 
 function Numbers({ number }) {

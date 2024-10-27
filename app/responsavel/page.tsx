@@ -7,7 +7,8 @@ import {
   getResponsavelTransactionList,
 } from "../actions/users";
 
-async function page({ searchParams }) {
+async function page(props) {
+  const searchParams = await props.searchParams;
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
