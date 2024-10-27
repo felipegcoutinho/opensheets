@@ -48,7 +48,6 @@ async function Page(props) {
             <TableHead>Transação</TableHead>
             <TableHead>Condição</TableHead>
             <TableHead>Pagamento</TableHead>
-
             <TableHead>Responsável</TableHead>
             <TableHead>Valor</TableHead>
             <TableHead>Categoria</TableHead>

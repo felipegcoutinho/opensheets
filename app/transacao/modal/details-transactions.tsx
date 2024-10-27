@@ -8,13 +8,13 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogFooter,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
@@ -49,6 +49,10 @@ export default function DetailsTransactions({
     setIsOpen(val);
   };
 
+  const parcelaRestante = itemValor * (itemQtdeParcelas - itemParcelaAtual);
+
+  // TODO - Verificar data final
+
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger>Detalhes</DialogTrigger>
@@ -57,9 +61,9 @@ export default function DetailsTransactions({
         <Card className="space-y-4 p-1">
           <CardHeader className="flex flex-row items-start bg-muted/50">
             <div className="grid gap-0.5">
-              <CardTitle className="group flex items-center gap-2 text-lg">
+              <DialogTitle className="group flex items-center gap-2 text-lg">
                 #{itemId}
-              </CardTitle>
+              </DialogTitle>
               <CardDescription>{DateFormat(itemDate)}</CardDescription>
             </div>
           </CardHeader>
@@ -135,7 +139,6 @@ export default function DetailsTransactions({
                 )}
 
                 <Separator className="my-2" />
-
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
                     Valor {itemCondicao === "Parcelado" && "da Parcela"}
@@ -144,7 +147,16 @@ export default function DetailsTransactions({
                     <Numbers number={itemValor} />
                   </span>
                 </li>
-
+                {itemCondicao === "Parcelado" && (
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Valor Restante
+                    </span>
+                    <span>
+                      <Numbers number={parcelaRestante} />
+                    </span>
+                  </li>
+                )}
                 {itemCondicao === "Recorrente" && (
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
@@ -153,9 +165,7 @@ export default function DetailsTransactions({
                     <span>{itemQtdeRecorrencia} meses</span>
                   </li>
                 )}
-
                 {itemCondicao !== "Parcelado" && <Separator className="my-2" />}
-
                 <li className="flex items-center justify-between font-semibold">
                   <span className="text-muted-foreground">Total da Compra</span>
                   <span className="text-lg">
