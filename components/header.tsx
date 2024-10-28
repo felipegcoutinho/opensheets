@@ -1,3 +1,4 @@
+import PrivacyButton from "@/components/privacy-button";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -107,6 +108,8 @@ export default async function Header() {
             <ModeToggle />
           </div>
         </div>
+
+        <PrivacyButton />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -1,15 +1,25 @@
 "use client";
 
 import { uiSans } from "@/app/fonts/font";
+import { usePrivacy } from "@/hooks/privacy-context";
+import { Skeleton } from "./ui/skeleton";
 
 function Numbers({ number }) {
+  const { estado, setEstado } = usePrivacy();
+
   return (
-    <span className={`${uiSans.className} font-bold`}>
-      {Number(number).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}
-    </span>
+    <>
+      {estado ? (
+        <span className={`${uiSans.className} font-bold`}>
+          {Number(number).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </span>
+      ) : (
+        <Skeleton className="h-5 w-16" />
+      )}
+    </>
   );
 }
 
