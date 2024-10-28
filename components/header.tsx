@@ -9,7 +9,7 @@ import { createClient } from "@/utils/supabase/server";
 import { Menu, Package2 } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
 import LinkOnHeader from "./links-on-header";
@@ -23,21 +23,15 @@ export default async function Header() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
-
   return (
     <div className="mx-auto mb-2 flex h-20 w-full items-center border-b border-neutral-100 bg-transparent dark:border-none">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />
         </Link>
-        <LinkOnHeader user={user} />
+        <Suspense>
+          <LinkOnHeader user={user} />
+        </Suspense>
       </nav>
       <Sheet>
         <SheetTrigger asChild>

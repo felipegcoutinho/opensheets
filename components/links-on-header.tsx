@@ -1,7 +1,7 @@
 "use client";
 
-import { UseDates } from "@/hooks/use-dates"; // Hook para obter a data atual
-import clsx from "clsx"; // Biblioteca para facilitar o gerenciamento de classes CSS condicionalmente
+import { UseDates } from "@/hooks/use-dates";
+import clsx from "clsx";
 import {
   ArrowDownUpIcon,
   BadgeCentIcon,
@@ -13,8 +13,8 @@ import {
   Users,
 } from "lucide-react";
 
-import Link from "next/link"; // Componente de Link do Next.js
-import { usePathname, useSearchParams } from "next/navigation"; // Hooks do Next.js para obter pathname e parâmetros de busca
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
 function LinkOnHeader({ user }) {
   const { currentMonthName, currentYear } = UseDates();
@@ -94,7 +94,7 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
       className={clsx(
         "flex items-center gap-1 rounded p-1 transition-colors duration-700",
         isActive
-          ? "decoration-foggy-amethyst font-bold text-black underline decoration-2 underline-offset-8 dark:bg-transparent dark:text-orange-300 dark:decoration-white" // Estilo para link ativo
+          ? "font-bold text-black underline decoration-foggy-amethyst decoration-2 underline-offset-8 dark:bg-transparent dark:text-orange-300 dark:decoration-white" // Estilo para link ativo
           : "text-neutral-500 hover:bg-neutral-200 hover:text-neutral-600 dark:text-white dark:hover:bg-neutral-800", // Estilo para link inativo
       )}
     >

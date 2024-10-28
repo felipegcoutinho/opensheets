@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Suspense } from "react";
 import { inter } from "./fonts/font";
 import "./globals.css";
 
@@ -27,7 +28,9 @@ export default function RootLayout({ children }) {
           <main className="mx-auto flex max-w-screen-1xl flex-col px-2 antialiased animate-in max-sm:px-2">
             <Header />
             <Banner />
-            <MonthPicker />
+            <Suspense>
+              <MonthPicker />
+            </Suspense>
             {children}
           </main>
           <SpeedInsights />
