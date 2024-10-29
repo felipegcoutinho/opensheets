@@ -37,7 +37,7 @@ async function PageAccount(props) {
     <div className="w-full">
       <CreateAccount />
 
-      <div className="mt-4 grid grid-cols-4 gap-4">
+      <div className="mt-4 grid gap-4 lg:grid-cols-4">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
             <CardColor key={item.id} aparencia={item.aparencia}>

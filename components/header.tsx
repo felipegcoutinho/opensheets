@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
-import { Menu, Package2 } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -38,59 +38,59 @@ export default async function Header() {
         <SheetTrigger asChild>
           {user && (
             <Button size="icon" className="shrink-0 md:hidden">
-              <Menu className="h-5 w-5 text-white" />
+              <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           )}
         </SheetTrigger>
-        <SheetContent side="left" className="bg-white">
+
+        <SheetContent side="left">
           <nav className="grid gap-6 text-lg">
             <Link
               href="#"
               className="flex items-center gap-2 text-lg font-semibold"
             >
-              <Package2 className="h-6 w-6" />
-              <span className="sr-only">Sheets</span>
+              <span className="sr-only">openSheets</span>
             </Link>
             <Link
               href="/"
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Home
             </Link>
             <Link
               href={`/transacao`}
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Transações
             </Link>
             <Link
               href={`/boleto`}
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Boletos
             </Link>
             <Link
               href="/cartao"
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Cartões
             </Link>
             <Link
               href="/conta"
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Contas
             </Link>
             <Link
               href="/responsavel"
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Responsável
             </Link>
             <Link
               href="/anotacao"
-              className="text-black transition-colors hover:text-muted-foreground"
+              className="transition-colors hover:text-muted-foreground"
             >
               Anotações
             </Link>
@@ -98,8 +98,8 @@ export default async function Header() {
         </SheetContent>
       </Sheet>
 
-      <div className="sm:hidden">
-        <p>Opensheets</p>
+      <div className="pl-2 sm:hidden">
+        <Logo />
       </div>
 
       <div className="flex w-full items-center gap-2 md:ml-auto md:gap-2 lg:gap-4">

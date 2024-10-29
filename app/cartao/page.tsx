@@ -41,7 +41,7 @@ async function PageCards(props) {
     <div className="w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
-      <div className="mt-4 grid grid-cols-3 gap-4">
+      <div className="mt-4 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
         {getCardsMap?.length !== 0 ? (
           getCardsMap?.map((item) => (
             <CardColor aparencia={item.aparencia} key={item.id}>
