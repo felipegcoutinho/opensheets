@@ -110,11 +110,11 @@ export default async function page(props) {
       ))}
 
       <div
-        className={`mt-4 rounded p-2 ${
+        className={`mt-4 rounded p-2 dark:border-none border${
           fatura_status &&
           fatura_status.some((item) => item.status_pagamento === "Pago")
-            ? "border border-green-500 bg-green-50"
-            : "border border-orange-500 bg-orange-50"
+            ? "border-green-500 bg-green-50 dark:bg-green-900"
+            : "border-orange-500 bg-orange-50 dark:bg-orange-900"
         }`}
       >
         <div className="flex items-center justify-between">

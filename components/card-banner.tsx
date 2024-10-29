@@ -12,7 +12,7 @@ function CardBanner({ children }) {
   }
 
   return (
-    <Card className="from-alt_yellow to-alt_violet mx-auto mb-4 w-full border-none bg-gradient-to-tr px-4 py-8 dark:bg-blue-950 dark:bg-gradient-to-tr">
+    <Card className="mx-auto mb-4 w-full border-none bg-gradient-to-tr from-alt_yellow to-alt_violet px-4 py-8 dark:bg-blue-950 dark:from-alt_green/40 dark:to-alt_violet/20">
       {children}
     </Card>
   );

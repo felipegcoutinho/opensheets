@@ -38,7 +38,7 @@ export default async function Banner() {
             </p>
           </div>
         </div>
-        <div className="flex space-x-2 text-black">
+        <div className="flex space-x-2 text-black dark:text-white">
           <div className="text-right">
             Saldo Atual
             <div className="text-2xl font-bold">

@@ -94,8 +94,8 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
       className={clsx(
         "flex items-center gap-1 rounded p-1 transition-colors duration-700",
         isActive
-          ? "font-bold text-black underline decoration-foggy-amethyst decoration-2 underline-offset-8 dark:bg-transparent dark:text-orange-300 dark:decoration-white" // Estilo para link ativo
-          : "text-neutral-500 hover:bg-neutral-200 hover:text-neutral-600 dark:text-white dark:hover:bg-neutral-800", // Estilo para link inativo
+          ? "font-bold text-black underline decoration-alt_violet decoration-2 underline-offset-8 dark:bg-transparent dark:text-alt_violet dark:decoration-alt_green"
+          : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800", // Estilo para link inativo
       )}
     >
       {/* <Icon size={12} /> */}
