@@ -102,9 +102,9 @@ export default async function page(props) {
 
           <div className="ml-auto">
             Total da Fatura
-            <p className="text-2xl font-bold">
+            <div className="text-2xl font-bold">
               <Numbers number={sumCardSum} />
-            </p>
+            </div>
           </div>
         </CardColor>
       ))}

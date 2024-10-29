@@ -103,13 +103,14 @@ export default async function Header() {
       </div>
 
       <div className="flex w-full items-center gap-2 md:ml-auto md:gap-2 lg:gap-4">
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
           <div className="relative">
             <ModeToggle />
           </div>
+          <div className="relative">
+            <PrivacyButton />
+          </div>
         </div>
-
-        <PrivacyButton />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

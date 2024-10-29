@@ -13,12 +13,12 @@ export default function PrivacyButton() {
     <>
       {estado ? (
         <Eye
-          className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 cursor-pointer transition-all dark:-rotate-90 dark:scale-0"
+          className="h-[1.2rem] w-[1.2rem] cursor-pointer transition-all"
           onClick={toggleEstado}
         />
       ) : (
         <EyeOff
-          className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 cursor-pointer text-neutral-600 transition-all dark:-rotate-90 dark:scale-0"
+          className="h-[1.2rem] w-[1.2rem] cursor-pointer text-neutral-600 transition-all"
           onClick={toggleEstado}
         />
       )}

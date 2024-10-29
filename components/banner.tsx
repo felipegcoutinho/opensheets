@@ -32,17 +32,17 @@ export default async function Banner() {
             <p className="text-xs text-neutral-100 dark:text-neutral-300">
               {fliendlyDate(currentDate)}
             </p>
-            <p className="text-precious-pearls text-xl font-bold">
+            <p className="text-xl font-bold text-precious-pearls">
               {getGreeting()}, <GetUserName />
             </p>
           </div>
         </div>
-        <div className="text-precious-pearls flex space-x-2">
+        <div className="flex space-x-2 text-precious-pearls">
           <div className="text-right">
             Saldo Atual
-            <p className="text-2xl font-bold">
+            <div className="text-2xl font-bold">
               <Numbers number={saldo} />
-            </p>
+            </div>
           </div>
         </div>
       </div>

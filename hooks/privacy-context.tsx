@@ -5,7 +5,7 @@ import { createContext, useContext, useState } from "react";
 export const PrivacyContext = createContext({});
 
 export function PrivacyProviderApp({ children }) {
-  const [estado, setEstado] = useState(false);
+  const [estado, setEstado] = useState(true);
 
   return (
     <PrivacyContext.Provider value={{ estado, setEstado }}>
