@@ -29,15 +29,16 @@ export default async function Banner() {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div>
-            <p className="text-xs text-neutral-100 dark:text-neutral-300">
+            <p className="text-sm text-neutral-800 dark:text-neutral-300">
               {fliendlyDate(currentDate)}
             </p>
-            <p className="text-xl font-bold text-precious-pearls">
+            {/* <p className="from-alt_green to-alt_yellow inline-block bg-gradient-to-r bg-clip-text  text-transparent"> */}
+            <p className="text-xl font-bold">
               {getGreeting()}, <GetUserName />
             </p>
           </div>
         </div>
-        <div className="flex space-x-2 text-precious-pearls">
+        <div className="flex space-x-2 text-black">
           <div className="text-right">
             Saldo Atual
             <div className="text-2xl font-bold">

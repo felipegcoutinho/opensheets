@@ -25,7 +25,7 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="mx-auto mb-2 flex h-20 w-full items-center border-b border-neutral-100 bg-transparent dark:border-none">
+    <div className="mx-auto mb-2 flex h-20 w-full items-center bg-transparent dark:border-none">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />

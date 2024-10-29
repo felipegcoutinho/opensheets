@@ -69,23 +69,23 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="bg-onsen flex w-full items-center justify-start rounded p-4 dark:bg-blue-950 dark:text-white">
+    <div className="bg-alt_green flex w-full items-center justify-start rounded p-4 dark:bg-blue-950 dark:text-white">
       <button onClick={goToPreviousMonth}>
         <ChevronLeftSquare
-          className="text-foggy-amethyst dark:text-blue-200"
+          className="text-alt_yellow dark:text-blue-200"
           size={16}
         />
       </button>
 
       <span
-        className={`text-foggy-amethyst mx-2 text-lg font-bold capitalize dark:text-blue-200`}
+        className={`mx-2 text-lg font-bold capitalize text-white dark:text-blue-200`}
       >
         {currentMonth} {currentYear}
       </span>
 
       <button onClick={goToNextMonth}>
         <ChevronRightSquare
-          className="text-foggy-amethyst dark:text-blue-200"
+          className="text-alt_yellow dark:text-blue-200"
           size={16}
         />
       </button>
@@ -94,7 +94,7 @@ export default function MonthPicker() {
         <Button
           variant="link"
           size="xs"
-          className="ml-4 border border-black px-1 text-black dark:border-white dark:text-white"
+          className="ml-4 border border-white px-1 text-white dark:border-white dark:text-white"
           onClick={goToCurrentMonthYear}
         >
           <span className="pl-1">Retornar ao Mês Atual</span>
