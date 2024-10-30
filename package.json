@@ -1,8 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack --experimental-https",
-    "turbo": "next dev --turbo",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start"
   },
