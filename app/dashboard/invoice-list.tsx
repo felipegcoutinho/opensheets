@@ -11,7 +11,7 @@ export default function Invoice({ data, month }) {
       {data.length > 0 ? (
         data.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800">
+            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
               <div>
                 <ColorDotInvoice
                   aparencia={item.aparencia}
