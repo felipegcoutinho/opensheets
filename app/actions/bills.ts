@@ -12,9 +12,10 @@ export async function getBills(month) {
     .from("boletos")
     .select(
       `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
-      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`
+      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
     )
-    .eq("periodo", month);
+    .eq("periodo", month)
+    .order("dt_vencimento", { ascending: true });
 
   if (error) {
     console.error("Erro em buscar boletos:", error);
@@ -74,7 +75,12 @@ export async function addBills(formData: FormData) {
     const quantidadeRecorrencias = parseInt(qtde_recorrencia, 10);
 
     const [mesInicial, anoInicial] = periodo.split("-");
-    const dataInicial = parse(`01-${mesInicial}-${anoInicial}`, "dd-MMMM-yyyy", new Date(), { locale: ptBR });
+    const dataInicial = parse(
+      `01-${mesInicial}-${anoInicial}`,
+      "dd-MMMM-yyyy",
+      new Date(),
+      { locale: ptBR },
+    );
 
     for (let i = 0; i < quantidadeRecorrencias; i++) {
       const dataRecorrente = addMonths(dataInicial, i);
@@ -83,16 +89,37 @@ export async function addBills(formData: FormData) {
       const mesRecorrente = dataRecorrente.getUTCMonth();
       const anoRecorrente = dataRecorrente.getUTCFullYear();
 
-      const dataRecorrenteComDia = new Date(Date.UTC(anoRecorrente, mesRecorrente, diaOriginal));
+      const dataRecorrenteComDia = new Date(
+        Date.UTC(anoRecorrente, mesRecorrente, diaOriginal),
+      );
 
-      const periodoRecorrente = format(dataRecorrenteComDia, "MMMM-yyyy", { locale: ptBR });
-      const dt_vencimentoRecorrente = dataRecorrenteComDia.toISOString().split("T")[0];
+      const periodoRecorrente = format(dataRecorrenteComDia, "MMMM-yyyy", {
+        locale: ptBR,
+      });
+      const dt_vencimentoRecorrente = dataRecorrenteComDia
+        .toISOString()
+        .split("T")[0];
 
       if (dividir_boleto === "on") {
-        adicionarBoleto(valor / 2, responsavel, periodoRecorrente, dt_vencimentoRecorrente);
-        adicionarBoleto(valor / 2, segundo_responsavel, periodoRecorrente, dt_vencimentoRecorrente);
+        adicionarBoleto(
+          valor / 2,
+          responsavel,
+          periodoRecorrente,
+          dt_vencimentoRecorrente,
+        );
+        adicionarBoleto(
+          valor / 2,
+          segundo_responsavel,
+          periodoRecorrente,
+          dt_vencimentoRecorrente,
+        );
       } else {
-        adicionarBoleto(valor, responsavel, periodoRecorrente, dt_vencimentoRecorrente);
+        adicionarBoleto(
+          valor,
+          responsavel,
+          periodoRecorrente,
+          dt_vencimentoRecorrente,
+        );
       }
     }
   }
@@ -180,7 +207,27 @@ export async function getSumBillsExpensePaid(month) {
     return null;
   }
 
-  const sumBillsExpensePaid = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const sumBillsExpensePaid = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return sumBillsExpensePaid;
+}
+
+export async function payBills(formData: FormData, id) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("boletos")
+    .update({ status_pagamento: "Pago" })
+    .eq("status_pagamento", "Pendente")
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao pagar boletos:", error);
+    return null;
+  }
+
+  return data;
 }

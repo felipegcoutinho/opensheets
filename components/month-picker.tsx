@@ -1,7 +1,6 @@
 "use client";
 
 import { UseDates } from "@/hooks/use-dates";
-import { GeistMono } from "geist/font/mono";
 import { ChevronLeftSquare, ChevronRightSquare } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
@@ -58,37 +57,44 @@ export default function MonthPicker() {
     currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
   const isHomePage =
-    pathname === "/dashboard" ||
-    pathname === "/transacao" ||
-    pathname === "/boleto" ||
-    pathname === "/responsavel" ||
-    pathname === "/anotacao";
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/transacao") ||
+    pathname.startsWith("/boleto") ||
+    pathname.startsWith("/responsavel") ||
+    pathname.startsWith("/anotacao") ||
+    (pathname.startsWith("/cartao/") && pathname !== "/cartao");
 
   if (!isHomePage) {
     return null;
   }
 
   return (
-    <div className="flex w-full justify-start rounded bg-lime-3000 px-4 py-4 text-black dark:bg-violet-600 dark:text-white">
+    <div className="flex w-full items-center justify-start rounded bg-alt_green p-4 dark:bg-alt_green/20 dark:text-white">
       <button onClick={goToPreviousMonth}>
-        <ChevronLeftSquare size={16} />
+        <ChevronLeftSquare
+          className="text-alt_yellow dark:text-blue-200"
+          size={16}
+        />
       </button>
 
       <span
-        className={`${GeistMono.className} mx-2 font-mono font-bold uppercase`}
+        className={`mx-2 text-lg font-bold capitalize text-white dark:text-blue-200`}
       >
         {currentMonth} {currentYear}
       </span>
 
       <button onClick={goToNextMonth}>
-        <ChevronRightSquare size={16} />
+        <ChevronRightSquare
+          className="text-alt_yellow dark:text-blue-200"
+          size={16}
+        />
       </button>
 
       {isDifferentFromCurrent && (
         <Button
           variant="link"
           size="xs"
-          className="ml-4 border border-black px-1 dark:border-white dark:text-white"
+          className="ml-4 border border-white px-1 text-white dark:border-white dark:text-white"
           onClick={goToCurrentMonthYear}
         >
           <span className="pl-1">Retornar ao Mês Atual</span>

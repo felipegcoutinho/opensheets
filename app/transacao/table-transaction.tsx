@@ -5,6 +5,7 @@ import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -70,6 +71,12 @@ function getColor(row) {
   return contaAparencia ?? cartaoAparencia;
 }
 
+const getResponsavelClass = (responsavel) => {
+  if (responsavel === "Você") return "text-blue-600";
+  if (responsavel === "Sistema") return "text-neutral-600";
+  return "text-orange-600";
+};
+
 // Função personalizada para filtrar em várias colunas
 const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
   const searchValue = filterValue.toLowerCase();
@@ -90,6 +97,22 @@ const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
 };
 
 export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
+  {
+    id: "selection",
+    header: ({ table }) => (
+      <input
+        type="checkbox"
+        checked={table.getIsAllPageRowsSelected()}
+        onChange={table.getToggleAllPageRowsSelectedHandler()}
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={row.getToggleSelectedHandler()}
+      />
+    ),
+  },
   {
     accessorKey: "data_compra",
     header: "Data",
@@ -216,7 +239,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     accessorKey: "forma_pagamento",
     header: () => <div>Pagamento</div>,
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("forma_pagamento")}</div>
+      <span className="capitalize">{row.getValue("forma_pagamento")}</span>
     ),
   },
 
@@ -237,7 +260,11 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
 
-      return <span>{item.responsavel}</span>;
+      return (
+        <span className={`font-bold ${getResponsavelClass(item.responsavel)}`}>
+          {item.responsavel}
+        </span>
+      );
     },
   },
 
@@ -383,7 +410,6 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   });
 
   const { DateFormat } = UseDates();
-
   const columns = getColumns(getAccountMap, getCardsMap, DateFormat);
 
   const table = useReactTable({
@@ -397,16 +423,21 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
       pagination,
     },
     onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter, // Adiciona o filtro global
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    globalFilterFn: customGlobalFilter, // Aplica a função de filtro global personalizada
+    globalFilterFn: customGlobalFilter,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
   });
+
+  // Cálculo da soma das transações selecionadas
+  const selectedTransactionSum = data
+    .filter((_, index) => rowSelection[index])
+    .reduce((sum, row) => sum + row.valor, 0);
 
   return (
     <div className="mt-4 w-full">
@@ -416,12 +447,19 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           getAccountMap={getAccountMap}
         />
 
-        <Input
-          placeholder="Pesquisar"
-          value={globalFilter}
-          onChange={(event) => setGlobalFilter(event.target.value)}
-          className="max-w-52"
-        />
+        <div className="flex items-center gap-2">
+          {/* Exibe a soma dos lançamentos selecionados */}
+          <div className="text-mdfont-bold">
+            Total Selecionado: <Numbers number={selectedTransactionSum} />
+          </div>
+
+          <Input
+            placeholder="Pesquisar"
+            value={globalFilter}
+            onChange={(event) => setGlobalFilter(event.target.value)}
+            className="max-w-52"
+          />
+        </div>
       </div>
 
       <Table className="mt-4">

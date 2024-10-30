@@ -7,7 +7,7 @@ export default function Utils() {
   const handleAdd = (e) => {
     e.preventDefault();
     startTransition(() => {
-      const formData = new FormData(e.target); // Utilize o formulário como target
+      const formData = new FormData(e.target);
       addFaturas(formData);
     });
   };

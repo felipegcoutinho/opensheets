@@ -1,4 +1,3 @@
-import { getAccount } from "@/app/actions/accounts";
 import {
   getCardDetails,
   getCardInvoice,
@@ -8,11 +7,11 @@ import {
 } from "@/app/actions/cards";
 import { getFaturas } from "@/app/actions/invoices";
 import DetailsTransactions from "@/app/transacao/modal/details-transactions";
+import ButtonPayment from "@/components/button-payment";
 import ButtonUndoPayment from "@/components/button-undo-payment";
 import CardColor, { ColorDot } from "@/components/card-color";
-import DialogPayment from "@/components/dialog-payment";
-import MonthPicker from "@/components/month-picker";
 import Numbers from "@/components/numbers";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -24,9 +23,17 @@ import {
 import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
+import {
+  CalendarClockIcon,
+  Check,
+  CheckCircle2,
+  RefreshCw,
+} from "lucide-react";
 import Image from "next/image";
 
-export default async function page({ params, searchParams }) {
+export default async function page(props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -36,20 +43,25 @@ export default async function page({ params, searchParams }) {
   const sumCardSum = await getCardSum(month, params.id);
 
   const getCardsMap = await getCards(month);
-  const getAccountMap = await getAccount(); //TODO: getAccountMap is not being used
 
   const limite = await getLimite(params.id);
 
   const fatura_status = await getFaturas(month, params.id);
 
+  const getResponsavelClass = (responsavel) => {
+    if (responsavel === "Você") return "text-blue-600";
+    if (responsavel === "Sistema") return "text-neutral-600";
+    return "text-orange-600";
+  };
+
   return (
     <>
-    <MonthPicker   />
       {getCardDetailMap?.map((item) => (
         <CardColor
           styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
           aparencia={item.aparencia}
           id={item.id}
+          key={item.id}
         >
           <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
 
@@ -82,7 +94,7 @@ export default async function page({ params, searchParams }) {
           </div>
 
           {item.anotacao && (
-            <div className="leading-loose ">
+            <div className="leading-loose">
               <p>Notas:</p>
               <p className="text-lg">{item.anotacao}</p>
             </div>
@@ -90,21 +102,42 @@ export default async function page({ params, searchParams }) {
 
           <div className="ml-auto">
             Total da Fatura
-            <p className="text-2xl font-bold">
+            <div className="text-2xl font-bold">
               <Numbers number={sumCardSum} />
-            </p>
-            <div className="flex items-center gap-2">
-              <DialogPayment
-                descricao={item.descricao}
-                valor={sumCardSum}
-                month={month}
-                paramsId={item.id}
-              />
-              <ButtonUndoPayment fatura_status={fatura_status} />
             </div>
           </div>
         </CardColor>
       ))}
+
+      <div
+        className={`mt-4 rounded p-2 dark:border-none border${
+          fatura_status &&
+          fatura_status.some((item) => item.status_pagamento === "Pago")
+            ? "border-green-500 bg-green-50 dark:bg-green-900"
+            : "border-orange-500 bg-orange-50 dark:bg-orange-900"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {fatura_status && fatura_status.length > 0 && (
+              <CheckCircle2 size={24} className="text-green-100" fill="green" />
+            )}
+
+            {getCardDetailMap?.map((item) => (
+              <ButtonPayment
+                key={item.id}
+                fatura_status={fatura_status}
+                month={month}
+                paramsId={params.id}
+                descricao={item.descricao}
+                valor={sumCardSum}
+              />
+            ))}
+          </div>
+
+          <ButtonUndoPayment fatura_status={fatura_status} />
+        </div>
+      </div>
 
       <Table className="mt-6">
         <TableHeader>
@@ -114,9 +147,9 @@ export default async function page({ params, searchParams }) {
             <TableHead>Transação</TableHead>
             <TableHead>Condição</TableHead>
             <TableHead>Pagamento</TableHead>
-            <TableHead>Categoria</TableHead>
             <TableHead>Responsável</TableHead>
             <TableHead>Valor</TableHead>
+            <TableHead>Categoria</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -124,31 +157,54 @@ export default async function page({ params, searchParams }) {
         <TableBody>
           {getCardInvoiceMap?.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>{DateFormat(item.data_compra)}</TableCell>
+              <TableCell className="font-bold">
+                {DateFormat(item.data_compra)}
+              </TableCell>
               <TableCell>
                 {item.descricao}
-                <span className="text-neutral-400 text-xs px-1">
+                <span className="px-1 text-xs text-neutral-400">
                   {item.condicao === "Parcelado" &&
                     `${item.parcela_atual} de ${item.qtde_parcela}`}
                 </span>
               </TableCell>
-              <TableCell
-                className={
-                  item.tipo_transacao === "Receita"
-                    ? "text-green-500"
-                    : "text-red-500"
-                }
-              >
-                {item.tipo_transacao}
+              <TableCell>
+                <Badge
+                  variant={
+                    item.tipo_transacao === "Receita"
+                      ? "defaultGreen"
+                      : "defaultRed"
+                  }
+                >
+                  {item.tipo_transacao}
+                </Badge>
               </TableCell>
-              <TableCell>{item.condicao}</TableCell>
+              <TableCell>
+                <span className="flex items-center gap-1">
+                  {item.condicao === "Parcelado" && (
+                    <CalendarClockIcon size={12} />
+                  )}
+                  {item.condicao === "Recorrente" && <RefreshCw size={12} />}
+                  {item.condicao === "Vista" && <Check size={12} />}
+
+                  <span className="capitalize">{item.condicao}</span>
+                </span>
+              </TableCell>
               <TableCell>{item.forma_pagamento}</TableCell>
-              <TableCell>{item.categoria}</TableCell>
-              <TableCell>{item.responsavel}</TableCell>
+
+              <TableCell>
+                <span
+                  className={`font-bold ${getResponsavelClass(item.responsavel)}`}
+                >
+                  {item.responsavel}
+                </span>
+              </TableCell>
               <TableCell>
                 <Numbers number={item.valor} />
               </TableCell>
-              <TableCell className="text-center flex gap-2">
+
+              <TableCell>{item.categoria}</TableCell>
+
+              <TableCell className="flex gap-2 text-center">
                 <DetailsTransactions
                   itemId={item.id}
                   itemPeriodo={item.periodo}

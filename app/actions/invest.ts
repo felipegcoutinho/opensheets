@@ -8,7 +8,7 @@ export async function getInvest() {
   const { data } = await supabase
     .from("investimentos")
     .select(`id, data, valor`)
-    .order("data", { ascending: false });
+    .order("data", { ascending: true });
 
   return data;
 }

@@ -92,7 +92,7 @@ export function ColorDotInvoice({ aparencia, descricao }) {
       <div
         className={cn(
           colorVariants[aparencia],
-          `flex h-4 w-1 items-center justify-center`,
+          `flex h-4 w-1 items-center justify-center rounded`,
         )}
       />
       {descricao}

@@ -14,7 +14,8 @@ import {
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
-async function PageAccount({ searchParams }) {
+async function PageAccount(props) {
+  const searchParams = await props.searchParams;
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
@@ -33,13 +34,13 @@ async function PageAccount({ searchParams }) {
   );
 
   return (
-    <div className="mt-4 w-full">
+    <div className="w-full">
       <CreateAccount />
 
-      <div className="mt-4 grid grid-cols-4 gap-4">
+      <div className="mt-4 grid gap-4 lg:grid-cols-4">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
-            <CardColor key={item.id} aparencia={item.aparencia} id={item.id}>
+            <CardColor key={item.id} aparencia={item.aparencia}>
               <CardContent className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                   <ColorDot

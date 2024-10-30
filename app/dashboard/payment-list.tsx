@@ -14,7 +14,7 @@ export async function PaymentList({ month }) {
 
       {payment?.length > 0 ? (
         payment?.map((item) => (
-          <CardContent className="grid gap-2 py-1">
+          <CardContent key={item.forma_pagamento} className="grid gap-2 py-1">
             <div className="grid">
               <div className="flex items-center justify-between">
                 <span className="text-md">{item.forma_pagamento}</span>

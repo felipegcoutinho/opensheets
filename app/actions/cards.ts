@@ -8,7 +8,9 @@ export async function getCards() {
 
   const { data, error } = await supabase
     .from("cartoes")
-    .select(`id, descricao, dt_vencimento, aparencia, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
+    .select(
+      `id, descricao, dt_vencimento, aparencia, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`,
+    )
     .order("descricao", { ascending: true });
 
   if (error) {
@@ -28,7 +30,7 @@ export async function getCardInvoice(month, cartao_id) {
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao, aparencia)`
+      qtde_recorrencia, cartoes (id, descricao, aparencia)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -48,7 +50,9 @@ export async function getCardDetails(id) {
 
   const { data, error } = await supabase
     .from("cartoes")
-    .select(`id, descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, contas (id, descricao)`)
+    .select(
+      `id, descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, contas (id, descricao)`,
+    )
     .eq("id", id);
 
   if (error) {
@@ -59,14 +63,59 @@ export async function getCardDetails(id) {
   return data;
 }
 
+// Busca a lista de categoria para tabela
+export async function getCategoria(month, categoriaId, tipo_transacao) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select(
+      `id, data_compra, realizado, periodo, descricao, tipo_transacao, categoria, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      qtde_recorrencia, cartoes (id, descricao, aparencia), contas (id, descricao)`,
+    )
+    .order("data_compra", { ascending: false })
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .eq("tipo_transacao", tipo_transacao)
+    .eq("categoria", categoriaId);
+
+  if (error) {
+    console.error("Erro ao buscar faturas:", error);
+    return null;
+  }
+
+  return data;
+}
+
 // Adiciona um novo cartão
 export async function addCards(formData: FormData) {
-  const { descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(formData.entries());
+  const {
+    descricao,
+    dt_vencimento,
+    dt_fechamento,
+    aparencia,
+    anotacao,
+    limite,
+    bandeira,
+    tipo,
+    conta_id,
+  } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
 
   try {
-    await supabase.from("cartoes").insert({ descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, conta_id });
+    await supabase.from("cartoes").insert({
+      descricao,
+      dt_vencimento,
+      dt_fechamento,
+      aparencia,
+      anotacao,
+      limite,
+      bandeira,
+      tipo,
+      conta_id,
+    });
     revalidatePath("/cartao");
   } catch (error) {
     console.error("Erro ao adicionar cartao:", error);
@@ -89,9 +138,18 @@ export async function deleteCards(formData: FormData) {
 
 // Atualiza um cartão
 export async function updateCards(formData: FormData) {
-  const { id, descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, conta_id } = Object.fromEntries(
-    formData.entries()
-  );
+  const {
+    id,
+    descricao,
+    dt_vencimento,
+    dt_fechamento,
+    aparencia,
+    anotacao,
+    limite,
+    bandeira,
+    tipo,
+    conta_id,
+  } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
 
@@ -133,7 +191,10 @@ export async function getCardSum(month, cartao_id) {
     return null;
   }
 
-  const getCardSum = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const getCardSum = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
 
   return getCardSum;
 }

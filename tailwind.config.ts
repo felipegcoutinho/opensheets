@@ -11,7 +11,7 @@ const config = {
   prefix: "",
   theme: {
     container: {
-      center: true,
+      center: "true",
       padding: "2rem",
       screens: {
         "2xl": "1400px",
@@ -24,6 +24,9 @@ const config = {
         "lime-3000": "#E4F984",
         "yellow-1000": "#F0DC25",
         "orange-1000": "#FF6101",
+        alt_green: "#4EAC46",
+        alt_yellow: "#FBEB72",
+        alt_violet: "#C080F8",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -61,6 +64,16 @@ const config = {
           DEFAULT: "hsl(var(--banner))",
           foreground: "hsl(var(--banner-foreground))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -69,12 +82,20 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
@@ -82,7 +103,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       maxWidth: {
-        "screen-1xl": "1100px", // Adicionando max-w-screen-1xl
+        "screen-1xl": "1400px",
       },
     },
   },

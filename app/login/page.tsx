@@ -6,7 +6,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "../../components/submit-button";
 
-export default function Login({ searchParams }) {
+export default async function Login(props) {
+  const searchParams = await props.searchParams;
   const signIn = async (formData) => {
     "use server";
 
@@ -27,21 +28,33 @@ export default function Login({ searchParams }) {
   };
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-      <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
+    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
+      <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
         <Label>Email</Label>
-        <Input className="mb-3" name="email" placeholder="you@example.com" required />
+        <Input
+          className="mb-3"
+          name="email"
+          placeholder="you@example.com"
+          required
+        />
 
         <Label>Password</Label>
-        <Input className="mb-3" type="password" name="password" placeholder="••••••••" required />
+        <Input
+          className="mb-3"
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
 
         <SubmitButton formAction={signIn} pendingText="Signing In...">
           Sign In
         </SubmitButton>
 
         {searchParams?.message && (
-          <p className="mt-4 p-4 bg-red-50 text-foreground text-center">
-            Não foi possível autenticar o usuário. Por favor, tente novamente ou verifique suas credenciais.
+          <p className="mt-4 bg-red-50 p-4 text-center text-foreground">
+            Não foi possível autenticar o usuário. Por favor, tente novamente ou
+            verifique suas credenciais.
           </p>
         )}
 

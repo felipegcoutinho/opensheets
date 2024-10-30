@@ -17,7 +17,28 @@ export default function DeleteCard({ itemId }) {
   const { handleDelete } = Utils();
 
   return (
-    <Dialog>
+    // <AlertDialog>
+    //   <AlertDialogTrigger>
+    //     <Trash2Icon color="red" />
+    //   </AlertDialogTrigger>
+    //   <AlertDialogContent>
+    //     <AlertDialogHeader>
+    //       <AlertDialogTitle>Remover Boleto?</AlertDialogTitle>
+    //       <AlertDialogDescription>
+    //         Isso não pode ser desfeito. Isso excluirá <strong>permanentemente</strong> seu boleto e removerá seus dados de nossos servidores.
+    //       </AlertDialogDescription>
+    //     </AlertDialogHeader>
+    //     <AlertDialogFooter>
+    //       <AlertDialogCancel>Cancel</AlertDialogCancel>
+    //       <form onSubmit={handleDelete(itemId)}>
+    //         <Button variant="destructive" className="w-full" type="submit">
+    //           Sim, quero remover
+    //         </Button>
+    //       </form>
+    //     </AlertDialogFooter>
+    //   </AlertDialogContent>
+    // </AlertDialog>
+    (<Dialog>
       <DialogTrigger className="p-0" asChild>
         <Button variant="link">remover</Button>
       </DialogTrigger>
@@ -43,28 +64,6 @@ export default function DeleteCard({ itemId }) {
           </form>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
-
-    // <AlertDialog>
-    //   <AlertDialogTrigger>
-    //     <Trash2Icon color="red" />
-    //   </AlertDialogTrigger>
-    //   <AlertDialogContent>
-    //     <AlertDialogHeader>
-    //       <AlertDialogTitle>Remover Boleto?</AlertDialogTitle>
-    //       <AlertDialogDescription>
-    //         Isso não pode ser desfeito. Isso excluirá <strong>permanentemente</strong> seu boleto e removerá seus dados de nossos servidores.
-    //       </AlertDialogDescription>
-    //     </AlertDialogHeader>
-    //     <AlertDialogFooter>
-    //       <AlertDialogCancel>Cancel</AlertDialogCancel>
-    //       <form onSubmit={handleDelete(itemId)}>
-    //         <Button variant="destructive" className="w-full" type="submit">
-    //           Sim, quero remover
-    //         </Button>
-    //       </form>
-    //     </AlertDialogFooter>
-    //   </AlertDialogContent>
-    // </AlertDialog>
+    </Dialog>)
   );
 }

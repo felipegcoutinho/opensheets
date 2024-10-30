@@ -26,21 +26,24 @@ export default async function Banner() {
 
   return (
     <CardBanner>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div>
-            <p className="text-muted-foreground">{fliendlyDate(currentDate)}</p>
-            <h1 className="text-xl">
+            <p className="text-sm text-neutral-800 dark:text-neutral-300">
+              {fliendlyDate(currentDate)}
+            </p>
+            {/* <p className="from-alt_green to-alt_yellow inline-block bg-gradient-to-r bg-clip-text  text-transparent"> */}
+            <p className="text-xl font-bold">
               {getGreeting()}, <GetUserName />
-            </h1>
+            </p>
           </div>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 text-black dark:text-white">
           <div className="text-right">
             Saldo Atual
-            <p className="text-2xl font-bold">
+            <div className="text-2xl font-bold">
               <Numbers number={saldo} />
-            </p>
+            </div>
           </div>
         </div>
       </div>
