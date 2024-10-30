@@ -13,7 +13,7 @@ import "./globals.css";
 export const metadata = {
   title: "OpenSheets",
   description:
-    "Planilhas financeiras para pessoas que querem ter controle sobre suas finanças.",
+    "Aplicação para finanças pessoais, com o objetivo de ajudar a organizar e controlar suas finanças.",
 };
 
 export default function RootLayout({ children }) {

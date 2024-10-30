@@ -47,7 +47,7 @@ export default async function Header() {
         <SheetContent side="left">
           <nav className="grid gap-6 text-lg">
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <span className="sr-only">openSheets</span>
