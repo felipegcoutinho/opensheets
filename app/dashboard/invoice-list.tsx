@@ -6,9 +6,7 @@ import { ArrowUpRight, Check } from "lucide-react";
 import Link from "next/link";
 
 export default function Invoice({ data, month }) {
-  const sortedData = [...data].sort(
-    (a, b) => a.dt_vencimento - b.dt_vencimento,
-  );
+  const sortedData = [...data].sort((a, b) => b.total_valor - a.total_valor);
 
   return (
     <>
