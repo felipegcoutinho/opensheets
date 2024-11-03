@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/server";
@@ -28,27 +29,27 @@ export default async function Login(props) {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
+    <Card className="flex w-full flex-1 flex-col justify-center gap-2 p-8 sm:max-w-md">
       <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
         <Label>Email</Label>
         <Input
           className="mb-3"
           name="email"
-          placeholder="you@example.com"
+          placeholder="Digite seu email"
           required
         />
 
-        <Label>Password</Label>
+        <Label>Senha</Label>
         <Input
           className="mb-3"
           type="password"
           name="password"
-          placeholder="••••••••"
+          placeholder="Digite sua senha"
           required
         />
 
-        <SubmitButton formAction={signIn} pendingText="Signing In...">
-          Sign In
+        <SubmitButton formAction={signIn} pendingText="Fazendo Login...">
+          Login
         </SubmitButton>
 
         {searchParams?.message && (
@@ -62,6 +63,6 @@ export default async function Login(props) {
           <Link href="/login/signup">Não possui conta? Faça o cadastro</Link>
         </Button>
       </form>
-    </div>
+    </Card>
   );
 }

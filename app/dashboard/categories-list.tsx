@@ -1,33 +1,50 @@
+"use client";
+
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
+import { Progress } from "@/components/ui/progress";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function CategoriesList({ data, month }) {
-  // Ordena os itens pelo valor de 'sum' de forma decrescente
-  const sortedData = [...data].sort((a, b) => b.sum - a.sum);
+  const [sortedData, setSortedData] = useState([]);
+  const [maxSum, setMaxSum] = useState(0);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const sorted = [...data].sort((a, b) => b.sum - a.sum);
+      setSortedData(sorted);
+      setMaxSum(sorted[0].sum);
+    }
+  }, [data]);
+
+  if (sortedData.length === 0) {
+    return <EmptyCard width={100} height={100} />;
+  }
 
   return (
     <>
-      {sortedData.length > 0 ? (
-        sortedData.map((item, index) => (
-          <div key={index} className="flex items-center justify-between py-1">
+      {sortedData.map((item, index) => (
+        <div key={index} className="mb-4">
+          <div className="mb-2 flex items-center justify-between">
             <Link
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 hover:underline"
               href={`/transacao/${encodeURIComponent(item.categoria.toLowerCase())}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
             >
               <p>{item.categoria}</p>
               <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
             </Link>
-
             <p className="text-muted-foreground">
               <Numbers number={item.sum} />
             </p>
           </div>
-        ))
-      ) : (
-        <EmptyCard width={100} height={100} />
-      )}
+          <Progress
+            value={(item.sum / maxSum) * 100}
+            className="h-1 bg-alt_violet/10"
+          />
+        </div>
+      ))}
     </>
   );
 }

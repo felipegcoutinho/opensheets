@@ -6,10 +6,14 @@ import { ArrowUpRight, Check } from "lucide-react";
 import Link from "next/link";
 
 export default function Invoice({ data, month }) {
+  const sortedData = [...data].sort(
+    (a, b) => a.dt_vencimento - b.dt_vencimento,
+  );
+
   return (
     <>
-      {data.length > 0 ? (
-        data.map((item) => (
+      {sortedData.length > 0 ? (
+        sortedData.map((item) => (
           <div key={item.cartao_id}>
             <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
               <div>
