@@ -1,11 +1,3 @@
-import {
-  getAccountDetails,
-  getAccountInvoice,
-  getSumAccountExpense,
-  getSumAccountIncome,
-} from "@/app/actions/accounts";
-import { getCards } from "@/app/actions/cards";
-import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import CardColor, { ColorDot } from "@/components/card-color";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +10,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import {
+  getAccountDetails,
+  getAccountInvoice,
+  getSumAccountExpense,
+  getSumAccountIncome,
+} from "@actions/accounts";
+import { getCards } from "@actions/cards";
+import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 
 export default async function page(props) {

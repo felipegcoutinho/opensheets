@@ -1,4 +1,3 @@
-import { getInvest } from "@/app/actions/invest";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import { getInvest } from "@actions/invest";
 import InvestComponent from "./chart";
 import CreateInvestimento from "./modal/create-invest";
 import DeleteInvest from "./modal/delete-invest";

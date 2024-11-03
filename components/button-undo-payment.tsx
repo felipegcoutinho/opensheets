@@ -1,7 +1,7 @@
 "use client";
 
-import { deleteFaturas } from "@/app/actions/invoices";
 import { Button } from "@/components/ui/button";
+import { deleteFaturas } from "@actions/invoices";
 import { Fragment } from "react";
 import Utils from "./utils";
 

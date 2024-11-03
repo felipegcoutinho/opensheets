@@ -1,4 +1,3 @@
-import { getCategoria } from "@/app/actions/cards";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -10,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import { getCategoria } from "@actions/cards";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import DetailsTransactions from "../../../modal/details-transactions";
 

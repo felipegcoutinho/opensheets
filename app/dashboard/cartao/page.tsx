@@ -1,5 +1,3 @@
-import { getAccount } from "@/app/actions/accounts";
-import { deleteCards, getCards } from "@/app/actions/cards";
 import CardColor, { ColorDot } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
@@ -9,6 +7,8 @@ import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
 import vuon from "@/public/vuon.svg";
+import { getAccount } from "@actions/accounts";
+import { deleteCards, getCards } from "@actions/cards";
 import Image from "next/image";
 import Link from "next/link";
 import CreateCard from "./modal/create-cards";
@@ -73,7 +73,7 @@ async function PageCards(props) {
                 <Button className="p-0 font-bold" variant="link">
                   <Link
                     className="p-0 font-bold text-white"
-                    href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}
+                    href={`/dashboard/cartao/${item.id}/${item.descricao.toLowerCase()}`}
                   >
                     fatura
                   </Link>

@@ -1,4 +1,3 @@
-import { deleteNotes, getNotes } from "@/app/actions/notes";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
+import { deleteNotes, getNotes } from "@actions/notes";
 import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 

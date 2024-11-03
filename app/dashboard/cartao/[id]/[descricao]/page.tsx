@@ -1,12 +1,3 @@
-import {
-  getCardDetails,
-  getCardInvoice,
-  getCards,
-  getCardSum,
-  getLimite,
-} from "@/app/actions/cards";
-import { getFaturas } from "@/app/actions/invoices";
-import DetailsTransactions from "@/app/transacao/modal/details-transactions";
 import ButtonPayment from "@/components/button-payment";
 import ButtonUndoPayment from "@/components/button-undo-payment";
 import CardColor, { ColorDot } from "@/components/card-color";
@@ -23,6 +14,15 @@ import {
 import { UseDates } from "@/hooks/use-dates";
 import mastercard from "@/public/mastercard.svg";
 import visa from "@/public/visa.svg";
+import {
+  getCardDetails,
+  getCardInvoice,
+  getCards,
+  getCardSum,
+  getLimite,
+} from "@actions/cards";
+import { getFaturas } from "@actions/invoices";
+import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
 import {
   CalendarClockIcon,
   Check,
