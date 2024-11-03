@@ -30,7 +30,7 @@ export default function CategoriesList({ data, month }) {
           <div className="mb-2 flex items-center justify-between">
             <Link
               className="flex items-center gap-1 hover:underline"
-              href={`/transacao/${encodeURIComponent(item.categoria.toLowerCase())}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
+              href={`/dashboard/transacao/${encodeURIComponent(item.categoria.toLowerCase())}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
             >
               <p>{item.categoria}</p>
               <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
