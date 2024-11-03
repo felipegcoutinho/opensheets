@@ -56,15 +56,13 @@ export default function MonthPicker() {
   const isDifferentFromCurrent =
     currentMonth !== defaultMonth || currentYear !== defaultYear.toString();
 
-  const isHomePage =
-    pathname.startsWith("/dashboard") ||
-    pathname.startsWith("/transacao") ||
-    pathname.startsWith("/boleto") ||
-    pathname.startsWith("/responsavel") ||
-    pathname.startsWith("/anotacao") ||
-    (pathname.startsWith("/cartao/") && pathname !== "/cartao");
+  const notShowMonthFilter =
+    pathname === "/dashboard/cartao" ||
+    pathname === "/dashboard/conta" ||
+    pathname === "/login" ||
+    pathname === "/";
 
-  if (!isHomePage) {
+  if (notShowMonthFilter) {
     return null;
   }
 

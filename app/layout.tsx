@@ -1,6 +1,5 @@
 import Banner from "@/components/banner";
 import Header from "@/components/header";
-import MonthPicker from "@/components/month-picker";
 import { Toaster } from "@/components/ui/sonner";
 import { PrivacyProviderApp } from "@/hooks/privacy-context";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
@@ -30,9 +29,7 @@ export default function RootLayout({ children }) {
             <PrivacyProviderApp>
               <Header />
               <Banner />
-              <Suspense>
-                <MonthPicker />
-              </Suspense>
+              <Suspense>{/* <MonthPicker /> */}</Suspense>
               {children}
             </PrivacyProviderApp>
           </main>
