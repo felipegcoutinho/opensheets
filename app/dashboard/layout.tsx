@@ -1,4 +1,6 @@
+import Banner from "@/components/banner";
 import MonthPicker from "@/components/month-picker";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "OpenSheets | Dashboard",
@@ -7,9 +9,12 @@ export const metadata = {
 
 export default function DashboardLayout({ children }) {
   return (
-    <div>
-      <MonthPicker />
+    <>
+      <Banner />
+      <Suspense>
+        <MonthPicker />
+      </Suspense>
       {children}
-    </div>
+    </>
   );
 }
