@@ -9,7 +9,6 @@ export async function PaymentList({ month }) {
     <Card className="h-1/2 overflow-y-auto max-sm:h-max">
       <CardHeader className="pb-3">
         <CardTitle className="text-sm uppercase">Formas de Pagamento</CardTitle>
-        {/* <CardDescription>Pagamentos em destaque</CardDescription> */}
       </CardHeader>
 
       {payment?.length > 0 ? (

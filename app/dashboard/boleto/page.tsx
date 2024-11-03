@@ -6,7 +6,7 @@ import TableBills from "./table-bills";
 
 async function PageBills(props) {
   const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear, DateFormat } = UseDates();
+  const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
