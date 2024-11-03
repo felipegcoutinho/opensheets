@@ -20,7 +20,7 @@ export default function Invoice({ data, month }) {
                   descricao={
                     <Link
                       className="flex items-center gap-1 hover:underline"
-                      href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
+                      href={`/dashboard/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
                     >
                       {item.descricao}
                       <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
