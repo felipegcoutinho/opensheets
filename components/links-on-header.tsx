@@ -31,33 +31,33 @@ function LinkOnHeader({ user }) {
     {
       href: `/dashboard?periodo=${month}`,
       Icon: Home,
-      name: "Home",
+      name: "dashboard",
       path: "/dashboard",
     },
     {
       href: `/transacao?periodo=${month}`,
       Icon: ArrowDownUpIcon,
-      name: "Transações",
+      name: "transações",
       path: "/transacao",
     },
     {
       href: `/boleto?periodo=${month}`,
       Icon: File,
-      name: "Boletos",
+      name: "boletos",
       path: "/boleto",
     },
-    { href: `/cartao`, Icon: CreditCard, name: "Cartões", path: "/cartao" },
-    { href: `/conta`, Icon: PiggyBank, name: "Contas", path: "/conta" },
+    { href: `/cartao`, Icon: CreditCard, name: "cartões", path: "/cartao" },
+    { href: `/conta`, Icon: PiggyBank, name: "contas", path: "/conta" },
     {
       href: `/responsavel?periodo=${month}`,
       Icon: Users,
-      name: "Responsáveis",
+      name: "responsáveis",
       path: "/responsavel",
     },
     {
       href: `/anotacao?periodo=${month}`,
       Icon: NotebookPenIcon,
-      name: "Anotações",
+      name: "anotações",
       path: "/anotacao",
     },
   ];
@@ -66,7 +66,7 @@ function LinkOnHeader({ user }) {
     links.push({
       href: `/investimentos`,
       Icon: BadgeCentIcon,
-      name: "Investimentos",
+      name: "investimentos",
       path: "/investimentos",
     });
   }
@@ -98,7 +98,7 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
           : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800", // Estilo para link inativo
       )}
     >
-      {/* <Icon size={12} /> */}
+      <Icon size={12} />
       {LinkName}
     </div>
   );

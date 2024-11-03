@@ -7,14 +7,16 @@ import PayBills from "../../components/pay-bills";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BillsList({ month }) {
+  const { DateFormat } = UseDates();
+
   const data = await getBillsByResponsavel(month);
 
-  const { DateFormat } = UseDates();
+  const sortedData = [...data].sort((a, b) => b.valor - a.valor);
 
   return (
     <>
-      {data.length > 0 ? (
-        data.map((item) => (
+      {sortedData.length > 0 ? (
+        sortedData.map((item) => (
           <div key={item.cartao_id}>
             <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
               <div>

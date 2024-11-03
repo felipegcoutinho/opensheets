@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/server";
@@ -41,7 +42,7 @@ export default async function Login(props) {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
+    <Card className="flex w-full flex-1 flex-col justify-center gap-2 p-8 sm:max-w-md">
       <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
         <Label>Seu nome</Label>
         <div className="mb-3 flex gap-2">
@@ -52,23 +53,24 @@ export default async function Login(props) {
         <Label>Email</Label>
         <Input
           name="email"
-          placeholder="email@opensheets.com"
+          placeholder="Digite seu email"
           className="mb-3"
           required
         />
 
-        <Label>Password</Label>
+        <Label>Senha</Label>
         <Input
           type="password"
           name="password"
-          placeholder="••••••••••••••••"
+          placeholder="Digite sua senha"
           className="mb-5"
           required
         />
 
-        <SubmitButton formAction={signUp} pendingText="Signing Up...">
-          Sign Up
+        <SubmitButton formAction={signUp} pendingText="Criando Conta...">
+          Criar Conta
         </SubmitButton>
+
         {searchParams?.message && (
           <p className="mt-4 bg-foreground/10 p-4 text-center text-foreground">
             {searchParams.message}
@@ -79,6 +81,6 @@ export default async function Login(props) {
           <Link href="/login">Voltar para Login</Link>
         </Button>
       </form>
-    </div>
+    </Card>
   );
 }
