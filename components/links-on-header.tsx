@@ -35,36 +35,46 @@ function LinkOnHeader({ user }) {
       path: "/dashboard",
     },
     {
-      href: `/transacao?periodo=${month}`,
+      href: `/dashboard/transacao?periodo=${month}`,
       Icon: ArrowDownUpIcon,
       name: "transações",
-      path: "/transacao",
+      path: "/dashboard/transacao",
     },
     {
-      href: `/boleto?periodo=${month}`,
+      href: `/dashboard/boleto?periodo=${month}`,
       Icon: File,
       name: "boletos",
-      path: "/boleto",
+      path: "/dashboard/boleto",
     },
-    { href: `/cartao`, Icon: CreditCard, name: "cartões", path: "/cartao" },
-    { href: `/conta`, Icon: PiggyBank, name: "contas", path: "/conta" },
     {
-      href: `/responsavel?periodo=${month}`,
+      href: `/dashboard/cartao`,
+      Icon: CreditCard,
+      name: "cartões",
+      path: "/dashboard/cartao",
+    },
+    {
+      href: `/dashboard/conta`,
+      Icon: PiggyBank,
+      name: "contas",
+      path: "/dashboard/conta",
+    },
+    {
+      href: `/dashboard/responsavel?periodo=${month}`,
       Icon: Users,
       name: "responsáveis",
-      path: "/responsavel",
+      path: "/dashboard/responsavel",
     },
     {
-      href: `/anotacao?periodo=${month}`,
+      href: `/dashboard/anotacao?periodo=${month}`,
       Icon: NotebookPenIcon,
       name: "anotações",
-      path: "/anotacao",
+      path: "/dashboard/anotacao",
     },
   ];
 
   if (user.email === "coutinho@outlook.com") {
     links.push({
-      href: `/investimentos`,
+      href: `/dashboard/investimentos`,
       Icon: BadgeCentIcon,
       name: "investimentos",
       path: "/investimentos",

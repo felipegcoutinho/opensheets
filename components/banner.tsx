@@ -1,9 +1,9 @@
+import { UseDates } from "@/hooks/use-dates";
 import {
   getSumAccountExpensePaid,
   getSumAccountIncomePaid,
-} from "@/app/actions/accounts";
-import { getSumBillsExpensePaid } from "@/app/actions/bills";
-import { UseDates } from "@/hooks/use-dates";
+} from "@actions/accounts";
+import { getSumBillsExpensePaid } from "@actions/bills";
 import CardBanner from "./card-banner";
 import GetUserName from "./data-name";
 import Numbers from "./numbers";
