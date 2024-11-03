@@ -10,7 +10,7 @@ import {
   getAccount,
   getSumAccountExpense,
   getSumAccountIncome,
-} from "../actions/accounts";
+} from "../../actions/accounts";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 

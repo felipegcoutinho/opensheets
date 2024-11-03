@@ -5,7 +5,7 @@ import { CreditCard, File, User } from "lucide-react";
 import {
   getResponsavelBillList,
   getResponsavelTransactionList,
-} from "../actions/users";
+} from "../../actions/users";
 
 async function page(props) {
   const searchParams = await props.searchParams;

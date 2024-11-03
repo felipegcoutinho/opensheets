@@ -1,7 +1,7 @@
 import { UseDates } from "@/hooks/use-dates";
-import { getAccount } from "../actions/accounts";
-import { getCards } from "../actions/cards";
-import { getTransaction } from "../actions/transactions";
+import { getAccount } from "../../actions/accounts";
+import { getCards } from "../../actions/cards";
+import { getTransaction } from "../../actions/transactions";
 import { TableTransaction } from "./table-transaction";
 
 async function PageTransactions(props) {

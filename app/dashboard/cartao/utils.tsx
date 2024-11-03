@@ -1,7 +1,7 @@
+import { addCards, updateCards } from "@/app/actions/cards";
 import UseOptions from "@/hooks/use-options";
 import { useState } from "react";
 import { toast } from "sonner";
-import { addCards, updateCards } from "../actions/cards";
 
 function Utils() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,11 +58,18 @@ function Utils() {
     const { optionsMeses } = UseOptions();
 
     for (let i = -1; i <= 1; i++) {
-      const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
+      const newDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + i,
+        1,
+      );
       const month = optionsMeses[newDate.getMonth()];
       const year = newDate.getFullYear();
       const value = `${month}-${year}`;
-      options.push({ value, label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}` });
+      options.push({
+        value,
+        label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}`,
+      });
     }
 
     return options;

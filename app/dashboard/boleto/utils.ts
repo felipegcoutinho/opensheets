@@ -1,7 +1,7 @@
+import { addBills, deleteBills, updateBills } from "@/app/actions/bills";
 import { useToast } from "@/components/ui/use-toast";
 import UseOptions from "@/hooks/use-options";
 import { useState } from "react";
-import { addBills, deleteBills, updateBills } from "../actions/bills";
 
 export default function Utils() {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,11 +79,18 @@ export default function Utils() {
     const { optionsMeses } = UseOptions();
 
     for (let i = -2; i <= 2; i++) {
-      const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
+      const newDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + i,
+        1,
+      );
       const month = optionsMeses[newDate.getMonth()];
       const year = newDate.getFullYear();
       const value = `${month}-${year}`;
-      options.push({ value, label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}` });
+      options.push({
+        value,
+        label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}`,
+      });
     }
 
     return options;

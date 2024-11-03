@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
-import DetailsTransactions from "../../modal/details-transactions";
+import DetailsTransactions from "../../../modal/details-transactions";
 
 async function Page(props) {
   const searchParams = await props.searchParams;

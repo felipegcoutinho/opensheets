@@ -35,27 +35,37 @@ function LinkOnHeader({ user }) {
       path: "/dashboard",
     },
     {
-      href: `/transacao?periodo=${month}`,
+      href: `/dashboard/transacao?periodo=${month}`,
       Icon: ArrowDownUpIcon,
       name: "transações",
       path: "/transacao",
     },
     {
-      href: `/boleto?periodo=${month}`,
+      href: `/dashboard/boleto?periodo=${month}`,
       Icon: File,
       name: "boletos",
       path: "/boleto",
     },
-    { href: `/cartao`, Icon: CreditCard, name: "cartões", path: "/cartao" },
-    { href: `/conta`, Icon: PiggyBank, name: "contas", path: "/conta" },
     {
-      href: `/responsavel?periodo=${month}`,
+      href: `/dashboard/cartao`,
+      Icon: CreditCard,
+      name: "cartões",
+      path: "/cartao",
+    },
+    {
+      href: `/dashboard/conta`,
+      Icon: PiggyBank,
+      name: "contas",
+      path: "/conta",
+    },
+    {
+      href: `/dashboard/responsavel?periodo=${month}`,
       Icon: Users,
       name: "responsáveis",
       path: "/responsavel",
     },
     {
-      href: `/anotacao?periodo=${month}`,
+      href: `/dashboard/anotacao?periodo=${month}`,
       Icon: NotebookPenIcon,
       name: "anotações",
       path: "/anotacao",
@@ -64,7 +74,7 @@ function LinkOnHeader({ user }) {
 
   if (user.email === "coutinho@outlook.com") {
     links.push({
-      href: `/investimentos`,
+      href: `/dashboard/investimentos`,
       Icon: BadgeCentIcon,
       name: "investimentos",
       path: "/investimentos",

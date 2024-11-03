@@ -1,6 +1,6 @@
+import { addInvest, deleteInvest, updateInvest } from "@/app/actions/invest";
 import { useState } from "react";
 import { toast } from "sonner";
-import { addInvest, deleteInvest, updateInvest } from "../actions/invest";
 
 export default function Utils() {
   const [isOpen, setIsOpen] = useState(false);

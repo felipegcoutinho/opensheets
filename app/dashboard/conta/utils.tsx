@@ -1,12 +1,10 @@
+import { addAccount, updateAccount } from "@/app/actions/accounts";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { addAccount, updateAccount } from "../actions/accounts";
 
 function Utils() {
   const [isOpen, setIsOpen] = useState(false);
-
   const [loading, setLoading] = useState(false);
-
   const [statusPagamento, setStatusPagamento] = useState(false);
 
   const { toast } = useToast();

@@ -1,3 +1,5 @@
+import { getAccount } from "@/app/actions/accounts";
+import { deleteCards, getCards } from "@/app/actions/cards";
 import CardColor, { ColorDot } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
@@ -9,8 +11,6 @@ import visa from "@/public/visa.svg";
 import vuon from "@/public/vuon.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { getAccount } from "../actions/accounts";
-import { deleteCards, getCards } from "../actions/cards";
 import CreateCard from "./modal/create-cards";
 import UpdateCard from "./modal/update-cards";
 
