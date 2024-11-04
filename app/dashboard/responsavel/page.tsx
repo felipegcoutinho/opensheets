@@ -1,7 +1,8 @@
 import Numbers from "@/components/numbers";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
-import { CreditCard, File, User } from "lucide-react";
+import { User } from "lucide-react";
 import {
   getResponsavelBillList,
   getResponsavelTransactionList,
@@ -90,19 +91,26 @@ function CardComponent({
       <CardContent className="text-sm">
         <div className="grid gap-1">
           <li className="flex items-center justify-between">
-            <span className="flex items-center gap-1 text-blue-700">
-              <CreditCard size={16} />
-              Cartões
+            <span className="flex items-center gap-1">
+              <Badge
+                variant="outline"
+                className="border-2 border-alt_green text-alt_green"
+              >
+                Cartões
+              </Badge>
             </span>
-            <span className="text-lg text-blue-700">
+            <span className="text-lg">
               <Numbers number={totalCartao} />
             </span>
           </li>
 
           <ul className="grid gap-2 p-2">
             {Object.entries(cartoes).map(([descricao, valor]) => (
-              <li className="flex items-center justify-between" key={descricao}>
-                <span className="text-muted-foreground">{descricao}</span>
+              <li
+                className="flex items-center justify-between text-muted-foreground"
+                key={descricao}
+              >
+                <span>{descricao}</span>
                 <span>
                   <Numbers number={valor} />
                 </span>
@@ -115,19 +123,26 @@ function CardComponent({
 
         <div className="grid gap-1">
           <li className="flex items-center justify-between">
-            <span className="flex items-center gap-1 text-orange-600">
-              <File size={16} />
-              Boletos
+            <span className="flex items-center gap-1">
+              <Badge
+                variant="outline"
+                className="border-2 border-alt_violet text-alt_violet"
+              >
+                Boletos
+              </Badge>
             </span>
-            <span className="text-lg text-orange-600">
+            <span className="text-lg">
               <Numbers number={totalBoleto} />
             </span>
           </li>
 
           <ul className="grid gap-2 p-2">
             {Object.entries(boletos).map(([descricao, valor]) => (
-              <li className="flex items-center justify-between" key={descricao}>
-                <span className="text-muted-foreground">{descricao}</span>
+              <li
+                className="flex items-center justify-between text-muted-foreground"
+                key={descricao}
+              >
+                <span>{descricao}</span>
                 <span>
                   <Numbers number={valor} />
                 </span>
@@ -136,7 +151,7 @@ function CardComponent({
           </ul>
         </div>
 
-        <div className="my-2 w-full border border-dashed border-muted"></div>
+        <div className="my-2 w-full border-2 border-muted"></div>
 
         <div className="mt-4">
           <li className="flex items-center justify-between font-bold">
