@@ -1,4 +1,3 @@
-import Banner from "@/components/banner";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import { PrivacyProviderApp } from "@/hooks/privacy-context";
@@ -18,12 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${inter.className}`}>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <main className="mx-auto flex max-w-screen-1xl flex-col px-2 antialiased animate-in max-sm:px-2">
             <PrivacyProviderApp>
               <Header />
