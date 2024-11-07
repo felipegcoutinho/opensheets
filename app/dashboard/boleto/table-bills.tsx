@@ -2,8 +2,8 @@
 
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
+import PayBills from "@/components/pay-bills";
 import { Button } from "@/components/ui/button";
-import { CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,7 +51,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                 <Numbers number={item.valor} />
               </TableCell>
               <TableCell>
-                <CardTitle className="text-md flex items-center gap-1 capitalize">
+                {/* <CardTitle className="text-md flex items-center gap-1 capitalize">
                   <Button
                     className="h-6"
                     variant={`${item.status_pagamento === "Pago" ? "success" : "warning"}`}
@@ -59,7 +59,18 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                   >
                     {item.status_pagamento === "Pago" ? "Pago" : "Pendente"}
                   </Button>
-                </CardTitle>
+                </CardTitle> */}
+                {item.status_pagamento === "Pago" ? (
+                  <Button className="h-6" variant="success" type="button">
+                    Pago
+                  </Button>
+                ) : (
+                  <PayBills
+                    descricao={item.descricao}
+                    valor={item.valor}
+                    id={item.id}
+                  />
+                )}
               </TableCell>
               <TableCell>
                 <span
