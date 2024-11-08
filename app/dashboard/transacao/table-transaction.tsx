@@ -182,7 +182,18 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
   {
     accessorKey: "tipo_transacao",
-    header: "Transacao",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Transacao
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -196,6 +207,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       );
     },
   },
+
   {
     accessorKey: "valor",
     header: ({ column }) => {
@@ -218,12 +230,21 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   },
   {
     accessorKey: "condicao",
-    header: () => <div>Condição</div>,
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("condicao")}</div>
-    ),
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Condição
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const item = row.original;
+
       return (
         <span className="flex items-center gap-1">
           {item.condicao === "Parcelado" && <CalendarClockIcon size={12} />}
@@ -235,12 +256,26 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       );
     },
   },
+
   {
     accessorKey: "forma_pagamento",
-    header: () => <div>Pagamento</div>,
-    cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("forma_pagamento")}</span>
-    ),
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Pagamento
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <span className="capitalize">{row.getValue("forma_pagamento")}</span>
+      );
+    },
   },
 
   {
