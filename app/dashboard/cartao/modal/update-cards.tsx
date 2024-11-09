@@ -15,13 +15,13 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectItemColor,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import UseOptions from "@/hooks/use-options";
+import Image from "next/image";
 import Utils from "../utils";
 
 export default function UpdateCard({
@@ -37,7 +37,7 @@ export default function UpdateCard({
   itemTipo,
   itemContaId,
   getAccountMap,
-  itemAparencia,
+  itemLogo,
 }) {
   const {
     isOpen,
@@ -46,14 +46,15 @@ export default function UpdateCard({
     setStatusPagamento,
     handleUpdate,
     loading,
-    colorMap,
   } = Utils();
+
+  const { logos, bandeiras } = UseOptions();
 
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger className="p-0" asChild>
-          <Button className={"font-bold text-white"} variant="link">
+          <Button className={"font-bold"} variant="link">
             editar
           </Button>
         </DialogTrigger>
@@ -65,6 +66,32 @@ export default function UpdateCard({
 
           <form onSubmit={handleUpdate}>
             <input type="hidden" name="id" value={itemId} />
+
+            <div className="w-full">
+              <Label>Escolha o Logo</Label>
+              <Required />
+              <Select name="logo_image" defaultValue={itemLogo} required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione a imagem para o cartão" />
+                </SelectTrigger>
+                <SelectContent>
+                  {logos.map((item) => (
+                    <SelectItem key={item.name} value={item.file}>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={`/logos/${item.file}`}
+                          className="rounded border"
+                          width={32}
+                          height={32}
+                          alt="Logo do cartão"
+                        />
+                        <span>{item.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
             <div className="w-full">
               <Label>Descrição</Label>
@@ -117,9 +144,20 @@ export default function UpdateCard({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Visa">Visa</SelectItem>
-                    <SelectItem value="Mastercard">Mastercard</SelectItem>
-                    <SelectItem value="Vuoncard">VuonCard</SelectItem>
+                    {bandeiras.map((item) => (
+                      <SelectItem key={item.name} value={item.file}>
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src={`/bandeiras/${item.file}`}
+                            className="rounded-full"
+                            width={32}
+                            height={32}
+                            alt="Logo do cartão"
+                          />
+                          <span>{item.name}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -166,29 +204,6 @@ export default function UpdateCard({
                       {item.descricao}
                     </SelectItem>
                   ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="w-full">
-              <Label>Aparência</Label>
-              <Required />
-              <Select defaultValue={itemAparencia} name="aparencia" required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {colorMap.map((color) => (
-                      <SelectItemColor
-                        key={color.name}
-                        value={color.name}
-                        color={color.hex}
-                      >
-                        {color.label}
-                      </SelectItemColor>
-                    ))}
-                  </SelectGroup>
                 </SelectContent>
               </Select>
             </div>

@@ -1,15 +1,41 @@
 "use client";
+
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectItemColor, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import UseOptions from "@/hooks/use-options";
+import Image from "next/image";
 import Utils from "../utils";
 
 export default function CreateCard({ getAccountMap }) {
-  const { isOpen, setIsOpen, handleSubmit, loading, getMonthOptions, statusPagamento, setStatusPagamento, colorMap } = Utils();
+  const {
+    isOpen,
+    setIsOpen,
+    handleSubmit,
+    loading,
+    statusPagamento,
+    setStatusPagamento,
+  } = Utils();
+
+  const { logos, bandeiras } = UseOptions();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -23,26 +49,71 @@ export default function CreateCard({ getAccountMap }) {
 
         <form onSubmit={handleSubmit}>
           <div className="w-full">
-            <Label>Descrição</Label>
+            <Label>Escolha o Logo</Label>
             <Required />
-            <Input name="descricao" placeholder="Descrição" type="text" required />
+            <Select name="logo_image" required>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione a imagem para o cartão" />
+              </SelectTrigger>
+              <SelectContent>
+                {logos.map((item) => (
+                  <SelectItem key={item.name} value={item.file}>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={`/logos/${item.file}`}
+                        className="h-8 w-8 rounded border"
+                        width={32}
+                        height={32}
+                        alt="Logo do cartão"
+                      />
+                      <span>{item.name}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
-          <div className="flex gap-2 w-full">
+          <div className="w-full">
+            <Label>Descrição</Label>
+            <Required />
+            <Input
+              name="descricao"
+              placeholder="Descrição"
+              type="text"
+              required
+            />
+          </div>
+
+          <div className="flex w-full gap-2">
             <div className="w-1/2">
               <Label>Data de Fechamento</Label>
               <Required />
-              <Input min={1} max={31} name="dt_fechamento" placeholder="Data de Fechamento" type="number" required />
+              <Input
+                min={1}
+                max={31}
+                name="dt_fechamento"
+                placeholder="Data de Fechamento"
+                type="number"
+                required
+              />
             </div>
 
             <div className="w-1/2">
               <Label>Data de Vencimento</Label>
               <Required />
-              <Input min={1} max={31} name="dt_vencimento" placeholder="Data de Vencimento" type="number" required />
+              <Input
+                min={1}
+                max={31}
+                name="dt_vencimento"
+                placeholder="Data de Vencimento"
+                type="number"
+                required
+              />
             </div>
           </div>
 
-          <div className="flex gap-2 w-full">
+          <div className="flex w-full gap-2">
             <div className="w-1/2">
               <Label>Bandeira</Label>
               <Required />
@@ -51,9 +122,20 @@ export default function CreateCard({ getAccountMap }) {
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Visa">Visa</SelectItem>
-                  <SelectItem value="Mastercard">Mastercard</SelectItem>
-                  <SelectItem value="Vuoncard">VuonCard</SelectItem>
+                  {bandeiras.map((item) => (
+                    <SelectItem key={item.name} value={item.file}>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={`/bandeiras/${item.file}`}
+                          className="rounded-full"
+                          width={32}
+                          height={32}
+                          alt="Logo do cartão"
+                        />
+                        <span>{item.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -97,30 +179,11 @@ export default function CreateCard({ getAccountMap }) {
           </div>
 
           <div className="w-full">
-            <Label>Aparência</Label>
-            <Required />
-            <Select name="aparencia" required>
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {colorMap.map((color) => (
-                    <SelectItemColor key={color.name} value={color.name} color={color.hex}>
-                      {color.label}
-                    </SelectItemColor>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="w-full">
             <Label>Anotação</Label>
             <Textarea name="anotacao" placeholder="Anotação" />
           </div>
 
-          <DialogFooter className="flex gap-2 mt-4">
+          <DialogFooter className="mt-4 flex gap-2">
             <DialogClose asChild>
               <Button className="w-1/2" type="button" variant="secondary">
                 Cancelar

@@ -8,7 +8,7 @@ export async function getAccount() {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("contas")
-    .select(`id, descricao, status, aparencia, tipo_conta, anotacao`);
+    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`);
 
   if (error) {
     console.error("Erro ao buscar contas:", error);
@@ -23,7 +23,7 @@ export async function getAccountDetails(id) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("contas")
-    .select(`id, descricao, status, aparencia, tipo_conta, anotacao`)
+    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)
     .eq("id", id);
 
   if (error) {
@@ -36,15 +36,19 @@ export async function getAccountDetails(id) {
 
 // Adiciona uma nova conta bancária
 export async function addAccount(formData: FormData) {
-  const { descricao, status, aparencia, tipo_conta, anotacao } =
+  const { descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
   const supabase = createClient();
 
   try {
-    await supabase
-      .from("contas")
-      .insert({ descricao, status, aparencia, tipo_conta, anotacao });
+    await supabase.from("contas").insert({
+      descricao,
+      status,
+      tipo_conta,
+      logo_image,
+      anotacao,
+    });
     revalidatePath("/conta");
   } catch (error) {
     console.error("Erro em adicionar conta:", error);
@@ -67,7 +71,7 @@ export async function deleteAccount(formData: FormData) {
 
 // Atualiza uma conta bancária
 export async function updateAccount(formData: FormData) {
-  const { id, descricao, status, aparencia, tipo_conta, anotacao } =
+  const { id, descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
   const supabase = createClient();
@@ -75,7 +79,14 @@ export async function updateAccount(formData: FormData) {
   try {
     await supabase
       .from("contas")
-      .update({ id, descricao, status, aparencia, tipo_conta, anotacao })
+      .update({
+        id,
+        descricao,
+        status,
+        tipo_conta,
+        logo_image,
+        anotacao,
+      })
       .eq("id", id);
     revalidatePath("/conta");
   } catch (error) {
@@ -90,7 +101,7 @@ export async function getAccountInvoice(month, id) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao, aparencia)",
+      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao)",
     )
     .eq("periodo", month)
     .or("responsavel.eq.Você,responsavel.eq.Sistema")

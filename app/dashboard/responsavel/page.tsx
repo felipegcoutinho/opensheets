@@ -119,7 +119,7 @@ function CardComponent({
           </ul>
         </div>
 
-        <div className="my-3 w-full border border-dashed border-muted"></div>
+        <div className="my-3 w-full border border-dashed border-muted dark:border-neutral-700"></div>
 
         <div className="grid gap-1">
           <li className="flex items-center justify-between">
@@ -151,7 +151,7 @@ function CardComponent({
           </ul>
         </div>
 
-        <div className="my-2 w-full border-2 border-muted"></div>
+        <div className="my-2 w-full border-2 border-muted dark:border-neutral-700"></div>
 
         <div className="mt-4">
           <li className="flex items-center justify-between font-bold">
