@@ -3,6 +3,7 @@ import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { UseDates } from "@/hooks/use-dates";
 import { Check } from "lucide-react";
+import Image from "next/image";
 import PayBills from "../../components/pay-bills";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
@@ -19,7 +20,7 @@ export async function BillsList({ month }) {
         sortedData.map((item) => (
           <div key={item.cartao_id}>
             <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
-              <div>
+              {/* <div>
                 <p className="text-lg font-bold">{item.descricao}</p>
                 {item.status_pagamento === "Pendente" ? (
                   <p className="text-sm text-muted-foreground">
@@ -28,6 +29,28 @@ export async function BillsList({ month }) {
                 ) : (
                   <Check className="text-green-500" size={16} />
                 )}
+              </div> */}
+
+              <div className="flex items-center gap-2">
+                <Image
+                  src={`/logos/boleto.png`}
+                  className="rounded"
+                  width={50}
+                  height={50}
+                  alt={"Logo do cartão"}
+                />
+
+                <div>
+                  <p>{item.descricao}</p>
+
+                  {item.status_pagamento === "Pendente" ? (
+                    <p className="text-xs text-muted-foreground">
+                      Vence {DateFormat(item.dt_vencimento)}
+                    </p>
+                  ) : (
+                    <Check className="text-green-500" size={16} />
+                  )}
+                </div>
               </div>
 
               <div className="py-1 text-right">

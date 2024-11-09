@@ -90,7 +90,7 @@ export default async function page(props) {
 
             <Image
               src={`/bandeiras/${item.bandeira}`}
-              className="rounded shadow-lg"
+              className="rounded"
               width={40}
               height={40}
               alt="Bandeira do cartão"
