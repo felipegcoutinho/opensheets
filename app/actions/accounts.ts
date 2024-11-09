@@ -45,7 +45,6 @@ export async function addAccount(formData: FormData) {
     await supabase.from("contas").insert({
       descricao,
       status,
-
       tipo_conta,
       logo_image,
       anotacao,
@@ -84,7 +83,6 @@ export async function updateAccount(formData: FormData) {
         id,
         descricao,
         status,
-
         tipo_conta,
         logo_image,
         anotacao,
