@@ -65,10 +65,10 @@ function getDescricao(row) {
   return contaDescricao ?? cartaoDescricao;
 }
 
-function getColor(row) {
-  const contaAparencia = row.contas?.aparencia;
-  const cartaoAparencia = row.cartoes?.aparencia;
-  return contaAparencia ?? cartaoAparencia;
+function getLogo(row) {
+  const contaLogo = row.contas?.logo_image;
+  const cartaoLogo = row.cartoes?.logo_image;
+  return contaLogo ?? cartaoLogo;
 }
 
 const getResponsavelClass = (responsavel) => {
@@ -309,12 +309,9 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       const descricao = getDescricao(item);
-      const aparencia = getColor(item);
-      return (
-        <div className="flex items-center gap-2">
-          <BadgeCardTable aparencia={aparencia} descricao={descricao} />
-        </div>
-      );
+      const logo = getLogo(item);
+
+      return <BadgeCardTable logo={logo} descricao={descricao} />;
     },
   },
 

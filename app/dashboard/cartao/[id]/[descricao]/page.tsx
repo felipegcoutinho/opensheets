@@ -1,8 +1,8 @@
 import ButtonPayment from "@/components/button-payment";
 import ButtonUndoPayment from "@/components/button-undo-payment";
-import CardColor, { ColorDot } from "@/components/card-color";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -57,13 +57,17 @@ export default async function page(props) {
   return (
     <>
       {getCardDetailMap?.map((item) => (
-        <CardColor
-          styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
-          aparencia={item.aparencia}
-          id={item.id}
+        <Card
+          className="mt-4 flex w-full items-center gap-10 px-8 py-6"
           key={item.id}
         >
-          <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
+          <Image
+            src={`/logos/${item.logo_image}`}
+            className="rounded shadow-lg"
+            width={60}
+            height={60}
+            alt={item.name}
+          />
 
           <div className="leading-loose">
             <p className="text-xs">Vencimento</p>
@@ -85,6 +89,7 @@ export default async function page(props) {
             <p className="text-xs">Tipo do Cartão</p>
             <p className="font-bold">Cartão {item.tipo}</p>
             <p className="text-xs">Bandeira</p>
+
             <Image
               src={item.bandeira === "Mastercard" ? mastercard : visa}
               alt="Logo da Bandeira"
@@ -106,7 +111,7 @@ export default async function page(props) {
               <Numbers number={sumCardSum} />
             </div>
           </div>
-        </CardColor>
+        </Card>
       ))}
 
       <div

@@ -1,13 +1,28 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function CardInvoices({ title, subtitle, children }) {
-  const [hasOverflow, setHasOverflow] = useState(true);
+export default function CardInvoices({ title, children }) {
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const contentRef = useRef(null);
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
+  const checkOverflow = () => {
+    const el = contentRef.current;
+    if (el) {
+      const isOverflowing = el.scrollHeight > el.clientHeight;
+      setHasOverflow(isOverflowing);
+    }
+  };
+
+  useEffect(() => {
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [children]);
+
+  const handleScroll = (e) => {
+    const target = e.target;
     const isAtBottom =
       Math.abs(target.scrollHeight - target.clientHeight - target.scrollTop) <
       1;
@@ -20,16 +35,15 @@ export default function CardInvoices({ title, subtitle, children }) {
         <CardTitle className="text-sm uppercase">{title}</CardTitle>
       </CardHeader>
       <CardContent
+        ref={contentRef}
         className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto pr-4"
         onScroll={handleScroll}
       >
         {children}
       </CardContent>
-      <div
-        className={`pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent transition-opacity duration-300 dark:from-zinc-900 ${
-          hasOverflow ? "opacity-100" : "opacity-0"
-        }`}
-      />
+      {hasOverflow && (
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent transition-opacity duration-300 dark:from-zinc-900" />
+      )}
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;

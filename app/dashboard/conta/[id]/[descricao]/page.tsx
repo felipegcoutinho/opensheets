@@ -1,6 +1,6 @@
-import CardColor, { ColorDot } from "@/components/card-color";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -19,6 +19,7 @@ import {
 import { getCards } from "@actions/cards";
 import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
+import Image from "next/image";
 
 export default async function page(props) {
   const searchParams = await props.searchParams;
@@ -45,12 +46,17 @@ export default async function page(props) {
   return (
     <>
       {getAccountDetailMap?.map((item) => (
-        <CardColor
-          styles="flex gap-10 px-8 py-6 mt-4 w-full items-center"
-          aparencia={item.aparencia}
+        <Card
+          className="mt-4 flex w-full items-center gap-10 px-8 py-6"
           key={item.id}
         >
-          <ColorDot aparencia={item.aparencia} descricao={item.descricao} />
+          <Image
+            src={`/logos/${item.logo_image}`}
+            className="rounded shadow-lg"
+            width={60}
+            height={60}
+            alt={item.logo_image}
+          />
 
           <div className="leading-relaxed">
             <p className="font-bold">Conta {item.tipo_conta}</p>
@@ -70,7 +76,7 @@ export default async function page(props) {
               <Numbers number={saldo} />
             </p>
           </div>
-        </CardColor>
+        </Card>
       ))}
 
       <Table className="mt-6">

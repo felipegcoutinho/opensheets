@@ -1,13 +1,21 @@
 "use client";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Utils from "../utils";
 
 export default function CreateInvestimento({ getAccountMap, children }) {
-  const { loading, getMonthOptions, handleSubmit, isOpen, setIsOpen } = Utils();
+  const { loading, handleSubmit, isOpen, setIsOpen } = Utils();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -30,7 +38,7 @@ export default function CreateInvestimento({ getAccountMap, children }) {
             <MoneyInput name="valor" placeholder="R$ 0,00" />
           </div>
 
-          <DialogFooter className="flex gap-2 mt-4">
+          <DialogFooter className="mt-4 flex gap-2">
             <DialogClose asChild>
               <Button className="w-1/2" type="button" variant="secondary">
                 Cancelar

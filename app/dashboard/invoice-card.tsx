@@ -1,8 +1,8 @@
-import { ColorDotInvoice } from "@/components/card-color";
 import DialogPayment from "@/components/dialog-payment";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Invoice({ data, month }) {
@@ -14,31 +14,30 @@ export default function Invoice({ data, month }) {
         sortedData.map((item) => (
           <div key={item.cartao_id}>
             <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
-              <div>
-                <ColorDotInvoice
-                  aparencia={item.aparencia}
-                  descricao={
-                    <Link
-                      className="flex items-center gap-1 hover:underline"
-                      href={`/dashboard/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
-                    >
-                      {item.descricao}
-                      <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
-                    </Link>
-                  }
+              <div className="flex items-center gap-2">
+                <Image
+                  src={`/logos/${item.logo_image}`}
+                  className="rounded"
+                  width={35}
+                  height={35}
+                  alt={item.name}
                 />
-                {item.status_pagamento === "Pendente" ? (
-                  <p className="text-sm text-muted-foreground">
-                    Vence dia {item.dt_vencimento}
-                  </p>
-                ) : (
-                  <Check className="text-green-500" size={16} />
-                )}
+
+                <Link
+                  className="flex items-center hover:underline"
+                  href={`/dashboard/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
+                >
+                  {item.descricao}
+                </Link>
+
+                <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
               </div>
+
               <div className="py-1 text-right">
                 <p className="font-bold">
                   <Numbers number={item.total_valor} />
                 </p>
+
                 <DialogPayment
                   descricao={item.descricao}
                   valor={item.total_valor}
