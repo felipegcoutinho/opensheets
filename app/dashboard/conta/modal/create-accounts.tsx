@@ -56,7 +56,7 @@ export default function CreateAccount() {
                         className="rounded border"
                         width={32}
                         height={32}
-                        alt={item.name}
+                        alt="Logo da conta"
                       />
                       <span>{item.name}</span>
                     </div>

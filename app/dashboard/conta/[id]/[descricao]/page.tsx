@@ -55,7 +55,7 @@ export default async function page(props) {
             className="rounded shadow-lg"
             width={60}
             height={60}
-            alt={item.logo_image}
+            alt="Logo da conta"
           />
 
           <div className="leading-relaxed">

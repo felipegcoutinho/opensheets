@@ -20,7 +20,7 @@ export default function Invoice({ data, month }) {
                   className="rounded"
                   width={35}
                   height={35}
-                  alt={item.name}
+                  alt={"Logo do cartão"}
                 />
 
                 <Link

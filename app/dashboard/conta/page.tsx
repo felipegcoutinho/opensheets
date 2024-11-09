@@ -49,7 +49,7 @@ async function PageAccount(props) {
                       className="rounded shadow-lg"
                       width={45}
                       height={45}
-                      alt={item.logo_image}
+                      alt="Logo da conta"
                     />
 
                     {item.descricao}

@@ -12,8 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
-import mastercard from "@/public/mastercard.svg";
-import visa from "@/public/visa.svg";
 import {
   getCardDetails,
   getCardInvoice,
@@ -66,7 +64,7 @@ export default async function page(props) {
             className="rounded shadow-lg"
             width={60}
             height={60}
-            alt={item.name}
+            alt="Logo do cartão"
           />
 
           <div className="leading-loose">
@@ -91,10 +89,11 @@ export default async function page(props) {
             <p className="text-xs">Bandeira</p>
 
             <Image
-              src={item.bandeira === "Mastercard" ? mastercard : visa}
-              alt="Logo da Bandeira"
+              src={`/bandeiras/${item.bandeira}`}
+              className="rounded shadow-lg"
               width={40}
               height={40}
+              alt="Bandeira do cartão"
             />
           </div>
 

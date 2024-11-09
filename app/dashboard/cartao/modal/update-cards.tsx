@@ -81,9 +81,9 @@ export default function UpdateCard({
                         <Image
                           src={`/logos/${item.file}`}
                           className="rounded border"
-                          alt={item.name}
                           width={32}
                           height={32}
+                          alt="Logo do cartão"
                         />
                         <span>{item.name}</span>
                       </div>
@@ -150,9 +150,9 @@ export default function UpdateCard({
                           <Image
                             src={`/bandeiras/${item.file}`}
                             className="rounded-full"
-                            alt={item.name}
                             width={32}
                             height={32}
+                            alt="Logo do cartão"
                           />
                           <span>{item.name}</span>
                         </div>

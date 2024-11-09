@@ -64,7 +64,7 @@ export default function UpdateAccount({
                         className="rounded border"
                         width={32}
                         height={32}
-                        alt="Logo"
+                        alt="Logo da conta"
                       />
                       <span>{item.name}</span>
                     </div>

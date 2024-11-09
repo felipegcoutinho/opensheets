@@ -64,7 +64,7 @@ export default function CreateCard({ getAccountMap }) {
                         className="h-8 w-8 rounded border"
                         width={32}
                         height={32}
-                        alt={item.name}
+                        alt="Logo do cartão"
                       />
                       <span>{item.name}</span>
                     </div>
@@ -130,7 +130,7 @@ export default function CreateCard({ getAccountMap }) {
                           className="rounded-full"
                           width={32}
                           height={32}
-                          alt={item.name}
+                          alt="Logo do cartão"
                         />
                         <span>{item.name}</span>
                       </div>

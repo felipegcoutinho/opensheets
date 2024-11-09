@@ -8,6 +8,7 @@ export function BadgeCardTable({ descricao, logo }) {
         className="rounded"
         width={30}
         height={30}
+        alt="Logo do cartão"
       />
 
       <p>{descricao}</p>
