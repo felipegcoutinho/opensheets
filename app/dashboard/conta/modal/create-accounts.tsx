@@ -45,7 +45,7 @@ export default function CreateAccount() {
             <Required />
             <Select name="logo_image" required>
               <SelectTrigger>
-                <SelectValue placeholder="Selecione a imagem para o cartão" />
+                <SelectValue placeholder="Selecione a imagem para a conta" />
               </SelectTrigger>
               <SelectContent>
                 {logos.map((item) => (

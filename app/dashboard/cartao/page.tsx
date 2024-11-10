@@ -50,7 +50,7 @@ async function PageCards(props) {
                   </div>
                 </CardTitle>
 
-                <div className="space-y-1 text-neutral-500">
+                <div className="space-y-1 text-neutral-500 dark:text-neutral-300">
                   <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
                   <p className="text-sm">Vence dia {item.dt_vencimento}</p>
                   <p className="text-sm">
@@ -59,10 +59,9 @@ async function PageCards(props) {
                 </div>
               </CardContent>
 
-              <CardFooter className="flex justify-between bg-neutral-100 px-6 py-1 text-black dark:bg-neutral-700">
-                <Button className="p-0 font-bold" variant="link">
+              <CardFooter className="flex justify-between bg-neutral-100 px-6 py-1 text-black dark:bg-neutral-800">
+                <Button className="p-0" variant="link">
                   <Link
-                    className="p-0 font-bold"
                     href={`/dashboard/cartao/${item.id}/${item.descricao.toLowerCase()}`}
                   >
                     fatura
@@ -87,7 +86,7 @@ async function PageCards(props) {
 
                 <form action={deleteCards}>
                   <Button
-                    className="p-0 font-bold"
+                    className="p-0"
                     variant="link"
                     value={item.id}
                     name="excluir"

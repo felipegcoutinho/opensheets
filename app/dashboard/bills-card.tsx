@@ -19,24 +19,13 @@ export async function BillsList({ month }) {
       {sortedData.length > 0 ? (
         sortedData.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
-              {/* <div>
-                <p className="text-lg font-bold">{item.descricao}</p>
-                {item.status_pagamento === "Pendente" ? (
-                  <p className="text-sm text-muted-foreground">
-                    Vence {DateFormat(item.dt_vencimento)}
-                  </p>
-                ) : (
-                  <Check className="text-green-500" size={16} />
-                )}
-              </div> */}
-
+            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900">
               <div className="flex items-center gap-2">
                 <Image
                   src={`/logos/boleto.png`}
                   className="rounded"
-                  width={50}
-                  height={50}
+                  width={40}
+                  height={40}
                   alt={"Logo do cartão"}
                 />
 
