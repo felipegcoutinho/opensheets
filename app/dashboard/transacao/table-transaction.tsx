@@ -72,9 +72,10 @@ function getLogo(row) {
 }
 
 const getResponsavelClass = (responsavel) => {
-  if (responsavel === "Você") return "text-blue-600";
-  if (responsavel === "Sistema") return "text-neutral-600";
-  return "text-orange-600";
+  if (responsavel === "Você") return "text-blue-600 dark:text-blue-400";
+  if (responsavel === "Sistema")
+    return "text-neutral-600 dark:text-neutral-300";
+  return "text-orange-600 dark:text-orange-400";
 };
 
 // Função personalizada para filtrar em várias colunas

@@ -23,7 +23,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
       className="focus:outline-none disabled:opacity-50"
       disabled={disabled}
     >
-      <Icon className="text-alt_yellow dark:text-blue-200" size={16} />
+      <Icon className="text-alt_yellow dark:text-blue-100" size={16} />
     </button>
   );
 };
@@ -209,7 +209,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-white focus:ring-0 dark:text-blue-200">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-white focus:ring-0 dark:text-blue-100">
               <SelectValue>{`${currentMonth} ${currentYear}`}</SelectValue>
             </SelectTrigger>
             <SelectContent>

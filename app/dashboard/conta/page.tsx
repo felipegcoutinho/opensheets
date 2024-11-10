@@ -37,7 +37,7 @@ async function PageAccount(props) {
     <div className="w-full">
       <CreateAccount />
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-4">
+      <div className="mt-4 grid gap-4 lg:grid-cols-3">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
             <Card key={item.id}>
@@ -56,13 +56,13 @@ async function PageAccount(props) {
                   </div>
                 </CardTitle>
 
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-neutral-500 dark:text-neutral-300">
                   Saldo <Numbers number={item.saldo} />
                 </p>
               </CardContent>
 
-              <CardFooter className="flex justify-between bg-neutral-100 px-6 py-1 dark:bg-neutral-700">
-                <Button className="p-0 font-bold" variant="link">
+              <CardFooter className="flex justify-between bg-neutral-100 px-6 py-1 dark:bg-neutral-800">
+                <Button className="p-0" variant="link">
                   <Link
                     href={`/dashboard/conta/${item.id}/${item.descricao.toLowerCase()}`}
                   >

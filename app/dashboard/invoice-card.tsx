@@ -13,13 +13,13 @@ export default function Invoice({ data, month }) {
       {sortedData.length > 0 ? (
         sortedData.map((item) => (
           <div key={item.cartao_id}>
-            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700">
+            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900">
               <div className="flex items-center gap-2">
                 <Image
                   src={`/logos/${item.logo_image}`}
                   className="rounded"
-                  width={35}
-                  height={35}
+                  width={40}
+                  height={40}
                   alt={"Logo do cartão"}
                 />
 

@@ -54,9 +54,7 @@ export default function UpdateCard({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger className="p-0" asChild>
-          <Button className={"font-bold"} variant="link">
-            editar
-          </Button>
+          <Button variant="link">editar</Button>
         </DialogTrigger>
 
         <DialogContent>
