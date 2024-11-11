@@ -26,7 +26,10 @@ async function PageCards(props) {
       <div className="mt-4 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
         {getCardsMap?.length !== 0 ? (
           getCardsMap?.map((item) => (
-            <Card key={item.id}>
+            <Card
+              key={item.id}
+              className="bg-gradient-to-tr from-white via-rose-50/50 to-orange-50/50"
+            >
               <CardContent className="space-y-4 p-5">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
