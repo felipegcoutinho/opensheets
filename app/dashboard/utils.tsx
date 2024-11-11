@@ -1,5 +1,10 @@
 import { UseDates } from "@/hooks/use-dates";
 import {
+  getSumAccountExpensePaid,
+  getSumAccountIncomePaid,
+} from "../actions/accounts";
+import { getSumBillsExpensePaid } from "../actions/bills";
+import {
   getBillsByResponsavel,
   getExpense,
   getExpenseBill,
@@ -11,10 +16,11 @@ import {
 } from "../actions/dashboards";
 
 async function Utils(month) {
-  const { getPreviousMonth } = UseDates();
-  const previousMonth = getPreviousMonth(month);
+  const { getPreviousMonth, currentMonthName, currentYear } = UseDates();
 
-  // Fetch data for current and previous month in parallel
+  const previousMonth = getPreviousMonth(month);
+  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
+
   const [
     receitas,
     despesas,
@@ -27,6 +33,9 @@ async function Utils(month) {
     expenseByCategory,
     incomeByCategory,
     invoiceBill,
+    sumAccountIncome,
+    sumAccountExpense,
+    sumBillsExpense,
   ] = await Promise.all([
     getIncome(month),
     getExpense(month),
@@ -39,6 +48,9 @@ async function Utils(month) {
     getExpenseByCategory(month),
     getIncomeByCategory(month),
     getBillsByResponsavel(month),
+    getSumAccountIncomePaid(defaultPeriodo),
+    getSumAccountExpensePaid(defaultPeriodo),
+    getSumBillsExpensePaid(defaultPeriodo),
   ]);
 
   // Calculating totals for current and previous months
@@ -52,6 +64,9 @@ async function Utils(month) {
   // Prediction calculation
   const previsto = saldoAnterior + balanco;
 
+  //Calculo do saldo atual
+  const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
+
   return {
     receitas,
     receitasAnterior,
@@ -62,8 +77,9 @@ async function Utils(month) {
     previsto,
     saldoAnterior,
     incomeByCategory,
-    invoiceCard: invoices, // Reusing invoices list as invoiceCard
+    invoiceCard: invoices,
     invoiceBill,
+    saldo,
     expenseByCategory,
   };
 }

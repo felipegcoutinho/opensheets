@@ -19,10 +19,11 @@ export default async function FinancialSummary({ month }) {
     balancoAnterior,
     previsto,
     saldoAnterior,
+    saldo,
   } = await Utils(month);
 
   return (
-    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
       <Card>
         <CardHeader className="pb-2">
           <CardDescription className="flex items-center gap-1">
@@ -81,6 +82,18 @@ export default async function FinancialSummary({ month }) {
         <CardContent className="text-xs text-muted-foreground">
           anterior <Numbers number={saldoAnterior} />
         </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="pb-2">
+          <CardDescription className="flex items-center gap-1">
+            <Ping color={"bg-violet-400"} />
+            Saldo Atual
+          </CardDescription>
+          <CardTitle className="text-2xl">
+            <Numbers number={saldo} />
+          </CardTitle>
+        </CardHeader>
       </Card>
     </div>
   );
