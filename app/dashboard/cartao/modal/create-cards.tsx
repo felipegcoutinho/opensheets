@@ -60,6 +60,7 @@ export default function CreateCard({ getAccountMap }) {
                   <SelectItem key={item.name} value={item.file}>
                     <div className="flex items-center gap-2">
                       <Image
+                        quality={100}
                         src={`/logos/${item.file}`}
                         className="h-8 w-8 rounded border"
                         width={32}
@@ -126,6 +127,7 @@ export default function CreateCard({ getAccountMap }) {
                     <SelectItem key={item.name} value={item.file}>
                       <div className="flex items-center gap-2">
                         <Image
+                          quality={100}
                           src={`/bandeiras/${item.file}`}
                           className="rounded-full"
                           width={32}

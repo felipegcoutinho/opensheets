@@ -60,6 +60,7 @@ export default function UpdateAccount({
                   <SelectItem key={item.name} value={item.file}>
                     <div className="flex items-center gap-2">
                       <Image
+                        quality={100}
                         src={`/logos/${item.file}`}
                         className="rounded border"
                         width={32}

@@ -22,6 +22,7 @@ export async function BillsList({ month }) {
             <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900">
               <div className="flex items-center gap-2">
                 <Image
+                  quality={100}
                   src={`/logos/boleto.png`}
                   className="rounded"
                   width={40}

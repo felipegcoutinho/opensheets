@@ -45,6 +45,7 @@ async function PageAccount(props) {
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image
+                      quality={100}
                       src={`/logos/${item.logo_image}`}
                       className="rounded shadow-lg"
                       width={45}

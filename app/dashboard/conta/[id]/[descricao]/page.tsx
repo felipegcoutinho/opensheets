@@ -51,6 +51,7 @@ export default async function page(props) {
           key={item.id}
         >
           <Image
+            quality={100}
             src={`/logos/${item.logo_image}`}
             className="rounded shadow-lg"
             width={60}

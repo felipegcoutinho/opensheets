@@ -60,6 +60,7 @@ export default async function page(props) {
           key={item.id}
         >
           <Image
+            quality={100}
             src={`/logos/${item.logo_image}`}
             className="rounded shadow-lg"
             width={60}
@@ -89,6 +90,7 @@ export default async function page(props) {
             <p className="text-xs">Bandeira</p>
 
             <Image
+              quality={100}
               src={`/bandeiras/${item.bandeira}`}
               className="rounded"
               width={40}

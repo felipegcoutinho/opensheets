@@ -34,6 +34,7 @@ async function PageCards(props) {
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image
+                      quality={100}
                       src={`/logos/${item.logo_image}`}
                       className="rounded shadow-lg"
                       width={45}
@@ -45,6 +46,7 @@ async function PageCards(props) {
 
                   <div className="flex space-x-1">
                     <Image
+                      quality={100}
                       src={`/bandeiras/${item.bandeira}`}
                       alt={`Logo da bandeira`}
                       width={50}

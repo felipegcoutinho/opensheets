@@ -4,6 +4,7 @@ export function BadgeCardTable({ descricao, logo }) {
   return (
     <div className="flex items-center gap-2">
       <Image
+        quality={100}
         src={`/logos/${logo}`}
         className="rounded"
         width={30}
