@@ -21,7 +21,12 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
           <main className="mx-auto flex max-w-screen-1xl flex-col px-2 antialiased animate-in max-sm:px-2">
             <PrivacyProviderApp>
               <Header />
