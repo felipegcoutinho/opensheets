@@ -54,6 +54,36 @@ export default async function page(props) {
 
   return (
     <>
+      <div
+        className={`mt-4 rounded p-2 dark:border-none border${
+          fatura_status &&
+          fatura_status.some((item) => item.status_pagamento === "Pago")
+            ? "border-green-500 bg-green-50 dark:bg-green-900"
+            : "border-orange-500 bg-orange-50 dark:bg-orange-900"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {fatura_status && fatura_status.length > 0 && (
+              <CheckCircle2 size={24} className="text-green-100" fill="green" />
+            )}
+
+            {getCardDetailMap?.map((item) => (
+              <ButtonPayment
+                key={item.id}
+                fatura_status={fatura_status}
+                month={month}
+                paramsId={params.id}
+                descricao={item.descricao}
+                valor={sumCardSum}
+              />
+            ))}
+          </div>
+
+          <ButtonUndoPayment fatura_status={fatura_status} />
+        </div>
+      </div>
+
       {getCardDetailMap?.map((item) => (
         <Card
           className="mt-4 flex w-full items-center gap-10 px-8 py-6"
@@ -114,36 +144,6 @@ export default async function page(props) {
           </div>
         </Card>
       ))}
-
-      <div
-        className={`mt-4 rounded p-2 dark:border-none border${
-          fatura_status &&
-          fatura_status.some((item) => item.status_pagamento === "Pago")
-            ? "border-green-500 bg-green-50 dark:bg-green-900"
-            : "border-orange-500 bg-orange-50 dark:bg-orange-900"
-        }`}
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {fatura_status && fatura_status.length > 0 && (
-              <CheckCircle2 size={24} className="text-green-100" fill="green" />
-            )}
-
-            {getCardDetailMap?.map((item) => (
-              <ButtonPayment
-                key={item.id}
-                fatura_status={fatura_status}
-                month={month}
-                paramsId={params.id}
-                descricao={item.descricao}
-                valor={sumCardSum}
-              />
-            ))}
-          </div>
-
-          <ButtonUndoPayment fatura_status={fatura_status} />
-        </div>
-      </div>
 
       <Table className="mt-6">
         <TableHeader>

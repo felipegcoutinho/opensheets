@@ -74,7 +74,7 @@ export default async function FinancialSummary({ month }) {
       {cardData.map((card, index) => (
         <CardItem key={index} {...card} />
       ))}
-      <Card className="bg-gradient-to-tr from-neutral-100">
+      <Card className="bg-gradient-to-tr from-amber-200/20 from-5% to-alt_violet/20">
         <CardHeader className="pb-2">
           <CardDescription className="flex items-center gap-1 pb-2">
             <Ping color="bg-black" />

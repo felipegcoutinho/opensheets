@@ -19,14 +19,9 @@ const config = {
     },
     extend: {
       colors: {
-        "lime-1000": "#F5FE8B",
-        "lime-2000": "#01FF5F",
-        "lime-3000": "#E4F984",
-        "yellow-1000": "#F0DC25",
-        "orange-1000": "#FF6101",
-        alt_green: "#4EAC46",
-        alt_yellow: "#FBEB72",
-        alt_violet: "#C080F8",
+        alt_green: "#3F604D",
+        alt_yellow: "#fff2ac",
+        alt_violet: "#eedbff",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
