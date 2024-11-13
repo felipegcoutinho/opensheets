@@ -1,52 +1,34 @@
-import {
-  getSumAccountExpensePaid,
-  getSumAccountIncomePaid,
-} from "@/app/actions/accounts";
-import { getSumBillsExpensePaid } from "@/app/actions/bills";
+"use client";
+
 import { UseDates } from "@/hooks/use-dates";
-import CardBanner from "./card-banner";
-import GetUserName from "./data-name";
-import Numbers from "./numbers";
+import { usePathname } from "next/navigation";
+import GetUserName from "./get-username";
+import { Card } from "./ui/card";
 
-export default async function Banner() {
-  const {
-    currentMonthName,
-    currentYear,
-    currentDate,
-    fliendlyDate,
-    getGreeting,
-  } = UseDates();
+export default function Banner() {
+  const { currentDate, fliendlyDate, getGreeting } = UseDates();
 
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
+  const pathname = usePathname();
+  const isDashboard = pathname === "/dashboard";
 
-  const sumAccountIncome = await getSumAccountIncomePaid(defaultPeriodo);
-  const sumAccountExpense = await getSumAccountExpensePaid(defaultPeriodo);
-  const sumBillsExpense = await getSumBillsExpensePaid(defaultPeriodo);
-  const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
+  if (!isDashboard) {
+    return null;
+  }
 
   return (
-    <CardBanner>
+    <Card className="mx-auto mb-4 w-full border-none bg-gradient-to-tr from-alt_yellow to-alt_violet px-4 py-8 dark:bg-alt_yellow/20 dark:from-alt_green/40 dark:to-alt_violet/20">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div>
             <p className="text-sm text-neutral-800 dark:text-neutral-300">
               {fliendlyDate(currentDate)}
             </p>
-            {/* <p className="from-alt_green to-alt_yellow inline-block bg-gradient-to-r bg-clip-text  text-transparent"> */}
             <p className="text-xl font-bold">
               {getGreeting()}, <GetUserName />
             </p>
           </div>
         </div>
-        <div className="flex space-x-2 text-black dark:text-white">
-          <div className="text-right">
-            Saldo Atual
-            <div className="text-2xl font-bold">
-              <Numbers number={saldo} />
-            </div>
-          </div>
-        </div>
       </div>
-    </CardBanner>
+    </Card>
   );
 }

@@ -9,7 +9,7 @@ function Numbers({ number }) {
   return (
     <>
       <span
-        className={`${uiSans.className} ${!estado && "opacity-50 blur"} font-bold`}
+        className={`font-bold ${uiSans.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
       >
         {Number(number).toLocaleString("pt-BR", {
           style: "currency",

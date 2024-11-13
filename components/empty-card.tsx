@@ -4,7 +4,13 @@ import Image from "next/image";
 function EmptyCard({ width, height }) {
   return (
     <div className="flex h-60 flex-col items-center justify-center">
-      <Image src={empty} alt="Empty" width={width} height={height} />
+      <Image
+        quality={100}
+        src={empty}
+        alt="Empty"
+        width={width}
+        height={height}
+      />
       <p className="mt-2 text-sm text-muted-foreground">
         Sem dados encontrados
       </p>

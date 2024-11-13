@@ -1,4 +1,4 @@
-import { addFaturas } from "@/app/actions/invoices";
+import { addFaturas } from "@actions/invoices";
 import { useTransition } from "react";
 
 export default function Utils() {

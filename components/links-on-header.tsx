@@ -31,42 +31,52 @@ function LinkOnHeader({ user }) {
     {
       href: `/dashboard?periodo=${month}`,
       Icon: Home,
-      name: "Home",
+      name: "dashboard",
       path: "/dashboard",
     },
     {
-      href: `/transacao?periodo=${month}`,
+      href: `/dashboard/transacao?periodo=${month}`,
       Icon: ArrowDownUpIcon,
-      name: "Transações",
-      path: "/transacao",
+      name: "transações",
+      path: "/dashboard/transacao",
     },
     {
-      href: `/boleto?periodo=${month}`,
+      href: `/dashboard/boleto?periodo=${month}`,
       Icon: File,
-      name: "Boletos",
-      path: "/boleto",
+      name: "boletos",
+      path: "/dashboard/boleto",
     },
-    { href: `/cartao`, Icon: CreditCard, name: "Cartões", path: "/cartao" },
-    { href: `/conta`, Icon: PiggyBank, name: "Contas", path: "/conta" },
     {
-      href: `/responsavel?periodo=${month}`,
+      href: `/dashboard/cartao`,
+      Icon: CreditCard,
+      name: "cartões",
+      path: "/dashboard/cartao",
+    },
+    {
+      href: `/dashboard/conta`,
+      Icon: PiggyBank,
+      name: "contas",
+      path: "/dashboard/conta",
+    },
+    {
+      href: `/dashboard/responsavel?periodo=${month}`,
       Icon: Users,
-      name: "Responsáveis",
-      path: "/responsavel",
+      name: "responsáveis",
+      path: "/dashboard/responsavel",
     },
     {
-      href: `/anotacao?periodo=${month}`,
+      href: `/dashboard/anotacao?periodo=${month}`,
       Icon: NotebookPenIcon,
-      name: "Anotações",
-      path: "/anotacao",
+      name: "anotações",
+      path: "/dashboard/anotacao",
     },
   ];
 
   if (user.email === "coutinho@outlook.com") {
     links.push({
-      href: `/investimentos`,
+      href: `/dashboard/investimentos`,
       Icon: BadgeCentIcon,
-      name: "Investimentos",
+      name: "investimentos",
       path: "/investimentos",
     });
   }
@@ -98,7 +108,7 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
           : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800", // Estilo para link inativo
       )}
     >
-      {/* <Icon size={12} /> */}
+      <Icon size={12} />
       {LinkName}
     </div>
   );

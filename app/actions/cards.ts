@@ -9,7 +9,7 @@ export async function getCards() {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, aparencia, dt_fechamento, anotacao, limite, bandeira, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
     )
     .order("descricao", { ascending: true });
 
@@ -30,7 +30,7 @@ export async function getCardInvoice(month, cartao_id) {
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao, aparencia)`,
+      qtde_recorrencia, cartoes (id, descricao, logo_image)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -51,7 +51,7 @@ export async function getCardDetails(id) {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, dt_fechamento, aparencia, anotacao, limite, bandeira, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
     )
     .eq("id", id);
 
@@ -72,7 +72,7 @@ export async function getCategoria(month, categoriaId, tipo_transacao) {
     .select(
       `id, data_compra, realizado, periodo, descricao, tipo_transacao, categoria, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao, aparencia), contas (id, descricao)`,
+      qtde_recorrencia, cartoes (id, descricao), contas (id, descricao)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -94,10 +94,10 @@ export async function addCards(formData: FormData) {
     descricao,
     dt_vencimento,
     dt_fechamento,
-    aparencia,
     anotacao,
     limite,
     bandeira,
+    logo_image,
     tipo,
     conta_id,
   } = Object.fromEntries(formData.entries());
@@ -109,10 +109,10 @@ export async function addCards(formData: FormData) {
       descricao,
       dt_vencimento,
       dt_fechamento,
-      aparencia,
       anotacao,
       limite,
       bandeira,
+      logo_image,
       tipo,
       conta_id,
     });
@@ -143,10 +143,10 @@ export async function updateCards(formData: FormData) {
     descricao,
     dt_vencimento,
     dt_fechamento,
-    aparencia,
     anotacao,
     limite,
     bandeira,
+    logo_image,
     tipo,
     conta_id,
   } = Object.fromEntries(formData.entries());
@@ -161,10 +161,10 @@ export async function updateCards(formData: FormData) {
         descricao,
         dt_vencimento,
         dt_fechamento,
-        aparencia,
         anotacao,
         limite,
         bandeira,
+        logo_image,
         tipo,
         conta_id,
       })
