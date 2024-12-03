@@ -16,7 +16,7 @@ export default function Banner() {
   }
 
   return (
-    <Card className="mx-auto mb-4 w-full border-none bg-amber-300 px-4 py-8 text-amber-950 dark:bg-alt_yellow/20 dark:from-alt_green/40 dark:to-alt_violet/20">
+    <Card className="mx-auto mb-4 w-full bg-gradient-to-br from-[#20AD63] to-[#2FE784] px-4 py-10 dark:bg-alt_yellow/20 dark:from-alt_green/40 dark:to-alt_violet/20">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div>

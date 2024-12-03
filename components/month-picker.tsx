@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-neutral-200 px-4 py-2 dark:bg-alt_green/50">
+    <Card className="flex w-full items-center justify-start gap-4 bg-[#CA77FF] px-4 py-2 dark:bg-alt_green/50">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -210,7 +210,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-neutral-600 focus:ring-0 dark:text-blue-100">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-black focus:ring-0 dark:text-blue-100">
               <SelectValue>{`${currentMonth} ${currentYear}`}</SelectValue>
             </SelectTrigger>
             <SelectContent>
