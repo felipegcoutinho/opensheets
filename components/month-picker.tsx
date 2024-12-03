@@ -12,6 +12,7 @@ import { ChevronLeftSquare, ChevronRightSquare, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
 import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 // Componente otimizado para os botões de navegação
 const NavigationButton = ({ onClick, direction, disabled }) => {
@@ -23,7 +24,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
       className="focus:outline-none disabled:opacity-50"
       disabled={disabled}
     >
-      <Icon className="text-alt_yellow dark:text-blue-100" size={16} />
+      <Icon className="text-neutral-600 dark:text-blue-100" size={16} />
     </button>
   );
 };
@@ -195,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex w-full items-center justify-start gap-4 rounded bg-alt_green p-3 dark:bg-alt_green/50">
+    <Card className="flex w-full items-center justify-start gap-4 bg-neutral-200 px-4 py-2 dark:bg-alt_green/50">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -209,7 +210,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-white focus:ring-0 dark:text-blue-100">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-neutral-600 focus:ring-0 dark:text-blue-100">
               <SelectValue>{`${currentMonth} ${currentYear}`}</SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -237,6 +238,6 @@ export default function MonthPicker() {
       {isDifferentFromCurrent && (
         <ReturnButton onClick={goToCurrentMonthYear} disabled={isChanging} />
       )}
-    </div>
+    </Card>
   );
 }

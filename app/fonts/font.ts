@@ -22,4 +22,29 @@ const uiSans = localFont({
     { path: "../fonts/ui-sans-v9-bold.woff2", weight: "600", style: "normal" },
   ],
 });
-export { inter, uiSans };
+
+const googleSans = localFont({
+  src: [
+    {
+      path: "../fonts/ProductSans-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../fonts/ProductSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/ProductSans-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/ProductSans-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+});
+export { googleSans, inter, uiSans };
