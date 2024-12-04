@@ -1,6 +1,6 @@
 "use client";
 
-import { uiSans } from "@/app/fonts/font";
+import { googleSans } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 
 function Numbers({ number }) {
@@ -9,7 +9,7 @@ function Numbers({ number }) {
   return (
     <>
       <span
-        className={`font-bold ${uiSans.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
+        className={`font-bold ${googleSans.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
       >
         {Number(number).toLocaleString("pt-BR", {
           style: "currency",
