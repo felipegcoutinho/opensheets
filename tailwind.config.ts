@@ -19,7 +19,9 @@ const config = {
     },
     extend: {
       colors: {
-        alt_green: "#3F604D",
+        "green-banner": "#2fe270",
+        "green-month": "#bed6c7",
+        "pink-link": "#ca77ff",
         alt_yellow: "#fff2ac",
         alt_violet: "#eedbff",
         border: "hsl(var(--border))",
