@@ -22,6 +22,7 @@ export default function Utils() {
   const [loading, setLoading] = useState(false);
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
+  const [image, setImage] = useState(null);
 
   const handleCondicaoChange = (value: string) => {
     setShowParcelas(value === "Parcelado");
@@ -188,5 +189,6 @@ export default function Utils() {
     setIsPaid,
     MonthUppercase,
     calcularMesFinal,
+    setImage,
   };
 }
