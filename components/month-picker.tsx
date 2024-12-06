@@ -24,7 +24,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
       className="focus:outline-none disabled:opacity-50"
       disabled={disabled}
     >
-      <Icon className="text-neutral-600 dark:text-blue-100" size={16} />
+      <Icon size={16} />
     </button>
   );
 };
@@ -34,7 +34,7 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="border border-white px-1 text-white disabled:opacity-50 dark:border-white dark:text-white"
+    className="border border-black px-1 text-black disabled:opacity-50 dark:border-black dark:text-black"
     onClick={onClick}
     disabled={disabled}
   >
@@ -44,7 +44,7 @@ const ReturnButton = ({ onClick, disabled }) => (
 
 // Componente de Loading
 const LoadingSpinner = () => (
-  <Loader2 className="h-4 w-4 animate-spin text-alt_yellow dark:text-blue-200" />
+  <Loader2 className="h-4 w-4 animate-spin text-green-banner dark:text-blue-200" />
 );
 
 export default function MonthPicker() {
@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-[#CA77FF] px-4 py-2 dark:bg-alt_green/50">
+    <Card className="dark:bg-pink-link/40 flex w-full items-center justify-start gap-4 bg-green-month px-4 py-2">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -210,7 +210,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-black focus:ring-0 dark:text-blue-100">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-black focus:ring-0 dark:text-white">
               <SelectValue>{`${currentMonth} ${currentYear}`}</SelectValue>
             </SelectTrigger>
             <SelectContent>

@@ -4,7 +4,7 @@ import { PrivacyProviderApp } from "@/hooks/privacy-context";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { googleSans } from "./fonts/font";
+import { uiSans } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="pt-BR"
-      className={`${googleSans.className}`}
+      className={`${uiSans.className}`}
       suppressHydrationWarning
     >
       <body>
