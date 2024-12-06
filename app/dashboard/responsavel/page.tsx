@@ -94,7 +94,7 @@ function CardComponent({
             <span className="flex items-center gap-1">
               <Badge
                 variant="outline"
-                className="border-2 border-alt_green text-alt_green"
+                className="border border-green-banner text-green-banner"
               >
                 Cartões
               </Badge>
@@ -126,7 +126,7 @@ function CardComponent({
             <span className="flex items-center gap-1">
               <Badge
                 variant="outline"
-                className="border-2 border-alt_violet text-alt_violet"
+                className="border border-pink-link text-pink-link"
               >
                 Boletos
               </Badge>
