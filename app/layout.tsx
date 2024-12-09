@@ -4,7 +4,7 @@ import { PrivacyProviderApp } from "@/hooks/privacy-context";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { uiSans } from "./fonts/font";
+import { googleSans } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="pt-BR"
-      className={`${uiSans.className}`}
+      className={`${googleSans.className}`}
       suppressHydrationWarning
     >
       <body>
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <main className="mx-auto flex max-w-screen-1xl flex-col px-2 antialiased animate-in max-sm:px-2">
+          <main className="mx-auto flex max-w-screen-xl flex-col px-2 antialiased animate-in max-sm:px-2">
             <PrivacyProviderApp>
               <Header />
               {children}

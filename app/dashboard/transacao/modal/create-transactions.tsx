@@ -59,6 +59,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     isPaid,
     setIsPaid,
     setImage,
+    image,
   } = Utils();
 
   if (showCartao && isPaid) {
@@ -76,16 +77,6 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="image">Imagem</label>
-            <input
-              type="file"
-              id="image"
-              accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </div>
-
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
               <Label>Data da Compra</Label>
@@ -378,6 +369,16 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 </Select>
               </div>
             )}
+          </div>
+
+          <div className="w-full">
+            <Label>Comprovante</Label>
+            <Input
+              type="file"
+              name="imagem_url"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
           </div>
 
           <div className="mb-1 flex w-full gap-2">

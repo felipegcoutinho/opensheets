@@ -48,6 +48,7 @@ export default function UpdateTransactions({
   itemRecorrencia,
   itemQtdeRecorrencia,
   itemPaid,
+  itemImagemURL,
 }) {
   const {
     isOpen,
@@ -94,9 +95,7 @@ export default function UpdateTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>
-          Editar
-      </DialogTrigger>
+      <DialogTrigger>Editar</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Atualizar Transação</DialogTitle>
@@ -204,7 +203,20 @@ export default function UpdateTransactions({
             />
           </div>
 
-          <div className="mb-1 flex w-full gap-2">
+          <div className="w-full">
+            <Label>Comprovante</Label>
+            <Input name="imagem_url" type="file" accept="image/*" />
+          </div>
+
+          {/* <Image
+            src={itemImagemURL}
+            alt="Comprovante"
+            width={200}
+            height={200}
+            className="mt-2 h-16 w-full rounded object-cover brightness-75 transition-all duration-300 hover:scale-105"
+          /> */}
+
+          <div className="flex w-full">
             <div className="w-full">
               <Label>Anotação</Label>
               <Textarea

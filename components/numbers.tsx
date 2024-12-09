@@ -7,16 +7,14 @@ function Numbers({ number }) {
   const { estado, setEstado } = usePrivacy();
 
   return (
-    <>
-      <span
-        className={`font-bold ${googleSans.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
-      >
-        {Number(number).toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        })}
-      </span>
-    </>
+    <span
+      className={`font-bold ${googleSans.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
+    >
+      {Number(number).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </span>
   );
 }
 

@@ -7,7 +7,6 @@ import { Card } from "./ui/card";
 
 export default function Banner() {
   const { currentDate, fliendlyDate, getGreeting } = UseDates();
-
   const pathname = usePathname();
   const isDashboard = pathname === "/dashboard";
 
@@ -16,19 +15,13 @@ export default function Banner() {
   }
 
   return (
-    <Card className="mx-auto mb-4 w-full bg-green-banner px-4 py-10 dark:bg-green-banner/20">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div>
-            <p className="text-base text-neutral-800 dark:text-neutral-300">
-              {fliendlyDate(currentDate)}
-            </p>
-            <p className="text-2xl font-bold">
-              {getGreeting()}, <GetUserName />
-            </p>
-          </div>
-        </div>
-      </div>
+    <Card className="mb-4 w-full bg-green-banner px-4 py-10 dark:bg-green-banner/20">
+      <p className="text-green-800 dark:text-pink-link">
+        {fliendlyDate(currentDate)}
+      </p>
+      <p className="text-2xl font-bold">
+        {getGreeting()}, <GetUserName />
+      </p>
     </Card>
   );
 }

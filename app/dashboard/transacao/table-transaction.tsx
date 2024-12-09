@@ -1,7 +1,7 @@
 "use client";
 
-import { BadgeCardTable } from "@/components/card-color";
 import EmptyCard from "@/components/empty-card";
+import { LogosOnTable } from "@/components/logos-on-table";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -312,7 +312,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const descricao = getDescricao(item);
       const logo = getLogo(item);
 
-      return <BadgeCardTable logo={logo} descricao={descricao} />;
+      return <LogosOnTable logo={logo} descricao={descricao} />;
     },
   },
 
@@ -364,6 +364,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                   itemCartao={item.cartoes?.descricao}
                   itemConta={item.contas?.descricao}
                   itemPaid={item.realizado}
+                  itemImagemURL={item.imagem_url}
                 />
               </DropdownMenuItem>
 
@@ -389,6 +390,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                     itemCartao={item.cartoes?.id}
                     itemConta={item.contas?.id}
                     itemPaid={item.realizado}
+                    itemImagemURL={item.imagem_url}
                   />
                 </DropdownMenuItem>
               )}

@@ -48,6 +48,13 @@ export default function Utils() {
     setLoading(true);
     const formData = new FormData(e.target);
 
+    const imageFile = formData.get("imagem_url");
+
+    // Remove o campo de imagem se nenhum arquivo válido for selecionado
+    if (!(imageFile instanceof File && imageFile.size > 0)) {
+      formData.delete("imagem_url");
+    }
+
     // Formatação do valor antes de enviar
     const valorFormatado = formData
       .get("valor")
@@ -68,6 +75,13 @@ export default function Utils() {
     const formData = new FormData(e.target);
 
     const condicao = formData.get("condicao");
+
+    const imageFile = formData.get("imagem_url");
+
+    // Remove o campo de imagem se nenhum arquivo válido for selecionado
+    if (!(imageFile instanceof File && imageFile.size > 0)) {
+      formData.delete("imagem_url");
+    }
 
     if (condicao !== "Parcelado") {
       const valorFormatado = formData
@@ -190,5 +204,6 @@ export default function Utils() {
     MonthUppercase,
     calcularMesFinal,
     setImage,
+    image,
   };
 }

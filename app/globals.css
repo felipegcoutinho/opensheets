@@ -69,14 +69,13 @@
   }
 
   ::selection {
-    @apply bg-orange-400 dark:bg-alt_violet text-primary-foreground;
+    @apply bg-orange-500 text-primary-foreground dark:bg-blue-400;
   }
 }
 
 .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
 }
-
 
 @keyframes animateIn {
   from {
@@ -100,10 +99,10 @@
 @keyframes animation {
   0%,
   100% {
-      background-position: 0% 50%;
+    background-position: 0% 50%;
   }
-  
+
   50% {
-      background-position: 100% 50%;
+    background-position: 100% 50%;
   }
 }
