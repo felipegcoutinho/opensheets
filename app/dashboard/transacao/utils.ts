@@ -2,6 +2,7 @@ import UseOptions from "@/hooks/use-options";
 import {
   addTransaction,
   deleteTransaction,
+  removeImage,
   updateTransaction,
 } from "@actions/transactions";
 import { addMonths, format, parse } from "date-fns";
@@ -23,6 +24,8 @@ export default function Utils() {
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
   const [image, setImage] = useState(null);
+
+  const [removingImage, setRemovingImage] = useState(false);
 
   const handleCondicaoChange = (value: string) => {
     setShowParcelas(value === "Parcelado");
@@ -73,15 +76,7 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-
     const condicao = formData.get("condicao");
-
-    const imageFile = formData.get("imagem_url");
-
-    // Remove o campo de imagem se nenhum arquivo válido for selecionado
-    if (!(imageFile instanceof File && imageFile.size > 0)) {
-      formData.delete("imagem_url");
-    }
 
     if (condicao !== "Parcelado") {
       const valorFormatado = formData
@@ -105,6 +100,17 @@ export default function Utils() {
     await deleteTransaction(formData);
     toast.success("Transação removida com sucesso!");
     setIsOpen(false);
+  };
+
+  const handleRemoveImage = async (transactionId, imageUrl) => {
+    setRemovingImage(true);
+    try {
+      await removeImage(transactionId, imageUrl);
+      alert("Imagem removida com sucesso!");
+    } catch (error) {
+      console.error("Erro ao remover a imagem:", error);
+      alert("Erro ao remover a imagem.");
+    }
   };
 
   const getMonthOptions = () => {
@@ -205,5 +211,6 @@ export default function Utils() {
     calcularMesFinal,
     setImage,
     image,
+    handleRemoveImage,
   };
 }

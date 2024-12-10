@@ -208,6 +208,7 @@ export async function deleteTransaction(formData: FormData) {
 }
 
 export async function updateTransaction(formData: FormData) {
+  const supabase = createClient();
   const {
     id,
     data_compra,
@@ -227,41 +228,42 @@ export async function updateTransaction(formData: FormData) {
     qtde_recorrencia,
     cartao_id,
     conta_id,
+    segundo_responsavel,
+    dividir_lancamento,
+    imagem_url_atual, // URL da imagem existente
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  let imageUrl = imagem_url_atual; // Use o URL existente como padrão
+  const imageFile = formData.get("imagem_url"); // Novo arquivo enviado
 
-  let imageUrl = formData.get("imagem_url"); // Pode ser um arquivo ou string existente
-  const imageFile = formData.get("imagem_url"); // Novo arquivo no formulário
-
-  // Atualizar a imagem, se houver novo upload
-  if (imageFile instanceof File) {
+  // Verificar se há um novo arquivo de imagem
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
     const fileName = `${Date.now()}_${imageFile.name}`;
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from("comprovantes")
-      .upload(`${fileName}`, imageFile, {
-        upsert: true,
-      });
+      .upload(fileName, imageFile);
 
     if (uploadError) {
       console.error("Erro ao fazer upload da imagem:", uploadError);
+      throw new Error("Erro ao fazer upload da imagem");
     } else {
-      // Gerar uma Signed URL para o arquivo atualizado
+      // Gerar URL assinada para a nova imagem
       const { data: signedUrlData, error: signedUrlError } =
         await supabase.storage
           .from("comprovantes")
-          .createSignedUrl(`${fileName}`, 31536000); // 1 ano
+          .createSignedUrl(fileName, 31536000);
 
       if (signedUrlError) {
         console.error("Erro ao gerar Signed URL:", signedUrlError);
-      } else {
-        imageUrl = signedUrlData.signedUrl; // Atualizar URL da imagem
+        throw new Error("Erro ao gerar URL assinada");
       }
+
+      imageUrl = signedUrlData.signedUrl;
     }
   }
 
+  // Atualizar a transação no banco de dados
   try {
-    // Atualizar transação no banco de dados
     await supabase
       .from("transacoes")
       .update({
@@ -270,7 +272,7 @@ export async function updateTransaction(formData: FormData) {
         tipo_transacao,
         periodo,
         categoria,
-        imagem_url: imageUrl, // Atualizar URL da imagem
+        imagem_url: imageUrl,
         realizado,
         condicao,
         forma_pagamento,
@@ -283,11 +285,46 @@ export async function updateTransaction(formData: FormData) {
         qtde_recorrencia,
         cartao_id,
         conta_id,
+        segundo_responsavel,
+        dividir_lancamento,
       })
       .eq("id", id);
 
-    revalidatePath("/dashboard");
+    console.log("Transação atualizada com sucesso!");
   } catch (error) {
-    console.error("Erro ao atualizar transação:", error);
+    console.error("Erro ao atualizar a transação:", error);
+    throw error;
   }
+}
+
+export async function removeImage(transactionId, imageUrl) {
+  const supabase = createClient();
+
+  // Extrair o caminho correto do arquivo
+  const filePath = decodeURIComponent(
+    imageUrl.split("/comprovantes/")[1].split("?")[0],
+  );
+
+  // 1. Excluir a imagem do storage
+  const { error: deleteError } = await supabase.storage
+    .from("comprovantes") // Nome do bucket
+    .remove([filePath]);
+
+  if (deleteError) {
+    console.error("Erro ao excluir imagem do storage:", deleteError);
+    throw new Error("Erro ao excluir imagem do armazenamento");
+  }
+
+  // 2. Limpar o campo `imagem_url` na tabela `transacoes`
+  const { error: updateError } = await supabase
+    .from("transacoes")
+    .update({ imagem_url: null }) // Define como `null`
+    .eq("id", transactionId); // Filtra pela transação
+
+  if (updateError) {
+    console.error("Erro ao limpar o campo imagem_url na tabela:", updateError);
+    throw new Error("Erro ao limpar o campo imagem_url");
+  }
+
+  console.log("Imagem removida com sucesso!");
 }

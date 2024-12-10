@@ -24,7 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { ThumbsUp } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Utils from "../utils";
 
 export default function UpdateTransactions({
@@ -74,6 +74,9 @@ export default function UpdateTransactions({
     setShowRecorrencia,
     isPaid,
     setIsPaid,
+    setImage,
+    removingImage,
+    handleRemoveImage,
   } = Utils();
 
   // Inicializa o estado de `isPaid` com o valor do item quando o modal for aberto
@@ -84,12 +87,32 @@ export default function UpdateTransactions({
   const handleDialogClose = (val) => {
     setIsOpen(val);
     if (!val) {
-      // Se o modal for fechado, resetar `isPaid` para o valor original
-      setIsPaid(itemPaid);
+      setImagePreview(itemImagemURL); // Restaura a imagem original
+      setIsPaid(itemPaid); // Restaura o estado do pagamento
       setShowConta(false);
       setShowCartao(false);
       setShowParcelas(false);
       setShowRecorrencia(false);
+    }
+  };
+
+  const [imagePreview, setImagePreview] = useState(itemImagemURL); // URL da imagem atual
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setImagePreview(reader.result); // Pré-visualização
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImageTeste = async () => {
+    try {
+      await handleRemoveImage(itemId, itemImagemURL);
+      setImagePreview(null); // Limpa a pré-visualização
+    } catch (error) {
+      console.error("Erro ao remover imagem:", error);
     }
   };
 
@@ -203,18 +226,42 @@ export default function UpdateTransactions({
             />
           </div>
 
-          <div className="w-full">
-            <Label>Comprovante</Label>
-            <Input name="imagem_url" type="file" accept="image/*" />
-          </div>
+          <div>
+            <Label>Imagem Atual</Label>
 
-          {/* <Image
-            src={itemImagemURL}
-            alt="Comprovante"
-            width={200}
-            height={200}
-            className="mt-2 h-16 w-full rounded object-cover brightness-75 transition-all duration-300 hover:scale-105"
-          /> */}
+            {
+              <Input
+                name="imagem_url"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              /*
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Comprovante"
+                className="mt-2 h-20 w-full rounded object-cover"
+              />
+            )} */
+            }
+
+            <div>
+              {imagePreview ? (
+                <div className="flex flex-col gap-2">
+                  <img
+                    src={imagePreview}
+                    alt="Comprovante"
+                    className="mt-2 h-20 w-full cursor-pointer rounded object-cover hover:brightness-50"
+                    onClick={handleRemoveImageTeste}
+                    disabled={removingImage}
+                  />
+                </div>
+              ) : (
+                <p>Sem imagem associada.</p>
+              )}
+            </div>
+          </div>
 
           <div className="flex w-full">
             <div className="w-full">
