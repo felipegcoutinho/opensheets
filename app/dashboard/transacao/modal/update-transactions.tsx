@@ -246,16 +246,27 @@ export default function UpdateTransactions({
             )} */
             }
 
-            <div>
+            <div className="group relative">
               {imagePreview ? (
                 <div className="flex flex-col gap-2">
-                  <img
-                    src={imagePreview}
-                    alt="Comprovante"
-                    className="mt-2 h-20 w-full cursor-pointer rounded object-cover hover:brightness-50"
+                  <div
+                    className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
                     onClick={handleRemoveImageTeste}
                     disabled={removingImage}
-                  />
+                  >
+                    {/* Imagem */}
+                    <img
+                      src={imagePreview}
+                      alt="Comprovante"
+                      className="h-full w-full object-cover"
+                    />
+                    {/* Texto "Remover Imagem" ao passar o mouse */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
+                      <span className="font-semibold text-white">
+                        {removingImage ? "Removendo..." : "Remover Imagem"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <p>Sem imagem associada.</p>

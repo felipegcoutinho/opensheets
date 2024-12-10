@@ -13,11 +13,9 @@ function ViewImage({ itemImagemURL }) {
     <Dialog>
       <DialogTrigger>
         {itemImagemURL && (
-          <Image
+          <img
             src={itemImagemURL}
             alt="Comprovante"
-            width={200}
-            height={200}
             className="h-20 w-full rounded object-cover brightness-75 transition-all duration-300 hover:scale-105"
           />
         )}
@@ -27,11 +25,12 @@ function ViewImage({ itemImagemURL }) {
           <DialogTitle></DialogTitle>
           <DialogDescription>
             <Image
+              width={600}
+              height={600}
               src={itemImagemURL}
               alt="Comprovante"
-              width={200}
-              height={200}
-              className="h-max w-full object-cover"
+              quality={100}
+              className="h-screen w-full object-fill"
             />
           </DialogDescription>
         </DialogHeader>

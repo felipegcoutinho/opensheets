@@ -47,6 +47,7 @@ import {
   Check,
   CheckCircle2Icon,
   Ellipsis,
+  ImageIcon,
   MessageSquareText,
   PartyPopper,
   RefreshCw,
@@ -426,6 +427,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+            </div>
+          )}
+
+          {item.imagem_url && (
+            <div className="flex gap-2 text-center">
+              <ImageIcon size={16} />
             </div>
           )}
         </div>
