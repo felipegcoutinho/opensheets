@@ -34,11 +34,11 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="border border-black px-1 text-black disabled:opacity-50 dark:border-black dark:text-black"
+    className="border border-pink-link px-1 text-pink-link brightness-50 disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
     onClick={onClick}
     disabled={disabled}
   >
-    <span className="pl-1">Retornar ao Mês Atual</span>
+    <span className="px-2">Retornar ao Mês Atual</span>
   </Button>
 );
 
@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="dark:bg-pink-link/40 flex w-full items-center justify-start gap-4 bg-green-month px-4 py-2">
+    <Card className="flex w-full items-center justify-start gap-4 bg-pink-link/50 px-4 py-2 dark:bg-pink-link/40">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -211,7 +211,12 @@ export default function MonthPicker() {
             disabled={isChanging}
           >
             <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-black focus:ring-0 dark:text-white">
-              <SelectValue>{`${currentMonth} ${currentYear}`}</SelectValue>
+              <SelectValue>
+                {currentMonth}
+                <span className="ml-1 text-pink-link brightness-50 dark:brightness-100">
+                  {currentYear}
+                </span>
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               {monthOptions.map((option) => (
@@ -221,6 +226,7 @@ export default function MonthPicker() {
               ))}
             </SelectContent>
           </Select>
+
           {isChanging && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
               <LoadingSpinner />

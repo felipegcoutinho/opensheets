@@ -2,6 +2,7 @@ import UseOptions from "@/hooks/use-options";
 import {
   addTransaction,
   deleteTransaction,
+  removeImage,
   updateTransaction,
 } from "@actions/transactions";
 import { addMonths, format, parse } from "date-fns";
@@ -22,6 +23,9 @@ export default function Utils() {
   const [loading, setLoading] = useState(false);
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
+  const [image, setImage] = useState(null);
+
+  const [removingImage, setRemovingImage] = useState(false);
 
   const handleCondicaoChange = (value: string) => {
     setShowParcelas(value === "Parcelado");
@@ -47,6 +51,13 @@ export default function Utils() {
     setLoading(true);
     const formData = new FormData(e.target);
 
+    const imageFile = formData.get("imagem_url");
+
+    // Remove o campo de imagem se nenhum arquivo válido for selecionado
+    if (!(imageFile instanceof File && imageFile.size > 0)) {
+      formData.delete("imagem_url");
+    }
+
     // Formatação do valor antes de enviar
     const valorFormatado = formData
       .get("valor")
@@ -65,7 +76,6 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-
     const condicao = formData.get("condicao");
 
     if (condicao !== "Parcelado") {
@@ -90,6 +100,17 @@ export default function Utils() {
     await deleteTransaction(formData);
     toast.success("Transação removida com sucesso!");
     setIsOpen(false);
+  };
+
+  const handleRemoveImage = async (transactionId, imageUrl) => {
+    setRemovingImage(true);
+    try {
+      await removeImage(transactionId, imageUrl);
+      toast.success("Imagem removida com sucesso!");
+    } catch (error) {
+      toast.success("Erro ao remover a imagem");
+      console.error("Erro ao remover a imagem:", error);
+    }
   };
 
   const getMonthOptions = () => {
@@ -188,5 +209,8 @@ export default function Utils() {
     setIsPaid,
     MonthUppercase,
     calcularMesFinal,
+    setImage,
+    image,
+    handleRemoveImage,
   };
 }

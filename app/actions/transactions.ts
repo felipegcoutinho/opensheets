@@ -10,7 +10,7 @@ export async function getTransaction(month) {
   const { data: transacao, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
+      `id, data_compra, periodo, descricao, tipo_transacao, categoria , imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
     )
@@ -32,6 +32,7 @@ export async function addTransaction(formData: FormData) {
     tipo_transacao,
     periodo,
     categoria,
+    imagem_url,
     realizado,
     condicao,
     forma_pagamento,
@@ -51,6 +52,37 @@ export async function addTransaction(formData: FormData) {
   const supabase = createClient();
   const transacoes = [];
 
+  // Upload da imagem, se houver
+  let imageUrl = null;
+  const imageFile = formData.get("imagem_url"); // Campo de imagem no formulário
+
+  // Upload da imagem, se houver
+  if (imageFile && imageFile instanceof File && imageFile.name) {
+    // Verifica se o arquivo tem um nome válido
+    const fileName = `${Date.now()}_${imageFile.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("comprovantes")
+      .upload(`${fileName}`, imageFile, {
+        upsert: true, // Sobrescreve arquivos com o mesmo nome, se necessário
+      });
+
+    if (uploadError) {
+      console.error("Erro ao fazer upload da imagem:", uploadError);
+    } else {
+      // Gerar uma Signed URL para acesso temporário ao arquivo
+      const { data: signedUrlData, error: signedUrlError } =
+        await supabase.storage
+          .from("comprovantes")
+          .createSignedUrl(`${fileName}`, 31536000); // URL válida por 1 ano
+
+      if (signedUrlError) {
+        console.error("Erro ao gerar Signed URL:", signedUrlError);
+      } else {
+        imageUrl = signedUrlData.signedUrl;
+      }
+    }
+  }
+
   function adicionarTransacao(valor, responsavel, periodo, parcela_atual) {
     transacoes.push({
       data_compra,
@@ -58,6 +90,7 @@ export async function addTransaction(formData: FormData) {
       tipo_transacao,
       periodo,
       categoria,
+      imagem_url: imageUrl,
       realizado,
       condicao,
       forma_pagamento,
@@ -175,6 +208,7 @@ export async function deleteTransaction(formData: FormData) {
 }
 
 export async function updateTransaction(formData: FormData) {
+  const supabase = createClient();
   const {
     id,
     data_compra,
@@ -194,10 +228,41 @@ export async function updateTransaction(formData: FormData) {
     qtde_recorrencia,
     cartao_id,
     conta_id,
+    segundo_responsavel,
+    dividir_lancamento,
+    imagem_url_atual, // URL da imagem existente
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  let imageUrl = imagem_url_atual; // Use o URL existente como padrão
+  const imageFile = formData.get("imagem_url"); // Novo arquivo enviado
 
+  // Verificar se há um novo arquivo de imagem
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    const fileName = `${Date.now()}_${imageFile.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("comprovantes")
+      .upload(fileName, imageFile);
+
+    if (uploadError) {
+      console.error("Erro ao fazer upload da imagem:", uploadError);
+      throw new Error("Erro ao fazer upload da imagem");
+    } else {
+      // Gerar URL assinada para a nova imagem
+      const { data: signedUrlData, error: signedUrlError } =
+        await supabase.storage
+          .from("comprovantes")
+          .createSignedUrl(fileName, 31536000);
+
+      if (signedUrlError) {
+        console.error("Erro ao gerar Signed URL:", signedUrlError);
+        throw new Error("Erro ao gerar URL assinada");
+      }
+
+      imageUrl = signedUrlData.signedUrl;
+    }
+  }
+
+  // Atualizar a transação no banco de dados
   try {
     await supabase
       .from("transacoes")
@@ -207,6 +272,7 @@ export async function updateTransaction(formData: FormData) {
         tipo_transacao,
         periodo,
         categoria,
+        imagem_url: imageUrl,
         realizado,
         condicao,
         forma_pagamento,
@@ -219,11 +285,46 @@ export async function updateTransaction(formData: FormData) {
         qtde_recorrencia,
         cartao_id,
         conta_id,
+        segundo_responsavel,
+        dividir_lancamento,
       })
       .eq("id", id);
 
-    revalidatePath("/dashboard");
+    console.log("Transação atualizada com sucesso!");
   } catch (error) {
-    console.error("Erro ao atualizar transação:", error);
+    console.error("Erro ao atualizar a transação:", error);
+    throw error;
   }
+}
+
+export async function removeImage(transactionId, imageUrl) {
+  const supabase = createClient();
+
+  // Extrair o caminho correto do arquivo
+  const filePath = decodeURIComponent(
+    imageUrl.split("/comprovantes/")[1].split("?")[0],
+  );
+
+  // 1. Excluir a imagem do storage
+  const { error: deleteError } = await supabase.storage
+    .from("comprovantes") // Nome do bucket
+    .remove([filePath]);
+
+  if (deleteError) {
+    console.error("Erro ao excluir imagem do storage:", deleteError);
+    throw new Error("Erro ao excluir imagem do armazenamento");
+  }
+
+  // 2. Limpar o campo `imagem_url` na tabela `transacoes`
+  const { error: updateError } = await supabase
+    .from("transacoes")
+    .update({ imagem_url: null }) // Define como `null`
+    .eq("id", transactionId); // Filtra pela transação
+
+  if (updateError) {
+    console.error("Erro ao limpar o campo imagem_url na tabela:", updateError);
+    throw new Error("Erro ao limpar o campo imagem_url");
+  }
+
+  console.log("Imagem removida com sucesso!");
 }

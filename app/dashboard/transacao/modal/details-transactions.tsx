@@ -20,6 +20,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/use-dates";
 import Utils from "../utils";
+import ViewImage from "./view-image";
 
 export default function DetailsTransactions({
   itemId,
@@ -40,6 +41,7 @@ export default function DetailsTransactions({
   itemRecorrencia,
   itemQtdeRecorrencia,
   itemPaid,
+  itemImagemURL,
 }) {
   const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } = Utils();
 
@@ -126,6 +128,8 @@ export default function DetailsTransactions({
                     <span>{itemNotas}</span>
                   </li>
                 )}
+
+                <ViewImage itemImagemURL={itemImagemURL} />
               </ul>
 
               <ul className="mb-6 grid gap-3">

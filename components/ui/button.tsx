@@ -10,8 +10,6 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        mytheme:
-          "bg-gradient-to-br from-[#171311] via-[#4D1E5D] to-[#96615A] text-white",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -21,9 +19,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         success:
-          "bg-green-50 text-green-500 hover:bg-green-100 dark:bg-green-900 dark:text-green-300",
+          "bg-green-100 text-green-600 hover:bg-green-100 dark:bg-green-800 dark:text-green-100",
         warning:
-          "bg-orange-50 text-orange-500 hover:bg-orange-100 dark:bg-orange-900 dark:text-orange-300",
+          "bg-orange-100 text-orange-600 hover:bg-orange-100 dark:bg-orange-800 dark:text-orange-100",
       },
       size: {
         default: "h-10 px-4 py-2",

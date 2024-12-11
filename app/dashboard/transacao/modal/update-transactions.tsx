@@ -23,8 +23,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { ThumbsUp } from "lucide-react";
-import { useEffect } from "react";
+import { ImageOff, ThumbsUp } from "lucide-react";
+import { useEffect, useState } from "react";
 import Utils from "../utils";
 
 export default function UpdateTransactions({
@@ -48,6 +48,7 @@ export default function UpdateTransactions({
   itemRecorrencia,
   itemQtdeRecorrencia,
   itemPaid,
+  itemImagemURL,
 }) {
   const {
     isOpen,
@@ -73,6 +74,9 @@ export default function UpdateTransactions({
     setShowRecorrencia,
     isPaid,
     setIsPaid,
+    setImage,
+    removingImage,
+    handleRemoveImage,
   } = Utils();
 
   // Inicializa o estado de `isPaid` com o valor do item quando o modal for aberto
@@ -83,8 +87,8 @@ export default function UpdateTransactions({
   const handleDialogClose = (val) => {
     setIsOpen(val);
     if (!val) {
-      // Se o modal for fechado, resetar `isPaid` para o valor original
-      setIsPaid(itemPaid);
+      setImagePreview(itemImagemURL); // Restaura a imagem original
+      setIsPaid(itemPaid); // Restaura o estado do pagamento
       setShowConta(false);
       setShowCartao(false);
       setShowParcelas(false);
@@ -92,11 +96,29 @@ export default function UpdateTransactions({
     }
   };
 
+  const [imagePreview, setImagePreview] = useState(itemImagemURL); // URL da imagem atual
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setImagePreview(reader.result); // Pré-visualização
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImageTeste = async () => {
+    try {
+      await handleRemoveImage(itemId, itemImagemURL);
+      setImagePreview(null); // Limpa a pré-visualização
+    } catch (error) {
+      console.error("Erro ao remover imagem:", error);
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>
-          Editar
-      </DialogTrigger>
+      <DialogTrigger>Editar</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Atualizar Transação</DialogTitle>
@@ -204,7 +226,45 @@ export default function UpdateTransactions({
             />
           </div>
 
-          <div className="mb-1 flex w-full gap-2">
+          <div>
+            <Label>Anexos</Label>
+            {
+              <Input
+                name="imagem_url"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            }
+
+            <div className="group relative">
+              {imagePreview ? (
+                <div
+                  className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
+                  onClick={handleRemoveImageTeste}
+                  disabled={removingImage}
+                >
+                  <img
+                    src={imagePreview}
+                    alt="Comprovante"
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="font-semibold text-white">
+                      {removingImage ? "Removendo..." : "Remover Imagem"}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-2 flex h-10 items-center justify-center bg-neutral-200 text-muted-foreground">
+                  <p>Não há anexos para essa transação</p>
+                  <ImageOff className="ml-2" size={16} />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex w-full">
             <div className="w-full">
               <Label>Anotação</Label>
               <Textarea

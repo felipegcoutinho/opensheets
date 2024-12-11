@@ -18,7 +18,7 @@ export async function getBills(month) {
     .order("dt_vencimento", { ascending: true });
 
   if (error) {
-    console.error("Erro em buscar boletos:", error);
+    console.error("Erro em buscar boletos (getBills):", error);
     return null;
   }
 

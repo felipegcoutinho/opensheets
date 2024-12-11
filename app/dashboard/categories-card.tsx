@@ -39,10 +39,7 @@ export default function CategoriesList({ data, month }) {
               <Numbers number={item.sum} />
             </p>
           </div>
-          <Progress
-            value={(item.sum / maxSum) * 100}
-            className="h-1 bg-alt_violet/10"
-          />
+          <Progress value={(item.sum / maxSum) * 100} className="h-1" />
         </div>
       ))}
     </>
