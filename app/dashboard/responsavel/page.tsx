@@ -1,5 +1,5 @@
 import Numbers from "@/components/numbers";
-import { Badge } from "@/components/ui/badge";
+import Ping from "@/components/ping-icon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import { User } from "lucide-react";
@@ -92,12 +92,8 @@ function CardComponent({
         <div className="grid gap-1">
           <li className="flex items-center justify-between">
             <span className="flex items-center gap-1">
-              <Badge
-                variant="outline"
-                className="border border-green-banner text-green-banner"
-              >
-                Cartões
-              </Badge>
+              <Ping color={"bg-green-banner"} />
+              <span className="font-bold">Cartões</span>
             </span>
             <span className="text-lg">
               <Numbers number={totalCartao} />
@@ -124,12 +120,8 @@ function CardComponent({
         <div className="grid gap-1">
           <li className="flex items-center justify-between">
             <span className="flex items-center gap-1">
-              <Badge
-                variant="outline"
-                className="border border-pink-link text-pink-link"
-              >
-                Boletos
-              </Badge>
+              <Ping color={"bg-pink-link"} />
+              <span className="font-bold">Boletos</span>
             </span>
             <span className="text-lg">
               <Numbers number={totalBoleto} />

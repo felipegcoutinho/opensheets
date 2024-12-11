@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { ThumbsUp } from "lucide-react";
+import { ImageOff, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import Utils from "../utils";
 
@@ -227,8 +227,7 @@ export default function UpdateTransactions({
           </div>
 
           <div>
-            <Label>Imagem Atual</Label>
-
+            <Label>Anexos</Label>
             {
               <Input
                 name="imagem_url"
@@ -236,40 +235,31 @@ export default function UpdateTransactions({
                 accept="image/*"
                 onChange={handleImageChange}
               />
-              /*
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Comprovante"
-                className="mt-2 h-20 w-full rounded object-cover"
-              />
-            )} */
             }
 
             <div className="group relative">
               {imagePreview ? (
-                <div className="flex flex-col gap-2">
-                  <div
-                    className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
-                    onClick={handleRemoveImageTeste}
-                    disabled={removingImage}
-                  >
-                    {/* Imagem */}
-                    <img
-                      src={imagePreview}
-                      alt="Comprovante"
-                      className="h-full w-full object-cover"
-                    />
-                    {/* Texto "Remover Imagem" ao passar o mouse */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
-                      <span className="font-semibold text-white">
-                        {removingImage ? "Removendo..." : "Remover Imagem"}
-                      </span>
-                    </div>
+                <div
+                  className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
+                  onClick={handleRemoveImageTeste}
+                  disabled={removingImage}
+                >
+                  <img
+                    src={imagePreview}
+                    alt="Comprovante"
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="font-semibold text-white">
+                      {removingImage ? "Removendo..." : "Remover Imagem"}
+                    </span>
                   </div>
                 </div>
               ) : (
-                <p>Sem imagem associada.</p>
+                <div className="mt-2 flex h-10 items-center justify-center bg-neutral-200 text-muted-foreground">
+                  <p>Não há anexos para essa transação</p>
+                  <ImageOff className="ml-2" size={16} />
+                </div>
               )}
             </div>
           </div>

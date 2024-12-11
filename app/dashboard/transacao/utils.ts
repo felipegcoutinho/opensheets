@@ -106,10 +106,10 @@ export default function Utils() {
     setRemovingImage(true);
     try {
       await removeImage(transactionId, imageUrl);
-      alert("Imagem removida com sucesso!");
+      toast.success("Imagem removida com sucesso!");
     } catch (error) {
+      toast.success("Erro ao remover a imagem");
       console.error("Erro ao remover a imagem:", error);
-      alert("Erro ao remover a imagem.");
     }
   };
 

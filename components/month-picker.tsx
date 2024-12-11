@@ -34,11 +34,11 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="border border-black px-1 text-black disabled:opacity-50 dark:border-black dark:text-black"
+    className="border border-pink-link px-1 text-pink-link brightness-50 disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
     onClick={onClick}
     disabled={disabled}
   >
-    <span className="pl-1">Retornar ao Mês Atual</span>
+    <span className="px-2">Retornar ao Mês Atual</span>
   </Button>
 );
 

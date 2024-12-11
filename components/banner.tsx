@@ -16,7 +16,7 @@ export default function Banner() {
 
   return (
     <Card className="mb-4 w-full bg-green-banner px-4 py-10 dark:bg-green-banner/20">
-      <p className="text-green-800 dark:text-pink-link">
+      <p className="text-green-800 dark:text-neutral-300">
         {fliendlyDate(currentDate)}
       </p>
       <p className="text-2xl font-bold">

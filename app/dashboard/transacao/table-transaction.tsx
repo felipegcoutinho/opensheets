@@ -47,7 +47,7 @@ import {
   Check,
   CheckCircle2Icon,
   Ellipsis,
-  ImageIcon,
+  FileImage,
   MessageSquareText,
   PartyPopper,
   RefreshCw,
@@ -333,12 +333,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <div className="flex">
+        <div className="flex items-center gap-1">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                className="flex p-0 data-[state=open]:bg-muted"
               >
                 <Ellipsis size={16} />
                 <span className="sr-only">Open menu</span>
@@ -399,7 +399,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               {item.responsavel != "Sistema" && (
                 <>
                   <DropdownMenuSeparator />
-
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     <DeleteTransactions
                       itemResponsavel={item.responsavel}
@@ -412,7 +411,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           </DropdownMenu>
 
           {item.responsavel != "Sistema" && (
-            <div className="flex gap-2 text-center">
+            <div className="flex text-center">
               <TooltipProvider delayDuration={300}>
                 <Tooltip>
                   <TooltipTrigger>
@@ -423,7 +422,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                     />
                   </TooltipTrigger>
                   <TooltipContent>
-                    {item.realizado ? "Compra Paga" : "Compra Pendente"}
+                    {item.realizado ? "Transação Paga" : "Transação Pendente"}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -431,8 +430,8 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           )}
 
           {item.imagem_url && (
-            <div className="flex gap-2 text-center">
-              <ImageIcon size={16} />
+            <div className="flex text-center">
+              <FileImage className="stroke-gray-500" size={16} />
             </div>
           )}
         </div>
