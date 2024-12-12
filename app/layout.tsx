@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       className={`${uiSans.className}`}
       suppressHydrationWarning
     >
-      <body>
+      <body suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

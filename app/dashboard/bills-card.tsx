@@ -17,8 +17,8 @@ export async function BillsList({ month }) {
   return (
     <>
       {sortedData.length > 0 ? (
-        sortedData.map((item) => (
-          <div key={item.cartao_id}>
+        sortedData.map((item, index) => (
+          <div key={`${item.cartao_id}-${index}`}>
             <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900">
               <div className="flex items-center gap-2">
                 <Image
@@ -29,10 +29,8 @@ export async function BillsList({ month }) {
                   height={40}
                   alt={"Logo do cartão"}
                 />
-
                 <div>
                   <p>{item.descricao}</p>
-
                   {item.status_pagamento === "Pendente" ? (
                     <p className="text-xs text-muted-foreground">
                       Vence {DateFormat(item.dt_vencimento)}
@@ -42,7 +40,6 @@ export async function BillsList({ month }) {
                   )}
                 </div>
               </div>
-
               <div className="py-1 text-right">
                 <p className="font-bold">
                   <Numbers number={item.valor} />
