@@ -1,8 +1,17 @@
-export const metadata = {
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
   title: "OpenSheets | Login",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  description: "Authentication forms built using the components.",
 };
 
-export default function LoginLayout({ children }) {
-  return <main className="flex justify-center mt-20">{children}</main>;
+export default function AuthenticationPage({ children }) {
+  return (
+    <div className="container relative h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+        <div className="absolute inset-0 rounded bg-green-banner dark:bg-green-950" />
+      </div>
+      <div className="mx-auto lg:p-8">{children}</div>
+    </div>
+  );
 }

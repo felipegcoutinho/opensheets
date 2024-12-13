@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/server";
@@ -42,7 +41,15 @@ export default async function Login(props) {
   };
 
   return (
-    <Card className="flex w-full flex-1 flex-col justify-center gap-2 p-8 sm:max-w-md">
+    <div className="flex w-full flex-1 flex-col justify-center gap-2 p-8 sm:max-w-md">
+      <div className="mx-auto mb-10 flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+        <div className="flex flex-col space-y-2 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">Criar Conta</h1>
+          <p className="text-sm text-muted-foreground">
+            Entre com seu email e senha para criar sua conta.
+          </p>
+        </div>
+      </div>
       <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
         <Label>Seu nome</Label>
         <div className="mb-3 flex gap-2">
@@ -81,6 +88,6 @@ export default async function Login(props) {
           <Link href="/login">Voltar para Login</Link>
         </Button>
       </form>
-    </Card>
+    </div>
   );
 }
