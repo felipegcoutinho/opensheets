@@ -33,7 +33,7 @@ async function PageCards(props) {
                     <Image
                       quality={100}
                       src={`/logos/${item.logo_image}`}
-                      className="rounded shadow-lg"
+                      className="rounded-full shadow-lg"
                       width={45}
                       height={45}
                       alt="Logo do cartão"

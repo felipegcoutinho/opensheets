@@ -92,7 +92,7 @@ export default async function page(props) {
           <Image
             quality={100}
             src={`/logos/${item.logo_image}`}
-            className="rounded shadow-lg"
+            className="rounded-full shadow-lg"
             width={60}
             height={60}
             alt="Logo do cartão"
@@ -122,7 +122,7 @@ export default async function page(props) {
             <Image
               quality={100}
               src={`/bandeiras/${item.bandeira}`}
-              className="rounded"
+              className="rounded-full"
               width={40}
               height={40}
               alt="Bandeira do cartão"
