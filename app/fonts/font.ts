@@ -1,10 +1,16 @@
-import { JetBrains_Mono } from "next/font/google";
+import { Fira_Sans, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   fallback: ["monospace"],
+});
+
+const firaSans = Fira_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  fallback: ["sans-serif"],
 });
 
 const uiSans = localFont({
@@ -47,4 +53,4 @@ const googleSans = localFont({
     },
   ],
 });
-export { googleSans, jetBrainsMono, uiSans };
+export { firaSans, googleSans, jetBrainsMono, uiSans };

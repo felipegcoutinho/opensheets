@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-pink-link/50 px-4 py-2 dark:bg-pink-link/40">
+    <Card className="flex w-full items-center justify-start gap-4 bg-pink-link px-4 py-2 dark:bg-pink-link/40">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
