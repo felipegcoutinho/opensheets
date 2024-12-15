@@ -1,10 +1,10 @@
-import { Inter } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
-const inter = Inter({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["500", "600"],
-  fallback: ["system-ui", "arial"],
+  weight: ["400", "500"],
+  fallback: ["monospace"],
 });
 
 const uiSans = localFont({
@@ -47,4 +47,4 @@ const googleSans = localFont({
     },
   ],
 });
-export { googleSans, inter, uiSans };
+export { googleSans, jetBrainsMono, uiSans };

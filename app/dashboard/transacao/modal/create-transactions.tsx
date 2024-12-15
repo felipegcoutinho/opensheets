@@ -374,6 +374,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
           <div className="w-full">
             <Label>Comprovante</Label>
             <Input
+              className="border-dotted border-neutral-400"
               type="file"
               name="imagem_url"
               accept="image/*"

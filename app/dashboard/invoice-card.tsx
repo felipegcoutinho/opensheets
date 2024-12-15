@@ -18,7 +18,7 @@ export default function Invoice({ data, month }) {
                 <Image
                   quality={100}
                   src={`/logos/${item.logo_image}`}
-                  className="rounded-full"
+                  className="rounded-none-full"
                   width={40}
                   height={40}
                   alt={"Logo do cartão"}

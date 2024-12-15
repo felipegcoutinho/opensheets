@@ -6,7 +6,7 @@ export function LogosOnTable({ descricao, logo }) {
       <Image
         quality={100}
         src={`/logos/${logo}`}
-        className="rounded-full"
+        className="rounded-none-full"
         width={30}
         height={30}
         alt="Logo do cartão"

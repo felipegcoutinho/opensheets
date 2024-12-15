@@ -80,7 +80,7 @@ export default async function FinancialSummary({ month }) {
             <Ping color="bg-black" />
             Saldo Atual
           </CardDescription>
-          <CardTitle className="text-3xl">
+          <CardTitle className="text-2xl">
             <Numbers number={saldo} />
           </CardTitle>
         </CardHeader>

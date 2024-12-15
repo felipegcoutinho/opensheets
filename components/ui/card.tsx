@@ -9,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "hover:scale-102 transform rounded border-none bg-card text-card-foreground transition-all duration-500 ease-in-out hover:shadow-2xl hover:shadow-pink-link/10 dark:border-neutral-800",
+      "hover:scale-102 rounded-none-none transform border-none bg-card text-card-foreground transition-all duration-500 ease-in-out hover:shadow-2xl hover:shadow-pink-link/10 dark:border-neutral-800",
       className,
     )}
     {...props}
@@ -24,7 +24,7 @@ const CreditCard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border border-neutral-200 bg-card text-card-foreground dark:border-none",
+      "rounded-none-xl border border-neutral-200 bg-card text-card-foreground dark:border-none",
       className,
     )}
     {...props}

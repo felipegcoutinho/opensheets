@@ -1,5 +1,6 @@
 "use client";
 
+import { uiSans } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import { usePathname } from "next/navigation";
 import GetUserName from "./get-username";
@@ -15,11 +16,13 @@ export default function Banner() {
   }
 
   return (
-    <Card className="mb-4 w-full bg-green-banner px-4 py-10 dark:bg-green-banner/20">
-      <p className="text-green-800 dark:text-neutral-300">
+    <Card
+      className={`${uiSans.className} mb-4 w-full bg-green-banner px-4 py-10 dark:bg-green-banner/20`}
+    >
+      <p className="text-sm text-green-800 dark:text-neutral-300">
         {fliendlyDate(currentDate)}
       </p>
-      <p className="text-2xl font-bold">
+      <p className="text-xl font-bold">
         {getGreeting()}, <GetUserName />
       </p>
     </Card>

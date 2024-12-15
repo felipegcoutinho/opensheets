@@ -54,7 +54,7 @@ export default function CreateAccount() {
                       <Image
                         quality={100}
                         src={`/logos/${item.file}`}
-                        className="rounded border"
+                        className="rounded-none border"
                         width={32}
                         height={32}
                         alt="Logo da conta"

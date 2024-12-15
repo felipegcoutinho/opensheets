@@ -27,11 +27,15 @@ export default async function FinancialSummaryCards({ month }) {
       </div>
 
       <CardInvoices title="Receitas por Categorias">
-        <Category data={incomeByCategory} month={month} />
+        <Category
+          color={"bg-green-banner"}
+          data={incomeByCategory}
+          month={month}
+        />
       </CardInvoices>
 
       <CardInvoices title="Despesas por Categorias">
-        <Category data={expenseByCategory} month={month} />
+        <Category color={"bg-red-500"} data={expenseByCategory} month={month} />
       </CardInvoices>
 
       <CountList month={month} />

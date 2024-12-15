@@ -227,9 +227,10 @@ export default function UpdateTransactions({
           </div>
 
           <div>
-            <Label>Anexos</Label>
+            <Label>Comprovantes</Label>
             {
               <Input
+                className="border-dotted border-neutral-400"
                 name="imagem_url"
                 type="file"
                 accept="image/*"
@@ -240,7 +241,7 @@ export default function UpdateTransactions({
             <div className="group relative">
               {imagePreview ? (
                 <div
-                  className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
+                  className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded-none"
                   onClick={handleRemoveImageTeste}
                   disabled={removingImage}
                 >

@@ -109,7 +109,7 @@ export default function CreateBills({ getAccountMap }) {
             </div>
           </div>
 
-          <div className="mt-2 flex items-center justify-between rounded bg-zinc-100 p-2">
+          <div className="mt-2 flex items-center justify-between rounded-none bg-zinc-100 p-2">
             <Label className="text-sm font-medium text-neutral-600">
               Dividir Boleto
             </Label>

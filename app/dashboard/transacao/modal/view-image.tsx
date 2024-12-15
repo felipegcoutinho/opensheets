@@ -16,7 +16,7 @@ function ViewImage({ itemImagemURL }) {
           <img
             src={itemImagemURL}
             alt="Comprovante"
-            className="h-20 w-full rounded object-cover brightness-50 transition-all duration-300 hover:scale-105"
+            className="h-20 w-full rounded-none object-cover transition-all duration-300 hover:scale-105"
           />
         )}
       </DialogTrigger>
