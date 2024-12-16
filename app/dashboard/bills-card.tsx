@@ -24,7 +24,7 @@ export async function BillsList({ month }) {
                 <Image
                   quality={100}
                   src={`/logos/boleto.png`}
-                  className="rounded-none-full"
+                  className="rounded-full"
                   width={40}
                   height={40}
                   alt={"Logo do cartão"}

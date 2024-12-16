@@ -1,6 +1,5 @@
 "use client";
 
-import { firaSans } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import { usePathname } from "next/navigation";
 import GetUserName from "./get-username";
@@ -17,7 +16,7 @@ export default function Banner() {
 
   return (
     <Card
-      className={`${firaSans.className} mb-4 w-full bg-green-banner px-4 py-10 text-black dark:bg-green-banner/20`}
+      className={`bg-primary-color dark:bg-primary-color/20 mb-4 w-full px-4 py-10 text-black`}
     >
       <p className="text-sm dark:text-neutral-300">
         {fliendlyDate(currentDate)}

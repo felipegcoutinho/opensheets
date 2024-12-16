@@ -151,7 +151,7 @@ const SelectItemColor = React.forwardRef<
     <span className="absolute left-2 flex h-4 w-4 items-center justify-center">
       <span
         style={{ backgroundColor: color }}
-        className="rounded-none-full inline-block h-4 w-4"
+        className="inline-block h-4 w-4 rounded-full"
       />
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

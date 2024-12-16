@@ -53,7 +53,7 @@ export default async function page(props) {
           <Image
             quality={100}
             src={`/logos/${item.logo_image}`}
-            className="rounded-none-full shadow-lg"
+            className="rounded-full shadow-lg"
             width={60}
             height={60}
             alt="Logo da conta"

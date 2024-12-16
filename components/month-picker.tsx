@@ -34,7 +34,7 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="border border-pink-link px-1 text-pink-link brightness-50 disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
+    className="border border-black px-1 text-black disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
     onClick={onClick}
     disabled={disabled}
   >
@@ -44,7 +44,7 @@ const ReturnButton = ({ onClick, disabled }) => (
 
 // Componente de Loading
 const LoadingSpinner = () => (
-  <Loader2 className="h-4 w-4 animate-spin text-green-banner dark:text-blue-200" />
+  <Loader2 className="text-primary-color h-4 w-4 animate-spin dark:text-blue-200" />
 );
 
 export default function MonthPicker() {
@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-pink-link px-4 py-2 dark:bg-pink-link/40">
+    <Card className="bg-thirdy-color dark:bg-thirdy-color/40 flex w-full items-center justify-start gap-4 px-4 py-2">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -213,9 +213,7 @@ export default function MonthPicker() {
             <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-black focus:ring-0 dark:text-white">
               <SelectValue>
                 {currentMonth}
-                <span className="ml-1 text-pink-link brightness-50 dark:brightness-100">
-                  {currentYear}
-                </span>
+                <span className="ml-1">{currentYear}</span>
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
