@@ -104,8 +104,8 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
       className={clsx(
         "flex items-center gap-1 p-1 transition-colors duration-700",
         isActive
-          ? "decoration-thirdy-color font-bold underline decoration-2 underline-offset-8 dark:bg-transparent"
-          : "hover:bg-thirdy-color/10 text-neutral-500 hover:text-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800",
+          ? "decoration-tertiary-color font-bold underline decoration-2 underline-offset-8 dark:bg-transparent"
+          : "hover:bg-tertiary-color/10 text-neutral-500 hover:text-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800",
       )}
     >
       <Icon size={12} />

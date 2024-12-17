@@ -74,13 +74,13 @@ export default async function FinancialSummary({ month }) {
       {cardData.map((card, index) => (
         <CardItem key={index} {...card} />
       ))}
-      <Card className="from-thirdy-color/10 bg-gradient-to-br">
+      <Card className="from-tertiary-color/50 bg-gradient-to-br">
         <CardHeader className="pb-2">
           <CardDescription className="flex items-center gap-1 pb-2">
             <Ping color="bg-black" />
             Saldo Atual
           </CardDescription>
-          <CardTitle className="text-2xl">
+          <CardTitle className="text-3xl">
             <Numbers number={saldo} />
           </CardTitle>
         </CardHeader>

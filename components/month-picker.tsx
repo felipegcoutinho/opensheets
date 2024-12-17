@@ -44,7 +44,7 @@ const ReturnButton = ({ onClick, disabled }) => (
 
 // Componente de Loading
 const LoadingSpinner = () => (
-  <Loader2 className="text-primary-color h-4 w-4 animate-spin dark:text-blue-200" />
+  <Loader2 className="h-4 w-4 animate-spin text-primary-color dark:text-blue-200" />
 );
 
 export default function MonthPicker() {
@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="bg-thirdy-color dark:bg-thirdy-color/40 flex w-full items-center justify-start gap-4 px-4 py-2">
+    <Card className="bg-tertiary-color dark:bg-tertiary-color/40 flex w-full items-center justify-start gap-4 px-4 py-2">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}

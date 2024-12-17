@@ -120,7 +120,7 @@ function CardComponent({
         <div className="grid gap-1">
           <li className="flex items-center justify-between">
             <span className="flex items-center gap-1">
-              <Ping color={"bg-thirdy-color"} />
+              <Ping color={"bg-tertiary-color"} />
               <span className="font-bold">Boletos</span>
             </span>
             <span className="text-lg">
