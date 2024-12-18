@@ -1,33 +1,13 @@
+import CardSummary from "@/components/card-summary";
 import Numbers from "@/components/numbers";
 import Ping from "@/components/ping-icon";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
 import Utils from "./utils";
-
-const CardItem = React.memo(({ title, value, previousValue, color }) => (
-  <Card>
-    <CardHeader className="pb-2">
-      <CardDescription className="flex items-center gap-1">
-        <Ping color={color} />
-        {title}
-      </CardDescription>
-      <CardTitle className="text-2xl">
-        <Numbers number={value} />
-      </CardTitle>
-    </CardHeader>
-    <CardContent className="text-xs text-muted-foreground">
-      anterior <Numbers number={previousValue} />
-    </CardContent>
-  </Card>
-));
-
-CardItem.displayName = "CardItem";
 
 export default async function FinancialSummary({ month }) {
   const {
@@ -71,10 +51,16 @@ export default async function FinancialSummary({ month }) {
 
   return (
     <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
-      {cardData.map((card, index) => (
-        <CardItem key={index} {...card} />
+      {cardData.map((item, index) => (
+        <CardSummary
+          color={item.color}
+          previousValue={item.previousValue}
+          title={item.title}
+          value={item.value}
+          key={index}
+        />
       ))}
-      <Card className="from-tertiary-color/50 bg-gradient-to-br">
+      <Card className="bg-gradient-to-br from-tertiary-color/50">
         <CardHeader className="pb-2">
           <CardDescription className="flex items-center gap-1 pb-2">
             <Ping color="bg-black" />
