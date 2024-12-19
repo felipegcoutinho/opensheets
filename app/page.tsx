@@ -17,7 +17,7 @@ export default async function Index() {
                 está indo.
               </p>
             </section>
-            <section className="container mx-auto mt-8 rounded-none bg-opacity-50 p-8 text-black dark:text-white">
+            <section className="container mx-auto mt-8 rounded bg-opacity-50 p-8 text-black dark:text-white">
               <h2 className="mb-4 text-2xl font-bold">Recursos Principais</h2>
               <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <li>

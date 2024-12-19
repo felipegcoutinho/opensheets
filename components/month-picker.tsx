@@ -34,7 +34,7 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="border border-black px-1 text-black disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
+    className="rounded border border-black px-1 text-black disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
     onClick={onClick}
     disabled={disabled}
   >
@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="bg-tertiary-color dark:bg-tertiary-color/40 flex w-full items-center justify-start gap-4 px-4 py-2">
+    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/40">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}

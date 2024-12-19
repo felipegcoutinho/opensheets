@@ -241,7 +241,7 @@ export default function UpdateTransactions({
             <div className="group relative">
               {imagePreview ? (
                 <div
-                  className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded-none"
+                  className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
                   onClick={handleRemoveImageTeste}
                   disabled={removingImage}
                 >

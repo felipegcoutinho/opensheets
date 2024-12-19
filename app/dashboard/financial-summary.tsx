@@ -1,12 +1,4 @@
 import CardSummary from "@/components/card-summary";
-import Numbers from "@/components/numbers";
-import Ping from "@/components/ping-icon";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Utils from "./utils";
 
 export default async function FinancialSummary({ month }) {
@@ -18,8 +10,7 @@ export default async function FinancialSummary({ month }) {
     balanco,
     balancoAnterior,
     previsto,
-    saldoAnterior,
-    saldo,
+    previstoAnterior,
   } = await Utils(month);
 
   const cardData = [
@@ -44,13 +35,13 @@ export default async function FinancialSummary({ month }) {
     {
       title: "Saldo Previsto",
       value: previsto,
-      previousValue: saldoAnterior,
+      previousValue: previstoAnterior,
       color: "bg-cyan-400",
     },
   ];
 
   return (
-    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
       {cardData.map((item, index) => (
         <CardSummary
           color={item.color}
@@ -60,17 +51,6 @@ export default async function FinancialSummary({ month }) {
           key={index}
         />
       ))}
-      <Card className="bg-gradient-to-br from-tertiary-color/50">
-        <CardHeader className="pb-2">
-          <CardDescription className="flex items-center gap-1 pb-2">
-            <Ping color="bg-black" />
-            Saldo Atual
-          </CardDescription>
-          <CardTitle className="text-3xl">
-            <Numbers number={saldo} />
-          </CardTitle>
-        </CardHeader>
-      </Card>
     </div>
   );
 }

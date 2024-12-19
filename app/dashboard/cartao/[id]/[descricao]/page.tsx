@@ -55,7 +55,7 @@ export default async function page(props) {
   return (
     <>
       <div
-        className={`mt-4 rounded-none p-2 dark:border-none border${
+        className={`mt-4 rounded p-2 dark:border-none border${
           fatura_status &&
           fatura_status.some((item) => item.status_pagamento === "Pago")
             ? "border-green-500 bg-green-50 dark:bg-green-900"

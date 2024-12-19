@@ -28,7 +28,7 @@ export default async function FinancialSummaryCards({ month }) {
 
       <CardInvoices title="Receitas por Categorias">
         <Category
-          color={"bg-green-500"}
+          color="bg-green-500"
           data={incomeByCategory}
           month={month}
         />
