@@ -11,7 +11,7 @@ function Banner({ children }) {
     return null;
   }
   return (
-    <Card className="mb-4 w-full bg-primary-color px-4 py-10 text-black dark:bg-primary-color/20">
+    <Card className="mb-4 w-full bg-primary-color px-4 py-10 text-[#585f34] dark:bg-primary-color/20">
       {children}
     </Card>
   );

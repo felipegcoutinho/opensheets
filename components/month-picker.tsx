@@ -21,7 +21,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="focus:outline-none disabled:opacity-50"
+      className="text-[#4e5a5c] focus:outline-none disabled:opacity-50"
       disabled={disabled}
     >
       <Icon size={16} />
@@ -34,7 +34,7 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="rounded border border-black px-1 text-black disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
+    className="rounded border border-[#4e5a5c] px-1 text-[#4e5a5c] disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
     onClick={onClick}
     disabled={disabled}
   >
@@ -210,7 +210,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-black focus:ring-0 dark:text-white">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-[#4e5a5c] focus:ring-0 dark:text-white">
               <SelectValue>
                 {currentMonth}
                 <span className="ml-1">{currentYear}</span>
