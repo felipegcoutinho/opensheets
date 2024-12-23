@@ -10,8 +10,9 @@ function Banner({ children }) {
   if (!isDashboard) {
     return null;
   }
+
   return (
-    <Card className="mb-4 w-full bg-primary-color px-4 py-10 text-[#585f34] dark:bg-primary-color/20">
+    <Card className="mb-4 w-full bg-primary-color bg-[url('/bg-banner.svg')] px-4 py-10 text-[#585f34] dark:bg-tertiary-color/30 dark:text-white">
       {children}
     </Card>
   );

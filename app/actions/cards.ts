@@ -199,7 +199,8 @@ export async function getCardSum(month, cartao_id) {
   return getCardSum;
 }
 
-export async function getLimite(cartao_id) {
+// Função para obter o limite em uso
+export async function getLimiteEmUso(cartao_id) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -211,11 +212,25 @@ export async function getLimite(cartao_id) {
     .eq("realizado", false);
 
   if (error) {
-    console.error("Erro ao buscar limite:", error);
-    return null;
+    console.error("Erro ao buscar limite em uso:", error);
+    return 0;
   }
 
-  const getLimite = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+  const limiteEmUso = data.reduce(
+    (sum, item) => sum + parseFloat(item.valor),
+    0,
+  );
+  return limiteEmUso;
+}
 
-  return getLimite;
+// Função para calcular o limite disponível
+export async function getLimitesCartao(cartao_id, limite_total) {
+  const limiteEmUso = await getLimiteEmUso(cartao_id);
+  const limiteDisponivel = limite_total - limiteEmUso;
+
+  return {
+    limiteTotal: limite_total,
+    limiteEmUso: limiteEmUso,
+    limiteDisponivel: limiteDisponivel,
+  };
 }

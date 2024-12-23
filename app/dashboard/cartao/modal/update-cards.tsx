@@ -201,7 +201,17 @@ export default function UpdateCard({
                 <SelectContent>
                   {getAccountMap?.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.descricao}
+                      <div className="flex items-center gap-2">
+                        <Image
+                          quality={100}
+                          src={`/logos/${item.logo_image}`}
+                          className="h-8 w-8 rounded-full border"
+                          width={32}
+                          height={32}
+                          alt="Logo da Conta"
+                        />
+                        <span>{item.descricao}</span>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>

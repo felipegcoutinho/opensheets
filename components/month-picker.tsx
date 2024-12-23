@@ -21,7 +21,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="text-[#4e5a5c] focus:outline-none disabled:opacity-50"
+      className="text-[#4e5a5c] focus:outline-none disabled:opacity-50 dark:text-white"
       disabled={disabled}
     >
       <Icon size={16} />
@@ -196,7 +196,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/40">
+    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}

@@ -17,7 +17,6 @@ import {
   getCardInvoice,
   getCards,
   getCardSum,
-  getLimite,
 } from "@actions/cards";
 import { getFaturas } from "@actions/invoices";
 import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
@@ -41,9 +40,6 @@ export default async function page(props) {
   const sumCardSum = await getCardSum(month, params.id);
 
   const getCardsMap = await getCards(month);
-
-  const limite = await getLimite(params.id);
-
   const fatura_status = await getFaturas(month, params.id);
 
   const getResponsavelClass = (responsavel) => {
@@ -106,11 +102,11 @@ export default async function page(props) {
           </div>
 
           <div className="leading-loose">
-            <p className="text-xs">Limite Disponível</p>
-            <p className="font-bold">
-              <Numbers number={item.limite - limite} />
+            <p className="text-xs">Limite Total</p>
+            <p>
+              <Numbers number={item.limite} />
             </p>
-            <p className="text-xs">Conta de Pagamento</p>
+            <p className="text-xs">Conta Padrão</p>
             <p className="font-bold">{item.contas.descricao}</p>
           </div>
 

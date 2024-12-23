@@ -24,6 +24,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { ThumbsUp } from "lucide-react";
+import Image from "next/image";
 import Utils from "../utils";
 
 export default function CreateTransactions({ getCardsMap, getAccountMap }) {
@@ -259,7 +260,17 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                   <SelectContent>
                     {getAccountMap.map((item) => (
                       <SelectItem key={item.id} value={item.id.toString()}>
-                        {item.descricao}
+                        <div className="flex items-center gap-2">
+                          <Image
+                            quality={100}
+                            src={`/logos/${item.logo_image}`}
+                            className="h-8 w-8 rounded-full border"
+                            width={32}
+                            height={32}
+                            alt="Logo da Conta"
+                          />
+                          <span>{item.descricao}</span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -278,7 +289,17 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                   <SelectContent>
                     {getCardsMap.map((item) => (
                       <SelectItem key={item.id} value={item.id.toString()}>
-                        {item.descricao}
+                        <div className="flex items-center gap-2">
+                          <Image
+                            quality={100}
+                            src={`/logos/${item.logo_image}`}
+                            className="h-8 w-8 rounded-full border"
+                            width={32}
+                            height={32}
+                            alt="Logo do cartão"
+                          />
+                          <span>{item.descricao}</span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>

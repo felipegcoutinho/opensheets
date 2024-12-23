@@ -2,9 +2,10 @@ import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { UseDates } from "@/hooks/use-dates";
 import { getAccount } from "@actions/accounts";
-import { deleteCards, getCards } from "@actions/cards";
+import { deleteCards, getCards, getLimitesCartao } from "@actions/cards";
 import Image from "next/image";
 import Link from "next/link";
 import CreateCard from "./modal/create-cards";
@@ -19,14 +20,25 @@ async function PageCards(props) {
   const getCardsMap = await getCards(month);
   const getAccountMap = await getAccount();
 
+  // Obter os limites para cada cartão
+  const cardsWithLimits = await Promise.all(
+    getCardsMap?.map(async (card) => {
+      const limites = await getLimitesCartao(card.id, card.limite);
+      return { ...card, limites };
+    }),
+  );
+
   return (
     <div className="w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
       <div className="mt-4 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
-        {getCardsMap?.length !== 0 ? (
-          getCardsMap?.map((item) => (
-            <Card key={item.id}>
+        {cardsWithLimits?.length !== 0 ? (
+          cardsWithLimits?.map((item) => (
+            <Card
+              key={item.id}
+              className={`rounded bg-[url('/bg.svg')] bg-cover`}
+            >
               <CardContent className="space-y-4 p-5">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -34,8 +46,8 @@ async function PageCards(props) {
                       quality={100}
                       src={`/logos/${item.logo_image}`}
                       className="rounded-full shadow-lg"
-                      width={45}
-                      height={45}
+                      width={50}
+                      height={50}
                       alt="Logo do cartão"
                     />
                     {item.descricao}
@@ -52,16 +64,43 @@ async function PageCards(props) {
                   </div>
                 </CardTitle>
 
-                <div className="space-y-1 text-neutral-500 dark:text-neutral-300">
+                <div className="space-y-2 text-neutral-500 dark:text-neutral-300">
                   <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
                   <p className="text-sm">Vence dia {item.dt_vencimento}</p>
-                  <p className="text-sm">
-                    Limite Total <Numbers number={item.limite} />
-                  </p>
+
+                  <div className="flex justify-between py-3 text-xs">
+                    <div>
+                      <p>Limite Total</p>
+                      <p>
+                        <Numbers number={item.limites.limiteTotal} />
+                      </p>
+                    </div>
+                    <div>
+                      <p>Em Uso</p>
+                      <p>
+                        <Numbers number={item.limites.limiteEmUso} />
+                      </p>
+                    </div>
+                    <div>
+                      <p>Disponível</p>
+                      <p className="text-green-500">
+                        <Numbers number={item.limites.limiteDisponivel} />
+                      </p>
+                    </div>
+                  </div>
+
+                  <Progress
+                    indicatorColor={"bg-black dark:bg-white"}
+                    value={
+                      (item.limites.limiteEmUso / item.limites.limiteTotal) *
+                      100
+                    }
+                    className="h-2"
+                  />
                 </div>
               </CardContent>
 
-              <CardFooter className="flex justify-between bg-neutral-100 px-6 py-1 text-black dark:bg-neutral-800">
+              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-sm">
                 <Button className="p-0" variant="link">
                   <Link
                     href={`/dashboard/cartao/${item.id}/${item.descricao.toLowerCase()}`}

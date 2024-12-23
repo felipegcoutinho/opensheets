@@ -8,7 +8,7 @@ export async function getResponsavelTransactionList(month) {
 
   const { data: users, error } = await supabase
     .from("transacoes")
-    .select("responsavel, cartoes (descricao), valor")
+    .select("responsavel, cartoes (descricao, logo_image), valor")
     .order("responsavel", { ascending: true })
     .eq("periodo", month)
     .eq("tipo_transacao", "Despesa")
