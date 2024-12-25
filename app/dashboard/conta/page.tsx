@@ -40,7 +40,7 @@ async function PageAccount(props) {
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
-            <Card key={item.id} className="bg-[url('/bg.svg')] bg-cover">
+            <Card key={item.id} className={`rounded`}>
               <CardContent className="space-y-4 p-6">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
