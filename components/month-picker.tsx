@@ -8,44 +8,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
-import { ChevronLeftSquare, ChevronRightSquare, Loader2 } from "lucide-react";
+import { ChevronLeftCircle, ChevronRightCircle, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-
-// Componente otimizado para os botões de navegação
-const NavigationButton = ({ onClick, direction, disabled }) => {
-  const Icon = direction === "left" ? ChevronLeftSquare : ChevronRightSquare;
-
-  return (
-    <button
-      onClick={onClick}
-      className="text-[#4e5a5c] focus:outline-none disabled:opacity-50 dark:text-white"
-      disabled={disabled}
-    >
-      <Icon size={16} />
-    </button>
-  );
-};
-
-// Componente otimizado para o botão de retorno
-const ReturnButton = ({ onClick, disabled }) => (
-  <Button
-    variant="link"
-    size="xs"
-    className="rounded border border-[#4e5a5c] px-1 text-[#4e5a5c] disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
-    onClick={onClick}
-    disabled={disabled}
-  >
-    <span className="px-2">Retornar ao Mês Atual</span>
-  </Button>
-);
-
-// Componente de Loading
-const LoadingSpinner = () => (
-  <Loader2 className="h-4 w-4 animate-spin text-primary-color dark:text-blue-200" />
-);
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -210,7 +177,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-[#4e5a5c] focus:ring-0 dark:text-white">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-cyan-900 focus:ring-0 dark:text-white">
               <SelectValue>
                 {currentMonth}
                 <span className="ml-1">{currentYear}</span>
@@ -245,3 +212,36 @@ export default function MonthPicker() {
     </Card>
   );
 }
+
+// Componente otimizado para os botões de navegação
+const NavigationButton = ({ onClick, direction, disabled }) => {
+  const Icon = direction === "left" ? ChevronLeftCircle : ChevronRightCircle;
+
+  return (
+    <button
+      onClick={onClick}
+      className="text-cyan-900 focus:outline-none disabled:opacity-50 dark:text-white"
+      disabled={disabled}
+    >
+      <Icon size={16} />
+    </button>
+  );
+};
+
+// Componente otimizado para o botão de retorno
+const ReturnButton = ({ onClick, disabled }) => (
+  <Button
+    variant="link"
+    size="xs"
+    className="border border-cyan-900 px-1 text-cyan-900 disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
+    onClick={onClick}
+    disabled={disabled}
+  >
+    <span className="px-2">Retornar ao Mês Atual</span>
+  </Button>
+);
+
+// Componente de Loading
+const LoadingSpinner = () => (
+  <Loader2 className="h-4 w-4 animate-spin text-primary-color dark:text-blue-200" />
+);
