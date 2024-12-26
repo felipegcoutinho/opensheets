@@ -1,7 +1,6 @@
 import Numbers from "@/components/numbers";
-import Ping from "@/components/ping-icon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User } from "lucide-react";
+import { CreditCard, File, User, Users } from "lucide-react";
 import Image from "next/image";
 
 export default function UsersCard({
@@ -19,7 +18,7 @@ export default function UsersCard({
       <CardHeader className="flex w-full">
         <CardTitle className="flex justify-between gap-2">
           <p>{responsavel}</p>
-          <User size={28} />
+          {responsavel === "Você" ? <User size={28} /> : <Users size={28} />}
         </CardTitle>
       </CardHeader>
 
@@ -27,7 +26,7 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <Ping color={"bg-primary-color"} />
+              <CreditCard size={14} />
               <p className="font-bold">Cartões</p>
             </div>
             <p className="text-lg">
@@ -39,7 +38,7 @@ export default function UsersCard({
             {hasCartoesData ? (
               Object.entries(cartoes).map(([descricao, data]) => (
                 <li
-                  className="flex items-center justify-between text-muted-foreground"
+                  className="flex items-center justify-between leading-relaxed text-muted-foreground"
                   key={descricao}
                 >
                   <p className="flex items-center gap-1">
@@ -84,7 +83,7 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <Ping color={"bg-tertiary-color"} />
+              <File size={14} />
               <p className="font-bold">Boletos</p>
             </div>
             <p className="text-lg">
@@ -96,7 +95,7 @@ export default function UsersCard({
             {hasBoletosData ? (
               Object.entries(boletos).map(([descricao, valor]) => (
                 <li
-                  className="flex items-center justify-between text-muted-foreground"
+                  className="flex items-center justify-between leading-relaxed text-muted-foreground"
                   key={descricao}
                 >
                   <span className="flex items-center gap-1">
