@@ -1,33 +1,5 @@
-import Numbers from "@/components/numbers";
-import Ping from "@/components/ping-icon";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import React from "react";
+import CardSummary from "@/components/card-summary";
 import Utils from "./utils";
-
-const CardItem = React.memo(({ title, value, previousValue, color }) => (
-  <Card>
-    <CardHeader className="pb-2">
-      <CardDescription className="flex items-center gap-1">
-        <Ping color={color} />
-        {title}
-      </CardDescription>
-      <CardTitle className="text-2xl">
-        <Numbers number={value} />
-      </CardTitle>
-    </CardHeader>
-    <CardContent className="text-xs text-muted-foreground">
-      anterior <Numbers number={previousValue} />
-    </CardContent>
-  </Card>
-));
-
-CardItem.displayName = "CardItem";
 
 export default async function FinancialSummary({ month }) {
   const {
@@ -38,8 +10,7 @@ export default async function FinancialSummary({ month }) {
     balanco,
     balancoAnterior,
     previsto,
-    saldoAnterior,
-    saldo,
+    previstoAnterior,
   } = await Utils(month);
 
   const cardData = [
@@ -64,27 +35,22 @@ export default async function FinancialSummary({ month }) {
     {
       title: "Saldo Previsto",
       value: previsto,
-      previousValue: saldoAnterior,
+      previousValue: previstoAnterior,
       color: "bg-cyan-400",
     },
   ];
 
   return (
-    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
-      {cardData.map((card, index) => (
-        <CardItem key={index} {...card} />
+    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      {cardData.map((item, index) => (
+        <CardSummary
+          color={item.color}
+          previousValue={item.previousValue}
+          title={item.title}
+          value={item.value}
+          key={index}
+        />
       ))}
-      <Card className="bg-gradient-to-br from-pink-link/10">
-        <CardHeader className="pb-2">
-          <CardDescription className="flex items-center gap-1 pb-2">
-            <Ping color="bg-black" />
-            Saldo Atual
-          </CardDescription>
-          <CardTitle className="text-3xl">
-            <Numbers number={saldo} />
-          </CardTitle>
-        </CardHeader>
-      </Card>
     </div>
   );
 }

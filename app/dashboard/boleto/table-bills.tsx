@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 import { Check, Ellipsis, RefreshCw } from "lucide-react";
+import Image from "next/image";
 import DeleteBills from "./modal/delete-bills";
 import UpdateBills from "./modal/update-bills";
 
@@ -29,6 +30,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
     <Table className="mt-4">
       <TableHeader>
         <TableRow className="border-b text-xs">
+          <TableHead></TableHead>
           <TableHead>Data de Vencimento</TableHead>
           <TableHead>Descrição</TableHead>
           <TableHead>Valor</TableHead>
@@ -43,6 +45,16 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
         {getBillsMap?.length !== 0 ? (
           getBillsMap?.map((item) => (
             <TableRow key={item.id}>
+              <TableCell>
+                <Image
+                  quality={100}
+                  src={`/logos/boleto.png`}
+                  className="rounded-full"
+                  width={40}
+                  height={40}
+                  alt={"Logo do cartão"}
+                />
+              </TableCell>
               <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
               <TableCell className="font-bold capitalize">
                 {item.descricao}

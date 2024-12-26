@@ -12,7 +12,7 @@ export default async function page(props) {
   return (
     <>
       <div className="px-1 py-8">
-        <h1 className="text-2xl font-bold">Visão Geral</h1>
+        <h1 className="text-xl font-bold">Visão Geral</h1>
         <h2 className="text-muted-foreground">
           Aqui estão seus principais números de {onlyMonth}.
         </h2>

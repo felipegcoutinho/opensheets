@@ -1,11 +1,4 @@
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  fallback: ["system-ui", "arial"],
-});
 
 const uiSans = localFont({
   src: [
@@ -23,28 +16,4 @@ const uiSans = localFont({
   ],
 });
 
-const googleSans = localFont({
-  src: [
-    {
-      path: "../fonts/ProductSans-Light.ttf",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "../fonts/ProductSans-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/ProductSans-Medium.ttf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../fonts/ProductSans-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-});
-export { googleSans, inter, uiSans };
+export { uiSans };

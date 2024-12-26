@@ -40,14 +40,14 @@ async function PageAccount(props) {
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
-            <Card key={item.id}>
+            <Card key={item.id} className={`rounded`}>
               <CardContent className="space-y-4 p-6">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image
                       quality={100}
                       src={`/logos/${item.logo_image}`}
-                      className="rounded shadow-lg"
+                      className="rounded-full shadow-lg"
                       width={45}
                       height={45}
                       alt="Logo da conta"
@@ -62,7 +62,7 @@ async function PageAccount(props) {
                 </p>
               </CardContent>
 
-              <CardFooter className="flex justify-between bg-neutral-100 px-6 py-1 dark:bg-neutral-800">
+              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-sm">
                 <Button className="p-0" variant="link">
                   <Link
                     href={`/dashboard/conta/${item.id}/${item.descricao.toLowerCase()}`}

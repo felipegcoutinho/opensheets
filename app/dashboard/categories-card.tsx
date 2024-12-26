@@ -7,7 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function CategoriesList({ data, month }) {
+export default function CategoriesList({ data, month, color }) {
   const [sortedData, setSortedData] = useState([]);
   const [maxSum, setMaxSum] = useState(0);
 
@@ -39,7 +39,11 @@ export default function CategoriesList({ data, month }) {
               <Numbers number={item.sum} />
             </p>
           </div>
-          <Progress value={(item.sum / maxSum) * 100} className="h-1" />
+          <Progress
+            indicatorColor={color}
+            value={(item.sum / maxSum) * 100}
+            className="h-1"
+          />
         </div>
       ))}
     </>

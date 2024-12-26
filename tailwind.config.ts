@@ -19,9 +19,9 @@ const config = {
     },
     extend: {
       colors: {
-        "green-banner": "#2fe270",
-        "green-month": "#bed6c7",
-        "pink-link": "#ca77ff",
+        "primary-color": "#ffca31",
+        "secondary-color": "#bed6c7",
+        "tertiary-color": "#D5E8EA",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

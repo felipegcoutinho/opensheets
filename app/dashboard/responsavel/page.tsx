@@ -1,12 +1,9 @@
-import Numbers from "@/components/numbers";
-import Ping from "@/components/ping-icon";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
-import { User } from "lucide-react";
 import {
   getResponsavelBillList,
   getResponsavelTransactionList,
 } from "../../actions/users";
+import UsersCard from "./users-card";
 
 async function page(props) {
   const searchParams = await props.searchParams;
@@ -30,8 +27,13 @@ async function page(props) {
 
     const descricaoCartao =
       item.cartoes?.descricao || "Pix, dinheiro ou débito";
-    acc[item.responsavel].cartoes[descricaoCartao] =
-      (acc[item.responsavel].cartoes[descricaoCartao] || 0) + item.valor;
+    if (!acc[item.responsavel].cartoes[descricaoCartao]) {
+      acc[item.responsavel].cartoes[descricaoCartao] = {
+        valor: 0,
+        logo_image: item.cartoes?.logo_image,
+      };
+    }
+    acc[item.responsavel].cartoes[descricaoCartao].valor += item.valor;
     acc[item.responsavel].totalCartao += item.valor;
 
     return acc;
@@ -55,12 +57,13 @@ async function page(props) {
   });
 
   return (
-    <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="my-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
       {Object.entries(groupedData).map(([responsavel, data]) => (
-        <CardComponent
+        <UsersCard
           key={responsavel}
           responsavel={responsavel}
           cartoes={data.cartoes}
+          logo={data.logo_image}
           totalCartao={data.totalCartao}
           boletos={data.boletos}
           totalBoleto={data.totalBoleto}
@@ -71,89 +74,3 @@ async function page(props) {
 }
 
 export default page;
-
-function CardComponent({
-  responsavel,
-  cartoes,
-  totalCartao,
-  boletos,
-  totalBoleto,
-}) {
-  return (
-    <Card className="overflow-hidden">
-      <CardHeader className="flex w-full">
-        <CardTitle className="flex justify-between gap-2 text-2xl">
-          <p>{responsavel}</p>
-          <User className="h-6 w-6" />
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="text-sm">
-        <div className="grid gap-1">
-          <li className="flex items-center justify-between">
-            <span className="flex items-center gap-1">
-              <Ping color={"bg-green-banner"} />
-              <span className="font-bold">Cartões</span>
-            </span>
-            <span className="text-lg">
-              <Numbers number={totalCartao} />
-            </span>
-          </li>
-
-          <ul className="grid gap-2 p-2">
-            {Object.entries(cartoes).map(([descricao, valor]) => (
-              <li
-                className="flex items-center justify-between text-muted-foreground"
-                key={descricao}
-              >
-                <span>{descricao}</span>
-                <span>
-                  <Numbers number={valor} />
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="my-3 w-full border border-dashed border-muted dark:border-neutral-700"></div>
-
-        <div className="grid gap-1">
-          <li className="flex items-center justify-between">
-            <span className="flex items-center gap-1">
-              <Ping color={"bg-pink-link"} />
-              <span className="font-bold">Boletos</span>
-            </span>
-            <span className="text-lg">
-              <Numbers number={totalBoleto} />
-            </span>
-          </li>
-
-          <ul className="grid gap-2 p-2">
-            {Object.entries(boletos).map(([descricao, valor]) => (
-              <li
-                className="flex items-center justify-between text-muted-foreground"
-                key={descricao}
-              >
-                <span>{descricao}</span>
-                <span>
-                  <Numbers number={valor} />
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="my-2 w-full border-2 border-muted dark:border-neutral-700"></div>
-
-        <div className="mt-4">
-          <li className="flex items-center justify-between font-bold">
-            <span className="text-lg text-muted-foreground">Total</span>
-            <span className="text-xl">
-              <Numbers number={totalCartao + totalBoleto} />
-            </span>
-          </li>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}

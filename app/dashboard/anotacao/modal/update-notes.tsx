@@ -1,14 +1,33 @@
 "use client";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import Utils from "../utils";
 
-export default function UpdateNotes({ itemId, itemDescricao, itemPeriodo, itemAnotacao }) {
+export default function UpdateNotes({
+  itemId,
+  itemDescricao,
+  itemPeriodo,
+  itemAnotacao,
+}) {
   const { loading, getMonthOptions, handleUpdate, isOpen, setIsOpen } = Utils();
 
   return (
@@ -16,7 +35,7 @@ export default function UpdateNotes({ itemId, itemDescricao, itemPeriodo, itemAn
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button variant="link" className="p-0">
-            Editar
+            editar
           </Button>
         </DialogTrigger>
         <DialogContent>
@@ -27,11 +46,16 @@ export default function UpdateNotes({ itemId, itemDescricao, itemPeriodo, itemAn
           <form onSubmit={handleUpdate}>
             <input type="hidden" name="id" value={itemId} />
 
-            <div className="flex w-full gap-2 mb-1">
+            <div className="mb-1 flex w-full gap-2">
               <div className="w-1/2">
                 <Label>Descrição</Label>
                 <Required />
-                <Input defaultValue={itemDescricao} name="descricao" placeholder="Descrição" type="text" />
+                <Input
+                  defaultValue={itemDescricao}
+                  name="descricao"
+                  placeholder="Descrição"
+                  type="text"
+                />
               </div>
 
               <div className="w-1/2">
@@ -52,14 +76,20 @@ export default function UpdateNotes({ itemId, itemDescricao, itemPeriodo, itemAn
               </div>
             </div>
 
-            <div className="flex w-full gap-2 mb-1">
+            <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
                 <Label>Anotação</Label>
-                <Textarea maxLength={512} className="h-64" defaultValue={itemAnotacao} name="anotacao" placeholder="Anotação" />
+                <Textarea
+                  maxLength={512}
+                  className="h-64"
+                  defaultValue={itemAnotacao}
+                  name="anotacao"
+                  placeholder="Anotação"
+                />
               </div>
             </div>
 
-            <DialogFooter className="flex gap-2 mt-4">
+            <DialogFooter className="mt-4 flex gap-2">
               <DialogClose asChild>
                 <Button className="w-1/2" type="button" variant="secondary">
                   Cancelar

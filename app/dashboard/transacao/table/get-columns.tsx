@@ -1,6 +1,5 @@
 "use client";
 
-import EmptyCard from "@/components/empty-card";
 import { LogosOnTable } from "@/components/logos-on-table";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
@@ -13,34 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { UseDates } from "@/hooks/use-dates";
-import {
-  FilterFn,
-  PaginationState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
 import {
   ArrowUpDown,
   CalendarClockIcon,
@@ -54,11 +31,9 @@ import {
   ThumbsUp,
   Users,
 } from "lucide-react";
-import { useState } from "react";
-import CreateTransactions from "./modal/create-transactions";
-import DeleteTransactions from "./modal/delete-transactions";
-import DetailsTransactions from "./modal/details-transactions";
-import UpdateTransactions from "./modal/update-transactions";
+import DeleteTransactions from "../modal/delete-transactions";
+import DetailsTransactions from "../modal/details-transactions";
+import UpdateTransactions from "../modal/update-transactions";
 
 function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -79,25 +54,6 @@ const getResponsavelClass = (responsavel) => {
   return "text-orange-600 dark:text-orange-400";
 };
 
-// Função personalizada para filtrar em várias colunas
-const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
-  const searchValue = filterValue.toLowerCase();
-
-  // Pega a descrição da conta ou cartão
-  const descricaoContaCartao = getDescricao(row.original).toLowerCase();
-
-  return (
-    row.original.descricao?.toLowerCase().includes(searchValue) ||
-    row.original.condicao?.toLowerCase().includes(searchValue) ||
-    row.original.forma_pagamento?.toLowerCase().includes(searchValue) ||
-    row.original.responsavel?.toLowerCase().includes(searchValue) ||
-    row.original.tipo_transacao?.toLowerCase().includes(searchValue) ||
-    row.original.valor?.toString().toLowerCase().includes(searchValue) ||
-    row.original.categoria?.toLowerCase().includes(searchValue) ||
-    descricaoContaCartao.includes(searchValue)
-  );
-};
-
 export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
     id: "selection",
@@ -110,11 +66,13 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     ),
     cell: ({ row }) => (
       <Checkbox
+        className="border-neutral-300"
         checked={row.getIsSelected()}
         onCheckedChange={row.getToggleSelectedHandler()}
       />
     ),
   },
+
   {
     accessorKey: "data_compra",
     header: "Data",
@@ -123,13 +81,14 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return <span>{DateFormat(item.data_compra)}</span>;
     },
   },
+
   {
     accessorKey: "descricao",
     header: "Descrição",
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <span className="flex items-center gap-1">
+        <div className="flex items-center gap-1">
           <span className="font-bold capitalize">
             {row.getValue("descricao")}
           </span>
@@ -177,7 +136,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             item.parcela_atual === item.qtde_parcela && (
               <PartyPopper color="pink" size={16} />
             )}
-        </span>
+        </div>
       );
     },
   },
@@ -230,6 +189,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       </div>
     ),
   },
+
   {
     accessorKey: "condicao",
     header: ({ column }) => {
@@ -439,137 +399,3 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     },
   },
 ];
-
-export function TableTransaction({ data, getAccountMap, getCardsMap }) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 50,
-  });
-
-  const { DateFormat } = UseDates();
-  const columns = getColumns(getAccountMap, getCardsMap, DateFormat);
-
-  const table = useReactTable({
-    data,
-    columns,
-    state: {
-      sorting,
-      globalFilter,
-      columnVisibility,
-      rowSelection,
-      pagination,
-    },
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    globalFilterFn: customGlobalFilter,
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    onPaginationChange: setPagination,
-  });
-
-  // Cálculo da soma das transações selecionadas
-  const selectedTransactionSum = data
-    .filter((_, index) => rowSelection[index])
-    .reduce((sum, row) => sum + row.valor, 0);
-
-  return (
-    <div className="mt-4 w-full">
-      <div className="flex items-center justify-between">
-        <CreateTransactions
-          getCardsMap={getCardsMap}
-          getAccountMap={getAccountMap}
-        />
-
-        <div className="flex items-center gap-2">
-          {/* Exibe a soma dos lançamentos selecionados */}
-          <div className="text-mdfont-bold">
-            Total Selecionado: <Numbers number={selectedTransactionSum} />
-          </div>
-
-          <Input
-            placeholder="Pesquisar"
-            value={globalFilter}
-            onChange={(event) => setGlobalFilter(event.target.value)}
-            className="max-w-52"
-          />
-        </div>
-      </div>
-
-      <Table className="mt-4">
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow className="text-xs" key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                className={`whitespace-nowrap ${
-                  row.original?.categoria === "Saldo Anterior" &&
-                  "bg-gradient-to-r from-green-400/10 to-transparent"
-                }`}
-                key={row.id}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                <EmptyCard width={100} height={100} />
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredRowModel().rows.length} transações
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}

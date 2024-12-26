@@ -227,9 +227,10 @@ export default function UpdateTransactions({
           </div>
 
           <div>
-            <Label>Anexos</Label>
+            <Label>Comprovantes</Label>
             {
               <Input
+                className="border-dotted border-neutral-400"
                 name="imagem_url"
                 type="file"
                 accept="image/*"

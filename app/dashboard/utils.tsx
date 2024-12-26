@@ -28,7 +28,7 @@ async function Utils(month) {
     receitasAnterior,
     despesasAnterior,
     despesasBoletosAnterior,
-    saldoAnterior,
+    previstoAnterior,
     invoices,
     expenseByCategory,
     incomeByCategory,
@@ -62,7 +62,7 @@ async function Utils(month) {
   const balancoAnterior = receitasAnterior - despesasTotalAnterior;
 
   // Prediction calculation
-  const previsto = saldoAnterior + balanco;
+  const previsto = previstoAnterior + balanco;
 
   //Calculo do saldo atual
   const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
@@ -75,7 +75,7 @@ async function Utils(month) {
     balanco,
     balancoAnterior,
     previsto,
-    saldoAnterior,
+    previstoAnterior,
     incomeByCategory,
     invoiceCard: invoices,
     invoiceBill,

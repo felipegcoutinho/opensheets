@@ -1,8 +1,8 @@
 function Ping({ color }) {
   return (
-    <div>
-      <span className={`${color} flex h-2.5 w-2.5 rounded`}></span>
-    </div>
+    <span>
+      <span className={`${color} flex h-2 w-2 rounded`}></span>
+    </span>
   );
 }
 

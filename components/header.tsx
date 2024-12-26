@@ -25,7 +25,7 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="mx-auto mb-2 flex h-20 w-full items-center bg-transparent dark:border-none">
+    <header className="mx-auto mb-2 flex h-20 w-full items-center bg-transparent dark:border-none">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />
@@ -48,48 +48,50 @@ export default async function Header() {
           <nav className="grid gap-6 text-lg">
             <Link
               href="/"
-              className="flex items-center gap-2 text-lg font-semibold"
+              className="flex items-center gap-2 text-lg font-bold"
             >
               <span className="sr-only">openSheets</span>
             </Link>
+
             <Link
               href="/"
               className="transition-colors hover:text-muted-foreground"
             >
               Home
             </Link>
+
             <Link
-              href={`/transacao`}
+              href="/dashboard/transacao"
               className="transition-colors hover:text-muted-foreground"
             >
               Transações
             </Link>
             <Link
-              href={`/boleto`}
+              href="/dashboard/boleto"
               className="transition-colors hover:text-muted-foreground"
             >
               Boletos
             </Link>
             <Link
-              href="/cartao"
+              href="/dashboard/cartao"
               className="transition-colors hover:text-muted-foreground"
             >
               Cartões
             </Link>
             <Link
-              href="/conta"
+              href="/dashboard/conta"
               className="transition-colors hover:text-muted-foreground"
             >
               Contas
             </Link>
             <Link
-              href="/responsavel"
+              href="/dashboard/responsavel"
               className="transition-colors hover:text-muted-foreground"
             >
               Responsável
             </Link>
             <Link
-              href="/anotacao"
+              href="/dashboard/anotacao"
               className="transition-colors hover:text-muted-foreground"
             >
               Anotações
@@ -121,20 +123,10 @@ export default async function Header() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            {/* {user && (
-              <Link
-                href="/ajustes"
-                className="text-black transition-colors hover:text-muted-foreground"
-              >
-                <Button className="px-2" variant="link">
-                  Ajustes
-                </Button>
-              </Link>
-            )} */}
             <AuthButton />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
+    </header>
   );
 }
