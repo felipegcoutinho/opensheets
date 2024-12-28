@@ -87,9 +87,10 @@ export default async function FinancialSummaryCards({ month }) {
         <Stats month={month} />
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+      <div className="mb-10 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
         <ConditionList month={month} />
         <PaymentList month={month} />
+
         <CardInvoices title="Receitas por Categorias">
           <Category
             color="bg-green-500"
@@ -97,6 +98,7 @@ export default async function FinancialSummaryCards({ month }) {
             month={month}
           />
         </CardInvoices>
+
         <CardInvoices title="Despesas por Categorias">
           <Category
             color={"bg-red-500"}

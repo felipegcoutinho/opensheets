@@ -28,7 +28,7 @@ function RecentesTransactions({ transactions }) {
               quality={100}
             />
             <div className="flex flex-col items-start py-1">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 {DateFormat(item.data_compra)}
               </p>
               <p>{item.descricao}</p>
