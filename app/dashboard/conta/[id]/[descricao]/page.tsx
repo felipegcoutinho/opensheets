@@ -66,15 +66,15 @@ export default async function page(props) {
           <div className="leading-relaxed">
             <p className="text-xs">Receitas</p>
             <p className="font-bold">
-              <Numbers number={sumAccountIncome} />
+              <Numbers value={sumAccountIncome} />
             </p>
             <p className="text-xs">Despesas</p>
             <p className="font-bold">
-              <Numbers number={accountExpense} />
+              <Numbers value={accountExpense} />
             </p>
             <p className="text-xs">Saldo</p>
             <p className="font-bold">
-              <Numbers number={saldo} />
+              <Numbers value={saldo} />
             </p>
           </div>
         </Card>
@@ -141,7 +141,7 @@ export default async function page(props) {
               </TableCell>
 
               <TableCell>
-                <Numbers number={item.valor} />
+                <Numbers value={item.valor} />
               </TableCell>
 
               <TableCell>{item.categoria}</TableCell>

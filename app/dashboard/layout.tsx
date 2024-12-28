@@ -11,7 +11,6 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <Banner />
-      {/* <CurrentBalance /> */}
       <Suspense>
         <MonthPicker />
       </Suspense>

@@ -5,22 +5,24 @@ import { getConditions } from "../actions/dashboards";
 export async function ConditionList({ month }) {
   const condicoes = await getConditions(month);
 
+  const condicoesSorted = condicoes.sort((a, b) => b.sum - a.sum);
+
   return (
-    <Card className="h-1/2 overflow-y-auto max-sm:h-max">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm uppercase">Condições</CardTitle>
+    <Card className="pb-4">
+      <CardHeader>
+        <CardTitle className="text-sm uppercase">
+          Condições de Pagamento
+        </CardTitle>
       </CardHeader>
 
-      {condicoes?.length > 0 ? (
-        condicoes?.map((item) => (
+      {condicoesSorted?.length > 0 ? (
+        condicoesSorted?.map((item) => (
           <CardContent key={item.condicao} className="grid gap-2 py-1">
-            <div className="grid">
-              <div className="flex items-center justify-between">
-                <span className="text-md">{item.condicao}</span>
-                <span className="text-muted-foreground">
-                  <Numbers number={item.sum} />
-                </span>
-              </div>
+            <div className="flex items-center justify-between">
+              <p>{item.condicao}</p>
+              <p className="text-muted-foreground">
+                <Numbers value={item.sum} />
+              </p>
             </div>
           </CardContent>
         ))

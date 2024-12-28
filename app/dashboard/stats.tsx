@@ -6,13 +6,13 @@ import {
   getTransactionsCount,
 } from "../actions/dashboards";
 
-async function CountList({ month }) {
+async function Stats({ month }) {
   const transacoes = await getTransactionsCount(month);
   const boletos = await getBillsCount(month);
   const cartoes = await getCardsCount(month);
 
   return (
-    <div className="grid grid-cols-1 gap-2">
+    <div className="grid grid-cols-3 gap-2">
       <Card>
         <CardHeader className="pb-0">
           <CardTitle className="flex items-center gap-1 text-sm uppercase">
@@ -24,7 +24,7 @@ async function CountList({ month }) {
           {transacoes?.map((item) => (
             <span
               key={item.count}
-              className="mt-4 block text-2xl text-muted-foreground"
+              className="mt-4 block text-3xl text-muted-foreground"
             >
               {item.count}
             </span>
@@ -43,7 +43,7 @@ async function CountList({ month }) {
           {boletos?.map((item) => (
             <span
               key={item.count}
-              className="mt-4 block text-2xl text-muted-foreground"
+              className="mt-4 block text-3xl text-muted-foreground"
             >
               {item.count}
             </span>
@@ -62,7 +62,7 @@ async function CountList({ month }) {
           {cartoes?.map((item) => (
             <span
               key={item.count}
-              className="mt-4 block text-2xl text-muted-foreground"
+              className="mt-4 block text-3xl text-muted-foreground"
             >
               {item.count}
             </span>
@@ -73,4 +73,4 @@ async function CountList({ month }) {
   );
 }
 
-export default CountList;
+export default Stats;

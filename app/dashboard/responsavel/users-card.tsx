@@ -18,7 +18,11 @@ export default function UsersCard({
       <CardHeader className="flex w-full">
         <CardTitle className="flex justify-between gap-2">
           <p>{responsavel}</p>
-          {responsavel === "Você" ? <User size={28} /> : <Users size={28} />}
+          {responsavel === "Você" ? (
+            <User className="text-blue-600" size={22} />
+          ) : (
+            <Users className="text-orange-600" size={22} />
+          )}
         </CardTitle>
       </CardHeader>
 
@@ -30,7 +34,7 @@ export default function UsersCard({
               <p className="font-bold">Cartões</p>
             </div>
             <p className="text-lg">
-              <Numbers number={totalCartao} />
+              <Numbers value={totalCartao} />
             </p>
           </li>
 
@@ -66,7 +70,7 @@ export default function UsersCard({
                     {descricao}
                   </p>
                   <p>
-                    <Numbers number={data.valor} />
+                    <Numbers value={data.valor} />
                   </p>
                 </li>
               ))
@@ -87,7 +91,7 @@ export default function UsersCard({
               <p className="font-bold">Boletos</p>
             </div>
             <p className="text-lg">
-              <Numbers number={totalBoleto} />
+              <Numbers value={totalBoleto} />
             </p>
           </li>
 
@@ -110,7 +114,7 @@ export default function UsersCard({
                     {descricao}
                   </span>
                   <span>
-                    <Numbers number={valor} />
+                    <Numbers value={valor} />
                   </span>
                 </li>
               ))
@@ -126,7 +130,7 @@ export default function UsersCard({
           <li className="flex items-center justify-between font-bold">
             <span className="text-lg text-muted-foreground">Total</span>
             <span className="text-xl">
-              <Numbers number={totalCartao + totalBoleto} />
+              <Numbers value={totalCartao + totalBoleto} />
             </span>
           </li>
         </div>

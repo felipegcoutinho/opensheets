@@ -5,23 +5,14 @@ import Numbers from "@/components/numbers";
 import { Progress } from "@/components/ui/progress";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export default function CategoriesList({ data, month, color }) {
-  const [sortedData, setSortedData] = useState([]);
-  const [maxSum, setMaxSum] = useState(0);
-
-  useEffect(() => {
-    if (data.length > 0) {
-      const sorted = [...data].sort((a, b) => b.sum - a.sum);
-      setSortedData(sorted);
-      setMaxSum(sorted[0].sum);
-    }
-  }, [data]);
-
-  if (sortedData.length === 0) {
+  if (data.length === 0) {
     return <EmptyCard width={100} height={100} />;
   }
+
+  const sortedData = [...data].sort((a, b) => b.sum - a.sum);
+  const maxSum = sortedData[0].sum;
 
   return (
     <>
@@ -36,7 +27,7 @@ export default function CategoriesList({ data, month, color }) {
               <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
             </Link>
             <p className="text-muted-foreground">
-              <Numbers number={item.sum} />
+              <Numbers value={item.sum} />
             </p>
           </div>
           <Progress

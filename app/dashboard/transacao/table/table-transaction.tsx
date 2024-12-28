@@ -27,7 +27,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import CreateTransactions from "../modal/create-transactions";
-import { getColumns } from "./get-columns";
+import { getColumns, getDescricao } from "./get-columns";
 
 // Função personalizada para filtrar em várias colunas
 const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
@@ -99,7 +99,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
         <div className="flex items-center gap-2">
           {/* Exibe a soma dos lançamentos selecionados */}
           <div className="text-right text-xs text-muted-foreground">
-            Total Selecionado: <Numbers number={selectedTransactionSum} />
+            Total Selecionado: <Numbers value={selectedTransactionSum} />
           </div>
 
           <Input

@@ -97,7 +97,7 @@ async function Page(props) {
               </TableCell>
 
               <TableCell>
-                <Numbers number={item.valor} />
+                <Numbers value={item.valor} />
               </TableCell>
 
               <TableCell>{item.categoria}</TableCell>

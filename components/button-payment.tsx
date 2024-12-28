@@ -52,7 +52,7 @@ export default function ButtonPayment({
               </DialogTitle>
               <DialogDescription className="mt-0 flex flex-col py-6 text-center text-lg">
                 Você está pagando a fatura de {descricao} no valor de{" "}
-                <Numbers number={valor} />
+                <Numbers value={valor} />
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex w-full flex-row">

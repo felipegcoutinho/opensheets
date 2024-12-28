@@ -1,8 +1,19 @@
 "use client";
 
 import Numbers from "@/components/numbers";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 import React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -31,13 +42,16 @@ export default function InvestComponent({ data }) {
           <div className="flex flex-1 flex-col justify-center gap-1 border-t py-4 text-left sm:border-t-0 sm:px-6 sm:py-6">
             <span className="text-xs text-muted-foreground">Valor Atual</span>
             <span className="text-lg font-bold leading-none sm:text-2xl">
-              <Numbers number={valorAtual} />
+              <Numbers value={valorAtual} />
             </span>
           </div>
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
-        <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[250px] w-full"
+        >
           <BarChart
             accessibilityLayer
             data={data}
@@ -55,7 +69,11 @@ export default function InvestComponent({ data }) {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value);
-                const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                const utcDate = new Date(
+                  date.getUTCFullYear(),
+                  date.getUTCMonth(),
+                  date.getUTCDate(),
+                );
                 return utcDate.toLocaleDateString("pt-BR", {
                   month: "short",
                   day: "numeric",
@@ -69,7 +87,11 @@ export default function InvestComponent({ data }) {
                   nameKey="views"
                   labelFormatter={(value) => {
                     const date = new Date(value);
-                    const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                    const utcDate = new Date(
+                      date.getUTCFullYear(),
+                      date.getUTCMonth(),
+                      date.getUTCDate(),
+                    );
                     return utcDate.toLocaleDateString("pt-BR", {
                       month: "long",
                       day: "numeric",

@@ -30,17 +30,12 @@ import Utils from "../utils";
 export default function CreateTransactions({ getCardsMap, getAccountMap }) {
   const {
     isOpen,
-    setIsOpen,
     tipoTransacao,
-    setTipoTransacao,
     quantidadeParcelas,
-    setQuantidadeParcelas,
     showParcelas,
     showRecorrencia,
     showConta,
     showCartao,
-    setShowConta,
-    setShowCartao,
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
@@ -49,18 +44,15 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     categoriasDespesa,
     handleSubmit,
     loading,
-    setLoading,
-    isEfetivadoChecked,
-    setIsEfetivadoChecked,
     isDividedChecked,
     setIsDividedChecked,
-    setShowParcelas,
-    setShowRecorrencia,
     handleDialogClose,
     isPaid,
     setIsPaid,
     setImage,
     image,
+    setQuantidadeParcelas,
+    
   } = Utils();
 
   if (showCartao && isPaid) {

@@ -60,7 +60,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                 {item.descricao}
               </TableCell>
               <TableCell>
-                <Numbers number={item.valor} />
+                <Numbers value={item.valor} />
               </TableCell>
               <TableCell>
                 {/* <CardTitle className="text-md flex items-center gap-1 capitalize">

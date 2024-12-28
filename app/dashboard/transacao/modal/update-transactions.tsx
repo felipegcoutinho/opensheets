@@ -30,79 +30,48 @@ import Utils from "../utils";
 export default function UpdateTransactions({
   itemId,
   itemCategoria,
-  itemCondicao,
   itemDescricao,
   itemNotas,
   itemDate,
   itemResponsavel,
-  itemSegundoResponsavel,
   itemTipoTransacao,
   itemValor,
-  itemFormaPagamento,
-  itemCartao,
-  itemConta,
-  itemQtdeParcelas,
-  getAccountMap,
-  getCardsMap,
   itemPeriodo,
-  itemRecorrencia,
-  itemQtdeRecorrencia,
   itemPaid,
   itemImagemURL,
 }) {
   const {
-    isOpen,
-    setIsOpen,
-    setTipoTransacao,
-    quantidadeParcelas,
-    setQuantidadeParcelas,
-    showParcelas,
-    showRecorrencia,
-    showConta,
-    showCartao,
-    handleCondicaoChange,
-    handleTipoTransacaoChange,
-    handleFormaPagamentoChange,
-    getMonthOptions,
     categoriasReceita,
     categoriasDespesa,
+    isOpen,
+    setIsOpen,
+    getMonthOptions,
     handleUpdate,
-    loading,
-    setShowConta,
-    setShowCartao,
-    setShowParcelas,
-    setShowRecorrencia,
-    isPaid,
     setIsPaid,
     setImage,
     removingImage,
     handleRemoveImage,
   } = Utils();
 
-  // Inicializa o estado de `isPaid` com o valor do item quando o modal for aberto
+  const [imagePreview, setImagePreview] = useState(itemImagemURL);
+
   useEffect(() => {
-    setIsPaid(itemPaid); // Inicializa `isPaid` com o valor atual da transação
+    setIsPaid(itemPaid);
   }, [itemPaid, setIsPaid]);
 
   const handleDialogClose = (val) => {
     setIsOpen(val);
     if (!val) {
-      setImagePreview(itemImagemURL); // Restaura a imagem original
-      setIsPaid(itemPaid); // Restaura o estado do pagamento
-      setShowConta(false);
-      setShowCartao(false);
-      setShowParcelas(false);
-      setShowRecorrencia(false);
+      setImagePreview(itemImagemURL);
+      setIsPaid(itemPaid);
     }
   };
-
-  const [imagePreview, setImagePreview] = useState(itemImagemURL); // URL da imagem atual
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => setImagePreview(reader.result); // Pré-visualização
+      reader.onload = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
     }
   };
@@ -110,7 +79,7 @@ export default function UpdateTransactions({
   const handleRemoveImageTeste = async () => {
     try {
       await handleRemoveImage(itemId, itemImagemURL);
-      setImagePreview(null); // Limpa a pré-visualização
+      setImagePreview(null);
     } catch (error) {
       console.error("Erro ao remover imagem:", error);
     }
@@ -137,7 +106,11 @@ export default function UpdateTransactions({
             <div className="w-1/2">
               <Label>Período</Label>
               <Required />
-              <Select defaultValue={itemPeriodo} name="periodo">
+              <Select
+                defaultValue={itemPeriodo}
+                name="periodo"
+                disabled={itemPaid}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -170,7 +143,7 @@ export default function UpdateTransactions({
               <MoneyInput
                 defaultValue={itemValor}
                 name="valor"
-                // disabled={itemCondicao === "Parcelado"}
+                disabled={itemPaid}
               />
             </div>
           </div>
@@ -203,11 +176,11 @@ export default function UpdateTransactions({
 
           <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
             <Label className="text-sm font-medium text-neutral-600">
-              Marcar lançamento como Pago{" "}
+              Marcar lançamento como Pago
             </Label>
             <Toggle
-              onPressedChange={() => setIsPaid(!isPaid)} // Altere o valor apenas quando o usuário interagir
-              defaultPressed={isPaid} // Valor inicial vem da transação atual
+              onPressedChange={() => setIsPaid(!itemPaid)}
+              defaultPressed={itemPaid}
               name="realizado"
               className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
             >
@@ -228,16 +201,13 @@ export default function UpdateTransactions({
 
           <div>
             <Label>Comprovantes</Label>
-            {
-              <Input
-                className="border-dotted border-neutral-400"
-                name="imagem_url"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            }
-
+            <Input
+              className="border-dotted border-neutral-400"
+              name="imagem_url"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
             <div className="group relative">
               {imagePreview ? (
                 <div
@@ -250,6 +220,7 @@ export default function UpdateTransactions({
                     alt="Comprovante"
                     className="h-full w-full object-cover"
                   />
+
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
                     <span className="font-semibold text-white">
                       {removingImage ? "Removendo..." : "Remover Imagem"}
@@ -283,8 +254,8 @@ export default function UpdateTransactions({
               </Button>
             </DialogClose>
 
-            <Button className="w-1/2" type="submit" disabled={loading}>
-              {loading ? "Salvando..." : "Salvar"}
+            <Button className="w-1/2" type="submit">
+              Salvar
             </Button>
           </DialogFooter>
         </form>

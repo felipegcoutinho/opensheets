@@ -293,3 +293,24 @@ export async function getIncomeByCategory(month) {
 
   return data;
 }
+
+export async function getRecentTransactions(month) {
+  const supabase = createClient();
+
+  const { data: transacao, error } = await supabase
+    .from("transacoes")
+    .select(
+      `id, data_compra, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)`,
+    )
+    .order("created_at", { ascending: false })
+    .eq("responsavel", "Você")
+    .eq("periodo", month)
+    .limit(5);
+
+  if (error) {
+    console.error("Erro ao buscar transações:", error);
+    return [];
+  }
+
+  return transacao;
+}
