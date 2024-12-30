@@ -184,9 +184,9 @@ export default function MonthPicker() {
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
-              {monthOptions.map((option) => (
-                <SelectItem key={option} value={option} className="capitalize">
-                  {option.replace("-", " ")}
+              {monthOptions.map((item, index) => (
+                <SelectItem key={index} value={item} className="capitalize">
+                  {item.replace("-", " ")}
                 </SelectItem>
               ))}
             </SelectContent>
