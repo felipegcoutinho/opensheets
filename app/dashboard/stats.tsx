@@ -3,8 +3,8 @@ import {
   ArrowDownUp,
   CreditCard,
   File,
+  Landmark,
   NotebookPenIcon,
-  PiggyBank,
 } from "lucide-react";
 import {
   getAccountsCount,
@@ -18,7 +18,7 @@ const statsConfig = [
   { title: "Transações", icon: ArrowDownUp, getData: getTransactionsCount },
   { title: "Boletos", icon: File, getData: getBillsCount },
   { title: "Cartões", icon: CreditCard, getData: getCardsCount },
-  { title: "Contas", icon: PiggyBank, getData: getAccountsCount },
+  { title: "Contas", icon: Landmark, getData: getAccountsCount },
   { title: "Anotações", icon: NotebookPenIcon, getData: getNotesCount },
 ];
 

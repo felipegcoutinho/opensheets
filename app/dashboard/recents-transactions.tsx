@@ -13,10 +13,10 @@ function RecentesTransactions({ transactions }) {
 
   return (
     <div className="mb-4">
-      {transactions.map((item, index) => (
+      {transactions.map((item) => (
         <div
-          key={index}
-          className="flex items-center justify-between border-b border-neutral-100"
+          key={item.id}
+          className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900"
         >
           <div className="flex items-center gap-2">
             <Image
