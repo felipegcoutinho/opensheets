@@ -41,7 +41,7 @@ async function PageAccount(props) {
         {accountData.length !== 0 ? (
           accountData.map((item) => (
             <Card key={item.id} className={`rounded`}>
-              <CardContent className="space-y-4 p-6">
+              <CardContent className="space-y-4 p-4">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image

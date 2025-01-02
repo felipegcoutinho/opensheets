@@ -22,13 +22,13 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 import Utils from "../utils";
 
 export default function CreateBills({ getAccountMap }) {
   const {
     loading,
-    getMonthOptions,
     categoriasDespesa,
     handleSubmit,
     setStatusPagamento,
@@ -40,6 +40,8 @@ export default function CreateBills({ getAccountMap }) {
     isOpen,
     setIsOpen,
   } = Utils();
+
+  const { getMonthOptions } = UseDates();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

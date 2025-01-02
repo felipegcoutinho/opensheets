@@ -113,29 +113,6 @@ export default function Utils() {
     }
   };
 
-  const getMonthOptions = () => {
-    const options = [];
-    const currentDate = new Date();
-    const { optionsMeses } = UseOptions();
-
-    for (let i = -2; i <= 2; i++) {
-      const newDate = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() + i,
-        1,
-      );
-      const month = optionsMeses[newDate.getMonth()];
-      const year = newDate.getFullYear();
-      const value = `${month}-${year}`;
-      options.push({
-        value,
-        label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}`,
-      });
-    }
-
-    return options;
-  };
-
   function MonthUppercase(itemPeriodo) {
     const data = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
     let periodoFormatado = format(data, "MMMM 'de' yyyy", { locale: ptBR });
@@ -194,7 +171,6 @@ export default function Utils() {
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
-    getMonthOptions,
     handleSubmit,
     handleDelete,
     loading,

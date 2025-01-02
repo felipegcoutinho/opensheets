@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { UseDates } from "@/hooks/use-dates";
 import Utils from "../utils";
 
 export default function UpdateNotes({
@@ -28,7 +29,9 @@ export default function UpdateNotes({
   itemPeriodo,
   itemAnotacao,
 }) {
-  const { loading, getMonthOptions, handleUpdate, isOpen, setIsOpen } = Utils();
+  const { loading, handleUpdate, isOpen, setIsOpen } = Utils();
+
+  const { getMonthOptions } = UseDates();
 
   return (
     <>
