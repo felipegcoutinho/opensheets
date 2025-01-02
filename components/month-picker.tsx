@@ -8,11 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
-import { ChevronLeftCircle, ChevronRightCircle, Loader2 } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -61,8 +60,8 @@ export default function MonthPicker() {
     currentDate.setMonth(currentMonthIndex);
     currentDate.setFullYear(parseInt(currentYear));
 
-    // Adiciona 6 meses antes
-    for (let i = 6; i > 0; i--) {
+    // Adiciona 4 meses antes
+    for (let i = 3; i > 0; i--) {
       const date = new Date(currentDate);
       date.setMonth(date.getMonth() - i);
       const month = date.toLocaleString("pt-BR", { month: "long" });
@@ -73,8 +72,8 @@ export default function MonthPicker() {
     // Adiciona mês atual
     options.push(`${currentMonth}-${currentYear}`);
 
-    // Adiciona 6 meses depois
-    for (let i = 1; i <= 6; i++) {
+    // Adiciona 4 meses depois
+    for (let i = 1; i <= 3; i++) {
       const date = new Date(currentDate);
       date.setMonth(date.getMonth() + i);
       const month = date.toLocaleString("pt-BR", { month: "long" });
@@ -163,7 +162,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
+    <div className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -183,10 +182,17 @@ export default function MonthPicker() {
                 <span className="ml-1">{currentYear}</span>
               </SelectValue>
             </SelectTrigger>
+
             <SelectContent>
               {monthOptions.map((item, index) => (
                 <SelectItem key={index} value={item} className="capitalize">
-                  {item.replace("-", " ")}
+                  <span className="flex items-center">
+                    <Calendar
+                      size={14}
+                      className="mr-2 text-muted-foreground"
+                    />
+                    {item.replace("-", " ")}
+                  </span>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -209,21 +215,21 @@ export default function MonthPicker() {
       {isDifferentFromCurrent && (
         <ReturnButton onClick={goToCurrentMonthYear} disabled={isChanging} />
       )}
-    </Card>
+    </div>
   );
 }
 
 // Componente otimizado para os botões de navegação
 const NavigationButton = ({ onClick, direction, disabled }) => {
-  const Icon = direction === "left" ? ChevronLeftCircle : ChevronRightCircle;
+  const Icon = direction === "left" ? ChevronLeft : ChevronRight;
 
   return (
     <button
       onClick={onClick}
-      className="text-cyan-900 focus:outline-none disabled:opacity-50 dark:text-white"
+      className="text-cyan-900 opacity-40 focus:outline-none disabled:opacity-50 dark:text-white"
       disabled={disabled}
     >
-      <Icon size={16} />
+      <Icon size={14} />
     </button>
   );
 };

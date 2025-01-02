@@ -26,12 +26,12 @@ const StatCard = ({ title, icon: Icon, count }) => (
   <Card>
     <CardHeader className="pb-0">
       <CardTitle className="flex items-center gap-1 text-sm uppercase">
-        <Icon size={16} />
+        <Icon size={12} />
         {title}
       </CardTitle>
     </CardHeader>
     <CardContent>
-      <span className="mt-4 block text-3xl text-muted-foreground">{count}</span>
+      <p className="mt-2 text-2xl text-muted-foreground">{count}</p>
     </CardContent>
   </Card>
 );

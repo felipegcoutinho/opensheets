@@ -62,7 +62,7 @@ export default function CreateCard({ getAccountMap }) {
                       <Image
                         quality={100}
                         src={`/logos/${item.file}`}
-                        className="h-8 w-8 rounded border"
+                        className="h-8 w-8 rounded-full border"
                         width={32}
                         height={32}
                         alt="Logo do cartão"

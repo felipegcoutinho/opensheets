@@ -14,6 +14,7 @@ import {
   getInvoiceList,
   getLastPrevious,
 } from "../actions/dashboards";
+import { getUserName } from "../actions/users";
 
 async function Utils(month) {
   const { getPreviousMonth, currentMonthName, currentYear } = UseDates();
@@ -36,6 +37,7 @@ async function Utils(month) {
     sumAccountIncome,
     sumAccountExpense,
     sumBillsExpense,
+    userName,
   ] = await Promise.all([
     getIncome(month),
     getExpense(month),
@@ -51,6 +53,7 @@ async function Utils(month) {
     getSumAccountIncomePaid(defaultPeriodo),
     getSumAccountExpensePaid(defaultPeriodo),
     getSumBillsExpensePaid(defaultPeriodo),
+    getUserName(),
   ]);
 
   // Calculating totals for current and previous months
@@ -81,6 +84,7 @@ async function Utils(month) {
     invoiceBill,
     saldo,
     expenseByCategory,
+    userName,
   };
 }
 

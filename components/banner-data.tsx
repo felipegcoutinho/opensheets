@@ -1,7 +1,6 @@
 import Utils from "@/app/dashboard/utils";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
-import GetUserName from "./get-username";
 import Numbers from "./numbers";
 
 export default async function BannerData() {
@@ -14,7 +13,8 @@ export default async function BannerData() {
   } = UseDates();
 
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const { saldo } = await Utils(defaultPeriodo);
+
+  const { saldo, userName } = await Utils(defaultPeriodo);
 
   return (
     <Banner>
@@ -22,7 +22,7 @@ export default async function BannerData() {
         <div>
           <p className="text-sm">{fliendlyDate(currentDate)}</p>
           <p className="text-xl font-bold">
-            {getGreeting()}, <GetUserName />
+            {getGreeting()}, {userName}
           </p>
         </div>
 

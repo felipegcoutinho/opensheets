@@ -45,7 +45,7 @@ export default function Invoice({ data, month }) {
         </div>
 
         <div className="py-1 text-right">
-          <p className="font-bold">
+          <p>
             <Numbers value={invoice.total_valor} />
           </p>
           <DialogPayment

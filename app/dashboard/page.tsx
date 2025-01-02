@@ -6,14 +6,17 @@ export default async function page(props) {
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
-  const onlyMonth = (searchParams?.periodo ?? defaultPeriodo).split("-")[0];
+  const firstNameMonth = (searchParams?.periodo ?? defaultPeriodo).split(
+    "-",
+  )[0];
 
   return (
     <>
-      <div className="px-1 py-8">
-        <h1 className="text-xl font-bold">Visão Geral</h1>
+      <div className="px-1 py-6">
+        <h1 className="text-lg font-bold">Visão Geral</h1>
         <h2 className="text-muted-foreground">
-          Aqui estão suas principais movimentações financeiras de {onlyMonth}.
+          Aqui estão suas principais movimentações financeiras de{" "}
+          {firstNameMonth}.
         </h2>
       </div>
 

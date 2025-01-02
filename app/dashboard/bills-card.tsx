@@ -42,7 +42,7 @@ export async function BillsList({ month }) {
       </div>
 
       <div className="py-1 text-right">
-        <p className="font-bold">
+        <p>
           <Numbers value={item.valor} />
         </p>
         {item.status_pagamento === "Pago" ? (

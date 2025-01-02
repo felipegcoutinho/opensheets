@@ -140,11 +140,7 @@ export default function UpdateTransactions({
             <div className="w-1/2">
               <Label>Valor</Label>
               <Required />
-              <MoneyInput
-                defaultValue={itemValor}
-                name="valor"
-                disabled={itemPaid}
-              />
+              <MoneyInput defaultValue={itemValor} name="valor" />
             </div>
           </div>
 
