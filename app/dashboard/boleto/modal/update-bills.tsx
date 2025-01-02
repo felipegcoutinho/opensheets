@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 import Utils from "../utils";
 
@@ -41,7 +42,6 @@ export default function UpdateBills({
 }) {
   const {
     loading,
-    getMonthOptions,
     categoriasDespesa,
     handleUpdate,
     setStatusPagamento,
@@ -50,6 +50,8 @@ export default function UpdateBills({
     isOpen,
     setIsOpen,
   } = Utils();
+
+  const { getMonthOptions } = UseDates();
 
   return (
     <>

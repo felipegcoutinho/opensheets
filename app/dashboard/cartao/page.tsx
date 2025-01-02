@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { UseDates } from "@/hooks/use-dates";
 import { getAccount } from "@actions/accounts";
 import { deleteCards, getCards, getLimitesCartao } from "@actions/cards";
+import { Lock, LockOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import CreateCard from "./modal/create-cards";
@@ -27,6 +28,17 @@ async function PageCards(props) {
       return { ...card, limites };
     }),
   );
+
+  function verificarCartaoFechado(dtFechamento) {
+    const hoje = new Date();
+    const diaAtual = hoje.getDate();
+
+    return diaAtual > dtFechamento ? (
+      <Lock size={14} className="text-red-500" />
+    ) : (
+      <LockOpen size={14} className="text-green-500" />
+    );
+  }
 
   return (
     <div className="w-full">
@@ -61,8 +73,13 @@ async function PageCards(props) {
                   </div>
                 </CardTitle>
 
-                <div className="space-y-2 text-neutral-500 dark:text-neutral-300">
-                  <p className="text-sm">Fecha dia {item.dt_fechamento}</p>
+                <div className="space-y-1 text-neutral-500 dark:text-neutral-300">
+                  <p className="flex items-center text-sm">
+                    Fecha dia {item.dt_fechamento}
+                    <span className="ml-1">
+                      {verificarCartaoFechado(item.dt_fechamento)}
+                    </span>
+                  </p>
                   <p className="text-sm">Vence dia {item.dt_vencimento}</p>
 
                   <div className="flex justify-between py-3 text-xs">

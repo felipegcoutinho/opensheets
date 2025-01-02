@@ -23,6 +23,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
 import Utils from "../utils";
@@ -39,7 +40,6 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
-    getMonthOptions,
     categoriasReceita,
     categoriasDespesa,
     handleSubmit,
@@ -52,8 +52,9 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
     setImage,
     image,
     setQuantidadeParcelas,
-    
   } = Utils();
+
+  const { getMonthOptions } = UseDates();
 
   if (showCartao && isPaid) {
     setIsPaid(false);

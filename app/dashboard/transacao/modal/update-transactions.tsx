@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import { UseDates } from "@/hooks/use-dates";
 import { ImageOff, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import Utils from "../utils";
@@ -45,7 +46,6 @@ export default function UpdateTransactions({
     categoriasDespesa,
     isOpen,
     setIsOpen,
-    getMonthOptions,
     handleUpdate,
     setIsPaid,
     setImage,
@@ -54,6 +54,8 @@ export default function UpdateTransactions({
   } = Utils();
 
   const [imagePreview, setImagePreview] = useState(itemImagemURL);
+
+  const { getMonthOptions } = UseDates();
 
   useEffect(() => {
     setIsPaid(itemPaid);

@@ -1,12 +1,44 @@
+import UseOptions from "./use-options";
+
 export function UseDates() {
   // Lista dos nomes dos meses
-  const optionsMeses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+  const optionsMeses = [
+    "janeiro",
+    "fevereiro",
+    "março",
+    "abril",
+    "maio",
+    "junho",
+    "julho",
+    "agosto",
+    "setembro",
+    "outubro",
+    "novembro",
+    "dezembro",
+  ];
 
   // Lista dos anos
-  const optionsAnos = ["2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
+  const optionsAnos = [
+    "2023",
+    "2024",
+    "2025",
+    "2026",
+    "2027",
+    "2028",
+    "2029",
+    "2030",
+  ];
 
   // Lista dos nomes dos dias da semana
-  const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  const diasDaSemana = [
+    "Domingo",
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sábado",
+  ];
 
   // Obtém a data atual
   const currentDate = new Date();
@@ -20,7 +52,14 @@ export function UseDates() {
   function DateFormat(dateString) {
     const [year, month, day] = dateString.split("-");
     const date = new Date(year, month - 1, day);
-    return new Intl.DateTimeFormat("pt-BR", { weekday: "short", day: "2-digit", month: "short" }).format(date).replace(".", "").replace(" de", "");
+    return new Intl.DateTimeFormat("pt-BR", {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+    })
+      .format(date)
+      .replace(".", "")
+      .replace(" de", "");
   }
 
   function fliendlyDate(date) {
@@ -33,13 +72,20 @@ export function UseDates() {
 
   function getGreeting() {
     const currentHour = currentDate.getHours();
-    const greeting = currentHour >= 5 && currentHour < 12 ? "Bom dia" : currentHour >= 12 && currentHour < 18 ? "Boa tarde" : "Boa noite";
+    const greeting =
+      currentHour >= 5 && currentHour < 12
+        ? "Bom dia"
+        : currentHour >= 12 && currentHour < 18
+          ? "Boa tarde"
+          : "Boa noite";
     return greeting;
   }
 
   const getPreviousMonth = (currentMonth) => {
     const [monthName, year] = currentMonth.split("-");
-    const monthIndex = optionsMeses.findIndex((m) => m.toLowerCase() === monthName.toLowerCase());
+    const monthIndex = optionsMeses.findIndex(
+      (m) => m.toLowerCase() === monthName.toLowerCase(),
+    );
 
     // Cria a data com o mês atual e ano fornecido
     const date = new Date(year, monthIndex, 1);
@@ -55,7 +101,9 @@ export function UseDates() {
 
   const getPreviousTwoMonth = (currentMonth) => {
     const [monthName, year] = currentMonth.split("-");
-    const monthIndex = optionsMeses.findIndex((m) => m.toLowerCase() === monthName.toLowerCase());
+    const monthIndex = optionsMeses.findIndex(
+      (m) => m.toLowerCase() === monthName.toLowerCase(),
+    );
 
     // Cria a data com o mês atual e ano fornecido
     const date = new Date(year, monthIndex, 1);
@@ -67,6 +115,29 @@ export function UseDates() {
     const previousYear = date.getFullYear();
 
     return `${previousMonth}-${previousYear}`;
+  };
+
+  const getMonthOptions = () => {
+    const options = [];
+    const currentDate = new Date();
+    const { optionsMeses } = UseOptions();
+
+    for (let i = -2; i <= 2; i++) {
+      const newDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + i,
+        1,
+      );
+      const month = optionsMeses[newDate.getMonth()];
+      const year = newDate.getFullYear();
+      const value = `${month}-${year}`;
+      options.push({
+        value,
+        label: `${month.charAt(0).toUpperCase() + month.slice(1)} de ${year}`,
+      });
+    }
+
+    return options;
   };
 
   return {
@@ -81,5 +152,6 @@ export function UseDates() {
     DateFormat,
     fliendlyDate,
     getGreeting,
+    getMonthOptions,
   };
 }
