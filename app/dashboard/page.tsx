@@ -13,10 +13,9 @@ export default async function page(props) {
   return (
     <>
       <div className="px-1 py-6">
-        <h1 className="text-lg font-bold">Visão Geral</h1>
+        <h1 className="text-lg font-semibold">Visão Geral</h1>
         <h2 className="text-muted-foreground">
-          Aqui estão suas principais movimentações financeiras de{" "}
-          {firstNameMonth}.
+          Suas principais movimentações financeiras de {firstNameMonth}.
         </h2>
       </div>
 
