@@ -3,7 +3,6 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getResponsavelTransactionList(month) {
-  "use server";
   const supabase = createClient();
 
   const { data: users, error } = await supabase
@@ -23,7 +22,6 @@ export async function getResponsavelTransactionList(month) {
 }
 
 export async function getResponsavelBillList(month) {
-  "use server";
   const supabase = createClient();
 
   const { data: bills, error } = await supabase
@@ -38,6 +36,37 @@ export async function getResponsavelBillList(month) {
   }
 
   return bills;
+}
+
+export async function getUserName() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("Error fetching username:", error);
+    return;
+  }
+
+  const firstName = data?.user?.user_metadata?.first_name;
+  const lastName = data?.user?.user_metadata?.last_name;
+
+  return `${firstName} ${lastName}`;
+}
+
+export async function getEmail() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("Error fetching email:", error);
+    return;
+  }
+
+  const email_data = data?.user?.user_metadata?.email;
+
+  return email_data;
 }
 
 // export async function getUsers() {

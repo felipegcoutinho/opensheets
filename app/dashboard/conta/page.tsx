@@ -58,7 +58,7 @@ async function PageAccount(props) {
                 </CardTitle>
 
                 <p className="text-sm text-neutral-500 dark:text-neutral-300">
-                  Saldo <Numbers number={item.saldo} />
+                  Saldo <Numbers value={item.saldo} />
                 </p>
               </CardContent>
 

@@ -104,7 +104,7 @@ export default async function page(props) {
           <div className="leading-loose">
             <p className="text-xs">Limite Total</p>
             <p>
-              <Numbers number={item.limite} />
+              <Numbers value={item.limite} />
             </p>
             <p className="text-xs">Conta Padrão</p>
             <p className="font-bold">{item.contas.descricao}</p>
@@ -135,7 +135,7 @@ export default async function page(props) {
           <div className="ml-auto">
             Total da Fatura
             <div className="text-2xl font-bold">
-              <Numbers number={sumCardSum} />
+              <Numbers value={sumCardSum} />
             </div>
           </div>
         </Card>
@@ -201,7 +201,7 @@ export default async function page(props) {
                 </span>
               </TableCell>
               <TableCell>
-                <Numbers number={item.valor} />
+                <Numbers value={item.valor} />
               </TableCell>
 
               <TableCell>{item.categoria}</TableCell>

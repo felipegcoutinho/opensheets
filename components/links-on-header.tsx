@@ -8,8 +8,8 @@ import {
   CreditCard,
   File,
   Home,
+  Landmark,
   NotebookPenIcon,
-  PiggyBank,
   Users,
 } from "lucide-react";
 
@@ -54,7 +54,7 @@ function LinkOnHeader({ user }) {
     },
     {
       href: `/dashboard/conta`,
-      Icon: PiggyBank,
+      Icon: Landmark,
       name: "contas",
       path: "/dashboard/conta",
     },

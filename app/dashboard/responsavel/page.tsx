@@ -14,6 +14,20 @@ async function page(props) {
   const TransactionListMap = await getResponsavelTransactionList(month);
   const BillListMap = await getResponsavelBillList(month);
 
+  // Função para reorganizar o objeto
+  function prioritizeResponsavel(data, prioridade) {
+    const result = {};
+    if (data[prioridade]) {
+      result[prioridade] = data[prioridade]; // Coloca o responsável prioritário no início
+    }
+    for (const key in data) {
+      if (key !== prioridade) {
+        result[key] = data[key];
+      }
+    }
+    return result;
+  }
+
   // Agrupa transações e boletos por responsável
   const groupedData = TransactionListMap.reduce((acc, item) => {
     if (!acc[item.responsavel]) {
@@ -56,9 +70,12 @@ async function page(props) {
     groupedData[item.responsavel].totalBoleto += item.valor;
   });
 
+  // Reorganiza os dados para priorizar o responsável "Você"
+  const prioritizedData = prioritizeResponsavel(groupedData, "Você");
+
   return (
     <div className="my-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-      {Object.entries(groupedData).map(([responsavel, data]) => (
+      {Object.entries(prioritizedData).map(([responsavel, data]) => (
         <UsersCard
           key={responsavel}
           responsavel={responsavel}

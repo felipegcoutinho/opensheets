@@ -41,7 +41,7 @@ export default function PayBills({ id, descricao, valor }) {
           </DialogTitle>
           <DialogDescription className="mt-0 flex flex-col py-6 text-center text-lg">
             Você está pagando o boleto de {descricao} no valor de{" "}
-            <Numbers number={valor} />
+            <Numbers value={valor} />
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex w-full flex-row">

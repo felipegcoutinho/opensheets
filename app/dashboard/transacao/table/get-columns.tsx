@@ -35,13 +35,13 @@ import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 
-function getDescricao(row) {
+export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
   const cartaoDescricao = row.cartoes?.descricao;
   return contaDescricao ?? cartaoDescricao;
 }
 
-function getLogo(row) {
+export function getLogo(row) {
   const contaLogo = row.contas?.logo_image;
   const cartaoLogo = row.cartoes?.logo_image;
   return contaLogo ?? cartaoLogo;
@@ -185,7 +185,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     },
     cell: ({ row }) => (
       <div className="capitalize">
-        <Numbers number={row.getValue("valor")} />
+        <Numbers value={row.getValue("valor")} />
       </div>
     ),
   },

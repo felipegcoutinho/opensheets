@@ -5,7 +5,7 @@ export const updateSession = async (request: NextRequest) => {
   const protectedRoutes = [
     "/dashboard",
     "/transacao",
-    "/cartao", // Proteção para a rota básica /cartao
+    "/cartao",
     "/boleto",
     "/responsaveis",
     "/anotacoes",

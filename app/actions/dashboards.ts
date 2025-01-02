@@ -238,6 +238,35 @@ export async function getCardsCount(month) {
   return data;
 }
 
+export async function getAccountsCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("contas").select("count()");
+
+  if (error) {
+    console.error("Erro ao buscar contas:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getNotesCount(month) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("anotacoes")
+    .select("count()")
+    .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar anotações:", error);
+    return null;
+  }
+
+  return data;
+}
+
 export async function getBillsByResponsavel(month) {
   const supabase = createClient();
 
@@ -292,4 +321,25 @@ export async function getIncomeByCategory(month) {
   }
 
   return data;
+}
+
+export async function getRecentTransactions(month) {
+  const supabase = createClient();
+
+  const { data: transacao, error } = await supabase
+    .from("transacoes")
+    .select(
+      `id, data_compra, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)`,
+    )
+    .order("created_at", { ascending: false })
+    .eq("responsavel", "Você")
+    .eq("periodo", month)
+    .limit(6);
+
+  if (error) {
+    console.error("Erro ao buscar transações:", error);
+    return [];
+  }
+
+  return transacao;
 }

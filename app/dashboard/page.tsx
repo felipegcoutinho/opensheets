@@ -1,25 +1,25 @@
 import { UseDates } from "@/hooks/use-dates";
-import FinancialSummary from "./financial-summary";
-import FinancialSummaryCards from "./financial-summary-cards";
+import Dashboards from "./dashboards";
 
 export default async function page(props) {
   const searchParams = await props.searchParams;
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
-  const onlyMonth = (searchParams?.periodo ?? defaultPeriodo).split("-")[0];
+  const firstNameMonth = (searchParams?.periodo ?? defaultPeriodo).split(
+    "-",
+  )[0];
 
   return (
     <>
-      <div className="px-1 py-8">
-        <h1 className="text-xl font-bold">Visão Geral</h1>
+      <div className="px-1 py-6">
+        <h1 className="text-lg font-semibold">Visão Geral</h1>
         <h2 className="text-muted-foreground">
-          Aqui estão seus principais números de {onlyMonth}.
+          Suas principais movimentações financeiras de {firstNameMonth}.
         </h2>
       </div>
 
-      <FinancialSummary month={month} />
-      <FinancialSummaryCards month={month} />
+      <Dashboards month={month} />
     </>
   );
 }

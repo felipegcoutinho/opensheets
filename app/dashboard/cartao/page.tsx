@@ -69,19 +69,19 @@ async function PageCards(props) {
                     <div>
                       <p>Limite Total</p>
                       <p>
-                        <Numbers number={item.limites.limiteTotal} />
+                        <Numbers value={item.limites.limiteTotal} />
                       </p>
                     </div>
                     <div>
                       <p>Em Uso</p>
                       <p>
-                        <Numbers number={item.limites.limiteEmUso} />
+                        <Numbers value={item.limites.limiteEmUso} />
                       </p>
                     </div>
                     <div>
                       <p>Disponível</p>
                       <p className="text-green-500">
-                        <Numbers number={item.limites.limiteDisponivel} />
+                        <Numbers value={item.limites.limiteDisponivel} />
                       </p>
                     </div>
                   </div>

@@ -63,10 +63,10 @@ async function page() {
                 <TableCell className="font-bold">#{item.id}</TableCell>
                 <TableCell>{DateFormat(item.data)}</TableCell>
                 <TableCell>
-                  <Numbers number={item.valor} />
+                  <Numbers value={item.valor} />
                 </TableCell>
                 <TableCell className={differenceClass}>
-                  {difference ? <Numbers number={difference} /> : "-"}
+                  {difference ? <Numbers value={difference} /> : "-"}
                 </TableCell>
                 <TableCell>
                   <UpdateInvest

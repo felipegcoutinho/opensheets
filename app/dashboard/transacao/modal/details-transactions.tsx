@@ -148,7 +148,7 @@ export default function DetailsTransactions({
                     Valor {itemCondicao === "Parcelado" && "da Parcela"}
                   </span>
                   <span>
-                    <Numbers number={itemValor} />
+                    <Numbers value={itemValor} />
                   </span>
                 </li>
                 {itemCondicao === "Parcelado" && (
@@ -157,7 +157,7 @@ export default function DetailsTransactions({
                       Valor Restante
                     </span>
                     <span>
-                      <Numbers number={parcelaRestante} />
+                      <Numbers value={parcelaRestante} />
                     </span>
                   </li>
                 )}
@@ -174,9 +174,9 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">Total da Compra</span>
                   <span className="text-lg">
                     {itemCondicao === "Parcelado" ? (
-                      <Numbers number={itemValor * itemQtdeParcelas} />
+                      <Numbers value={itemValor * itemQtdeParcelas} />
                     ) : (
-                      <Numbers number={itemValor} />
+                      <Numbers value={itemValor} />
                     )}
                   </span>
                 </li>

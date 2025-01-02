@@ -9,59 +9,54 @@ import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BillsList({ month }) {
   const { DateFormat } = UseDates();
-
   const data = await getBillsByResponsavel(month);
 
-  const sortedData = [...data].sort((a, b) => b.valor - a.valor);
+  if (!data.length) return <EmptyCard width={100} height={100} />;
 
-  return (
-    <>
-      {sortedData.length > 0 ? (
-        sortedData.map((item, index) => (
-          <div key={`${item.cartao_id}-${index}`}>
-            <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900">
-              <div className="flex items-center gap-2">
-                <Image
-                  quality={100}
-                  src={`/logos/boleto.png`}
-                  className="rounded-full"
-                  width={40}
-                  height={40}
-                  alt={"Logo do cartão"}
-                />
-                <div>
-                  <p>{item.descricao}</p>
-                  {item.status_pagamento === "Pendente" ? (
-                    <p className="text-xs text-muted-foreground">
-                      Vence {DateFormat(item.dt_vencimento)}
-                    </p>
-                  ) : (
-                    <Check className="text-green-500" size={16} />
-                  )}
-                </div>
-              </div>
-              <div className="py-1 text-right">
-                <p className="font-bold">
-                  <Numbers number={item.valor} />
-                </p>
-                {item.status_pagamento === "Pago" ? (
-                  <Button className="h-6" variant="success" type="button">
-                    Pago
-                  </Button>
-                ) : (
-                  <PayBills
-                    descricao={item.descricao}
-                    valor={item.valor}
-                    id={item.id}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        ))
-      ) : (
-        <EmptyCard width={100} height={100} />
-      )}
-    </>
-  );
+  const sortedBills = [...data].sort((a, b) => b.valor - a.valor);
+
+  return sortedBills.map((item, index) => (
+    <div
+      key={`${item.cartao_id}-${index}`}
+      className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900"
+    >
+      <div className="flex items-center gap-2">
+        <Image
+          src="/logos/boleto.png"
+          className="rounded-full"
+          width={40}
+          height={40}
+          alt="Logo do cartão"
+          quality={100}
+        />
+        <div>
+          <p>{item.descricao}</p>
+          {item.status_pagamento === "Pendente" ? (
+            <p className="text-xs text-muted-foreground">
+              Vence {DateFormat(item.dt_vencimento)}
+            </p>
+          ) : (
+            <Check className="text-green-500" size={16} />
+          )}
+        </div>
+      </div>
+
+      <div className="py-1 text-right">
+        <p>
+          <Numbers value={item.valor} />
+        </p>
+        {item.status_pagamento === "Pago" ? (
+          <Button className="h-6" variant="success" type="button">
+            Pago
+          </Button>
+        ) : (
+          <PayBills
+            descricao={item.descricao}
+            valor={item.valor}
+            id={item.id}
+          />
+        )}
+      </div>
+    </div>
+  ));
 }

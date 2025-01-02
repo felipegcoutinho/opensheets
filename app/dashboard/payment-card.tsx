@@ -6,8 +6,8 @@ export async function PaymentList({ month }) {
   const payment = await getPayment(month);
 
   return (
-    <Card className="h-1/2 overflow-y-auto max-sm:h-max">
-      <CardHeader className="pb-3">
+    <Card>
+      <CardHeader>
         <CardTitle className="text-sm uppercase">Formas de Pagamento</CardTitle>
       </CardHeader>
 
@@ -18,7 +18,7 @@ export async function PaymentList({ month }) {
               <div className="flex items-center justify-between">
                 <span className="text-md">{item.forma_pagamento}</span>
                 <span className="text-muted-foreground">
-                  <Numbers number={item.sum} />
+                  <Numbers value={item.sum} />
                 </span>
               </div>
             </div>

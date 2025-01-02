@@ -21,22 +21,22 @@ export default async function Header() {
   const supabase = createClient(cookieStore);
 
   const {
-    data: { user },
+    data: { user: session },
   } = await supabase.auth.getUser();
 
   return (
-    <header className="mx-auto mb-2 flex h-20 w-full items-center bg-transparent dark:border-none">
+    <header className="mx-auto flex w-full items-center py-5">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />
         </Link>
         <Suspense>
-          <LinkOnHeader user={user} />
+          <LinkOnHeader user={session} />
         </Suspense>
       </nav>
       <Sheet>
         <SheetTrigger asChild>
-          {user && (
+          {session && (
             <Button size="icon" className="shrink-0 md:hidden">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation menu</span>

@@ -17,11 +17,11 @@ export default function CardSummary({ title, value, previousValue, color }) {
           {title}
         </CardDescription>
         <CardTitle className="text-2xl">
-          <Numbers number={value} />
+          <Numbers value={value} />
         </CardTitle>
       </CardHeader>
       <CardContent className="text-xs text-muted-foreground">
-        anterior <Numbers number={previousValue} />
+        anterior <Numbers value={previousValue} />
       </CardContent>
     </Card>
   );

@@ -1,7 +1,6 @@
 import Numbers from "@/components/numbers";
-import Ping from "@/components/ping-icon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User } from "lucide-react";
+import { CreditCard, File, User, Users } from "lucide-react";
 import Image from "next/image";
 
 export default function UsersCard({
@@ -19,7 +18,11 @@ export default function UsersCard({
       <CardHeader className="flex w-full">
         <CardTitle className="flex justify-between gap-2">
           <p>{responsavel}</p>
-          <User size={28} />
+          {responsavel === "Você" ? (
+            <User className="text-blue-600" size={22} />
+          ) : (
+            <Users className="text-orange-600" size={22} />
+          )}
         </CardTitle>
       </CardHeader>
 
@@ -27,11 +30,11 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <Ping color={"bg-primary-color"} />
+              <CreditCard size={14} />
               <p className="font-bold">Cartões</p>
             </div>
             <p className="text-lg">
-              <Numbers number={totalCartao} />
+              <Numbers value={totalCartao} />
             </p>
           </li>
 
@@ -39,7 +42,7 @@ export default function UsersCard({
             {hasCartoesData ? (
               Object.entries(cartoes).map(([descricao, data]) => (
                 <li
-                  className="flex items-center justify-between text-muted-foreground"
+                  className="flex items-center justify-between leading-relaxed text-muted-foreground"
                   key={descricao}
                 >
                   <p className="flex items-center gap-1">
@@ -67,7 +70,7 @@ export default function UsersCard({
                     {descricao}
                   </p>
                   <p>
-                    <Numbers number={data.valor} />
+                    <Numbers value={data.valor} />
                   </p>
                 </li>
               ))
@@ -84,11 +87,11 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <Ping color={"bg-tertiary-color"} />
+              <File size={14} />
               <p className="font-bold">Boletos</p>
             </div>
             <p className="text-lg">
-              <Numbers number={totalBoleto} />
+              <Numbers value={totalBoleto} />
             </p>
           </li>
 
@@ -96,7 +99,7 @@ export default function UsersCard({
             {hasBoletosData ? (
               Object.entries(boletos).map(([descricao, valor]) => (
                 <li
-                  className="flex items-center justify-between text-muted-foreground"
+                  className="flex items-center justify-between leading-relaxed text-muted-foreground"
                   key={descricao}
                 >
                   <span className="flex items-center gap-1">
@@ -111,7 +114,7 @@ export default function UsersCard({
                     {descricao}
                   </span>
                   <span>
-                    <Numbers number={valor} />
+                    <Numbers value={valor} />
                   </span>
                 </li>
               ))
@@ -127,7 +130,7 @@ export default function UsersCard({
           <li className="flex items-center justify-between font-bold">
             <span className="text-lg text-muted-foreground">Total</span>
             <span className="text-xl">
-              <Numbers number={totalCartao + totalBoleto} />
+              <Numbers value={totalCartao + totalBoleto} />
             </span>
           </li>
         </div>
