@@ -79,7 +79,7 @@ export default function UpdateCard({
                         <Image
                           quality={100}
                           src={`/logos/${item.file}`}
-                          className="rounded border"
+                          className="rounded-full border"
                           width={32}
                           height={32}
                           alt="Logo do cartão"

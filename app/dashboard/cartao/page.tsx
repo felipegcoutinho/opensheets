@@ -36,8 +36,8 @@ async function PageCards(props) {
         {cardsWithLimits?.length !== 0 ? (
           cardsWithLimits?.map((item) => (
             <Card key={item.id} className={`rounded`}>
-              <CardContent className="space-y-4 p-5">
-                <CardTitle className="flex items-center justify-between">
+              <CardContent className="space-y-4 p-4">
+                <CardTitle className={`flex items-center justify-between`}>
                   <div className="flex items-center gap-2">
                     <Image
                       quality={100}
