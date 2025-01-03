@@ -26,9 +26,8 @@ export default function DeleteInvest({ itemId }) {
         <DialogHeader>
           <DialogTitle>Remover Investimentoo?</DialogTitle>
           <DialogDescription>
-            <p>
-              Isso não pode ser desfeito. Isso excluirá <strong>permanentemente</strong> seu lançamento.
-            </p>
+            Isso não pode ser desfeito. Isso excluirá{" "}
+            <strong>permanentemente</strong> seu lançamento.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex gap-2">

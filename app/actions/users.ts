@@ -41,17 +41,25 @@ export async function getResponsavelBillList(month) {
 export async function getUserName() {
   const supabase = createClient();
 
-  const { data, error } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
 
-  if (error) {
-    console.error("Error fetching username:", error);
-    return;
+  if (error || !user) {
+    return null;
   }
 
-  const firstName = data?.user?.user_metadata?.first_name;
-  const lastName = data?.user?.user_metadata?.last_name;
+  const firstName = user?.user_metadata?.first_name ?? "";
+  const lastName = user?.user_metadata?.last_name ?? "";
 
-  return `${firstName} ${lastName}`;
+  // Se não houver nome, retorna null
+  if (!firstName && !lastName) {
+    return null;
+  }
+
+  const fullName = `${firstName} ${lastName}`.trim();
+  return fullName;
 }
 
 export async function getEmail() {
@@ -59,14 +67,13 @@ export async function getEmail() {
 
   const { data, error } = await supabase.auth.getUser();
 
-  if (error) {
-    console.error("Error fetching email:", error);
-    return;
+  // Se houver erro ou não houver dados, retorna null
+  if (error || !data?.user) {
+    return null;
   }
 
-  const email_data = data?.user?.user_metadata?.email;
-
-  return email_data;
+  const email_data = data.user?.user_metadata?.email;
+  return email_data ?? null;
 }
 
 // export async function getUsers() {

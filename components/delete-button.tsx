@@ -20,18 +20,14 @@ export default function DeleteButton({
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="text-red-500">
-          Remover
-      </DialogTrigger>
+      <DialogTrigger className="text-red-500">Remover</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
           <DialogDescription>
-            <p>
-              Isso não pode ser desfeito. Isso excluirá{" "}
-              <strong>permanentemente</strong> seu lançamento e removerá seus
-              dados de nossos servidores.
-            </p>
+            Isso não pode ser desfeito. Isso excluirá
+            <strong>permanentemente</strong> seu lançamento e removerá seus
+            dados de nossos servidores.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex w-full gap-2">

@@ -18,28 +18,7 @@ export default function DeleteAccount({ itemId }) {
   const { handleDelete } = Utils();
 
   return (
-    // <AlertDialog>
-    //   <AlertDialogTrigger>
-    //     <Trash2Icon color="red" />
-    //   </AlertDialogTrigger>
-    //   <AlertDialogContent>
-    //     <AlertDialogHeader>
-    //       <AlertDialogTitle>Remover Boleto?</AlertDialogTitle>
-    //       <AlertDialogDescription>
-    //         Isso não pode ser desfeito. Isso excluirá <strong>permanentemente</strong> seu boleto e removerá seus dados de nossos servidores.
-    //       </AlertDialogDescription>
-    //     </AlertDialogHeader>
-    //     <AlertDialogFooter>
-    //       <AlertDialogCancel>Cancel</AlertDialogCancel>
-    //       <form onSubmit={handleDelete(itemId)}>
-    //         <Button variant="destructive" className="w-full" type="submit">
-    //           Sim, quero remover
-    //         </Button>
-    //       </form>
-    //     </AlertDialogFooter>
-    //   </AlertDialogContent>
-    // </AlertDialog>
-    (<Dialog>
+    <Dialog>
       <DialogTrigger>
         <Trash2Icon color="red" />
       </DialogTrigger>
@@ -47,9 +26,9 @@ export default function DeleteAccount({ itemId }) {
         <DialogHeader>
           <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
           <DialogDescription>
-            <p>
-              Isso não pode ser desfeito. Isso excluirá <strong>permanentemente</strong> seu lançamento e removerá seus dados de nossos servidores.
-            </p>
+            Isso não pode ser desfeito. Isso excluirá
+            <strong>permanentemente</strong> seu lançamento e removerá seus
+            dados de nossos servidores.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex gap-2">
@@ -65,6 +44,6 @@ export default function DeleteAccount({ itemId }) {
           </form>
         </DialogFooter>
       </DialogContent>
-    </Dialog>)
+    </Dialog>
   );
 }
