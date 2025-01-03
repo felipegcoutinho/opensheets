@@ -1,5 +1,5 @@
 import ButtonPayment from "@/components/button-payment";
-import ButtonUndoPayment from "@/components/button-undo-payment";
+import RemovePaymentButton from "@/components/button-undo-payment";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -76,7 +76,7 @@ export default async function page(props) {
             ))}
           </div>
 
-          <ButtonUndoPayment fatura_status={fatura_status} />
+          <RemovePaymentButton fatura_status={fatura_status} />
         </div>
       </div>
 
