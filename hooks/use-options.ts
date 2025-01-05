@@ -45,7 +45,8 @@ export default function UseOptions() {
     { id: 7, name: "Salário" },
     { id: 8, name: "Saldo Anterior" },
     { id: 9, name: "Vendas" },
-    { id: 10, name: "Outros" },
+    { id: 10, name: "Rendimentos" },
+    { id: 11, name: "Outros" },
   ];
 
   const categoriasDespesa = [

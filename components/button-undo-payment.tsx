@@ -5,7 +5,7 @@ import { deleteFaturas } from "@actions/invoices";
 import { Fragment } from "react";
 import Utils from "./utils";
 
-export default function ButtonUndoPayment({ fatura_status }) {
+export default function RemovePaymentButton({ fatura_status }) {
   const { handleAdd, isPending, startTransition } = Utils();
 
   return (

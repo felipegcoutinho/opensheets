@@ -12,6 +12,7 @@ import { Calendar, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
 import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -162,7 +163,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <div className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
+    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -215,7 +216,7 @@ export default function MonthPicker() {
       {isDifferentFromCurrent && (
         <ReturnButton onClick={goToCurrentMonthYear} disabled={isChanging} />
       )}
-    </div>
+    </Card>
   );
 }
 
