@@ -33,7 +33,7 @@ async function PageCards(props) {
     const hoje = new Date();
     const diaAtual = hoje.getDate();
 
-    return diaAtual > dtFechamento ? (
+    return diaAtual >= dtFechamento ? (
       <Lock size={14} className="text-red-500" />
     ) : (
       <LockOpen size={14} className="text-green-500" />
