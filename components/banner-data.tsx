@@ -17,9 +17,12 @@ export default async function BannerData() {
   const { saldo, userName } = await Utils(defaultPeriodo);
 
   // Fazendo a chamada para a API de geolocalização
-  const locationResponse = await fetch("http://localhost:3000/api/geo", {
-    method: "GET",
-  });
+  const locationResponse = await fetch(
+    "https://opensheets-beta.felipecoutinho.com/api/geo",
+    {
+      method: "GET",
+    },
+  );
   const locationText = await locationResponse.text();
   const location = locationText.replace(/<[^>]*>?/gm, ""); // Remove as tags HTML
 
