@@ -16,56 +16,32 @@ export default async function BannerData() {
 
   const { saldo, userName } = await Utils(defaultPeriodo);
 
-  // Construindo a URL completa
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/geo`;
+  // Fazendo a chamada para a API de geolocalização
+  const locationResponse = await fetch(
+    "https://opensheets-git-dev-felipe-coutinhos-projects-b4ea6aea.vercel.app/api/geo",
+    { method: "GET" },
+  );
+  const locationText = await locationResponse.text();
+  const location = locationText.replace(/<[^>]*>?/gm, ""); // Remove as tags HTML
 
-  try {
-    // Fazendo a chamada para a API de geolocalização
-    const locationResponse = await fetch(apiUrl, { method: "GET" });
-    const locationText = await locationResponse.text();
-    const location = locationText.replace(/<[^>]*>?/gm, ""); // Remove as tags HTML
-
-    return (
-      <Banner>
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm">{fliendlyDate(currentDate)}</p>
-            <p className="text-xl font-bold">
-              {getGreeting()}, {userName}
-            </p>
-            <p className="text-sm">{location}</p> {/* Mostra a localização */}
-          </div>
-
-          <div className="text-right">
-            <p>Saldo Atual</p>
-            <p className="text-2xl">
-              <Numbers value={saldo} />
-            </p>
-          </div>
+  return (
+    <Banner>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm">{fliendlyDate(currentDate)}</p>
+          <p className="text-xl font-bold">
+            {getGreeting()}, {userName}
+          </p>
+          <p className="text-sm">{location}</p> {/* Mostra a localização */}
         </div>
-      </Banner>
-    );
-  } catch (error) {
-    console.error("Erro ao buscar geolocalização:", error);
-    return (
-      <Banner>
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm">{fliendlyDate(currentDate)}</p>
-            <p className="text-xl font-bold">
-              {getGreeting()}, {userName}
-            </p>
-            <p className="text-sm">Localização não disponível</p>
-          </div>
 
-          <div className="text-right">
-            <p>Saldo Atual</p>
-            <p className="text-2xl">
-              <Numbers value={saldo} />
-            </p>
-          </div>
+        <div className="text-right">
+          <p>Saldo Atual</p>
+          <p className="text-2xl">
+            <Numbers value={saldo} />
+          </p>
         </div>
-      </Banner>
-    );
-  }
+      </div>
+    </Banner>
+  );
 }
