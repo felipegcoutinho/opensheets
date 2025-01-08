@@ -18,7 +18,7 @@ export default async function BannerData() {
 
   // Fazendo a chamada para a API de geolocalização
   const locationResponse = await fetch(
-    "https://opensheets-git-dev-felipe-coutinhos-projects-b4ea6aea.vercel.app/api/geo",
+    "https://opensheets-beta.vercel.app/api/geo",
     { method: "GET" },
   );
   const locationText = await locationResponse.text();
