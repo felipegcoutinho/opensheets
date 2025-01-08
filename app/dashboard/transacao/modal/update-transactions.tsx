@@ -24,7 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { ImageOff, ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import Utils from "../utils";
 
@@ -198,7 +198,7 @@ export default function UpdateTransactions({
           </div>
 
           <div>
-            <Label>Comprovantes</Label>
+            <Label>Anexo</Label>
             <Input
               className="border-dotted border-neutral-400"
               name="imagem_url"
@@ -206,8 +206,8 @@ export default function UpdateTransactions({
               accept="image/*"
               onChange={handleImageChange}
             />
-            <div className="group relative">
-              {imagePreview ? (
+            <div className="relative">
+              {imagePreview && (
                 <div
                   className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
                   onClick={handleRemoveImageTeste}
@@ -224,11 +224,6 @@ export default function UpdateTransactions({
                       {removingImage ? "Removendo..." : "Remover Imagem"}
                     </span>
                   </div>
-                </div>
-              ) : (
-                <div className="mt-2 flex h-10 items-center justify-center bg-neutral-200 text-muted-foreground">
-                  <p>Não há anexos para essa transação</p>
-                  <ImageOff className="ml-2" size={16} />
                 </div>
               )}
             </div>

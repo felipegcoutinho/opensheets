@@ -25,7 +25,7 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="mx-auto flex w-full items-center py-5">
+    <header className="mx-auto flex h-20 w-full items-center">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
         <Link href="/" className="pr-10">
           <Logo />
