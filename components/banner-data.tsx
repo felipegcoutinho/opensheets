@@ -16,16 +16,6 @@ export default async function BannerData() {
 
   const { saldo, userName } = await Utils(defaultPeriodo);
 
-  // Fazendo a chamada para a API de geolocalização
-  const locationResponse = await fetch(
-    "https://opensheets-beta.felipecoutinho.com/api/geo",
-    {
-      method: "GET",
-    },
-  );
-  const locationText = await locationResponse.text();
-  const location = locationText.replace(/<[^>]*>?/gm, ""); // Remove as tags HTML
-
   return (
     <Banner>
       <div className="flex items-center justify-between">
@@ -34,7 +24,6 @@ export default async function BannerData() {
           <p className="text-xl font-bold">
             {getGreeting()}, {userName}
           </p>
-          <p className="text-sm">{location}</p> {/* Mostra a localização */}
         </div>
 
         <div className="text-right">
