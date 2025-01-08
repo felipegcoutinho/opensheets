@@ -386,7 +386,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
           </div>
 
           <div className="w-full">
-            <Label>Comprovante</Label>
+            <Label>Anexo</Label>
             <Input
               className="border-dotted border-neutral-400"
               type="file"

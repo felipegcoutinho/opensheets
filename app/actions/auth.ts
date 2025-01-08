@@ -3,11 +3,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-// export async function signOutt(data) {
-//   (await cookies()).delete("name");
-//   return redirect("/login");
-// }
-
 export async function signOut(data) {
   const supabase = createClient();
 
@@ -32,4 +27,35 @@ export const signIn = async (formData) => {
   }
 
   return redirect("/dashboard");
+};
+
+export const signUp = async (formData) => {
+  "use server";
+
+  const origin = (await headers()).get("origin");
+  const email = formData.get("email");
+  const firstName = formData.get("first_name");
+  const lastName = formData.get("last_name");
+  const password = formData.get("password");
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+      },
+      emailRedirectTo: `${origin}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    return redirect("/login/signup?message=Could not authenticate user");
+  }
+
+  return redirect(
+    "/login/signup?message=Check email to continue sign in process",
+  );
 };

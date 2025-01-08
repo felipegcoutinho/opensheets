@@ -106,6 +106,7 @@ export default function UseOptions() {
     { file: "mastercard.png", name: "Mastercard" },
     { file: "mercadobitcoin.png", name: "Mercado Bitcoin" },
     { file: "mercadopago.png", name: "Mercado Pago" },
+    { file: "mercadopagocartao.png", name: "Cartão Mercado Pago" },
     { file: "neon.png", name: "Neon" },
     { file: "next.png", name: "Next" },
     { file: "nu-invest.png", name: "Nu Invest" },
