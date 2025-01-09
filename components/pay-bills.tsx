@@ -12,25 +12,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useTransition } from "react";
-import { payBills } from "../app/actions/bills";
+import Utils from "./utils";
 
 export default function PayBills({ id, descricao, valor }) {
-  const [isPending, startTransition] = useTransition();
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    startTransition(() => {
-      const formData = new FormData(e.target);
-      payBills(formData, id);
-    });
-  };
+  const { handlePaymentBills, isPending, startTransition } = Utils();
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button className="h-6" variant="warning" type="button">
-          Pagar
+          Pagar boleto
         </Button>
       </DialogTrigger>
 
@@ -51,7 +42,7 @@ export default function PayBills({ id, descricao, valor }) {
             </Button>
           </DialogClose>
 
-          <form className="w-1/2" onSubmit={handleAdd}>
+          <form className="w-1/2" onSubmit={handlePaymentBills}>
             <Button
               className={`w-full bg-green-500 hover:bg-green-600 ${isPending ? "opacity-50" : ""}`}
               type="submit"

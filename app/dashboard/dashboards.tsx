@@ -4,7 +4,7 @@ import { getRecentTransactions } from "../actions/dashboards";
 import { BillsList } from "./bills-card";
 import Category from "./categories-card";
 import { ConditionList } from "./condition-card";
-import Invoice from "./invoice-card";
+import Invoice from "./invoices-card";
 import { PaymentList } from "./payment-card";
 import RecentesTransactions from "./recents-transactions";
 import Stats from "./stats";

@@ -9,6 +9,7 @@ import { getBillsByResponsavel } from "../actions/dashboards";
 
 export async function BillsList({ month }) {
   const { DateFormat } = UseDates();
+
   const data = await getBillsByResponsavel(month);
 
   if (!data.length) return <EmptyCard width={100} height={100} />;

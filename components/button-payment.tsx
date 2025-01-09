@@ -22,7 +22,7 @@ export default function ButtonPayment({
   descricao,
   valor,
 }) {
-  const { handleAdd, isPending, startTransition } = Utils();
+  const { handlePaymentInvoices, isPending, startTransition } = Utils();
 
   return (
     <>
@@ -41,7 +41,7 @@ export default function ButtonPayment({
         <Dialog>
           <DialogTrigger asChild>
             <Button className="h-6" variant="warning" type="button">
-              Pagar
+              Pagar fatura
             </Button>
           </DialogTrigger>
 
@@ -62,7 +62,7 @@ export default function ButtonPayment({
                 </Button>
               </DialogClose>
 
-              <form className="w-1/2" onSubmit={handleAdd}>
+              <form className="w-1/2" onSubmit={handlePaymentInvoices}>
                 <input
                   type="hidden"
                   name="status_pagamento"

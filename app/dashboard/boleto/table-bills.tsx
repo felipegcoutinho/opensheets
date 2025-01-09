@@ -26,6 +26,7 @@ import UpdateBills from "./modal/update-bills";
 
 export default function TableBills({ getBillsMap, getAccountMap }) {
   const { DateFormat } = UseDates();
+  
   return (
     <Table className="mt-4">
       <TableHeader>
@@ -63,15 +64,6 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                 <Numbers value={item.valor} />
               </TableCell>
               <TableCell>
-                {/* <CardTitle className="text-md flex items-center gap-1 capitalize">
-                  <Button
-                    className="h-6"
-                    variant={`${item.status_pagamento === "Pago" ? "success" : "warning"}`}
-                    type="button"
-                  >
-                    {item.status_pagamento === "Pago" ? "Pago" : "Pendente"}
-                  </Button>
-                </CardTitle> */}
                 {item.status_pagamento === "Pago" ? (
                   <Button className="h-6" variant="success" type="button">
                     Pago
