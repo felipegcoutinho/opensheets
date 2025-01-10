@@ -1,14 +1,14 @@
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
-import { Button } from "@/components/ui/button";
 import { UseDates } from "@/hooks/use-dates";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import PayBills from "../../components/pay-bills";
+import BillPaymentDialog from "../../components/bill-payment-dialog";
 import { getBillsByResponsavel } from "../actions/dashboards";
 
-export async function BillsList({ month }) {
+export async function BillsCard({ month }) {
   const { DateFormat } = UseDates();
+
   const data = await getBillsByResponsavel(month);
 
   if (!data.length) return <EmptyCard width={100} height={100} />;
@@ -18,7 +18,7 @@ export async function BillsList({ month }) {
   return sortedBills.map((item, index) => (
     <div
       key={`${item.cartao_id}-${index}`}
-      className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-900"
+      className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"
     >
       <div className="flex items-center gap-2">
         <Image
@@ -45,17 +45,13 @@ export async function BillsList({ month }) {
         <p>
           <Numbers value={item.valor} />
         </p>
-        {item.status_pagamento === "Pago" ? (
-          <Button className="h-6" variant="success" type="button">
-            Pago
-          </Button>
-        ) : (
-          <PayBills
-            descricao={item.descricao}
-            valor={item.valor}
-            id={item.id}
-          />
-        )}
+
+        <BillPaymentDialog
+          descricao={item.descricao}
+          valor={item.valor}
+          id={item.id}
+          status_pagamento={item.status_pagamento}
+        />
       </div>
     </div>
   ));

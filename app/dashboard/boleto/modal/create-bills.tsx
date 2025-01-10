@@ -2,6 +2,7 @@
 
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -112,8 +113,8 @@ export default function CreateBills({ getAccountMap }) {
             </div>
           </div>
 
-          <div className="mt-2 flex items-center justify-between rounded bg-zinc-100 p-2">
-            <Label className="text-sm font-medium text-neutral-600">
+          <Card className="mt-2 flex items-center justify-between rounded p-2">
+            <Label className="text-sm font-medium text-muted-foreground">
               Dividir Boleto
             </Label>
             <Switch
@@ -121,7 +122,7 @@ export default function CreateBills({ getAccountMap }) {
               checked={isDividedChecked}
               onCheckedChange={() => setIsDividedChecked(!isDividedChecked)}
             />
-          </div>
+          </Card>
 
           <div className="flex w-full gap-2">
             <div className="w-full">

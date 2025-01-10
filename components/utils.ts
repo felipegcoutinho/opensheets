@@ -1,19 +1,26 @@
-import { addFaturas } from "@actions/invoices";
+import { addFaturas } from "@/app/actions/invoices";
+import confetti from "canvas-confetti";
 import { useTransition } from "react";
 
 export default function Utils() {
   const [isPending, startTransition] = useTransition();
 
-  const handleAdd = (e) => {
+  const handlePaymentInvoices = (e) => {
     e.preventDefault();
     startTransition(() => {
       const formData = new FormData(e.target);
-      addFaturas(formData);
+      addFaturas(formData).then(() => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      });
     });
   };
 
   return {
-    handleAdd,
+    handlePaymentInvoices,
     isPending,
     startTransition,
   };

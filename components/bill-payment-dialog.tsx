@@ -1,5 +1,6 @@
 "use client";
 
+import { payBills } from "@/app/actions/bills";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,19 +13,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import confetti from "canvas-confetti";
 import { useTransition } from "react";
-import { payBills } from "../app/actions/bills";
 
-export default function PayBills({ id, descricao, valor }) {
+export default function BillPaymentDialog({
+  id,
+  descricao,
+  valor,
+  status_pagamento,
+}) {
   const [isPending, startTransition] = useTransition();
 
-  const handleAdd = (e) => {
+  const handlePaymentBills = (e) => {
     e.preventDefault();
     startTransition(() => {
       const formData = new FormData(e.target);
-      payBills(formData, id);
+      payBills(formData, id).then(() => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      });
     });
   };
+
+  if (status_pagamento === "Pago") {
+    return (
+      <Button className="h-6" variant="success" type="button">
+        Pago
+      </Button>
+    );
+  }
 
   return (
     <Dialog>
@@ -51,9 +71,11 @@ export default function PayBills({ id, descricao, valor }) {
             </Button>
           </DialogClose>
 
-          <form className="w-1/2" onSubmit={handleAdd}>
+          <form className="w-1/2" onSubmit={handlePaymentBills}>
             <Button
-              className={`w-full bg-green-500 hover:bg-green-600 ${isPending ? "opacity-50" : ""}`}
+              className={`w-full bg-green-500 hover:bg-green-600 ${
+                isPending ? "opacity-50" : ""
+              }`}
               type="submit"
               disabled={isPending}
             >

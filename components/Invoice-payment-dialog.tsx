@@ -15,14 +15,14 @@ import { Fragment } from "react";
 import Numbers from "./numbers";
 import Utils from "./utils";
 
-export default function ButtonPayment({
+export default function InvoicePaymentDialog({
   fatura_status,
   month,
-  paramsId,
+  cartao_id,
   descricao,
   valor,
 }) {
-  const { handleAdd, isPending, startTransition } = Utils();
+  const { handlePaymentInvoices, isPending, startTransition } = Utils();
 
   return (
     <>
@@ -62,14 +62,18 @@ export default function ButtonPayment({
                 </Button>
               </DialogClose>
 
-              <form className="w-1/2" onSubmit={handleAdd}>
+              <form className="w-1/2" onSubmit={handlePaymentInvoices}>
                 <input
                   type="hidden"
                   name="status_pagamento"
                   defaultValue={"Pago"}
                 />
                 <input type="hidden" name="periodo" defaultValue={month} />
-                <input type="hidden" name="cartao_id" defaultValue={paramsId} />
+                <input
+                  type="hidden"
+                  name="cartao_id"
+                  defaultValue={cartao_id}
+                />
 
                 <Button
                   className={`w-full bg-green-500 hover:bg-green-600 ${isPending ? "opacity-50" : ""}`}

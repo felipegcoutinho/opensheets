@@ -1,5 +1,5 @@
-import ButtonPayment from "@/components/button-payment";
-import RemovePaymentButton from "@/components/button-undo-payment";
+import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
+import RemovePaymentButton from "@/components/remove-payment-button";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -65,11 +65,11 @@ export default async function page(props) {
             )}
 
             {getCardDetailMap?.map((item) => (
-              <ButtonPayment
+              <InvoicePaymentDialog
                 key={item.id}
                 fatura_status={fatura_status}
                 month={month}
-                paramsId={params.id}
+                cartao_id={item.id}
                 descricao={item.descricao}
                 valor={sumCardSum}
               />

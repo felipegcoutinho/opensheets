@@ -1,0 +1,82 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { deleteFaturas } from "@actions/invoices";
+import { Fragment } from "react";
+import Utils from "./utils";
+
+export default function RemovePaymentButton({ fatura_status }) {
+  const { handleAdd, isPending, startTransition } = Utils();
+
+  const handleDeleteInvoice = (e, id) => {
+    e.preventDefault();
+    startTransition(() => {
+      const formData = new FormData(e.target);
+      deleteFaturas(formData, id);
+    });
+  };
+
+  return (
+    <Fragment>
+      {fatura_status &&
+        fatura_status.length > 0 &&
+        fatura_status.map(
+          (item) =>
+            item.status_pagamento === "Pago" && (
+              <Dialog key={item.id}>
+                <DialogTrigger asChild>
+                  <Button className="h-6" variant="destructive" type="button">
+                    Remover Pagamento
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle className="text-center">
+                      Confirmar Exclusão
+                    </DialogTitle>
+                    <DialogDescription className="mt-0 flex flex-col py-6 text-center text-lg">
+                      Tem certeza que deseja remover este pagamento? Esta ação
+                      não poderá ser desfeita.
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <DialogFooter className="flex w-full flex-row">
+                    <DialogClose className="w-1/2" asChild>
+                      <Button type="button" variant="secondary">
+                        Cancelar
+                      </Button>
+                    </DialogClose>
+
+                    <form
+                      className="w-1/2"
+                      onSubmit={(e) => handleDeleteInvoice(e, item.id)}
+                    >
+                      <input type="hidden" name="excluir" value={item.id} />
+                      <Button
+                        className={`w-full ${isPending ? "opacity-50" : ""}`}
+                        type="submit"
+                        variant="destructive"
+                        disabled={isPending}
+                      >
+                        {isPending ? "Removendo..." : "Confirmar Exclusão"}
+                      </Button>
+                    </form>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            ),
+        )}
+    </Fragment>
+  );
+}
