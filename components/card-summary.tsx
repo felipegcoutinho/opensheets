@@ -1,5 +1,4 @@
 import Numbers from "@/components/numbers";
-import Ping from "@/components/ping-icon";
 import {
   Card,
   CardContent,
@@ -12,8 +11,8 @@ export default function CardSummary({ title, value, previousValue, color }) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardDescription className="flex items-center gap-1">
-          <Ping color={color} />
+        <CardDescription className="flex items-center gap-1 text-sm">
+          {/* <Ping color={color} /> */}
           {title}
         </CardDescription>
         <CardTitle className="text-2xl">

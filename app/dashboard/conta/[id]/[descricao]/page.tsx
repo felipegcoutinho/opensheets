@@ -1,5 +1,5 @@
 import Numbers from "@/components/numbers";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -109,15 +109,16 @@ export default async function page(props) {
                 </span>
               </TableCell>
               <TableCell>
-                <Badge
+                <Button
+                  className="h-6"
                   variant={
                     item.tipo_transacao === "Receita"
-                      ? "defaultGreen"
-                      : "defaultRed"
+                      ? "success"
+                      : "destructive"
                   }
                 >
                   {item.tipo_transacao}
-                </Badge>
+                </Button>
               </TableCell>
               <TableCell>
                 <span className="flex items-center gap-1">

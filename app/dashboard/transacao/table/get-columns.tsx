@@ -2,7 +2,6 @@
 
 import { LogosOnTable } from "@/components/logos-on-table";
 import Numbers from "@/components/numbers";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -158,13 +157,14 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Badge
+        <Button
+          className="h-6"
           variant={
-            item.tipo_transacao === "Receita" ? "defaultGreen" : "defaultRed"
+            item.tipo_transacao === "Receita" ? "success" : "destructive"
           }
         >
           {item.tipo_transacao}
-        </Badge>
+        </Button>
       );
     },
   },
@@ -274,15 +274,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const logo = getLogo(item);
 
       return <LogosOnTable logo={logo} descricao={descricao} />;
-    },
-  },
-
-  {
-    accessorKey: "categoria",
-    header: () => <span>Categoria</span>,
-    cell: ({ row }) => {
-      const item = row.original;
-      return <span className="capitalize">{row.getValue("categoria")}</span>;
     },
   },
 

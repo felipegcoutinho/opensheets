@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
-import { Menu } from "lucide-react";
+import { Menu, UserCircle2Icon } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -27,7 +27,7 @@ export default async function Header() {
   return (
     <header className="mx-auto flex h-20 w-full items-center">
       <nav className="hidden flex-col gap-4 md:flex md:flex-row md:items-center md:gap-3 md:text-sm lg:gap-3">
-        <Link href="/" className="pr-10">
+        <Link href="/">
           <Logo />
         </Link>
         <Suspense>
@@ -104,8 +104,8 @@ export default async function Header() {
         <Logo />
       </div>
 
-      <div className="flex w-full items-center gap-2 md:ml-auto md:gap-2 lg:gap-4">
-        <div className="ml-auto flex items-center gap-2">
+      <div className="flex w-full items-center md:ml-auto md:gap-2 lg:gap-4">
+        <div className="ml-auto flex items-center gap-3">
           <div className="relative">
             <ModeToggle />
           </div>
@@ -117,7 +117,7 @@ export default async function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="link" size="icon">
-              <Menu className="h-5 w-5 bg-transparent" />
+              <UserCircle2Icon size={20} className="bg-transparent" />
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>

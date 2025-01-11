@@ -12,7 +12,7 @@ function Banner({ children }) {
   }
 
   return (
-    <Card className="mb-4 w-full bg-primary-color px-4 py-10 text-amber-900 dark:bg-tertiary-color/30 dark:text-white">
+    <Card className="mb-4 w-full bg-gradient-to-r from-primary-color to-tertiary-color px-4 py-12 text-black dark:bg-gradient-to-r dark:from-black dark:text-white">
       {children}
     </Card>
   );
