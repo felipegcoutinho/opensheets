@@ -17,7 +17,7 @@ export async function BillsCard({ month }) {
 
   return sortedBills.map((item, index) => (
     <div
-      key={`${item.cartao_id}-${index}`}
+      key={`${item.id}-${index}`}
       className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"
     >
       <div className="flex items-center gap-2">

@@ -20,7 +20,7 @@ export default async function BannerData() {
     <Banner>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm">{fliendlyDate(currentDate)}</p>
+          <p className="text-base">{fliendlyDate(currentDate)}</p>
           <p className="text-xl font-bold">
             {getGreeting()}, {userName}
           </p>

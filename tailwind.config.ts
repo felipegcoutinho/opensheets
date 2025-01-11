@@ -19,7 +19,7 @@ const config = {
     },
     extend: {
       colors: {
-        "primary-color": "#ffca31",
+        "primary-color": "#ffe27c",
         "secondary-color": "#bed6c7",
         "tertiary-color": "#D5E8EA",
         border: "hsl(var(--border))",
