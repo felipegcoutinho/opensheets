@@ -109,9 +109,11 @@ export default async function Header() {
           <div className="relative">
             <ModeToggle />
           </div>
-          <div className="relative">
-            <PrivacyButton />
-          </div>
+          {session && (
+            <div className="relative">
+              <PrivacyButton />
+            </div>
+          )}
         </div>
 
         <DropdownMenu>

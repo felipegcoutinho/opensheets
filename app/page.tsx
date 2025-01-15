@@ -1,63 +1,69 @@
-export default async function Index() {
+import { Card, CardContent } from "@/components/ui/card";
+import { BarChart3, PieChart, Shield, Wallet } from "lucide-react";
+
+export default function Index() {
+  const features = [
+    {
+      title: "Rastreamento de Despesas",
+      description:
+        "Registre todas as suas despesas diárias de forma fácil e eficaz.",
+      icon: <Wallet className="h-6 w-6" />,
+    },
+    {
+      title: "Orçamento Personalizado",
+      description:
+        "Crie orçamentos personalizados e saiba quanto você pode gastar em cada categoria.",
+      icon: <PieChart className="h-6 w-6" />,
+    },
+    {
+      title: "Relatórios Detalhados",
+      description:
+        "Visualize relatórios detalhados para entender melhor seus hábitos de gastos.",
+      icon: <BarChart3 className="h-6 w-6" />,
+    },
+    {
+      title: "Segurança dos Dados",
+      description:
+        "Seus dados financeiros são armazenados com segurança e privacidade em mente.",
+      icon: <Shield className="h-6 w-6" />,
+    },
+  ];
+
   return (
-    <div className="flex w-full flex-1 flex-col items-center gap-20">
-      <div className="flex max-w-4xl flex-1 flex-col gap-20 px-3 animate-in">
-        <main className="flex flex-1 flex-col gap-6">
-          <div className="h-screen text-black">
-            <header className="py-4 text-center">
-              <h1 className="text-4xl font-bold text-black dark:text-white">
-                Controle Seus Gastos com Opensheets
-              </h1>
-            </header>
-            <section className="container mx-auto p-8 text-black dark:text-white">
-              <p className="text-xl">
-                Bem-vindo ao Magic Sheets, a solução financeira definitiva para
-                gerenciar seus gastos pessoais e manter suas finanças sob
-                controle. Nunca foi tão fácil entender para onde seu dinheiro
-                está indo.
-              </p>
-            </section>
-            <section className="container mx-auto mt-8 rounded bg-opacity-50 p-8 text-black dark:text-white">
-              <h2 className="mb-4 text-2xl font-bold">Recursos Principais</h2>
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <li>
-                  <h3 className="text-xl font-semibold">
-                    Rastreamento de Despesas
-                  </h3>
-                  <p>
-                    Registre todas as suas despesas diárias de forma fácil e
-                    eficaz.
-                  </p>
-                </li>
-                <li>
-                  <h3 className="text-xl font-semibold">
-                    Orçamento Personalizado
-                  </h3>
-                  <p>
-                    Crie orçamentos personalizados e saiba quanto você pode
-                    gastar em cada categoria.
-                  </p>
-                </li>
-                <li>
-                  <h3 className="text-xl font-semibold">
-                    Relatórios Detalhados
-                  </h3>
-                  <p>
-                    Visualize relatórios detalhados para entender melhor seus
-                    hábitos de gastos.
-                  </p>
-                </li>
-                <li>
-                  <h3 className="text-xl font-semibold">Segurança dos Dados</h3>
-                  <p>
-                    Seus dados financeiros são armazenados com segurança e
-                    privacidade em mente.
-                  </p>
-                </li>
-              </ul>
-            </section>
-          </div>
-        </main>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="mx-auto max-w-6xl px-4 py-16">
+        {/* Hero Section */}
+        <div className="mb-20 text-center">
+          <h1 className="mb-6 text-5xl font-bold text-gray-900 dark:text-white">
+            Controle Seus Gastos com Opensheets
+          </h1>
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-600 dark:text-gray-300">
+            Bem-vindo ao Opensheets, a solução financeira definitiva para
+            gerenciar seus gastos pessoais e manter suas finanças sob controle.
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature, index) => (
+            <Card
+              key={index}
+              className="group border-gray-200 bg-white transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+            >
+              <CardContent className="p-6">
+                <div className="mb-4 inline-block rounded-lg bg-gray-100 p-3 dark:bg-gray-700">
+                  {feature.icon}
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-gray-900 transition-colors group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-300">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {feature.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
