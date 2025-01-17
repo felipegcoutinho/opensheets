@@ -77,7 +77,11 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     header: "Data",
     cell: ({ row }) => {
       const item = row.original;
-      return <span>{DateFormat(item.data_compra)}</span>;
+      return (
+        <span className="text-muted-foreground">
+          {DateFormat(item.data_compra)}
+        </span>
+      );
     },
   },
 
@@ -146,7 +150,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return (
         <Button
           variant="ghost"
-          className="p-0 text-xs"
+          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Transacao
@@ -175,7 +179,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return (
         <Button
           variant="ghost"
-          className="p-0 text-xs"
+          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Valor
@@ -196,7 +200,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return (
         <Button
           variant="ghost"
-          className="p-0 text-xs"
+          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Condição
@@ -225,7 +229,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return (
         <Button
           variant="ghost"
-          className="p-0 text-xs"
+          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Pagamento
@@ -246,7 +250,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       return (
         <Button
           variant="ghost"
-          className="p-0 text-xs"
+          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Responsável

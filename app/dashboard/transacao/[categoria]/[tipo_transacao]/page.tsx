@@ -1,5 +1,7 @@
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,7 +13,13 @@ import {
 import { UseDates } from "@/hooks/use-dates";
 import { getCategoria } from "@actions/cards";
 import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
-import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  CalendarClockIcon,
+  Check,
+  RefreshCw,
+} from "lucide-react";
+import Link from "next/link";
 
 async function Page(props) {
   const searchParams = await props.searchParams;
@@ -20,115 +28,180 @@ async function Page(props) {
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  // Função para capitalizar a primeira letra
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  // Capitalizando a primeira letra de params.categoria
   const categoria = capitalizeFirstLetter(decodeURIComponent(params.categoria));
   const tipoTransacao = capitalizeFirstLetter(
     decodeURIComponent(params.tipo_transacao),
   );
 
   const getCategoriaMap = await getCategoria(month, categoria, tipoTransacao);
+  const valorTotal = getCategoriaMap?.reduce(
+    (acc, item) => acc + item.valor,
+    0,
+  );
+
+  // Calcula o número total de transações
+  const totalTransacoes = getCategoriaMap?.length || 0;
 
   return (
-    <>
-      <h1 className="mt-6 text-xl">Categoria | {tipoTransacao}</h1>
-      <h2 className="mb-6 mt-2">
-        <Badge className="text-sm">{categoria}</Badge>
-      </h2>
+    <div className="mb-4 space-y-6">
+      {/* Botão Voltar */}
+      <Button variant="ghost" className="mt-4">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <ArrowLeftIcon size={16} />
+          <p>Voltar</p>
+        </Link>
+      </Button>
 
-      <Table>
-        <TableHeader>
-          <TableRow className="border-b text-xs">
-            <TableHead>Data</TableHead>
-            <TableHead>Descrição</TableHead>
-            <TableHead>Transação</TableHead>
-            <TableHead>Condição</TableHead>
-            <TableHead>Pagamento</TableHead>
-            <TableHead>Responsável</TableHead>
-            <TableHead>Valor</TableHead>
-            <TableHead>Categoria</TableHead>
-            <TableHead>Ações</TableHead>
-          </TableRow>
-        </TableHeader>
+      {/* Cabeçalho com Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Categoria
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-2">
+              <Button
+                variant={
+                  tipoTransacao === "Receita" ? "success" : "destructive"
+                }
+                className="h-6"
+              >
+                {tipoTransacao}
+              </Button>
+              <Badge variant="outline" className="h-6">
+                {categoria}
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
 
-        <TableBody>
-          {getCategoriaMap?.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell className="font-bold">
-                {DateFormat(item.data_compra)}
-              </TableCell>
-              <TableCell>
-                {item.descricao}
-                <span className="px-1 text-xs text-neutral-400">
-                  {item.condicao === "Parcelado" &&
-                    `${item.parcela_atual} de ${item.qtde_parcela}`}
-                </span>
-              </TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    item.tipo_transacao === "Receita"
-                      ? "defaultGreen"
-                      : "defaultRed"
-                  }
-                >
-                  {item.tipo_transacao}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <span className="flex items-center gap-1">
-                  {item.condicao === "Parcelado" && (
-                    <CalendarClockIcon size={12} />
-                  )}
-                  {item.condicao === "Recorrente" && <RefreshCw size={12} />}
-                  {item.condicao === "Vista" && <Check size={12} />}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Valor Total
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              <Numbers value={valorTotal} />
+            </div>
+          </CardContent>
+        </Card>
 
-                  <span className="capitalize"> {item.condicao}</span>
-                </span>
-              </TableCell>
-              <TableCell>{item.forma_pagamento}</TableCell>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Total de Transações
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalTransacoes}</div>
+          </CardContent>
+        </Card>
+      </div>
 
-              <TableCell className="font-bold text-blue-600">
-                {item.responsavel}
-              </TableCell>
+      {/* Tabela de Transações */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Transações</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50">
+                <TableHead>Data</TableHead>
+                <TableHead>Descrição</TableHead>
+                <TableHead>Transação</TableHead>
+                <TableHead>Condição</TableHead>
+                <TableHead>Pagamento</TableHead>
+                <TableHead>Responsável</TableHead>
+                <TableHead>Valor</TableHead>
+                <TableHead className="text-right">Ações</TableHead>
+              </TableRow>
+            </TableHeader>
 
-              <TableCell>
-                <Numbers value={item.valor} />
-              </TableCell>
-
-              <TableCell>{item.categoria}</TableCell>
-
-              <TableCell className="flex text-center">
-                <DetailsTransactions
-                  itemId={item.id}
-                  itemPeriodo={item.periodo}
-                  itemNotas={item.anotacao}
-                  itemDate={item.data_compra}
-                  itemDescricao={item.descricao}
-                  itemCategoria={item.categoria}
-                  itemCondicao={item.condicao}
-                  itemResponsavel={item.responsavel}
-                  itemTipoTransacao={item.tipo_transacao}
-                  itemValor={item.valor}
-                  itemFormaPagamento={item.forma_pagamento}
-                  itemQtdeParcelas={item.qtde_parcela}
-                  itemParcelaAtual={item.parcela_atual}
-                  itemRecorrencia={item.recorrencia}
-                  itemQtdeRecorrencia={item.qtde_recorrencia}
-                  itemCartao={item.cartoes?.descricao}
-                  itemPaid={item.realizado}
-                  itemConta={item.contas?.descricao}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </>
+            <TableBody>
+              {getCategoriaMap?.map((item) => (
+                <TableRow key={item.id} className="hover:bg-muted/50">
+                  <TableCell>{DateFormat(item.data_compra)}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col">
+                      <span>{item.descricao}</span>
+                      {item.condicao === "Parcelado" && (
+                        <span className="text-xs text-muted-foreground">
+                          Parcela {item.parcela_atual} de {item.qtde_parcela}
+                        </span>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant={
+                        item.tipo_transacao === "Receita"
+                          ? "success"
+                          : "destructive"
+                      }
+                      className="h-6 whitespace-nowrap"
+                    >
+                      {item.tipo_transacao}
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <span className="flex items-center gap-1">
+                      {item.condicao === "Parcelado" && (
+                        <CalendarClockIcon size={12} />
+                      )}
+                      {item.condicao === "Recorrente" && (
+                        <RefreshCw size={12} />
+                      )}
+                      {item.condicao === "Vista" && <Check size={12} />}
+                      <span className="capitalize">{item.condicao}</span>
+                    </span>
+                  </TableCell>
+                  <TableCell>{item.forma_pagamento}</TableCell>
+                  <TableCell>
+                    <span className="font-medium text-primary">
+                      {item.responsavel}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <Numbers value={item.valor} />
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DetailsTransactions
+                      itemId={item.id}
+                      itemPeriodo={item.periodo}
+                      itemNotas={item.anotacao}
+                      itemDate={item.data_compra}
+                      itemDescricao={item.descricao}
+                      itemCategoria={item.categoria}
+                      itemCondicao={item.condicao}
+                      itemResponsavel={item.responsavel}
+                      itemTipoTransacao={item.tipo_transacao}
+                      itemValor={item.valor}
+                      itemFormaPagamento={item.forma_pagamento}
+                      itemQtdeParcelas={item.qtde_parcela}
+                      itemParcelaAtual={item.parcela_atual}
+                      itemRecorrencia={item.recorrencia}
+                      itemQtdeRecorrencia={item.qtde_recorrencia}
+                      itemCartao={item.cartoes?.descricao}
+                      itemPaid={item.realizado}
+                      itemConta={item.contas?.descricao}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
