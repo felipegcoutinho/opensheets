@@ -1,3 +1,4 @@
+import { Merriweather } from "next/font/google";
 import localFont from "next/font/local";
 
 const uiSans = localFont({
@@ -16,4 +17,10 @@ const uiSans = localFont({
   ],
 });
 
-export { uiSans };
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  weight: ["400", "900"],
+  fallback: ["monospace"],
+});
+
+export { merriweather, uiSans };

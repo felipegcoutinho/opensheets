@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "bg-red-50 text-red-500 hover:bg-red-100 dark:bg-transparent dark:text-red-500 dark:border dark:border-red-500",
+          "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-900/40 dark:text-red-200 dark:border-none",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
@@ -19,9 +19,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         success:
-          "bg-green-50 text-green-600 hover:bg-green-100 dark:bg-transparent dark:text-green-600 dark:border dark:border-green-600",
+          "bg-green-50 text-green-600 hover:bg-green-100 dark:bg-green-900/40 dark:text-green-300 dark:border-none",
         warning:
-          "bg-orange-50 text-orange-600 hover:bg-orange-100 dark:bg-transparent dark:text-orange-600 dark:border dark:border-orange-600",
+          "bg-orange-50 text-orange-600 hover:bg-orange-100 dark:bg-orange-900/40 dark:text-orange-300 dark:border-none",
       },
       size: {
         default: "h-10 px-4 py-2",

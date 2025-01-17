@@ -8,7 +8,9 @@ export async function PaymentList({ month }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm uppercase">Formas de Pagamento</CardTitle>
+        <CardTitle className="text-sm uppercase dark:text-muted-foreground">
+          Formas de Pagamento
+        </CardTitle>
       </CardHeader>
 
       {payment?.length > 0 ? (
@@ -16,10 +18,10 @@ export async function PaymentList({ month }) {
           <CardContent key={item.forma_pagamento} className="grid gap-2 py-1">
             <div className="grid">
               <div className="flex items-center justify-between">
-                <span className="text-md">{item.forma_pagamento}</span>
-                <span className="text-muted-foreground">
+                <p className="text-md">{item.forma_pagamento}</p>
+                <p>
                   <Numbers value={item.sum} />
-                </span>
+                </p>
               </div>
             </div>
           </CardContent>

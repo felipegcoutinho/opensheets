@@ -12,7 +12,7 @@ export default function CardSummary({ title, value, previousValue, color }) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardDescription className="flex items-center gap-1">
+        <CardDescription className="flex items-center gap-1 dark:text-muted-foreground">
           <Ping color={color} />
           {title}
         </CardDescription>

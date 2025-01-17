@@ -25,13 +25,13 @@ const statsConfig = [
 const StatCard = ({ title, icon: Icon, count }) => (
   <Card>
     <CardHeader className="pb-0">
-      <CardTitle className="flex items-center gap-1 text-sm uppercase">
+      <CardTitle className="flex items-center gap-1 text-sm uppercase dark:text-muted-foreground">
         <Icon size={14} />
         {title}
       </CardTitle>
     </CardHeader>
     <CardContent>
-      <p className="mt-2 text-2xl text-muted-foreground">{count}</p>
+      <p className="mt-2 text-2xl">{count}</p>
     </CardContent>
   </Card>
 );

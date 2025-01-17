@@ -26,7 +26,7 @@ export default function CategoriesList({ data, month, color }) {
               <p>{item.categoria}</p>
               <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
             </Link>
-            <p className="text-muted-foreground">
+            <p>
               <Numbers value={item.sum} />
             </p>
           </div>

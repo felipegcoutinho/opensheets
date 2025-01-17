@@ -28,14 +28,14 @@ function RecentesTransactions({ transactions }) {
               quality={100}
             />
             <div className="flex flex-col items-start py-1">
+              <p>{item.descricao}</p>
               <p className="text-xs text-muted-foreground">
                 {DateFormat(item.data_compra)}
               </p>
-              <p>{item.descricao}</p>
             </div>
           </div>
 
-          <p className="text-muted-foreground">
+          <p>
             <Numbers value={item.valor} />
           </p>
         </div>
