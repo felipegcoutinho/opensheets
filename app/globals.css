@@ -68,7 +68,7 @@
   }
 
   ::selection {
-    @apply bg-orange-500 text-primary-foreground dark:bg-blue-400;
+    @apply bg-amber-500 text-primary-foreground dark:bg-violet-400;
   }
 }
 

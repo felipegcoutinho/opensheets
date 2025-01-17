@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 // Busca a lista de boletos salvos
 export async function getBills(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("boletos")
@@ -44,7 +44,7 @@ export async function addBills(formData: FormData) {
     dividir_boleto,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const boletos = [];
 
   function adicionarBoleto(valor, responsavel, periodo, dt_vencimento) {
@@ -136,7 +136,7 @@ export async function addBills(formData: FormData) {
 export async function deleteBills(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase.from("boletos").delete().eq("id", excluir);
@@ -164,7 +164,7 @@ export async function updateBills(formData: FormData) {
     responsavel,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase
@@ -193,7 +193,7 @@ export async function updateBills(formData: FormData) {
 
 // Busca apenas despesas realizadas de uma conta bancária específica e soma os valores
 export async function getSumBillsExpensePaid(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("boletos")
@@ -216,7 +216,7 @@ export async function getSumBillsExpensePaid(month) {
 }
 
 export async function payBills(formData: FormData, id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("boletos")

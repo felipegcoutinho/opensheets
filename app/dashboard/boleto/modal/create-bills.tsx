@@ -95,11 +95,21 @@ export default function CreateBills({ getAccountMap }) {
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categoriasDespesa.map((item) => (
-                    <SelectItem key={item.id} value={item.name}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
+                  {categoriasDespesa.map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <SelectItem
+                        key={item.id}
+                        value={item.name}
+                        className="flex items-center gap-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          <IconComponent className="h-4 w-4 text-red-500 dark:text-red-500" />
+                          {item.name}
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>

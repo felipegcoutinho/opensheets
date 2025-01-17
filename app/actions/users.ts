@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getResponsavelTransactionList(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: users, error } = await supabase
     .from("transacoes")
@@ -22,7 +22,7 @@ export async function getResponsavelTransactionList(month) {
 }
 
 export async function getResponsavelBillList(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: bills, error } = await supabase
     .from("boletos")
@@ -39,7 +39,7 @@ export async function getResponsavelBillList(month) {
 }
 
 export async function getUserName() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -63,7 +63,7 @@ export async function getUserName() {
 }
 
 export async function getEmail() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
 

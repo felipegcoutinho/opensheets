@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 // Busca a lista de contas bancárias salvas
 export async function getAccount() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("contas")
     .select(`id, descricao, status, tipo_conta, logo_image, anotacao`);
@@ -20,7 +20,7 @@ export async function getAccount() {
 
 // Busca detalhes de uma conta bancária específica
 export async function getAccountDetails(id) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("contas")
     .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)
@@ -39,7 +39,7 @@ export async function addAccount(formData: FormData) {
   const { descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase.from("contas").insert({
@@ -59,7 +59,7 @@ export async function addAccount(formData: FormData) {
 export async function deleteAccount(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase.from("contas").delete().eq("id", excluir);
@@ -74,7 +74,7 @@ export async function updateAccount(formData: FormData) {
   const { id, descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase
@@ -96,7 +96,7 @@ export async function updateAccount(formData: FormData) {
 
 // Busca as transações de uma conta bancária específica na tabela transacoes
 export async function getAccountInvoice(month, id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -117,7 +117,7 @@ export async function getAccountInvoice(month, id) {
 
 // Busca as receitas de uma conta bancária específica e soma os valores
 export async function getSumAccountIncome(month, id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
@@ -143,7 +143,7 @@ export async function getSumAccountIncome(month, id) {
 
 // Busca as despesas de uma conta bancária específica e soma os valores
 export async function getSumAccountExpense(month, id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
@@ -169,7 +169,7 @@ export async function getSumAccountExpense(month, id) {
 
 // Busca apenas despesas realizadas de uma conta bancária específica e soma os valores
 export async function getSumAccountExpensePaid(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
@@ -195,7 +195,7 @@ export async function getSumAccountExpensePaid(month) {
 
 // Busca apenas receitas realizadas de uma conta bancária específica e soma os valores
 export async function getSumAccountIncomePaid(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
