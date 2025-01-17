@@ -334,7 +334,7 @@ export async function getRecentTransactions(month) {
     .order("created_at", { ascending: false })
     .eq("responsavel", "Você")
     .eq("periodo", month)
-    .limit(6);
+    .limit(5);
 
   if (error) {
     console.error("Erro ao buscar transações:", error);
