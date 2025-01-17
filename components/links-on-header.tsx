@@ -102,13 +102,13 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
   return (
     <div
       className={clsx(
-        "flex items-center px-1 text-base transition-colors duration-700",
+        "flex items-center gap-1 text-base transition-colors duration-700",
         isActive
           ? "text-blue-600 underline decoration-2 underline-offset-4 dark:text-orange-400"
           : "text-neutral-600 hover:text-blue-600 hover:underline hover:decoration-2 hover:underline-offset-4 dark:text-neutral-300",
       )}
     >
-      {/* <Icon size={12} /> */}
+      <Icon size={14} />
       {LinkName}
     </div>
   );
