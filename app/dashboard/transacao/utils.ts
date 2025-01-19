@@ -122,14 +122,21 @@ export default function Utils() {
     return periodoFormatado;
   }
 
-  function calcularMesFinal(itemPeriodo, itemQtdeParcelas) {
+  function calcularMesFinal(
+    itemPeriodo,
+    itemQtdeParcelas,
+    itemParcelaAtual = 1,
+  ) {
     // Parse o itemPeriodo para um objeto Date
     const dataInicial = parse(itemPeriodo, "MMMM-yyyy", new Date(), {
       locale: ptBR,
     });
 
-    // Adicione a quantidade de parcelas à data inicial
-    const dataFinal = addMonths(dataInicial, itemQtdeParcelas - 1);
+    // Calcule quantas parcelas ainda faltam
+    const parcelasRestantes = itemQtdeParcelas - itemParcelaAtual + 1;
+
+    // Adicione a quantidade de parcelas restantes à data inicial
+    const dataFinal = addMonths(dataInicial, parcelasRestantes - 1);
 
     // Formate a data final para o formato "MMMM 'de' yyyy"
     let mesFinal = format(dataFinal, "MMMM 'de' yyyy", { locale: ptBR });

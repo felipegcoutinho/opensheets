@@ -177,8 +177,8 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             </div>
           </div>
 
-          <div className="mt-2 flex w-full items-center gap-2">
-            <Card
+          <Card className="mt-2 flex w-full items-center gap-2">
+            <div
               className={`flex items-center justify-between gap-2 p-2 ${showCartao ? "w-full" : "w-1/2"}`}
             >
               <Label className="text-sm font-medium text-muted-foreground">
@@ -189,10 +189,10 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 checked={isDividedChecked}
                 onCheckedChange={() => setIsDividedChecked(!isDividedChecked)}
               />
-            </Card>
+            </div>
 
             {!showCartao && (
-              <Card className="flex w-1/2 items-center justify-between gap-2 px-2">
+              <div className="flex w-1/2 items-center justify-between gap-2 px-2">
                 <Label className="text-sm font-medium text-muted-foreground">
                   Status do Lançamento
                 </Label>
@@ -207,9 +207,9 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 >
                   <ThumbsUp strokeWidth={2} className="h-6 w-6" />
                 </Toggle>
-              </Card>
+              </div>
             )}
-          </div>
+          </Card>
 
           <div className="flex w-full gap-2">
             <div className="w-full">

@@ -33,7 +33,6 @@ export default function CreateBills({ getAccountMap }) {
     categoriasDespesa,
     handleSubmit,
     setStatusPagamento,
-    statusPagamento,
     showRecorrencia,
     handleCondicaoChange,
     isDividedChecked,
@@ -230,15 +229,6 @@ export default function CreateBills({ getAccountMap }) {
               </Select>
             </div>
           </div>
-
-          {statusPagamento === "Pago" && (
-            <div className="mb-1 flex w-full gap-2">
-              <div className="w-full">
-                <Label>Data de Pagamento</Label>
-                <Input name="dt_pagamento" type="date" />
-              </div>
-            </div>
-          )}
 
           <div className="w-full">
             <Label>Conta Padrão</Label>

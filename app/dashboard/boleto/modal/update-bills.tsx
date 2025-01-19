@@ -45,7 +45,6 @@ export default function UpdateBills({
     categoriasDespesa,
     handleUpdate,
     setStatusPagamento,
-    statusPagamento,
     handleCondicaoChange,
     isOpen,
     setIsOpen,
@@ -233,19 +232,6 @@ export default function UpdateBills({
                 </Select>
               </div>
             </div>
-
-            {statusPagamento === "Pago" && (
-              <div className="mb-1 flex w-full gap-2">
-                <div className="w-full">
-                  <Label>Data de Pagamento</Label>
-                  <Input
-                    defaultValue={itemDtPagamento}
-                    name="dt_pagamento"
-                    type="date"
-                  />
-                </div>
-              </div>
-            )}
 
             <div className="w-full">
               <Label>Conta Padrão</Label>

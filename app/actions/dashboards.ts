@@ -273,7 +273,7 @@ export async function getBillsByResponsavel(month) {
   const { data, error } = await supabase
     .from("boletos")
     .select(
-      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
+      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao,
       qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
     )
     .eq("periodo", month)

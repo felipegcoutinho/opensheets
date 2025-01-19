@@ -58,7 +58,6 @@ export async function addAccount(formData: FormData) {
 // Deleta uma conta bancária
 export async function deleteAccount(formData: FormData) {
   const excluir = formData.get("excluir");
-
   const supabase = await createClient();
 
   try {

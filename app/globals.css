@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -21,7 +21,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
+    --input: 0 0% 90%;
     --ring: 0 0% 3.9%;
     --radius: 0rem;
     --chart-1: 12 76% 61%;
@@ -64,7 +64,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-neutral-50 dark:bg-neutral-900 text-foreground;
   }
 
   ::selection {

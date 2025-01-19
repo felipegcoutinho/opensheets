@@ -11,14 +11,14 @@ export async function getBills(month) {
   const { data, error } = await supabase
     .from("boletos")
     .select(
-      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
+      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao,
       qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
     )
     .eq("periodo", month)
     .order("dt_vencimento", { ascending: true });
 
   if (error) {
-    console.error("Erro em buscar boletos (getBills):", error);
+    console.error("Erro em buscar boletos:", error);
     return null;
   }
 
@@ -33,7 +33,6 @@ export async function addBills(formData: FormData) {
     periodo,
     categoria,
     status_pagamento,
-    dt_pagamento,
     valor,
     qtde_recorrencia,
     condicao,
@@ -54,7 +53,6 @@ export async function addBills(formData: FormData) {
       periodo,
       categoria,
       status_pagamento,
-      dt_pagamento,
       valor,
       conta_id,
       qtde_recorrencia,
@@ -155,7 +153,6 @@ export async function updateBills(formData: FormData) {
     periodo,
     categoria,
     status_pagamento,
-    dt_pagamento,
     valor,
     conta_id,
     qtde_recorrencia,
@@ -176,7 +173,6 @@ export async function updateBills(formData: FormData) {
         periodo,
         categoria,
         status_pagamento,
-        dt_pagamento,
         valor,
         conta_id,
         qtde_recorrencia,
@@ -220,7 +216,7 @@ export async function payBills(formData: FormData, id) {
 
   const { error, data } = await supabase
     .from("boletos")
-    .update({ status_pagamento: "Pago", dt_pagamento: new Date() })
+    .update({ status_pagamento: "Pago" })
     .eq("status_pagamento", "Pendente")
     .eq("id", id);
 

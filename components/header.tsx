@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/utils/supabase/server";
-import { Menu, UserCircle2Icon } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -15,6 +15,7 @@ import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
 import LinkOnHeader from "./links-on-header";
 import Logo from "./logo";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default async function Header() {
   const cookieStore = await cookies();
@@ -119,8 +120,13 @@ export default async function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="link" size="icon">
-              <UserCircle2Icon size={20} className="bg-transparent" />
-              <span className="sr-only">Toggle user menu</span>
+              <Avatar>
+                <AvatarImage
+                  src="https://www.yagopartal.com/wp-content/uploads/2022/10/Black-panther-CESAR.jpg"
+                  alt="Avatar"
+                />
+                <AvatarFallback>OP</AvatarFallback>
+              </Avatar>
             </Button>
           </DropdownMenuTrigger>
 
