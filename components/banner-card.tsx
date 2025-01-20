@@ -11,7 +11,7 @@ function Banner({ children }) {
   }
 
   return (
-    <div className="mb-4 w-full text-black dark:from-transparent dark:to-transparent dark:text-white">
+    <div className="text-color-1 mb-4 w-full dark:from-transparent dark:to-transparent dark:text-white">
       {children}
     </div>
   );
