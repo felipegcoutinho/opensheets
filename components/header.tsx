@@ -20,7 +20,7 @@ export default async function Header() {
   const session = await getSession();
 
   return (
-    <header className="bg-color-2 text-color-1 mb-4 w-full">
+    <header className="bg-color-6 mb-4 w-full text-color-1">
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4">
         {/* Menu para telas pequenas */}
         <div className="flex items-center gap-4 md:hidden">

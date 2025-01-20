@@ -52,8 +52,8 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
       className={clsx(
         "flex items-center gap-1 rounded-full px-3 py-1 transition-colors duration-200",
         isActive
-          ? "text-color-1 bg-orange-200"
-          : "hover:text-color-1 text-color-1/80 dark:text-neutral-300",
+          ? "bg-white text-color-1"
+          : "text-color-1/80 hover:text-color-1 dark:text-neutral-300",
       )}
     >
       <Icon size={14} />

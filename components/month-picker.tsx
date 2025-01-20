@@ -163,7 +163,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
+    <Card className="boerder-none flex w-full items-center justify-start gap-4 bg-color-1 px-4 py-2 text-white dark:bg-tertiary-color/20">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -177,7 +177,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-cyan-900 focus:ring-0 dark:text-white">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg capitalize focus:ring-0 dark:text-white">
               <SelectValue>
                 {currentMonth}
                 <span className="ml-1">{currentYear}</span>
@@ -227,7 +227,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="text-cyan-900 opacity-40 focus:outline-none disabled:opacity-50 dark:text-white"
+      className="opacity-40 focus:outline-none disabled:opacity-50 dark:text-white"
       disabled={disabled}
     >
       <Icon size={14} />
@@ -240,7 +240,7 @@ const ReturnButton = ({ onClick, disabled }) => (
   <Button
     variant="link"
     size="xs"
-    className="border border-cyan-900 px-1 text-cyan-900 disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
+    className="border border-white px-1 text-white disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
     onClick={onClick}
     disabled={disabled}
   >
