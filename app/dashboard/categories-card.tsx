@@ -93,7 +93,7 @@ export default function CategoriesList({ data, month, color }) {
             <div className="mb-2 flex items-center justify-between">
               <Link
                 className="flex items-center gap-1 hover:underline"
-                href={`/dashboard/transacao/${encodeURIComponent(categoria)}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
+                href={`/dashboard/transacao/${encodeURIComponent(categoria).toLocaleLowerCase()}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
               >
                 <IconComponent className={`h-4 w-4 ${iconColor}`} />
                 <p>{item.categoria}</p>

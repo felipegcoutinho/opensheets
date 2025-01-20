@@ -75,3 +75,13 @@ export async function getEmail() {
   const email_data = data.user?.user_metadata?.email;
   return email_data ?? null;
 }
+
+export async function getSession() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
+}

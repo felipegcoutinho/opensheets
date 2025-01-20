@@ -6,7 +6,7 @@ function Logo() {
 
   return (
     <div
-      className={`${merriweather.className} flex w-28 items-center text-xl tracking-tighter text-black dark:text-white`}
+      className={`${merriweather.className} text-color-1 flex w-28 items-center text-xl tracking-tighter dark:text-white`}
     >
       <p>
         {open}

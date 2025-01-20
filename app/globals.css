@@ -7,7 +7,7 @@
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 242 80% 14%; 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
@@ -64,7 +64,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-neutral-50 dark:bg-neutral-900 text-foreground;
+    @apply bg-background dark:bg-neutral-900 text-foreground;
   }
 
   ::selection {
