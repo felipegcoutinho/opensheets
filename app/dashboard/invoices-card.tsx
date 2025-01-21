@@ -59,6 +59,7 @@ export default async function InvoiceCard({ data, month }) {
             cartao_id={item.cartao_id}
             descricao={item.descricao}
             valor={item.total_valor}
+            logo_imagem={item.logo_image}
           />
         </div>
       </div>
