@@ -27,13 +27,12 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <main className="mx-auto flex max-w-screen-xl flex-col px-2 antialiased animate-in max-sm:px-2">
-            <PrivacyProviderApp>
-              <Header />
+          <PrivacyProviderApp>
+            <Header />
+            <main className="mx-auto flex max-w-screen-xl flex-col px-2 antialiased animate-in max-sm:px-2">
               {children}
-            </PrivacyProviderApp>
-          </main>
-
+            </main>
+          </PrivacyProviderApp>
           <SpeedInsights />
           <Analytics />
           <Toaster position="top-right" richColors duration={2500} />

@@ -33,7 +33,6 @@ export default function CreateBills({ getAccountMap }) {
     categoriasDespesa,
     handleSubmit,
     setStatusPagamento,
-    statusPagamento,
     showRecorrencia,
     handleCondicaoChange,
     isDividedChecked,
@@ -95,11 +94,21 @@ export default function CreateBills({ getAccountMap }) {
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categoriasDespesa.map((item) => (
-                    <SelectItem key={item.id} value={item.name}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
+                  {categoriasDespesa.map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <SelectItem
+                        key={item.id}
+                        value={item.name}
+                        className="flex items-center gap-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          <IconComponent className="h-4 w-4 text-red-500 dark:text-red-500" />
+                          {item.name}
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -220,15 +229,6 @@ export default function CreateBills({ getAccountMap }) {
               </Select>
             </div>
           </div>
-
-          {statusPagamento === "Pago" && (
-            <div className="mb-1 flex w-full gap-2">
-              <div className="w-full">
-                <Label>Data de Pagamento</Label>
-                <Input name="dt_pagamento" type="date" />
-              </div>
-            </div>
-          )}
 
           <div className="w-full">
             <Label>Conta Padrão</Label>

@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export async function getNotes(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: notes } = await supabase
     .from("anotacoes")
     .select(`id, descricao, periodo, anotacao`)
@@ -18,7 +18,7 @@ export async function addNotes(formData: FormData) {
     formData.entries(),
   );
 
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.from("anotacoes").insert({ descricao, periodo, anotacao });
   revalidatePath("/anotacoes");
 }
@@ -26,7 +26,7 @@ export async function addNotes(formData: FormData) {
 export async function deleteNotes(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.from("anotacoes").delete().eq("id", excluir);
   revalidatePath("/anotacoes");
 }
@@ -36,7 +36,7 @@ export async function updateNotes(formData: FormData) {
     formData.entries(),
   );
 
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase
     .from("anotacoes")
     .update({ id, descricao, periodo, anotacao })

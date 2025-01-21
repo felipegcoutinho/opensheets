@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "OpenSheets | Contas",
+  title: "Contas | openSheets",
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 

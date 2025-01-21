@@ -1,5 +1,6 @@
 "use client";
 
+import { bebasNeue } from "@/app/fonts/font";
 import {
   Select,
   SelectContent,
@@ -11,7 +12,6 @@ import { UseDates } from "@/hooks/use-dates";
 import { Calendar, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
-import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 
 export default function MonthPicker() {
@@ -163,7 +163,9 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="flex w-full items-center justify-start gap-4 bg-tertiary-color px-4 py-2 dark:bg-tertiary-color/20">
+    <Card
+      className={`${bebasNeue.className} flex w-full items-center justify-start gap-4 border-none bg-color-1 px-4 py-2 text-color-2 dark:dark:bg-card`}
+    >
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -177,7 +179,7 @@ export default function MonthPicker() {
             onValueChange={handleMonthSelect}
             disabled={isChanging}
           >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-lg font-bold capitalize text-cyan-900 focus:ring-0 dark:text-white">
+            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-2xl capitalize focus:ring-0 dark:text-white">
               <SelectValue>
                 {currentMonth}
                 <span className="ml-1">{currentYear}</span>
@@ -227,28 +229,26 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="text-cyan-900 opacity-40 focus:outline-none disabled:opacity-50 dark:text-white"
+      className="text-color-6 focus:outline-none disabled:opacity-50"
       disabled={disabled}
     >
-      <Icon size={14} />
+      <Icon size={16} />
     </button>
   );
 };
 
 // Componente otimizado para o botão de retorno
 const ReturnButton = ({ onClick, disabled }) => (
-  <Button
-    variant="link"
-    size="xs"
-    className="border border-cyan-900 px-1 text-cyan-900 disabled:opacity-50 dark:border-white dark:text-white dark:brightness-100"
+  <button
+    className="rounded bg-color-2 p-1 text-color-1 disabled:opacity-50 dark:border-white dark:text-white"
     onClick={onClick}
     disabled={disabled}
   >
     <span className="px-2">Retornar ao Mês Atual</span>
-  </Button>
+  </button>
 );
 
 // Componente de Loading
 const LoadingSpinner = () => (
-  <Loader2 className="h-4 w-4 animate-spin text-primary-color dark:text-blue-200" />
+  <Loader2 className="text-primary-color h-4 w-4 animate-spin dark:text-blue-200" />
 );

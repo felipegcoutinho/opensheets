@@ -1,16 +1,17 @@
+import { gabarito } from "@/app/fonts/font";
+
 function Logo() {
+  const open = "open";
+  const sheets = <span className="font-bold">Sheets</span>;
+
   return (
-    <div className="flex items-center gap-1 text-2xl tracking-tighter text-black dark:text-white">
-      {/* <Image
-        quality={100}
-        src="/logo.png"
-        alt="openSheets"
-        width={32}
-        height={32}
-      /> */}
-      <span>
-        open<span className="font-bold">sheets</span>
-      </span>
+    <div
+      className={`${gabarito.className} flex items-center text-2xl tracking-tighter text-card-foreground`}
+    >
+      <p>
+        {open}
+        {sheets}
+      </p>
     </div>
   );
 }

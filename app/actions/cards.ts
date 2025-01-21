@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 // Busca a lista de cartões salvos
 export async function getCards() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("cartoes")
@@ -23,7 +23,7 @@ export async function getCards() {
 
 // Busca a lista de transações para tabela de faturas
 export async function getCardInvoice(month, cartao_id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -46,7 +46,7 @@ export async function getCardInvoice(month, cartao_id) {
 
 // Busca os detalhes do cartão para a página de fatura
 export async function getCardDetails(id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("cartoes")
@@ -65,7 +65,7 @@ export async function getCardDetails(id) {
 
 // Busca a lista de categoria para tabela
 export async function getCategoria(month, categoriaId, tipo_transacao) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -102,7 +102,7 @@ export async function addCards(formData: FormData) {
     conta_id,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase.from("cartoes").insert({
@@ -126,7 +126,7 @@ export async function addCards(formData: FormData) {
 export async function deleteCards(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase.from("cartoes").delete().eq("id", excluir);
@@ -151,7 +151,7 @@ export async function updateCards(formData: FormData) {
     conta_id,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     await supabase
@@ -177,7 +177,7 @@ export async function updateCards(formData: FormData) {
 
 // Busca o valor total das despesas do cartão
 export async function getCardSum(month, cartao_id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
@@ -201,7 +201,7 @@ export async function getCardSum(month, cartao_id) {
 
 // Função para obter o limite em uso
 export async function getLimiteEmUso(cartao_id) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from("transacoes")

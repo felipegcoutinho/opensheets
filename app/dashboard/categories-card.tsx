@@ -3,8 +3,72 @@
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Progress } from "@/components/ui/progress";
-import { ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  Award,
+  Beer,
+  Briefcase,
+  Car,
+  CircleDollarSign,
+  Coffee,
+  CreditCard,
+  Gamepad2,
+  Gift,
+  GraduationCap,
+  Heart,
+  History,
+  Home,
+  Newspaper,
+  PiggyBank,
+  Plane,
+  RefreshCw,
+  Scissors,
+  Shirt,
+  ShoppingBag,
+  ShoppingCart,
+  Stars,
+  TrendingUp,
+  Trophy,
+  Users,
+  UtensilsCrossed,
+  Wallet,
+} from "lucide-react";
 import Link from "next/link";
+
+const iconesCategorias = {
+  // Receitas
+  "ajuste de saldo": History,
+  investimentos: TrendingUp,
+  plr: Award,
+  prêmios: Trophy,
+  presente: Gift,
+  reembolso: RefreshCw,
+  salário: Briefcase,
+  "saldo anterior": Wallet,
+  vendas: ShoppingCart,
+  rendimentos: PiggyBank,
+  outros: CircleDollarSign,
+  // Despesas
+  alimentação: UtensilsCrossed,
+  assinaturas: Newspaper,
+  bares: Beer,
+  compras: ShoppingBag,
+  "cuidados pessoais": Scissors,
+  educação: GraduationCap,
+  empréstimos: PiggyBank,
+  "lazer e hobbies": Gamepad2,
+  "loteria e apostas": Stars,
+  mercado: ShoppingCart,
+  moradia: Home,
+  pagamentos: CreditCard,
+  restaurantes: Coffee,
+  roupas: Shirt,
+  saúde: Heart,
+  terceiros: Users,
+  trabalho: Briefcase,
+  transporte: Car,
+  viagem: Plane,
+};
 
 export default function CategoriesList({ data, month, color }) {
   if (data.length === 0) {
@@ -16,27 +80,37 @@ export default function CategoriesList({ data, month, color }) {
 
   return (
     <>
-      {sortedData.map((item, index) => (
-        <div key={index} className="mb-4">
-          <div className="mb-2 flex items-center justify-between">
-            <Link
-              className="flex items-center gap-1 hover:underline"
-              href={`/dashboard/transacao/${encodeURIComponent(item.categoria.toLowerCase())}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
-            >
-              <p>{item.categoria}</p>
-              <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
-            </Link>
-            <p className="text-muted-foreground">
-              <Numbers value={item.sum} />
-            </p>
+      {sortedData.map((item, index) => {
+        const categoria = item.categoria.toLowerCase();
+        const IconComponent = iconesCategorias[categoria] || CircleDollarSign;
+        const iconColor =
+          item.tipo_transacao.toLowerCase() === "receita"
+            ? "text-green-600 dark:text-green-500"
+            : "text-red-600 dark:text-red-500";
+
+        return (
+          <div key={index} className="mb-4">
+            <div className="mb-2 flex items-center justify-between">
+              <Link
+                className="flex items-center gap-1 hover:underline"
+                href={`/dashboard/transacao/${encodeURIComponent(categoria).toLocaleLowerCase()}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
+              >
+                <IconComponent className={`h-4 w-4 ${iconColor}`} />
+                <p>{item.categoria}</p>
+                <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
+              </Link>
+              <p>
+                <Numbers value={item.sum} />
+              </p>
+            </div>
+            <Progress
+              indicatorColor={color}
+              value={(item.sum / maxSum) * 100}
+              className="h-1"
+            />
           </div>
-          <Progress
-            indicatorColor={color}
-            value={(item.sum / maxSum) * 100}
-            className="h-1"
-          />
-        </div>
-      ))}
+        );
+      })}
     </>
   );
 }

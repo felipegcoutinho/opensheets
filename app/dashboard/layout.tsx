@@ -3,7 +3,7 @@ import MonthPicker from "@/components/month-picker";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "OpenSheets | Dashboard",
+  title: "Dashboard | openSheets",
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 

@@ -16,13 +16,17 @@ export default async function BannerData() {
 
   const { saldo, userName } = await Utils(defaultPeriodo);
 
+  const userNameSplit = userName.split(" ")[0];
+
   return (
     <Banner>
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-base">{fliendlyDate(currentDate)}</p>
-          <p className="text-xl font-bold">
-            {getGreeting()}, {userName}
+        <div className="py-6">
+          <p className="text-2xl font-bold text-color-6">
+            Olá, {userNameSplit}! 👋
+          </p>
+          <p className="text-muted-foreground">
+            Hoje é {fliendlyDate(currentDate)}.
           </p>
         </div>
 

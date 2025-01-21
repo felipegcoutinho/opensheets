@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getResponsavelTransactionList(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: users, error } = await supabase
     .from("transacoes")
@@ -22,7 +22,7 @@ export async function getResponsavelTransactionList(month) {
 }
 
 export async function getResponsavelBillList(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: bills, error } = await supabase
     .from("boletos")
@@ -39,7 +39,7 @@ export async function getResponsavelBillList(month) {
 }
 
 export async function getUserName() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -63,7 +63,7 @@ export async function getUserName() {
 }
 
 export async function getEmail() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
 
@@ -76,47 +76,12 @@ export async function getEmail() {
   return email_data ?? null;
 }
 
-// export async function getUsers() {
-//   "use server";
-//   const cookiestore = cookies();
+export async function getSession() {
+  const supabase = await createClient();
 
-//   const supabase = createClient(cookiestore);
-//   const { data: users } = await supabase.from("responsaveis").select(`id, descricao, anotacao`);
-//   return users;
-// }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-// export async function addUsers(formData: FormData) {
-//   "use server";
-//   const cookieStore = cookies();
-
-//   const { descricao, anotacao } = Object.fromEntries(formData.entries());
-
-//   const supabase = createClient(cookieStore);
-//   await supabase.from("responsaveis").insert({ descricao, anotacao });
-
-//   revalidatePath("/responsaveis");
-// }
-
-// export async function deleteUsers(formData: FormData) {
-//   "use server";
-//   const cookieStore = cookies();
-
-//   const excluir = formData.get("excluir") as string;
-
-//   const supabase = createClient(cookieStore);
-//   await supabase.from("responsaveis").delete().eq("id", excluir);
-
-//   revalidatePath("/responsaveis");
-// }
-
-// export async function updateUsers(formData: FormData) {
-//   "use server";
-//   const cookieStore = cookies();
-
-//   const { id, descricao, anotacao } = Object.fromEntries(formData.entries());
-
-//   const supabase = createClient(cookieStore);
-//   await supabase.from("responsaveis").update({ id, descricao, anotacao }).eq("id", id);
-
-//   revalidatePath("/responsaveis");
-// }
+  return user;
+}

@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 
 // Busca a receita total do mês
 export async function getIncome(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -26,7 +26,7 @@ export async function getIncome(month) {
 
 // Busca a despesa total do mês
 export async function getExpense(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -47,7 +47,7 @@ export async function getExpense(month) {
 
 // Busca o saldo anterior
 export async function getLastPrevious(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -71,7 +71,7 @@ export async function getLastPrevious(month) {
 
 // Busca o valor total das despesas dos boletos
 export async function getExpenseBill(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("boletos")
@@ -94,7 +94,7 @@ export async function getExpenseBill(month) {
 
 // Busca o valor total das despesas pagas que não são cartao de credito.
 export async function getExpensePaid(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -118,7 +118,7 @@ export async function getExpensePaid(month) {
 
 // Busca o valor total das boletos pagos no mês
 export async function getExpenseBillPaid(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("boletos")
@@ -141,7 +141,7 @@ export async function getExpenseBillPaid(month) {
 
 // Busca o valor total das faturas
 export async function getInvoiceList(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.rpc("getinvoicelists", { month });
 
@@ -154,7 +154,7 @@ export async function getInvoiceList(month) {
 }
 
 export async function getConditions(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -173,7 +173,7 @@ export async function getConditions(month) {
 }
 
 export async function getPayment(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -192,7 +192,7 @@ export async function getPayment(month) {
 }
 
 export async function getTransactionsCount(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
@@ -209,7 +209,7 @@ export async function getTransactionsCount(month) {
 }
 
 export async function getBillsCount(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("boletos")
@@ -226,7 +226,7 @@ export async function getBillsCount(month) {
 }
 
 export async function getCardsCount(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.from("cartoes").select("count()");
 
@@ -239,7 +239,7 @@ export async function getCardsCount(month) {
 }
 
 export async function getAccountsCount(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.from("contas").select("count()");
 
@@ -252,7 +252,7 @@ export async function getAccountsCount(month) {
 }
 
 export async function getNotesCount(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("anotacoes")
@@ -268,12 +268,12 @@ export async function getNotesCount(month) {
 }
 
 export async function getBillsByResponsavel(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("boletos")
     .select(
-      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, dt_pagamento, valor, condicao,
+      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao,
       qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
     )
     .eq("periodo", month)
@@ -288,7 +288,7 @@ export async function getBillsByResponsavel(month) {
 }
 
 export async function getExpenseByCategory(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("transacoes")
     .select("categoria, tipo_transacao, valor.sum()")
@@ -306,7 +306,7 @@ export async function getExpenseByCategory(month) {
 }
 
 export async function getIncomeByCategory(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("transacoes")
     .select("categoria, tipo_transacao, valor.sum()")
@@ -324,7 +324,7 @@ export async function getIncomeByCategory(month) {
 }
 
 export async function getRecentTransactions(month) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: transacao, error } = await supabase
     .from("transacoes")
@@ -334,7 +334,7 @@ export async function getRecentTransactions(month) {
     .order("created_at", { ascending: false })
     .eq("responsavel", "Você")
     .eq("periodo", month)
-    .limit(6);
+    .limit(5);
 
   if (error) {
     console.error("Erro ao buscar transações:", error);

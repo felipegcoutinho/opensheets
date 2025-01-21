@@ -53,8 +53,6 @@ export default function DetailsTransactions({
 
   const parcelaRestante = itemValor * (itemQtdeParcelas - itemParcelaAtual);
 
-  // TODO - Verificar data final
-
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger>Detalhes</DialogTrigger>
@@ -138,10 +136,14 @@ export default function DetailsTransactions({
                     DataCompra={itemDate}
                     ParcelaAtual={itemParcelaAtual}
                     QtdeParcela={itemQtdeParcelas}
-                    DataFim={calcularMesFinal(itemPeriodo, itemQtdeParcelas)}
+                    DataFim={calcularMesFinal(
+                      itemPeriodo,
+                      itemQtdeParcelas,
+                      itemParcelaAtual,
+                    )}
                   />
                 )}
-
+                {itemPeriodo} - {itemQtdeParcelas} - {itemParcelaAtual}
                 <Separator className="my-2" />
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">

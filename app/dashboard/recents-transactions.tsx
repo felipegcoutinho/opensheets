@@ -22,20 +22,20 @@ function RecentesTransactions({ transactions }) {
             <Image
               src={`/logos/${getLogo(item)}`}
               className="rounded-full"
-              width={24}
-              height={24}
+              width={28}
+              height={28}
               alt="Logo do cartão"
               quality={100}
             />
-            <div className="flex flex-col items-start py-1">
+            <div className="flex flex-col items-start py-2">
+              <p>{item.descricao}</p>
               <p className="text-xs text-muted-foreground">
                 {DateFormat(item.data_compra)}
               </p>
-              <p>{item.descricao}</p>
             </div>
           </div>
 
-          <p className="text-muted-foreground">
+          <p>
             <Numbers value={item.valor} />
           </p>
         </div>

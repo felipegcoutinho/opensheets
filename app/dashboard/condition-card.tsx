@@ -10,7 +10,7 @@ export async function ConditionList({ month }) {
   return (
     <Card className="pb-4">
       <CardHeader>
-        <CardTitle className="text-sm uppercase">
+        <CardTitle className="text-sm uppercase dark:text-muted-foreground">
           Condições de Pagamento
         </CardTitle>
       </CardHeader>
@@ -20,7 +20,7 @@ export async function ConditionList({ month }) {
           <CardContent key={item.condicao} className="grid gap-2 py-1">
             <div className="flex items-center justify-between">
               <p>{item.condicao}</p>
-              <p className="text-muted-foreground">
+              <p>
                 <Numbers value={item.sum} />
               </p>
             </div>
