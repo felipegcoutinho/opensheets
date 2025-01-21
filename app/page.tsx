@@ -30,7 +30,7 @@ export default function Index() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-6xl px-4 py-16">
         {/* Hero Section */}
         <div className="mb-20 text-center">
@@ -48,10 +48,10 @@ export default function Index() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="group border-gray-200 bg-white transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+              className="group border-gray-200 bg-white transition-all duration-300 hover:shadow-lg dark:bg-card"
             >
               <CardContent className="p-6">
-                <div className="mb-4 inline-block rounded-lg bg-gray-100 p-3 dark:bg-gray-700">
+                <div className="mb-4 inline-block rounded-lg p-3">
                   {feature.icon}
                 </div>
                 <h3 className="mb-2 text-xl font-semibold text-gray-900 transition-colors group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-300">

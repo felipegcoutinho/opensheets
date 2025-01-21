@@ -42,7 +42,7 @@ export default function UsersCard({
             {hasCartoesData ? (
               Object.entries(cartoes).map(([descricao, data]) => (
                 <li
-                  className="flex items-center justify-between leading-relaxed text-muted-foreground"
+                  className="flex items-center justify-between space-y-1 leading-relaxed text-muted-foreground"
                   key={descricao}
                 >
                   <p className="flex items-center gap-1">
@@ -99,7 +99,7 @@ export default function UsersCard({
             {hasBoletosData ? (
               Object.entries(boletos).map(([descricao, valor]) => (
                 <li
-                  className="flex items-center justify-between leading-relaxed text-muted-foreground"
+                  className="flex items-center justify-between space-y-1 leading-relaxed text-muted-foreground"
                   key={descricao}
                 >
                   <span className="flex items-center gap-1">
