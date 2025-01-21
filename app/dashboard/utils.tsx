@@ -13,6 +13,7 @@ import {
   getIncomeByCategory,
   getInvoiceList,
   getLastPrevious,
+  getRecentTransactions,
 } from "../actions/dashboards";
 import { getUserName } from "../actions/users";
 
@@ -21,6 +22,9 @@ async function Utils(month) {
 
   const previousMonth = getPreviousMonth(month);
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
+
+  /* Get recent transactions */
+  const recentsTransactions = await getRecentTransactions(month);
 
   const [
     receitas,
@@ -70,6 +74,33 @@ async function Utils(month) {
   //Calculo do saldo atual
   const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
 
+  const cardData = [
+    {
+      title: "Receitas",
+      value: receitas,
+      previousValue: receitasAnterior,
+      color: "bg-green-400",
+    },
+    {
+      title: "Despesas",
+      value: despesasTotal,
+      previousValue: despesasTotalAnterior,
+      color: "bg-red-500",
+    },
+    {
+      title: "Balanço",
+      value: balanco,
+      previousValue: balancoAnterior,
+      color: "bg-yellow-400",
+    },
+    {
+      title: "Saldo Previsto",
+      value: previsto,
+      previousValue: previstoAnterior,
+      color: "bg-cyan-400",
+    },
+  ];
+
   return {
     receitas,
     receitasAnterior,
@@ -85,6 +116,8 @@ async function Utils(month) {
     saldo,
     expenseByCategory,
     userName,
+    recentsTransactions,
+    cardData,
   };
 }
 

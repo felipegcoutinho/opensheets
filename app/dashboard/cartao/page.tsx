@@ -47,7 +47,7 @@ async function PageCards(props) {
       <div className="mt-4 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
         {cardsWithLimits?.length !== 0 ? (
           cardsWithLimits?.map((item) => (
-            <Card key={item.id} className={`rounded`}>
+            <Card key={item.id}>
               <CardContent className="space-y-4 p-4">
                 <CardTitle className={`flex items-center justify-between`}>
                   <div className="flex items-center gap-2">

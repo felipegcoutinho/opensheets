@@ -22,18 +22,15 @@ export default async function BannerData() {
     <Banner>
       <div className="flex items-center justify-between">
         <div className="py-6">
-          {/* <p className="text-base">{fliendlyDate(currentDate)}</p> */}
-          {/* <p className="text-xl font-bold">
-            {getGreeting()}, {userName}
-          </p> */}
-          <p className="text-xl font-bold">Olá, {userNameSplit}!</p>
-          <p className="text-muted-foreground">Hoje é dia 19 Jan 2025.</p>
-          <p className="text-base text-muted-foreground">
-            Seu saldo atual é de <Numbers value={saldo} />
+          <p className="text-xl font-bold text-color-6">
+            Olá, {userNameSplit}!
+          </p>
+          <p className="text-muted-foreground">
+            Hoje é {fliendlyDate(currentDate)}.
           </p>
         </div>
 
-        <div hidden className="text-right">
+        <div className="text-right">
           <p>Saldo Atual</p>
           <p className="text-2xl">
             <Numbers value={saldo} />

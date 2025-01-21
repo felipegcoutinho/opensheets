@@ -6,7 +6,7 @@ function Logo() {
 
   return (
     <div
-      className={`${gabarito.className} text-color-1 flex w-28 items-center text-2xl tracking-tighter dark:text-white`}
+      className={`${gabarito.className} flex items-center text-2xl tracking-tighter text-card-foreground`}
     >
       <p>
         {open}

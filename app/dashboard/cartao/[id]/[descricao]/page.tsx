@@ -50,7 +50,7 @@ export default async function page(props) {
 
   return (
     <>
-      <div
+      <Card
         className={`mt-4 rounded p-2 dark:border-none border${
           fatura_status &&
           fatura_status.some((item) => item.status_pagamento === "Pago")
@@ -78,7 +78,7 @@ export default async function page(props) {
 
           <RemovePaymentButton fatura_status={fatura_status} />
         </div>
-      </div>
+      </Card>
 
       {getCardDetailMap?.map((item) => (
         <Card

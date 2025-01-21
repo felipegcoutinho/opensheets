@@ -25,20 +25,18 @@ function LinkOnHeader({ session }) {
 
   return (
     <nav className="hidden md:block">
-      <div className="rounded-full px-1 py-1">
-        <div className="flex items-center">
-          <Suspense>
-            {links.map(({ href, Icon, name, path }) => (
-              <Link key={href} href={href}>
-                <LinkNavButton
-                  Icon={Icon}
-                  LinkName={name}
-                  isActive={pathname === path}
-                />
-              </Link>
-            ))}
-          </Suspense>
-        </div>
+      <div className="flex w-full items-center justify-center">
+        <Suspense>
+          {links.map(({ href, Icon, name, path }) => (
+            <Link key={href} href={href}>
+              <LinkNavButton
+                Icon={Icon}
+                LinkName={name}
+                isActive={pathname === path}
+              />
+            </Link>
+          ))}
+        </Suspense>
       </div>
     </nav>
   );
@@ -50,10 +48,10 @@ export function LinkNavButton({ Icon, LinkName, isActive }) {
   return (
     <div
       className={clsx(
-        "flex items-center gap-1 rounded-full px-3 py-1 transition-colors duration-200",
+        "flex items-center gap-1 rounded-full px-4 lowercase transition-colors duration-200",
         isActive
-          ? "bg-white text-color-1"
-          : "text-color-1/80 hover:text-color-1 dark:text-neutral-300",
+          ? "text-color-6 underline decoration-2 underline-offset-8"
+          : "text-color-2 hover:text-color-2 dark:text-neutral-300",
       )}
     >
       <Icon size={14} />

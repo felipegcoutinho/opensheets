@@ -1,6 +1,5 @@
 import CardSummary from "@/components/card-summary";
 import CardInvoices from "../../components/card-invoices";
-import { getRecentTransactions } from "../actions/dashboards";
 import { BillsCard } from "./bills-card";
 import Category from "./categories-card";
 import { ConditionList } from "./condition-card";
@@ -24,36 +23,9 @@ export default async function FinancialSummaryCards({ month }) {
     invoiceCard,
     invoiceBill,
     expenseByCategory,
+    recentsTransactions,
+    cardData,
   } = await Utils(month);
-
-  const cardData = [
-    {
-      title: "Receitas",
-      value: receitas,
-      previousValue: receitasAnterior,
-      color: "bg-green-400",
-    },
-    {
-      title: "Despesas",
-      value: despesasTotal,
-      previousValue: despesasTotalAnterior,
-      color: "bg-red-500",
-    },
-    {
-      title: "Balanço",
-      value: balanco,
-      previousValue: balancoAnterior,
-      color: "bg-yellow-400",
-    },
-    {
-      title: "Saldo Previsto",
-      value: previsto,
-      previousValue: previstoAnterior,
-      color: "bg-cyan-400",
-    },
-  ];
-
-  const recentsTransactions = await getRecentTransactions(month);
 
   return (
     <>
