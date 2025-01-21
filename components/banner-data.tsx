@@ -22,8 +22,8 @@ export default async function BannerData() {
     <Banner>
       <div className="flex items-center justify-between">
         <div className="py-6">
-          <p className="text-xl font-bold text-color-6">
-            Olá, {userNameSplit}!
+          <p className="text-2xl font-bold text-color-6">
+            Olá, {userNameSplit}! 👋
           </p>
           <p className="text-muted-foreground">
             Hoje é {fliendlyDate(currentDate)}.
