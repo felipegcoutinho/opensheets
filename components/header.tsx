@@ -87,7 +87,7 @@ export default async function Header() {
             )}
 
             <DropdownMenuContent align="end">
-              <AuthButton />
+              <AuthButton session={session} />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

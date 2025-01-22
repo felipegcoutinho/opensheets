@@ -1,19 +1,18 @@
 import { getEmail, getUserName } from "@/app/actions/users";
 import { signOut } from "@actions/auth";
-import { LogOut, UserCircle } from "lucide-react"; // Adicionando ícone de logout
-import Link from "next/link";
+import { LogOut } from "lucide-react"; // Adicionando ícone de logout
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 
-export default async function AuthButton() {
+export default async function AuthButton({ session }) {
   const user = await getUserName();
   const email = await getEmail();
 
   return (
-    <div className="flex items-center p-4">
-      {user ? (
+    <>
+      {session && (
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 p-2">
             <Avatar>
               <AvatarImage
                 src="https://www.yagopartal.com/wp-content/uploads/2022/10/Black-panther-CESAR.jpg"
@@ -37,17 +36,7 @@ export default async function AuthButton() {
             </Button>
           </form>
         </div>
-      ) : (
-        <Link href="/login">
-          <Button
-            className="flex items-center gap-2 font-medium"
-            variant="outline"
-          >
-            <UserCircle className="h-5 w-5" />
-            Entrar
-          </Button>
-        </Link>
       )}
-    </div>
+    </>
   );
 }

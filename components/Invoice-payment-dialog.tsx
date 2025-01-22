@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AlertCircle, CheckCircle2, CreditCard } from "lucide-react";
+import { CheckCircle2, CreditCard } from "lucide-react";
 import Image from "next/image";
 import Numbers from "./numbers";
 import Utils from "./utils";
@@ -78,13 +78,6 @@ export default function InvoicePaymentDialog({
                     <Numbers value={valor} />
                   </span>
                 </div>
-              </div>
-
-              <div className="flex items-center gap-2 rounded-lg bg-yellow-50 p-3 text-yellow-800">
-                <AlertCircle className="h-5 w-5 flex-shrink-0" />
-                <span className="text-sm">
-                  Esta ação não poderá ser desfeita após a confirmação.
-                </span>
               </div>
             </div>
           </DialogDescription>

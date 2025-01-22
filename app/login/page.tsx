@@ -1,3 +1,4 @@
+import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,8 +33,11 @@ export default async function Login(props) {
                 <Input name="email" placeholder="Digite seu email" required />
               </div>
               <div className="grid gap-2">
-                <div className="flex items-center">
+                <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
+                  <Link className="text-sm" href="/login/forgot-password">
+                    Esqueceu a senha?
+                  </Link>
                 </div>
                 <Input
                   type="password"
@@ -46,13 +50,9 @@ export default async function Login(props) {
                 Login
               </SubmitButton>
 
-              {searchParams?.message && (
-                <p className="mt-4 bg-red-50 p-4 text-center text-foreground">
-                  Não foi possível autenticar o usuário. Por favor, tente
-                  novamente ou verifique suas credenciais.
-                </p>
-              )}
+              <FormMessage message={searchParams} />
             </div>
+
             <div className="mt-2 text-center text-sm">
               <Button variant={"link"} asChild className="w-full">
                 <Link href="/login/signup">

@@ -12,6 +12,7 @@ export const updateSession = async (request: NextRequest) => {
     "/contas",
     "/investimentos",
     "/ajustes",
+    "/reset-password",
   ];
 
   try {
