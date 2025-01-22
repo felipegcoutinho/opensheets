@@ -123,6 +123,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 <SelectContent>
                   <SelectItem value="Receita">Receita</SelectItem>
                   <SelectItem value="Despesa">Despesa</SelectItem>
+                  <SelectItem value="Investimento">Investimento</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -131,9 +132,9 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
               <Label>Categoria</Label>
               <Select
                 name="categoria"
-                disabled={
-                  tipoTransacao !== "Receita" && tipoTransacao !== "Despesa"
-                }
+                // disabled={
+                //   tipoTransacao !== "Receita" && tipoTransacao !== "Despesa"
+                // }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />

@@ -162,9 +162,15 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
       return (
         <Button
-          className="h-6"
+          size="lg-badge"
           variant={
-            item.tipo_transacao === "Receita" ? "success" : "destructive"
+            item.tipo_transacao === "Receita"
+              ? "success"
+              : item.tipo_transacao === "Despesa"
+                ? "destructive"
+                : item.tipo_transacao === "Investimento"
+                  ? "invest"
+                  : undefined
           }
         >
           {item.tipo_transacao}
