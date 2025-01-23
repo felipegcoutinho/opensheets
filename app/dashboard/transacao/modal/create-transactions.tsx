@@ -73,7 +73,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
         <form onSubmit={handleSubmit}>
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Data da Compra</Label>
+              <Label>Data da Transação</Label>
               <Required />
               <Input name="data_compra" type="date" />
             </div>

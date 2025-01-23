@@ -100,7 +100,7 @@ export default function UpdateTransactions({
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Data da Compra</Label>
+              <Label>Data da Transação</Label>
               <Required />
               <Input defaultValue={itemDate} name="data_compra" type="date" />
             </div>

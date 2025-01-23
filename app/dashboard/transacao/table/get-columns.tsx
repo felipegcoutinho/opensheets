@@ -53,6 +53,19 @@ const getResponsavelClass = (responsavel) => {
   return "text-orange-600 dark:text-orange-400";
 };
 
+function getButtonVariant(tipoTransacao) {
+  switch (tipoTransacao) {
+    case "Receita":
+      return "success";
+    case "Despesa":
+      return "destructive";
+    case "Investimento":
+      return "invest";
+    default:
+      return undefined;
+  }
+}
+
 export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
     id: "selection",
@@ -161,18 +174,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Button
-          size="lg-badge"
-          variant={
-            item.tipo_transacao === "Receita"
-              ? "success"
-              : item.tipo_transacao === "Despesa"
-                ? "destructive"
-                : item.tipo_transacao === "Investimento"
-                  ? "invest"
-                  : undefined
-          }
-        >
+        <Button size="lg-badge" variant={getButtonVariant(item.tipo_transacao)}>
           {item.tipo_transacao}
         </Button>
       );

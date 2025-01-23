@@ -7,19 +7,19 @@ import {
   NotebookPenIcon,
 } from "lucide-react";
 import {
-  getAccountsCount,
-  getBillsCount,
-  getCardsCount,
-  getNotesCount,
-  getTransactionsCount,
+  getAccountsStats,
+  getBillsStats,
+  getCardsStats,
+  getNotesStats,
+  getTransactionsStats,
 } from "../actions/dashboards";
 
 const statsConfig = [
-  { title: "Transações", icon: ArrowDownUp, getData: getTransactionsCount },
-  { title: "Boletos", icon: File, getData: getBillsCount },
-  { title: "Cartões", icon: CreditCard, getData: getCardsCount },
-  { title: "Contas", icon: Landmark, getData: getAccountsCount },
-  { title: "Anotações", icon: NotebookPenIcon, getData: getNotesCount },
+  { title: "Transações", icon: ArrowDownUp, getData: getTransactionsStats },
+  { title: "Boletos", icon: File, getData: getBillsStats },
+  { title: "Cartões", icon: CreditCard, getData: getCardsStats },
+  { title: "Contas", icon: Landmark, getData: getAccountsStats },
+  { title: "Anotações", icon: NotebookPenIcon, getData: getNotesStats },
 ];
 
 const StatCard = ({ title, icon: Icon, count }) => (

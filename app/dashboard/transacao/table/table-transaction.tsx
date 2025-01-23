@@ -56,7 +56,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   const [rowSelection, setRowSelection] = useState({});
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 50,
+    pageSize: 25,
   });
 
   const { DateFormat } = UseDates();

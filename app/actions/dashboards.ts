@@ -191,7 +191,7 @@ export async function getPayment(month) {
   return data;
 }
 
-export async function getTransactionsCount(month) {
+export async function getTransactionsStats(month) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -208,7 +208,7 @@ export async function getTransactionsCount(month) {
   return data;
 }
 
-export async function getBillsCount(month) {
+export async function getBillsStats(month) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -225,7 +225,7 @@ export async function getBillsCount(month) {
   return data;
 }
 
-export async function getCardsCount(month) {
+export async function getCardsStats(month) {
   const supabase = await createClient();
 
   const { data, error } = await supabase.from("cartoes").select("count()");
@@ -238,7 +238,7 @@ export async function getCardsCount(month) {
   return data;
 }
 
-export async function getAccountsCount(month) {
+export async function getAccountsStats(month) {
   const supabase = await createClient();
 
   const { data, error } = await supabase.from("contas").select("count()");
@@ -251,7 +251,7 @@ export async function getAccountsCount(month) {
   return data;
 }
 
-export async function getNotesCount(month) {
+export async function getNotesStats(month) {
   const supabase = await createClient();
 
   const { data, error } = await supabase

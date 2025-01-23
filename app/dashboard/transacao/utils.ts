@@ -50,7 +50,6 @@ export default function Utils() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-
     const imageFile = formData.get("imagem_url");
 
     // Remove o campo de imagem se nenhum arquivo válido for selecionado

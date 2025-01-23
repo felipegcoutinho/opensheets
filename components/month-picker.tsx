@@ -164,7 +164,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${bebasNeue.className} flex w-full items-center justify-start gap-4 border-none bg-color-1 px-4 py-2 text-color-2 dark:dark:bg-card`}
+      className={`${bebasNeue.className} flex w-full items-center justify-start gap-4 border-none bg-color-1 px-4 py-2 text-color-2 dark:bg-card`}
     >
       <div className="flex items-center">
         <NavigationButton
@@ -240,7 +240,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
 // Componente otimizado para o botão de retorno
 const ReturnButton = ({ onClick, disabled }) => (
   <button
-    className="rounded bg-color-2 p-1 text-color-1 disabled:opacity-50 dark:border-white dark:text-white"
+    className="rounded bg-color-2 p-1 text-color-1 disabled:opacity-50 dark:bg-color-6 dark:text-white"
     onClick={onClick}
     disabled={disabled}
   >
