@@ -140,7 +140,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
                   <TableRow
                     className={`whitespace-nowrap ${
                       row.original?.categoria === "Saldo Anterior" &&
-                      "bg-gradient-to-r from-green-400/10 to-transparent"
+                      "bg-linear-to-r from-green-400/10 to-transparent"
                     }`}
                     key={row.id}
                   >

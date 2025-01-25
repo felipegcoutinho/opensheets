@@ -1,3 +1,10 @@
+import {
+  getCardDetails,
+  getCardInvoice,
+  getCards,
+  getCardSum,
+} from "@/actions/cards";
+import { getFaturas } from "@/actions/invoices";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import Numbers from "@/components/numbers";
 import RemovePaymentButton from "@/components/remove-payment-button";
@@ -11,15 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import DetailsTransactions from "@/dashboard/transacao/modal/details-transactions";
 import { UseDates } from "@/hooks/use-dates";
-import {
-  getCardDetails,
-  getCardInvoice,
-  getCards,
-  getCardSum,
-} from "@actions/cards";
-import { getFaturas } from "@actions/invoices";
-import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
 import {
   CalendarClockIcon,
   Check,
@@ -99,9 +99,9 @@ const CardInfo = ({ item, sumCardSum }) => (
 
 const InfoSection = ({ title, value, subtitle, subvalue }) => (
   <div className="leading-loose">
-    <p className="text-xs text-muted-foreground">{title}</p>
+    <p className="text-muted-foreground text-xs">{title}</p>
     <p className="font-bold">{value}</p>
-    <p className="text-xs text-muted-foreground">{subtitle}</p>
+    <p className="text-muted-foreground text-xs">{subtitle}</p>
     <p className="font-bold">{subvalue}</p>
   </div>
 );

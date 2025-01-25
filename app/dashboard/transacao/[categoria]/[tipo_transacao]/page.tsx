@@ -1,3 +1,4 @@
+import { getCategoria } from "@/actions/cards";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import DetailsTransactions from "@/dashboard/transacao/modal/details-transactions";
 import { UseDates } from "@/hooks/use-dates";
-import { getCategoria } from "@actions/cards";
-import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
 import {
   ArrowLeftIcon,
   CalendarClockIcon,
@@ -60,7 +60,7 @@ async function Page(props) {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Categoria
             </CardTitle>
           </CardHeader>
@@ -83,7 +83,7 @@ async function Page(props) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Valor Total
             </CardTitle>
           </CardHeader>
@@ -96,7 +96,7 @@ async function Page(props) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Total de Transações
             </CardTitle>
           </CardHeader>
@@ -134,7 +134,7 @@ async function Page(props) {
                     <div className="flex flex-col">
                       <span>{item.descricao}</span>
                       {item.condicao === "Parcelado" && (
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-muted-foreground text-xs">
                           Parcela {item.parcela_atual} de {item.qtde_parcela}
                         </span>
                       )}
@@ -166,7 +166,7 @@ async function Page(props) {
                   </TableCell>
                   <TableCell>{item.forma_pagamento}</TableCell>
                   <TableCell>
-                    <span className="font-medium text-primary">
+                    <span className="text-primary font-medium">
                       {item.responsavel}
                     </span>
                   </TableCell>

@@ -1,5 +1,5 @@
+import { signOut } from "@/actions/auth";
 import { getEmail, getUserName } from "@/app/actions/users";
-import { signOut } from "@actions/auth";
 import { LogOut } from "lucide-react"; // Adicionando ícone de logout
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";

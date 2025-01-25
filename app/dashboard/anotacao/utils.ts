@@ -1,6 +1,6 @@
+import { deleteBills } from "@/actions/bills";
+import { addNotes, updateNotes } from "@/actions/notes";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteBills } from "@actions/bills";
-import { addNotes, updateNotes } from "@actions/notes";
 import { useState } from "react";
 
 export default function Utils() {

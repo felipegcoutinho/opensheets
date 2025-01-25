@@ -36,7 +36,7 @@ export default async function Header() {
 
             <LinksOnMobile session={session} />
           </Sheet>
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="shrink-0">
             <Logo />
           </Link>
         </div>
@@ -44,7 +44,7 @@ export default async function Header() {
         {/* Logo e menu para telas médias e grandes */}
         <div className="hidden md:flex md:w-full md:items-center">
           {/* Logo à esquerda */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <Link href="/">
               <Logo />
             </Link>

@@ -1,5 +1,5 @@
+import { addAccount, updateAccount } from "@/actions/accounts";
 import { useToast } from "@/components/ui/use-toast";
-import { addAccount, updateAccount } from "@actions/accounts";
 import { useState } from "react";
 
 function Utils() {

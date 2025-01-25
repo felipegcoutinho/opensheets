@@ -1,6 +1,6 @@
+import { addBills, deleteBills, updateBills } from "@/actions/bills";
 import { useToast } from "@/components/ui/use-toast";
 import UseOptions from "@/hooks/use-options";
-import { addBills, deleteBills, updateBills } from "@actions/bills";
 import { useState } from "react";
 
 export default function Utils() {

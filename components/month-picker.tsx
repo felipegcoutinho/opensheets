@@ -229,7 +229,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="text-color-6 focus:outline-none disabled:opacity-50"
+      className="text-color-6 focus:outline-hidden disabled:opacity-50"
       disabled={disabled}
     >
       <Icon size={16} />

@@ -22,8 +22,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@actions/*": ["./app/actions/*"],
-      "@dashboard/*": ["./app/dashboard/*"]
+      "@/actions/*": ["./app/actions/*"],
+      "@/dashboard/*": ["./app/dashboard/*"]
 
     }
   },

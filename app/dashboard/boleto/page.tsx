@@ -1,6 +1,6 @@
+import { getAccount } from "@/actions/accounts";
+import { getBills } from "@/actions/bills";
 import { UseDates } from "@/hooks/use-dates";
-import { getAccount } from "@actions/accounts";
-import { getBills } from "@actions/bills";
 import CreateBills from "./modal/create-bills";
 import TableBills from "./table-bills";
 

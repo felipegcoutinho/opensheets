@@ -1,11 +1,11 @@
+import { getAccount } from "@/actions/accounts";
+import { deleteCards, getCards, getLimitesCartao } from "@/actions/cards";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { UseDates } from "@/hooks/use-dates";
-import { getAccount } from "@actions/accounts";
-import { deleteCards, getCards, getLimitesCartao } from "@actions/cards";
 import { Lock, LockOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -114,7 +114,7 @@ async function PageCards(props) {
                 </div>
               </CardContent>
 
-              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-sm">
+              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-xs">
                 <Button className="p-0" variant="link">
                   <Link
                     href={`/dashboard/cartao/${item.id}/${item.descricao.toLowerCase()}`}

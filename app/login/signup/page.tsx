@@ -1,3 +1,4 @@
+import { signUp } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signUp } from "@actions/auth";
 import Link from "next/link";
 import { SubmitButton } from "../../../components/submit-button";
 
@@ -19,12 +19,12 @@ export default async function SignUp(props) {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-3xl">Criar conta</CardTitle>
-        <CardDescription className="normal-case text-muted-foreground">
+        <CardDescription className="text-muted-foreground normal-case">
           Entre com seu nome, email e senha para criar sua conta.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
+        <form className="text-foreground flex w-full flex-1 flex-col justify-center gap-2">
           <Label>Seu nome</Label>
           <div className="mb-3 flex gap-2">
             <Input placeholder="Primeiro nome" name="first_name" required />
@@ -53,7 +53,7 @@ export default async function SignUp(props) {
           </SubmitButton>
 
           {searchParams?.message && (
-            <p className="mt-4 bg-foreground/10 p-4 text-center text-foreground">
+            <p className="bg-foreground/10 text-foreground mt-4 p-4 text-center">
               {searchParams.message}
             </p>
           )}
