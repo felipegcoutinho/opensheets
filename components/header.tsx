@@ -21,7 +21,7 @@ export default async function Header() {
 
   return (
     <header className="mb-4 w-full bg-background text-color-2 shadow-2xl shadow-color-6/10">
-      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-2">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-2">
         {/* Menu para telas pequenas */}
         <div className="flex items-center gap-4 md:hidden">
           <Sheet>
@@ -72,10 +72,7 @@ export default async function Header() {
               <DropdownMenuTrigger asChild>
                 <Button variant="link" size="icon">
                   <Avatar>
-                    <AvatarImage
-                      src="https://www.yagopartal.com/wp-content/uploads/2022/10/Black-panther-CESAR.jpg"
-                      alt="Avatar"
-                    />
+                    <AvatarImage src="/black_panter.jpg" alt="Avatar" />
                     <AvatarFallback>OP</AvatarFallback>
                   </Avatar>
                 </Button>

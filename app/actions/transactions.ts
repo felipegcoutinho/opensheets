@@ -4,7 +4,7 @@ import { addMonths, format, parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { revalidatePath } from "next/cache";
 
-export async function getTransaction(month) {
+export async function getTransaction(month: string) {
   const supabase = await createClient();
 
   const { data: transacao, error } = await supabase

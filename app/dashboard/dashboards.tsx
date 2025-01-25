@@ -29,7 +29,7 @@ export default async function FinancialSummaryCards({ month }) {
 
   return (
     <>
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {cardData.map((item, index) => (
           <CardSummary
             color={item.color}
@@ -41,7 +41,7 @@ export default async function FinancialSummaryCards({ month }) {
         ))}
       </div>
 
-      <div className="mt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-2 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <CardInvoices title="Faturas">
           <InvoiceCard month={month} data={invoiceCard} />
         </CardInvoices>

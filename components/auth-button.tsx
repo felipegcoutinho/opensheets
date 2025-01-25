@@ -14,10 +14,7 @@ export default async function AuthButton({ session }) {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 p-2">
             <Avatar>
-              <AvatarImage
-                src="https://www.yagopartal.com/wp-content/uploads/2022/10/Black-panther-CESAR.jpg"
-                alt="Avatar"
-              />
+              <AvatarImage src="/black_panter.jpg" alt="Avatar" />
               <AvatarFallback>OP</AvatarFallback>
             </Avatar>
             <div className="flex flex-col items-start">
