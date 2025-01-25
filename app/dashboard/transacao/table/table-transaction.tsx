@@ -56,7 +56,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
   const [rowSelection, setRowSelection] = useState({});
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 25,
+    pageSize: 30,
   });
 
   const { DateFormat } = UseDates();
@@ -99,7 +99,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
 
         <div className="flex items-center gap-2">
           {/* Exibe a soma dos lançamentos selecionados */}
-          <div className="text-right text-xs text-muted-foreground">
+          <div className="text-muted-foreground text-right text-xs">
             Total Selecionado: <Numbers value={selectedTransactionSum} />
           </div>
 
@@ -170,7 +170,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
       </Card>
 
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredRowModel().rows.length} transações
         </div>
         <div className="space-x-2">

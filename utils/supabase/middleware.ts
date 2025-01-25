@@ -13,6 +13,7 @@ export const updateSession = async (request: NextRequest) => {
     "/investimentos",
     "/ajustes",
     "/reset-password",
+    
   ];
 
   try {

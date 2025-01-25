@@ -21,12 +21,12 @@ export default async function Login(props) {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-3xl">Login</CardTitle>
-          <CardDescription className="normal-case text-muted-foreground">
+          <CardDescription className="text-muted-foreground normal-case">
             Entre com seu email e senha para acessar sua conta.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
+          <form className="text-foreground flex w-full flex-1 flex-col justify-center gap-2">
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -35,9 +35,9 @@ export default async function Login(props) {
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link className="text-sm" href="/login/forgot-password">
+                  {/* <Link className="text-sm" href="/login/forgot-password">
                     Esqueceu a senha?
-                  </Link>
+                  </Link> */}
                 </div>
                 <Input
                   type="password"
@@ -53,7 +53,7 @@ export default async function Login(props) {
               <FormMessage message={searchParams} />
             </div>
 
-            <div className="mt-2 text-center text-sm">
+            <div className="text-center text-sm">
               <Button variant={"link"} asChild className="w-full">
                 <Link href="/login/signup">
                   Não possui conta? Faça o cadastro

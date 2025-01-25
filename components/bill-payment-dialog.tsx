@@ -29,8 +29,7 @@ export default function BillPaymentDialog({
   const handlePaymentBills = (e) => {
     e.preventDefault();
     startTransition(() => {
-      const formData = new FormData(e.target);
-      payBills(formData, id).then(() => {
+      payBills(id).then(() => {
         confetti({
           particleCount: 100,
           spread: 70,
@@ -78,15 +77,15 @@ export default function BillPaymentDialog({
                   alt="Logo do cartão"
                   quality={100}
                 />
-                <span className="font-medium text-foreground">{descricao}</span>
+                <span className="text-foreground font-medium">{descricao}</span>
               </div>
 
-              <div className="rounded-lg bg-muted/50 p-4">
+              <div className="bg-muted/50 rounded-lg p-4">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Valor Total
                   </span>
-                  <span className="text-2xl font-semibold text-foreground">
+                  <span className="text-foreground text-2xl font-semibold">
                     <Numbers value={valor} />
                   </span>
                 </div>

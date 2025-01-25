@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         >
           <PrivacyProviderApp>
             <Header />
-            <main className="mx-auto flex max-w-(--breakpoint-xl) flex-col px-2 antialiased animate-in max-sm:px-2">
+            <main className="animate-in mx-auto flex max-w-(--breakpoint-xl) flex-col px-2 antialiased max-sm:px-2">
               {children}
             </main>
           </PrivacyProviderApp>

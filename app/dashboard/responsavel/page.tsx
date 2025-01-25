@@ -1,3 +1,4 @@
+import EmptyCard from "@/components/empty-card";
 import { UseDates } from "@/hooks/use-dates";
 import {
   getResponsavelBillList,
@@ -13,6 +14,9 @@ async function page(props) {
 
   const TransactionListMap = await getResponsavelTransactionList(month);
   const BillListMap = await getResponsavelBillList(month);
+
+  if (!TransactionListMap.length || !BillListMap)
+    return <EmptyCard width={100} height={100} />;
 
   // Função para reorganizar o objeto
   function prioritizeResponsavel(data, prioridade) {

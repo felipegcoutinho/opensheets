@@ -32,7 +32,7 @@ export async function BillsCard({ month }) {
         <div>
           <p>{item.descricao}</p>
           {item.status_pagamento === "Pendente" ? (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Vence {DateFormat(item.dt_vencimento)}
             </p>
           ) : (

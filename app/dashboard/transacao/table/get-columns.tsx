@@ -110,13 +110,13 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           </span>
 
           {item.condicao === "Parcelado" && (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               {item.parcela_atual} de {item.qtde_parcela}
             </span>
           )}
 
           {item.responsavel === "Sistema" && (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               <CheckCircle2Icon fill="green" className="text-white" size={14} />
             </span>
           )}
@@ -301,7 +301,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex p-0 data-[state=open]:bg-muted"
+                className="data-[state=open]:bg-muted flex p-0"
               >
                 <Ellipsis size={16} />
                 <span className="sr-only">Open menu</span>

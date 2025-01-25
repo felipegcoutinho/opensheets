@@ -1,3 +1,4 @@
+import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
@@ -10,6 +11,8 @@ function RecentesTransactions({ transactions }) {
   }
 
   const { DateFormat } = UseDates();
+
+  if (!transactions.length) return <EmptyCard width={100} height={100} />;
 
   return (
     <div className="mb-4">
@@ -29,7 +32,7 @@ function RecentesTransactions({ transactions }) {
             />
             <div className="flex flex-col items-start py-2">
               <p>{item.descricao}</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 {DateFormat(item.data_compra)}
               </p>
             </div>
