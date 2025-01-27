@@ -1,14 +1,14 @@
-import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { UseDates } from "@/hooks/use-dates";
 import {
   deleteAccount,
   getAccount,
   getSumAccountExpense,
   getSumAccountIncome,
-} from "@actions/accounts";
+} from "@/actions/accounts";
+import EmptyCard from "@/components/empty-card";
+import Numbers from "@/components/numbers";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
@@ -62,7 +62,7 @@ async function PageAccount(props) {
                 </p>
               </CardContent>
 
-              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-sm">
+              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-xs">
                 <Button className="p-0" variant="link">
                   <Link
                     href={`/dashboard/conta/${item.id}/${item.descricao.toLowerCase()}`}

@@ -53,6 +53,19 @@ const getResponsavelClass = (responsavel) => {
   return "text-orange-600 dark:text-orange-400";
 };
 
+function getButtonVariant(tipoTransacao) {
+  switch (tipoTransacao) {
+    case "Receita":
+      return "success";
+    case "Despesa":
+      return "destructive";
+    case "Investimento":
+      return "invest";
+    default:
+      return undefined;
+  }
+}
+
 export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
     id: "selection",
@@ -97,13 +110,13 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
           </span>
 
           {item.condicao === "Parcelado" && (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               {item.parcela_atual} de {item.qtde_parcela}
             </span>
           )}
 
           {item.responsavel === "Sistema" && (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               <CheckCircle2Icon fill="green" className="text-white" size={14} />
             </span>
           )}
@@ -161,12 +174,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Button
-          className="h-6"
-          variant={
-            item.tipo_transacao === "Receita" ? "success" : "destructive"
-          }
-        >
+        <Button size="lg-badge" variant={getButtonVariant(item.tipo_transacao)}>
           {item.tipo_transacao}
         </Button>
       );
@@ -293,7 +301,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex p-0 data-[state=open]:bg-muted"
+                className="data-[state=open]:bg-muted flex p-0"
               >
                 <Ellipsis size={16} />
                 <span className="sr-only">Open menu</span>

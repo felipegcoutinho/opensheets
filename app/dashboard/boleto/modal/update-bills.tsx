@@ -138,6 +138,7 @@ export default function UpdateBills({
                 <Label>Valor</Label>
                 <Required />
                 <MoneyInput
+                  readOnly={itemStatusPagamento === "Pago"}
                   defaultValue={itemValor}
                   name="valor"
                   placeholder="R$ 0,00"

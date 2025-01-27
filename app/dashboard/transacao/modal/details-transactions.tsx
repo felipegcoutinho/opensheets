@@ -143,7 +143,7 @@ export default function DetailsTransactions({
                     )}
                   />
                 )}
-                {itemPeriodo} - {itemQtdeParcelas} - {itemParcelaAtual}
+
                 <Separator className="my-2" />
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">

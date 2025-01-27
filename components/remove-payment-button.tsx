@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteFaturas } from "@/actions/invoices";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,7 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { deleteFaturas } from "@actions/invoices";
 import { Fragment } from "react";
 import Utils from "./utils";
 

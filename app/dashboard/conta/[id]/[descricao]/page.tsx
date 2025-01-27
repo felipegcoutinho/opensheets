@@ -1,3 +1,9 @@
+import {
+  getAccountDetails,
+  getAccountInvoice,
+  getSumAccountExpense,
+  getSumAccountIncome,
+} from "@/actions/accounts";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,14 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import DetailsTransactions from "@/dashboard/transacao/modal/details-transactions";
 import { UseDates } from "@/hooks/use-dates";
-import {
-  getAccountDetails,
-  getAccountInvoice,
-  getSumAccountExpense,
-  getSumAccountIncome,
-} from "@actions/accounts";
-import DetailsTransactions from "@dashboard/transacao/modal/details-transactions";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -57,7 +57,7 @@ const AccountBalance = ({ income, expense, balance }) => (
 
 const BalanceItem = ({ label, value }) => (
   <>
-    <p className="text-xs text-muted-foreground">{label}</p>
+    <p className="text-muted-foreground text-xs">{label}</p>
     <p className="font-bold">
       <Numbers value={value} />
     </p>

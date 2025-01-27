@@ -73,9 +73,9 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
         <form onSubmit={handleSubmit}>
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Data da Compra</Label>
+              <Label>Data da Transação</Label>
               <Required />
-              <Input name="data_compra" type="date" />
+              <Input name="data_compra" type="date" required />
             </div>
 
             <div className="w-1/2">
@@ -100,13 +100,18 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             <div className="w-1/2">
               <Label>Descrição</Label>
               <Required />
-              <Input name="descricao" placeholder="Descrição" type="text" />
+              <Input
+                name="descricao"
+                placeholder="Descrição"
+                type="text"
+                required
+              />
             </div>
 
             <div className="w-1/2">
               <Label>Valor</Label>
               <Required />
-              <MoneyInput name="valor" placeholder="R$ 0,00" />
+              <MoneyInput name="valor" placeholder="R$ 0,00" required />
             </div>
           </div>
 
@@ -114,6 +119,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             <div className="w-1/2">
               <Label>Tipo de Transação</Label>
               <Select
+                required
                 name="tipo_transacao"
                 onValueChange={handleTipoTransacaoChange}
               >
@@ -123,6 +129,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 <SelectContent>
                   <SelectItem value="Receita">Receita</SelectItem>
                   <SelectItem value="Despesa">Despesa</SelectItem>
+                  <SelectItem value="Investimento">Investimento</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -131,9 +138,10 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
               <Label>Categoria</Label>
               <Select
                 name="categoria"
-                disabled={
-                  tipoTransacao !== "Receita" && tipoTransacao !== "Despesa"
-                }
+                required
+                // disabled={
+                //   tipoTransacao !== "Receita" && tipoTransacao !== "Despesa"
+                // }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
@@ -181,7 +189,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
             <div
               className={`flex items-center justify-between gap-2 p-2 ${showCartao ? "w-full" : "w-1/2"}`}
             >
-              <Label className="text-sm font-medium text-muted-foreground">
+              <Label className="text-muted-foreground text-sm font-medium">
                 Dividir Lançamento
               </Label>
               <Switch
@@ -193,7 +201,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
 
             {!showCartao && (
               <div className="flex w-1/2 items-center justify-between gap-2 px-2">
-                <Label className="text-sm font-medium text-muted-foreground">
+                <Label className="text-muted-foreground text-sm font-medium">
                   Status do Lançamento
                 </Label>
 
@@ -203,7 +211,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                   defaultPressed={true}
                   pressed={isPaid}
                   name="realizado"
-                  className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
+                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
                 >
                   <ThumbsUp strokeWidth={2} className="h-6 w-6" />
                 </Toggle>
@@ -216,6 +224,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
               <Label>Responsável</Label>
               <Required />
               <Input
+                required
                 list="responsavel-list"
                 name="responsavel"
                 placeholder="Responsável"
@@ -243,6 +252,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
               <Label>Forma de Pagamento</Label>
               <Required />
               <Select
+                required
                 name="forma_pagamento"
                 onValueChange={(value) => handleFormaPagamentoChange(value)}
               >
@@ -266,7 +276,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
               <div className="w-1/2">
                 <Label>Contas</Label>
                 <Required />
-                <Select name="conta_id" placeholder="Selecione">
+                <Select name="conta_id" placeholder="Selecione" >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>

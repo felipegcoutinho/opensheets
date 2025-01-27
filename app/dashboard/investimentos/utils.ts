@@ -1,4 +1,4 @@
-import { addInvest, deleteInvest, updateInvest } from "@actions/invest";
+import { addInvest, deleteInvest, updateInvest } from "@/actions/invest";
 import { useState } from "react";
 import { toast } from "sonner";
 

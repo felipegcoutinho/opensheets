@@ -1,9 +1,8 @@
-import { UseDates } from "@/hooks/use-dates";
 import {
   getSumAccountExpensePaid,
   getSumAccountIncomePaid,
-} from "../actions/accounts";
-import { getSumBillsExpensePaid } from "../actions/bills";
+} from "@/actions/accounts";
+import { getSumBillsExpensePaid } from "@/actions/bills";
 import {
   getBillsByResponsavel,
   getExpense,
@@ -14,17 +13,15 @@ import {
   getInvoiceList,
   getLastPrevious,
   getRecentTransactions,
-} from "../actions/dashboards";
-import { getUserName } from "../actions/users";
+} from "@/actions/dashboards";
+import { getUserName } from "@/actions/users";
+import { UseDates } from "@/hooks/use-dates";
 
 async function Utils(month) {
   const { getPreviousMonth, currentMonthName, currentYear } = UseDates();
 
   const previousMonth = getPreviousMonth(month);
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-
-  /* Get recent transactions */
-  const recentsTransactions = await getRecentTransactions(month);
 
   const [
     receitas,
@@ -42,6 +39,7 @@ async function Utils(month) {
     sumAccountExpense,
     sumBillsExpense,
     userName,
+    recentsTransactions,
   ] = await Promise.all([
     getIncome(month),
     getExpense(month),
@@ -58,6 +56,7 @@ async function Utils(month) {
     getSumAccountExpensePaid(defaultPeriodo),
     getSumBillsExpensePaid(defaultPeriodo),
     getUserName(),
+    getRecentTransactions(month),
   ]);
 
   // Calculating totals for current and previous months

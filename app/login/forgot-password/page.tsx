@@ -1,6 +1,6 @@
+import { forgotPasswordAction } from "@/app/actions/auth";
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,18 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { signIn } from "../actions/auth";
 
-export default async function Login(props) {
+export default async function ForgotPassword(props) {
   const searchParams = await props.searchParams;
 
   return (
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Login</CardTitle>
+          <CardTitle className="text-3xl">Redefinir senha</CardTitle>
           <CardDescription className="text-muted-foreground normal-case">
-            Entre com seu email e senha para acessar sua conta.
+            Insira seu email para redefinir sua senha.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -32,33 +31,22 @@ export default async function Login(props) {
                 <Label htmlFor="email">Email</Label>
                 <Input name="email" placeholder="Digite seu email" required />
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
-                  {/* <Link className="text-sm" href="/login/forgot-password">
-                    Esqueceu a senha?
-                  </Link> */}
-                </div>
-                <Input
-                  type="password"
-                  name="password"
-                  placeholder="Digite sua senha"
-                  required
-                />
-              </div>
-              <SubmitButton formAction={signIn} pendingText="Fazendo Login...">
-                Login
+              <SubmitButton
+                pendingText="Aguarde um momento..."
+                formAction={forgotPasswordAction}
+              >
+                Redefinir
               </SubmitButton>
-
               <FormMessage message={searchParams} />
             </div>
 
             <div className="text-center text-sm">
-              <Button variant={"link"} asChild className="w-full">
-                <Link href="/login/signup">
-                  Não possui conta? Faça o cadastro
+              <p className="text-secondary-foreground">
+                Já possui uma conta?{" "}
+                <Link className="text-primary underline" href="/login">
+                  Faça login
                 </Link>
-              </Button>
+              </p>
             </div>
           </form>
         </CardContent>

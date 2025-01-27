@@ -211,7 +211,7 @@ export async function getSumBillsExpensePaid(month) {
   return sumBillsExpensePaid;
 }
 
-export async function payBills(formData: FormData, id) {
+export async function payBills(id) {
   const supabase = await createClient();
 
   const { error, data } = await supabase

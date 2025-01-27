@@ -152,6 +152,7 @@ export default function MonthPicker() {
     const notShowPaths = [
       "/dashboard/cartao",
       "/dashboard/conta",
+      "/dashboard/ajustes",
       "/login",
       "/",
     ];
@@ -164,7 +165,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${bebasNeue.className} flex w-full items-center justify-start gap-4 border-none bg-color-1 px-4 py-2 text-color-2 dark:dark:bg-card`}
+      className={`${bebasNeue.className} bg-color-1 text-color-2 dark:bg-card flex w-full items-center justify-start gap-4 border-none px-4 py-2`}
     >
       <div className="flex items-center">
         <NavigationButton
@@ -192,7 +193,7 @@ export default function MonthPicker() {
                   <span className="flex items-center">
                     <Calendar
                       size={14}
-                      className="mr-2 text-muted-foreground"
+                      className="text-muted-foreground mr-2"
                     />
                     {item.replace("-", " ")}
                   </span>
@@ -202,7 +203,7 @@ export default function MonthPicker() {
           </Select>
 
           {isChanging && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+            <div className="absolute top-1/2 right-4 -translate-y-1/2">
               <LoadingSpinner />
             </div>
           )}
@@ -229,7 +230,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="text-color-6 focus:outline-none disabled:opacity-50"
+      className="text-color-6 focus:outline-hidden disabled:opacity-50"
       disabled={disabled}
     >
       <Icon size={16} />
@@ -240,7 +241,7 @@ const NavigationButton = ({ onClick, direction, disabled }) => {
 // Componente otimizado para o botão de retorno
 const ReturnButton = ({ onClick, disabled }) => (
   <button
-    className="rounded bg-color-2 p-1 text-color-1 disabled:opacity-50 dark:border-white dark:text-white"
+    className="bg-color-2 text-color-1 dark:bg-color-6 rounded p-1 disabled:opacity-50 dark:text-white"
     onClick={onClick}
     disabled={disabled}
   >

@@ -1,3 +1,5 @@
+import { deleteNotes, getNotes } from "@/actions/notes";
+import EmptyCard from "@/components/empty-card";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,7 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
-import { deleteNotes, getNotes } from "@actions/notes";
 import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 
@@ -18,6 +19,8 @@ async function PageNotes(props) {
   const month = searchParams?.periodo ?? defaultPeriodo;
 
   const getNotesMap = await getNotes(month);
+
+  if (!getNotesMap.length) return <EmptyCard width={100} height={100} />;
 
   return (
     <div className="mt-4 w-full">
