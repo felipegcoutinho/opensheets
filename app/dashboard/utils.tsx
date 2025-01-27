@@ -16,108 +16,107 @@ import {
 } from "@/actions/dashboards";
 import { getUserName } from "@/actions/users";
 import { UseDates } from "@/hooks/use-dates";
+import { useMemo } from "react";
 
-async function Utils(month) {
+function useUtils(month) {
   const { getPreviousMonth, currentMonthName, currentYear } = UseDates();
 
-  const previousMonth = getPreviousMonth(month);
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
+  const data = useMemo(async () => {
+    const previousMonth = getPreviousMonth(month);
+    const defaultPeriodo = `${currentMonthName}-${currentYear}`;
 
-  const [
-    receitas,
-    despesas,
-    despesasBoletos,
-    receitasAnterior,
-    despesasAnterior,
-    despesasBoletosAnterior,
-    previstoAnterior,
-    invoices,
-    expenseByCategory,
-    incomeByCategory,
-    invoiceBill,
-    sumAccountIncome,
-    sumAccountExpense,
-    sumBillsExpense,
-    userName,
-    recentsTransactions,
-  ] = await Promise.all([
-    getIncome(month),
-    getExpense(month),
-    getExpenseBill(month),
-    getIncome(previousMonth),
-    getExpense(previousMonth),
-    getExpenseBill(previousMonth),
-    getLastPrevious(month),
-    getInvoiceList(month),
-    getExpenseByCategory(month),
-    getIncomeByCategory(month),
-    getBillsByResponsavel(month),
-    getSumAccountIncomePaid(defaultPeriodo),
-    getSumAccountExpensePaid(defaultPeriodo),
-    getSumBillsExpensePaid(defaultPeriodo),
-    getUserName(),
-    getRecentTransactions(month),
-  ]);
+    const [
+      receitas,
+      despesas,
+      despesasBoletos,
+      receitasAnterior,
+      despesasAnterior,
+      despesasBoletosAnterior,
+      previstoAnterior,
+      invoices,
+      expenseByCategory,
+      incomeByCategory,
+      invoiceBill,
+      sumAccountIncome,
+      sumAccountExpense,
+      sumBillsExpense,
+      userName,
+      recentsTransactions,
+    ] = await Promise.all([
+      getIncome(month),
+      getExpense(month),
+      getExpenseBill(month),
+      getIncome(previousMonth),
+      getExpense(previousMonth),
+      getExpenseBill(previousMonth),
+      getLastPrevious(month),
+      getInvoiceList(month),
+      getExpenseByCategory(month),
+      getIncomeByCategory(month),
+      getBillsByResponsavel(month),
+      getSumAccountIncomePaid(defaultPeriodo),
+      getSumAccountExpensePaid(defaultPeriodo),
+      getSumBillsExpensePaid(defaultPeriodo),
+      getUserName(),
+      getRecentTransactions(month),
+    ]);
 
-  // Calculating totals for current and previous months
-  const despesasTotal = despesas + despesasBoletos;
-  const despesasTotalAnterior = despesasAnterior + despesasBoletosAnterior;
+    // Memoized calculations
+    const despesasTotal = despesas + despesasBoletos;
+    const despesasTotalAnterior = despesasAnterior + despesasBoletosAnterior;
+    const balanco = receitas - despesasTotal;
+    const balancoAnterior = receitasAnterior - despesasTotalAnterior;
+    const previsto = previstoAnterior + balanco;
+    const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
 
-  // Balance calculations
-  const balanco = receitas - despesasTotal;
-  const balancoAnterior = receitasAnterior - despesasTotalAnterior;
+    const cardData = [
+      {
+        title: "Receitas",
+        value: receitas,
+        previousValue: receitasAnterior,
+        color: "bg-green-400",
+      },
+      {
+        title: "Despesas",
+        value: despesasTotal,
+        previousValue: despesasTotalAnterior,
+        color: "bg-red-500",
+      },
+      {
+        title: "Balanço",
+        value: balanco,
+        previousValue: balancoAnterior,
+        color: "bg-yellow-400",
+      },
+      {
+        title: "Saldo Previsto",
+        value: previsto,
+        previousValue: previstoAnterior,
+        color: "bg-cyan-400",
+      },
+    ];
 
-  // Prediction calculation
-  const previsto = previstoAnterior + balanco;
+    return {
+      receitas,
+      receitasAnterior,
+      despesasTotal,
+      despesasTotalAnterior,
+      balanco,
+      balancoAnterior,
+      previsto,
+      previstoAnterior,
+      incomeByCategory,
+      invoiceCard: invoices,
+      invoiceBill,
+      saldo,
+      expenseByCategory,
+      userName,
+      recentsTransactions,
+      cardData,
+    };
+  }, [month, currentMonthName, currentYear]);
 
-  //Calculo do saldo atual
-  const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
-
-  const cardData = [
-    {
-      title: "Receitas",
-      value: receitas,
-      previousValue: receitasAnterior,
-      color: "bg-green-400",
-    },
-    {
-      title: "Despesas",
-      value: despesasTotal,
-      previousValue: despesasTotalAnterior,
-      color: "bg-red-500",
-    },
-    {
-      title: "Balanço",
-      value: balanco,
-      previousValue: balancoAnterior,
-      color: "bg-yellow-400",
-    },
-    {
-      title: "Saldo Previsto",
-      value: previsto,
-      previousValue: previstoAnterior,
-      color: "bg-cyan-400",
-    },
-  ];
-
-  return {
-    receitas,
-    receitasAnterior,
-    despesasTotal,
-    despesasTotalAnterior,
-    balanco,
-    balancoAnterior,
-    previsto,
-    previstoAnterior,
-    incomeByCategory,
-    invoiceCard: invoices,
-    invoiceBill,
-    saldo,
-    expenseByCategory,
-    userName,
-    recentsTransactions,
-    cardData,
-  };
+  return data;
 }
 
-export default Utils;
+export default useUtils;
