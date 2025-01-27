@@ -26,7 +26,8 @@ export default async function BannerData() {
             Olá, {userNameSplit}! 👋
           </p>
           <p className="text-muted-foreground">
-            Hoje é {fliendlyDate(currentDate)}.
+            Hoje é{" "}
+            <span className="lowercase">{fliendlyDate(currentDate)}.</span>
           </p>
         </div>
 
