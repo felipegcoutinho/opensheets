@@ -129,7 +129,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                 <SelectContent>
                   <SelectItem value="Receita">Receita</SelectItem>
                   <SelectItem value="Despesa">Despesa</SelectItem>
-                  <SelectItem value="Investimento">Investimento</SelectItem>
+                  {/* <SelectItem value="Investimento">Investimento</SelectItem> */}
                 </SelectContent>
               </Select>
             </div>
@@ -276,7 +276,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
               <div className="w-1/2">
                 <Label>Contas</Label>
                 <Required />
-                <Select name="conta_id" placeholder="Selecione" >
+                <Select name="conta_id" placeholder="Selecione">
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>

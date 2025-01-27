@@ -122,7 +122,7 @@ export function UseDates() {
     const currentDate = new Date();
     const { optionsMeses } = UseOptions();
 
-    for (let i = -4; i <= 4; i++) {
+    for (let i = -2; i <= 2; i++) {
       const newDate = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth() + i,

@@ -1,4 +1,4 @@
-import { Bebas_Neue, Gabarito, Inter, Merriweather } from "next/font/google";
+import { Bebas_Neue, Gabarito } from "next/font/google";
 import localFont from "next/font/local";
 
 const uiSans = localFont({
@@ -23,22 +23,10 @@ const gabarito = Gabarito({
   fallback: ["monospace"],
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  fallback: ["monospace"],
-});
-
-const merriweather = Merriweather({
-  subsets: ["latin"],
-  weight: ["400", "900"],
-  fallback: ["monospace"],
-});
-
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: ["400"],
   fallback: ["monospace"],
 });
 
-export { bebasNeue, gabarito, inter, merriweather, uiSans };
+export { bebasNeue, gabarito, uiSans };
