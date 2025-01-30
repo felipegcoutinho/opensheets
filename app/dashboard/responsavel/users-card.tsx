@@ -42,7 +42,7 @@ export default function UsersCard({
             {hasCartoesData ? (
               Object.entries(cartoes).map(([descricao, data]) => (
                 <li
-                  className="flex items-center justify-between space-y-1 leading-relaxed text-muted-foreground"
+                  className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
                   key={descricao}
                 >
                   <p className="flex items-center gap-1">
@@ -56,7 +56,7 @@ export default function UsersCard({
                         alt="Logo do cartão"
                       />
                     ) : (
-                      descricao === "Pix, dinheiro ou débito" && (
+                      descricao === "Pix/Dinheiro/Débito" && (
                         <Image
                           quality={100}
                           src="/logos/pix.png"
@@ -82,7 +82,7 @@ export default function UsersCard({
           </ul>
         </div>
 
-        <div className="my-3 w-full border border-dashed border-muted dark:border-neutral-700"></div>
+        <div className="border-muted my-3 w-full border border-dashed dark:border-neutral-700"></div>
 
         <div className="grid">
           <li className="flex items-center justify-between">
@@ -99,7 +99,7 @@ export default function UsersCard({
             {hasBoletosData ? (
               Object.entries(boletos).map(([descricao, valor]) => (
                 <li
-                  className="flex items-center justify-between space-y-1 leading-relaxed text-muted-foreground"
+                  className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
                   key={descricao}
                 >
                   <span className="flex items-center gap-1">
@@ -124,11 +124,11 @@ export default function UsersCard({
           </ul>
         </div>
 
-        <div className="my-2 w-full border-2 border-muted dark:border-neutral-700"></div>
+        <div className="border-muted my-2 w-full border-2 dark:border-neutral-700"></div>
 
         <div className="mt-4">
           <li className="flex items-center justify-between font-bold">
-            <span className="text-lg text-muted-foreground">Total</span>
+            <span className="text-muted-foreground text-lg">Total</span>
             <span className="text-xl">
               <Numbers value={totalCartao + totalBoleto} />
             </span>
