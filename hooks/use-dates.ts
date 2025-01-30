@@ -1,5 +1,3 @@
-import UseOptions from "./use-options";
-
 export function UseDates() {
   // Lista dos nomes dos meses
   const optionsMeses = [
@@ -120,7 +118,6 @@ export function UseDates() {
   const getMonthOptions = () => {
     const options = [];
     const currentDate = new Date();
-    const { optionsMeses } = UseOptions();
 
     for (let i = -2; i <= 2; i++) {
       const newDate = new Date(

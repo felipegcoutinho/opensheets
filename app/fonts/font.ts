@@ -29,6 +29,11 @@ const openRunde = localFont({
       weight: "500",
       style: "normal",
     },
+    // {
+    //   path: "../fonts/OpenRunde-Bold.woff2",
+    //   weight: "600",
+    //   style: "normal",
+    // },
   ],
 });
 
