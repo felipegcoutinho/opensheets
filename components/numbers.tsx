@@ -1,6 +1,6 @@
 "use client";
 
-import { inter } from "@/app/fonts/font";
+import { openRunde } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 
 function Numbers({ value }) {
@@ -8,7 +8,7 @@ function Numbers({ value }) {
 
   return (
     <span
-      className={`font-bold tracking-tighter ${inter.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
+      className={`font-bold tracking-tighter ${openRunde.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
     >
       {Number(value).toLocaleString("pt-BR", {
         style: "currency",

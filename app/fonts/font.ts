@@ -17,6 +17,21 @@ const uiSans = localFont({
   ],
 });
 
+const openRunde = localFont({
+  src: [
+    {
+      path: "../fonts/OpenRunde-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/OpenRunde-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+});
+
 const gabarito = Gabarito({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -35,4 +50,4 @@ const inter = Inter({
   fallback: ["monospace"],
 });
 
-export { bebasNeue, gabarito, inter, uiSans };
+export { bebasNeue, gabarito, inter, openRunde, uiSans };
