@@ -143,7 +143,7 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="relative flex items-center">
-          <div className="mx-4 text-2xl capitalize dark:text-white">
+          <div className="mx-2 text-2xl capitalize dark:text-white">
             {currentMonth} <span className="text-color-6">{currentYear}</span>
           </div>
 
