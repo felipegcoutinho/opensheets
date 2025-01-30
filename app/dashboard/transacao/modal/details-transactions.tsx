@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/use-dates";
-import Utils from "../utils";
+import Utils from "../utils-transacao";
 import ViewImage from "./view-image";
 
 export default function DetailsTransactions({
@@ -59,7 +59,7 @@ export default function DetailsTransactions({
 
       <DialogContent className="p-0">
         <Card className="space-y-4 p-1">
-          <CardHeader className="flex flex-row items-start bg-muted/50">
+          <CardHeader className="bg-muted/50 flex flex-row items-start">
             <div className="grid gap-0.5">
               <DialogTitle className="group flex items-center gap-2 text-lg">
                 #{itemId}

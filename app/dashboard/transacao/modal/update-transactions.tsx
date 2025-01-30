@@ -26,7 +26,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import Utils from "../utils";
+import Utils from "../utils-transacao";
 
 export default function UpdateTransactions({
   itemId,
@@ -200,7 +200,7 @@ export default function UpdateTransactions({
               onPressedChange={() => setIsPaid(!itemPaid)}
               defaultPressed={itemPaid}
               name="realizado"
-              className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
+              className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
             >
               <ThumbsUp strokeWidth={2} className="h-6 w-6" />
             </Toggle>
@@ -239,7 +239,7 @@ export default function UpdateTransactions({
                     className="h-full w-full object-cover"
                   />
 
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black opacity-0 transition-opacity group-hover:opacity-100">
                     <span className="font-semibold text-white">
                       {removingImage ? "Removendo..." : "Remover Imagem"}
                     </span>
