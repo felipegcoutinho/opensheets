@@ -24,7 +24,6 @@ export default function Utils() {
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
   const [image, setImage] = useState(null);
-
   const [removingImage, setRemovingImage] = useState(false);
 
   const handleCondicaoChange = (value: string) => {

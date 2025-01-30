@@ -26,7 +26,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import Utils from "../utils";
+import Utils from "../utils-transacao";
 
 export default function CreateTransactions({ getCardsMap, getAccountMap }) {
   const {
