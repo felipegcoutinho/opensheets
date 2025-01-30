@@ -1,18 +1,38 @@
 "use client";
 
 import { bebasNeue } from "@/app/fonts/font";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
-import { Calendar, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState, useTransition } from "react";
+import React, { useCallback, useMemo, useState, useTransition } from "react";
 import { Card } from "./ui/card";
+
+const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
+  const Icon = direction === "left" ? ChevronLeft : ChevronRight;
+  return (
+    <button
+      onClick={onClick}
+      className="text-color-6 cursor-pointer focus:outline-hidden disabled:opacity-50"
+      disabled={disabled}
+    >
+      <Icon size={16} />
+    </button>
+  );
+});
+
+const ReturnButton = React.memo(({ onClick, disabled }) => (
+  <button
+    className="bg-color-2 text-color-1 dark:bg-color-6 ml-2 cursor-pointer rounded disabled:opacity-50 dark:text-white"
+    onClick={onClick}
+    disabled={disabled}
+  >
+    <span className="px-2">Retornar ao Mês Atual</span>
+  </button>
+));
+
+const LoadingSpinner = () => (
+  <Loader2 className="text-primary-color h-4 w-4 animate-spin dark:text-blue-200" />
+);
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -22,10 +42,8 @@ export default function MonthPicker() {
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Combine both loading states
   const isChanging = isPending || isLoading;
 
-  // Memoize valores default que não mudam
   const defaultValues = useMemo(
     () => ({
       month: new Date().toLocaleString("pt-BR", { month: "long" }),
@@ -34,70 +52,34 @@ export default function MonthPicker() {
     [],
   );
 
-  // Memoize o parâmetro atual do mês
-  const monthYearParam = useMemo(() => {
-    return (
+  const monthYearParam = useMemo(
+    () =>
       searchParams.get("periodo") ||
-      `${defaultValues.month}-${defaultValues.year}`
-    );
-  }, [searchParams, defaultValues.month, defaultValues.year]);
+      `${defaultValues.month}-${defaultValues.year}`,
+    [searchParams, defaultValues.month, defaultValues.year],
+  );
 
-  // Memoize mês e ano atuais
   const [currentMonth, currentYear] = useMemo(
     () => monthYearParam.split("-"),
     [monthYearParam],
   );
 
-  // Memoize índice do mês atual
   const currentMonthIndex = useMemo(
     () => optionsMeses.indexOf(currentMonth),
     [optionsMeses, currentMonth],
   );
 
-  // Memoize opções de meses
-  const monthOptions = useMemo(() => {
-    const options = [];
-    const currentDate = new Date();
-    currentDate.setMonth(currentMonthIndex);
-    currentDate.setFullYear(parseInt(currentYear));
-
-    // Adiciona 4 meses antes
-    for (let i = 3; i > 0; i--) {
-      const date = new Date(currentDate);
-      date.setMonth(date.getMonth() - i);
-      const month = date.toLocaleString("pt-BR", { month: "long" });
-      const year = date.getFullYear();
-      options.push(`${month}-${year}`);
-    }
-
-    // Adiciona mês atual
-    options.push(`${currentMonth}-${currentYear}`);
-
-    // Adiciona 4 meses depois
-    for (let i = 1; i <= 3; i++) {
-      const date = new Date(currentDate);
-      date.setMonth(date.getMonth() + i);
-      const month = date.toLocaleString("pt-BR", { month: "long" });
-      const year = date.getFullYear();
-      options.push(`${month}-${year}`);
-    }
-
-    return options;
-  }, [currentMonthIndex, currentMonth, currentYear]);
-
-  // Função auxiliar para navegação
   const navigateToMonth = useCallback(
     (newMonth, newYear) => {
       setIsLoading(true);
       startTransition(() => {
         replace(`${pathname}?periodo=${newMonth}-${newYear}`);
-        setTimeout(() => setIsLoading(false), 300); // Garante um mínimo de feedback visual
+        setTimeout(() => setIsLoading(false), 300);
       });
     },
     [pathname, replace],
   );
 
-  // Callbacks otimizados para navegação
   const goToPreviousMonth = useCallback(() => {
     let previousMonthIndex = currentMonthIndex - 1;
     let previousYear = currentYear;
@@ -128,18 +110,6 @@ export default function MonthPicker() {
     navigateToMonth(defaultValues.month, defaultValues.year);
   }, [navigateToMonth, defaultValues]);
 
-  const handleMonthSelect = useCallback(
-    (value) => {
-      setIsLoading(true);
-      startTransition(() => {
-        replace(`${pathname}?periodo=${value}`);
-        setTimeout(() => setIsLoading(false), 300);
-      });
-    },
-    [pathname, replace],
-  );
-
-  // Memoize a verificação de diferença do mês atual
   const isDifferentFromCurrent = useMemo(
     () =>
       currentMonth !== defaultValues.month ||
@@ -147,7 +117,6 @@ export default function MonthPicker() {
     [currentMonth, currentYear, defaultValues.month, defaultValues.year],
   );
 
-  // Memoize a verificação de exibição do filtro
   const shouldShowMonthFilter = useMemo(() => {
     const notShowPaths = [
       "/dashboard/cartao",
@@ -165,7 +134,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${bebasNeue.className} bg-color-1 text-color-2 dark:bg-card flex w-full items-center justify-start gap-4 border-none px-4 py-2`}
+      className={`${bebasNeue.className} bg-color-1 text-color-2 dark:bg-card flex w-full items-center justify-start border-none p-4`}
     >
       <div className="flex items-center">
         <NavigationButton
@@ -173,34 +142,10 @@ export default function MonthPicker() {
           direction="left"
           disabled={isChanging}
         />
-
         <div className="relative flex items-center">
-          <Select
-            value={monthYearParam}
-            onValueChange={handleMonthSelect}
-            disabled={isChanging}
-          >
-            <SelectTrigger className="mx-2 min-w-[150px] border-none bg-transparent text-2xl capitalize focus:ring-0 dark:text-white">
-              <SelectValue>
-                {currentMonth}
-                <span className="ml-1">{currentYear}</span>
-              </SelectValue>
-            </SelectTrigger>
-
-            <SelectContent>
-              {monthOptions.map((item, index) => (
-                <SelectItem key={index} value={item} className="capitalize">
-                  <span className="flex items-center">
-                    <Calendar
-                      size={14}
-                      className="text-muted-foreground mr-2"
-                    />
-                    {item.replace("-", " ")}
-                  </span>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="mx-4 text-2xl capitalize dark:text-white">
+            {currentMonth} <span className="text-color-6">{currentYear}</span>
+          </div>
 
           {isChanging && (
             <div className="absolute top-1/2 right-4 -translate-y-1/2">
@@ -208,48 +153,15 @@ export default function MonthPicker() {
             </div>
           )}
         </div>
-
         <NavigationButton
           onClick={goToNextMonth}
           direction="right"
           disabled={isChanging}
         />
       </div>
-
       {isDifferentFromCurrent && (
         <ReturnButton onClick={goToCurrentMonthYear} disabled={isChanging} />
       )}
     </Card>
   );
 }
-
-// Componente otimizado para os botões de navegação
-const NavigationButton = ({ onClick, direction, disabled }) => {
-  const Icon = direction === "left" ? ChevronLeft : ChevronRight;
-
-  return (
-    <button
-      onClick={onClick}
-      className="text-color-6 focus:outline-hidden disabled:opacity-50"
-      disabled={disabled}
-    >
-      <Icon size={16} />
-    </button>
-  );
-};
-
-// Componente otimizado para o botão de retorno
-const ReturnButton = ({ onClick, disabled }) => (
-  <button
-    className="bg-color-2 text-color-1 dark:bg-color-6 rounded p-1 disabled:opacity-50 dark:text-white"
-    onClick={onClick}
-    disabled={disabled}
-  >
-    <span className="px-2">Retornar ao Mês Atual</span>
-  </button>
-);
-
-// Componente de Loading
-const LoadingSpinner = () => (
-  <Loader2 className="text-primary-color h-4 w-4 animate-spin dark:text-blue-200" />
-);

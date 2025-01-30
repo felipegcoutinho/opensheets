@@ -30,42 +30,6 @@ import {
 } from "lucide-react";
 
 export default function UseOptions() {
-  const optionsMeses = [
-    "janeiro",
-    "fevereiro",
-    "março",
-    "abril",
-    "maio",
-    "junho",
-    "julho",
-    "agosto",
-    "setembro",
-    "outubro",
-    "novembro",
-    "dezembro",
-  ];
-
-  const optionsAnos = [
-    "2023",
-    "2024",
-    "2025",
-    "2026",
-    "2027",
-    "2028",
-    "2029",
-    "2030",
-  ];
-
-  const diasDaSemana = [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-  ];
-
   const categoriasReceita = [
     { id: 1, name: "Ajuste de Saldo", icon: History },
     { id: 2, name: "Investimentos", icon: TrendingUp },
@@ -176,9 +140,6 @@ export default function UseOptions() {
   return {
     categoriasDespesa,
     categoriasReceita,
-    optionsMeses,
-    optionsAnos,
-    diasDaSemana,
     logos,
     bandeiras,
   };
