@@ -43,8 +43,7 @@ async function page(props) {
       };
     }
 
-    const descricaoCartao =
-      item.cartoes?.descricao || "Pix, dinheiro ou débito";
+    const descricaoCartao = item.cartoes?.descricao || "Pix/Dinheiro/Débito";
     if (!acc[item.responsavel].cartoes[descricaoCartao]) {
       acc[item.responsavel].cartoes[descricaoCartao] = {
         valor: 0,

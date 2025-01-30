@@ -20,8 +20,8 @@ export default async function Header() {
   const session = await getSession();
 
   return (
-    <header className="mb-4 w-full bg-background text-color-2 shadow-2xl shadow-color-6/10">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-2">
+    <header className="bg-background text-color-2 shadow-color-6/10 mb-4 w-full shadow-2xl">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-2">
         {/* Menu para telas pequenas */}
         <div className="flex items-center gap-4 md:hidden">
           <Sheet>
@@ -44,14 +44,14 @@ export default async function Header() {
         {/* Logo e menu para telas médias e grandes */}
         <div className="hidden md:flex md:w-full md:items-center">
           {/* Logo à esquerda */}
-          <div className="shrink-0">
+          <div className="mr-6 shrink-0">
             <Link href="/">
               <Logo />
             </Link>
           </div>
 
           {/* Links centralizados */}
-          <div className="flex flex-1 justify-center">
+          <div className="flex flex-1 justify-start">
             <LinkOnHeader session={session} />
           </div>
         </div>

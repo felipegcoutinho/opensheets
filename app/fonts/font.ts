@@ -1,4 +1,4 @@
-import { Bebas_Neue, Gabarito } from "next/font/google";
+import { Bebas_Neue, Gabarito, Inter } from "next/font/google";
 import localFont from "next/font/local";
 
 const uiSans = localFont({
@@ -29,4 +29,10 @@ const bebasNeue = Bebas_Neue({
   fallback: ["monospace"],
 });
 
-export { bebasNeue, gabarito, uiSans };
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  fallback: ["monospace"],
+});
+
+export { bebasNeue, gabarito, inter, uiSans };
