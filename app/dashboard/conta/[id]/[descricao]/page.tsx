@@ -4,6 +4,7 @@ import {
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/actions/accounts";
+import DetailsTransactions from "@/app/dashboard/transacao/modal/details-transactions";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DetailsTransactions from "@/dashboard/transacao/modal/details-transactions";
 import { UseDates } from "@/hooks/use-dates";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import Image from "next/image";

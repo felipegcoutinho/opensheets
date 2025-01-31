@@ -23,7 +23,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/actions/*": ["./app/actions/*"],
-      "@/dashboard/*": ["./app/dashboard/*"]
+      "@/dashboard/*": ["app/dashboard/*"]
 
     }
   },

@@ -81,7 +81,10 @@ export default function CategoriesList({ data, month, color }) {
   return (
     <>
       {sortedData.map((item, index) => {
-        const categoria = item.categoria.toLowerCase();
+        const categoria = item.categoria;
+        const tipoTransacao = item.tipo_transacao.toLowerCase();
+        const url = `/dashboard/transacao/${categoria}/${tipoTransacao}?periodo=${month}`;
+
         const IconComponent = iconesCategorias[categoria] || CircleDollarSign;
         const iconColor =
           item.tipo_transacao.toLowerCase() === "receita"
@@ -93,11 +96,11 @@ export default function CategoriesList({ data, month, color }) {
             <div className="mb-2 flex items-center justify-between">
               <Link
                 className="flex items-center gap-1 hover:underline"
-                href={`/dashboard/transacao/${encodeURIComponent(categoria).toLocaleLowerCase()}/${encodeURIComponent(item.tipo_transacao.toLowerCase())}?periodo=${month}`}
+                href={url}
               >
                 <IconComponent className={`h-4 w-4 ${iconColor}`} />
                 <p>{item.categoria}</p>
-                <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
+                <ArrowUpRight className="text-muted-foreground h-3 w-3" />
               </Link>
               <p>
                 <Numbers value={item.sum} />

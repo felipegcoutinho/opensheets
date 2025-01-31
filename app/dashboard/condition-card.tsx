@@ -10,7 +10,7 @@ export async function ConditionList({ month }) {
   return (
     <Card className="pb-4">
       <CardHeader>
-        <CardTitle className="text-sm uppercase dark:text-muted-foreground">
+        <CardTitle className="dark:text-muted-foreground text-sm uppercase">
           Condições de Pagamento
         </CardTitle>
       </CardHeader>
@@ -28,7 +28,7 @@ export async function ConditionList({ month }) {
         ))
       ) : (
         <CardContent className="flex items-center justify-start">
-          <span className="text-lg text-muted-foreground">
+          <span className="text-muted-foreground text-lg">
             Não há condições disponíveis.
           </span>
         </CardContent>

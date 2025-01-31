@@ -13,7 +13,6 @@ export const updateSession = async (request: NextRequest) => {
     "/investimentos",
     "/ajustes",
     "/reset-password",
-    
   ];
 
   try {
@@ -42,7 +41,7 @@ export const updateSession = async (request: NextRequest) => {
     const currentPath = request.nextUrl.pathname;
 
     // Verifica se a rota atual é "/" ou "/login" e se o usuário está logado
-    if ((currentPath === "/" || currentPath === "/login") && session) {
+    if (currentPath === "/login" && session) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 

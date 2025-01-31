@@ -10,9 +10,7 @@ function Banner({ children }) {
     return null;
   }
 
-  return (
-    <div className="mb-4 w-full text-color-2 dark:text-white">{children}</div>
-  );
+  return <div className="mb-4 w-full dark:text-white">{children}</div>;
 }
 
 export default Banner;
