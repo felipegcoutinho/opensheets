@@ -11,13 +11,14 @@ export default async function BannerData() {
     currentMonthName,
     currentYear,
   } = UseDates();
-  const { saldo, userName } = await Utils(`${currentMonthName}-${currentYear}`);3
+  const { saldo, userName } = await Utils(`${currentMonthName}-${currentYear}`);
+  3;
 
   return (
     <Banner>
       <div className="flex items-center justify-between py-6">
         <div>
-          <p className="text-color-6 text-2xl font-bold">
+          <p className="text-2xl font-bold">
             Olá, {userName.split(" ")[0]}! 👋
           </p>
           <p className="text-muted-foreground">
@@ -25,7 +26,7 @@ export default async function BannerData() {
             <span className="lowercase">{fliendlyDate(currentDate)}.</span>
           </p>
         </div>
-        <div className="text-color-2 text-right">
+        <div className="text-right">
           <p>Saldo Atual</p>
           <p className="text-2xl">
             <Numbers value={saldo} />
