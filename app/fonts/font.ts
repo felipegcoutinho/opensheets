@@ -1,4 +1,4 @@
-import { Bebas_Neue, Gabarito, Inter } from "next/font/google";
+import { Bebas_Neue, Gabarito } from "next/font/google";
 import localFont from "next/font/local";
 
 const uiSans = localFont({
@@ -17,25 +17,25 @@ const uiSans = localFont({
   ],
 });
 
-const openRunde = localFont({
-  src: [
-    {
-      path: "../fonts/OpenRunde-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/OpenRunde-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    // {
-    //   path: "../fonts/OpenRunde-Bold.woff2",
-    //   weight: "600",
-    //   style: "normal",
-    // },
-  ],
-});
+// const openRunde = localFont({
+//   src: [
+//     {
+//       path: "../fonts/OpenRunde-Regular.woff2",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "../fonts/OpenRunde-Medium.woff2",
+//       weight: "500",
+//       style: "normal",
+//     },
+//     {
+//       path: "../fonts/OpenRunde-Bold.woff2",
+//       weight: "600",
+//       style: "normal",
+//     },
+//   ],
+// });
 
 const gabarito = Gabarito({
   subsets: ["latin"],
@@ -49,10 +49,10 @@ const bebasNeue = Bebas_Neue({
   fallback: ["monospace"],
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  fallback: ["monospace"],
-});
+// const inter = Inter({
+//   subsets: ["latin"],
+//   weight: ["400", "700"],
+//   fallback: ["monospace"],
+// });
 
-export { bebasNeue, gabarito, inter, openRunde, uiSans };
+export { bebasNeue, gabarito, uiSans };
