@@ -42,21 +42,15 @@ export default function BillPaymentDialog({
   const isPaid = status_pagamento === "Pago";
 
   if (isPaid) {
-    return (
-      <Button className="h-6 gap-1" variant="success" type="button">
-        <CheckCircle2 className="h-4 w-4" />
-        <span>Pago</span>
-      </Button>
-    );
+    return <span className="text-green-500">pago</span>;
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="h-6 gap-1" variant="warning" type="button">
-          <CreditCard className="h-4 w-4" />
-          Pagar
-        </Button>
+        <span className="cursor-pointer text-orange-500 hover:underline">
+          pagar
+        </span>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">

@@ -10,12 +10,11 @@ function LinkOnHeader({ session }) {
   const { currentMonthName, currentYear } = UseDates();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const isHomePage = pathname === "/";
+
+  if (!session) return null;
 
   let month =
     searchParams.get("periodo") || `${currentMonthName}-${currentYear}`;
-
-  if (!session || isHomePage) return null;
 
   const links = NavigationLinks({
     month,

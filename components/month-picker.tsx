@@ -134,7 +134,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${bebasNeue.className} bg-color-1 text-color-2 dark:bg-card flex w-full items-center justify-start border-none p-4`}
+      className={`${bebasNeue.className} bg-color-1 dark:bg-card flex w-full items-center justify-start border-none p-4`}
     >
       <div className="flex items-center">
         <NavigationButton

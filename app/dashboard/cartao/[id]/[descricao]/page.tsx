@@ -5,6 +5,7 @@ import {
   getCardSum,
 } from "@/actions/cards";
 import { getFaturas } from "@/actions/invoices";
+import DetailsTransactions from "@/app/dashboard/transacao/modal/details-transactions";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import Numbers from "@/components/numbers";
 import RemovePaymentButton from "@/components/remove-payment-button";
@@ -18,7 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DetailsTransactions from "@/dashboard/transacao/modal/details-transactions";
 import { UseDates } from "@/hooks/use-dates";
 import {
   CalendarClockIcon,

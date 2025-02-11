@@ -1,4 +1,5 @@
 import { getCategoria } from "@/actions/cards";
+import DetailsTransactions from "@/app/dashboard/transacao/modal/details-transactions";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DetailsTransactions from "@/dashboard/transacao/modal/details-transactions";
 import { UseDates } from "@/hooks/use-dates";
 import {
   ArrowLeftIcon,

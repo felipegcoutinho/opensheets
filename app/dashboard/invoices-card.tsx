@@ -35,11 +35,11 @@ export default async function InvoiceCard({ data, month }) {
               href={`/dashboard/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
             >
               {item.descricao}
-              <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
+              <ArrowUpRight className="text-muted-foreground h-3 w-3" />
             </Link>
 
             {item.status_pagamento === "Pendente" ? (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 Vence dia {item.dt_vencimento}
               </p>
             ) : (
