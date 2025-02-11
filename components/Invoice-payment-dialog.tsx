@@ -31,21 +31,15 @@ export default function InvoicePaymentDialog({
   );
 
   if (isPaid) {
-    return (
-      <Button className="h-6 gap-1" variant="success" type="button">
-        <CheckCircle2 className="h-4 w-4" />
-        <span>Pago</span>
-      </Button>
-    );
+    return <span className="text-green-500">pago</span>;
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="h-6 gap-1" variant="warning" type="button">
-          <CreditCard className="h-4 w-4" />
-          Pagar
-        </Button>
+        <span className="cursor-pointer text-orange-500 hover:underline">
+          pagar
+        </span>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
@@ -66,15 +60,15 @@ export default function InvoicePaymentDialog({
                   alt="Logo do cartão"
                   quality={100}
                 />
-                <span className="font-medium text-foreground">{descricao}</span>
+                <span className="text-foreground font-medium">{descricao}</span>
               </div>
 
-              <div className="rounded-lg bg-muted/50 p-4">
+              <div className="bg-muted/50 rounded-lg p-4">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Valor Total
                   </span>
-                  <span className="text-2xl font-semibold text-foreground">
+                  <span className="text-foreground text-2xl font-semibold">
                     <Numbers value={valor} />
                   </span>
                 </div>

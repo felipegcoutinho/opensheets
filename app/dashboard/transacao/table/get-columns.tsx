@@ -56,9 +56,9 @@ const getResponsavelClass = (responsavel) => {
 function getButtonVariant(tipoTransacao) {
   switch (tipoTransacao) {
     case "Receita":
-      return "success";
+      return "receita";
     case "Despesa":
-      return "destructive";
+      return "despesa";
     case "Investimento":
       return "invest";
     default:
@@ -174,7 +174,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Button size="lg-badge" variant={getButtonVariant(item.tipo_transacao)}>
+        <Button size="sm" variant={getButtonVariant(item.tipo_transacao)}>
           {item.tipo_transacao}
         </Button>
       );

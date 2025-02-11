@@ -24,6 +24,8 @@ const buttonVariants = cva(
           "bg-orange-50 text-orange-600 hover:bg-orange-100 dark:bg-orange-900/40 dark:text-orange-400 dark:border-none",
         invest:
           "bg-neutral-100 text-black hover:bg-neutral-100 dark:bg-neutral-600 dark:text-white dark:border-none",
+        receita: "text-green-500 hover:text-green-600",
+        despesa: "text-red-500 hover:text-red-600",
       },
       size: {
         default: "h-10 px-4 py-2",
