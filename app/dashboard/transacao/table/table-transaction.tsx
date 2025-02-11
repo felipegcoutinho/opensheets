@@ -26,6 +26,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import Link from "next/link";
 import { useState } from "react";
 import CreateTransactions from "../modal/create-transactions";
 import { getColumns, getDescricao } from "./get-columns";
@@ -96,6 +97,10 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
           getCardsMap={getCardsMap}
           getAccountMap={getAccountMap}
         />
+
+        <Link href="./transacao/novo">
+          <Button>Página Transação</Button>
+        </Link>
 
         <div className="flex items-center gap-2">
           {/* Exibe a soma dos lançamentos selecionados */}
