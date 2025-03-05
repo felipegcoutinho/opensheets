@@ -178,7 +178,7 @@
   }
 
   ::selection {
-    @apply bg-amber-500 text-primary-foreground dark:bg-violet-400;
+    @apply bg-orange-50 text-orange-600 dark:bg-violet-400;
   }
 }
 
