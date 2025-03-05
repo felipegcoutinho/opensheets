@@ -22,10 +22,9 @@ export async function BillsCard({ month }) {
     >
       <div className="flex items-center gap-2">
         <Image
-          src="/logos/boleto.png"
-          className="rounded-full"
-          width={40}
-          height={40}
+          src="/logos/boleto.svg"
+          width={30}
+          height={30}
           alt="Logo do cartão"
           quality={100}
         />

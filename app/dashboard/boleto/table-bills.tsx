@@ -36,7 +36,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow className="border-b bg-muted/50">
+            <TableRow className="bg-muted/50 border-b">
               <TableHead>Descrição</TableHead>
               <TableHead>Data de Vencimento</TableHead>
               <TableHead>Valor</TableHead>
@@ -54,10 +54,9 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                   <TableCell className="flex items-center gap-2 font-bold capitalize">
                     <Image
                       quality={100}
-                      src={`/logos/boleto.png`}
-                      className="rounded-full"
-                      width={40}
-                      height={40}
+                      src={`/logos/boleto.svg`}
+                      width={30}
+                      height={30}
                       alt={"Logo do cartão"}
                     />
                     {item.descricao}
@@ -98,7 +97,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
-                          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                          className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
                         >
                           <Ellipsis size={16} />
                           <span className="sr-only">Open menu</span>

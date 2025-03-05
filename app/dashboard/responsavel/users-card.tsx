@@ -105,8 +105,7 @@ export default function UsersCard({
                   <span className="flex items-center gap-1">
                     <Image
                       quality={100}
-                      src="/logos/boleto.png"
-                      className="rounded-full"
+                      src="/logos/boleto.svg"
                       width={20}
                       height={20}
                       alt="Logo do Boleto"
