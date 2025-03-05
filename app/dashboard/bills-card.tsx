@@ -23,6 +23,7 @@ export async function BillsCard({ month }) {
       <div className="flex items-center gap-2">
         <Image
           src="/logos/boleto.svg"
+          className="dark:invert dark:filter"
           width={30}
           height={30}
           alt="Logo do cartão"

@@ -55,6 +55,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                     <Image
                       quality={100}
                       src={`/logos/boleto.svg`}
+                      className={`dark:invert dark:filter`}
                       width={30}
                       height={30}
                       alt={"Logo do cartão"}

@@ -106,6 +106,7 @@ export default function UsersCard({
                     <Image
                       quality={100}
                       src="/logos/boleto.svg"
+                      className="dark:invert dark:filter"
                       width={20}
                       height={20}
                       alt="Logo do Boleto"

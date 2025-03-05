@@ -1,5 +1,5 @@
 import { UseDates } from "@/hooks/use-dates";
-import Dashboards from "./dashboards";
+import FinancialSummaryCards from "./dashboards";
 
 export default async function page(props) {
   const searchParams = await props.searchParams;
@@ -11,5 +11,5 @@ export default async function page(props) {
     "-",
   )[0];
 
-  return <Dashboards month={month} />;
+  return <FinancialSummaryCards month={month} />;
 }

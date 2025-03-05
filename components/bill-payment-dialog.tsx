@@ -61,6 +61,7 @@ export default function BillPaymentDialog({
                 <span>Você está pagando o boleto de:</span>
                 <Image
                   src="/logos/boleto.svg"
+                  className="dark:invert dark:filter"
                   width={40}
                   height={40}
                   alt="Logo do cartão"
