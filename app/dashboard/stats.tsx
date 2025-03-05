@@ -15,7 +15,7 @@ import {
 } from "../actions/dashboards";
 
 const statsConfig = [
-  { title: "Transações", icon: ArrowDownUp, getData: getTransactionsStats },
+  { title: "Lançamentos", icon: ArrowDownUp, getData: getTransactionsStats },
   { title: "Boletos", icon: File, getData: getBillsStats },
   { title: "Cartões", icon: CreditCard, getData: getCardsStats },
   { title: "Contas", icon: Landmark, getData: getAccountsStats },

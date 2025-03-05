@@ -14,7 +14,7 @@ export async function getResponsavelTransactionList(month) {
     .neq("responsavel", "Sistema");
 
   if (error) {
-    console.error("Erro ao buscar transações:", error);
+    console.error("Erro ao buscar Lançamentos:", error);
     return null;
   }
 

@@ -23,7 +23,7 @@ export function NavigationLinks({ month, userEmail }) {
     {
       href: `/dashboard/transacao?periodo=${month}`,
       Icon: ArrowDownUpIcon,
-      name: "Transações",
+      name: "Lançamentos",
       path: "/dashboard/transacao",
     },
     {

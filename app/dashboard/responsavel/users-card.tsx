@@ -76,7 +76,7 @@ export default function UsersCard({
               ))
             ) : (
               <li className="text-muted-foreground">
-                Sem transações registradas
+                Sem Lançamentos registradas
               </li>
             )}
           </ul>

@@ -43,7 +43,7 @@ async function Page(props) {
     0,
   );
 
-  // Calcula o número total de transações
+  // Calcula o número total de Lançamentos
   const totalTransacoes = getCategoriaMap?.length || 0;
 
   return (
@@ -97,7 +97,7 @@ async function Page(props) {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-muted-foreground text-sm font-medium">
-              Total de Transações
+              Total de Lançamentos
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -106,10 +106,10 @@ async function Page(props) {
         </Card>
       </div>
 
-      {/* Tabela de Transações */}
+      {/* Tabela de Lançamentos */}
       <Card>
         <CardHeader>
-          <CardTitle>Transações</CardTitle>
+          <CardTitle>Lançamentos</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

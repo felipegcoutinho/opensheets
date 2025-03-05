@@ -201,7 +201,7 @@ export async function getTransactionsStats(month) {
     .eq("responsavel", "Você");
 
   if (error) {
-    console.error("Erro ao buscar transações:", error);
+    console.error("Erro ao buscar Lançamentos:", error);
     return null;
   }
 
@@ -337,7 +337,7 @@ export async function getRecentTransactions(month) {
     .limit(5);
 
   if (error) {
-    console.error("Erro ao buscar transações:", error);
+    console.error("Erro ao buscar Lançamentos:", error);
     return [];
   }
 

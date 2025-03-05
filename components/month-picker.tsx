@@ -22,7 +22,7 @@ const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
 
 const ReturnButton = React.memo(({ onClick, disabled }) => (
   <button
-    className="bg-color-2 text-color-1 dark:bg-color-6 ml-2 cursor-pointer rounded disabled:opacity-50 dark:text-white"
+    className="bg-color-6 dark:bg-color-6 ml-2 cursor-pointer rounded text-white disabled:opacity-50 dark:text-white"
     onClick={onClick}
     disabled={disabled}
   >
@@ -134,7 +134,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${bebasNeue.className} bg-color-1 dark:bg-card flex w-full items-center justify-start border-none p-4`}
+      className={`${bebasNeue.className} dark:bg-card flex w-full items-center justify-start border-none bg-orange-100 p-4`}
     >
       <div className="flex items-center">
         <NavigationButton

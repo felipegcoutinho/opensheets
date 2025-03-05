@@ -32,7 +32,7 @@ async function page(props) {
     return result;
   }
 
-  // Agrupa transações e boletos por responsável
+  // Agrupa Lançamentos e boletos por responsável
   const groupedData = TransactionListMap.reduce((acc, item) => {
     if (!acc[item.responsavel]) {
       acc[item.responsavel] = {

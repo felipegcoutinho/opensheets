@@ -84,7 +84,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
     onPaginationChange: setPagination,
   });
 
-  // Cálculo da soma das transações selecionadas
+  // Cálculo da soma das Lançamentos selecionadas
   const selectedTransactionSum = data
     .filter((_, index) => rowSelection[index])
     .reduce((sum, row) => sum + row.valor, 0);
@@ -114,7 +114,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
 
       <Card className="mt-4">
         <CardHeader>
-          <CardTitle>Transações</CardTitle>
+          <CardTitle>Lançamentos</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
@@ -171,7 +171,7 @@ export function TableTransaction({ data, getAccountMap, getCardsMap }) {
 
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredRowModel().rows.length} transações
+          {table.getFilteredRowModel().rows.length} Lançamentos
         </div>
         <div className="space-x-2">
           <Button

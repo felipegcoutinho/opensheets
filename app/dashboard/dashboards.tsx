@@ -49,7 +49,7 @@ export default async function FinancialSummaryCards({ month }) {
           <BillsCard month={month} data={invoiceBill} />
         </CardInvoices>
 
-        <CardInvoices title="Transações Recentes">
+        <CardInvoices title="Lançamentos Recentes">
           <RecentesTransactions transactions={recentsTransactions} />
         </CardInvoices>
       </div>

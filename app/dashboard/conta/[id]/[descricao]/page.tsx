@@ -64,7 +64,7 @@ const BalanceItem = ({ label, value }) => (
   </>
 );
 
-// Componente da tabela de transações
+// Componente da tabela de Lançamentos
 const TransactionTable = ({
   transactions,
   dateFormatter,
@@ -82,7 +82,7 @@ const TransactionTable = ({
   return (
     <Card className="mt-4">
       <CardHeader>
-        <CardTitle>Transações</CardTitle>
+        <CardTitle>Lançamentos</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
@@ -213,7 +213,7 @@ export default async function AccountPage({ searchParams, params }) {
         />
       ))}
 
-      <Suspense fallback={<div>Carregando transações...</div>}>
+      <Suspense fallback={<div>Carregando Lançamentos...</div>}>
         <TransactionTable
           transactions={transactionInvoice}
           dateFormatter={DateFormat}

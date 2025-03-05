@@ -20,7 +20,7 @@ export default async function Header() {
   const session = await getSession();
 
   return (
-    <header className="bg-background mb-4 w-full border-b">
+    <header className="fixed top-0 left-0 z-50 w-full border-b backdrop-blur-3xl">
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-2">
         {/* Menu para telas pequenas */}
         <div className="flex items-center gap-4 md:hidden">
@@ -42,51 +42,51 @@ export default async function Header() {
         </div>
 
         {/* Logo e menu para telas médias e grandes */}
-        <div className="hidden md:flex md:w-full md:items-center">
+        <div className="hidden md:flex md:w-full md:items-center md:justify-between">
           {/* Logo à esquerda */}
-          <div className="mr-6 shrink-0">
+          <div className="shrink-0">
             <Link href="/">
               <Logo />
             </Link>
           </div>
 
           {/* Links centralizados */}
-          <div className="flex flex-1 justify-start">
+          <div className="absolute left-1/2 -translate-x-1/2 transform">
             <LinkOnHeader session={session} />
           </div>
-        </div>
 
-        {/* Botões à direita */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            {session && (
-              <>
-                <ModeToggle />
-                <PrivacyButton />
-              </>
-            )}
+          {/* Botões à direita */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              {session && (
+                <>
+                  <ModeToggle />
+                  <PrivacyButton />
+                </>
+              )}
+            </div>
+
+            <DropdownMenu>
+              {session ? (
+                <DropdownMenuTrigger asChild>
+                  <Button variant="link" size="icon">
+                    <Avatar>
+                      <AvatarImage src="/black_panter.jpg" alt="Avatar" />
+                      <AvatarFallback>OP</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+              ) : (
+                <Link href="/login">
+                  <Button>Login</Button>
+                </Link>
+              )}
+
+              <DropdownMenuContent align="end">
+                <AuthButton session={session} />
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-
-          <DropdownMenu>
-            {session ? (
-              <DropdownMenuTrigger asChild>
-                <Button variant="link" size="icon">
-                  <Avatar>
-                    <AvatarImage src="/black_panter.jpg" alt="Avatar" />
-                    <AvatarFallback>OP</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-            ) : (
-              <Link href="/login">
-                <Button>Login</Button>
-              </Link>
-            )}
-
-            <DropdownMenuContent align="end">
-              <AuthButton session={session} />
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </header>

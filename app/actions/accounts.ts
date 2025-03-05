@@ -93,7 +93,7 @@ export async function updateAccount(formData: FormData) {
   }
 }
 
-// Busca as transações de uma conta bancária específica na tabela transacoes
+// Busca as Lançamentos de uma conta bancária específica na tabela transacoes
 export async function getAccountInvoice(month, id) {
   const supabase = await createClient();
 
@@ -107,7 +107,7 @@ export async function getAccountInvoice(month, id) {
     .eq("conta_id", id);
 
   if (error) {
-    console.error("Erro ao buscar transações:", error);
+    console.error("Erro ao buscar Lançamentos:", error);
     return null;
   }
 

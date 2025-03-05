@@ -9,7 +9,9 @@ export const metadata = {
 export default function DashboardLayout({ children }) {
   return (
     <>
-      <Banner />
+      <div className="mt-24">
+        <Banner />
+      </div>
       <Suspense>
         <MonthPicker />
       </Suspense>

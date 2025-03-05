@@ -128,7 +128,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
   return (
     <Card className="mt-4">
       <CardHeader>
-        <CardTitle>Transações</CardTitle>
+        <CardTitle>Lançamentos</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
@@ -263,7 +263,7 @@ export default async function InvoicePage({ searchParams, params }) {
         <CardInfo key={item.id} item={item} sumCardSum={cardSum} />
       ))}
 
-      <Suspense fallback={<div>Carregando transações...</div>}>
+      <Suspense fallback={<div>Carregando Lançamentos...</div>}>
         <TransactionTable
           transactions={cardInvoice}
           dateFormatter={DateFormat}
