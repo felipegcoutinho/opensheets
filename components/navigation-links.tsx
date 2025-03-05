@@ -64,7 +64,7 @@ export function NavigationLinks({ month, userEmail }) {
       href: `/dashboard/investimentos`,
       Icon: BadgeCentIcon,
       name: "Investimentos",
-      path: "/investimentos",
+      path: "dashboard/investimentos",
     });
   }
 

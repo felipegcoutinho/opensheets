@@ -3,8 +3,8 @@ import Numbers from "@/components/numbers";
 import { UseDates } from "@/hooks/use-dates";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import BillPaymentDialog from "../../components/bill-payment-dialog";
-import { getBillsByResponsavel } from "../actions/dashboards";
+import BillPaymentDialog from "../../../components/bill-payment-dialog";
+import { getBillsByResponsavel } from "../../actions/dashboards";
 
 export async function BillsCard({ month }) {
   const { DateFormat } = UseDates();

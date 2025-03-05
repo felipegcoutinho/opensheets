@@ -6,15 +6,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu } from "lucide-react";
 import Link from "next/link";
 import AuthButton from "./auth-button";
 import { ModeToggle } from "./darkmode-button";
-import LinkOnHeader from "./links-on-header";
-import LinksOnMobile from "./links-on-mobile";
 import Logo from "./logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Sheet, SheetTrigger } from "./ui/sheet";
 
 export default async function Header() {
   const session = await getSession();
@@ -23,7 +19,7 @@ export default async function Header() {
     <header className="fixed top-0 left-0 z-50 w-full border-b backdrop-blur-3xl">
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-2">
         {/* Menu para telas pequenas */}
-        <div className="flex items-center gap-4 md:hidden">
+        {/* <div className="flex items-center gap-4 md:hidden">
           <Sheet>
             <SheetTrigger asChild>
               {session && (
@@ -39,7 +35,7 @@ export default async function Header() {
           <Link href="/" className="shrink-0">
             <Logo />
           </Link>
-        </div>
+        </div> */}
 
         {/* Logo e menu para telas médias e grandes */}
         <div className="hidden md:flex md:w-full md:items-center md:justify-between">
@@ -51,9 +47,9 @@ export default async function Header() {
           </div>
 
           {/* Links centralizados */}
-          <div className="absolute left-1/2 -translate-x-1/2 transform">
+          {/* <div className="absolute left-1/2 -translate-x-1/2 transform">
             <LinkOnHeader session={session} />
-          </div>
+          </div> */}
 
           {/* Botões à direita */}
           <div className="flex items-center gap-4">

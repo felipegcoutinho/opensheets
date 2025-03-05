@@ -1,6 +1,6 @@
 import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPayment } from "../actions/dashboards";
+import { getPayment } from "../../actions/dashboards";
 
 export async function PaymentList({ month }) {
   const payment = await getPayment(month);

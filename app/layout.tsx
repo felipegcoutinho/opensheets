@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import { PrivacyProviderApp } from "@/hooks/privacy-context";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
@@ -28,10 +27,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <Header />
-            <main className="animate-in mx-auto flex max-w-7xl flex-col px-2 antialiased max-sm:px-2">
-              {children}
-            </main>
+            <main className="animate-in antialiased">{children}</main>
           </PrivacyProviderApp>
           <SpeedInsights />
           <Analytics />

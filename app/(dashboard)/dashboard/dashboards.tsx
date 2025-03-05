@@ -1,5 +1,5 @@
 import CardSummary from "@/components/card-summary";
-import CardInvoices from "../../components/card-invoices";
+import CardInvoices from "../../../components/card-invoices";
 import { BillsCard } from "./bills-card";
 import Category from "./categories-card";
 import { ConditionList } from "./condition-card";

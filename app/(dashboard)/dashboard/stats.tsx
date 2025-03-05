@@ -12,7 +12,7 @@ import {
   getCardsStats,
   getNotesStats,
   getTransactionsStats,
-} from "../actions/dashboards";
+} from "../../actions/dashboards";
 
 const statsConfig = [
   { title: "Lançamentos", icon: ArrowDownUp, getData: getTransactionsStats },

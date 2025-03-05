@@ -1,14 +1,11 @@
 import {
-  getCardDetails,
-  getCardInvoice,
-  getCards,
-  getCardSum,
-} from "@/actions/cards";
-import { getFaturas } from "@/actions/invoices";
-import DetailsTransactions from "@/app/dashboard/transacao/modal/details-transactions";
-import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
+  getAccountDetails,
+  getAccountInvoice,
+  getSumAccountExpense,
+  getSumAccountIncome,
+} from "@/actions/accounts";
+import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
 import Numbers from "@/components/numbers";
-import RemovePaymentButton from "@/components/remove-payment-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -20,25 +17,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
-import {
-  CalendarClockIcon,
-  Check,
-  CheckCircle2,
-  RefreshCw,
-} from "lucide-react";
+import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
 
-// Separate components for better organization
-const CardStatusIndicator = ({ fatura_status }) => (
-  <div className="flex items-center gap-2">
-    {fatura_status?.length > 0 && (
-      <CheckCircle2 size={24} className="text-green-100" fill="green" />
-    )}
-  </div>
-);
-
-const CardInfo = ({ item, sumCardSum }) => (
+// Component para exibir as informações da conta
+const AccountInfo = ({ item, sumAccountIncome, accountExpense, saldo }) => (
   <Card className="mt-4 flex w-full items-center gap-10 px-8 py-6">
     <Image
       quality={100}
@@ -46,76 +30,46 @@ const CardInfo = ({ item, sumCardSum }) => (
       className="rounded-full shadow-lg"
       width={60}
       height={60}
-      alt={`Logo do cartão ${item.descricao}`}
+      alt={`Logo da conta ${item.descricao}`}
       priority
     />
 
-    <InfoSection
-      title="Vencimento"
-      value={item.dt_vencimento}
-      subtitle="Fechamento"
-      subvalue={item.dt_fechamento}
-    />
-
-    <InfoSection
-      title="Limite Total"
-      value={<Numbers value={item.limite} />}
-      subtitle="Conta Padrão"
-      subvalue={item.contas.descricao}
-    />
-
-    <InfoSection
-      title="Tipo do Cartão"
-      value={`Cartão ${item.tipo}`}
-      subtitle="Bandeira"
-      subvalue={
-        <Image
-          quality={100}
-          src={`/bandeiras/${item.bandeira}`}
-          className="rounded-full"
-          width={40}
-          height={40}
-          alt="Bandeira do cartão"
-          priority
-        />
-      }
-    />
-
-    {item.anotacao && (
-      <div className="leading-loose">
-        <p className="text-sm font-medium">Notas:</p>
-        <p className="text-lg">{item.anotacao}</p>
-      </div>
-    )}
-
-    <div className="ml-auto">
-      <p className="text-sm font-medium">Total da Fatura</p>
-      <div className="text-2xl font-bold">
-        <Numbers value={sumCardSum} />
-      </div>
+    <div className="leading-relaxed">
+      <p className="font-bold">Conta {item.tipo_conta}</p>
     </div>
+
+    <AccountBalance
+      income={sumAccountIncome}
+      expense={accountExpense}
+      balance={saldo}
+    />
   </Card>
 );
 
-const InfoSection = ({ title, value, subtitle, subvalue }) => (
-  <div className="leading-loose">
-    <p className="text-muted-foreground text-xs">{title}</p>
-    <p className="font-bold">{value}</p>
-    <p className="text-muted-foreground text-xs">{subtitle}</p>
-    <p className="font-bold">{subvalue}</p>
+// Componente separado para exibir saldos
+const AccountBalance = ({ income, expense, balance }) => (
+  <div className="leading-relaxed">
+    <BalanceItem label="Receitas" value={income} />
+    <BalanceItem label="Despesas" value={expense} />
+    <BalanceItem label="Saldo" value={balance} />
   </div>
 );
 
-const TransactionTable = ({ transactions, dateFormatter }) => {
-  const getResponsavelClass = (responsavel) => {
-    const classes = {
-      Você: "text-blue-600",
-      Sistema: "text-neutral-600",
-      default: "text-orange-600",
-    };
-    return classes[responsavel] || classes.default;
-  };
+const BalanceItem = ({ label, value }) => (
+  <>
+    <p className="text-muted-foreground text-xs">{label}</p>
+    <p className="font-bold">
+      <Numbers value={value} />
+    </p>
+  </>
+);
 
+// Componente da tabela de Lançamentos
+const TransactionTable = ({
+  transactions,
+  dateFormatter,
+  getResponsavelClass,
+}) => {
   const getTransactionIcon = (condicao) => {
     const icons = {
       Parcelado: <CalendarClockIcon size={12} />,
@@ -202,10 +156,9 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
                     itemQtdeParcelas={item.qtde_parcela}
-                    itemParcelaAtual={item.parcela_atual}
                     itemRecorrencia={item.recorrencia}
                     itemQtdeRecorrencia={item.qtde_recorrencia}
-                    itemCartao={item.cartoes?.descricao}
+                    itemConta={item.contas?.descricao}
                     itemPaid={item.realizado}
                   />
                 </TableCell>
@@ -218,55 +171,53 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
   );
 };
 
-// Main page component using Server Component
-export default async function InvoicePage({ searchParams, params }) {
+// Função utilitária para classes de responsável
+const useResponsavelClass = () => {
+  return (responsavel) => {
+    const classes = {
+      Você: "text-blue-600",
+      Sistema: "text-neutral-600",
+      default: "text-orange-600",
+    };
+    return classes[responsavel] || classes.default;
+  };
+};
+
+// Componente principal da página
+export default async function AccountPage({ searchParams, params }) {
   const { currentMonthName, currentYear, DateFormat } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  const [cardDetails, cardInvoice, cardSum, cards, faturaStatus] =
+  // Fetch paralelo dos dados
+  const [accountDetails, transactionInvoice, sumIncome, sumExpense] =
     await Promise.all([
-      getCardDetails(params.id),
-      getCardInvoice(month, params.id),
-      getCardSum(month, params.id),
-      getCards(month),
-      getFaturas(month, params.id),
+      getAccountDetails(params.id),
+      getAccountInvoice(month, params.id),
+      getSumAccountIncome(month, params.id),
+      getSumAccountExpense(month, params.id),
     ]);
 
-  const isPaid = faturaStatus?.some((item) => item.status_pagamento === "Pago");
-  const statusClassName = isPaid
-    ? "border-green-500 bg-green-50 dark:bg-green-900"
-    : "border-orange-500 bg-orange-50 dark:bg-orange-900";
+  const saldo = sumIncome - sumExpense;
+  const getResponsavelClass = useResponsavelClass();
 
   return (
     <>
-      <Card className={`mt-4 rounded border-none p-2 ${statusClassName}`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <CardStatusIndicator fatura_status={faturaStatus} />
-            {cardDetails?.map((item) => (
-              <InvoicePaymentDialog
-                key={item.id}
-                fatura_status={faturaStatus}
-                month={month}
-                cartao_id={item.id}
-                descricao={item.descricao}
-                valor={cardSum}
-              />
-            ))}
-          </div>
-          <RemovePaymentButton fatura_status={faturaStatus} />
-        </div>
-      </Card>
-
-      {cardDetails?.map((item) => (
-        <CardInfo key={item.id} item={item} sumCardSum={cardSum} />
+      {accountDetails?.map((item) => (
+        <AccountInfo
+          key={item.id}
+          item={item}
+          sumAccountIncome={sumIncome}
+          accountExpense={sumExpense}
+          saldo={saldo}
+        />
       ))}
 
       <Suspense fallback={<div>Carregando Lançamentos...</div>}>
         <TransactionTable
-          transactions={cardInvoice}
+          transactions={transactionInvoice}
           dateFormatter={DateFormat}
+          getResponsavelClass={getResponsavelClass}
         />
       </Suspense>
     </>

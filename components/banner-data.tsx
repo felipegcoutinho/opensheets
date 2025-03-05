@@ -1,4 +1,4 @@
-import Utils from "@/app/dashboard/utils";
+import Utils from "@/app/(dashboard)/dashboard/utils";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 import Numbers from "./numbers";
