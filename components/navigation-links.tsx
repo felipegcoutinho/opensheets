@@ -33,10 +33,10 @@ export function NavigationLinks({ month, userEmail }) {
       path: "/dashboard/boleto",
     },
     {
-      href: `/dashboard/cartao`,
+      href: `/cartao`,
       Icon: CreditCard,
       name: "Cartões",
-      path: "/dashboard/cartao",
+      path: "/cartao",
     },
     {
       href: `/dashboard/conta`,

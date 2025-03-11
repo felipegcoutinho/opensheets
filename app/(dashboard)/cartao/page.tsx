@@ -117,7 +117,7 @@ async function PageCards(props) {
               <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-xs">
                 <Button className="p-0" variant="link">
                   <Link
-                    href={`/dashboard/cartao/${item.id}/${item.descricao.toLowerCase()}`}
+                    href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}
                   >
                     fatura
                   </Link>

@@ -119,7 +119,7 @@ export default function MonthPicker() {
 
   const shouldShowMonthFilter = useMemo(() => {
     const notShowPaths = [
-      "/dashboard/cartao",
+      "/cartao",
       "/dashboard/conta",
       "/dashboard/ajustes",
       "/login",

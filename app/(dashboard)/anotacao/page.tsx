@@ -20,8 +20,6 @@ async function PageNotes(props) {
 
   const getNotesMap = await getNotes(month);
 
-  if (!getNotesMap.length) return <EmptyCard width={100} height={100} />;
-
   return (
     <div className="mt-4 w-full">
       <CreateNotes>
@@ -29,37 +27,41 @@ async function PageNotes(props) {
       </CreateNotes>
 
       <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {getNotesMap?.map((item) => (
-          <Card className="flex flex-col justify-between" key={item.id}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                {item.descricao}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="break-all">{item.anotacao}</CardContent>
-            <CardFooter>
-              <div className="flex gap-4">
-                <UpdateNotes
-                  itemId={item.id}
-                  itemDescricao={item.descricao}
-                  itemAnotacao={item.anotacao}
-                  itemPeriodo={item.periodo}
-                />
+        {!getNotesMap.length ? (
+          <EmptyCard width={100} height={100} />
+        ) : (
+          getNotesMap.map((item) => (
+            <Card className="flex flex-col justify-between" key={item.id}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  {item.descricao}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="break-all">{item.anotacao}</CardContent>
+              <CardFooter>
+                <div className="flex gap-4">
+                  <UpdateNotes
+                    itemId={item.id}
+                    itemDescricao={item.descricao}
+                    itemAnotacao={item.anotacao}
+                    itemPeriodo={item.periodo}
+                  />
 
-                <form action={deleteNotes}>
-                  <Button
-                    className="p-0"
-                    variant="link"
-                    value={item.id}
-                    name="excluir"
-                  >
-                    excluir
-                  </Button>
-                </form>
-              </div>
-            </CardFooter>
-          </Card>
-        ))}
+                  <form action={deleteNotes}>
+                    <Button
+                      className="p-0"
+                      variant="link"
+                      value={item.id}
+                      name="excluir"
+                    >
+                      excluir
+                    </Button>
+                  </form>
+                </div>
+              </CardFooter>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

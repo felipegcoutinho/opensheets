@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="animate-in antialiased">{children}</main>
+            <main className="antialiased">{children}</main>
           </PrivacyProviderApp>
           <SpeedInsights />
           <Analytics />

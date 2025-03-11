@@ -32,7 +32,7 @@ export default async function InvoiceCard({ data, month }) {
           <div>
             <Link
               className="flex items-center gap-1 hover:underline"
-              href={`/dashboard/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
+              href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
             >
               {item.descricao}
               <ArrowUpRight className="text-muted-foreground h-3 w-3" />
