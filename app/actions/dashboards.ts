@@ -69,29 +69,6 @@ export async function getLastPrevious(month) {
   return lastPrevious;
 }
 
-// Busca o valor total das despesas dos boletos
-export async function getExpenseBill(month) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("boletos")
-    .select("valor")
-    .eq("periodo", month)
-    .eq("responsavel", "Você");
-
-  if (error) {
-    console.error("Erro ao buscar despesas de boletos:", error);
-    return null;
-  }
-
-  const expenseBills = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return expenseBills;
-}
-
 // Busca o valor total das despesas pagas que não são cartao de credito.
 export async function getExpensePaid(month) {
   const supabase = await createClient();
@@ -114,29 +91,6 @@ export async function getExpensePaid(month) {
     0,
   );
   return totalExpensePaid;
-}
-
-// Busca o valor total das boletos pagos no mês
-export async function getExpenseBillPaid(month) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("boletos")
-    .select("valor")
-    .eq("periodo", month)
-    .eq("status_pagamento", "Pago");
-
-  if (error) {
-    console.error("Erro ao buscar boletos pagos:", error);
-    return null;
-  }
-
-  const expensebillsPaid = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return expensebillsPaid;
 }
 
 // Busca o valor total das faturas
@@ -261,26 +215,6 @@ export async function getNotesStats(month) {
 
   if (error) {
     console.error("Erro ao buscar anotações:", error);
-    return null;
-  }
-
-  return data;
-}
-
-export async function getBillsByResponsavel(month) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("boletos")
-    .select(
-      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao,
-      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
-    )
-    .eq("periodo", month)
-    .eq("responsavel", "Você");
-
-  if (error) {
-    console.error("Erro em buscar boletos:", error);
     return null;
   }
 

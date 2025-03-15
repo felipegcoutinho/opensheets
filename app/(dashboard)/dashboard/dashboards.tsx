@@ -1,6 +1,5 @@
 import CardSummary from "@/components/card-summary";
 import CardInvoices from "../../../components/card-invoices";
-import { BillsCard } from "./bills-card";
 import Category from "./categories-card";
 import { ConditionList } from "./condition-card";
 import InvoiceCard from "./invoices-card";
@@ -46,7 +45,7 @@ export default async function FinancialSummaryCards({ month }) {
         </CardInvoices>
 
         <CardInvoices title="Boletos">
-          <BillsCard month={month} data={invoiceBill} />
+          {/* <BillsCard month={month} data={invoiceBill} /> */}
         </CardInvoices>
 
         <CardInvoices title="Lançamentos Recentes">

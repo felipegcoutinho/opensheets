@@ -2,11 +2,8 @@ import {
   getSumAccountExpensePaid,
   getSumAccountIncomePaid,
 } from "@/actions/accounts";
-import { getSumBillsExpensePaid } from "@/actions/bills";
 import {
-  getBillsByResponsavel,
   getExpense,
-  getExpenseBill,
   getExpenseByCategory,
   getIncome,
   getIncomeByCategory,
@@ -28,46 +25,38 @@ function useUtils(month) {
     const [
       receitas,
       despesas,
-      despesasBoletos,
       receitasAnterior,
       despesasAnterior,
-      despesasBoletosAnterior,
       previstoAnterior,
       invoices,
       expenseByCategory,
       incomeByCategory,
-      invoiceBill,
       sumAccountIncome,
       sumAccountExpense,
-      sumBillsExpense,
       userName,
       recentsTransactions,
     ] = await Promise.all([
       getIncome(month),
       getExpense(month),
-      getExpenseBill(month),
       getIncome(previousMonth),
       getExpense(previousMonth),
-      getExpenseBill(previousMonth),
       getLastPrevious(month),
       getInvoiceList(month),
       getExpenseByCategory(month),
       getIncomeByCategory(month),
-      getBillsByResponsavel(month),
       getSumAccountIncomePaid(defaultPeriodo),
       getSumAccountExpensePaid(defaultPeriodo),
-      getSumBillsExpensePaid(defaultPeriodo),
       getUserName(),
       getRecentTransactions(month),
     ]);
 
     // Memoized calculations
-    const despesasTotal = despesas + despesasBoletos;
-    const despesasTotalAnterior = despesasAnterior + despesasBoletosAnterior;
+    const despesasTotal = despesas;
+    const despesasTotalAnterior = despesasAnterior;
     const balanco = receitas - despesasTotal;
     const balancoAnterior = receitasAnterior - despesasTotalAnterior;
     const previsto = previstoAnterior + balanco;
-    const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
+    const saldo = sumAccountIncome - sumAccountExpense;
 
     const cardData = [
       {
@@ -107,7 +96,6 @@ function useUtils(month) {
       previstoAnterior,
       incomeByCategory,
       invoiceCard: invoices,
-      invoiceBill,
       saldo,
       expenseByCategory,
       userName,
