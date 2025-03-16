@@ -11,8 +11,8 @@ export default async function BannerData() {
     currentMonthName,
     currentYear,
   } = UseDates();
+  
   const { saldo, userName } = await Utils(`${currentMonthName}-${currentYear}`);
-  3;
 
   return (
     <Banner>

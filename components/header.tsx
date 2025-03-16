@@ -1,5 +1,4 @@
 import { getSession } from "@/app/actions/users";
-import PrivacyButton from "@/components/privacy-button";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,7 +7,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import AuthButton from "./auth-button";
-import { ModeToggle } from "./darkmode-button";
 import Logo from "./logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
@@ -18,25 +16,6 @@ export default async function Header() {
   return (
     <header className="fixed top-0 left-0 z-50 w-full border-b backdrop-blur-3xl">
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-2">
-        {/* Menu para telas pequenas */}
-        {/* <div className="flex items-center gap-4 md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              {session && (
-                <Button variant="ghost" size="icon" className="shrink-0">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle navigation menu</span>
-                </Button>
-              )}
-            </SheetTrigger>
-
-            <LinksOnMobile session={session} />
-          </Sheet>
-          <Link href="/" className="shrink-0">
-            <Logo />
-          </Link>
-        </div> */}
-
         {/* Logo e menu para telas médias e grandes */}
         <div className="hidden md:flex md:w-full md:items-center md:justify-between">
           {/* Logo à esquerda */}
@@ -46,22 +25,7 @@ export default async function Header() {
             </Link>
           </div>
 
-          {/* Links centralizados */}
-          {/* <div className="absolute left-1/2 -translate-x-1/2 transform">
-            <LinkOnHeader session={session} />
-          </div> */}
-
-          {/* Botões à direita */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              {session && (
-                <>
-                  <ModeToggle />
-                  <PrivacyButton />
-                </>
-              )}
-            </div>
-
             <DropdownMenu>
               {session ? (
                 <DropdownMenuTrigger asChild>

@@ -20,16 +20,6 @@ export default async function AuthButton({ session }) {
           </div>
 
           <div className="flex w-full flex-col items-start gap-2">
-            {/* <Link href="/dashboard/ajustes" className="w-full">
-              <Button
-                variant="ghost"
-                className="flex w-full items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
-              >
-                <Settings className="h-4 w-4" />
-                <span>Ajustes</span>
-              </Button>
-            </Link> */}
-
             <Link href="/dashboard/" className="w-full">
               <Button
                 variant="ghost"
