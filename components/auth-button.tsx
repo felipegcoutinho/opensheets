@@ -1,6 +1,7 @@
 import { signOut } from "@/actions/auth";
 import { getEmail, getUserName } from "@/app/actions/users";
-import { LogOut } from "lucide-react"; // Adicionando ícone de configurações
+import { LayoutDashboardIcon, LogOut } from "lucide-react"; // Adicionando ícone de configurações
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 export default async function AuthButton({ session }) {
@@ -29,10 +30,20 @@ export default async function AuthButton({ session }) {
               </Button>
             </Link> */}
 
+            <Link href="/dashboard/" className="w-full">
+              <Button
+                variant="ghost"
+                className="flex w-full cursor-pointer items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+              >
+                <LayoutDashboardIcon className="h-4 w-4" />
+                <span>Dashboard</span>
+              </Button>
+            </Link>
+
             <form action={signOut} className="w-full">
               <Button
                 variant="ghost"
-                className="flex w-full items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700"
+                className="flex w-full cursor-pointer items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sair</span>

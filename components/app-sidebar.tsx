@@ -59,6 +59,11 @@ const data = {
       icon: ArrowRightLeft,
     },
     {
+      name: "boletos",
+      url: "/boleto",
+      icon: ArrowRightLeft,
+    },
+    {
       name: "cartões",
       url: "/cartao",
       icon: CreditCard,
