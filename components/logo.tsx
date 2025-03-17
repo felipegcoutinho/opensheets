@@ -10,7 +10,7 @@ function Logo() {
 
   return (
     <div
-      className={`${gabarito.className} flex items-center rounded-full border border-zinc-700 px-4 py-1 text-xl tracking-tighter text-zinc-700 dark:border-white dark:text-zinc-200`}
+      className={`${gabarito.className} flex items-center px-4 py-1 text-2xl tracking-tighter text-zinc-800 dark:border-white dark:text-zinc-200`}
     >
       {open}
       {sheets}

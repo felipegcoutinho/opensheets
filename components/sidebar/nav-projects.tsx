@@ -2,6 +2,7 @@
 
 import {
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -13,7 +14,7 @@ import { memo } from "react";
 
 export const NavProjects = memo(function NavProjects({
   projects,
-  title = "Projects",
+  title = "Menu",
 }: {
   projects: {
     name: string;
@@ -26,7 +27,7 @@ export const NavProjects = memo(function NavProjects({
 
   return (
     <SidebarGroup>
-      {/* <SidebarGroupLabel>{title}</SidebarGroupLabel> */}
+      <SidebarGroupLabel>{title}</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => {
           const isActive = pathname === item.url;
@@ -36,7 +37,7 @@ export const NavProjects = memo(function NavProjects({
               <SidebarMenuButton asChild>
                 <Link
                   href={item.url}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-5 transition-all duration-200 ${
+                  className={`flex items-center gap-3 rounded-lg px-3 py-4 transition-all duration-200 ${
                     isActive
                       ? "text-primary bg-gray-200 font-medium"
                       : "text-gray-600 hover:bg-orange-100/60"

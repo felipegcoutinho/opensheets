@@ -25,8 +25,10 @@ export function AppSidebar({
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <div className="flex items-center gap-2">{open ? <Logo /> : "O "}</div>
+      <SidebarHeader className="flex items-center justify-center border-b border-gray-200">
+        <div className="flex items-center gap-2">
+          {open ? <Logo /> : <span className="text-black">OP</span>}
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={data.projects} />
