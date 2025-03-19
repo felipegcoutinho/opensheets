@@ -92,7 +92,7 @@ function useUtils(month) {
         title: "Saldo Previsto",
         value: previsto,
         previousValue: previstoAnterior,
-        color: "bg-cyan-400",
+        color: "bg-violet-400",
       },
     ];
 

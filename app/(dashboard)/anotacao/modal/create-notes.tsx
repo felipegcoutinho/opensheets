@@ -30,7 +30,9 @@ export default function CreateNotes({ getAccountMap, children }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger asChild>
+        <Button variant="default">Nova Anotação</Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Nova Anotação</DialogTitle>

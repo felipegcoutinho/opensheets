@@ -24,17 +24,24 @@ export default async function Layout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <NavPage />
-      <SidebarInset className="px-8">
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2">
-            <SidebarTrigger className="text-orange-400" size="icon" />
+      <SidebarInset>
+        <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b border-dashed transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
+          <div className="flex w-full items-center gap-1 px-4 py-3 lg:gap-2 lg:px-6">
+            <SidebarTrigger size="icon" className="-ml-1" />
+
+            <div className="ml-auto flex items-center gap-2">
+              {/* <ModeToggle /> */}
+            </div>
           </div>
         </header>
-        <Banner />
-        <Suspense>
-          <MonthPicker />
-        </Suspense>
-        {children}
+
+        <div className="px-6">
+          <Banner />
+          <Suspense>
+            <MonthPicker />
+          </Suspense>
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

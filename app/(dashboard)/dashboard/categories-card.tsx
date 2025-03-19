@@ -83,7 +83,7 @@ export default function CategoriesList({ data, month, color }) {
       {sortedData.map((item, index) => {
         const categoria = item.categoria;
         const tipoTransacao = item.tipo_transacao.toLowerCase();
-        const url = `/dashboard/transacao/${categoria}/${tipoTransacao}?periodo=${month}`;
+        const url = `/lancamentos/${categoria}/${tipoTransacao}?periodo=${month}`;
 
         const IconComponent = iconesCategorias[categoria] || CircleDollarSign;
         const iconColor =

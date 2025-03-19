@@ -1,4 +1,4 @@
-import { deleteNotes, getNotes } from "@/actions/notes";
+import { deleteNotes } from "@/actions/notes";
 import EmptyCard from "@/components/empty-card";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
+import { createClient } from "@/utils/supabase/server";
 import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 
@@ -18,19 +19,23 @@ async function PageNotes(props) {
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  const getNotesMap = await getNotes(month);
+  const supabase = await createClient();
+
+  const { data: notes } = await supabase
+    .from("anotacoes")
+    .select(`id, descricao, periodo, anotacao`)
+    .eq("periodo", month)
+    .order("descricao", { ascending: true });
 
   return (
     <div className="mt-4 w-full">
-      <CreateNotes>
-        <Button variant="default">Nova Anotação</Button>
-      </CreateNotes>
+      <CreateNotes />
 
       <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {!getNotesMap.length ? (
+        {!notes.length ? (
           <EmptyCard width={100} height={100} />
         ) : (
-          getNotesMap.map((item) => (
+          notes.map((item) => (
             <Card className="flex flex-col justify-between" key={item.id}>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">

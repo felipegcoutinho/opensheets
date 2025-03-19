@@ -6,6 +6,8 @@ import { ConditionList } from "./condition-card";
 import InvoiceCard from "./invoices-card";
 import { PaymentList } from "./payment-card";
 import RecentesTransactions from "./recents-transactions";
+import Stats from "./stats";
+import { Teste } from "./teste";
 import Utils from "./utils";
 
 export default async function FinancialSummaryCards({ month }) {
@@ -25,6 +27,8 @@ export default async function FinancialSummaryCards({ month }) {
     recentsTransactions,
     cardData,
   } = await Utils(month);
+
+  const { aaa, bbb } = await Teste(month);
 
   return (
     <>
@@ -54,9 +58,9 @@ export default async function FinancialSummaryCards({ month }) {
         </CardInvoices>
       </div>
 
-      {/* <div className="my-2">
+      <div className="my-2">
         <Stats month={month} />
-      </div> */}
+      </div>
 
       <div className="my-2 mb-10 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
         <ConditionList month={month} />

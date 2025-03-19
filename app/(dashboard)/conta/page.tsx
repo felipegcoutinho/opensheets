@@ -65,7 +65,7 @@ async function PageAccount(props) {
               <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-xs">
                 <Button className="p-0" variant="link">
                   <Link
-                    href={`/dashboard/conta/${item.id}/${item.descricao.toLowerCase()}`}
+                    href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}
                   >
                     extrato
                   </Link>

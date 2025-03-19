@@ -5,7 +5,7 @@ async function NavPage() {
   const name = await getUserName();
   const email = await getEmail();
 
-  return <AppSidebar usermail={email} username={name} variant="sidebar" />;
+  return <AppSidebar usermail={email} username={name} variant="inset" />;
 }
 
 export default NavPage;

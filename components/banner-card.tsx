@@ -10,7 +10,7 @@ function Banner({ children }) {
     return null;
   }
 
-  return <div className="mb-2 w-full dark:text-white">{children}</div>;
+  return <div className="my-2 w-full px-4 dark:text-white">{children}</div>;
 }
 
 export default Banner;
