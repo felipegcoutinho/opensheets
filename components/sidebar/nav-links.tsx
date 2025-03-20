@@ -8,7 +8,7 @@ import {
   Users,
 } from "lucide-react";
 
-export function getData() {
+export function getData(month: string) {
   return {
     user: {
       name: "Felipe Coutinho",
@@ -18,17 +18,17 @@ export function getData() {
     projects: [
       {
         name: "dashboard",
-        url: "/dashboard",
+        url: `/dashboard?periodo=${month}`,
         icon: LayoutDashboard,
       },
       {
         name: "lançamentos",
-        url: "/lancamentos",
+        url: `/lancamentos?periodo=${month}`,
         icon: ArrowRightLeft,
       },
       {
         name: "boletos",
-        url: "/boleto",
+        url: `/boleto?periodo=${month}`,
         icon: File,
       },
       {
@@ -43,12 +43,12 @@ export function getData() {
       },
       {
         name: "responsáveis",
-        url: "/responsavel",
+        url: `/responsavel?periodo=${month}`,
         icon: Users,
       },
       {
         name: "anotações",
-        url: "/anotacao",
+        url: `/anotacao?periodo=${month}`,
         icon: Pen,
       },
     ],

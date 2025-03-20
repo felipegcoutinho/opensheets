@@ -6,19 +6,19 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { UseDates } from "@/hooks/use-dates";
 import { Eye, Palette } from "lucide-react";
 import { useTheme } from "next-themes";
+import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
 import PrivacyButton from "../privacy-button";
-import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { getData } from "./nav-links";
 
@@ -28,23 +28,21 @@ export function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar> & { session: any }) {
   const { open } = useSidebar();
-  const data = getData();
   const { resolvedTheme, setTheme } = useTheme();
-  const [calcInput, setCalcInput] = React.useState("");
-  const [calcResult, setCalcResult] = React.useState("");
   const [mounted, setMounted] = React.useState(false);
+
+  const { currentMonthName, currentYear } = UseDates();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  let month =
+    searchParams.get("periodo") || `${currentMonthName}-${currentYear}`;
+
+  const data = getData(month);
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
-
-  React.useEffect(() => {
-    try {
-      setCalcResult(eval(calcInput) || "");
-    } catch {
-      setCalcResult("Erro");
-    }
-  }, [calcInput]);
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -55,16 +53,6 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={data.projects} />
-
-        <div className="p-4 group-data-[collapsible=icon]:hidden">
-          <SidebarGroupLabel>Calculadora</SidebarGroupLabel>
-          <Input
-            type="text"
-            value={calcInput}
-            onChange={(e) => setCalcInput(e.target.value)}
-          />
-          <div className="mt-2 text-lg font-bold">{calcResult}</div>
-        </div>
 
         <SidebarMenuItem className="mt-auto mb-6 space-y-2 px-3 group-data-[collapsible=icon]:hidden">
           <SidebarMenuButton asChild>
