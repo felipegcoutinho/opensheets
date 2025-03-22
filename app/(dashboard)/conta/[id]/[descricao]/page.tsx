@@ -35,7 +35,7 @@ const AccountInfo = ({ item, sumAccountIncome, accountExpense, saldo }) => (
     />
 
     <div className="leading-relaxed">
-      <p className="font-bold">Conta {item.tipo_conta}</p>
+      <p>Conta {item.tipo_conta}</p>
     </div>
 
     <AccountBalance
@@ -58,7 +58,7 @@ const AccountBalance = ({ income, expense, balance }) => (
 const BalanceItem = ({ label, value }) => (
   <>
     <p className="text-muted-foreground text-xs">{label}</p>
-    <p className="font-bold">
+    <p>
       <Numbers value={value} />
     </p>
   </>
@@ -105,7 +105,7 @@ const TransactionTable = ({
               <TableRow key={item.id}>
                 <TableCell>{dateFormatter(item.data_compra)}</TableCell>
                 <TableCell>
-                  <span className="font-bold">{item.descricao}</span>
+                  <span>{item.descricao}</span>
                   {item.condicao === "Parcelado" && (
                     <span className="px-1 text-xs text-neutral-400">
                       {`${item.parcela_atual} de ${item.qtde_parcela}`}
@@ -132,9 +132,7 @@ const TransactionTable = ({
                 </TableCell>
                 <TableCell>{item.forma_pagamento}</TableCell>
                 <TableCell>
-                  <span
-                    className={`font-bold ${getResponsavelClass(item.responsavel)}`}
-                  >
+                  <span className={` ${getResponsavelClass(item.responsavel)}`}>
                     {item.responsavel}
                   </span>
                 </TableCell>

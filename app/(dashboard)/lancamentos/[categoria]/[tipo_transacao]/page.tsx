@@ -88,7 +88,7 @@ async function Page(props) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl">
               <Numbers value={valorTotal} />
             </div>
           </CardContent>
@@ -101,7 +101,7 @@ async function Page(props) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalTransacoes}</div>
+            <div className="text-2xl">{totalTransacoes}</div>
           </CardContent>
         </Card>
       </div>

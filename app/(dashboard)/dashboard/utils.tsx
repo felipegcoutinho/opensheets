@@ -67,6 +67,7 @@ function useUtils(month) {
     const balanco = receitas - despesasTotal;
     const balancoAnterior = receitasAnterior - despesasTotalAnterior;
     const previsto = previstoAnterior + balanco;
+
     const saldo = sumAccountIncome - sumAccountExpense - sumBillsExpense;
 
     const cardData = [

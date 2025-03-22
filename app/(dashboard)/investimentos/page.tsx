@@ -60,7 +60,7 @@ async function page() {
 
             return (
               <TableRow key={item.id} className="whitespace-nowrap">
-                <TableCell className="font-bold">#{item.id}</TableCell>
+                <TableCell>#{item.id}</TableCell>
                 <TableCell>{DateFormat(item.data)}</TableCell>
                 <TableCell>
                   <Numbers value={item.valor} />

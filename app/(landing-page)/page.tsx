@@ -34,7 +34,7 @@ export default function Index() {
       <div className="mx-auto max-w-6xl px-4 py-16">
         {/* Hero Section */}
         <div className="mb-20 text-center">
-          <h1 className="mb-6 text-5xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mb-6 text-5xl text-gray-900 dark:text-white">
             Controle Seus Gastos com Opensheets
           </h1>
           <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-600 dark:text-gray-300">

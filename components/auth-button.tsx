@@ -14,7 +14,7 @@ export default async function AuthButton({ session }) {
         <div className="flex flex-col items-start gap-2">
           <div className="flex items-center gap-2 p-2">
             <div className="text-muted-foreground flex flex-col items-start">
-              <span className="text-sm font-bold">{user}</span>
+              <span className="text-sm">{user}</span>
               <span className="truncate text-xs">{email}</span>
             </div>
           </div>

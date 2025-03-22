@@ -31,7 +31,7 @@ export default function UsersCard({
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <CreditCard size={14} />
-              <p className="font-bold">Cartões</p>
+              <p>Cartões</p>
             </div>
             <p className="text-lg">
               <Numbers value={totalCartao} />
@@ -88,7 +88,7 @@ export default function UsersCard({
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <File size={14} />
-              <p className="font-bold">Boletos</p>
+              <p>Boletos</p>
             </div>
             <p className="text-lg">
               <Numbers value={totalBoleto} />
@@ -127,7 +127,7 @@ export default function UsersCard({
         <div className="border-muted my-2 w-full border-2 dark:border-neutral-700"></div>
 
         <div className="mt-4">
-          <li className="flex items-center justify-between font-bold">
+          <li className="flex items-center justify-between">
             <span className="text-muted-foreground text-lg">Total</span>
             <span className="text-xl">
               <Numbers value={totalCartao + totalBoleto} />

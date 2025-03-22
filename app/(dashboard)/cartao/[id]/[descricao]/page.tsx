@@ -90,7 +90,7 @@ const CardInfo = ({ item, sumCardSum }) => (
 
     <div className="ml-auto">
       <p className="text-sm font-medium">Total da Fatura</p>
-      <div className="text-2xl font-bold">
+      <div className="text-2xl">
         <Numbers value={sumCardSum} />
       </div>
     </div>
@@ -100,9 +100,9 @@ const CardInfo = ({ item, sumCardSum }) => (
 const InfoSection = ({ title, value, subtitle, subvalue }) => (
   <div className="leading-loose">
     <p className="text-muted-foreground text-xs">{title}</p>
-    <p className="font-bold">{value}</p>
+    <p>{value}</p>
     <p className="text-muted-foreground text-xs">{subtitle}</p>
-    <p className="font-bold">{subvalue}</p>
+    <p>{subvalue}</p>
   </div>
 );
 
@@ -151,7 +151,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
               <TableRow key={item.id}>
                 <TableCell>{dateFormatter(item.data_compra)}</TableCell>
                 <TableCell>
-                  <span className="font-bold">{item.descricao}</span>
+                  <span>{item.descricao}</span>
                   {item.condicao === "Parcelado" && (
                     <span className="px-1 text-xs text-neutral-400">
                       {`${item.parcela_atual} de ${item.qtde_parcela}`}
@@ -178,9 +178,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                 </TableCell>
                 <TableCell>{item.forma_pagamento}</TableCell>
                 <TableCell>
-                  <span
-                    className={`font-bold ${getResponsavelClass(item.responsavel)}`}
-                  >
+                  <span className={` ${getResponsavelClass(item.responsavel)}`}>
                     {item.responsavel}
                   </span>
                 </TableCell>

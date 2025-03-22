@@ -51,7 +51,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
             {getBillsMap?.length !== 0 ? (
               getBillsMap?.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="flex items-center gap-2 font-bold capitalize">
+                  <TableCell className="flex items-center gap-2 capitalize">
                     <Image
                       quality={100}
                       src={`/logos/boleto.svg`}
@@ -76,7 +76,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                   </TableCell>
                   <TableCell>
                     <span
-                      className={`font-bold ${item.responsavel === "Você" ? "text-blue-600" : "text-orange-500"}`}
+                      className={` ${item.responsavel === "Você" ? "text-blue-600" : "text-orange-500"}`}
                     >
                       {item.responsavel}
                     </span>

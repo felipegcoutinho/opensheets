@@ -105,9 +105,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
       return (
         <div className="flex items-center gap-1">
-          <span className="font-bold capitalize">
-            {row.getValue("descricao")}
-          </span>
+          <span className="capitalize">{row.getValue("descricao")}</span>
 
           {item.condicao === "Parcelado" && (
             <span className="text-muted-foreground text-xs">
@@ -270,7 +268,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <span className={`font-bold ${getResponsavelClass(item.responsavel)}`}>
+        <span className={` ${getResponsavelClass(item.responsavel)}`}>
           {item.responsavel}
         </span>
       );
