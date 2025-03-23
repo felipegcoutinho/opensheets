@@ -13,13 +13,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
-import { Eye, Palette } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
 import PrivacyButton from "../privacy-button";
-import { Switch } from "../ui/switch";
 import { getData } from "./nav-links";
 
 export function AppSidebar({
@@ -63,7 +62,7 @@ export function AppSidebar({
             </label>
           </SidebarMenuButton>
 
-          <SidebarMenuButton asChild>
+          {/* <SidebarMenuButton asChild>
             <label>
               <Palette />
               <span>Dark Mode</span>
@@ -77,7 +76,7 @@ export function AppSidebar({
                 />
               )}
             </label>
-          </SidebarMenuButton>
+          </SidebarMenuButton> */}
         </SidebarMenuItem>
       </SidebarContent>
       <SidebarFooter>

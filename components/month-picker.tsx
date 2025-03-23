@@ -12,7 +12,7 @@ const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="text-color-6 cursor-pointer focus:outline-hidden disabled:opacity-50"
+      className="cursor-pointer text-green-600 focus:outline-hidden disabled:opacity-50"
       disabled={disabled}
     >
       <Icon size={16} />
@@ -144,7 +144,7 @@ export default function MonthPicker() {
         />
         <div className="relative flex items-center">
           <div className="mx-2 text-2xl capitalize dark:text-white">
-            {currentMonth} <span className="text-color-6">{currentYear}</span>
+            {currentMonth} <span className="text-green-600">{currentYear}</span>
           </div>
 
           {isChanging && (
