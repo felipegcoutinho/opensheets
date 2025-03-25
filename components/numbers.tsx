@@ -1,6 +1,6 @@
 "use client";
 
-import { AtlasGrotesk } from "@/app/fonts/font";
+import { openRunde } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 
 function Numbers({ value }) {
@@ -8,7 +8,7 @@ function Numbers({ value }) {
 
   return (
     <span
-      className={`font-normal ${AtlasGrotesk.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
+      className={`font-medium ${openRunde.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
     >
       {Number(value).toLocaleString("pt-BR", {
         style: "currency",

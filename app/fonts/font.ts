@@ -37,25 +37,25 @@ const AtlasGrotesk = localFont({
   ],
 });
 
-// const openRunde = localFont({
-//   src: [
-//     {
-//       path: "../fonts/OpenRunde-Regular.woff2",
-//       weight: "400",
-//       style: "normal",
-//     },
-//     {
-//       path: "../fonts/OpenRunde-Medium.woff2",
-//       weight: "500",
-//       style: "normal",
-//     },
-//     {
-//       path: "../fonts/OpenRunde-Bold.woff2",
-//       weight: "600",
-//       style: "normal",
-//     },
-//   ],
-// });
+const openRunde = localFont({
+  src: [
+    {
+      path: "../fonts/OpenRunde-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/OpenRunde-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/OpenRunde-Bold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+  ],
+});
 
 const gabarito = Gabarito({
   subsets: ["latin"],
@@ -75,4 +75,4 @@ const bebasNeue = Bebas_Neue({
 //   fallback: ["monospace"],
 // });
 
-export { AtlasGrotesk, bebasNeue, gabarito, uiSans };
+export { AtlasGrotesk, bebasNeue, gabarito, openRunde, uiSans };

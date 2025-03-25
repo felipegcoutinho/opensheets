@@ -11,9 +11,7 @@ export default function CardSummary({ title, value, previousValue, color }) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardDescription className="dark:text-muted-foreground flex items-center gap-1">
-          {title}
-        </CardDescription>
+        <CardDescription>{title}</CardDescription>
         <CardTitle className="text-2xl">
           <Numbers value={value} />
         </CardTitle>
