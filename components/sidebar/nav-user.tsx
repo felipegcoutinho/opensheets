@@ -3,7 +3,6 @@
 import { LogOut, MoreVerticalIcon } from "lucide-react";
 
 import { signOut } from "@/app/actions/auth";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +17,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { ModeToggle } from "../darkmode-button";
 import PrivacyButton from "../privacy-button";
 
 export function NavUser({
@@ -44,10 +42,6 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-              </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{username}</span>
                 <span className="truncate text-xs">{usermail}</span>
@@ -63,10 +57,6 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-2 py-2 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{username}</span>
                   <span className="truncate text-xs">{usermail}</span>
@@ -83,15 +73,15 @@ export function NavUser({
                 </span>
               </div>
 
-              <div className="flex items-center justify-between px-2 py-1">
+              {/* <div className="flex items-center justify-between px-2 py-1">
                 <span className="text-sm">Tema</span>
                 <div className="flex h-9 w-9 items-center justify-center">
                   <ModeToggle />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex items-center justify-between px-2 py-1">
-                <span className="text-sm">Privacidade</span>
+                <span className="text-sm">Valores Visíveis</span>
                 <div className="flex w-9 items-center justify-center">
                   <PrivacyButton />
                 </div>

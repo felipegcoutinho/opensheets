@@ -1,4 +1,3 @@
-import { Bebas_Neue, Gabarito } from "next/font/google";
 import localFont from "next/font/local";
 
 const uiSans = localFont({
@@ -57,22 +56,4 @@ const openRunde = localFont({
   ],
 });
 
-const gabarito = Gabarito({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  fallback: ["monospace"],
-});
-
-const bebasNeue = Bebas_Neue({
-  subsets: ["latin"],
-  weight: ["400"],
-  fallback: ["monospace"],
-});
-
-// const inter = Inter({
-//   subsets: ["latin"],
-//   weight: ["400", "700"],
-//   fallback: ["monospace"],
-// });
-
-export { AtlasGrotesk, bebasNeue, gabarito, openRunde, uiSans };
+export { AtlasGrotesk, openRunde, uiSans };

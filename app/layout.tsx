@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
-import { openRunde } from "./fonts/font";
+import { AtlasGrotesk } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="pt-BR"
-      className={`${openRunde.className}`}
+      className={`${AtlasGrotesk.className}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

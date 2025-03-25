@@ -7,18 +7,14 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
-import { Eye } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
-import PrivacyButton from "../privacy-button";
 import { getData } from "./nav-links";
 
 export function AppSidebar({
@@ -53,8 +49,8 @@ export function AppSidebar({
       <SidebarContent>
         <NavProjects projects={data.projects} />
 
-        <SidebarMenuItem className="mt-auto mb-6 space-y-2 px-3 group-data-[collapsible=icon]:hidden">
-          <SidebarMenuButton asChild>
+        {/*<SidebarMenuItem className="mt-auto mb-6 space-y-2 px-3 group-data-[collapsible=icon]:hidden">
+         <SidebarMenuButton asChild>
             <label>
               <Eye />
               <span>Valores Visíveis</span>
@@ -62,7 +58,7 @@ export function AppSidebar({
             </label>
           </SidebarMenuButton>
 
-          {/* <SidebarMenuButton asChild>
+        <SidebarMenuButton asChild>
             <label>
               <Palette />
               <span>Dark Mode</span>
@@ -76,8 +72,8 @@ export function AppSidebar({
                 />
               )}
             </label>
-          </SidebarMenuButton> */}
-        </SidebarMenuItem>
+          </SidebarMenuButton> 
+        </SidebarMenuItem>*/}
       </SidebarContent>
       <SidebarFooter>
         <NavUser username={username} usermail={usermail} user={data.user} />
