@@ -3,8 +3,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
   --color-color-1: #e4ffcd;
   --color-color-2: #0a353b;
   --color-color-3: #2c155d;
