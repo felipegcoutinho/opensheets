@@ -1,6 +1,6 @@
 "use client";
 
-import { bebasNeue } from "@/app/fonts/font";
+import { AtlasGrotesk } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -26,7 +26,7 @@ const ReturnButton = React.memo(({ onClick, disabled }) => (
     onClick={onClick}
     disabled={disabled}
   >
-    <span className="px-2">Retornar ao Mês Atual</span>
+    <span className="px-2 text-sm">Retornar ao Mês Atual</span>
   </button>
 ));
 
@@ -134,7 +134,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${bebasNeue.className} dark:bg-card my-2 flex w-full items-center justify-start border-none bg-slate-100 p-4`}
+      className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-slate-100 p-4"
     >
       <div className="flex items-center">
         <NavigationButton
@@ -143,7 +143,7 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="relative flex items-center">
-          <div className="mx-2 text-2xl capitalize dark:text-white">
+          <div className={`${AtlasGrotesk.className} mx-2 text-lg capitalize dark:text-white`} >
             {currentMonth} <span className="text-green-600">{currentYear}</span>
           </div>
 

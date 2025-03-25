@@ -15,40 +15,38 @@ export default async function Header() {
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full border-b backdrop-blur-3xl">
-      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-2">
-        {/* Logo e menu para telas médias e grandes */}
-        <div className="hidden md:flex md:w-full md:items-center md:justify-between">
-          {/* Logo à esquerda */}
-          <div className="shrink-0">
-            <Link href="/">
-              <Logo />
-            </Link>
-          </div>
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4">
+        {/* Logo sempre visível */}
+        <div className="shrink-0">
+          <Link href="/">
+            <Logo />
+          </Link>
+        </div>
 
-          <div className="flex items-center gap-4">
-            <DropdownMenu>
-              {session ? (
-                <DropdownMenuTrigger asChild>
-                  <Button variant="link" size="icon">
-                    <Avatar>
-                      <AvatarImage src="/black_panter.jpg" alt="Avatar" />
-                      <AvatarFallback>OP</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-              ) : (
-                <Link href="/login">
-                  <Button>Login</Button>
-                </Link>
-              )}
-
-              <DropdownMenuContent align="end">
-                <AuthButton session={session} />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+        {/* Área de login/usuário ocupando o espaço à direita */}
+        <div className="flex flex-1 justify-end">
+          <DropdownMenu>
+            {session ? (
+              <DropdownMenuTrigger asChild>
+                <Button variant="link" size="icon">
+                  <Avatar>
+                    <AvatarImage src="/black_panter.jpg" alt="Avatar" />
+                    <AvatarFallback>OP</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+            ) : (
+              <Link href="/login">
+                <Button>Login</Button>
+              </Link>
+            )}
+            <DropdownMenuContent align="end">
+              <AuthButton session={session} />
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
   );
 }
+
