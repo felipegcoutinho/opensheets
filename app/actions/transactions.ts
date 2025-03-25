@@ -18,7 +18,7 @@ export async function getTransaction(month: string) {
     .eq("periodo", month);
 
   if (error) {
-    console.error("Erro ao buscar transações:", error);
+    console.error("Erro ao buscar Lançamentos:", error);
     return [];
   }
 

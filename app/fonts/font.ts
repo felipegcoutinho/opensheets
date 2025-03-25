@@ -17,6 +17,26 @@ const uiSans = localFont({
   ],
 });
 
+const AtlasGrotesk = localFont({
+  src: [
+    {
+      path: "../fonts/AtlasGroteskRegularWeb.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../fonts/AtlasGroteskMediumWeb.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/SharpGroteskMedium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+});
+
 // const openRunde = localFont({
 //   src: [
 //     {
@@ -55,4 +75,4 @@ const bebasNeue = Bebas_Neue({
 //   fallback: ["monospace"],
 // });
 
-export { bebasNeue, gabarito, uiSans };
+export { AtlasGrotesk, bebasNeue, gabarito, uiSans };

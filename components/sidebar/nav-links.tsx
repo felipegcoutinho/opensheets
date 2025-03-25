@@ -1,0 +1,56 @@
+import {
+  ArrowRightLeft,
+  CreditCard,
+  File,
+  LayoutDashboard,
+  Pen,
+  PiggyBank,
+  Users,
+} from "lucide-react";
+
+export function getData(month: string) {
+  return {
+    user: {
+      name: "Felipe Coutinho",
+      email: "m@example.com",
+    },
+
+    projects: [
+      {
+        name: "dashboard",
+        url: `/dashboard?periodo=${month}`,
+        icon: LayoutDashboard,
+      },
+      {
+        name: "lançamentos",
+        url: `/lancamentos?periodo=${month}`,
+        icon: ArrowRightLeft,
+      },
+      {
+        name: "boletos",
+        url: `/boleto?periodo=${month}`,
+        icon: File,
+      },
+      {
+        name: "cartões",
+        url: "/cartao",
+        icon: CreditCard,
+      },
+      {
+        name: "contas",
+        url: "/conta",
+        icon: PiggyBank,
+      },
+      {
+        name: "responsáveis",
+        url: `/responsavel?periodo=${month}`,
+        icon: Users,
+      },
+      {
+        name: "anotações",
+        url: `/anotacao?periodo=${month}`,
+        icon: Pen,
+      },
+    ],
+  };
+}

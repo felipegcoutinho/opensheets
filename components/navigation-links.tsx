@@ -23,7 +23,7 @@ export function NavigationLinks({ month, userEmail }) {
     {
       href: `/dashboard/transacao?periodo=${month}`,
       Icon: ArrowDownUpIcon,
-      name: "Transações",
+      name: "Lançamentos",
       path: "/dashboard/transacao",
     },
     {
@@ -33,10 +33,10 @@ export function NavigationLinks({ month, userEmail }) {
       path: "/dashboard/boleto",
     },
     {
-      href: `/dashboard/cartao`,
+      href: `/cartao`,
       Icon: CreditCard,
       name: "Cartões",
-      path: "/dashboard/cartao",
+      path: "/cartao",
     },
     {
       href: `/dashboard/conta`,
@@ -64,7 +64,7 @@ export function NavigationLinks({ month, userEmail }) {
       href: `/dashboard/investimentos`,
       Icon: BadgeCentIcon,
       name: "Investimentos",
-      path: "/investimentos",
+      path: "dashboard/investimentos",
     });
   }
 

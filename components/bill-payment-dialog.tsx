@@ -30,11 +30,7 @@ export default function BillPaymentDialog({
     e.preventDefault();
     startTransition(() => {
       payBills(id).then(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       });
     });
   };
@@ -64,8 +60,8 @@ export default function BillPaymentDialog({
               <div className="flex flex-col items-center gap-2 text-base">
                 <span>Você está pagando o boleto de:</span>
                 <Image
-                  src="/logos/boleto.png"
-                  className="rounded-full"
+                  src="/logos/boleto.svg"
+                  className="dark:invert dark:filter"
                   width={40}
                   height={40}
                   alt="Logo do cartão"

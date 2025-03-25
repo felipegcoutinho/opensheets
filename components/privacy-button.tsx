@@ -1,27 +1,30 @@
 "use client";
-import { Eye, EyeOff } from "lucide-react";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
+import { useEffect, useState } from "react";
 import { usePrivacy } from "../hooks/privacy-context";
 
-export default function PrivacyButton() {
+export default function PrivacySwitch() {
   const { estado, setEstado } = usePrivacy();
+  const [mounted, setMounted] = useState(false);
+
+  // Componente só deve ser renderizado após montagem para evitar problemas de hidratação
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleEstado = () => {
     setEstado(!estado);
   };
 
   return (
-    <>
-      {estado ? (
-        <Eye
-          className="h-[1.2rem] w-[1.2rem] cursor-pointer text-card-foreground transition-all"
-          onClick={toggleEstado}
-        />
+    <div className="flex flex-1 justify-end">
+      {mounted ? (
+        <Switch checked={estado} onCheckedChange={toggleEstado} />
       ) : (
-        <EyeOff
-          className="h-[1.2rem] w-[1.2rem] cursor-pointer text-neutral-600 transition-all"
-          onClick={toggleEstado}
-        />
+        <Skeleton className="h-4 w-8 rounded-full" />
       )}
-    </>
+    </div>
   );
 }

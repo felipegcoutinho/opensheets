@@ -21,7 +21,7 @@ export async function getCards() {
   return data;
 }
 
-// Busca a lista de transações para tabela de faturas
+// Busca a lista de Lançamentos para tabela de faturas
 export async function getCardInvoice(month, cartao_id) {
   const supabase = await createClient();
 

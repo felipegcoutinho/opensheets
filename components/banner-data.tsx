@@ -1,4 +1,4 @@
-import Utils from "@/app/dashboard/utils";
+import Utils from "@/app/(dashboard)/dashboard/utils";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 import Numbers from "./numbers";
@@ -11,19 +11,16 @@ export default async function BannerData() {
     currentMonthName,
     currentYear,
   } = UseDates();
+
   const { saldo, userName } = await Utils(`${currentMonthName}-${currentYear}`);
-  3;
 
   return (
     <Banner>
       <div className="flex items-center justify-between py-6">
         <div>
-          <p className="text-2xl font-bold">
-            Olá, {userName.split(" ")[0]}! 👋
-          </p>
+          <p className="text-xl">Olá, {userName.split(" ")[0]}! 👋</p>
           <p className="text-muted-foreground">
-            Hoje é{" "}
-            <span className="lowercase">{fliendlyDate(currentDate)}.</span>
+            <span>{fliendlyDate(currentDate)}.</span>
           </p>
         </div>
         <div className="text-right">
