@@ -8,7 +8,6 @@ import InvoiceCard from "./invoices-card";
 import { PaymentList } from "./payment-card";
 import RecentesTransactions from "./recents-transactions";
 import Stats from "./stats";
-import { Teste } from "./teste";
 import useUtils from "./utils";
 
 export default async function page(props) {
@@ -33,8 +32,6 @@ export default async function page(props) {
     recentsTransactions,
     cardData,
   } = await useUtils(month);
-
-  const { aaa, bbb } = await Teste(month);
 
   return (
     <>
