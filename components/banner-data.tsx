@@ -18,7 +18,9 @@ export default async function BannerData() {
     <Banner>
       <div className="flex items-center justify-between py-6">
         <div>
-          <p className="text-xl font-bold">Olá, {userName.split(" ")[0]}! 👋</p>
+          <p className="text-xl font-medium">
+            Olá, {userName.split(" ")[0]}! 👋
+          </p>
           <p className="text-muted-foreground">
             <span>{fliendlyDate(currentDate)}.</span>
           </p>
