@@ -34,7 +34,7 @@ async function PageAccount(props) {
     <div className="w-full">
       <CreateAccount />
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mb-4 grid gap-4 lg:grid-cols-3">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
             <Card key={item.id}>

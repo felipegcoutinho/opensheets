@@ -1,20 +1,34 @@
-import { uiSans } from "@/app/fonts/font";
-
 function Logo() {
-  const open = "open";
-  const sheets = (
-    <span className="font-bold">
-      sheets<span className="text-color-6">.</span>
-    </span>
-  );
-
   return (
-    <div
-      className={`${uiSans.className} flex items-center px-4 py-1 text-2xl tracking-tighter text-zinc-800 dark:border-white dark:text-zinc-200`}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="200"
+      height="40"
+      viewBox="0 0 200 40"
+      fill="none"
     >
-      {open}
-      {sheets}
-    </div>
+      <text
+        x="0"
+        y="28"
+        fontFamily="sans-serif"
+        fontWeight="400"
+        fontSize="24"
+        fill="#1C1C1C"
+      >
+        open
+      </text>
+      <text
+        x="54"
+        y="28"
+        fontFamily="sans-serif"
+        fontWeight="600"
+        fontSize="24"
+        fill="#1C1C1C"
+      >
+        sheets
+      </text>
+      <circle cx="134" cy="26" r="2" fill="#3CB371" />
+    </svg>
   );
 }
 

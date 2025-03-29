@@ -43,7 +43,7 @@ async function page(props) {
     <div className="w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
-      <div className="mt-4 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
+      <div className="mb-4 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
         {cardsWithLimits?.length !== 0 ? (
           cardsWithLimits?.map((item) => (
             <Card key={item.id}>
