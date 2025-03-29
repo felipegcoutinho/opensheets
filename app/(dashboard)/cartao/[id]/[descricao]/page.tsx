@@ -1,11 +1,7 @@
-import {
-  getCardDetails,
-  getCardInvoice,
-  getCards,
-  getCardSum,
-} from "@/actions/cards";
+import { getCardDetails, getCardInvoice, getCardSum } from "@/actions/cards";
 import { getFaturas } from "@/actions/invoices";
 import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
+import { getCards } from "@/app/services/cartoes";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import Numbers from "@/components/numbers";
 import RemovePaymentButton from "@/components/remove-payment-button";

@@ -2,25 +2,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
-// Busca a lista de cartões salvos
-export async function getCards() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("cartoes")
-    .select(
-      `id, descricao, dt_vencimento, dt_fechamento, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
-    )
-    .order("descricao", { ascending: true });
-
-  if (error) {
-    console.error("Erro ao buscar cartões:", error);
-    return null;
-  }
-
-  return data;
-}
-
 // Busca a lista de Lançamentos para tabela de faturas
 export async function getCardInvoice(month, cartao_id) {
   const supabase = await createClient();

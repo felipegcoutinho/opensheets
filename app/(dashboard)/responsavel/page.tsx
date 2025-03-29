@@ -1,16 +1,13 @@
-import EmptyCard from "@/components/empty-card";
-import { UseDates } from "@/hooks/use-dates";
 import {
   getResponsavelBillList,
   getResponsavelTransactionList,
-} from "../../actions/users";
+} from "@/app/actions/users";
+import EmptyCard from "@/components/empty-card";
+import { getPeriodo } from "@/hooks/periodo";
 import UsersCard from "./users-card";
 
 async function page(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = await getPeriodo(props);
 
   const TransactionListMap = await getResponsavelTransactionList(month);
   const BillListMap = await getResponsavelBillList(month);

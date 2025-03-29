@@ -1,4 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getNotesStats } from "@/services/anotacoes";
+import { getBillsStats } from "@/services/boletos";
+import { getCardsStats } from "@/services/cartoes";
+import { getAccountsStats } from "@/services/contas";
+import { getTransactionsStats } from "@/services/transacoes";
 import {
   ArrowDownUp,
   CreditCard,
@@ -6,13 +11,6 @@ import {
   Landmark,
   NotebookPenIcon,
 } from "lucide-react";
-import {
-  getAccountsStats,
-  getBillsStats,
-  getCardsStats,
-  getNotesStats,
-  getTransactionsStats,
-} from "../../actions/dashboards";
 
 const statsConfig = [
   { title: "Lançamentos", icon: ArrowDownUp, getData: getTransactionsStats },

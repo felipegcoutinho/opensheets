@@ -1,21 +1,18 @@
+import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { UseDates } from "@/hooks/use-dates";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import BillPaymentDialog from "../../../components/bill-payment-dialog";
-import { getBillsByResponsavel } from "../../actions/dashboards";
 
-export async function BillsCard({ month }) {
+export default async function BillsCard({ month, data }) {
   const { DateFormat } = UseDates();
-
-  const data = await getBillsByResponsavel(month);
 
   if (!data.length) return <EmptyCard width={100} height={100} />;
 
-  const sortedBills = [...data].sort((a, b) => b.valor - a.valor);
+  const dataSorted = data.sort((a, b) => b.valor - a.valor);
 
-  return sortedBills.map((item, index) => (
+  return dataSorted.map((item, index) => (
     <div
       key={`${item.id}-${index}`}
       className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"

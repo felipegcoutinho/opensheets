@@ -1,24 +1,21 @@
 import {
   deleteAccount,
-  getAccount,
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/actions/accounts";
+import { getAccount } from "@/app/services/contas";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { UseDates } from "@/hooks/use-dates";
+import { getPeriodo } from "@/hooks/periodo";
 import Image from "next/image";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
 async function PageAccount(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = await getPeriodo(props);
 
   const getAccountMap = await getAccount();
 

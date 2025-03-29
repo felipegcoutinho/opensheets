@@ -1,6 +1,6 @@
+import { getConditions } from "@/app/services/transacoes";
 import Numbers from "@/components/numbers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getConditions } from "../../actions/dashboards";
 
 export async function ConditionList({ month }) {
   const condicoes = await getConditions(month);

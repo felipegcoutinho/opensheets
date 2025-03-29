@@ -1,38 +1,22 @@
-import { getAccount } from "@/actions/accounts";
 import { deleteCards, getLimitesCartao } from "@/actions/cards";
+import { getCards } from "@/app/services/cartoes";
+import { getAccount } from "@/app/services/contas";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { UseDates } from "@/hooks/use-dates";
-import { createClient } from "@/utils/supabase/server";
+import { getPeriodo } from "@/hooks/periodo";
 import { Lock, LockOpen } from "lucide-react";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import CreateCard from "./modal/create-cards";
 import UpdateCard from "./modal/update-cards";
 
-async function PageCards(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+async function page(props) {
+  const month = await getPeriodo(props);
 
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: cartoes, error } = await supabase
-    .from("cartoes")
-    .select(`*, contas (id, descricao)`)
-    .order("descricao", { ascending: true });
-
-  if (error) {
-    console.error("Erro ao buscar cartões:", error);
-    return null;
-  }
-
+  const cartoes = await getCards();
   const getAccountMap = await getAccount();
 
   // Obter os limites para cada cartão
@@ -174,4 +158,4 @@ async function PageCards(props) {
   );
 }
 
-export default PageCards;
+export default page;

@@ -1,26 +1,23 @@
-import { UseDates } from "@/hooks/use-dates";
-import { getAccount } from "../../actions/accounts";
-import { getCards } from "../../actions/cards";
-import { getTransaction } from "../../actions/transactions";
+import { getCards } from "@/app/services/cartoes";
+import { getAccount } from "@/app/services/contas";
+import { getTransactions } from "@/app/services/transacoes";
+import { getPeriodo } from "@/hooks/periodo";
 import { TableTransaction } from "./table/table-transaction";
 
-async function PageTransactions(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+async function page(props) {
+  const month = await getPeriodo(props);
 
-  const getCardsMap = await getCards(month);
-  const getAccountMap = await getAccount();
-  const getTransactionMap = await getTransaction(month);
+  const cartoes = await getCards(month);
+  const contas = await getAccount();
+  const lancamentos = await getTransactions(month);
 
   return (
     <TableTransaction
-      data={getTransactionMap}
-      getAccountMap={getAccountMap}
-      getCardsMap={getCardsMap}
+      data={lancamentos}
+      getAccount={contas}
+      getCards={cartoes}
     />
   );
 }
 
-export default PageTransactions;
+export default page;

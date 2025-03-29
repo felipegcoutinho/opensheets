@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-async function Page(props) {
+async function page(props) {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
@@ -205,4 +205,4 @@ async function Page(props) {
   );
 }
 
-export default Page;
+export default page;

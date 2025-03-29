@@ -3,21 +3,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
-// Busca a lista de contas bancárias salvas
-export async function getAccount() {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("contas")
-    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`);
-
-  if (error) {
-    console.error("Erro ao buscar contas:", error);
-    return null;
-  }
-
-  return data;
-}
-
 // Busca detalhes de uma conta bancária específica
 export async function getAccountDetails(id) {
   const supabase = await createClient();
@@ -164,55 +149,4 @@ export async function getSumAccountExpense(month, id) {
   }, 0);
 
   return sumAccountExpense;
-}
-
-// Busca apenas despesas realizadas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpensePaid(month) {
-  const supabase = await createClient();
-
-  const { error, data } = await supabase
-    .from("transacoes")
-    .select(`valor`)
-    .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
-    .eq("realizado", true)
-    .eq("responsavel", "Você")
-    .neq("responsavel", "Sistema");
-
-  if (error) {
-    console.error("Erro ao buscar despesas:", error);
-    return null;
-  }
-
-  const sumAccountExpensePaid = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return sumAccountExpensePaid;
-}
-
-// Busca apenas receitas realizadas de uma conta bancária específica e soma os valores
-export async function getSumAccountIncomePaid(month) {
-  const supabase = await createClient();
-
-  const { error, data } = await supabase
-    .from("transacoes")
-    .select(`valor`)
-    .eq("periodo", month)
-    .eq("tipo_transacao", "Receita")
-    .eq("realizado", true)
-    .neq("responsavel", "Sistema");
-
-  if (error) {
-    console.error("Erro ao buscar receitas:", error);
-    return null;
-  }
-
-  const sumAccountIncomePaid = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return sumAccountIncomePaid;
 }
