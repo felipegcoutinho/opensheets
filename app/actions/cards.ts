@@ -13,6 +13,7 @@ export async function addCards(formData: FormData) {
     bandeira,
     logo_image,
     tipo,
+    status,
     conta_id,
   } = Object.fromEntries(formData.entries());
 
@@ -28,6 +29,7 @@ export async function addCards(formData: FormData) {
       bandeira,
       logo_image,
       tipo,
+      status,
       conta_id,
     });
     revalidatePath("/cartao");
@@ -62,6 +64,7 @@ export async function updateCards(formData: FormData) {
     bandeira,
     logo_image,
     tipo,
+    status,
     conta_id,
   } = Object.fromEntries(formData.entries());
 
@@ -80,6 +83,7 @@ export async function updateCards(formData: FormData) {
         bandeira,
         logo_image,
         tipo,
+        status,
         conta_id,
       })
       .eq("id", id);
@@ -88,5 +92,3 @@ export async function updateCards(formData: FormData) {
     console.error("Erro ao atualizar cartao:", error);
   }
 }
-
-

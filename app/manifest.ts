@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "openSheets",
-    short_name: "openSheets",
+    name: "opensheets",
+    short_name: "opensheets",
     description:
       "Aplicação para finanças pessoais, com o objetivo de ajudar a organizar e controlar suas finanças.",
     start_url: "/login",

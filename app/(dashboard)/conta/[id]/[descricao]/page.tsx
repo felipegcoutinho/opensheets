@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 import { CalendarClockIcon, Check, RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -79,6 +80,8 @@ const TransactionTable = ({
     return icons[condicao] || null;
   };
 
+  const { getButtonVariant } = UseStyles();
+
   return (
     <Card className="mt-4">
       <CardHeader>
@@ -114,12 +117,8 @@ const TransactionTable = ({
                 </TableCell>
                 <TableCell>
                   <Button
-                    className="h-6"
-                    variant={
-                      item.tipo_transacao === "Receita"
-                        ? "success"
-                        : "destructive"
-                    }
+                    size="sm"
+                    variant={getButtonVariant(item.tipo_transacao)}
                   >
                     {item.tipo_transacao}
                   </Button>

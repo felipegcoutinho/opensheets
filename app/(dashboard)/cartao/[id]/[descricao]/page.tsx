@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 import {
   CalendarClockIcon,
   Check,
@@ -122,6 +123,8 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
     return icons[condicao] || null;
   };
 
+  const { getButtonVariant } = UseStyles();
+
   return (
     <Card className="mt-4">
       <CardHeader>
@@ -157,12 +160,8 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                 </TableCell>
                 <TableCell>
                   <Button
-                    className="h-6"
-                    variant={
-                      item.tipo_transacao === "Receita"
-                        ? "success"
-                        : "destructive"
-                    }
+                    size="sm"
+                    variant={getButtonVariant(item.tipo_transacao)}
                   >
                     {item.tipo_transacao}
                   </Button>

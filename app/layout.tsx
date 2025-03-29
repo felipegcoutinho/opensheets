@@ -8,7 +8,7 @@ import { SharpGrotesk } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
-  title: "OpenSheets",
+  title: "opensheets",
   description:
     "Aplicação para finanças pessoais, com o objetivo de ajudar a organizar e controlar suas finanças.",
 };

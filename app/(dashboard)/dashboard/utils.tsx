@@ -1,4 +1,3 @@
-import { getUserName } from "@/actions/users";
 import { getExpenseBill } from "@/app/services/boletos";
 import { fetchAllData } from "@/app/services/fetch-all-data";
 import { getExpense, getIncome } from "@/app/services/transacoes";
@@ -27,8 +26,6 @@ async function useUtils(month) {
   const receitasAnterior = await getIncome(previousMonth);
   const despesasCartoesAnterior = await getExpense(previousMonth);
   const despesasBoletosAnterior = await getExpenseBill(previousMonth);
-
-  const userName = await getUserName();
 
   // Calcula o saldo geral
   const despesasTotal = despesasCartoes + despesasBoletos;
@@ -82,7 +79,6 @@ async function useUtils(month) {
     billsByResponsavel,
     saldo,
     expenseByCategory,
-    userName,
     recentTransactions,
     summary,
   };

@@ -15,9 +15,30 @@ export async function getCards() {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, dt_fechamento, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
     )
-    .order("descricao", { ascending: true });
+    .order("descricao", { ascending: true })
+    .eq("status", "ativo");
+
+  if (error) {
+    console.error("Erro ao buscar cartões:", error);
+    return null;
+  }
+
+  return data;
+}
+
+// Busca a lista de cartões salvos
+export async function getCardsDisabled() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("cartoes")
+    .select(
+      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+    )
+    .order("descricao", { ascending: true })
+    .eq("status", "inativo");
 
   if (error) {
     console.error("Erro ao buscar cartões:", error);

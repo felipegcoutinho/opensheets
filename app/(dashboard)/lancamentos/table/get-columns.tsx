@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import UseStyles from "@/hooks/use-styles";
 import {
   ArrowUpDown,
   CalendarClockIcon,
@@ -33,6 +34,8 @@ import {
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
+
+const { getButtonVariant } = UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -52,19 +55,6 @@ const getResponsavelClass = (responsavel) => {
     return "text-neutral-600 dark:text-neutral-300";
   return "text-orange-600 dark:text-orange-400";
 };
-
-function getButtonVariant(tipoTransacao) {
-  switch (tipoTransacao) {
-    case "Receita":
-      return "receita";
-    case "Despesa":
-      return "despesa";
-    case "Investimento":
-      return "invest";
-    default:
-      return undefined;
-  }
-}
 
 export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   {
