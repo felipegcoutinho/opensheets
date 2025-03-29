@@ -25,14 +25,15 @@ async function useUtils(month) {
   } = await fetchAllData(month);
 
   const receitasAnterior = await getIncome(previousMonth);
-  const despesasAnterior = await getExpense(previousMonth);
+  const despesasCartoesAnterior = await getExpense(previousMonth);
   const despesasBoletosAnterior = await getExpenseBill(previousMonth);
 
   const userName = await getUserName();
 
   // Calcula o saldo geral
   const despesasTotal = despesasCartoes + despesasBoletos;
-  const despesasTotalAnterior = despesasAnterior + despesasBoletosAnterior;
+  const despesasTotalAnterior =
+    despesasCartoesAnterior + despesasBoletosAnterior;
   const balanco = receitas - despesasTotal;
   const balancoAnterior = receitasAnterior - despesasTotalAnterior;
   const previsto = previstoAnterior + balanco;
