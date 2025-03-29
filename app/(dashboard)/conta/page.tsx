@@ -1,9 +1,9 @@
+import { deleteAccount } from "@/actions/accounts";
+import { getAccount } from "@/app/services/contas";
 import {
-  deleteAccount,
   getSumAccountExpense,
   getSumAccountIncome,
-} from "@/actions/accounts";
-import { getAccount } from "@/app/services/contas";
+} from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";

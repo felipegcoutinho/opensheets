@@ -3,22 +3,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
-// Busca detalhes de uma conta bancária específica
-export async function getAccountDetails(id) {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("contas")
-    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)
-    .eq("id", id);
-
-  if (error) {
-    console.error("Erro ao buscar detalhes das contas:", error);
-    return null;
-  }
-
-  return data;
-}
-
 // Adiciona uma nova conta bancária
 export async function addAccount(formData: FormData) {
   const { descricao, status, tipo_conta, logo_image, anotacao } =
@@ -76,77 +60,4 @@ export async function updateAccount(formData: FormData) {
   } catch (error) {
     console.error("Erro ao atualizar conta:", error);
   }
-}
-
-// Busca as Lançamentos de uma conta bancária específica na tabela transacoes
-export async function getAccountInvoice(month, id) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("transacoes")
-    .select(
-      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao)",
-    )
-    .eq("periodo", month)
-    .or("responsavel.eq.Você,responsavel.eq.Sistema")
-    .eq("conta_id", id);
-
-  if (error) {
-    console.error("Erro ao buscar Lançamentos:", error);
-    return null;
-  }
-
-  return data;
-}
-
-// Busca as receitas de uma conta bancária específica e soma os valores
-export async function getSumAccountIncome(month, id) {
-  const supabase = await createClient();
-
-  const { error, data } = await supabase
-    .from("transacoes")
-    .select(`valor`)
-    .eq("conta_id", id)
-    .eq("periodo", month)
-    .eq("tipo_transacao", "Receita")
-    .or("responsavel.eq.Você,responsavel.eq.Sistema")
-    .eq("realizado", true);
-
-  if (error) {
-    console.error("Erro ao buscar receitas:", error);
-    return null;
-  }
-
-  const sumAccountIncome = data.reduce((sum, item) => {
-    const valor = parseFloat(item.valor);
-    return sum + (isNaN(valor) ? 0 : valor);
-  }, 0);
-
-  return sumAccountIncome;
-}
-
-// Busca as despesas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpense(month, id) {
-  const supabase = await createClient();
-
-  const { error, data } = await supabase
-    .from("transacoes")
-    .select(`valor`)
-    .eq("conta_id", id)
-    .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
-    .or("responsavel.eq.Você, responsavel.eq.Sistema")
-    .eq("realizado", true);
-
-  if (error) {
-    console.error("Erro ao buscar despesas:", error);
-    return null;
-  }
-
-  const sumAccountExpense = data.reduce((sum, item) => {
-    const valor = parseFloat(item.valor);
-    return sum + (isNaN(valor) ? 0 : valor);
-  }, 0);
-
-  return sumAccountExpense;
 }

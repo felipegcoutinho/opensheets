@@ -1,42 +1,4 @@
-"use server";
-
 import { createClient } from "@/utils/supabase/server";
-
-export async function getResponsavelTransactionList(month) {
-  const supabase = await createClient();
-
-  const { data: users, error } = await supabase
-    .from("transacoes")
-    .select("responsavel, cartoes (descricao, logo_image), valor")
-    .order("responsavel", { ascending: true })
-    .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
-    .neq("responsavel", "Sistema");
-
-  if (error) {
-    console.error("Erro ao buscar Lançamentos:", error);
-    return null;
-  }
-
-  return users;
-}
-
-export async function getResponsavelBillList(month) {
-  const supabase = await createClient();
-
-  const { data: bills, error } = await supabase
-    .from("boletos")
-    .select("responsavel, descricao, valor")
-    .order("responsavel", { ascending: true })
-    .eq("periodo", month);
-
-  if (error) {
-    console.error("Erro ao buscar boletos:", error);
-    return null;
-  }
-
-  return bills;
-}
 
 export async function getUserName() {
   const supabase = await createClient();

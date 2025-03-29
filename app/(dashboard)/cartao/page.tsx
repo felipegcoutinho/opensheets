@@ -1,6 +1,7 @@
-import { deleteCards, getLimitesCartao } from "@/actions/cards";
+import { deleteCards } from "@/actions/cards";
 import { getCards } from "@/app/services/cartoes";
 import { getAccount } from "@/app/services/contas";
+import { getLimitesCartao } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
 import Numbers from "@/components/numbers";
 import { Button } from "@/components/ui/button";

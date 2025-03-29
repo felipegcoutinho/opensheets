@@ -1,5 +1,5 @@
-import { getCategoria } from "@/actions/cards";
 import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
+import { getCategoria } from "@/app/services/transacoes";
 import Numbers from "@/components/numbers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

@@ -22,3 +22,19 @@ export async function getAccount() {
 
   return data;
 }
+
+// Busca detalhes de uma conta bancária específica
+export async function getAccountDetails(id) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("contas")
+    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao buscar detalhes das contas:", error);
+    return null;
+  }
+
+  return data;
+}

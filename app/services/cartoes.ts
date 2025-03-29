@@ -26,3 +26,22 @@ export async function getCards() {
 
   return data;
 }
+
+// Busca os detalhes do cartão para a página de fatura
+export async function getCardDetails(id) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("cartoes")
+    .select(
+      `id, descricao, dt_vencimento, dt_fechamento, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+    )
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao buscar detalhes do cartão:", error);
+    return null;
+  }
+
+  return data;
+}
