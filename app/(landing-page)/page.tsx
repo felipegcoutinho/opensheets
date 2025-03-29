@@ -35,10 +35,10 @@ export default function Index() {
         {/* Hero Section */}
         <div className="mb-20 text-center">
           <h1 className="mb-6 text-5xl text-gray-900 dark:text-white">
-            Controle Seus Gastos com Opensheets
+            Controle Seus Gastos com opensheets
           </h1>
           <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-600 dark:text-gray-300">
-            Bem-vindo ao Opensheets, a solução financeira definitiva para
+            Bem-vindo ao opensheets, a solução financeira definitiva para
             gerenciar seus gastos pessoais e manter suas finanças sob controle.
           </p>
         </div>

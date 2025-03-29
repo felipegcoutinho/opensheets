@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 import {
   ArrowLeftIcon,
   CalendarClockIcon,
@@ -46,6 +47,8 @@ async function page(props) {
   // Calcula o número total de Lançamentos
   const totalTransacoes = getCategoriaMap?.length || 0;
 
+  const { getButtonVariant } = UseStyles();
+
   return (
     <div className="mb-4 space-y-6">
       {/* Botão Voltar */}
@@ -66,12 +69,7 @@ async function page(props) {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Button
-                variant={
-                  tipoTransacao === "Receita" ? "success" : "destructive"
-                }
-                className="h-6"
-              >
+              <Button size="sm" variant={getButtonVariant(tipoTransacao)}>
                 {tipoTransacao}
               </Button>
               <Badge variant="outline" className="h-6">
@@ -142,12 +140,8 @@ async function page(props) {
                   </TableCell>
                   <TableCell>
                     <Button
-                      variant={
-                        item.tipo_transacao === "Receita"
-                          ? "success"
-                          : "destructive"
-                      }
-                      className="h-6 whitespace-nowrap"
+                      size="sm"
+                      variant={getButtonVariant(item.tipo_transacao)}
                     >
                       {item.tipo_transacao}
                     </Button>

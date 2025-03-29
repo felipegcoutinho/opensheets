@@ -65,6 +65,7 @@ export async function getConditions(month) {
     .eq("periodo", month)
     .eq("responsavel", "Você")
     .order("condicao", { ascending: true });
+
   if (error) throw error;
   return data;
 }
@@ -171,13 +172,15 @@ export async function getSumAccountIncomePaid(month) {
 export async function getTransactions(month: string) {
   const supabase = await createClient();
 
-  const { data: transacao, error } = await supabase
+  const { data, error } = await supabase
     .from("transacoes")
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, categoria , imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
     )
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false })
     .eq("periodo", month);
 
@@ -186,7 +189,34 @@ export async function getTransactions(month: string) {
     return [];
   }
 
-  return transacao;
+  return data;
+}
+
+export async function getTransactionsByConditions(
+  condicao: string,
+  month: string,
+) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select(
+      `*, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
+    )
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false })
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .eq("condicao", condicao)
+    .eq("tipo_transacao", "Despesa");
+
+  if (error) {
+    console.error("Erro ao buscar Lançamentos:", error);
+    return [];
+  }
+
+  return data;
 }
 
 // Busca a lista de Lançamentos para tabela de faturas

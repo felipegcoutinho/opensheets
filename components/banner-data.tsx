@@ -1,18 +1,16 @@
 import Utils from "@/app/(dashboard)/dashboard/utils";
+import { getUserName } from "@/app/actions/users";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 
 export default async function BannerData() {
-  const {
-    currentDate,
-    fliendlyDate,
-    getGreeting,
-    currentMonthName,
-    currentYear,
-  } = UseDates();
+  const { currentDate, fliendlyDate, currentMonthName, currentYear } =
+    UseDates();
 
-  const { saldo, userName } = await Utils(`${currentMonthName}-${currentYear}`);
+  const { saldo } = await Utils(`${currentMonthName}-${currentYear}`);
+
+  const userName = await getUserName();
 
   return (
     <Banner>

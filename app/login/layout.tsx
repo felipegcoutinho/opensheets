@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "OpenSheets | Login",
+  title: "opensheets | Login",
   description: "Authentication forms built using the components.",
 };
 

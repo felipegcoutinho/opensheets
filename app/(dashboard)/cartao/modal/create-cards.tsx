@@ -159,6 +159,20 @@ export default function CreateCard({ getAccountMap }) {
             </div>
           </div>
 
+          <div>
+            <Label>Status do Cartão</Label>
+            <Required />
+            <Select name="status" defaultValue="Ativo" required>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Ativo">Ativo</SelectItem>
+                <SelectItem value="Inativo">Inativo</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="w-full">
             <Label>Limite</Label>
             <Required />

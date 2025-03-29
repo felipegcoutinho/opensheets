@@ -33,7 +33,7 @@ export default function UpdateCard({
   itemAnotacao,
   itemLimite,
   itemBandeira,
-  itemStatusPagamento,
+  itemStatus,
   itemTipo,
   itemContaId,
   getAccountMap,
@@ -175,6 +175,20 @@ export default function UpdateCard({
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            <div>
+              <Label>Status do Cartão</Label>
+              <Required />
+              <Select name="status" defaultValue={itemStatus} required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ativo">Ativo</SelectItem>
+                  <SelectItem value="inativo">Inativo</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="w-full">

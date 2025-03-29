@@ -10,7 +10,7 @@ import { cookies } from "next/headers";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "Dashboard | openSheets",
+  title: "Dashboard | opensheets",
 };
 
 export default async function Layout({
