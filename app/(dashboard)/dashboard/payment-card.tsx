@@ -1,6 +1,6 @@
-import Numbers from "@/components/numbers";
+import { getPayment } from "@/app/services/transacoes";
+import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPayment } from "../../actions/dashboards";
 
 export async function PaymentList({ month }) {
   const payment = await getPayment(month);
@@ -20,7 +20,7 @@ export async function PaymentList({ month }) {
               <div className="flex items-center justify-between">
                 <p className="text-md">{item.forma_pagamento}</p>
                 <p>
-                  <Numbers value={item.sum} />
+                  <MoneyValues value={item.sum} />
                 </p>
               </div>
             </div>

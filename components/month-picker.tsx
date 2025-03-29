@@ -1,6 +1,5 @@
 "use client";
 
-import { AtlasGrotesk } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -133,9 +132,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card
-      className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-slate-100 p-4"
-    >
+    <Card className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-slate-100 p-4">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -143,7 +140,7 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="relative flex items-center">
-          <div className={`${AtlasGrotesk.className} mx-2 text-lg capitalize dark:text-white`} >
+          <div className={`mx-2 text-lg font-bold capitalize dark:text-white`}>
             {currentMonth} <span className="text-green-600">{currentYear}</span>
           </div>
 

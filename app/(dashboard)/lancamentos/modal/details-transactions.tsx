@@ -1,6 +1,6 @@
 "use client";
 
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import Timeline from "@/components/timeline-orders";
 import { Button } from "@/components/ui/button";
 import {
@@ -150,7 +150,7 @@ export default function DetailsTransactions({
                     Valor {itemCondicao === "Parcelado" && "da Parcela"}
                   </span>
                   <span>
-                    <Numbers value={itemValor} />
+                    <MoneyValues value={itemValor} />
                   </span>
                 </li>
                 {itemCondicao === "Parcelado" && (
@@ -159,7 +159,7 @@ export default function DetailsTransactions({
                       Valor Restante
                     </span>
                     <span>
-                      <Numbers value={parcelaRestante} />
+                      <MoneyValues value={parcelaRestante} />
                     </span>
                   </li>
                 )}
@@ -176,9 +176,9 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">Total da Compra</span>
                   <span className="text-lg">
                     {itemCondicao === "Parcelado" ? (
-                      <Numbers value={itemValor * itemQtdeParcelas} />
+                      <MoneyValues value={itemValor * itemQtdeParcelas} />
                     ) : (
-                      <Numbers value={itemValor} />
+                      <MoneyValues value={itemValor} />
                     )}
                   </span>
                 </li>

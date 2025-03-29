@@ -1,5 +1,5 @@
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 
@@ -39,7 +39,7 @@ function RecentesTransactions({ transactions }) {
           </div>
 
           <p>
-            <Numbers value={item.valor} />
+            <MoneyValues value={item.valor} />
           </p>
         </div>
       ))}

@@ -32,7 +32,9 @@ export default function CreateAccount() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">Nova Conta</Button>
+        <Button variant="default" className="mt-2 mb-4">
+          Nova Conta
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

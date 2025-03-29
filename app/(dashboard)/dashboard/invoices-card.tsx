@@ -1,10 +1,10 @@
+import { getFaturas } from "@/app/services/faturas";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { ArrowUpRight, Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getFaturas } from "../../actions/invoices";
 
 export default async function InvoiceCard({ data, month }) {
   const dataSorted = data.sort((a, b) => b.total_valor - a.total_valor);
@@ -50,7 +50,7 @@ export default async function InvoiceCard({ data, month }) {
 
         <div className="py-1 text-right">
           <p>
-            <Numbers value={item.total_valor} />
+            <MoneyValues value={item.total_valor} />
           </p>
 
           <InvoicePaymentDialog

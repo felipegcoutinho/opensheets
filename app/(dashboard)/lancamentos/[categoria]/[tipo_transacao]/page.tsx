@@ -1,6 +1,6 @@
-import { getCategoria } from "@/actions/cards";
 import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
-import Numbers from "@/components/numbers";
+import { getCategoria } from "@/app/services/transacoes";
+import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-async function Page(props) {
+async function page(props) {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const { currentMonthName, currentYear, DateFormat } = UseDates();
@@ -89,7 +89,7 @@ async function Page(props) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl">
-              <Numbers value={valorTotal} />
+              <MoneyValues value={valorTotal} />
             </div>
           </CardContent>
         </Card>
@@ -171,7 +171,7 @@ async function Page(props) {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <Numbers value={item.valor} />
+                    <MoneyValues value={item.valor} />
                   </TableCell>
                   <TableCell className="text-right">
                     <DetailsTransactions
@@ -205,4 +205,4 @@ async function Page(props) {
   );
 }
 
-export default Page;
+export default page;

@@ -1,29 +1,9 @@
 "use server";
+
 import { createClient } from "@/utils/supabase/server";
 import { addMonths, format, parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { revalidatePath } from "next/cache";
-
-export async function getTransaction(month: string) {
-  const supabase = await createClient();
-
-  const { data: transacao, error } = await supabase
-    .from("transacoes")
-    .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, categoria , imagem_url, realizado, condicao, 
-      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
-    )
-    .order("created_at", { ascending: false })
-    .eq("periodo", month);
-
-  if (error) {
-    console.error("Erro ao buscar Lançamentos:", error);
-    return [];
-  }
-
-  return transacao;
-}
 
 export async function addTransaction(formData: FormData) {
   const {

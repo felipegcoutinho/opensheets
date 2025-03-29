@@ -1,13 +1,10 @@
-import {
-  getCardDetails,
-  getCardInvoice,
-  getCards,
-  getCardSum,
-} from "@/actions/cards";
-import { getFaturas } from "@/actions/invoices";
 import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
+
+import { getCardDetails, getCards } from "@/app/services/cartoes";
+import { getFaturas } from "@/app/services/faturas";
+import { getCardInvoice, getCardSum } from "@/app/services/transacoes";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import RemovePaymentButton from "@/components/remove-payment-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -59,7 +56,7 @@ const CardInfo = ({ item, sumCardSum }) => (
 
     <InfoSection
       title="Limite Total"
-      value={<Numbers value={item.limite} />}
+      value={<MoneyValues value={item.limite} />}
       subtitle="Conta Padrão"
       subvalue={item.contas.descricao}
     />
@@ -91,7 +88,7 @@ const CardInfo = ({ item, sumCardSum }) => (
     <div className="ml-auto">
       <p className="text-sm font-medium">Total da Fatura</p>
       <div className="text-2xl">
-        <Numbers value={sumCardSum} />
+        <MoneyValues value={sumCardSum} />
       </div>
     </div>
   </Card>
@@ -183,7 +180,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Numbers value={item.valor} />
+                  <MoneyValues value={item.valor} />
                 </TableCell>
                 <TableCell>{item.categoria}</TableCell>
                 <TableCell>
@@ -217,18 +214,20 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
 };
 
 // Main page component using Server Component
-export default async function InvoicePage({ searchParams, params }) {
+export default async function page({ searchParams, params }) {
   const { currentMonthName, currentYear, DateFormat } = UseDates();
+  const search = await searchParams;
+  const { id } = await params;
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = search?.periodo ?? defaultPeriodo;
 
   const [cardDetails, cardInvoice, cardSum, cards, faturaStatus] =
     await Promise.all([
-      getCardDetails(params.id),
-      getCardInvoice(month, params.id),
-      getCardSum(month, params.id),
+      getCardDetails(id),
+      getCardInvoice(month, id),
+      getCardSum(month, id),
       getCards(month),
-      getFaturas(month, params.id),
+      getFaturas(month, id),
     ]);
 
   const isPaid = faturaStatus?.some((item) => item.status_pagamento === "Pago");

@@ -28,32 +28,17 @@ const AtlasGrotesk = localFont({
       weight: "400",
       style: "normal",
     },
-    {
-      path: "../fonts/SharpGroteskMedium.woff2",
-      weight: "500",
-      style: "normal",
-    },
   ],
 });
 
-const openRunde = localFont({
+const SharpGrotesk = localFont({
   src: [
     {
-      path: "../fonts/OpenRunde-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/OpenRunde-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../fonts/OpenRunde-Bold.woff2",
-      weight: "600",
+      path: "../fonts/SharpGroteskMedium.woff2",
+      weight: "200",
       style: "normal",
     },
   ],
 });
 
-export { AtlasGrotesk, openRunde, uiSans };
+export { AtlasGrotesk, SharpGrotesk, uiSans };

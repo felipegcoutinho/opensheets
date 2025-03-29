@@ -1,4 +1,5 @@
 import { deleteNotes } from "@/actions/notes";
+import { getNotes } from "@/app/services/anotacoes";
 import EmptyCard from "@/components/empty-card";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,24 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { UseDates } from "@/hooks/use-dates";
-import { createClient } from "@/utils/supabase/server";
+import { getPeriodo } from "@/hooks/periodo";
 import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 
 async function PageNotes(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = await getPeriodo(props);
 
-  const supabase = await createClient();
-
-  const { data: notes } = await supabase
-    .from("anotacoes")
-    .select(`id, descricao, periodo, anotacao`)
-    .eq("periodo", month)
-    .order("descricao", { ascending: true });
+  const notes = await getNotes(month);
 
   return (
     <div className="mt-4 w-full">

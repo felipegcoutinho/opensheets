@@ -28,7 +28,7 @@ import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
 import Utils from "../utils-transacao";
 
-export default function CreateTransactions({ getCardsMap, getAccountMap }) {
+export default function CreateTransactions({ getCards, getAccount }) {
   const {
     isOpen,
     tipoTransacao,
@@ -281,7 +281,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
-                      {getAccountMap.map((item) => (
+                      {getAccount.map((item) => (
                         <SelectItem key={item.id} value={item.id.toString()}>
                           <div className="flex items-center gap-2">
                             <Image
@@ -310,7 +310,7 @@ export default function CreateTransactions({ getCardsMap, getAccountMap }) {
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
-                      {getCardsMap.map((item) => (
+                      {getCards.map((item) => (
                         <SelectItem key={item.id} value={item.id.toString()}>
                           <div className="flex items-center gap-2">
                             <Image

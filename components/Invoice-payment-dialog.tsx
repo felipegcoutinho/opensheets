@@ -1,5 +1,6 @@
 "use client";
 
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +14,6 @@ import {
 } from "@/components/ui/dialog";
 import { CheckCircle2, CreditCard } from "lucide-react";
 import Image from "next/image";
-import Numbers from "./numbers";
 import Utils from "./utils";
 
 export default function InvoicePaymentDialog({
@@ -69,7 +69,7 @@ export default function InvoicePaymentDialog({
                     Valor Total
                   </span>
                   <span className="text-foreground text-2xl font-semibold">
-                    <Numbers value={valor} />
+                    <MoneyValues value={valor} />
                   </span>
                 </div>
               </div>

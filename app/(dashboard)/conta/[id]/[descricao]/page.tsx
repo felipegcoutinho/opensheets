@@ -1,11 +1,11 @@
+import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
+import { getAccountDetails } from "@/app/services/contas";
 import {
-  getAccountDetails,
   getAccountInvoice,
   getSumAccountExpense,
   getSumAccountIncome,
-} from "@/actions/accounts";
-import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
-import Numbers from "@/components/numbers";
+} from "@/app/services/transacoes";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -59,7 +59,7 @@ const BalanceItem = ({ label, value }) => (
   <>
     <p className="text-muted-foreground text-xs">{label}</p>
     <p>
-      <Numbers value={value} />
+      <MoneyValues value={value} />
     </p>
   </>
 );
@@ -137,7 +137,7 @@ const TransactionTable = ({
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Numbers value={item.valor} />
+                  <MoneyValues value={item.valor} />
                 </TableCell>
                 <TableCell>{item.categoria}</TableCell>
                 <TableCell>
@@ -184,16 +184,18 @@ const useResponsavelClass = () => {
 // Componente principal da página
 export default async function AccountPage({ searchParams, params }) {
   const { currentMonthName, currentYear, DateFormat } = UseDates();
+  const search = await searchParams;
+  const { id } = await params;
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = search?.periodo ?? defaultPeriodo;
 
   // Fetch paralelo dos dados
   const [accountDetails, transactionInvoice, sumIncome, sumExpense] =
     await Promise.all([
-      getAccountDetails(params.id),
-      getAccountInvoice(month, params.id),
-      getSumAccountIncome(month, params.id),
-      getSumAccountExpense(month, params.id),
+      getAccountDetails(id),
+      getAccountInvoice(month, id),
+      getSumAccountIncome(month, id),
+      getSumAccountExpense(month, id),
     ]);
 
   const saldo = sumIncome - sumExpense;

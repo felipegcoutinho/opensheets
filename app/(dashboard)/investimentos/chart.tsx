@@ -1,6 +1,6 @@
 "use client";
 
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import {
   Card,
   CardContent,
@@ -42,7 +42,7 @@ export default function InvestComponent({ data }) {
           <div className="flex flex-1 flex-col justify-center gap-1 border-t py-4 text-left sm:border-t-0 sm:px-6 sm:py-6">
             <span className="text-muted-foreground text-xs">Valor Atual</span>
             <span className="text-lg leading-none sm:text-2xl">
-              <Numbers value={valorAtual} />
+              <MoneyValues value={valorAtual} />
             </span>
           </div>
         </div>

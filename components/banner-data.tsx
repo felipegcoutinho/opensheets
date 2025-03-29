@@ -1,7 +1,7 @@
 import Utils from "@/app/(dashboard)/dashboard/utils";
+import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
-import Numbers from "./numbers";
 
 export default async function BannerData() {
   const {
@@ -18,7 +18,9 @@ export default async function BannerData() {
     <Banner>
       <div className="flex items-center justify-between py-6">
         <div>
-          <p className="text-xl font-bold">Olá, {userName.split(" ")[0]}! 👋</p>
+          <p className="text-xl font-medium">
+            Olá, {userName.split(" ")[0]}! 👋
+          </p>
           <p className="text-muted-foreground">
             <span>{fliendlyDate(currentDate)}.</span>
           </p>
@@ -26,7 +28,7 @@ export default async function BannerData() {
         <div className="text-right">
           <p>Saldo Atual</p>
           <p className="text-2xl">
-            <Numbers value={saldo} />
+            <MoneyValues value={saldo} />
           </p>
         </div>
       </div>

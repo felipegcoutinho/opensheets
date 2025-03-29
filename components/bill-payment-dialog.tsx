@@ -1,7 +1,7 @@
 "use client";
 
 import { payBills } from "@/app/actions/bills";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -76,7 +76,7 @@ export default function BillPaymentDialog({
                     Valor Total
                   </span>
                   <span className="text-foreground text-2xl font-semibold">
-                    <Numbers value={valor} />
+                    <MoneyValues value={valor} />
                   </span>
                 </div>
               </div>

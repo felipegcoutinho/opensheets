@@ -1,21 +1,16 @@
+import { getResponsavelBillList } from "@/app/services/boletos";
+import { getResponsavelTransactionList } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
-import { UseDates } from "@/hooks/use-dates";
-import {
-  getResponsavelBillList,
-  getResponsavelTransactionList,
-} from "../../actions/users";
+import { getPeriodo } from "@/hooks/periodo";
 import UsersCard from "./users-card";
 
 async function page(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = await getPeriodo(props);
 
-  const TransactionListMap = await getResponsavelTransactionList(month);
-  const BillListMap = await getResponsavelBillList(month);
+  const TransactionList = await getResponsavelTransactionList(month);
+  const BillList = await getResponsavelBillList(month);
 
-  if (!TransactionListMap.length || !BillListMap)
+  if (!TransactionList.length || !BillList)
     return <EmptyCard width={100} height={100} />;
 
   // Função para reorganizar o objeto
@@ -33,7 +28,7 @@ async function page(props) {
   }
 
   // Agrupa Lançamentos e boletos por responsável
-  const groupedData = TransactionListMap.reduce((acc, item) => {
+  const groupedData = TransactionList.reduce((acc, item) => {
     if (!acc[item.responsavel]) {
       acc[item.responsavel] = {
         cartoes: {},
@@ -56,7 +51,7 @@ async function page(props) {
     return acc;
   }, {});
 
-  BillListMap.forEach((item) => {
+  BillList.forEach((item) => {
     if (!groupedData[item.responsavel]) {
       groupedData[item.responsavel] = {
         cartoes: {},

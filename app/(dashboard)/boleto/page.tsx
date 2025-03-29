@@ -1,14 +1,11 @@
-import { getAccount } from "@/actions/accounts";
-import { getBills } from "@/actions/bills";
-import { UseDates } from "@/hooks/use-dates";
+import { getBills } from "@/app/services/boletos";
+import { getAccount } from "@/app/services/contas";
+import { getPeriodo } from "@/hooks/periodo";
 import CreateBills from "./modal/create-bills";
 import TableBills from "./table-bills";
 
-async function PageBills(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+async function page(props) {
+  const month = await getPeriodo(props);
 
   const getBillsMap = await getBills(month);
   const getAccountMap = await getAccount();
@@ -21,4 +18,4 @@ async function PageBills(props) {
   );
 }
 
-export default PageBills;
+export default page;

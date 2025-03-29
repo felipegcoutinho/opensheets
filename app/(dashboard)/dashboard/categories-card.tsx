@@ -1,7 +1,7 @@
 "use client";
 
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Progress } from "@/components/ui/progress";
 import {
   ArrowUpRight,
@@ -103,7 +103,7 @@ export default function CategoriesList({ data, month, color }) {
                 <ArrowUpRight className="text-muted-foreground h-3 w-3" />
               </Link>
               <p>
-                <Numbers value={item.sum} />
+                <MoneyValues value={item.sum} />
               </p>
             </div>
             <Progress

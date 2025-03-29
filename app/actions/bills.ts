@@ -4,27 +4,6 @@ import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { revalidatePath } from "next/cache";
 
-// Busca a lista de boletos salvos
-export async function getBills(month) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("boletos")
-    .select(
-      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao,
-      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
-    )
-    .eq("periodo", month)
-    .order("dt_vencimento", { ascending: true });
-
-  if (error) {
-    console.error("Erro em buscar boletos:", error);
-    return null;
-  }
-
-  return data;
-}
-
 // Adiciona um novo boleto
 export async function addBills(formData: FormData) {
   const {
@@ -185,30 +164,6 @@ export async function updateBills(formData: FormData) {
   } catch (error) {
     console.error("Erro ao atualizar boleto:", error);
   }
-}
-
-// Busca apenas despesas realizadas de uma conta bancária específica e soma os valores
-export async function getSumBillsExpensePaid(month) {
-  const supabase = await createClient();
-
-  const { error, data } = await supabase
-    .from("boletos")
-    .select(`valor`)
-    .eq("periodo", month)
-    .eq("status_pagamento", "Pago")
-    .eq("responsavel", "Você");
-
-  if (error) {
-    console.error("Erro ao buscar boletos pagos:", error);
-    return null;
-  }
-
-  const sumBillsExpensePaid = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return sumBillsExpensePaid;
 }
 
 export async function payBills(id) {
