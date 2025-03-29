@@ -1,14 +1,13 @@
 "use client";
 
-import { openRunde } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 
-function Numbers({ value }) {
+function MoneyValues({ value }) {
   const { estado, setEstado } = usePrivacy();
 
   return (
     <span
-      className={`font-medium ${openRunde.className} ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
+      className={`${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
     >
       {Number(value).toLocaleString("pt-BR", {
         style: "currency",
@@ -18,4 +17,4 @@ function Numbers({ value }) {
   );
 }
 
-export default Numbers;
+export default MoneyValues;

@@ -3,7 +3,7 @@ import { getCards } from "@/app/services/cartoes";
 import { getAccount } from "@/app/services/contas";
 import { getLimitesCartao } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -85,19 +85,19 @@ async function page(props) {
                     <div>
                       <p>Limite Total</p>
                       <p>
-                        <Numbers value={item.limites.limiteTotal} />
+                        <MoneyValues value={item.limites.limiteTotal} />
                       </p>
                     </div>
                     <div>
                       <p>Em Uso</p>
                       <p>
-                        <Numbers value={item.limites.limiteEmUso} />
+                        <MoneyValues value={item.limites.limiteEmUso} />
                       </p>
                     </div>
                     <div>
                       <p>Disponível</p>
                       <p className="text-green-500">
-                        <Numbers value={item.limites.limiteDisponivel} />
+                        <MoneyValues value={item.limites.limiteDisponivel} />
                       </p>
                     </div>
                   </div>

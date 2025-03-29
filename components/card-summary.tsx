@@ -1,4 +1,4 @@
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import {
   Card,
   CardContent,
@@ -12,12 +12,12 @@ export default function CardSummary({ title, value, previousValue, color }) {
     <Card>
       <CardHeader className="pb-2">
         <CardDescription>{title}</CardDescription>
-        <CardTitle className="text-2xl">
-          <Numbers value={value} />
+        <CardTitle className="text-2xl font-medium">
+          <MoneyValues value={value} />
         </CardTitle>
       </CardHeader>
       <CardContent className="text-xs text-neutral-500">
-        anterior <Numbers value={previousValue} />
+        anterior <MoneyValues value={previousValue} />
       </CardContent>
     </Card>
   );

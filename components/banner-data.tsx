@@ -1,7 +1,7 @@
 import Utils from "@/app/(dashboard)/dashboard/utils";
+import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
-import Numbers from "./numbers";
 
 export default async function BannerData() {
   const {
@@ -28,7 +28,7 @@ export default async function BannerData() {
         <div className="text-right">
           <p>Saldo Atual</p>
           <p className="text-2xl">
-            <Numbers value={saldo} />
+            <MoneyValues value={saldo} />
           </p>
         </div>
       </div>

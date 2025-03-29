@@ -2,7 +2,7 @@
 
 import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -64,7 +64,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                   </TableCell>
                   <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
                   <TableCell>
-                    <Numbers value={item.valor} />
+                    <MoneyValues value={item.valor} />
                   </TableCell>
                   <TableCell>
                     <BillPaymentDialog

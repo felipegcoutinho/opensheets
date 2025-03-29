@@ -1,6 +1,6 @@
 import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
 import { getCategoria } from "@/app/services/transacoes";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -89,7 +89,7 @@ async function page(props) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl">
-              <Numbers value={valorTotal} />
+              <MoneyValues value={valorTotal} />
             </div>
           </CardContent>
         </Card>
@@ -171,7 +171,7 @@ async function page(props) {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <Numbers value={item.valor} />
+                    <MoneyValues value={item.valor} />
                   </TableCell>
                   <TableCell className="text-right">
                     <DetailsTransactions

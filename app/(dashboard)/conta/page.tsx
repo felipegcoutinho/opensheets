@@ -5,7 +5,7 @@ import {
   getSumAccountIncome,
 } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { getPeriodo } from "@/hooks/periodo";
@@ -55,7 +55,7 @@ async function PageAccount(props) {
                 </CardTitle>
 
                 <p className="text-sm text-neutral-500 dark:text-neutral-300">
-                  Saldo <Numbers value={item.saldo} />
+                  Saldo <MoneyValues value={item.saldo} />
                 </p>
               </CardContent>
 

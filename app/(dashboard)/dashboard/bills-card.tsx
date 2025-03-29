@@ -1,6 +1,6 @@
 import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
 import { Check } from "lucide-react";
 import Image from "next/image";
@@ -40,7 +40,7 @@ export default async function BillsCard({ month, data }) {
 
       <div className="py-1 text-right">
         <p>
-          <Numbers value={item.valor} />
+          <MoneyValues value={item.valor} />
         </p>
 
         <BillPaymentDialog

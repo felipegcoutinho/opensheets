@@ -1,5 +1,5 @@
 import { getConditions } from "@/app/services/transacoes";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export async function ConditionList({ month }) {
@@ -21,7 +21,7 @@ export async function ConditionList({ month }) {
             <div className="flex items-center justify-between">
               <p>{item.condicao}</p>
               <p>
-                <Numbers value={item.sum} />
+                <MoneyValues value={item.sum} />
               </p>
             </div>
           </CardContent>

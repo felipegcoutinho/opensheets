@@ -1,7 +1,7 @@
 "use client";
 
 import EmptyCard from "@/components/empty-card";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -97,7 +97,7 @@ export function TableTransaction({ data, getAccount, getCards }) {
         <div className="flex items-center gap-2">
           {/* Exibe a soma dos lançamentos selecionados */}
           <div className="text-muted-foreground text-right text-xs">
-            Total Selecionado: <Numbers value={selectedTransactionSum} />
+            Total Selecionado: <MoneyValues value={selectedTransactionSum} />
           </div>
 
           <Input

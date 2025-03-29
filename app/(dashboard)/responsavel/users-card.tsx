@@ -1,4 +1,4 @@
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, File, User, Users } from "lucide-react";
 import Image from "next/image";
@@ -34,7 +34,7 @@ export default function UsersCard({
               <p>Cartões</p>
             </div>
             <p className="text-lg">
-              <Numbers value={totalCartao} />
+              <MoneyValues value={totalCartao} />
             </p>
           </li>
 
@@ -70,7 +70,7 @@ export default function UsersCard({
                     {descricao}
                   </p>
                   <p>
-                    <Numbers value={data.valor} />
+                    <MoneyValues value={data.valor} />
                   </p>
                 </li>
               ))
@@ -91,7 +91,7 @@ export default function UsersCard({
               <p>Boletos</p>
             </div>
             <p className="text-lg">
-              <Numbers value={totalBoleto} />
+              <MoneyValues value={totalBoleto} />
             </p>
           </li>
 
@@ -114,7 +114,7 @@ export default function UsersCard({
                     {descricao}
                   </span>
                   <span>
-                    <Numbers value={valor} />
+                    <MoneyValues value={valor} />
                   </span>
                 </li>
               ))
@@ -130,7 +130,7 @@ export default function UsersCard({
           <li className="flex items-center justify-between">
             <span className="text-muted-foreground text-lg">Total</span>
             <span className="text-xl">
-              <Numbers value={totalCartao + totalBoleto} />
+              <MoneyValues value={totalCartao + totalBoleto} />
             </span>
           </li>
         </div>

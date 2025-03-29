@@ -1,7 +1,7 @@
 "use client";
 
 import { LogosOnTable } from "@/components/logos-on-table";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -195,7 +195,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     },
     cell: ({ row }) => (
       <div className="capitalize">
-        <Numbers value={row.getValue("valor")} />
+        <MoneyValues value={row.getValue("valor")} />
       </div>
     ),
   },

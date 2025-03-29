@@ -1,6 +1,5 @@
 "use client";
 
-import { openRunde } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -141,9 +140,7 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="relative flex items-center">
-          <div
-            className={`${openRunde.className} mx-2 text-lg capitalize dark:text-white`}
-          >
+          <div className={`mx-2 text-lg font-bold capitalize dark:text-white`}>
             {currentMonth} <span className="text-green-600">{currentYear}</span>
           </div>
 

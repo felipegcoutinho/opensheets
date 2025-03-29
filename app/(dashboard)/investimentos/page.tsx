@@ -1,5 +1,5 @@
 import { getInvest } from "@/actions/invest";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -63,10 +63,10 @@ async function page() {
                 <TableCell>#{item.id}</TableCell>
                 <TableCell>{DateFormat(item.data)}</TableCell>
                 <TableCell>
-                  <Numbers value={item.valor} />
+                  <MoneyValues value={item.valor} />
                 </TableCell>
                 <TableCell className={differenceClass}>
-                  {difference ? <Numbers value={difference} /> : "-"}
+                  {difference ? <MoneyValues value={difference} /> : "-"}
                 </TableCell>
                 <TableCell>
                   <UpdateInvest

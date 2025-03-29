@@ -5,7 +5,7 @@ import {
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/app/services/transacoes";
-import Numbers from "@/components/numbers";
+import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -59,7 +59,7 @@ const BalanceItem = ({ label, value }) => (
   <>
     <p className="text-muted-foreground text-xs">{label}</p>
     <p>
-      <Numbers value={value} />
+      <MoneyValues value={value} />
     </p>
   </>
 );
@@ -137,7 +137,7 @@ const TransactionTable = ({
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Numbers value={item.valor} />
+                  <MoneyValues value={item.valor} />
                 </TableCell>
                 <TableCell>{item.categoria}</TableCell>
                 <TableCell>
