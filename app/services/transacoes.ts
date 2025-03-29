@@ -65,6 +65,7 @@ export async function getConditions(month) {
     .eq("periodo", month)
     .eq("responsavel", "Você")
     .order("condicao", { ascending: true });
+
   if (error) throw error;
   return data;
 }
@@ -182,6 +183,33 @@ export async function getTransactions(month: string) {
     .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false })
     .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar Lançamentos:", error);
+    return [];
+  }
+
+  return data;
+}
+
+export async function getTransactionsByConditions(
+  condicao: string,
+  month: string,
+) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select(
+      `*, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
+    )
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false })
+    .eq("periodo", month)
+    .eq("responsavel", "Você")
+    .eq("condicao", condicao)
+    .eq("tipo_transacao", "Despesa");
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
