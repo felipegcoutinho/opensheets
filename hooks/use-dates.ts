@@ -25,6 +25,11 @@ export function UseDates() {
     "2028",
     "2029",
     "2030",
+    "2031",
+    "2032",
+    "2033",
+    "2034",
+    "2035",
   ];
 
   // Lista dos nomes dos dias da semana

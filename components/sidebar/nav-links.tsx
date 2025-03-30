@@ -10,11 +10,6 @@ import {
 
 export function getData(month: string) {
   return {
-    user: {
-      name: "Felipe Coutinho",
-      email: "m@example.com",
-    },
-
     projects: [
       {
         name: "dashboard",
