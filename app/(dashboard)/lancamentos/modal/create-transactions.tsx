@@ -438,12 +438,16 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
         <DialogFooter className="mt-4 flex gap-2">
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
+            <Button className="w-1/2" type="button" variant="secondary">
               Cancelar
             </Button>
           </DialogClose>
-
-          <Button form="transaction-form" type="submit" disabled={loading}>
+          <Button
+            form="transaction-form"
+            className="w-1/2"
+            type="submit"
+            disabled={loading}
+          >
             {loading ? "Salvando..." : "Salvar"}
           </Button>
         </DialogFooter>
