@@ -8,6 +8,7 @@ import InvoiceCard from "./invoices-card";
 import { PaymentList } from "./payment-card";
 import RecentesTransactions from "./recents-transactions";
 import Stats from "./stats";
+import { Component } from "./teste";
 import useUtils from "./utils";
 
 export default async function page(props) {
@@ -47,6 +48,11 @@ export default async function page(props) {
       </div>
 
       <div className="mt-2 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <Component
+          previuosreceita={receitasAnterior}
+          previuosdespesa={despesasTotalAnterior}
+        />
+
         <CardInvoices title="Faturas">
           <InvoiceCard month={month} data={invoiceList} />
         </CardInvoices>
