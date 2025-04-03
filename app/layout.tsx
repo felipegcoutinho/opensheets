@@ -13,7 +13,7 @@ export const metadata = {
     "Aplicação para finanças pessoais, com o objetivo de ajudar a organizar e controlar suas finanças.",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html
       lang="pt-BR"
@@ -28,7 +28,10 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="antialiased">{children}</main>
+            <main className="antialiased">
+              {props.children}
+              {props.modal}
+            </main>
           </PrivacyProviderApp>
           <SpeedInsights />
           <Analytics />
