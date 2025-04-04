@@ -27,6 +27,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function CreateTransactionsTeste({ getCards, getAccount }) {
   const {
@@ -60,8 +61,10 @@ export default function CreateTransactionsTeste({ getCards, getAccount }) {
     setIsPaid(false);
   }
 
+  const router = useRouter();
+
   return (
-    <Dialog open={true} onOpenChange={handleDialogClose}>
+    <Dialog open={true} onOpenChange={() => router.back()}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Nova Transação</DialogTitle>

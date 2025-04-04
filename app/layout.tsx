@@ -28,10 +28,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="antialiased">
-              {props.children}
-              {props.modal}
-            </main>
+            <main className="antialiased">{props.children}</main>
           </PrivacyProviderApp>
           <SpeedInsights />
           <Analytics />

@@ -1,4 +1,4 @@
-import CreateTransactionsTeste from "@/app/criar-lancamentos/page";
+import CreateTransactionsTeste from "@/app/(dashboard)/criar-lancamentos/page";
 
 export default function CreateTransactions({ getCards, getAccount }) {
   return (
