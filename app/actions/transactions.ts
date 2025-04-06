@@ -308,3 +308,19 @@ export async function removeImage(transactionId, imageUrl) {
 
   console.log("Imagem removida com sucesso!");
 }
+
+export async function togglePagamento(id, realizadoAtual) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .update({ realizado: !realizadoAtual })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao atualizar status de pagamento:", error.message);
+    return { error };
+  }
+
+  return { data };
+}
