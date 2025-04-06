@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { getNotesStats } from "@/services/anotacoes";
 import { getBillsStats } from "@/services/boletos";
 import { getCardsStats } from "@/services/cartoes";
 import { getAccountsStats } from "@/services/contas";
 import { getTransactionsStats } from "@/services/transacoes";
 import {
-  ArrowDownUp,
+  ArrowRightLeft,
   CreditCard,
   File,
   Landmark,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const statsConfig = [
-  { title: "Lançamentos", icon: ArrowDownUp, getData: getTransactionsStats },
+  { title: "Lançamentos", icon: ArrowRightLeft, getData: getTransactionsStats },
   { title: "Boletos", icon: File, getData: getBillsStats },
   { title: "Cartões", icon: CreditCard, getData: getCardsStats },
   { title: "Contas", icon: Landmark, getData: getAccountsStats },
@@ -21,15 +21,13 @@ const statsConfig = [
 ];
 
 const StatCard = ({ title, icon: Icon, count }) => (
-  <Card>
-    <CardHeader className="pb-0">
-      <CardTitle className="dark:text-muted-foreground flex items-center gap-1 text-sm uppercase">
-        <Icon size={14} />
-        {title}
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="mt-2 text-2xl">{count}</p>
+  <Card className="flex items-center justify-between border-none bg-slate-100 p-6">
+    <CardTitle className="dark:text-muted-foreground flex items-center gap-1">
+      <Icon size={14} />
+      {title}
+    </CardTitle>
+    <CardContent className="flex items-center p-0">
+      <p className="text-3xl text-green-600">{count}</p>
     </CardContent>
   </Card>
 );
@@ -43,7 +41,7 @@ async function Stats({ month }) {
   );
 
   return (
-    <div className="grid grid-cols-2 gap-2 lg:grid-cols-5">
+    <div className="grid grid-cols-2 gap-2 lg:grid-cols-2">
       {statsConfig.map(({ title, icon }, index) => (
         <StatCard
           key={title}

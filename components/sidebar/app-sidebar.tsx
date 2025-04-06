@@ -49,6 +49,10 @@ export function AppSidebar({
       <SidebarContent>
         <NavProjects projects={data.projects} />
 
+        {/* <Link href="/criar-lancamentos" className="your-class-name">
+          Your Link Text
+        </Link> */}
+
         {/*<SidebarMenuItem className="mt-auto mb-6 space-y-2 px-3 group-data-[collapsible=icon]:hidden">
          <SidebarMenuButton asChild>
             <label>

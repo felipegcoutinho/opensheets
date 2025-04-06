@@ -102,22 +102,22 @@ export function UseDates() {
     return `${previousMonth}-${previousYear}`;
   };
 
-  const getPreviousTwoMonth = (currentMonth) => {
+  const getLastSixMonths = (currentMonth: string) => {
     const [monthName, year] = currentMonth.split("-");
-    const monthIndex = optionsMeses.findIndex(
+    const startIndex = optionsMeses.findIndex(
       (m) => m.toLowerCase() === monthName.toLowerCase(),
     );
 
-    // Cria a data com o mês atual e ano fornecido
-    const date = new Date(year, monthIndex, 1);
+    const months = [];
 
-    // Define a data para o mês anterior
-    date.setMonth(date.getMonth() - 2);
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(Number(year), startIndex - i, 1);
+      const month = optionsMeses[date.getMonth()];
+      const yearFormatted = date.getFullYear();
+      months.push(`${month}-${yearFormatted}`);
+    }
 
-    const previousMonth = optionsMeses[date.getMonth()];
-    const previousYear = date.getFullYear();
-
-    return `${previousMonth}-${previousYear}`;
+    return months;
   };
 
   const getMonthOptions = () => {
@@ -150,7 +150,7 @@ export function UseDates() {
     optionsAnos,
     diasDaSemana,
     getPreviousMonth,
-    getPreviousTwoMonth,
+    getLastSixMonths,
     DateFormat,
     fliendlyDate,
     getGreeting,

@@ -7,7 +7,11 @@ export async function getNotesStats(month) {
     .from("anotacoes")
     .select("count()")
     .eq("periodo", month);
+
   if (error) throw error;
+
+  const total = data[0].count;
+
   return data;
 }
 

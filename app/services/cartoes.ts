@@ -3,8 +3,15 @@ import { createClient } from "@/utils/supabase/server";
 export async function getCardsStats() {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("cartoes").select("count()");
+  const { data, error } = await supabase
+    .from("cartoes")
+    .select("count()")
+    .eq("status", "ativo");
+
   if (error) throw error;
+
+  const total = data[0].count;
+
   return data;
 }
 

@@ -6,15 +6,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Ping from "./ping-icon";
 
 export default function CardSummary({ title, value, previousValue, color }) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardDescription>{title}</CardDescription>
-        <CardTitle className="text-2xl font-medium">
-          <MoneyValues value={value} />
+        <CardTitle>
+          <div className="flex items-center gap-2">
+            <Ping color={color} />
+            {title}
+          </div>
         </CardTitle>
+        <CardDescription className="text-2xl">
+          <MoneyValues value={value} />
+        </CardDescription>
       </CardHeader>
       <CardContent className="text-xs text-neutral-500">
         anterior <MoneyValues value={previousValue} />
