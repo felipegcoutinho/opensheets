@@ -2,6 +2,7 @@
 
 import { LogosOnTable } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import TogglePaymentDialog from "@/components/toggle-payment-dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -28,12 +29,12 @@ import {
   MessageSquareText,
   PartyPopper,
   RefreshCw,
-  ThumbsUp,
   Users,
 } from "lucide-react";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
+import Utils from "../utils-transacao";
 
 const { getButtonVariant } = UseStyles();
 
@@ -283,8 +284,10 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
     cell: ({ row }) => {
       const item = row.original;
 
+      const { isPaid, setIsPaid, showCartao, handleSubmit } = Utils();
+
       return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -348,6 +351,19 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               )}
 
               {item.responsavel != "Sistema" && (
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  <TogglePaymentDialog
+                    id={item.id}
+                    realizadoAtual={item.realizado}
+                    formaPagamento={item.forma_pagamento}
+                    onStatusChanged={(novoStatus) => {
+                      item.realizado = novoStatus;
+                    }}
+                  />
+                </DropdownMenuItem>
+              )}
+
+              {item.responsavel != "Sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -360,25 +376,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               )}
             </DropdownMenuContent>
           </DropdownMenu>
-
-          {item.responsavel != "Sistema" && (
-            <div className="flex text-center">
-              <TooltipProvider delayDuration={300}>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <ThumbsUp
-                      fill={item.realizado ? "green" : "gray"}
-                      className="stroke-none"
-                      size={16}
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {item.realizado ? "Transação Paga" : "Transação Pendente"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-          )}
 
           {item.imagem_url && (
             <div className="flex text-center">

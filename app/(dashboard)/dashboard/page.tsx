@@ -4,7 +4,7 @@ import { getPeriodo } from "@/hooks/periodo";
 import { UseDates } from "@/hooks/use-dates";
 import BillsCard from "./bills-card";
 import Category from "./categories-card";
-import { ChartSummary } from "./chart-summary";
+import { ChartSummary } from "../../../components/chart-summary";
 import { ConditionList } from "./condition-card";
 import InvoiceCard from "./invoices-card";
 import { PaymentList } from "./payment-card";
