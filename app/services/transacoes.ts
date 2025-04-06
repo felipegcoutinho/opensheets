@@ -92,7 +92,11 @@ export async function getTransactionsStats(month) {
     .select("count()")
     .eq("periodo", month)
     .eq("responsavel", "Você");
+
   if (error) throw error;
+
+  const totalTransactions = data[0].count;
+
   return data;
 }
 

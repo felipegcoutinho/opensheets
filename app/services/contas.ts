@@ -4,7 +4,11 @@ export async function getAccountsStats() {
   const supabase = createClient();
 
   const { data, error } = await supabase.from("contas").select("count()");
+
   if (error) throw error;
+
+  const total = data[0].count;
+
   return data;
 }
 

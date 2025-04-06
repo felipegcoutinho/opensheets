@@ -30,7 +30,11 @@ export async function getBillsStats(month) {
     .select("count()")
     .eq("periodo", month)
     .eq("responsavel", "Você");
+
   if (error) throw error;
+
+  const total = data[0].count;
+
   return data;
 }
 

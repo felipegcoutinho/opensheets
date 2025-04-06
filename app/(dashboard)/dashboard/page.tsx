@@ -1,21 +1,32 @@
 import CardInvoices from "@/components/card-invoices";
 import CardSummary from "@/components/card-summary";
+import { getPeriodo } from "@/hooks/periodo";
 import { UseDates } from "@/hooks/use-dates";
 import BillsCard from "./bills-card";
 import Category from "./categories-card";
+import { ChartSummary } from "./chart-summary";
 import { ConditionList } from "./condition-card";
 import InvoiceCard from "./invoices-card";
 import { PaymentList } from "./payment-card";
 import RecentesTransactions from "./recents-transactions";
 import Stats from "./stats";
-import { Component } from "./teste";
 import useUtils from "./utils";
 
 export default async function page(props) {
-  const searchParams = await props.searchParams;
-  const { currentMonthName, currentYear } = UseDates();
-  const defaultPeriodo = `${currentMonthName}-${currentYear}`;
-  const month = searchParams?.periodo ?? defaultPeriodo;
+  const month = await getPeriodo(props);
+
+  const { getLastSixMonths } = await UseDates();
+
+  const sixmonth = await getLastSixMonths(month);
+
+  const allData = await Promise.all(sixmonth.map((month) => useUtils(month)));
+
+  const chartData = sixmonth.map((month, index) => ({
+    month: month.split("-")[0].slice(0, 3), // Ex: "Abr"
+    receita: allData[index].receitas,
+    despesa: allData[index].despesasTotal,
+    balanco: allData[index].balanco,
+  }));
 
   const {
     receitas,
@@ -43,15 +54,15 @@ export default async function page(props) {
             title={item.title}
             value={item.value}
             key={index}
+            color={item.color}
           />
         ))}
       </div>
 
-      <div className="mt-2 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <Component
-          previuosreceita={receitasAnterior}
-          previuosdespesa={despesasTotalAnterior}
-        />
+      <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
+        <div>
+          <ChartSummary data={chartData} />
+        </div>
 
         <CardInvoices title="Faturas">
           <InvoiceCard month={month} data={invoiceList} />
@@ -60,17 +71,19 @@ export default async function page(props) {
         <CardInvoices title="Boletos">
           <BillsCard month={month} data={billsByResponsavel} />
         </CardInvoices>
+      </div>
 
+      <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-2">
         <CardInvoices title="Lançamentos Recentes">
           <RecentesTransactions transactions={recentTransactions} />
         </CardInvoices>
+
+        <CardInvoices title="Resumo do Mês">
+          <Stats month={month} />
+        </CardInvoices>
       </div>
 
-      <div className="my-2">
-        <Stats month={month} />
-      </div>
-
-      <div className="my-2 mb-10 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+      <div className="my-2 mb-10 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
         <ConditionList month={month} />
         <PaymentList month={month} />
 

@@ -55,13 +55,13 @@ async function useUtils(month) {
       title: "Balanço",
       value: balanco,
       previousValue: balancoAnterior,
-      color: "bg-yellow-400",
+      color: "bg-violet-500",
     },
     {
       title: "Saldo Previsto",
       value: previsto,
       previousValue: previstoAnterior,
-      color: "bg-violet-400",
+      color: "bg-amber-500",
     },
   ];
 

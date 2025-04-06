@@ -8,9 +8,7 @@ export async function PaymentList({ month }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="dark:text-muted-foreground text-sm uppercase">
-          Formas de Pagamento
-        </CardTitle>
+        <CardTitle>Formas de Pagamento</CardTitle>
       </CardHeader>
 
       {payment?.length > 0 ? (

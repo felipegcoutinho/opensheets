@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
 import { useTheme } from "next-themes";
-import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
@@ -50,9 +49,9 @@ export function AppSidebar({
       <SidebarContent>
         <NavProjects projects={data.projects} />
 
-        <Link href="/criar-lancamentos" className="your-class-name">
+        {/* <Link href="/criar-lancamentos" className="your-class-name">
           Your Link Text
-        </Link>
+        </Link> */}
 
         {/*<SidebarMenuItem className="mt-auto mb-6 space-y-2 px-3 group-data-[collapsible=icon]:hidden">
          <SidebarMenuButton asChild>

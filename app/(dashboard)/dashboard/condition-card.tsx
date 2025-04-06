@@ -12,9 +12,7 @@ export async function ConditionList({ month }) {
   return (
     <Card className="pb-4">
       <CardHeader>
-        <CardTitle className="dark:text-muted-foreground text-sm uppercase">
-          Condições de Pagamento
-        </CardTitle>
+        <CardTitle>Condições de Pagamento</CardTitle>
       </CardHeader>
 
       {condicoesSorted?.length > 0 ? (
