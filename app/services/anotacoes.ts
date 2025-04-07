@@ -12,7 +12,7 @@ export async function getNotesStats(month) {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 export async function getNotes(month) {

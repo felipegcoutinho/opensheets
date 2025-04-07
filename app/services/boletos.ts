@@ -35,7 +35,7 @@ export async function getBillsStats(month) {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 export async function getBillsByResponsavel(month) {

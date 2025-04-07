@@ -42,7 +42,14 @@ export const NavProjects = memo(function NavProjects({
                       isActive ? "text-green-600" : "text-black"
                     }`}
                   />
-                  <span className="truncate font-medium">{item.name}</span>
+                  <span className="truncate font-medium">
+                    {item.name}
+                    {typeof item.count === "number" && (
+                      <span className="ml-2 rounded bg-neutral-200 px-2 py-0.5 text-xs text-neutral-800">
+                        {item.count}
+                      </span>
+                    )}
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

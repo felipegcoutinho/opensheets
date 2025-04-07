@@ -12,7 +12,7 @@ export async function getCardsStats() {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 // Busca a lista de cartões salvos

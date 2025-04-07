@@ -9,7 +9,7 @@ export async function getAccountsStats() {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 export async function getAccount() {

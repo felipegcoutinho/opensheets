@@ -95,9 +95,9 @@ export async function getTransactionsStats(month) {
 
   if (error) throw error;
 
-  const totalTransactions = data[0].count;
+  const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 export async function getExpenseByCategory(month) {
