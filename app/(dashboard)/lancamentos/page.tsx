@@ -4,7 +4,7 @@ import { getTransactions } from "@/app/services/transacoes";
 import { getPeriodo } from "@/hooks/periodo";
 import { TableTransaction } from "./table/table-transaction";
 
-async function page(props) {
+export default async function page(props) {
   const month = await getPeriodo(props);
 
   const cartoes = await getCards(month);
@@ -19,5 +19,3 @@ async function page(props) {
     />
   );
 }
-
-export default page;

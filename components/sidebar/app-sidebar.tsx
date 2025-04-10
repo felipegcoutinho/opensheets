@@ -20,18 +20,8 @@ import { NavLinks } from "./nav-links";
 export function AppSidebar({
   username,
   usermail,
-  stats,
   ...props
-}: React.ComponentProps<typeof Sidebar> & {
-  session: any;
-  stats: {
-    transacoes: number;
-    boletos: number;
-    cartoes: number;
-    contas: number;
-    anotacoes: number;
-  };
-}) {
+}: React.ComponentProps<typeof Sidebar> & {}) {
   const { open } = useSidebar();
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
@@ -43,7 +33,7 @@ export function AppSidebar({
   let month =
     searchParams.get("periodo") || `${currentMonthName}-${currentYear}`;
 
-  const data = NavLinks(month, stats);
+  const data = NavLinks(month);
 
   React.useEffect(() => {
     setMounted(true);
@@ -54,7 +44,6 @@ export function AppSidebar({
       <SidebarHeader className="flex items-center justify-center">
         <div className="flex items-center gap-2">
           {open ? <Logo /> : <span className="text-black">OP</span>}
-          {month}
         </div>
       </SidebarHeader>
       <SidebarContent>

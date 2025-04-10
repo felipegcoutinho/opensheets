@@ -13,7 +13,11 @@ export const metadata = {
   title: "Dashboard | opensheets",
 };
 
-export default async function Layout(props: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
@@ -32,8 +36,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
           <Suspense>
             <MonthPicker />
           </Suspense>
-          {props.children}
-          {props.modal}
+          {children}
         </div>
       </SidebarInset>
     </SidebarProvider>

@@ -84,7 +84,7 @@ export async function getPayment(month) {
   return data;
 }
 
-export async function getTransactionsStats(month) {
+export async function getTransactionsStats(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
