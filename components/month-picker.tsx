@@ -126,7 +126,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-slate-100 p-4">
+    <Card className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-orange-100 p-4">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
