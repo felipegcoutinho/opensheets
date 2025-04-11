@@ -21,7 +21,7 @@ const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
 
 const ReturnButton = React.memo(({ onClick, disabled }) => (
   <button
-    className="bg-color-6 dark:bg-color-6 ml-2 cursor-pointer rounded text-white disabled:opacity-50 dark:text-white"
+    className="bg-primary ml-2 cursor-pointer rounded text-white disabled:opacity-50 dark:text-white"
     onClick={onClick}
     disabled={disabled}
   >
@@ -126,7 +126,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-orange-100 p-4">
+    <Card className="dark:bg-card bg-secondary my-2 flex w-full items-center justify-start border-none p-4">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -134,8 +134,9 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="relative flex items-center">
-          <div className={`mx-2 text-lg font-bold capitalize dark:text-white`}>
-            {currentMonth} <span className="text-green-600">{currentYear}</span>
+          <div className={`mx-2 text-lg font-bold capitalize`}>
+            {currentMonth}{" "}
+            <span className="text-accent-foreground">{currentYear}</span>
           </div>
 
           {isChanging && (

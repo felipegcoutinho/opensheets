@@ -7,7 +7,7 @@ function MoneyValues({ value }) {
 
   return (
     <span
-      className={`${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
+      className={`font-bold ${!estado && "opacity-80 blur-xl transition-all duration-300 hover:blur-none"} `}
     >
       {Number(value).toLocaleString("pt-BR", {
         style: "currency",
