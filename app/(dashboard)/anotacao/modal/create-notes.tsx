@@ -21,12 +21,27 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
+import { useState } from "react";
 import Utils from "../utils";
 
-export default function CreateNotes({ getAccountMap, children }) {
-  const { loading, handleSubmit, isOpen, setIsOpen } = Utils();
+type MonthOption = {
+  value: string;
+  label: string;
+};
 
+type Props = {
+  getAccountMap: (accountId: string) => {
+    id: string;
+    descricao: string;
+  };
+  children: React.ReactNode;
+};
+
+export default function CreateNotes({ getAccountMap, children }: Props) {
+  const { loading, handleSubmit, isOpen, setIsOpen } = Utils();
   const { getMonthOptions } = UseDates();
+
+  const [periodo, setPeriodo] = useState("");
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -55,18 +70,19 @@ export default function CreateNotes({ getAccountMap, children }) {
             <div className="w-1/2">
               <Label>Período</Label>
               <Required />
-              <Select name="periodo" required>
+              <Select value={periodo} onValueChange={setPeriodo} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  {getMonthOptions().map((option) => (
+                  {getMonthOptions().map((option: MonthOption) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              <input type="hidden" name="periodo" value={periodo} />
             </div>
           </div>
 
