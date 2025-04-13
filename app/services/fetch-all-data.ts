@@ -22,9 +22,9 @@ import {
   getSumAccountIncomePaid,
   getTransactionsStats,
 } from "@/services/transacoes";
-import { createClient } from "@/utils/supabase/server";
+import { getInvoiceList } from "@/services/faturas";
 
-export async function fetchAllData(month :string) {
+export async function fetchAllData(month: string) {
   try {
     const [
       receitas,
@@ -71,16 +71,6 @@ export async function fetchAllData(month :string) {
       getSumBillsExpensePaid(month),
       getInvoiceList(month),
     ]);
-
-    async function getInvoiceList(month) {
-      const supabase = createClient();
-
-      const { data, error } = await supabase.rpc("getinvoicelists", { month });
-      if (error) throw error;
-
-      return data;
-    }
-
 
     return {
       receitas,
