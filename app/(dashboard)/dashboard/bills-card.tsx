@@ -38,6 +38,8 @@ export default async function BillsCard({ month, data }) {
         </div>
       </div>
 
+      
+
       <div className="py-1 text-right">
         <p>
           <MoneyValues value={item.valor} />
