@@ -22,7 +22,7 @@ export async function addBills(formData: FormData) {
     dividir_boleto,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = await createClient();
+  const supabase = createClient();
   const boletos = [];
 
   function adicionarBoleto(valor, responsavel, periodo, dt_vencimento) {
@@ -113,7 +113,7 @@ export async function addBills(formData: FormData) {
 export async function deleteBills(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase.from("boletos").delete().eq("id", excluir);
@@ -140,7 +140,7 @@ export async function updateBills(formData: FormData) {
     responsavel,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase
@@ -167,7 +167,7 @@ export async function updateBills(formData: FormData) {
 }
 
 export async function payBills(id) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { error, data } = await supabase
     .from("boletos")

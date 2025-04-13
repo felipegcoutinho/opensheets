@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function signOut(data) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   await supabase.auth.signOut();
   return redirect("/login");
@@ -17,7 +17,7 @@ export const signIn = async (formData) => {
 
   const email = formData.get("email");
   const password = formData.get("password");
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -39,7 +39,7 @@ export const signUp = async (formData) => {
   const firstName = formData.get("first_name");
   const lastName = formData.get("last_name");
   const password = formData.get("password");
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { error } = await supabase.auth.signUp({
     email,
@@ -64,7 +64,7 @@ export const signUp = async (formData) => {
 
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
-  const supabase = await createClient();
+  const supabase = createClient();
   const origin = (await headers()).get("origin");
   const callbackUrl = formData.get("callbackUrl")?.toString();
 
@@ -101,7 +101,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
 };
 
 export const resetPasswordAction = async (formData: FormData) => {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;

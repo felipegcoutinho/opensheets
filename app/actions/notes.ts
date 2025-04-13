@@ -8,7 +8,7 @@ export async function addNotes(formData: FormData) {
     formData.entries(),
   );
 
-  const supabase = await createClient();
+  const supabase = createClient();
   await supabase.from("anotacoes").insert({ descricao, periodo, anotacao });
   revalidatePath("/anotacoes");
 }
@@ -16,7 +16,7 @@ export async function addNotes(formData: FormData) {
 export async function deleteNotes(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = await createClient();
+  const supabase = createClient();
   await supabase.from("anotacoes").delete().eq("id", excluir);
   revalidatePath("/anotacoes");
 }
@@ -26,7 +26,7 @@ export async function updateNotes(formData: FormData) {
     formData.entries(),
   );
 
-  const supabase = await createClient();
+  const supabase = createClient();
   await supabase
     .from("anotacoes")
     .update({ id, descricao, periodo, anotacao })

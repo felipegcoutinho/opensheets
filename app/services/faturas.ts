@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getFaturas(month, cartao_id) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: faturas } = await supabase
     .from("faturas")

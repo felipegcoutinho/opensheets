@@ -24,7 +24,7 @@ import {
 } from "@/services/transacoes";
 import { createClient } from "@/utils/supabase/server";
 
-export async function fetchAllData(month) {
+export async function fetchAllData(month :string) {
   try {
     const [
       receitas,
@@ -77,8 +77,10 @@ export async function fetchAllData(month) {
 
       const { data, error } = await supabase.rpc("getinvoicelists", { month });
       if (error) throw error;
+
       return data;
     }
+
 
     return {
       receitas,

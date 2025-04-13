@@ -6,7 +6,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import { revalidatePath } from "next/cache";
 
 export async function addTransaction(formData: FormData) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const transacoes = [];
 
   const formEntries = Object.fromEntries(formData.entries());
@@ -158,13 +158,13 @@ async function uploadImagem(
 export async function deleteTransaction(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = await createClient();
+  const supabase = createClient();
   await supabase.from("transacoes").delete().eq("id", excluir);
   revalidatePath("/dashboard");
 }
 
 export async function updateTransaction(formData: FormData) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     id,
     data_compra,
@@ -254,7 +254,7 @@ export async function updateTransaction(formData: FormData) {
 }
 
 export async function removeImage(transactionId, imageUrl) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Extrair o caminho correto do arquivo
   const filePath = decodeURIComponent(
@@ -286,7 +286,7 @@ export async function removeImage(transactionId, imageUrl) {
 }
 
 export async function togglePagamento(id, realizadoAtual) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
