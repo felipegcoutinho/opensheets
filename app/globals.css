@@ -16,12 +16,12 @@
   --background: oklch(0.985 0 0);
   --card: oklch(0.985 0 0);
   --popover: oklch(0.985 0 0);
-  --sidebar: oklch(0.99 0 none);
+  --sidebar: oklch(0.95 0.01 94.93);
   --foreground: oklch(0.213 0 0);
   --card-foreground: oklch(0.213 0 0);
   --popover-foreground: oklch(0.213 0 0);
   --sidebar-foreground: oklch(0.213 0 0);
-  --primary: oklch(0.523 0.19 258);
+  --primary: oklch(0.67 0.13 38.75);
   --sidebar-primary: oklch(0.523 0.19 258);
   --primary-foreground: oklch(0.961 0 0);
   --sidebar-primary-foreground: oklch(0.961 0 0);
@@ -147,7 +147,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 
   ::selection {

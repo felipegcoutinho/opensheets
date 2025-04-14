@@ -1,3 +1,4 @@
+import { Noto_Serif_Georgian } from "next/font/google";
 import localFont from "next/font/local";
 
 const uiSans = localFont({
@@ -41,4 +42,9 @@ const SharpGrotesk = localFont({
   ],
 });
 
-export { AtlasGrotesk, SharpGrotesk, uiSans };
+const NotoSerifGeorgian = Noto_Serif_Georgian({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+export { AtlasGrotesk, NotoSerifGeorgian, SharpGrotesk, uiSans };
