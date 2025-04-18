@@ -21,7 +21,7 @@ const statsConfig = [
 ];
 
 const StatCard = ({ title, icon: Icon, count }) => (
-  <Card className="flex items-center justify-between border-none bg-violet-100 p-6">
+  <Card className="bg-accent flex items-center justify-between border-none p-6">
     <CardTitle className="dark:text-muted-foreground flex items-center gap-1">
       <Icon size={14} />
       {title}
