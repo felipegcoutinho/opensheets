@@ -32,14 +32,12 @@ export const NavProjects = memo(function NavProjects({
                 <Link
                   href={item.url}
                   className={`flex items-center gap-3 rounded-xl px-3 py-2 capitalize transition-all ${
-                    isActive
-                      ? "text-green-600 hover:bg-green-700"
-                      : "text-neutral-700 hover:bg-neutral-100 hover:text-black"
+                    isActive ? "text-primary" : "text-accent-foreground"
                   } `}
                 >
                   <item.icon
                     className={`h-5 w-5 flex-shrink-0 ${
-                      isActive ? "text-green-600" : "text-black"
+                      isActive ? "text-primary" : "text-foreground"
                     }`}
                   />
                   <span className="truncate font-medium">

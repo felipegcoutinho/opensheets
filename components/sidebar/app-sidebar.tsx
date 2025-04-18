@@ -40,10 +40,14 @@ export function AppSidebar({
   }, []);
 
   return (
-    <Sidebar collapsible="icon" {...props} className="border-r border-zinc-200">
+    <Sidebar
+      collapsible="icon"
+      {...props}
+      className="border-border/50 border-r"
+    >
       <SidebarHeader className="flex items-center justify-center">
         <div className="flex items-center gap-2">
-          {open ? <Logo /> : <span className="text-black">OP</span>}
+          {open ? <Logo /> : <p>OP</p>}
         </div>
       </SidebarHeader>
       <SidebarContent>

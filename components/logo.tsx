@@ -13,7 +13,7 @@ function Logo() {
         fontFamily="sans-serif"
         fontWeight="400"
         fontSize="24"
-        fill="#1C1C1C"
+        className="dark:fill-primary fill-black"
       >
         open
       </text>
@@ -23,11 +23,11 @@ function Logo() {
         fontFamily="sans-serif"
         fontWeight="600"
         fontSize="24"
-        fill="#1C1C1C"
+        className="dark:fill-primary fill-black"
       >
         sheets
       </text>
-      <circle cx="134" cy="26" r="2" fill="#3CB371" />
+      <circle cx="134" cy="26" r="2" className="fill-primary" />
     </svg>
   );
 }

@@ -22,7 +22,7 @@ export default function CardSummary({ title, value, previousValue, color }) {
           <MoneyValues value={value} />
         </CardDescription>
       </CardHeader>
-      <CardContent className="text-xs text-neutral-500">
+      <CardContent className="text-muted-foreground text-xs">
         anterior <MoneyValues value={previousValue} />
       </CardContent>
     </Card>
