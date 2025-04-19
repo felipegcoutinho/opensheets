@@ -46,4 +46,4 @@ const SharpGrotesk = localFont({
 //   weight: ["400", "700"],
 // });
 
-export { AtlasGrotesk, inter, SharpGrotesk, uiSans };
+export { AtlasGrotesk, SharpGrotesk, uiSans };
