@@ -36,7 +36,7 @@ function CartaoCard({ item, getAccountMap, mostrarLimites }) {
             <Image
               quality={100}
               src={`/logos/${item.logo_image}`}
-              className="rounded-full shadow-lg"
+              className="rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
               width={50}
               height={50}
               alt="Logo do cartão"
@@ -55,7 +55,7 @@ function CartaoCard({ item, getAccountMap, mostrarLimites }) {
           </div>
         </CardTitle>
 
-        <div className="space-y-1 text-neutral-500 dark:text-neutral-300">
+        <div className="text-muted-foreground space-y-1">
           <p className="flex items-center text-sm">
             Fecha dia {item.dt_fechamento}
             <span className="ml-1">
@@ -88,18 +88,18 @@ function CartaoCard({ item, getAccountMap, mostrarLimites }) {
               </div>
 
               <Progress
-                indicatorColor={"bg-black dark:bg-white"}
+                indicatorColor="bg-chart-2"
                 value={
                   (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
                 }
-                className="h-2"
+                className="h-2 rounded-full"
               />
             </>
           )}
         </div>
       </CardContent>
 
-      <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-xs">
+      <CardFooter className="flex justify-between px-6 py-1">
         {mostrarLimites ? (
           <Button className="p-0" variant="link">
             <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>

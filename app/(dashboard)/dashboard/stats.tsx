@@ -36,7 +36,7 @@ async function Stats({ month }) {
   const statsData = await Promise.all(
     statsConfig.map(async ({ getData }) => {
       const data = await getData(month);
-      return data?.[0]?.count ?? 0;
+      return data;
     }),
   );
 

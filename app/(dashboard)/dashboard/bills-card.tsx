@@ -15,12 +15,12 @@ export default async function BillsCard({ month, data }) {
   return dataSorted.map((item, index) => (
     <div
       key={`${item.id}-${index}`}
-      className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"
+      className="border-border border-b/50 flex items-center justify-between"
     >
       <div className="flex items-center gap-2">
         <Image
           src="/logos/boleto.svg"
-          className="dark:invert dark:filter"
+          className="transition-transform duration-300 hover:scale-110 dark:invert dark:filter"
           width={30}
           height={30}
           alt="Logo do cartão"
@@ -37,8 +37,6 @@ export default async function BillsCard({ month, data }) {
           )}
         </div>
       </div>
-
-      
 
       <div className="py-1 text-right">
         <p>
