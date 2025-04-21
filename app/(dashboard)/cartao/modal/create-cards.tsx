@@ -40,7 +40,10 @@ export default function CreateCard({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="my-4">
+        <Button
+          variant="default"
+          className="my-4 transition-all hover:scale-110"
+        >
           Novo Cartão
         </Button>
       </DialogTrigger>

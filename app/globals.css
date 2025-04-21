@@ -45,6 +45,7 @@
   --chart-3: oklch(0.59 0.263 299.05);
   --chart-4: oklch(0.9 0.1898 107.39);
   --radius: 0.3rem;
+  --contrast: oklch(0.77 0.1723 62.08);
 }
 
 .dark {
@@ -79,6 +80,7 @@
   --chart-2: oklch(0.6 0.2273 31.53);
   --chart-3: oklch(0.59 0.263 299.05);
   --chart-4: oklch(0.9 0.1898 107.39);
+  --contrast: oklch(0.57 0.1633 44.72);
 }
 
 /* Add Tailwind v4 @theme configuration as needed */
@@ -123,6 +125,7 @@
   --color-sidebar: var(--sidebar);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --color-contrast: var(--contrast);
 
   @keyframes accordion-down {
     from {

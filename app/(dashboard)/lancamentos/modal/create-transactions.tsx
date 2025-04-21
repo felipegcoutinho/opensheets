@@ -64,7 +64,9 @@ export default function CreateTransactions({ getCards, getAccount }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger asChild>
-        <Button variant="default">Nova Transação</Button>
+        <Button variant="default" className="transition-all hover:scale-110">
+          Nova Transação
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>

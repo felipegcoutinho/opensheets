@@ -43,7 +43,7 @@ export function AppSidebar({
     <Sidebar
       collapsible="icon"
       {...props}
-      className="border-border/30 border-t-4 border-r border-t-orange-400"
+      className="border-border/30 border-t-contrast border-t-4 border-r"
     >
       <SidebarHeader className="flex items-center justify-center">
         <div className="flex items-center gap-2">

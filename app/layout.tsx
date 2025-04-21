@@ -32,9 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="border-t-4 border-t-orange-400 antialiased">
-              {children}
-            </main>
+            <main className="antialiased">{children}</main>
           </PrivacyProviderApp>
 
           <SpeedInsights />

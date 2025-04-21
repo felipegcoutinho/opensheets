@@ -46,7 +46,12 @@ export default function CreateNotes({ getAccountMap, children }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">Nova Anotação</Button>
+        <Button
+          variant="default"
+          className="mt-2 mb-4 transition-all hover:scale-110"
+        >
+          Nova Anotação
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

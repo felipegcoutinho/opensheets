@@ -32,7 +32,10 @@ export default function CreateAccount() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="mt-2 mb-4">
+        <Button
+          variant="default"
+          className="mt-2 mb-4 transition-all hover:scale-110"
+        >
           Nova Conta
         </Button>
       </DialogTrigger>
