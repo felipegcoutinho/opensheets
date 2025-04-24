@@ -96,7 +96,9 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
       return (
         <div className="flex items-center gap-1">
-          <span className="capitalize">{row.getValue("descricao")}</span>
+          <span className="font-bold capitalize">
+            {row.getValue("descricao")}
+          </span>
 
           {item.condicao === "Parcelado" && (
             <span className="text-muted-foreground text-xs">
@@ -106,7 +108,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
           {item.responsavel === "Sistema" && (
             <span className="text-muted-foreground text-xs">
-              <CheckCircle2Icon fill="green" className="text-white" size={14} />
+              <CheckCircle2Icon fill="green" className="text-white" size={15} />
             </span>
           )}
 
@@ -139,7 +141,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
           {item.condicao === "Parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
-              <PartyPopper color="pink" size={16} />
+              <PartyPopper className="text-emerald-600" size={18} />
             )}
         </div>
       );
@@ -184,11 +186,15 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <MoneyValues value={row.getValue("valor")} />
-      </div>
-    ),
+
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <div className={`capitalize`}>
+          <MoneyValues value={row.getValue("valor")} />
+        </div>
+      );
+    },
   },
 
   {
