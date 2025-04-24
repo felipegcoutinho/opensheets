@@ -15,7 +15,7 @@ export default async function BillsCard({ month, data }) {
   return dataSorted.map((item, index) => (
     <div
       key={`${item.id}-${index}`}
-      className="border-border border-b/50 flex items-center justify-between"
+      className="border-border/50 flex items-center justify-between border-b"
     >
       <div className="flex items-center gap-2">
         <Image

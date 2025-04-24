@@ -3,7 +3,6 @@ import {
   CreditCard,
   File,
   LayoutDashboard,
-  Lightbulb,
   Pen,
   PiggyBank,
   Users,
@@ -47,11 +46,11 @@ export function NavLinks(month: string) {
         url: `/anotacao?periodo=${month}`,
         icon: Pen,
       },
-      {
-        name: "insights",
-        url: `/insights?periodo=${month}`,
-        icon: Lightbulb,
-      },
+      // {
+      //   name: "insights",
+      //   url: `/insights?periodo=${month}`,
+      //   icon: Lightbulb,
+      // },
     ],
   };
 }

@@ -4,8 +4,8 @@ import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
+import { uiSans } from "./fonts/font";
 import "./globals.css";
-import { AtlasGrotesk } from "./fonts/font";
 
 export const metadata = {
   title: "opensheets",
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${AtlasGrotesk.className} `}
+      className={`${uiSans.className} `}
       suppressHydrationWarning
     >
       <body>
@@ -32,7 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="antialiased">{children}</main>
+            <main className="subpixel-antialiased">{children}</main>
           </PrivacyProviderApp>
 
           <SpeedInsights />
