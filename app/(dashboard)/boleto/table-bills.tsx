@@ -60,7 +60,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                       height={30}
                       alt={"Logo do cartão"}
                     />
-                    {item.descricao}
+                    <p className="text-sm font-semibold">{item.descricao}</p>
                   </TableCell>
                   <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
                   <TableCell>

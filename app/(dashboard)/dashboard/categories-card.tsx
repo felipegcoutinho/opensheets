@@ -40,22 +40,22 @@ const iconesCategorias = {
   "ajuste de saldo": History,
   investimentos: TrendingUp,
   plr: Award,
-  prêmios: Trophy,
+  premios: Trophy,
   presente: Gift,
   reembolso: RefreshCw,
-  salário: Briefcase,
+  salario: Briefcase,
   "saldo anterior": Wallet,
   vendas: ShoppingCart,
   rendimentos: PiggyBank,
   outros: CircleDollarSign,
   // Despesas
-  alimentação: UtensilsCrossed,
+  alimentacao: UtensilsCrossed,
   assinaturas: Newspaper,
   bares: Beer,
   compras: ShoppingBag,
   "cuidados pessoais": Scissors,
-  educação: GraduationCap,
-  empréstimos: PiggyBank,
+  educacao: GraduationCap,
+  emprestimos: PiggyBank,
   "lazer e hobbies": Gamepad2,
   "loteria e apostas": Stars,
   mercado: ShoppingCart,
@@ -63,7 +63,7 @@ const iconesCategorias = {
   pagamentos: CreditCard,
   restaurantes: Coffee,
   roupas: Shirt,
-  saúde: Heart,
+  saude: Heart,
   terceiros: Users,
   trabalho: Briefcase,
   transporte: Car,
@@ -85,7 +85,13 @@ export default function CategoriesList({ data, month, color }) {
         const tipoTransacao = item.tipo_transacao.toLowerCase();
         const url = `/dashboard/${categoria}/${tipoTransacao}?periodo=${month}`;
 
-        const IconComponent = iconesCategorias[categoria] || CircleDollarSign;
+        const categoriaKey = categoria
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        const IconComponent =
+          iconesCategorias[categoriaKey] || CircleDollarSign;
+
         const iconColor =
           item.tipo_transacao.toLowerCase() === "receita"
             ? "text-green-600 dark:text-green-500"
