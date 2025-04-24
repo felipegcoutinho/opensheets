@@ -8,7 +8,7 @@ import {
   Users,
 } from "lucide-react";
 
-export function getData(month: string) {
+export function NavLinks(month: string) {
   return {
     projects: [
       {
@@ -46,6 +46,11 @@ export function getData(month: string) {
         url: `/anotacao?periodo=${month}`,
         icon: Pen,
       },
+      // {
+      //   name: "insights",
+      //   url: `/insights?periodo=${month}`,
+      //   icon: Lightbulb,
+      // },
     ],
   };
 }

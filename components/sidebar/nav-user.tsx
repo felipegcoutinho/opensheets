@@ -18,6 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import PrivacyButton from "../privacy-button";
+import { ModeToggle } from "../darkmode-button";
 
 export function NavUser({
   user,
@@ -76,16 +77,16 @@ export function NavUser({
                 </span>
               </div>
 
-              {/* <div className="flex items-center justify-between px-2 py-1">
-                <span className="text-sm">Tema</span>
-                <div className="flex h-9 w-9 items-center justify-center">
+              <div className="flex items-center justify-between p-2">
+                <p className="text-sm">Modo Escuro</p>
+                <div className="flex items-center justify-center">
                   <ModeToggle />
                 </div>
-              </div> */}
+              </div>
 
-              <div className="flex items-center justify-between px-2 py-1">
-                <span className="text-sm">Valores Visíveis</span>
-                <div className="flex w-9 items-center justify-center">
+              <div className="flex items-center justify-between p-2">
+                <p className="text-sm">Valores Visíveis</p>
+                <div className="flex items-center justify-center">
                   <PrivacyButton />
                 </div>
               </div>
@@ -98,7 +99,7 @@ export function NavUser({
               <form action={signOut}>
                 <button
                   type="submit"
-                  className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-red-600 transition-colors hover:bg-red-50 hover:text-red-700"
+                  className="text-destructive flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Sair</span>

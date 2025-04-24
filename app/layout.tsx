@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
-import { SharpGrotesk } from "./fonts/font";
+import { uiSans } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -13,14 +13,18 @@ export const metadata = {
     "Aplicação para finanças pessoais, com o objetivo de ajudar a organizar e controlar suas finanças.",
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="pt-BR"
-      className={`${SharpGrotesk.className}`}
+      className={`${uiSans.className} `}
       suppressHydrationWarning
     >
-      <body suppressHydrationWarning>
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -28,8 +32,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="antialiased">{props.children}</main>
+            <main className="subpixel-antialiased">{children}</main>
           </PrivacyProviderApp>
+
           <SpeedInsights />
           <Analytics />
           <Toaster position="top-right" richColors duration={2500} />

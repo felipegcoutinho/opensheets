@@ -8,26 +8,26 @@ import {
   ArrowRightLeft,
   CreditCard,
   File,
-  Landmark,
   NotebookPenIcon,
+  PiggyBank,
 } from "lucide-react";
 
 const statsConfig = [
   { title: "Lançamentos", icon: ArrowRightLeft, getData: getTransactionsStats },
   { title: "Boletos", icon: File, getData: getBillsStats },
   { title: "Cartões", icon: CreditCard, getData: getCardsStats },
-  { title: "Contas", icon: Landmark, getData: getAccountsStats },
+  { title: "Contas", icon: PiggyBank, getData: getAccountsStats },
   { title: "Anotações", icon: NotebookPenIcon, getData: getNotesStats },
 ];
 
 const StatCard = ({ title, icon: Icon, count }) => (
-  <Card className="flex items-center justify-between border-none bg-slate-100 p-6">
+  <Card className="flex items-center justify-between border p-6">
     <CardTitle className="dark:text-muted-foreground flex items-center gap-1">
-      <Icon size={14} />
+      <Icon size={16} />
       {title}
     </CardTitle>
     <CardContent className="flex items-center p-0">
-      <p className="text-3xl text-green-600">{count}</p>
+      <p className="text-primary text-2xl">{count}</p>
     </CardContent>
   </Card>
 );
@@ -36,7 +36,7 @@ async function Stats({ month }) {
   const statsData = await Promise.all(
     statsConfig.map(async ({ getData }) => {
       const data = await getData(month);
-      return data?.[0]?.count ?? 0;
+      return data;
     }),
   );
 

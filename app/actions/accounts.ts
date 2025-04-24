@@ -8,7 +8,7 @@ export async function addAccount(formData: FormData) {
   const { descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase.from("contas").insert({
@@ -27,7 +27,7 @@ export async function addAccount(formData: FormData) {
 // Deleta uma conta bancária
 export async function deleteAccount(formData: FormData) {
   const excluir = formData.get("excluir");
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase.from("contas").delete().eq("id", excluir);
@@ -42,7 +42,7 @@ export async function updateAccount(formData: FormData) {
   const { id, descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase

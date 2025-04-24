@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { JetBrains_Mono } from "next/font/google";
 
 const uiSans = localFont({
   src: [
@@ -41,4 +42,9 @@ const SharpGrotesk = localFont({
   ],
 });
 
-export { AtlasGrotesk, SharpGrotesk, uiSans };
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+export { AtlasGrotesk, jetbrains, SharpGrotesk, uiSans };

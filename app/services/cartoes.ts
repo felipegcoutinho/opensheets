@@ -12,12 +12,12 @@ export async function getCardsStats() {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 // Busca a lista de cartões salvos
 export async function getCards() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("cartoes")
@@ -37,7 +37,7 @@ export async function getCards() {
 
 // Busca a lista de cartões salvos
 export async function getCardsDisabled() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("cartoes")
@@ -57,7 +57,7 @@ export async function getCardsDisabled() {
 
 // Busca os detalhes do cartão para a página de fatura
 export async function getCardDetails(id) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("cartoes")

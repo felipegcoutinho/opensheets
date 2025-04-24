@@ -17,12 +17,12 @@ export default async function InvoiceCard({ data, month }) {
     return (
       <div
         key={item.cartao_id}
-        className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"
+        className="border-border/50 flex items-center justify-between border-b"
       >
         <div className="flex items-center gap-2">
           <Image
             src={`/logos/${item.logo_image}`}
-            className="rounded-full"
+            className="rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
             width={40}
             height={40}
             alt="Logo do cartão"

@@ -35,7 +35,7 @@ export async function getBillsStats(month) {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 export async function getBillsByResponsavel(month) {
@@ -65,7 +65,7 @@ export async function getSumBillsExpensePaid(month) {
 
 // Busca a lista de boletos salvos
 export async function getBills(month) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("boletos")
@@ -85,7 +85,7 @@ export async function getBills(month) {
 }
 
 export async function getResponsavelBillList(month) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("boletos")

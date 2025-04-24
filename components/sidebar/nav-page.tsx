@@ -1,11 +1,11 @@
 import { getEmail, getUserName } from "@/app/actions/users";
 import { AppSidebar } from "./app-sidebar";
 
-async function NavPage(props) {
+async function page() {
   const name = await getUserName();
   const email = await getEmail();
 
-  return <AppSidebar usermail={email} username={name} variant="inset" />;
+  return <AppSidebar usermail={email} username={name} variant="sidebar" />;
 }
 
-export default NavPage;
+export default page;

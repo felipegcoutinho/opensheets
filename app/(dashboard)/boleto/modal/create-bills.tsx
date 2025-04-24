@@ -46,7 +46,9 @@ export default function CreateBills({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">Novo Boleto</Button>
+        <Button variant="default" className="transition-all hover:scale-110">
+          Novo Boleto
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -103,7 +105,7 @@ export default function CreateBills({ getAccountMap }) {
                         className="flex items-center gap-2"
                       >
                         <div className="flex items-center gap-2">
-                          <IconComponent className="h-4 w-4 text-red-500 dark:text-red-500" />
+                          <IconComponent className="h-4 w-4 text-red-500" />
                           {item.name}
                         </div>
                       </SelectItem>
@@ -123,7 +125,7 @@ export default function CreateBills({ getAccountMap }) {
           </div>
 
           <Card className="mt-2 flex items-center justify-between rounded p-2">
-            <Label className="text-sm font-medium text-muted-foreground">
+            <Label className="text-muted-foreground text-sm font-medium">
               Dividir Boleto
             </Label>
             <Switch

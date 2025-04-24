@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getUserName() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const {
     data: { user },
@@ -25,7 +25,7 @@ export async function getUserName() {
 }
 
 export async function getEmail() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase.auth.getUser();
 
@@ -39,7 +39,7 @@ export async function getEmail() {
 }
 
 export async function getSession() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const {
     data: { user },

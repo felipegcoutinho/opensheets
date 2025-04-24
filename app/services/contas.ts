@@ -9,11 +9,11 @@ export async function getAccountsStats() {
 
   const total = data[0].count;
 
-  return data;
+  return total;
 }
 
 export async function getAccount() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("contas")
@@ -29,7 +29,7 @@ export async function getAccount() {
 
 // Busca detalhes de uma conta bancária específica
 export async function getAccountDetails(id) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("contas")
     .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)

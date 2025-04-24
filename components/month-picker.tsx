@@ -11,7 +11,7 @@ const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
   return (
     <button
       onClick={onClick}
-      className="cursor-pointer text-green-600 focus:outline-hidden disabled:opacity-50"
+      className="text-primary cursor-pointer focus:outline-hidden disabled:opacity-50"
       disabled={disabled}
     >
       <Icon size={16} />
@@ -21,7 +21,7 @@ const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
 
 const ReturnButton = React.memo(({ onClick, disabled }) => (
   <button
-    className="bg-color-6 dark:bg-color-6 ml-2 cursor-pointer rounded text-white disabled:opacity-50 dark:text-white"
+    className="bg-primary ml-2 cursor-pointer rounded text-white disabled:opacity-50 dark:text-white"
     onClick={onClick}
     disabled={disabled}
   >
@@ -30,7 +30,7 @@ const ReturnButton = React.memo(({ onClick, disabled }) => (
 ));
 
 const LoadingSpinner = () => (
-  <Loader2 className="text-primary-color h-4 w-4 animate-spin dark:text-blue-200" />
+  <Loader2 className="text-primary h-4 w-4 animate-spin dark:text-blue-200" />
 );
 
 export default function MonthPicker() {
@@ -126,7 +126,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="dark:bg-card my-2 flex w-full items-center justify-start border-none bg-slate-100 p-4">
+    <Card className="my-2 flex w-full items-center justify-start p-3">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -134,8 +134,8 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="relative flex items-center">
-          <div className={`mx-2 text-lg font-bold capitalize dark:text-white`}>
-            {currentMonth} <span className="text-green-600">{currentYear}</span>
+          <div className="mx-2 text-lg font-bold capitalize">
+            {currentMonth} <span className="text-primary">{currentYear}</span>
           </div>
 
           {isChanging && (

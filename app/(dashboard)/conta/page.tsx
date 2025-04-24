@@ -14,9 +14,8 @@ import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
-async function PageAccount(props) {
+async function page(props) {
   const month = await getPeriodo(props);
-
   const getAccountMap = await getAccount();
 
   const accountData = await Promise.all(
@@ -44,7 +43,7 @@ async function PageAccount(props) {
                     <Image
                       quality={100}
                       src={`/logos/${item.logo_image}`}
-                      className="rounded-full shadow-lg"
+                      className="rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
                       width={45}
                       height={45}
                       alt="Logo da conta"
@@ -54,12 +53,12 @@ async function PageAccount(props) {
                   </div>
                 </CardTitle>
 
-                <p className="text-sm text-neutral-500 dark:text-neutral-300">
+                <p className="text-muted-foreground text-sm">
                   Saldo <MoneyValues value={item.saldo} />
                 </p>
               </CardContent>
 
-              <CardFooter className="flex justify-between px-6 py-1 text-black backdrop-blur-xs">
+              <CardFooter className="flex justify-between px-6 py-1">
                 <Button className="p-0" variant="link">
                   <Link
                     href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}
@@ -98,4 +97,4 @@ async function PageAccount(props) {
   );
 }
 
-export default PageAccount;
+export default page;

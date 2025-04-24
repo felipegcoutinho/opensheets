@@ -43,25 +43,25 @@ async function useUtils(month) {
       title: "Receitas",
       value: receitas,
       previousValue: receitasAnterior,
-      color: "bg-green-400",
+      color: "bg-chart-1",
     },
     {
       title: "Despesas",
       value: despesasTotal,
       previousValue: despesasTotalAnterior,
-      color: "bg-red-500",
+      color: "bg-chart-2",
     },
     {
       title: "Balanço",
       value: balanco,
       previousValue: balancoAnterior,
-      color: "bg-violet-500",
+      color: "bg-chart-3",
     },
     {
       title: "Saldo Previsto",
       value: previsto,
       previousValue: previstoAnterior,
-      color: "bg-amber-500",
+      color: "bg-chart-4",
     },
   ];
 

@@ -17,7 +17,7 @@ export async function addCards(formData: FormData) {
     conta_id,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase.from("cartoes").insert({
@@ -42,7 +42,7 @@ export async function addCards(formData: FormData) {
 export async function deleteCards(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase.from("cartoes").delete().eq("id", excluir);
@@ -68,7 +68,7 @@ export async function updateCards(formData: FormData) {
     conta_id,
   } = Object.fromEntries(formData.entries());
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   try {
     await supabase

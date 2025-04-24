@@ -6,13 +6,16 @@ import ptBR from "date-fns/locale/pt-BR";
 import { revalidatePath } from "next/cache";
 
 export async function addTransaction(formData: FormData) {
+  const supabase = createClient();
+  const transacoes = [];
+
+  const formEntries = Object.fromEntries(formData.entries());
   const {
     data_compra,
     descricao,
     tipo_transacao,
     periodo,
     categoria,
-    imagem_url,
     realizado,
     condicao,
     forma_pagamento,
@@ -27,48 +30,32 @@ export async function addTransaction(formData: FormData) {
     conta_id,
     segundo_responsavel,
     dividir_lancamento,
-  } = Object.fromEntries(formData.entries());
+  } = formEntries;
 
-  const supabase = await createClient();
-  const transacoes = [];
+  const valorNumerico = parseFloat(valor);
+  const parcelas = parseInt(qtde_parcela || "1", 10);
+  const recorrencias = parseInt(qtde_recorrencia || "1", 10);
+  const [mesInicial, anoInicial] = periodo.split("-");
+  const dataInicial = parse(
+    `01-${mesInicial}-${anoInicial}`,
+    "dd-MMMM-yyyy",
+    new Date(),
+    { locale: ptBR },
+  );
 
-  // Upload da imagem, se houver
-  let imageUrl = null;
-  const imageFile = formData.get("imagem_url"); // Campo de imagem no formulário
+  const imageUrl = await uploadImagem(formData.get("imagem_url"), supabase);
 
-  // Upload da imagem, se houver
-  if (imageFile && imageFile instanceof File && imageFile.name) {
-    // Verifica se o arquivo tem um nome válido
-    const fileName = `${Date.now()}_${imageFile.name}`;
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("comprovantes")
-      .upload(`${fileName}`, imageFile, {
-        upsert: true, // Sobrescreve arquivos com o mesmo nome, se necessário
-      });
-
-    if (uploadError) {
-      console.error("Erro ao fazer upload da imagem:", uploadError);
-    } else {
-      // Gerar uma Signed URL para acesso temporário ao arquivo
-      const { data: signedUrlData, error: signedUrlError } =
-        await supabase.storage
-          .from("comprovantes")
-          .createSignedUrl(`${fileName}`, 31536000); // URL válida por 1 ano
-
-      if (signedUrlError) {
-        console.error("Erro ao gerar Signed URL:", signedUrlError);
-      } else {
-        imageUrl = signedUrlData.signedUrl;
-      }
-    }
-  }
-
-  function adicionarTransacao(valor, responsavel, periodo, parcela_atual) {
+  function adicionar(
+    valorUnitario,
+    responsavel,
+    periodoAtual,
+    parcelaAtual = null,
+  ) {
     transacoes.push({
       data_compra,
       descricao,
       tipo_transacao,
-      periodo,
+      periodo: periodoAtual,
       categoria,
       imagem_url: imageUrl,
       realizado,
@@ -76,9 +63,9 @@ export async function addTransaction(formData: FormData) {
       forma_pagamento,
       anotacao,
       responsavel,
-      valor,
+      valor: valorUnitario,
       qtde_parcela,
-      parcela_atual,
+      parcela_atual: parcelaAtual,
       recorrencia,
       qtde_recorrencia,
       cartao_id,
@@ -87,87 +74,47 @@ export async function addTransaction(formData: FormData) {
     });
   }
 
-  if (condicao === "Vista") {
-    if (dividir_lancamento === "on") {
-      adicionarTransacao(valor / 2, responsavel, periodo, null);
-      adicionarTransacao(valor / 2, segundo_responsavel, periodo, null);
-    } else {
-      adicionarTransacao(valor, responsavel, periodo, null);
-    }
-  } else if (condicao === "Parcelado") {
-    const parcelas = parseInt(qtde_parcela, 10);
-    const valorTotal = parseFloat(valor);
-    const valorParcela = parseFloat((valorTotal / parcelas).toFixed(2));
-    const valorUltimaParcela = parseFloat(
-      (valorTotal - valorParcela * (parcelas - 1)).toFixed(2),
-    );
+  function gerarPeriodo(offset: number): string {
+    const data = addMonths(dataInicial, offset);
+    return `${format(data, "MMMM", { locale: ptBR })}-${data.getFullYear()}`;
+  }
 
-    const [mesInicial, anoInicial] = periodo.split("-");
-    const dataInicial = parse(
-      `01-${mesInicial}-${anoInicial}`,
-      "dd-MMMM-yyyy",
-      new Date(),
-      { locale: ptBR },
+  function dividirValor(
+    valor: number,
+    parcela: number | null,
+    periodo: string,
+  ) {
+    const v = parseFloat(valor.toFixed(2));
+    if (dividir_lancamento === "on") {
+      adicionar(v / 2, responsavel, periodo, parcela);
+      adicionar(v / 2, segundo_responsavel, periodo, parcela);
+    } else {
+      adicionar(v, responsavel, periodo, parcela);
+    }
+  }
+
+  if (condicao === "Vista") {
+    dividirValor(valorNumerico, null, periodo);
+  }
+
+  if (condicao === "Parcelado") {
+    const valorParcela = parseFloat((valorNumerico / parcelas).toFixed(2));
+    const valorUltima = parseFloat(
+      (valorNumerico - valorParcela * (parcelas - 1)).toFixed(2),
     );
 
     for (let i = 0; i < parcelas; i++) {
-      const dataParcela = addMonths(dataInicial, i);
-      const mesParcela = format(dataParcela, "MMMM", { locale: ptBR });
-      const anoParcela = dataParcela.getFullYear();
-      const periodoParcela = `${mesParcela}-${anoParcela}`;
       const parcelaAtual = i + 1;
-      const valorAtual = i === parcelas - 1 ? valorUltimaParcela : valorParcela;
-
-      if (dividir_lancamento === "on") {
-        adicionarTransacao(
-          valorAtual / 2,
-          responsavel,
-          periodoParcela,
-          parcelaAtual,
-        );
-        adicionarTransacao(
-          valorAtual / 2,
-          segundo_responsavel,
-          periodoParcela,
-          parcelaAtual,
-        );
-      } else {
-        adicionarTransacao(
-          valorAtual,
-          responsavel,
-          periodoParcela,
-          parcelaAtual,
-        );
-      }
+      const periodoAtual = gerarPeriodo(i);
+      const valorAtual = i === parcelas - 1 ? valorUltima : valorParcela;
+      dividirValor(valorAtual, parcelaAtual, periodoAtual);
     }
-  } else if (condicao === "Recorrente") {
-    const quantidadeRecorrencias = parseInt(qtde_recorrencia, 10);
+  }
 
-    const [mesInicial, anoInicial] = periodo.split("-");
-    const dataInicial = parse(
-      `01-${mesInicial}-${anoInicial}`,
-      "dd-MMMM-yyyy",
-      new Date(),
-      { locale: ptBR },
-    );
-
-    for (let i = 0; i < quantidadeRecorrencias; i++) {
-      const dataRecorrente = addMonths(dataInicial, i);
-      const mesRecorrente = format(dataRecorrente, "MMMM", { locale: ptBR });
-      const anoRecorrente = dataRecorrente.getFullYear();
-      const periodoRecorrente = `${mesRecorrente}-${anoRecorrente}`;
-
-      if (dividir_lancamento === "on") {
-        adicionarTransacao(valor / 2, responsavel, periodoRecorrente, null);
-        adicionarTransacao(
-          valor / 2,
-          segundo_responsavel,
-          periodoRecorrente,
-          null,
-        );
-      } else {
-        adicionarTransacao(valor, responsavel, periodoRecorrente, null);
-      }
+  if (condicao === "Recorrente") {
+    for (let i = 0; i < recorrencias; i++) {
+      const periodoAtual = gerarPeriodo(i);
+      dividirValor(valorNumerico, null, periodoAtual);
     }
   }
 
@@ -175,20 +122,49 @@ export async function addTransaction(formData: FormData) {
     await supabase.from("transacoes").insert(transacoes);
     revalidatePath("/dashboard");
   } catch (error) {
-    console.error("Error adding transaction:", error);
+    console.error("Erro ao adicionar transações:", error);
   }
+}
+
+// Função auxiliar para upload da imagem
+async function uploadImagem(
+  imageFile: FormDataEntryValue | null,
+  supabase: any,
+): Promise<string | null> {
+  if (!(imageFile instanceof File) || !imageFile.name) return null;
+
+  const fileName = `${Date.now()}_${imageFile.name}`;
+  const { error: uploadError } = await supabase.storage
+    .from("comprovantes")
+    .upload(fileName, imageFile, { upsert: true });
+
+  if (uploadError) {
+    console.error("Erro ao fazer upload:", uploadError);
+    return null;
+  }
+
+  const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+    .from("comprovantes")
+    .createSignedUrl(fileName, 31536000);
+
+  if (signedUrlError) {
+    console.error("Erro ao gerar Signed URL:", signedUrlError);
+    return null;
+  }
+
+  return signedUrlData?.signedUrl || null;
 }
 
 export async function deleteTransaction(formData: FormData) {
   const excluir = formData.get("excluir");
 
-  const supabase = await createClient();
+  const supabase = createClient();
   await supabase.from("transacoes").delete().eq("id", excluir);
   revalidatePath("/dashboard");
 }
 
 export async function updateTransaction(formData: FormData) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     id,
     data_compra,
@@ -278,7 +254,7 @@ export async function updateTransaction(formData: FormData) {
 }
 
 export async function removeImage(transactionId, imageUrl) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Extrair o caminho correto do arquivo
   const filePath = decodeURIComponent(
@@ -310,7 +286,7 @@ export async function removeImage(transactionId, imageUrl) {
 }
 
 export async function togglePagamento(id, realizadoAtual) {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")

@@ -4,7 +4,7 @@ function Logo() {
       xmlns="http://www.w3.org/2000/svg"
       width="200"
       height="40"
-      viewBox="0 0 200 40"
+      viewBox="0 0 140 40"
       fill="none"
     >
       <text
@@ -13,7 +13,7 @@ function Logo() {
         fontFamily="sans-serif"
         fontWeight="400"
         fontSize="24"
-        fill="#1C1C1C"
+        className="dark:fill-primary fill-black"
       >
         open
       </text>
@@ -23,11 +23,11 @@ function Logo() {
         fontFamily="sans-serif"
         fontWeight="600"
         fontSize="24"
-        fill="#1C1C1C"
+        className="dark:fill-primary fill-black"
       >
         sheets
       </text>
-      <circle cx="134" cy="26" r="2" fill="#3CB371" />
+      <circle cx="134" cy="26" r="2" className="fill-primary" />
     </svg>
   );
 }
