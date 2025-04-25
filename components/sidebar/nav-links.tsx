@@ -3,6 +3,7 @@ import {
   CreditCard,
   File,
   LayoutDashboard,
+  LucideStars,
   Pen,
   PiggyBank,
   Users,
@@ -46,11 +47,11 @@ export function NavLinks(month: string) {
         url: `/anotacao?periodo=${month}`,
         icon: Pen,
       },
-      // {
-      //   name: "insights",
-      //   url: `/insights?periodo=${month}`,
-      //   icon: Lightbulb,
-      // },
+      {
+        name: "insights",
+        url: `/insights?periodo=${month}`,
+        icon: LucideStars,
+      },
     ],
   };
 }
