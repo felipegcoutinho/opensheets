@@ -51,8 +51,8 @@ export function getLogo(row) {
 }
 
 const getResponsavelClass = (responsavel) => {
-  if (responsavel === "Você") return "text-blue-600 dark:text-blue-400";
-  if (responsavel === "Sistema")
+  if (responsavel === "você") return "text-blue-600 dark:text-blue-400";
+  if (responsavel === "sistema")
     return "text-neutral-600 dark:text-neutral-300";
   return "text-orange-600 dark:text-orange-400";
 };
@@ -106,7 +106,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </span>
           )}
 
-          {item.responsavel === "Sistema" && (
+          {item.responsavel === "sistema" && (
             <span className="text-muted-foreground text-xs">
               <CheckCircle2Icon fill="green" className="text-white" size={15} />
             </span>
@@ -125,7 +125,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </span>
           )}
 
-          {item.anotacao != "" && item.responsavel != "Sistema" && (
+          {item.anotacao != "" && item.responsavel != "sistema" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
@@ -329,7 +329,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                 />
               </DropdownMenuItem>
 
-              {item.responsavel != "Sistema" && (
+              {item.responsavel != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <UpdateTransactions
                     itemId={item.id}
@@ -356,7 +356,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                 </DropdownMenuItem>
               )}
 
-              {item.responsavel != "Sistema" && (
+              {item.responsavel != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <TogglePaymentDialog
                     id={item.id}
@@ -369,7 +369,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                 </DropdownMenuItem>
               )}
 
-              {item.responsavel != "Sistema" && (
+              {item.responsavel != "sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

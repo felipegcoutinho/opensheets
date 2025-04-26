@@ -3,97 +3,40 @@
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Progress } from "@/components/ui/progress";
-import {
-  ArrowUpRight,
-  Award,
-  Beer,
-  Briefcase,
-  Car,
-  CircleDollarSign,
-  Coffee,
-  CreditCard,
-  Gamepad2,
-  Gift,
-  GraduationCap,
-  Heart,
-  History,
-  Home,
-  Newspaper,
-  PiggyBank,
-  Plane,
-  RefreshCw,
-  Scissors,
-  Shirt,
-  ShoppingBag,
-  ShoppingCart,
-  Stars,
-  TrendingUp,
-  Trophy,
-  Users,
-  UtensilsCrossed,
-  Wallet,
-} from "lucide-react";
+import UseOptions from "@/hooks/use-options";
 import Link from "next/link";
-
-const iconesCategorias = {
-  // Receitas
-  "ajuste de saldo": History,
-  investimentos: TrendingUp,
-  plr: Award,
-  premios: Trophy,
-  presente: Gift,
-  reembolso: RefreshCw,
-  salario: Briefcase,
-  "saldo anterior": Wallet,
-  vendas: ShoppingCart,
-  rendimentos: PiggyBank,
-  outros: CircleDollarSign,
-  // Despesas
-  alimentacao: UtensilsCrossed,
-  assinaturas: Newspaper,
-  bares: Beer,
-  compras: ShoppingBag,
-  "cuidados pessoais": Scissors,
-  educacao: GraduationCap,
-  emprestimos: PiggyBank,
-  "lazer e hobbies": Gamepad2,
-  "loteria e apostas": Stars,
-  mercado: ShoppingCart,
-  moradia: Home,
-  pagamentos: CreditCard,
-  restaurantes: Coffee,
-  roupas: Shirt,
-  saude: Heart,
-  terceiros: Users,
-  trabalho: Briefcase,
-  transporte: Car,
-  viagem: Plane,
-};
+import { ArrowUpRight, CircleDollarSign } from "lucide-react";
 
 export default function CategoriesList({ data, month, color }) {
-  if (data.length === 0) {
-    return <EmptyCard width={100} height={100} />;
-  }
+  const { categoriasDespesa, categoriasReceita } = UseOptions();
 
   const sortedData = [...data].sort((a, b) => b.sum - a.sum);
-  const maxSum = sortedData[0].sum;
+  const maxSum = sortedData[0]?.sum || 1;
+
+  function getCategoryIcon(categoria, tipo) {
+    const categorias =
+      tipo === "receita" ? categoriasReceita : categoriasDespesa;
+    const found = categorias.find(
+      (cat) => cat?.value?.toLowerCase() === categoria?.toLowerCase(),
+    );
+    return found?.icon || CircleDollarSign;
+  }
+
+  if (!data || data.length === 0) {
+    return <EmptyCard />;
+  }
 
   return (
-    <>
+    <div className="space-y-4">
       {sortedData.map((item, index) => {
         const categoria = item.categoria;
-        const tipoTransacao = item.tipo_transacao.toLowerCase();
+        const tipoTransacao = item.tipo_transacao;
         const url = `/dashboard/${categoria}/${tipoTransacao}?periodo=${month}`;
 
-        const categoriaKey = categoria
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-        const IconComponent =
-          iconesCategorias[categoriaKey] || CircleDollarSign;
+        const IconComponent = getCategoryIcon(categoria, tipoTransacao);
 
         const iconColor =
-          item.tipo_transacao.toLowerCase() === "receita"
+          tipoTransacao === "receita"
             ? "text-green-600 dark:text-green-500"
             : "text-red-600 dark:text-red-500";
 
@@ -120,6 +63,6 @@ export default function CategoriesList({ data, month, color }) {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }

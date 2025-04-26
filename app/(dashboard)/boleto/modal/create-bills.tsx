@@ -146,7 +146,7 @@ export default function CreateBills({ getAccountMap }) {
                 type="text"
               />
               <datalist id="responsavel-list">
-                <option value="Você" />
+                <option value="você" />
               </datalist>
             </div>
 
@@ -176,8 +176,8 @@ export default function CreateBills({ getAccountMap }) {
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Vista">À Vista</SelectItem>
-                  <SelectItem value="Recorrente">Recorrente</SelectItem>
+                  <SelectItem value="vista">À Vista</SelectItem>
+                  <SelectItem value="recorrente">Recorrente</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -219,14 +219,14 @@ export default function CreateBills({ getAccountMap }) {
               <Select
                 name="status_pagamento"
                 onValueChange={(e) => setStatusPagamento(e)}
-                defaultValue="Pendente"
+                defaultValue="pendente"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Pendente">Pendente</SelectItem>
-                  <SelectItem value="Pago">Pago</SelectItem>
+                  <SelectItem value="pendente">Pendente</SelectItem>
+                  <SelectItem value="pago">Pago</SelectItem>
                 </SelectContent>
               </Select>
             </div>

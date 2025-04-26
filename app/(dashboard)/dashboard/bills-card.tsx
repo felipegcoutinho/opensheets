@@ -28,7 +28,7 @@ export default async function BillsCard({ month, data }) {
         />
         <div>
           <p className="capitalize">{item.descricao}</p>
-          {item.status_pagamento === "Pendente" ? (
+          {item.status_pagamento === "pendente" ? (
             <p className="text-muted-foreground text-xs">
               Vence {DateFormat(item.dt_vencimento)}
             </p>

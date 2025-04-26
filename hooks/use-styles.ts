@@ -1,9 +1,9 @@
 function UseStyles() {
   function getButtonVariant(tipoTransacao) {
     switch (tipoTransacao) {
-      case "Receita":
+      case "receita":
         return "receita";
-      case "Despesa":
+      case "despesa":
         return "despesa";
       case "Investimento":
         return "invest";

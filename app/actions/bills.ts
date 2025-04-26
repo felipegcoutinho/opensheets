@@ -171,8 +171,8 @@ export async function payBills(id) {
 
   const { error, data } = await supabase
     .from("boletos")
-    .update({ status_pagamento: "Pago" })
-    .eq("status_pagamento", "Pendente")
+    .update({ status_pagamento: "pago" })
+    .eq("status_pagamento", "pendente")
     .eq("id", id);
 
   if (error) {

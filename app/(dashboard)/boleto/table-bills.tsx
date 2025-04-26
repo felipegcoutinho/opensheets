@@ -76,7 +76,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                   </TableCell>
                   <TableCell>
                     <span
-                      className={` ${item.responsavel === "Você" ? "text-blue-600" : "text-orange-500"}`}
+                      className={` ${item.responsavel === "você" ? "text-blue-600" : "text-orange-500"}`}
                     >
                       {item.responsavel}
                     </span>

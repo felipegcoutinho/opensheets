@@ -1,5 +1,4 @@
 "use client";
-
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -19,8 +18,9 @@ export const NavProjects = memo(function NavProjects({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="text-sm font-medium text-neutral-500">
+      <SidebarGroupLabel className="text-muted-foreground text-sm">
         {title}
+        <span className="text-2xl">👇</span>
       </SidebarGroupLabel>
       <SidebarMenu className="mt-1">
         {projects.map((item) => {
@@ -40,13 +40,13 @@ export const NavProjects = memo(function NavProjects({
                       isActive ? "text-primary" : "text-foreground"
                     }`}
                   />
-                  <span className="truncate font-medium">
+                  <span className="truncate text-base">
                     {item.name}
-                    {typeof item.count === "number" && (
+                    {/* {typeof item.count === "number" && (
                       <span className="ml-2 rounded bg-neutral-200 px-2 py-0.5 text-xs text-neutral-800">
                         {item.count}
                       </span>
-                    )}
+                    )} */}
                   </span>
                 </Link>
               </SidebarMenuButton>

@@ -130,8 +130,8 @@ export default function CreateTransactions({ getCards, getAccount }) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Receita">Receita</SelectItem>
-                    <SelectItem value="Despesa">Despesa</SelectItem>
+                    <SelectItem value="receita">receita</SelectItem>
+                    <SelectItem value="despesa">despesa</SelectItem>
                     {/* <SelectItem value="Investimento">Investimento</SelectItem> */}
                   </SelectContent>
                 </Select>
@@ -143,7 +143,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
                   name="categoria"
                   required
                   // disabled={
-                  //   tipoTransacao !== "Receita" && tipoTransacao !== "Despesa"
+                  //   tipoTransacao !== "receita" && tipoTransacao !== "despesa"
                   // }
                 >
                   <SelectTrigger>
@@ -151,7 +151,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
                   </SelectTrigger>
                   <SelectContent>
                     <>
-                      {tipoTransacao === "Receita"
+                      {tipoTransacao === "receita"
                         ? categoriasReceita.map((item) => {
                             const IconComponent = item.icon;
                             return (
@@ -234,7 +234,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
                   type="text"
                 />
                 <datalist id="responsavel-list">
-                  <option value="Você" />
+                  <option value="você" />
                 </datalist>
               </div>
 

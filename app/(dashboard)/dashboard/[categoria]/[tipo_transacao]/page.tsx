@@ -29,14 +29,8 @@ async function page(props) {
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   const month = searchParams?.periodo ?? defaultPeriodo;
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-
-  const categoria = capitalizeFirstLetter(decodeURIComponent(params.categoria));
-  const tipoTransacao = capitalizeFirstLetter(
-    decodeURIComponent(params.tipo_transacao),
-  );
+  const categoria = decodeURIComponent(params.categoria);
+  const tipoTransacao = decodeURIComponent(params.tipo_transacao);
 
   const getCategoriaMap = await getCategoria(month, categoria, tipoTransacao);
   const valorTotal = getCategoriaMap?.reduce(

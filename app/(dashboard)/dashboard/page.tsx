@@ -11,6 +11,7 @@ import { PaymentList } from "./payment-card";
 import RecentesTransactions from "./recents-transactions";
 import Stats from "./stats";
 import useUtils from "./utils";
+import { getBillsExpenseByCategory } from "@/app/services/transacoes";
 
 export default async function page(props) {
   const month = await getPeriodo(props);
@@ -44,6 +45,12 @@ export default async function page(props) {
     recentTransactions,
     summary,
   } = await useUtils(month);
+
+  const teste = await getBillsExpenseByCategory(month);
+
+  const teste2 = teste + expenseByCategory;
+
+  console.log(teste);
 
   return (
     <>

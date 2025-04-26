@@ -155,7 +155,7 @@ export default function UpdateTransactions({
                 </SelectTrigger>
                 <SelectContent>
                   <>
-                    {itemTipoTransacao === "Receita"
+                    {itemTipoTransacao === "receita"
                       ? categoriasReceita.map((item) => {
                           const IconComponent = item.icon;
                           return (

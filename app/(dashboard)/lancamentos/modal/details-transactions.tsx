@@ -117,7 +117,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Status</span>
-                  <span>{itemPaid ? "Pago" : "Pendente"}</span>
+                  <span>{itemPaid ? "pago" : "pendente"}</span>
                 </li>
 
                 {itemNotas && (

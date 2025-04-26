@@ -107,8 +107,8 @@ const InfoSection = ({ title, value, subtitle, subvalue }) => (
 const TransactionTable = ({ transactions, dateFormatter }) => {
   const getResponsavelClass = (responsavel) => {
     const classes = {
-      Você: "text-blue-600",
-      Sistema: "text-neutral-600",
+      você: "text-blue-600",
+      sistema: "text-neutral-600",
       default: "text-orange-600",
     };
     return classes[responsavel] || classes.default;
@@ -229,7 +229,7 @@ export default async function page({ searchParams, params }) {
       getFaturas(month, id),
     ]);
 
-  const isPaid = faturaStatus?.some((item) => item.status_pagamento === "Pago");
+  const isPaid = faturaStatus?.some((item) => item.status_pagamento === "pago");
   const statusClassName = isPaid
     ? "border-green-500 bg-green-50 dark:bg-green-900"
     : "border-orange-500 bg-orange-50 dark:bg-orange-900";

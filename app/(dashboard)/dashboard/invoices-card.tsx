@@ -38,7 +38,7 @@ export default async function InvoiceCard({ data, month }) {
               <ArrowUpRight className="text-muted-foreground h-3 w-3" />
             </Link>
 
-            {item.status_pagamento === "Pendente" ? (
+            {item.status_pagamento === "pendente" ? (
               <p className="text-muted-foreground text-xs">
                 Vence dia {item.dt_vencimento}
               </p>

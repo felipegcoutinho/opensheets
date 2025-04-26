@@ -27,7 +27,7 @@ export default function InvoicePaymentDialog({
   const { handlePaymentInvoices, isPending } = Utils();
 
   const isPaid = fatura_status?.some(
-    (item) => item.status_pagamento === "Pago",
+    (item) => item.status_pagamento === "pago",
   );
 
   if (isPaid) {
@@ -85,7 +85,7 @@ export default function InvoicePaymentDialog({
           </DialogClose>
 
           <form className="flex-1" onSubmit={handlePaymentInvoices}>
-            <input type="hidden" name="status_pagamento" defaultValue="Pago" />
+            <input type="hidden" name="status_pagamento" defaultValue="pago" />
             <input type="hidden" name="periodo" defaultValue={month} />
             <input type="hidden" name="cartao_id" defaultValue={cartao_id} />
 

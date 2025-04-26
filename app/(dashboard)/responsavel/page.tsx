@@ -68,8 +68,8 @@ async function page(props) {
     groupedData[item.responsavel].totalBoleto += item.valor;
   });
 
-  // Reorganiza os dados para priorizar o responsável "Você"
-  const prioritizedData = prioritizeResponsavel(groupedData, "Você");
+  // Reorganiza os dados para priorizar o responsável "você"
+  const prioritizedData = prioritizeResponsavel(groupedData, "você");
 
   return (
     <div className="my-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">

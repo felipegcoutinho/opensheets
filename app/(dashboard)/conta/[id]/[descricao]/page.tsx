@@ -172,8 +172,8 @@ const TransactionTable = ({
 const useResponsavelClass = () => {
   return (responsavel) => {
     const classes = {
-      Você: "text-blue-600",
-      Sistema: "text-neutral-600",
+      você: "text-blue-600",
+      sistema: "text-neutral-600",
       default: "text-orange-600",
     };
     return classes[responsavel] || classes.default;

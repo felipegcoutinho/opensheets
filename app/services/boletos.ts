@@ -7,7 +7,7 @@ export async function getExpenseBill(month) {
     .from("boletos")
     .select("valor")
     .eq("periodo", month)
-    .eq("responsavel", "Você");
+    .eq("responsavel", "você");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
@@ -18,7 +18,7 @@ export async function getExpenseBillPaid(month) {
     .from("boletos")
     .select("valor")
     .eq("periodo", month)
-    .eq("status_pagamento", "Pago");
+    .eq("status_pagamento", "pago");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
@@ -29,7 +29,7 @@ export async function getBillsStats(month) {
     .from("boletos")
     .select("count()")
     .eq("periodo", month)
-    .eq("responsavel", "Você");
+    .eq("responsavel", "você");
 
   if (error) throw error;
 
@@ -46,7 +46,7 @@ export async function getBillsByResponsavel(month) {
       "id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao, qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)",
     )
     .eq("periodo", month)
-    .eq("responsavel", "Você");
+    .eq("responsavel", "você");
   if (error) throw error;
   return data;
 }
@@ -57,8 +57,8 @@ export async function getSumBillsExpensePaid(month) {
     .from("boletos")
     .select("valor")
     .eq("periodo", month)
-    .eq("status_pagamento", "Pago")
-    .eq("responsavel", "Você");
+    .eq("status_pagamento", "pago")
+    .eq("responsavel", "você");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }

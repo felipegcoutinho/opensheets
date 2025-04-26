@@ -1,38 +1,24 @@
-import { getTransactions } from "@/app/services/transacoes";
+import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
 import { getPeriodo } from "@/hooks/periodo";
-import Dashboard from "./dashboard";
+import Dashboard from "./dashboard"; // agora é Home, não Dashboard
+import { getBillsByResponsavel } from "@/app/services/boletos";
+import { getCards } from "@/app/services/cartoes";
 
 async function page(props) {
   const month = await getPeriodo(props);
-  const lancamentos = await getTransactions(month);
 
-  const analysisRequest = {
-    messages: [
-      {
-        role: "system",
-        content:
-          "Você é um assistente financeiro. Analise os lançamentos financeiros abaixo e forneça uma análise detalhada.",
-      },
-      {
-        role: "user",
-        content: JSON.stringify(lancamentos), // Aqui passamos os dados dos lançamentos para a IA
-      },
-    ],
-  };
-
-  const result = await fetch("http://localhost:3000/api/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(analysisRequest),
-  });
-
-  const analysis = await result.json();
+  const lancamentos = await getTransactionsByResponsableVoce(month);
+  const boletos = await getBillsByResponsavel(month);
+  const cartoes = await getCards();
 
   return (
     <div>
-      <Dashboard lancamentos={lancamentos} analysis={analysis} />
+      <Dashboard
+        month={month}
+        lancamentos={lancamentos}
+        boletos={boletos}
+        cartoes={cartoes}
+      />
     </div>
   );
 }

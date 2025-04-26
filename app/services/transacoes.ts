@@ -1,53 +1,53 @@
 // /services/transacoes.ts
 import { createClient } from "@/utils/supabase/server";
 
-export async function getIncome(month : string) {
+export async function getIncome(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
-    .eq("tipo_transacao", "Receita")
+    .eq("tipo_transacao", "receita")
     .eq("periodo", month)
     .neq("categoria", "Saldo Anterior")
-    .eq("responsavel", "Você");
+    .eq("responsavel", "você");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getExpense(month : string) {
+export async function getExpense(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "Você");
+    .eq("responsavel", "você");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getLastPrevious(month : string) {
+export async function getLastPrevious(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
-    .eq("tipo_transacao", "Receita")
+    .eq("tipo_transacao", "receita")
     .eq("periodo", month)
     .eq("categoria", "Saldo Anterior");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getExpensePaid(month : string) {
+export async function getExpensePaid(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select("valor")
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .neq("forma_pagamento", "Cartão de Crédito")
     .eq("periodo", month)
     .eq("realizado", true);
@@ -55,30 +55,30 @@ export async function getExpensePaid(month : string) {
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getConditions(month : string) {
+export async function getConditions(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select("condicao, valor.sum()")
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .order("condicao", { ascending: true });
 
   if (error) throw error;
   return data;
 }
 
-export async function getPayment(month : string) {
+export async function getPayment(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select("forma_pagamento, valor.sum()")
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .order("forma_pagamento", { ascending: true });
   if (error) throw error;
   return data;
@@ -91,7 +91,7 @@ export async function getTransactionsStats(month: string) {
     .from("transacoes")
     .select("count()")
     .eq("periodo", month)
-    .eq("responsavel", "Você");
+    .eq("responsavel", "você");
 
   if (error) throw error;
 
@@ -106,12 +106,30 @@ export async function getExpenseByCategory(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select("categoria, tipo_transacao, valor.sum()")
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .order("categoria", { ascending: true });
+
   if (error) throw error;
   return data;
+}
+
+export async function getBillsExpenseByCategory(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("boletos")
+    .select("categoria, valor.sum()")
+    .eq("periodo", month)
+    .eq("responsavel", "você")
+    .order("categoria", { ascending: true });
+
+  if (error) throw error;
+
+  const total = data.reduce((sum, item) => sum + parseFloat(item.sum), 0);
+
+  return total;
 }
 
 export async function getIncomeByCategory(month: string) {
@@ -120,9 +138,9 @@ export async function getIncomeByCategory(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select("categoria, tipo_transacao, valor.sum()")
-    .eq("tipo_transacao", "Receita")
+    .eq("tipo_transacao", "receita")
     .eq("periodo", month)
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .order("categoria", { ascending: true });
   if (error) throw error;
   return data;
@@ -137,7 +155,7 @@ export async function getRecentTransactions(month: string) {
       "id, data_compra, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)",
     )
     .order("created_at", { ascending: false })
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .eq("periodo", month)
     .limit(5);
   if (error) throw error;
@@ -151,10 +169,10 @@ export async function getSumAccountExpensePaid(month: string) {
     .from("transacoes")
     .select("valor")
     .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .eq("realizado", true)
-    .eq("responsavel", "Você")
-    .neq("responsavel", "Sistema");
+    .eq("responsavel", "você")
+    .neq("responsavel", "sistema");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
@@ -166,9 +184,9 @@ export async function getSumAccountIncomePaid(month: string) {
     .from("transacoes")
     .select("valor")
     .eq("periodo", month)
-    .eq("tipo_transacao", "Receita")
+    .eq("tipo_transacao", "receita")
     .eq("realizado", true)
-    .neq("responsavel", "Sistema");
+    .neq("responsavel", "sistema");
   if (error) throw error;
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
@@ -211,9 +229,9 @@ export async function getTransactionsByConditions(
     .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false })
     .eq("periodo", month)
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .eq("condicao", condicao)
-    .eq("tipo_transacao", "Despesa");
+    .eq("tipo_transacao", "despesa");
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -224,7 +242,7 @@ export async function getTransactionsByConditions(
 }
 
 // Busca a lista de Lançamentos para tabela de faturas
-export async function getCardInvoice(month: string, cartao_id : number) {
+export async function getCardInvoice(month: string, cartao_id: number) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -247,7 +265,7 @@ export async function getCardInvoice(month: string, cartao_id : number) {
 }
 
 // Busca o valor total das despesas do cartão
-export async function getCardSum(month: string, cartao_id : number) {
+export async function getCardSum(month: string, cartao_id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -255,7 +273,7 @@ export async function getCardSum(month: string, cartao_id : number) {
     .select(`valor`)
     .eq("cartao_id", cartao_id)
     .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa");
+    .eq("tipo_transacao", "despesa");
 
   if (error) {
     console.error("Erro ao buscar transacoes:", error);
@@ -271,7 +289,7 @@ export async function getCardSum(month: string, cartao_id : number) {
 }
 
 // Busca a lista de categoria para tabela
-export async function getCategoria(month : string, categoriaId, tipo_transacao) {
+export async function getCategoria(month: string, categoriaId, tipo_transacao) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -283,7 +301,7 @@ export async function getCategoria(month : string, categoriaId, tipo_transacao) 
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
-    .eq("responsavel", "Você")
+    .eq("responsavel", "você")
     .eq("tipo_transacao", tipo_transacao)
     .eq("categoria", categoriaId);
 
@@ -303,7 +321,7 @@ export async function getLimiteEmUso(cartao_id) {
     .from("transacoes")
     .select(`valor`)
     .eq("cartao_id", cartao_id)
-    .eq("tipo_transacao", "Despesa")
+    .eq("tipo_transacao", "despesa")
     .eq("forma_pagamento", "Cartão de Crédito")
     .eq("realizado", false);
 
@@ -341,7 +359,7 @@ export async function getAccountInvoice(month, id) {
       "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao)",
     )
     .eq("periodo", month)
-    .or("responsavel.eq.Você,responsavel.eq.Sistema")
+    .or("responsavel.eq.você,responsavel.eq.sistema")
     .eq("conta_id", id);
 
   if (error) {
@@ -361,8 +379,8 @@ export async function getSumAccountIncome(month, id) {
     .select(`valor`)
     .eq("conta_id", id)
     .eq("periodo", month)
-    .eq("tipo_transacao", "Receita")
-    .or("responsavel.eq.Você,responsavel.eq.Sistema")
+    .eq("tipo_transacao", "receita")
+    .or("responsavel.eq.você,responsavel.eq.sistema")
     .eq("realizado", true);
 
   if (error) {
@@ -387,8 +405,8 @@ export async function getSumAccountExpense(month, id) {
     .select(`valor`)
     .eq("conta_id", id)
     .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
-    .or("responsavel.eq.Você, responsavel.eq.Sistema")
+    .eq("tipo_transacao", "despesa")
+    .or("responsavel.eq.você, responsavel.eq.sistema")
     .eq("realizado", true);
 
   if (error) {
@@ -412,12 +430,36 @@ export async function getResponsavelTransactionList(month) {
     .select("responsavel, cartoes (descricao, logo_image), valor")
     .order("responsavel", { ascending: true })
     .eq("periodo", month)
-    .eq("tipo_transacao", "Despesa")
-    .neq("responsavel", "Sistema");
+    .eq("tipo_transacao", "despesa")
+    .neq("responsavel", "sistema");
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
     return null;
+  }
+
+  return data;
+}
+
+export async function getTransactionsByResponsableVoce(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select(
+      `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      qtde_recorrencia, dividir_lancamento`,
+    )
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false })
+    .eq("responsavel", "você")
+    .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar Lançamentos:", error);
+    return [];
   }
 
   return data;

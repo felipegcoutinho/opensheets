@@ -138,7 +138,7 @@ export default function UpdateBills({
                 <Label>Valor</Label>
                 <Required />
                 <MoneyInput
-                  readOnly={itemStatusPagamento === "Pago"}
+                  readOnly={itemStatusPagamento === "pago"}
                   defaultValue={itemValor}
                   name="valor"
                   placeholder="R$ 0,00"
@@ -227,8 +227,8 @@ export default function UpdateBills({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Pendente">Pendente</SelectItem>
-                    <SelectItem value="Pago">Pago</SelectItem>
+                    <SelectItem value="pendente">Pendente</SelectItem>
+                    <SelectItem value="pago">Pago</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

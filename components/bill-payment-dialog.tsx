@@ -35,7 +35,7 @@ export default function BillPaymentDialog({
     });
   };
 
-  const isPaid = status_pagamento === "Pago";
+  const isPaid = status_pagamento === "pago";
 
   if (isPaid) {
     return <span className="text-green-500">pago</span>;
@@ -92,7 +92,7 @@ export default function BillPaymentDialog({
           </DialogClose>
 
           <form className="flex-1" onSubmit={handlePaymentBills}>
-            <input type="hidden" name="status_pagamento" defaultValue="Pago" />
+            <input type="hidden" name="status_pagamento" defaultValue="pago" />
             <Button
               className="w-full bg-green-500 hover:bg-green-600 disabled:bg-green-500/50"
               type="submit"
