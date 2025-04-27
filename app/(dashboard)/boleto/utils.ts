@@ -14,7 +14,7 @@ export default function Utils() {
   const { toast } = useToast();
 
   const handleCondicaoChange = (value) => {
-    setShowRecorrencia(value === "Recorrente");
+    setShowRecorrencia(value === "recorrente");
   };
 
   const handleSubmit = async (e) => {

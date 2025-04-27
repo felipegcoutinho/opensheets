@@ -10,12 +10,12 @@ export async function addBills(formData: FormData) {
     descricao,
     dt_vencimento,
     periodo,
-    categoria,
     status_pagamento,
     valor,
     qtde_recorrencia,
     condicao,
     conta_id,
+    categoria_id,
     anotacao,
     responsavel,
     segundo_responsavel,
@@ -30,10 +30,10 @@ export async function addBills(formData: FormData) {
       descricao,
       dt_vencimento,
       periodo,
-      categoria,
       status_pagamento,
       valor,
       conta_id,
+      categoria_id,
       qtde_recorrencia,
       condicao,
       anotacao,
@@ -41,14 +41,14 @@ export async function addBills(formData: FormData) {
     });
   }
 
-  if (condicao === "Vista") {
+  if (condicao === "vista") {
     if (dividir_boleto === "on") {
       adicionarBoleto(valor / 2, responsavel, periodo, dt_vencimento);
       adicionarBoleto(valor / 2, segundo_responsavel, periodo, dt_vencimento);
     } else {
       adicionarBoleto(valor, responsavel, periodo, dt_vencimento);
     }
-  } else if (condicao === "Recorrente") {
+  } else if (condicao === "recorrente") {
     const quantidadeRecorrencias = parseInt(qtde_recorrencia, 10);
 
     const [mesInicial, anoInicial] = periodo.split("-");
@@ -130,10 +130,10 @@ export async function updateBills(formData: FormData) {
     descricao,
     dt_vencimento,
     periodo,
-    categoria,
     status_pagamento,
     valor,
     conta_id,
+    categoria_id,
     qtde_recorrencia,
     condicao,
     anotacao,
@@ -150,10 +150,10 @@ export async function updateBills(formData: FormData) {
         descricao,
         dt_vencimento,
         periodo,
-        categoria,
         status_pagamento,
         valor,
         conta_id,
+        categoria_id,
         qtde_recorrencia,
         condicao,
         anotacao,

@@ -40,6 +40,8 @@ export default function UpdateTransactions({
   itemPeriodo,
   itemPaid,
   itemImagemURL,
+  itemCategoriaId,
+  getCategorias,
 }) {
   const {
     categoriasReceita,
@@ -146,7 +148,27 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          <div className="mt-1 flex w-full gap-2">
+          <div className="w-full">
+            <Label>Categoria</Label>
+            <Required />
+            <Select
+              defaultValue={itemCategoriaId.toString()}
+              name="categoria_id"
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {getCategorias?.map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    <p>{item.nome}</p>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* <div className="mt-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Categoria</Label>
               <Select defaultValue={itemCategoria} name="categoria">
@@ -190,7 +212,7 @@ export default function UpdateTransactions({
                 </SelectContent>
               </Select>
             </div>
-          </div>
+          </div> */}
 
           <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
             <Label className="text-sm font-medium text-neutral-600">

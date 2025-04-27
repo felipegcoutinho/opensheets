@@ -25,7 +25,11 @@ import Image from "next/image";
 import DeleteBills from "./modal/delete-bills";
 import UpdateBills from "./modal/update-bills";
 
-export default function TableBills({ getBillsMap, getAccountMap }) {
+export default function TableBills({
+  getBillsMap,
+  getAccountMap,
+  getCategorias,
+}) {
   const { DateFormat } = UseDates();
 
   return (
@@ -36,7 +40,7 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow className="bg-muted/50 border-b">
+            <TableRow className="border-b">
               <TableHead>Descrição</TableHead>
               <TableHead>Data de Vencimento</TableHead>
               <TableHead>Valor</TableHead>
@@ -84,15 +88,17 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
 
                   <TableCell>
                     <span className="flex items-center gap-1">
-                      {item.condicao === "Recorrente" && (
+                      {item.condicao === "recorrente" && (
                         <RefreshCw size={12} />
                       )}
-                      {item.condicao === "Vista" && <Check size={12} />}
+                      {item.condicao === "vista" && <Check size={12} />}
 
                       <span className="capitalize">{item.condicao}</span>
                     </span>
                   </TableCell>
-                  <TableCell>{item.categoria}</TableCell>
+
+                  <TableCell>{item.categorias?.nome}</TableCell>
+
                   <TableCell className="flex gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -119,8 +125,10 @@ export default function TableBills({ getBillsMap, getAccountMap }) {
                             itemAnotacao={item.anotacao}
                             itemCondicao={item.condicao}
                             itemQtdeRecorrencia={item.qtde_recorrencia}
-                            getAccountMap={getAccountMap}
                             itemContaId={item.contas?.id}
+                            itemCategoriaId={item.categorias?.id}
+                            getAccountMap={getAccountMap}
+                            getCategorias={getCategorias}
                           />
                         </DropdownMenuItem>
 

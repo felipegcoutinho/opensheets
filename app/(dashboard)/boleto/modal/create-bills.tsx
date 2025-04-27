@@ -27,7 +27,7 @@ import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 import Utils from "../utils";
 
-export default function CreateBills({ getAccountMap }) {
+export default function CreateBills({ getAccountMap, getCategorias }) {
   const {
     loading,
     categoriasDespesa,
@@ -46,9 +46,7 @@ export default function CreateBills({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="transition-all hover:scale-110">
-          Novo Boleto
-        </Button>
+        <Button className="transition-all hover:scale-110">Novo Boleto</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -88,7 +86,28 @@ export default function CreateBills({ getAccountMap }) {
               <Input name="dt_vencimento" type="date" />
             </div>
 
+            {/* Novo formulario  */}
             <div className="w-1/2">
+              <Label>Categoria</Label>
+              <Required />
+
+              <Select name="categoria_id">
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getCategorias?.map((item) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      <div className="flex items-center gap-2">
+                        <span>{item.nome}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* <div className="w-1/2">
               <Label>Categoria</Label>
               <Required />
               <Select name="categoria">
@@ -113,7 +132,7 @@ export default function CreateBills({ getAccountMap }) {
                   })}
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
 
           <div className="mb-1 flex w-full gap-2">
@@ -170,7 +189,7 @@ export default function CreateBills({ getAccountMap }) {
               <Select
                 name="condicao"
                 onValueChange={handleCondicaoChange}
-                defaultValue="Vista"
+                defaultValue="vista"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />

@@ -38,7 +38,9 @@ export default function UpdateBills({
   itemCondicao,
   itemQtdeRecorrencia,
   itemContaId,
+  itemCategoriaId,
   getAccountMap,
+  getCategorias,
 }) {
   const {
     loading,
@@ -108,26 +110,21 @@ export default function UpdateBills({
               <div className="w-1/2">
                 <Label>Categoria</Label>
                 <Required />
-                <Select defaultValue={itemCategoria} name="categoria">
+                <Select
+                  defaultValue={itemCategoriaId.toString()}
+                  name="categoria_id"
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categoriasDespesa.map((item) => {
-                      const IconComponent = item.icon;
-                      return (
-                        <SelectItem
-                          key={item.id}
-                          value={item.name}
-                          className="flex items-center gap-2"
-                        >
-                          <div className="flex items-center gap-2">
-                            <IconComponent className="h-4 w-4 text-red-500" />
-                            {item.name}
-                          </div>
-                        </SelectItem>
-                      );
-                    })}
+                    {getCategorias?.map((item) => (
+                      <SelectItem key={item.id} value={item.id.toString()}>
+                        <div className="flex items-center gap-2">
+                          <span>{item.nome}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -160,10 +157,10 @@ export default function UpdateBills({
             </div>
 
             <div
-              className={`${itemCondicao === "Recorrente" && "flex gap-2"} hidden w-full`}
+              className={`${itemCondicao === "recorrente" && "flex gap-2"} hidden w-full`}
             >
               <div
-                className={`${itemCondicao === "Recorrente" ? "w-1/2" : "w-full"}`}
+                className={`${itemCondicao === "recorrente" ? "w-1/2" : "w-full"}`}
               >
                 <Label>Condição</Label>
                 <Required />
@@ -176,13 +173,13 @@ export default function UpdateBills({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Vista">À Vista</SelectItem>
-                    <SelectItem value="Recorrente">Recorrente</SelectItem>
+                    <SelectItem value="vista">À Vista</SelectItem>
+                    <SelectItem value="recorrente">Recorrente</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {itemCondicao === "Recorrente" && (
+              {itemCondicao === "recorrente" && (
                 <div className="w-1/2">
                   <Label>Quant. recorrencia</Label>
                   <Select

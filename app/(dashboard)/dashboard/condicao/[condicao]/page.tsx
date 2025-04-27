@@ -83,7 +83,7 @@ async function Page({ params, searchParams }) {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow className="bg-muted/50">
+              <TableRow>
                 <TableHead>Data</TableHead>
                 <TableHead>Descrição</TableHead>
                 <TableHead>Transação</TableHead>
@@ -96,12 +96,12 @@ async function Page({ params, searchParams }) {
             </TableHeader>
             <TableBody>
               {transactions?.map((item) => (
-                <TableRow key={item.id} className="hover:bg-muted/50">
+                <TableRow key={item.id}>
                   <TableCell>{DateFormat(item.data_compra)}</TableCell>
                   <TableCell>
                     <div className="flex flex-col">
                       <span>{item.descricao}</span>
-                      {item.condicao === "Parcelado" && (
+                      {item.condicao === "parcelado" && (
                         <span className="text-muted-foreground text-xs">
                           Parcela {item.parcela_atual} de {item.qtde_parcela}
                         </span>
@@ -118,13 +118,13 @@ async function Page({ params, searchParams }) {
                   </TableCell>
                   <TableCell>
                     <span className="flex items-center gap-1">
-                      {item.condicao === "Parcelado" && (
+                      {item.condicao === "parcelado" && (
                         <CalendarClockIcon size={12} />
                       )}
-                      {item.condicao === "Recorrente" && (
+                      {item.condicao === "recorrente" && (
                         <RefreshCw size={12} />
                       )}
-                      {item.condicao === "Vista" && <Check size={12} />}
+                      {item.condicao === "vista" && <Check size={12} />}
                       <span className="capitalize">{item.condicao}</span>
                     </span>
                   </TableCell>

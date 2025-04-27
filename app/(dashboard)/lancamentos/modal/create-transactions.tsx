@@ -29,7 +29,11 @@ import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
 import Utils from "../utils-transacao";
 
-export default function CreateTransactions({ getCards, getAccount }) {
+export default function CreateTransactions({
+  getCards,
+  getAccount,
+  getCategorias,
+}) {
   const {
     isOpen,
     tipoTransacao,
@@ -132,20 +136,34 @@ export default function CreateTransactions({ getCards, getAccount }) {
                   <SelectContent>
                     <SelectItem value="receita">receita</SelectItem>
                     <SelectItem value="despesa">despesa</SelectItem>
-                    {/* <SelectItem value="Investimento">Investimento</SelectItem> */}
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="w-1/2">
                 <Label>Categoria</Label>
-                <Select
-                  name="categoria"
-                  required
-                  // disabled={
-                  //   tipoTransacao !== "receita" && tipoTransacao !== "despesa"
-                  // }
-                >
+                <Required />
+
+                <Select name="categoria_id">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getCategorias?.map((item) => {
+                      const IconComponent = item.icone;
+                      return (
+                        <SelectItem key={item.id} value={item.id.toString()}>
+                          <p>{item.nome}</p>
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* <div className="w-1/2">
+                <Label>Categoria</Label>
+                <Select name="categoria" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -185,7 +203,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
                     </>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
             </div>
 
             <Card className="mt-2 flex w-full items-center gap-2">
@@ -342,16 +360,16 @@ export default function CreateTransactions({ getCards, getAccount }) {
                 <Select
                   name="condicao"
                   onValueChange={handleCondicaoChange}
-                  defaultValue="Vista"
+                  defaultValue="vista"
                   required
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Vista">À Vista</SelectItem>
-                    <SelectItem value="Parcelado">Parcelado</SelectItem>
-                    <SelectItem value="Recorrente">Recorrente</SelectItem>
+                    <SelectItem value="vista">À Vista</SelectItem>
+                    <SelectItem value="parcelado">Parcelado</SelectItem>
+                    <SelectItem value="recorrente">Recorrente</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

@@ -27,10 +27,10 @@ export default function Utils() {
   const [removingImage, setRemovingImage] = useState(false);
 
   const handleCondicaoChange = (value: string) => {
-    setShowParcelas(value === "Parcelado");
-    setShowRecorrencia(value === "Recorrente");
+    setShowParcelas(value === "parcelado");
+    setShowRecorrencia(value === "recorrente");
 
-    if (value !== "Parcelado") {
+    if (value !== "parcelado") {
       setQuantidadeParcelas("");
     }
   };
@@ -76,7 +76,7 @@ export default function Utils() {
     const formData = new FormData(e.target);
     const condicao = formData.get("condicao");
 
-    if (condicao !== "Parcelado") {
+    if (condicao !== "parcelado") {
       const valorFormatado = formData
         .get("valor")
         .replace(/[R$\.\s]/g, "")

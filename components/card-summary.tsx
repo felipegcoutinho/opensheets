@@ -23,8 +23,8 @@ export default function CardSummary({
 }: Props) {
   const getPercentageChange = () => {
     if (!previousValue || previousValue === 0) return null;
-    const change = ((value - previousValue) / previousValue) * 100;
-    return change.toFixed(1);
+    const change = (((value - previousValue) / previousValue) * 100).toFixed(1);
+    return change;
   };
 
   const percentageChange = getPercentageChange();

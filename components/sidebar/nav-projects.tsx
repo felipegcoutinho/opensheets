@@ -40,7 +40,7 @@ export const NavProjects = memo(function NavProjects({
                       isActive ? "text-primary" : "text-foreground"
                     }`}
                   />
-                  <span className="truncate text-base">
+                  <span className="truncate">
                     {item.name}
                     {/* {typeof item.count === "number" && (
                       <span className="ml-2 rounded bg-neutral-200 px-2 py-0.5 text-xs text-neutral-800">

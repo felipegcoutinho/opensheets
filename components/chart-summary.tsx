@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartLegend,
@@ -42,12 +36,8 @@ export function ChartSummary({ data }) {
   };
 
   return (
-    <Card className="h-96">
-      <CardHeader>
-        <CardTitle>Receita, Despesa e Balanço</CardTitle>
-        <CardDescription>Últimos 6 meses</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <>
+      <CardContent className="p-0">
         <ChartContainer className="my-8" config={chartConfig}>
           <BarChart
             data={data}
@@ -92,6 +82,6 @@ export function ChartSummary({ data }) {
           </BarChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+    </>
   );
 }

@@ -1,4 +1,3 @@
-// /services/transacoes.ts
 import { createClient } from "@/utils/supabase/server";
 
 export async function getIncome(month: string) {
@@ -6,12 +5,14 @@ export async function getIncome(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, categoria_id!inner(id, nome)") // Fazendo join na tabela de categorias
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
-    .neq("categoria", "Saldo Anterior")
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .neq("categoria_id.nome", "saldo anterior"); // Correto: agora o filtro é no nome da categoria
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
@@ -24,7 +25,9 @@ export async function getExpense(month: string) {
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
     .eq("responsavel", "você");
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
@@ -33,12 +36,16 @@ export async function getLastPrevious(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, categoria_id!inner(id, nome)")
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
-    .eq("categoria", "Saldo Anterior");
+    .eq("categoria_id.nome", "saldo anterior");
+
   if (error) throw error;
-  return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  const total = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
+
+  return total;
 }
 
 export async function getExpensePaid(month: string) {
@@ -48,10 +55,12 @@ export async function getExpensePaid(month: string) {
     .from("transacoes")
     .select("valor")
     .eq("tipo_transacao", "despesa")
-    .neq("forma_pagamento", "Cartão de Crédito")
+    .neq("forma_pagamento", "cartão de crédito")
     .eq("periodo", month)
     .eq("realizado", true);
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
@@ -80,7 +89,9 @@ export async function getPayment(month: string) {
     .eq("periodo", month)
     .eq("responsavel", "você")
     .order("forma_pagamento", { ascending: true });
+
   if (error) throw error;
+
   return data;
 }
 
@@ -100,49 +111,18 @@ export async function getTransactionsStats(month: string) {
   return total;
 }
 
-export async function getExpenseByCategory(month: string) {
+export async function getTransactionsByCategory(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("categoria, tipo_transacao, valor.sum()")
-    .eq("tipo_transacao", "despesa")
+    .select(`valor, tipo_transacao, categoria:categoria_id ( nome )`)
     .eq("periodo", month)
-    .eq("responsavel", "você")
-    .order("categoria", { ascending: true });
-
-  if (error) throw error;
-  return data;
-}
-
-export async function getBillsExpenseByCategory(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("boletos")
-    .select("categoria, valor.sum()")
-    .eq("periodo", month)
-    .eq("responsavel", "você")
-    .order("categoria", { ascending: true });
+    .eq("responsavel", "você");
+  // .is("realizado", true);
 
   if (error) throw error;
 
-  const total = data.reduce((sum, item) => sum + parseFloat(item.sum), 0);
-
-  return total;
-}
-
-export async function getIncomeByCategory(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("transacoes")
-    .select("categoria, tipo_transacao, valor.sum()")
-    .eq("tipo_transacao", "receita")
-    .eq("periodo", month)
-    .eq("responsavel", "você")
-    .order("categoria", { ascending: true });
-  if (error) throw error;
   return data;
 }
 
@@ -158,7 +138,9 @@ export async function getRecentTransactions(month: string) {
     .eq("responsavel", "você")
     .eq("periodo", month)
     .limit(5);
+
   if (error) throw error;
+
   return data;
 }
 
@@ -173,7 +155,9 @@ export async function getSumAccountExpensePaid(month: string) {
     .eq("realizado", true)
     .eq("responsavel", "você")
     .neq("responsavel", "sistema");
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
@@ -187,7 +171,9 @@ export async function getSumAccountIncomePaid(month: string) {
     .eq("tipo_transacao", "receita")
     .eq("realizado", true)
     .neq("responsavel", "sistema");
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
@@ -197,9 +183,9 @@ export async function getTransactions(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, categoria , imagem_url, realizado, condicao, 
+      `id, data_compra, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -223,7 +209,7 @@ export async function getTransactionsByConditions(
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `*, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image)`,
+      `*, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -248,9 +234,9 @@ export async function getCardInvoice(month: string, cartao_id: number) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, 
+      `id, data_compra, periodo, descricao, tipo_transacao, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao, logo_image)`,
+      qtde_recorrencia, cartoes (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -295,15 +281,15 @@ export async function getCategoria(month: string, categoriaId, tipo_transacao) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, realizado, periodo, descricao, tipo_transacao, categoria, condicao, 
+      `id, data_compra, realizado, periodo, descricao, tipo_transacao, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, cartoes (id, descricao), contas (id, descricao)`,
+      qtde_recorrencia, cartoes (id, descricao), contas (id, descricao), categoria_id!inner(id, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
     .eq("responsavel", "você")
     .eq("tipo_transacao", tipo_transacao)
-    .eq("categoria", categoriaId);
+    .eq("categoria_id.nome", categoriaId);
 
   if (error) {
     console.error("Erro ao buscar faturas:", error);
@@ -322,7 +308,7 @@ export async function getLimiteEmUso(cartao_id) {
     .select(`valor`)
     .eq("cartao_id", cartao_id)
     .eq("tipo_transacao", "despesa")
-    .eq("forma_pagamento", "Cartão de Crédito")
+    .eq("forma_pagamento", "cartão de crédito")
     .eq("realizado", false);
 
   if (error) {
@@ -356,7 +342,7 @@ export async function getAccountInvoice(month, id) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, periodo, descricao, tipo_transacao, categoria, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao)",
+      "id, data_compra, periodo, descricao, tipo_transacao, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao), categorias (id, nome)",
     )
     .eq("periodo", month)
     .or("responsavel.eq.você,responsavel.eq.sistema")
@@ -447,7 +433,7 @@ export async function getTransactionsByResponsableVoce(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, categoria, realizado, condicao, 
+      `id, data_compra, periodo, descricao, tipo_transacao, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
       qtde_recorrencia, dividir_lancamento`,
     )

@@ -1,17 +1,21 @@
-import CardInvoices from "@/components/card-invoices";
+import Widget from "@/components/widget";
 import CardSummary from "@/components/card-summary";
 import { getPeriodo } from "@/hooks/periodo";
 import { UseDates } from "@/hooks/use-dates";
-import BillsCard from "./bills-card";
-import Category from "./categories-card";
-import { ChartSummary } from "../../../components/chart-summary";
-import { ConditionList } from "./condition-card";
-import InvoiceCard from "./invoices-card";
-import { PaymentList } from "./payment-card";
-import RecentesTransactions from "./recents-transactions";
-import Stats from "./stats";
+import { ChartSummary } from "@/components/chart-summary";
+import { PaymentWidget } from "./payment-widget";
 import useUtils from "./utils";
-import { getBillsExpenseByCategory } from "@/app/services/transacoes";
+import InvoiceWidget from "./invoices-widget";
+import BillsWidget from "./bills-widget";
+import RecentesTransactions from "./recents-transactions-widget";
+import StatsWidget from "./stats-widget";
+import CategoryWidget from "./categories-widget";
+import { ConditionWidget } from "./condition-widget";
+import { getNotesStats } from "@/services/anotacoes";
+import { getBillsStats } from "@/services/boletos";
+import { getCardsStats } from "@/services/cartoes";
+import { getAccountsStats } from "@/services/contas";
+import { getTransactionsStats } from "@/services/transacoes";
 
 export default async function page(props) {
   const month = await getPeriodo(props);
@@ -44,13 +48,24 @@ export default async function page(props) {
     expenseByCategory,
     recentTransactions,
     summary,
+    getTotalsCategory,
   } = await useUtils(month);
 
-  const teste = await getBillsExpenseByCategory(month);
+  const categoryData = await getTotalsCategory(month);
 
-  const teste2 = teste + expenseByCategory;
+  const lancamentos = await getTransactionsStats(month);
+  const boletos = await getBillsStats(month);
+  const cartoes = await getCardsStats(month);
+  const contas = await getAccountsStats(month);
+  const anotacoes = await getNotesStats(month);
 
-  console.log(teste);
+  const statsData = [
+    { title: "Lançamentos", value: lancamentos },
+    { title: "Boletos", value: boletos },
+    { title: "Cartões", value: cartoes },
+    { title: "Contas", value: contas },
+    { title: "Anotações", value: anotacoes },
+  ];
 
   return (
     <>
@@ -67,44 +82,67 @@ export default async function page(props) {
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
-        <div>
+        <Widget title="Receita, Despesa e Balanço" subtitle="Últimos 6 Meses">
           <ChartSummary data={chartData} />
-        </div>
+        </Widget>
 
-        <CardInvoices title="Faturas">
-          <InvoiceCard month={month} data={invoiceList} />
-        </CardInvoices>
+        <Widget title="Faturas" subtitle="faturas a vencer">
+          <InvoiceWidget month={month} data={invoiceList} />
+        </Widget>
 
-        <CardInvoices title="Boletos">
-          <BillsCard month={month} data={billsByResponsavel} />
-        </CardInvoices>
+        <Widget title="Boletos" subtitle="boletos a vencer">
+          <BillsWidget month={month} data={billsByResponsavel} />
+        </Widget>
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-2">
-        <CardInvoices title="Lançamentos Recentes">
+        <Widget title="Lançamentos Recentes" subtitle="Últimos 5 Lançamentos">
           <RecentesTransactions transactions={recentTransactions} />
-        </CardInvoices>
+        </Widget>
 
-        <CardInvoices title="Resumo do Mês">
-          <Stats month={month} />
-        </CardInvoices>
+        <Widget title="Resumo do Mês" subtitle="Principais Resumos">
+          <StatsWidget month={month} statsConfig={statsData} />
+        </Widget>
       </div>
 
       <div className="my-2 mb-10 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
-        <ConditionList month={month} />
-        <PaymentList month={month} />
+        <Widget
+          title="Condições de Pagamento"
+          subtitle={"Principais Condições de Pagamento"}
+        >
+          <ConditionWidget month={month} />
+        </Widget>
 
-        <CardInvoices title="Receitas por Categorias">
-          <Category
-            color="bg-green-500"
-            data={incomeByCategory}
+        <Widget
+          title="Formas de Pagamentos"
+          subtitle={"Principais Formas de Pagamento"}
+        >
+          <PaymentWidget month={month} />
+        </Widget>
+
+        <Widget
+          title="Receitas por Categoria"
+          subtitle="Principais Categorias por Receita"
+        >
+          <CategoryWidget
+            data={categoryData}
+            tipo="receita"
+            totalReceita={receitas}
             month={month}
           />
-        </CardInvoices>
+        </Widget>
 
-        <CardInvoices title="Despesas por Categorias">
-          <Category color="bg-red-500" data={expenseByCategory} month={month} />
-        </CardInvoices>
+        <Widget
+          title="Despesas por Categoria"
+          subtitle="Principais Categorias por Despesa"
+        >
+          <CategoryWidget
+            data={categoryData}
+            tipo="despesa"
+            totalReceita={receitas}
+            month={month}
+          />
+        </Widget>
       </div>
     </>
   );

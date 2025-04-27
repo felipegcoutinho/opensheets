@@ -57,7 +57,12 @@ const getResponsavelClass = (responsavel) => {
   return "text-orange-600 dark:text-orange-400";
 };
 
-export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
+export const getColumns = (
+  getAccountMap,
+  getCardsMap,
+  getCategorias,
+  DateFormat,
+) => [
   {
     id: "selection",
     header: ({ table }) => (
@@ -100,7 +105,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             {row.getValue("descricao")}
           </span>
 
-          {item.condicao === "Parcelado" && (
+          {item.condicao === "parcelado" && (
             <span className="text-muted-foreground text-xs">
               {item.parcela_atual} de {item.qtde_parcela}
             </span>
@@ -139,7 +144,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </TooltipProvider>
           )}
 
-          {item.condicao === "Parcelado" &&
+          {item.condicao === "parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
               <PartyPopper className="text-emerald-600" size={18} />
             )}
@@ -216,9 +221,9 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
       return (
         <span className="flex items-center gap-1">
-          {item.condicao === "Parcelado" && <CalendarClockIcon size={12} />}
-          {item.condicao === "Recorrente" && <RefreshCw size={12} />}
-          {item.condicao === "Vista" && <Check size={12} />}
+          {item.condicao === "parcelado" && <CalendarClockIcon size={12} />}
+          {item.condicao === "recorrente" && <RefreshCw size={12} />}
+          {item.condicao === "vista" && <Check size={12} />}
 
           <span className="capitalize">{row.getValue("condicao")}</span>
         </span>
@@ -273,6 +278,30 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
   },
 
   {
+    accessorKey: "categoria",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Categoria
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <Button size="sm" variant={getButtonVariant(item.tipo_transacao)}>
+          {item.categorias?.nome}
+        </Button>
+      );
+    },
+  },
+
+  {
     accessorKey: "contaCartao",
     header: () => <span>Conta/Cartão</span>,
     cell: ({ row }) => {
@@ -308,7 +337,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <DetailsTransactions
                   itemId={item.id}
-                  itemPeriodo={item.periodo}
                   itemNotas={item.anotacao}
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
@@ -326,6 +354,8 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                   itemConta={item.contas?.descricao}
                   itemPaid={item.realizado}
                   itemImagemURL={item.imagem_url}
+                  itemCategoriaId={item.categorias?.nome}
+                  itemPeriodo={item.periodo}
                 />
               </DropdownMenuItem>
 
@@ -346,12 +376,10 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                     itemQtdeParcelas={item.qtde_parcela}
                     itemRecorrencia={item.recorrencia}
                     itemQtdeRecorrencia={item.qtde_recorrencia}
-                    getAccountMap={getAccountMap}
-                    getCardsMap={getCardsMap}
-                    itemCartao={item.cartoes?.id}
-                    itemConta={item.contas?.id}
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}
+                    itemCategoriaId={item.categorias?.id}
+                    getCategorias={getCategorias}
                   />
                 </DropdownMenuItem>
               )}

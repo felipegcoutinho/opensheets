@@ -6,6 +6,7 @@ import {
   LucideStars,
   Pen,
   PiggyBank,
+  Settings,
   Users,
 } from "lucide-react";
 
@@ -52,6 +53,18 @@ export function NavLinks(month: string) {
         url: `/insights?periodo=${month}`,
         icon: LucideStars,
       },
+      {
+        name: "configurações",
+        url: `/ajustes`,
+        icon: Settings,
+      },
+
+      // TODO - Implementar feedback
+      // {
+      //   name: "feedback",
+      //   url: `/feedback?periodo=${month}`,
+      //   icon: LucideStars,
+      // },
     ],
   };
 }

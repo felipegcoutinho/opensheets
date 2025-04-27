@@ -43,7 +43,7 @@ export async function getBillsByResponsavel(month) {
   const { data, error } = await supabase
     .from("boletos")
     .select(
-      "id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao, qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)",
+      "id, descricao, periodo, dt_vencimento, status_pagamento, valor, condicao, qtde_recorrencia, anotacao, responsavel, contas ( id, descricao), categorias ( id, nome )",
     )
     .eq("periodo", month)
     .eq("responsavel", "você");
@@ -70,8 +70,8 @@ export async function getBills(month) {
   const { data, error } = await supabase
     .from("boletos")
     .select(
-      `id, descricao, periodo, dt_vencimento, categoria, status_pagamento, valor, condicao,
-      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao)`,
+      `id, descricao, periodo, dt_vencimento, status_pagamento, valor, condicao,
+      qtde_recorrencia, anotacao, responsavel, contas ( id, descricao), categorias ( id, nome )`,
     )
     .eq("periodo", month)
     .order("dt_vencimento", { ascending: true });
@@ -92,6 +92,42 @@ export async function getResponsavelBillList(month) {
     .select("responsavel, descricao, valor")
     .order("responsavel", { ascending: true })
     .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar boletos:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getBillsByCategory(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("boletos")
+    .select(`valor, categoria:categoria_id ( nome )`)
+    .eq("periodo", month)
+    .eq("responsavel", "você");
+  // .eq("status_pagamento", "Pago");
+
+  if (error) throw error;
+
+  return data;
+}
+
+export async function getCategoriaBoletos(month: string, categoriaId: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("boletos")
+    .select(
+      `id, dt_vencimento, periodo, descricao, status_pagamento, anotacao, responsavel, valor, categoria_id!inner(id, nome)`,
+    )
+    .order("dt_vencimento", { ascending: false })
+    .eq("periodo", month)
+    .eq("responsavel", "você")
+    .eq("categoria_id.nome", categoriaId);
 
   if (error) {
     console.error("Erro ao buscar boletos:", error);

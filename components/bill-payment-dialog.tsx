@@ -70,7 +70,7 @@ export default function BillPaymentDialog({
                 <span className="text-foreground font-medium">{descricao}</span>
               </div>
 
-              <div className="bg-muted/50 rounded-lg p-4">
+              <div className="rounded-lg p-4">
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-muted-foreground text-sm">
                     Valor Total

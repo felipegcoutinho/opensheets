@@ -6,7 +6,7 @@ import { ArrowUpRight, Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function InvoiceCard({ data, month }) {
+export default async function InvoiceWidget({ data, month }) {
   const dataSorted = data.sort((a, b) => b.total_valor - a.total_valor);
 
   if (!dataSorted.length) return <EmptyCard width={100} height={100} />;

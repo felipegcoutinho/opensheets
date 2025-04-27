@@ -1,23 +1,19 @@
 import { getConditions } from "@/app/services/transacoes";
 import MoneyValues from "@/components/money-values";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-export async function ConditionList({ month }) {
+export async function ConditionWidget({ month }) {
   const condicoes = await getConditions(month);
 
   const condicoesSorted = condicoes.sort((a, b) => b.sum - a.sum);
 
   return (
-    <Card className="pb-4">
-      <CardHeader>
-        <CardTitle>Condições de Pagamento</CardTitle>
-      </CardHeader>
-
+    <>
       {condicoesSorted?.length > 0 ? (
         condicoesSorted?.map((item) => (
-          <CardContent key={item.condicao} className="grid gap-2 py-1">
+          <CardContent key={item.condicao} className="grid gap-2 p-0 py-1">
             <div className="flex items-center justify-between">
               <Link
                 href={`/dashboard/condicao/${item.condicao}`}
@@ -40,6 +36,6 @@ export async function ConditionList({ month }) {
           </span>
         </CardContent>
       )}
-    </Card>
+    </>
   );
 }
