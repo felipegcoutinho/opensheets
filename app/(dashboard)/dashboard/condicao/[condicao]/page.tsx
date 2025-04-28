@@ -34,7 +34,7 @@ async function Page({ params, searchParams }) {
 
   const valorTotal = transactions.reduce((acc, item) => acc + item.valor, 0);
 
-  const { getButtonVariant } = UseStyles();
+  const { getButtonVariant, getResponsavelClass } = UseStyles();
 
   return (
     <div className="mb-4 space-y-6">
@@ -130,7 +130,9 @@ async function Page({ params, searchParams }) {
                   </TableCell>
                   <TableCell>{item.forma_pagamento}</TableCell>
                   <TableCell>
-                    <span className="text-primary font-medium">
+                    <span
+                      className={`${getResponsavelClass(item.responsavel)}`}
+                    >
                       {item.responsavel}
                     </span>
                   </TableCell>
@@ -144,7 +146,7 @@ async function Page({ params, searchParams }) {
                       itemNotas={item.anotacao}
                       itemDate={item.data_compra}
                       itemDescricao={item.descricao}
-                      itemCategoria={item.categoria}
+                      itemCategoriaId={item.categorias?.nome}
                       itemCondicao={item.condicao}
                       itemResponsavel={item.responsavel}
                       itemTipoTransacao={item.tipo_transacao}

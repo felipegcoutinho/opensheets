@@ -36,7 +36,7 @@ import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 import Utils from "../utils-transacao";
 
-const { getButtonVariant } = UseStyles();
+const { getButtonVariant, getResponsavelClass } = UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -49,13 +49,6 @@ export function getLogo(row) {
   const cartaoLogo = row.cartoes?.logo_image;
   return contaLogo ?? cartaoLogo;
 }
-
-const getResponsavelClass = (responsavel) => {
-  if (responsavel === "você") return "text-blue-600 dark:text-blue-400";
-  if (responsavel === "sistema")
-    return "text-neutral-600 dark:text-neutral-300";
-  return "text-orange-600 dark:text-orange-400";
-};
 
 export const getColumns = (
   getAccountMap,
@@ -270,33 +263,9 @@ export const getColumns = (
       const item = row.original;
 
       return (
-        <span className={` ${getResponsavelClass(item.responsavel)}`}>
+        <span className={`${getResponsavelClass(item.responsavel)}`}>
           {item.responsavel}
         </span>
-      );
-    },
-  },
-
-  {
-    accessorKey: "categoria",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Categoria
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const item = row.original;
-      return (
-        <Button size="sm" variant={getButtonVariant(item.tipo_transacao)}>
-          {item.categorias?.nome}
-        </Button>
       );
     },
   },

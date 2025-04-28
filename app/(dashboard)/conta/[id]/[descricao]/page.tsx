@@ -138,7 +138,7 @@ const TransactionTable = ({
                 <TableCell>
                   <MoneyValues value={item.valor} />
                 </TableCell>
-                <TableCell>{item.categoria}</TableCell>
+                <TableCell>{item.categorias?.nome}</TableCell>
                 <TableCell>
                   <DetailsTransactions
                     itemId={item.id}
@@ -146,7 +146,7 @@ const TransactionTable = ({
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
-                    itemCategoria={item.categoria}
+                    itemCategoriaId={item.categorias?.nome}
                     itemCondicao={item.condicao}
                     itemResponsavel={item.responsavel}
                     itemTipoTransacao={item.tipo_transacao}

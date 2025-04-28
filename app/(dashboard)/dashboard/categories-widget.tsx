@@ -1,10 +1,10 @@
 "use client";
 
-import { CardContent } from "@/components/ui/card";
-import MoneyValues from "@/components/money-values";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
 import EmptyCard from "@/components/empty-card";
+import MoneyValues from "@/components/money-values";
+import { Badge } from "@/components/ui/badge";
+import { CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
@@ -80,6 +80,7 @@ export default function CategoryWidget({
             </div>
           );
         })}
+        {sortedData.length === 0 && <EmptyCard />}
       </CardContent>
     </div>
   );
