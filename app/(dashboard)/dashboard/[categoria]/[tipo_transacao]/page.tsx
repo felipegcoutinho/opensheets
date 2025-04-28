@@ -97,7 +97,6 @@ async function page(props) {
                     <TableHead>Data</TableHead>
                     <TableHead>Descrição</TableHead>
                     <TableHead>Tipo</TableHead>
-                    <TableHead>Status</TableHead>
                     <TableHead>Categoria</TableHead>
                     <TableHead>Valor</TableHead>
                   </TableRow>
@@ -108,13 +107,19 @@ async function page(props) {
                       <TableCell>{DateFormat(item.data_compra)}</TableCell>
                       <TableCell>{item.descricao}</TableCell>
                       <TableCell>{item.tipo_transacao}</TableCell>
-                      <TableCell>{item.status_pagamento ?? "-"}</TableCell>
                       <TableCell>{item.categoria_id?.nome}</TableCell>
                       <TableCell>
                         <MoneyValues value={item.valor} />
                       </TableCell>
                     </TableRow>
                   ))}
+                  {transacoes?.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center">
+                        Nenhum lançamento encontrado.
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
@@ -150,6 +155,13 @@ async function page(props) {
                       </TableCell>
                     </TableRow>
                   ))}
+                  {boletos?.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center">
+                        Nenhum boleto encontrado.
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>

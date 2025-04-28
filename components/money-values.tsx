@@ -7,24 +7,27 @@ import { animate, useMotionValue } from "framer-motion";
 
 type Props = {
   value: number;
+  animated?: boolean; // NOVO: controle de animação
 };
 
-function MoneyValues({ value }: Props) {
+function MoneyValues({ value, animated = true }: Props) {
   const { estado } = usePrivacy();
-  const [displayValue, setDisplayValue] = useState(0);
+  const [displayValue, setDisplayValue] = useState(animated ? 0 : value);
   const motionValue = useMotionValue(0);
 
   useEffect(() => {
+    if (!animated) return; // Se animação for desativada, não faz nada
+
     const controls = animate(motionValue, value, {
-      duration: 0.1,
-      ease: "easeIn",
+      duration: 0.2,
+      ease: "easeOut",
       onUpdate: (latest) => {
         setDisplayValue(latest);
       },
     });
 
     return controls.stop;
-  }, [value, motionValue]);
+  }, [animated, value, motionValue]);
 
   return (
     <span
@@ -33,7 +36,7 @@ function MoneyValues({ value }: Props) {
         "opacity-80 blur-xl transition-all duration-300 hover:blur-none"
       }`}
     >
-      {displayValue.toLocaleString("pt-BR", {
+      {(animated ? displayValue : value).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
       })}
