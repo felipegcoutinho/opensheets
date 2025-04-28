@@ -20,7 +20,6 @@ export const NavProjects = memo(function NavProjects({
     <SidebarGroup>
       <SidebarGroupLabel className="text-muted-foreground text-sm">
         {title}
-        <span className="text-2xl">👇</span>
       </SidebarGroupLabel>
       <SidebarMenu className="mt-1">
         {projects.map((item) => {

@@ -1,7 +1,8 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCategoria } from "@/app/services/transacoes";
 import { getCategoriaBoletos } from "@/app/services/boletos";
+import { getCategoria } from "@/app/services/transacoes";
 import MoneyValues from "@/components/money-values";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -11,12 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { UseDates } from "@/hooks/use-dates";
-import Link from "next/link";
-import { ArrowLeftIcon } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getPeriodo } from "@/hooks/periodo";
+import { UseDates } from "@/hooks/use-dates";
+import { ArrowLeftIcon } from "lucide-react";
+import Link from "next/link";
 
 async function page(props) {
   const params = await props.params;
@@ -47,7 +47,7 @@ async function page(props) {
       </Button>
 
       {/* Banner / Resumo */}
-      <Card className="border-dashed">
+      <Card>
         <CardHeader>
           <CardTitle className="text-xl capitalize">{categoria}</CardTitle>
           <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">

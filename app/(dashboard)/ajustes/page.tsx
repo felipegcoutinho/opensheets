@@ -1,7 +1,8 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ManagerCategoria from "./categorias/manager-categoria";
 import { getNewCategorias } from "@/app/services/categorias";
 import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ManagerCategoria from "./categorias/manager-categoria";
+import AddCategoriaForm from "./categorias/new-category";
 
 async function page() {
   const categorias = await getNewCategorias();
@@ -33,6 +34,8 @@ async function page() {
                 receitas. <br /> As categorias são usadas para organizar suas
                 transações financeiras.
               </p>
+
+              <AddCategoriaForm />
             </div>
 
             <ManagerCategoria categorias={categorias} />
