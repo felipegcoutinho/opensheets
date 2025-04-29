@@ -44,7 +44,7 @@ export default function UpdateCategory({
       <DialogTrigger>Editar</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Nova Categoria</DialogTitle>
+          <DialogTitle>Atualizar Categoria</DialogTitle>
         </DialogHeader>
 
         <form action={formAction} className="space-y-4">
