@@ -7,7 +7,6 @@ import {
   Pen,
   PiggyBank,
   Users,
-  WandSparkles,
 } from "lucide-react";
 
 export function NavLinks(month: string) {
@@ -48,11 +47,11 @@ export function NavLinks(month: string) {
         url: `/anotacao?periodo=${month}`,
         icon: Pen,
       },
-      {
-        name: "insights",
-        url: `/insights?periodo=${month}`,
-        icon: WandSparkles,
-      },
+      // {
+      //   name: "insights",
+      //   url: `/insights?periodo=${month}`,
+      //   icon: WandSparkles,
+      // },
       {
         name: "categorias",
         url: `/categorias`,
