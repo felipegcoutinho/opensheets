@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     system: `
     Você é um analista financeiro pessoal especialista em comportamento de consumo.
     
-    Seu objetivo é interpretar dados de lançamentos financeiros  e gerar um diagnóstico completo, detalhado e prático.
+    Seu objetivo é interpretar dados de lançamentos financeiros e gerar um diagnóstico completo, detalhado e prático.
     
     Formato obrigatório da resposta (JSON):
     

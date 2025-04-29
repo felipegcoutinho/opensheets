@@ -1,6 +1,5 @@
 "use client";
 
-import { updateCategoria } from "@/app/actions/categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,24 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useActionState } from "react";
 import CategoryHelper from "../category-helper";
-
-const initialState = {
-  message: "",
-};
 
 export default function UpdateCategory({
   itemId,
   itemNome,
   itemTipoCategoria,
 }) {
-  const [state, formAction, loading] = useActionState(
-    updateCategoria,
-    initialState,
-  );
-
-  const { isOpen, setIsOpen } = CategoryHelper();
+  const { handleUpdate, updateLoading, isOpen, setIsOpen } = CategoryHelper();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -47,7 +36,7 @@ export default function UpdateCategory({
           <DialogTitle>Atualizar Categoria</DialogTitle>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-4">
+        <form action={handleUpdate} className="space-y-4">
           <input type="hidden" name="id" value={itemId} />
 
           <div>
@@ -88,16 +77,10 @@ export default function UpdateCategory({
               </Button>
             </DialogClose>
 
-            <Button className="w-1/2" type="submit" disabled={loading}>
-              {loading ? "Atualizando..." : "Atualizar"}
+            <Button className="w-1/2" type="submit" disabled={updateLoading}>
+              {updateLoading ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
-
-          {state.message && (
-            <p className="mt-2 text-center text-sm text-red-500">
-              {state.message}
-            </p>
-          )}
         </form>
       </DialogContent>
     </Dialog>

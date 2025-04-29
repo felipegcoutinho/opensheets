@@ -17,9 +17,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import UpdateCategory from "./modal/update-category";
 import { Ellipsis } from "lucide-react";
 import DeleteCategory from "./modal/delete-category";
+import UpdateCategory from "./modal/update-category";
 
 export default function TableCategories({ categorias }) {
   return (
@@ -40,7 +40,17 @@ export default function TableCategories({ categorias }) {
             {categorias?.length !== 0 ? (
               categorias?.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="font-bold">{item.nome}</TableCell>
+                  <TableCell className="font-bold capitalize">
+                    {item.nome}
+
+                    {/* <Image
+                      src={item.icone}
+                      alt={item.nome}
+                      width={20}
+                      height={20}
+                      className="ml-2 inline-block"
+                    /> */}
+                  </TableCell>
                   <TableCell>
                     <Badge
                       variant={

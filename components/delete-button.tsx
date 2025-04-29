@@ -12,7 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function DeleteButton({ handleDelete, isOpen, setIsOpen }) {
+export default function DeleteButton({
+  handleDelete,
+  isOpen,
+  setIsOpen,
+  loading,
+}) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger className="text-red-500">Remover</DialogTrigger>
@@ -20,9 +25,9 @@ export default function DeleteButton({ handleDelete, isOpen, setIsOpen }) {
         <DialogHeader>
           <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
           <DialogDescription>
-            Isso não pode ser desfeito. Isso excluirá
-            <strong>permanentemente</strong> seu lançamento e removerá seus
-            dados de nossos servidores.
+            Isso não pode ser desfeito. Isso removerá
+            <strong> permanentemente</strong> seu conteúdo e removerá seus dados
+            de nossos servidores.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex w-full gap-2">
@@ -32,8 +37,13 @@ export default function DeleteButton({ handleDelete, isOpen, setIsOpen }) {
             </Button>
           </DialogClose>
           <form className="w-1/2" onSubmit={handleDelete}>
-            <Button variant="destructive" className="w-full" type="submit">
-              Sim, quero excluir
+            <Button
+              variant="destructive"
+              className="w-full"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Removendo..." : " Sim, quero excluir"}
             </Button>
           </form>
         </DialogFooter>

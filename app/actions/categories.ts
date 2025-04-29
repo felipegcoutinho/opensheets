@@ -24,7 +24,7 @@ export async function addCategories(prevState: unknown, formData: FormData) {
   revalidatePath("/categorias");
 }
 
-export async function deleteCategoria(formData: FormData) {
+export async function deleteCategories(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
   const excluir = formData.get("excluir");
@@ -44,7 +44,7 @@ export async function deleteCategoria(formData: FormData) {
   revalidatePath("/categorias");
 }
 
-export async function updateCategoria(prevState: unknown, formData: FormData) {
+export async function updateCategories(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
   const { id, nome, tipo_categoria } = Object.fromEntries(formData.entries());

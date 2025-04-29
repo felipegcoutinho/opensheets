@@ -1,8 +1,8 @@
+import { getBillsByResponsavel } from "@/app/services/boletos";
+import { getCards } from "@/app/services/cartoes";
 import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
 import { getPeriodo } from "@/hooks/periodo";
 import Dashboard from "./dashboard"; // agora é Home, não Dashboard
-import { getBillsByResponsavel } from "@/app/services/boletos";
-import { getCards } from "@/app/services/cartoes";
 
 async function page(props) {
   const month = await getPeriodo(props);

@@ -1,6 +1,5 @@
 "use client";
 
-import { addCategories } from "@/app/actions/categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,20 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useActionState } from "react";
-
-const initialState = {
-  message: "",
-};
+import CategoryHelper from "../category-helper";
 
 export default function CreateCategory() {
-  const [state, formAction, loading] = useActionState(
-    addCategories,
-    initialState,
-  );
+  const { handleSubmit, loading, isOpen, setIsOpen } = CategoryHelper();
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
           variant="default"
@@ -48,7 +40,7 @@ export default function CreateCategory() {
           <DialogTitle>Nova Categoria</DialogTitle>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-4">
+        <form action={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="nome">Nome da Categoria</Label>
             <Input id="nome" name="nome" required placeholder="Digite o nome" />
@@ -77,12 +69,6 @@ export default function CreateCategory() {
               {loading ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
-
-          {state.message && (
-            <p className="mt-2 text-center text-sm text-red-500">
-              {state.message}
-            </p>
-          )}
         </form>
       </DialogContent>
     </Dialog>

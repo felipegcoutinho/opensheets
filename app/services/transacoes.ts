@@ -435,7 +435,7 @@ export async function getTransactionsByResponsableVoce(month: string) {
     .select(
       `id, data_compra, periodo, descricao, tipo_transacao, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
-      qtde_recorrencia, dividir_lancamento`,
+      qtde_recorrencia, dividir_lancamento, categorias ( id, nome ), cartoes (id, descricao), contas (id, descricao)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
