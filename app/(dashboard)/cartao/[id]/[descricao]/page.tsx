@@ -107,8 +107,8 @@ const InfoSection = ({ title, value, subtitle, subvalue }) => (
 const TransactionTable = ({ transactions, dateFormatter }) => {
   const getResponsavelClass = (responsavel) => {
     const classes = {
-      Você: "text-blue-600",
-      Sistema: "text-neutral-600",
+      você: "text-blue-600",
+      sistema: "text-neutral-600",
       default: "text-orange-600",
     };
     return classes[responsavel] || classes.default;
@@ -116,9 +116,9 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
 
   const getTransactionIcon = (condicao) => {
     const icons = {
-      Parcelado: <CalendarClockIcon size={12} />,
-      Recorrente: <RefreshCw size={12} />,
-      Vista: <Check size={12} />,
+      parcelado: <CalendarClockIcon size={12} />,
+      recorrente: <RefreshCw size={12} />,
+      vista: <Check size={12} />,
     };
     return icons[condicao] || null;
   };
@@ -133,7 +133,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow className="bg-muted/50">
+            <TableRow>
               <TableHead>Data</TableHead>
               <TableHead>Descrição</TableHead>
               <TableHead>Transação</TableHead>
@@ -152,7 +152,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                 <TableCell>{dateFormatter(item.data_compra)}</TableCell>
                 <TableCell>
                   <span>{item.descricao}</span>
-                  {item.condicao === "Parcelado" && (
+                  {item.condicao === "parcelado" && (
                     <span className="px-1 text-xs text-neutral-400">
                       {`${item.parcela_atual} de ${item.qtde_parcela}`}
                     </span>
@@ -181,7 +181,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                 <TableCell>
                   <MoneyValues value={item.valor} />
                 </TableCell>
-                <TableCell>{item.categoria}</TableCell>
+                <TableCell>{item.categorias?.nome}</TableCell>
                 <TableCell>
                   <DetailsTransactions
                     itemId={item.id}
@@ -189,7 +189,7 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
-                    itemCategoria={item.categoria}
+                    itemCategoriaId={item.categorias?.nome}
                     itemCondicao={item.condicao}
                     itemResponsavel={item.responsavel}
                     itemTipoTransacao={item.tipo_transacao}
@@ -229,7 +229,7 @@ export default async function page({ searchParams, params }) {
       getFaturas(month, id),
     ]);
 
-  const isPaid = faturaStatus?.some((item) => item.status_pagamento === "Pago");
+  const isPaid = faturaStatus?.some((item) => item.status_pagamento === "pago");
   const statusClassName = isPaid
     ? "border-green-500 bg-green-50 dark:bg-green-900"
     : "border-orange-500 bg-orange-50 dark:bg-orange-900";

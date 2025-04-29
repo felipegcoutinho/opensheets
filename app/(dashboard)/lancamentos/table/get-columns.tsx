@@ -36,7 +36,7 @@ import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 import Utils from "../utils-transacao";
 
-const { getButtonVariant } = UseStyles();
+const { getButtonVariant, getResponsavelClass } = UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -50,14 +50,12 @@ export function getLogo(row) {
   return contaLogo ?? cartaoLogo;
 }
 
-const getResponsavelClass = (responsavel) => {
-  if (responsavel === "Você") return "text-blue-600 dark:text-blue-400";
-  if (responsavel === "Sistema")
-    return "text-neutral-600 dark:text-neutral-300";
-  return "text-orange-600 dark:text-orange-400";
-};
-
-export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
+export const getColumns = (
+  getAccountMap,
+  getCardsMap,
+  getCategorias,
+  DateFormat,
+) => [
   {
     id: "selection",
     header: ({ table }) => (
@@ -100,13 +98,13 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             {row.getValue("descricao")}
           </span>
 
-          {item.condicao === "Parcelado" && (
+          {item.condicao === "parcelado" && (
             <span className="text-muted-foreground text-xs">
               {item.parcela_atual} de {item.qtde_parcela}
             </span>
           )}
 
-          {item.responsavel === "Sistema" && (
+          {item.responsavel === "sistema" && (
             <span className="text-muted-foreground text-xs">
               <CheckCircle2Icon fill="green" className="text-white" size={15} />
             </span>
@@ -125,7 +123,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </span>
           )}
 
-          {item.anotacao != "" && item.responsavel != "Sistema" && (
+          {item.anotacao != "" && item.responsavel != "sistema" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
@@ -139,7 +137,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
             </TooltipProvider>
           )}
 
-          {item.condicao === "Parcelado" &&
+          {item.condicao === "parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
               <PartyPopper className="text-emerald-600" size={18} />
             )}
@@ -216,9 +214,9 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
 
       return (
         <span className="flex items-center gap-1">
-          {item.condicao === "Parcelado" && <CalendarClockIcon size={12} />}
-          {item.condicao === "Recorrente" && <RefreshCw size={12} />}
-          {item.condicao === "Vista" && <Check size={12} />}
+          {item.condicao === "parcelado" && <CalendarClockIcon size={12} />}
+          {item.condicao === "recorrente" && <RefreshCw size={12} />}
+          {item.condicao === "vista" && <Check size={12} />}
 
           <span className="capitalize">{row.getValue("condicao")}</span>
         </span>
@@ -265,7 +263,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
       const item = row.original;
 
       return (
-        <span className={` ${getResponsavelClass(item.responsavel)}`}>
+        <span className={`${getResponsavelClass(item.responsavel)}`}>
           {item.responsavel}
         </span>
       );
@@ -308,7 +306,6 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <DetailsTransactions
                   itemId={item.id}
-                  itemPeriodo={item.periodo}
                   itemNotas={item.anotacao}
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
@@ -326,10 +323,12 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                   itemConta={item.contas?.descricao}
                   itemPaid={item.realizado}
                   itemImagemURL={item.imagem_url}
+                  itemCategoriaId={item.categorias?.nome}
+                  itemPeriodo={item.periodo}
                 />
               </DropdownMenuItem>
 
-              {item.responsavel != "Sistema" && (
+              {item.responsavel != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <UpdateTransactions
                     itemId={item.id}
@@ -346,17 +345,15 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                     itemQtdeParcelas={item.qtde_parcela}
                     itemRecorrencia={item.recorrencia}
                     itemQtdeRecorrencia={item.qtde_recorrencia}
-                    getAccountMap={getAccountMap}
-                    getCardsMap={getCardsMap}
-                    itemCartao={item.cartoes?.id}
-                    itemConta={item.contas?.id}
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}
+                    itemCategoriaId={item.categorias?.id}
+                    getCategorias={getCategorias}
                   />
                 </DropdownMenuItem>
               )}
 
-              {item.responsavel != "Sistema" && (
+              {item.responsavel != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <TogglePaymentDialog
                     id={item.id}
@@ -369,7 +366,7 @@ export const getColumns = (getAccountMap, getCardsMap, DateFormat) => [
                 </DropdownMenuItem>
               )}
 
-              {item.responsavel != "Sistema" && (
+              {item.responsavel != "sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

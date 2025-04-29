@@ -40,6 +40,8 @@ export default function UpdateTransactions({
   itemPeriodo,
   itemPaid,
   itemImagemURL,
+  itemCategoriaId,
+  getCategorias,
 }) {
   const {
     categoriasReceita,
@@ -100,14 +102,18 @@ export default function UpdateTransactions({
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Data da Transação</Label>
-              <Required />
+              <Label>
+                Data da Transação
+                <Required />
+              </Label>
               <Input defaultValue={itemDate} name="data_compra" type="date" />
             </div>
 
             <div className="w-1/2">
-              <Label>Período</Label>
-              <Required />
+              <Label>
+                Período
+                <Required />
+              </Label>
               <Select
                 defaultValue={itemPeriodo}
                 name="periodo"
@@ -129,8 +135,10 @@ export default function UpdateTransactions({
 
           <div className="flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Descrição</Label>
-              <Required />
+              <Label>
+                Descrição
+                <Required />
+              </Label>
               <Input
                 defaultValue={itemDescricao}
                 name="descricao"
@@ -140,13 +148,46 @@ export default function UpdateTransactions({
             </div>
 
             <div className="w-1/2">
-              <Label>Valor</Label>
-              <Required />
+              <Label>
+                Valor
+                <Required />
+              </Label>
               <MoneyInput defaultValue={itemValor} name="valor" />
             </div>
           </div>
 
-          <div className="mt-1 flex w-full gap-2">
+          <div className="w-full">
+            <Label>
+              Categoria
+              <Required />
+            </Label>
+            <Select
+              defaultValue={itemCategoriaId.toString()}
+              name="categoria_id"
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {getCategorias
+                  ?.filter(
+                    (categoria) =>
+                      categoria.tipo_categoria === itemTipoTransacao,
+                  )
+                  .map((item) => (
+                    <SelectItem
+                      className="capitalize"
+                      key={item.id}
+                      value={item.id.toString()}
+                    >
+                      {item.nome}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* <div className="mt-1 flex w-full gap-2">
             <div className="w-full">
               <Label>Categoria</Label>
               <Select defaultValue={itemCategoria} name="categoria">
@@ -155,7 +196,7 @@ export default function UpdateTransactions({
                 </SelectTrigger>
                 <SelectContent>
                   <>
-                    {itemTipoTransacao === "Receita"
+                    {itemTipoTransacao === "receita"
                       ? categoriasReceita.map((item) => {
                           const IconComponent = item.icon;
                           return (
@@ -190,12 +231,10 @@ export default function UpdateTransactions({
                 </SelectContent>
               </Select>
             </div>
-          </div>
+          </div> */}
 
           <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
-            <Label className="text-sm font-medium text-neutral-600">
-              Marcar lançamento como Pago
-            </Label>
+            <Label>Marcar lançamento como Pago</Label>
             <Toggle
               onPressedChange={() => setIsPaid(!itemPaid)}
               defaultPressed={itemPaid}
@@ -207,8 +246,10 @@ export default function UpdateTransactions({
           </Card>
 
           <div className="w-full">
-            <Label>Responsável</Label>
-            <Required />
+            <Label>
+              Responsável
+              <Required />
+            </Label>
             <Input
               defaultValue={itemResponsavel}
               name="responsavel"

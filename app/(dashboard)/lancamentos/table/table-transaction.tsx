@@ -49,7 +49,12 @@ const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
   );
 };
 
-export function TableTransaction({ data, getAccount, getCards }) {
+export function TableTransaction({
+  data,
+  getAccount,
+  getCards,
+  getCategorias,
+}) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -60,7 +65,7 @@ export function TableTransaction({ data, getAccount, getCards }) {
   });
 
   const { DateFormat } = UseDates();
-  const columns = getColumns(getAccount, getCards, DateFormat);
+  const columns = getColumns(getAccount, getCards, getCategorias, DateFormat);
 
   const table = useReactTable({
     data,
@@ -92,7 +97,11 @@ export function TableTransaction({ data, getAccount, getCards }) {
   return (
     <div className="mt-4 w-full">
       <div className="flex items-center justify-between">
-        <CreateTransactions getCards={getCards} getAccount={getAccount} />
+        <CreateTransactions
+          getCards={getCards}
+          getAccount={getAccount}
+          getCategorias={getCategorias}
+        />
 
         <div className="flex items-center gap-2">
           {/* Exibe a soma dos lançamentos selecionados */}
@@ -117,7 +126,7 @@ export function TableTransaction({ data, getAccount, getCards }) {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow className="bg-muted/50" key={headerGroup.id}>
+                <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <TableHead key={header.id}>
                       {header.isPlaceholder

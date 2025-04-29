@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useMemo, useState, useTransition } from "react";
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 
 const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
   const Icon = direction === "left" ? ChevronLeft : ChevronRight;
@@ -20,13 +21,14 @@ const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
 });
 
 const ReturnButton = React.memo(({ onClick, disabled }) => (
-  <button
-    className="bg-primary ml-2 cursor-pointer rounded text-white disabled:opacity-50 dark:text-white"
+  <Button
+    className="ml-2 cursor-pointer rounded disabled:opacity-50"
+    size={"sm"}
     onClick={onClick}
     disabled={disabled}
   >
-    <span className="px-2 text-sm">Retornar ao Mês Atual</span>
-  </button>
+    <span className="px-2">Retornar ao Mês Atual</span>
+  </Button>
 ));
 
 const LoadingSpinner = () => (
@@ -117,7 +119,7 @@ export default function MonthPicker() {
   );
 
   const shouldShowMonthFilter = useMemo(() => {
-    const notShowPaths = ["/cartao", "/conta", "/ajustes", "/login", "/"];
+    const notShowPaths = ["/cartao", "/conta", "/categorias", "/login", "/"];
     return !notShowPaths.includes(pathname);
   }, [pathname]);
 
@@ -126,7 +128,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="my-2 flex w-full items-center justify-start p-3">
+    <Card className="my-2 flex h-14 w-full items-center justify-start p-4">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}

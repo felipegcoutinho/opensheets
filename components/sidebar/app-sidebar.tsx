@@ -51,7 +51,7 @@ export function AppSidebar({
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={data.projects} />
+        <NavProjects links={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser username={username} usermail={usermail} user={data.user} />

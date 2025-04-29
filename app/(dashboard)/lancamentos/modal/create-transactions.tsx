@@ -29,7 +29,11 @@ import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
 import Utils from "../utils-transacao";
 
-export default function CreateTransactions({ getCards, getAccount }) {
+export default function CreateTransactions({
+  getCards,
+  getAccount,
+  getCategorias,
+}) {
   const {
     isOpen,
     tipoTransacao,
@@ -76,14 +80,17 @@ export default function CreateTransactions({ getCards, getAccount }) {
           <form onSubmit={handleSubmit} id="transaction-form">
             <div className="mb-1 flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Data da Transação</Label>
-                <Required />
+                <Label>
+                  Data da Transação <Required />
+                </Label>
+
                 <Input name="data_compra" type="date" required />
               </div>
 
               <div className="w-1/2">
-                <Label>Período</Label>
-                <Required />
+                <Label>
+                  Período <Required />
+                </Label>
                 <Select name="periodo" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
@@ -101,8 +108,10 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Descrição</Label>
-                <Required />
+                <Label>
+                  Descrição
+                  <Required />
+                </Label>
                 <Input
                   name="descricao"
                   placeholder="Descrição"
@@ -112,8 +121,10 @@ export default function CreateTransactions({ getCards, getAccount }) {
               </div>
 
               <div className="w-1/2">
-                <Label>Valor</Label>
-                <Required />
+                <Label>
+                  Valor
+                  <Required />
+                </Label>
                 <MoneyInput name="valor" placeholder="R$ 0,00" required />
               </div>
             </div>
@@ -130,59 +141,37 @@ export default function CreateTransactions({ getCards, getAccount }) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Receita">Receita</SelectItem>
-                    <SelectItem value="Despesa">Despesa</SelectItem>
-                    {/* <SelectItem value="Investimento">Investimento</SelectItem> */}
+                    <SelectItem value="receita">Receita</SelectItem>
+                    <SelectItem value="despesa">Despesa</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="w-1/2">
-                <Label>Categoria</Label>
-                <Select
-                  name="categoria"
-                  required
-                  // disabled={
-                  //   tipoTransacao !== "Receita" && tipoTransacao !== "Despesa"
-                  // }
-                >
+                <Label>
+                  Categoria
+                  <Required />
+                </Label>
+
+                <Select name="categoria_id" disabled={!tipoTransacao}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <>
-                      {tipoTransacao === "Receita"
-                        ? categoriasReceita.map((item) => {
-                            const IconComponent = item.icon;
-                            return (
-                              <SelectItem
-                                key={item.id}
-                                value={item.name}
-                                className="flex items-center gap-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <IconComponent className="h-4 w-4 text-green-500 dark:text-green-500" />
-                                  {item.name}
-                                </div>
-                              </SelectItem>
-                            );
-                          })
-                        : categoriasDespesa.map((item) => {
-                            const IconComponent = item.icon;
-                            return (
-                              <SelectItem
-                                key={item.id}
-                                value={item.name}
-                                className="flex items-center gap-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <IconComponent className="h-4 w-4 text-red-500 dark:text-red-500" />
-                                  {item.name}
-                                </div>
-                              </SelectItem>
-                            );
-                          })}
-                    </>
+                    {getCategorias
+                      ?.filter(
+                        (categoria) =>
+                          categoria.tipo_categoria === tipoTransacao,
+                      )
+                      .map((item) => (
+                        <SelectItem
+                          className="capitalize"
+                          key={item.id}
+                          value={item.id.toString()}
+                        >
+                          {item.nome}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -192,9 +181,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
               <div
                 className={`flex items-center justify-between gap-2 p-2 ${showCartao ? "w-full" : "w-1/2"}`}
               >
-                <Label className="text-muted-foreground text-sm font-medium">
-                  Dividir Lançamento
-                </Label>
+                <Label>Dividir Lançamento</Label>
                 <Switch
                   name="dividir_lancamento"
                   checked={isDividedChecked}
@@ -204,9 +191,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
               {!showCartao && (
                 <div className="flex w-1/2 items-center justify-between gap-2 px-2">
-                  <Label className="text-muted-foreground text-sm font-medium">
-                    Status do Lançamento
-                  </Label>
+                  <Label>Status do Lançamento</Label>
 
                   <Toggle
                     disabled={showCartao}
@@ -224,8 +209,10 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
             <div className="flex w-full gap-2">
               <div className="w-full">
-                <Label>Responsável</Label>
-                <Required />
+                <Label>
+                  Responsável
+                  <Required />
+                </Label>
                 <Input
                   required
                   list="responsavel-list"
@@ -234,7 +221,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
                   type="text"
                 />
                 <datalist id="responsavel-list">
-                  <option value="Você" />
+                  <option value="você" />
                 </datalist>
               </div>
 
@@ -252,8 +239,10 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
             <div className="flex gap-2">
               <div className={showConta || showCartao ? "w-1/2" : "w-full"}>
-                <Label>Forma de Pagamento</Label>
-                <Required />
+                <Label>
+                  Forma de Pagamento
+                  <Required />
+                </Label>
                 <Select
                   required
                   name="forma_pagamento"
@@ -277,8 +266,10 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
               {showConta && (
                 <div className="w-1/2">
-                  <Label>Contas</Label>
-                  <Required />
+                  <Label>
+                    Contas <Required />
+                  </Label>
+
                   <Select name="conta_id" placeholder="Selecione">
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
@@ -306,8 +297,9 @@ export default function CreateTransactions({ getCards, getAccount }) {
 
               {showCartao && (
                 <div className="w-1/2">
-                  <Label>Cartão</Label>
-                  <Required />
+                  <Label>
+                    Cartão <Required />
+                  </Label>
                   <Select name="cartao_id">
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
@@ -342,16 +334,16 @@ export default function CreateTransactions({ getCards, getAccount }) {
                 <Select
                   name="condicao"
                   onValueChange={handleCondicaoChange}
-                  defaultValue="Vista"
+                  defaultValue="vista"
                   required
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Vista">À Vista</SelectItem>
-                    <SelectItem value="Parcelado">Parcelado</SelectItem>
-                    <SelectItem value="Recorrente">Recorrente</SelectItem>
+                    <SelectItem value="vista">À Vista</SelectItem>
+                    <SelectItem value="parcelado">Parcelado</SelectItem>
+                    <SelectItem value="recorrente">Recorrente</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -444,6 +436,7 @@ export default function CreateTransactions({ getCards, getAccount }) {
               Cancelar
             </Button>
           </DialogClose>
+
           <Button
             form="transaction-form"
             className="w-1/2"

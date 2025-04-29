@@ -1,5 +1,4 @@
 "use client";
-
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -12,18 +11,18 @@ import { usePathname } from "next/navigation";
 import { memo } from "react";
 
 export const NavProjects = memo(function NavProjects({
-  projects,
+  links,
   title = "Menu",
 }) {
   const pathname = usePathname();
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="text-sm font-medium text-neutral-500">
+      <SidebarGroupLabel className="text-muted-foreground text-sm">
         {title}
       </SidebarGroupLabel>
       <SidebarMenu className="mt-1">
-        {projects.map((item) => {
+        {links.map((item) => {
           const isActive = pathname.startsWith(item.url.split("?")[0]);
 
           return (
@@ -40,14 +39,7 @@ export const NavProjects = memo(function NavProjects({
                       isActive ? "text-primary" : "text-foreground"
                     }`}
                   />
-                  <span className="truncate font-medium">
-                    {item.name}
-                    {typeof item.count === "number" && (
-                      <span className="ml-2 rounded bg-neutral-200 px-2 py-0.5 text-xs text-neutral-800">
-                        {item.count}
-                      </span>
-                    )}
-                  </span>
+                  <span className="truncate">{item.name}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

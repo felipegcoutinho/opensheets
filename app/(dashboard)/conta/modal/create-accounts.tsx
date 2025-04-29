@@ -46,8 +46,10 @@ export default function CreateAccount() {
 
         <form onSubmit={handleSubmit}>
           <div className="w-full">
-            <Label>Escolha o Logo</Label>
-            <Required />
+            <Label>
+              Escolha o Logo
+              <Required />
+            </Label>
             <Select name="logo_image" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione a imagem para a conta" />
@@ -73,8 +75,10 @@ export default function CreateAccount() {
           </div>
 
           <div className="w-full">
-            <Label>Descrição</Label>
-            <Required />
+            <Label>
+              Descrição
+              <Required />
+            </Label>
             <Input
               name="descricao"
               placeholder="Descrição"
@@ -84,8 +88,10 @@ export default function CreateAccount() {
           </div>
 
           <div className="w-full">
-            <Label>Tipo da Conta</Label>
-            <Required />
+            <Label>
+              Tipo da Conta
+              <Required />
+            </Label>
             <Select name="tipo_conta" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione" />

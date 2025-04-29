@@ -54,8 +54,10 @@ export default function CreateCard({ getAccountMap }) {
 
         <form onSubmit={handleSubmit}>
           <div className="w-full">
-            <Label>Escolha o Logo</Label>
-            <Required />
+            <Label>
+              Escolha o Logo
+              <Required />
+            </Label>
             <Select name="logo_image" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
@@ -81,8 +83,10 @@ export default function CreateCard({ getAccountMap }) {
           </div>
 
           <div className="w-full">
-            <Label>Descrição</Label>
-            <Required />
+            <Label>
+              Descrição
+              <Required />
+            </Label>
             <Input
               name="descricao"
               placeholder="Descrição"
@@ -93,8 +97,10 @@ export default function CreateCard({ getAccountMap }) {
 
           <div className="flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Data de Fechamento</Label>
-              <Required />
+              <Label>
+                Data de Fechamento
+                <Required />
+              </Label>
               <Input
                 min={1}
                 max={31}
@@ -106,8 +112,10 @@ export default function CreateCard({ getAccountMap }) {
             </div>
 
             <div className="w-1/2">
-              <Label>Data de Vencimento</Label>
-              <Required />
+              <Label>
+                Data de Vencimento
+                <Required />
+              </Label>
               <Input
                 min={1}
                 max={31}
@@ -121,8 +129,10 @@ export default function CreateCard({ getAccountMap }) {
 
           <div className="flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Bandeira</Label>
-              <Required />
+              <Label>
+                Bandeira
+                <Required />
+              </Label>
               <Select name="bandeira" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
@@ -148,8 +158,10 @@ export default function CreateCard({ getAccountMap }) {
             </div>
 
             <div className="w-1/2">
-              <Label>Tipo do Cartão</Label>
-              <Required />
+              <Label>
+                Tipo do Cartão
+                <Required />
+              </Label>
               <Select name="tipo" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
@@ -163,8 +175,10 @@ export default function CreateCard({ getAccountMap }) {
           </div>
 
           <div>
-            <Label>Status do Cartão</Label>
-            <Required />
+            <Label>
+              Status do Cartão
+              <Required />
+            </Label>
             <Select name="status" defaultValue="Ativo" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione" />
@@ -177,14 +191,18 @@ export default function CreateCard({ getAccountMap }) {
           </div>
 
           <div className="w-full">
-            <Label>Limite</Label>
-            <Required />
+            <Label>
+              Limite
+              <Required />
+            </Label>
             <MoneyInput name="limite" placeholder="R$ 0,00" />
           </div>
 
           <div className="w-full">
-            <Label>Conta Padrão</Label>
-            <Required />
+            <Label>
+              Conta Padrão
+              <Required />
+            </Label>
             <Select name="conta_id" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione" />

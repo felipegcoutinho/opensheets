@@ -24,7 +24,6 @@ import ViewImage from "./view-image";
 
 export default function DetailsTransactions({
   itemId,
-  itemCategoria,
   itemCondicao,
   itemDescricao,
   itemNotas,
@@ -42,6 +41,7 @@ export default function DetailsTransactions({
   itemQtdeRecorrencia,
   itemPaid,
   itemImagemURL,
+  itemCategoriaId,
 }) {
   const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } = Utils();
 
@@ -59,8 +59,8 @@ export default function DetailsTransactions({
 
       <DialogContent className="p-0">
         <Card className="space-y-4 p-1">
-          <CardHeader className="bg-muted/50 flex flex-row items-start">
-            <div className="grid gap-0.5">
+          <CardHeader className="flex flex-row items-start border-b">
+            <div>
               <DialogTitle className="group flex items-center gap-2 text-lg">
                 #{itemId}
               </DialogTitle>
@@ -97,7 +97,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Categoria</span>
-                  <span>{itemCategoria}</span>
+                  <span>{itemCategoriaId}</span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
@@ -117,7 +117,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Status</span>
-                  <span>{itemPaid ? "Pago" : "Pendente"}</span>
+                  <span>{itemPaid ? "pago" : "pendente"}</span>
                 </li>
 
                 {itemNotas && (
@@ -131,7 +131,7 @@ export default function DetailsTransactions({
               </ul>
 
               <ul className="mb-6 grid gap-3">
-                {itemCondicao === "Parcelado" && (
+                {itemCondicao === "parcelado" && (
                   <Timeline
                     DataCompra={itemDate}
                     ParcelaAtual={itemParcelaAtual}
@@ -147,13 +147,13 @@ export default function DetailsTransactions({
                 <Separator className="my-2" />
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
-                    Valor {itemCondicao === "Parcelado" && "da Parcela"}
+                    Valor {itemCondicao === "parcelado" && "da Parcela"}
                   </span>
                   <span>
                     <MoneyValues value={itemValor} />
                   </span>
                 </li>
-                {itemCondicao === "Parcelado" && (
+                {itemCondicao === "parcelado" && (
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
                       Valor Restante
@@ -163,7 +163,7 @@ export default function DetailsTransactions({
                     </span>
                   </li>
                 )}
-                {itemCondicao === "Recorrente" && (
+                {itemCondicao === "recorrente" && (
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
                       Quantidade de Recorrências
@@ -171,11 +171,11 @@ export default function DetailsTransactions({
                     <span>{itemQtdeRecorrencia} meses</span>
                   </li>
                 )}
-                {itemCondicao !== "Parcelado" && <Separator className="my-2" />}
+                {itemCondicao !== "parcelado" && <Separator className="my-2" />}
                 <li className="flex items-center justify-between font-semibold">
                   <span className="text-muted-foreground">Total da Compra</span>
                   <span className="text-lg">
-                    {itemCondicao === "Parcelado" ? (
+                    {itemCondicao === "parcelado" ? (
                       <MoneyValues value={itemValor * itemQtdeParcelas} />
                     ) : (
                       <MoneyValues value={itemValor} />

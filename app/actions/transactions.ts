@@ -15,7 +15,7 @@ export async function addTransaction(formData: FormData) {
     descricao,
     tipo_transacao,
     periodo,
-    categoria,
+
     realizado,
     condicao,
     forma_pagamento,
@@ -27,6 +27,7 @@ export async function addTransaction(formData: FormData) {
     recorrencia,
     qtde_recorrencia,
     cartao_id,
+    categoria_id,
     conta_id,
     segundo_responsavel,
     dividir_lancamento,
@@ -56,7 +57,7 @@ export async function addTransaction(formData: FormData) {
       descricao,
       tipo_transacao,
       periodo: periodoAtual,
-      categoria,
+
       imagem_url: imageUrl,
       realizado,
       condicao,
@@ -69,6 +70,7 @@ export async function addTransaction(formData: FormData) {
       recorrencia,
       qtde_recorrencia,
       cartao_id,
+      categoria_id,
       conta_id,
       dividir_lancamento,
     });
@@ -93,11 +95,11 @@ export async function addTransaction(formData: FormData) {
     }
   }
 
-  if (condicao === "Vista") {
+  if (condicao === "vista") {
     dividirValor(valorNumerico, null, periodo);
   }
 
-  if (condicao === "Parcelado") {
+  if (condicao === "parcelado") {
     const valorParcela = parseFloat((valorNumerico / parcelas).toFixed(2));
     const valorUltima = parseFloat(
       (valorNumerico - valorParcela * (parcelas - 1)).toFixed(2),
@@ -111,7 +113,7 @@ export async function addTransaction(formData: FormData) {
     }
   }
 
-  if (condicao === "Recorrente") {
+  if (condicao === "recorrente") {
     for (let i = 0; i < recorrencias; i++) {
       const periodoAtual = gerarPeriodo(i);
       dividirValor(valorNumerico, null, periodoAtual);
@@ -171,7 +173,7 @@ export async function updateTransaction(formData: FormData) {
     descricao,
     tipo_transacao,
     periodo,
-    categoria,
+
     realizado,
     condicao,
     forma_pagamento,
@@ -183,6 +185,7 @@ export async function updateTransaction(formData: FormData) {
     recorrencia,
     qtde_recorrencia,
     cartao_id,
+    categoria_id,
     conta_id,
     segundo_responsavel,
     dividir_lancamento,
@@ -227,7 +230,7 @@ export async function updateTransaction(formData: FormData) {
         descricao,
         tipo_transacao,
         periodo,
-        categoria,
+
         imagem_url: imageUrl,
         realizado,
         condicao,
@@ -240,6 +243,7 @@ export async function updateTransaction(formData: FormData) {
         recorrencia,
         qtde_recorrencia,
         cartao_id,
+        categoria_id,
         conta_id,
         segundo_responsavel,
         dividir_lancamento,

@@ -49,8 +49,10 @@ export default function UpdateAccount({
           <input type="hidden" name="id" value={itemId} />
 
           <div className="w-full">
-            <Label>Escolha o Logo</Label>
-            <Required />
+            <Label>
+              Escolha o Logo
+              <Required />
+            </Label>
             <Select name="logo_image" defaultValue={itemLogo} required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
@@ -76,8 +78,10 @@ export default function UpdateAccount({
           </div>
 
           <div className="w-full">
-            <Label>Descrição</Label>
-            <Required />
+            <Label>
+              Descrição
+              <Required />
+            </Label>
             <Input
               defaultValue={itemDescricao}
               name="descricao"
@@ -88,16 +92,18 @@ export default function UpdateAccount({
           </div>
 
           <div className="w-full">
-            <Label>Tipo da Conta</Label>
-            <Required />
+            <Label>
+              Tipo da Conta
+              <Required />
+            </Label>
             <Select defaultValue={itemTipoConta} name="tipo_conta" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Corrente">Corrente</SelectItem>
-                <SelectItem value="Poupança">Poupança</SelectItem>
-                <SelectItem value="Investimento">Investimento</SelectItem>
+                <SelectItem value="corrente">Corrente</SelectItem>
+                <SelectItem value="poupança">Poupança</SelectItem>
+                <SelectItem value="investimento">Investimento</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -18,7 +18,7 @@ export default function UsersCard({
       <CardHeader className="flex w-full">
         <CardTitle className="flex justify-between gap-2">
           <p>{responsavel}</p>
-          {responsavel === "Você" ? (
+          {responsavel === "você" ? (
             <User className="text-blue-600" size={22} />
           ) : (
             <Users className="text-orange-600" size={22} />

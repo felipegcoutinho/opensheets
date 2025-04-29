@@ -1,31 +1,171 @@
 "use client";
 
-import { useChat } from "@ai-sdk/react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Wand2 } from "lucide-react";
+import { useState } from "react";
 
-export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+type Analysis = {
+  resumo: {
+    total_receitas: string;
+    total_despesas: string;
+    saldo: string;
+  };
+  insights_gerais: string[];
+  categorias_relevantes: {
+    categoria: string;
+    valor_total: string;
+    percentual_sobre_total: string;
+  }[];
+  padrões_de_gastos: string[];
+  alertas: string[];
+  recomendações: string[];
+};
+
+function Home({
+  lancamentos,
+  boletos,
+  cartoes,
+  month,
+}: {
+  lancamentos: any[];
+  boletos: any[];
+  cartoes: any[];
+  month: string;
+}) {
+  const [analysis, setAnalysis] = useState<Analysis | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleAnalyze = async () => {
+    setLoading(true);
+    setAnalysis(null);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: [
+              { role: "user", content: JSON.stringify(lancamentos) },
+              { role: "user", content: JSON.stringify(boletos) },
+              { role: "user", content: JSON.stringify(cartoes) },
+            ],
+          }),
+        },
+      );
+
+      const { analysis } = await response.json();
+      setAnalysis(JSON.parse(analysis));
+    } catch (error) {
+      console.error("Erro ao buscar análise:", error);
+      setAnalysis(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="stretch mx-auto flex w-full max-w-md flex-col py-24">
-      {messages.map((message) => (
-        <div key={message.id} className="whitespace-pre-wrap">
-          {message.role === "user" ? "User: " : "AI: "}
-          {message.parts.map((part, i) => {
-            switch (part.type) {
-              case "text":
-                return <div key={`${message.id}-${i}`}>{part.text}</div>;
-            }
-          })}
-        </div>
-      ))}
+    <>
+      <Button
+        onClick={handleAnalyze}
+        disabled={loading}
+        className="my-2 max-w-60"
+      >
+        {loading ? (
+          <div className="flex items-center justify-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin" /> Analisando... Calma aí!
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-2">
+            <Wand2 className="h-4 w-4" /> Analisar minhas finanças com IA
+          </div>
+        )}
+      </Button>
+      {analysis && (
+        <Card className="my-2 w-full">
+          <CardHeader>
+            <CardTitle>Análise Financeira de {month}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {/* Resumo */}
+              <Card className="p-4">
+                <h3 className="mb-2 text-lg font-bold">🎯 Resumo</h3>
+                <p>
+                  <strong>Receitas:</strong> {analysis.resumo.total_receitas}
+                </p>
+                <p>
+                  <strong>Despesas:</strong> {analysis.resumo.total_despesas}
+                </p>
+                <p>
+                  <strong>Balanço:</strong> {analysis.resumo.saldo}
+                </p>
+              </Card>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          className="fixed bottom-0 mb-8 w-full max-w-md rounded border border-zinc-300 p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
-          value={input}
-          placeholder="Say something..."
-          onChange={handleInputChange}
-        />
-      </form>
-    </div>
+              {/* Insights Gerais */}
+              <Card className="p-4">
+                <h3 className="mb-2 text-lg font-bold">💡 Insights Gerais</h3>
+                <ul className="list-inside list-disc space-y-1">
+                  {analysis.insights_gerais.map((insight, idx) => (
+                    <li key={idx}>{insight}</li>
+                  ))}
+                </ul>
+              </Card>
+
+              {/* Categorias Relevantes */}
+              <Card className="col-span-1 p-4 md:col-span-2">
+                <h3 className="mb-2 text-lg font-bold">
+                  📊 Categorias Relevantes
+                </h3>
+                <ul className="list-inside list-disc space-y-1">
+                  {analysis.categorias_relevantes.map((cat, idx) => (
+                    <li key={idx}>
+                      {cat.categoria}: {cat.valor_total} (
+                      {cat.percentual_sobre_total})
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+
+              {/* Padrões de Gastos */}
+              <Card className="p-4">
+                <h3 className="mb-2 text-lg font-bold">📈 Padrões de Gastos</h3>
+                <ul className="list-inside list-disc space-y-1">
+                  {analysis.padrões_de_gastos.map((padrao, idx) => (
+                    <li key={idx}>{padrao}</li>
+                  ))}
+                </ul>
+              </Card>
+
+              {/* Alertas */}
+              <Card className="p-4">
+                <h3 className="mb-2 text-lg font-bold">🚨 Alertas</h3>
+                <ul className="list-inside list-disc space-y-1">
+                  {analysis.alertas.map((alerta, idx) => (
+                    <li key={idx}>{alerta}</li>
+                  ))}
+                </ul>
+              </Card>
+
+              {/* Recomendações */}
+              <Card className="col-span-1 p-4 md:col-span-2">
+                <h3 className="mb-2 text-lg font-bold">🛡️ Recomendações</h3>
+                <ul className="list-inside list-disc space-y-1">
+                  {analysis.recomendações.map((rec, idx) => (
+                    <li key={idx}>{rec}</li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }
+
+export default Home;

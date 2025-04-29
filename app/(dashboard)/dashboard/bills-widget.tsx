@@ -5,7 +5,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { Check } from "lucide-react";
 import Image from "next/image";
 
-export default async function BillsCard({ month, data }) {
+export default async function BillsWidget({ month, data }) {
   const { DateFormat } = UseDates();
 
   if (!data.length) return <EmptyCard width={100} height={100} />;
@@ -28,7 +28,7 @@ export default async function BillsCard({ month, data }) {
         />
         <div>
           <p className="capitalize">{item.descricao}</p>
-          {item.status_pagamento === "Pendente" ? (
+          {item.status_pagamento === "pendente" ? (
             <p className="text-muted-foreground text-xs">
               Vence {DateFormat(item.dt_vencimento)}
             </p>

@@ -34,14 +34,18 @@ export default function UpdateInvest({ itemId, itemData, itemValor }) {
           <input type="hidden" name="id" value={itemId} />
 
           <div className="w-full">
-            <Label>Data</Label>
-            <Required />
+            <Label>
+              Data
+              <Required />
+            </Label>
             <Input defaultValue={itemData} name="data" type="date" />
           </div>
 
           <div className="w-full">
-            <Label>Valor</Label>
-            <Required />
+            <Label>
+              Valor
+              <Required />
+            </Label>
             <MoneyInput
               defaultValue={itemValor}
               name="valor"

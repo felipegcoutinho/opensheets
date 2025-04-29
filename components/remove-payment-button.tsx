@@ -32,7 +32,7 @@ export default function RemovePaymentButton({ fatura_status }) {
         fatura_status.length > 0 &&
         fatura_status.map(
           (item) =>
-            item.status_pagamento === "Pago" && (
+            item.status_pagamento === "pago" && (
               <Dialog key={item.id}>
                 <DialogTrigger asChild>
                   <Button className="h-6" variant="destructive" type="button">

@@ -27,14 +27,18 @@ export default function CreateInvestimento({ getAccountMap, children }) {
 
         <form onSubmit={handleSubmit}>
           <div className="w-full">
-            <Label>Data</Label>
-            <Required />
+            <Label>
+              Data
+              <Required />
+            </Label>
             <Input name="data" type="date" />
           </div>
 
           <div className="w-full">
-            <Label>Valor</Label>
-            <Required />
+            <Label>
+              Valor
+              <Required />
+            </Label>
             <MoneyInput name="valor" placeholder="R$ 0,00" />
           </div>
 

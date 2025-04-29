@@ -21,6 +21,8 @@ async function useUtils(month) {
     sumAccountIncomePaid,
     sumAccountExpensePaid,
     sumBillsExpensePaid,
+    transactionsByCategory,
+    billsByCategory,
   } = await fetchAllData(month);
 
   const receitasAnterior = await getIncome(previousMonth);
@@ -65,6 +67,38 @@ async function useUtils(month) {
     },
   ];
 
+  async function getTotalsCategory(month: string) {
+    const totals = new Map<string, number>();
+
+    // Primeiro somar transacoes
+    transactionsByCategory.forEach((item) => {
+      const categoriaNome = item.categoria?.nome || "Sem Categoria";
+      const valor = parseFloat(item.valor) || 0;
+      const tipo = item.tipo_transacao || "despesa"; // Fallback se vier null
+
+      const chave = `${tipo}:${categoriaNome}`;
+
+      totals.set(chave, (totals.get(chave) || 0) + valor);
+    });
+
+    // Depois somar boletos (considerando sempre como 'despesa')
+    billsByCategory.forEach((item) => {
+      const categoriaNome = item.categoria?.nome || "Sem Categoria";
+      const valor = parseFloat(item.valor) || 0;
+      const tipo = "despesa";
+
+      const chave = `${tipo}:${categoriaNome}`;
+
+      totals.set(chave, (totals.get(chave) || 0) + valor);
+    });
+
+    // Transformar o Map em array para exibir
+    return Array.from(totals.entries()).map(([key, total]) => {
+      const [tipo_transacao, categoria] = key.split(":");
+      return { tipo_transacao, categoria, total };
+    });
+  }
+
   return {
     receitas,
     receitasAnterior,
@@ -81,6 +115,7 @@ async function useUtils(month) {
     expenseByCategory,
     recentTransactions,
     summary,
+    getTotalsCategory,
   };
 }
 

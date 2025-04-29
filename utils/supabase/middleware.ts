@@ -13,6 +13,7 @@ export const updateSession = async (request: NextRequest) => {
     "/investimentos",
     "/ajustes",
     "/reset-password",
+    "/insights",
   ];
 
   try {
@@ -42,14 +43,6 @@ export const updateSession = async (request: NextRequest) => {
 
     // Verifica se a rota atual é "/" ou "/login" e se o usuário está logado
     if (currentPath === "/login" && session) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-
-    // Verifica acesso exclusivo para a rota "/investimentos"
-    if (
-      currentPath === "/investimentos" &&
-      session?.user.id !== "3e531380-1b62-4364-914f-f16c44e57272"
-    ) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 

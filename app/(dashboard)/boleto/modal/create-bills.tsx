@@ -27,7 +27,7 @@ import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 import Utils from "../utils";
 
-export default function CreateBills({ getAccountMap }) {
+export default function CreateBills({ getAccountMap, getCategorias }) {
   const {
     loading,
     categoriasDespesa,
@@ -46,9 +46,7 @@ export default function CreateBills({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="transition-all hover:scale-110">
-          Novo Boleto
-        </Button>
+        <Button className="transition-all hover:scale-110">Novo Boleto</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -58,14 +56,18 @@ export default function CreateBills({ getAccountMap }) {
         <form onSubmit={handleSubmit}>
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Descrição</Label>
-              <Required />
+              <Label>
+                Descrição
+                <Required />
+              </Label>
               <Input name="descricao" placeholder="Descrição" type="text" />
             </div>
 
             <div className="w-1/2">
-              <Label>Período</Label>
-              <Required />
+              <Label>
+                Período
+                <Required />
+              </Label>
               <Select name="periodo">
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
@@ -83,34 +85,38 @@ export default function CreateBills({ getAccountMap }) {
 
           <div className="flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Data de Vencimento</Label>
-              <Required />
+              <Label>
+                Data de Vencimento
+                <Required />
+              </Label>
               <Input name="dt_vencimento" type="date" />
             </div>
 
+            {/* Novo formulario  */}
             <div className="w-1/2">
-              <Label>Categoria</Label>
-              <Required />
-              <Select name="categoria">
+              <Label>
+                Categoria
+                <Required />
+              </Label>
+
+              <Select name="categoria_id">
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categoriasDespesa.map((item) => {
-                    const IconComponent = item.icon;
-                    return (
+                  {getCategorias
+                    ?.filter(
+                      (categoria) => categoria.tipo_categoria === "despesa",
+                    )
+                    .map((item) => (
                       <SelectItem
+                        className="capitalize"
                         key={item.id}
-                        value={item.name}
-                        className="flex items-center gap-2"
+                        value={item.id.toString()}
                       >
-                        <div className="flex items-center gap-2">
-                          <IconComponent className="h-4 w-4 text-red-500" />
-                          {item.name}
-                        </div>
+                        {item.nome}
                       </SelectItem>
-                    );
-                  })}
+                    ))}
                 </SelectContent>
               </Select>
             </div>
@@ -118,16 +124,16 @@ export default function CreateBills({ getAccountMap }) {
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
-              <Label>Valor</Label>
-              <Required />
+              <Label>
+                Valor
+                <Required />
+              </Label>
               <MoneyInput name="valor" placeholder="R$ 0,00" />
             </div>
           </div>
 
           <Card className="mt-2 flex items-center justify-between rounded p-2">
-            <Label className="text-muted-foreground text-sm font-medium">
-              Dividir Boleto
-            </Label>
+            <Label>Dividir Boleto</Label>
             <Switch
               name="dividir_boleto"
               checked={isDividedChecked}
@@ -137,8 +143,10 @@ export default function CreateBills({ getAccountMap }) {
 
           <div className="flex w-full gap-2">
             <div className="w-full">
-              <Label>Responsável</Label>
-              <Required />
+              <Label>
+                Responsável
+                <Required />
+              </Label>
               <Input
                 list="responsavel-list"
                 name="responsavel"
@@ -146,7 +154,7 @@ export default function CreateBills({ getAccountMap }) {
                 type="text"
               />
               <datalist id="responsavel-list">
-                <option value="Você" />
+                <option value="você" />
               </datalist>
             </div>
 
@@ -164,20 +172,22 @@ export default function CreateBills({ getAccountMap }) {
 
           <div className="flex w-full gap-2">
             <div className={showRecorrencia ? "w-1/2" : "w-full"}>
-              <Label>Condição</Label>
-              <Required />
+              <Label>
+                Condição
+                <Required />
+              </Label>
 
               <Select
                 name="condicao"
                 onValueChange={handleCondicaoChange}
-                defaultValue="Vista"
+                defaultValue="vista"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Vista">À Vista</SelectItem>
-                  <SelectItem value="Recorrente">Recorrente</SelectItem>
+                  <SelectItem value="vista">À Vista</SelectItem>
+                  <SelectItem value="recorrente">Recorrente</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -213,28 +223,32 @@ export default function CreateBills({ getAccountMap }) {
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
-              <Label>Status de Pagamento</Label>
-              <Required />
+              <Label>
+                Status de Pagamento
+                <Required />
+              </Label>
 
               <Select
                 name="status_pagamento"
                 onValueChange={(e) => setStatusPagamento(e)}
-                defaultValue="Pendente"
+                defaultValue="pendente"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Pendente">Pendente</SelectItem>
-                  <SelectItem value="Pago">Pago</SelectItem>
+                  <SelectItem value="pendente">Pendente</SelectItem>
+                  <SelectItem value="pago">Pago</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div className="w-full">
-            <Label>Conta Padrão</Label>
-            <Required />
+            <Label>
+              Conta Padrão
+              <Required />
+            </Label>
 
             <Select name="conta_id">
               <SelectTrigger>

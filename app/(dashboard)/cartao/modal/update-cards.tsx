@@ -66,8 +66,10 @@ export default function UpdateCard({
             <input type="hidden" name="id" value={itemId} />
 
             <div className="w-full">
-              <Label>Escolha o Logo</Label>
-              <Required />
+              <Label>
+                Escolha o Logo
+                <Required />
+              </Label>
               <Select name="logo_image" defaultValue={itemLogo} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione a imagem para o cartão" />
@@ -93,8 +95,10 @@ export default function UpdateCard({
             </div>
 
             <div className="w-full">
-              <Label>Descrição</Label>
-              <Required />
+              <Label>
+                Descrição
+                <Required />
+              </Label>
               <Input
                 defaultValue={itemDescricao}
                 name="descricao"
@@ -106,8 +110,10 @@ export default function UpdateCard({
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Data de Fechamento</Label>
-                <Required />
+                <Label>
+                  Data de Fechamento
+                  <Required />
+                </Label>
                 <Input
                   min={1}
                   max={31}
@@ -120,8 +126,10 @@ export default function UpdateCard({
               </div>
 
               <div className="w-1/2">
-                <Label>Data de Vencimento</Label>
-                <Required />
+                <Label>
+                  Data de Vencimento
+                  <Required />
+                </Label>
                 <Input
                   min={1}
                   max={31}
@@ -136,8 +144,10 @@ export default function UpdateCard({
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Bandeira</Label>
-                <Required />
+                <Label>
+                  Bandeira
+                  <Required />
+                </Label>
                 <Select defaultValue={itemBandeira} name="bandeira" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
@@ -163,23 +173,27 @@ export default function UpdateCard({
               </div>
 
               <div className="w-1/2">
-                <Label>Tipo do Cartão</Label>
-                <Required />
+                <Label>
+                  Tipo do Cartão
+                  <Required />
+                </Label>
                 <Select defaultValue={itemTipo} name="tipo" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Virtual">Virtual</SelectItem>
-                    <SelectItem value="Físico">Físico</SelectItem>
+                    <SelectItem value="virtual">Virtual</SelectItem>
+                    <SelectItem value="físico">Físico</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div>
-              <Label>Status do Cartão</Label>
-              <Required />
+              <Label>
+                Status do Cartão
+                <Required />
+              </Label>
               <Select name="status" defaultValue={itemStatus} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
@@ -192,8 +206,10 @@ export default function UpdateCard({
             </div>
 
             <div className="w-full">
-              <Label>Limite</Label>
-              <Required />
+              <Label>
+                Limite
+                <Required />
+              </Label>
               <MoneyInput
                 defaultValue={itemLimite}
                 name="limite"
@@ -202,8 +218,10 @@ export default function UpdateCard({
             </div>
 
             <div className="w-full">
-              <Label>Conta Padrão</Label>
-              <Required />
+              <Label>
+                Conta Padrão
+                <Required />
+              </Label>
               <Select
                 defaultValue={itemContaId.toString()}
                 name="conta_id"

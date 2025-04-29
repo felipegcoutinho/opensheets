@@ -38,11 +38,12 @@ export default function UpdateBills({
   itemCondicao,
   itemQtdeRecorrencia,
   itemContaId,
+  itemCategoriaId,
   getAccountMap,
+  getCategorias,
 }) {
   const {
     loading,
-    categoriasDespesa,
     handleUpdate,
     setStatusPagamento,
     handleCondicaoChange,
@@ -66,8 +67,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Descrição</Label>
-                <Required />
+                <Label>
+                  Descrição
+                  <Required />
+                </Label>
                 <Input
                   defaultValue={itemDescricao}
                   name="descricao"
@@ -77,8 +80,10 @@ export default function UpdateBills({
               </div>
 
               <div className="w-1/2">
-                <Label>Período</Label>
-                <Required />
+                <Label>
+                  Período
+                  <Required />
+                </Label>
                 <Select defaultValue={itemPeriodo} name="periodo">
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
@@ -96,8 +101,10 @@ export default function UpdateBills({
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Data de Vencimento</Label>
-                <Required />
+                <Label>
+                  Data de Vencimento
+                  <Required />
+                </Label>
                 <Input
                   defaultValue={itemDtVencimento}
                   name="dt_vencimento"
@@ -106,28 +113,31 @@ export default function UpdateBills({
               </div>
 
               <div className="w-1/2">
-                <Label>Categoria</Label>
-                <Required />
-                <Select defaultValue={itemCategoria} name="categoria">
+                <Label>
+                  Categoria
+                  <Required />
+                </Label>
+                <Select
+                  defaultValue={itemCategoriaId.toString()}
+                  name="categoria_id"
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categoriasDespesa.map((item) => {
-                      const IconComponent = item.icon;
-                      return (
+                    {getCategorias
+                      ?.filter(
+                        (categoria) => categoria.tipo_categoria === "despesa",
+                      )
+                      .map((item) => (
                         <SelectItem
+                          className="capitalize"
                           key={item.id}
-                          value={item.name}
-                          className="flex items-center gap-2"
+                          value={item.id.toString()}
                         >
-                          <div className="flex items-center gap-2">
-                            <IconComponent className="h-4 w-4 text-red-500" />
-                            {item.name}
-                          </div>
+                          {item.nome}
                         </SelectItem>
-                      );
-                    })}
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -135,10 +145,12 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Valor</Label>
-                <Required />
+                <Label>
+                  Valor
+                  <Required />
+                </Label>
                 <MoneyInput
-                  readOnly={itemStatusPagamento === "Pago"}
+                  readOnly={itemStatusPagamento === "pago"}
                   defaultValue={itemValor}
                   name="valor"
                   placeholder="R$ 0,00"
@@ -148,8 +160,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Responsável</Label>
-                <Required />
+                <Label>
+                  Responsável
+                  <Required />
+                </Label>
                 <Input
                   defaultValue={itemResponsavel}
                   name="responsavel"
@@ -160,13 +174,15 @@ export default function UpdateBills({
             </div>
 
             <div
-              className={`${itemCondicao === "Recorrente" && "flex gap-2"} hidden w-full`}
+              className={`${itemCondicao === "recorrente" && "flex gap-2"} hidden w-full`}
             >
               <div
-                className={`${itemCondicao === "Recorrente" ? "w-1/2" : "w-full"}`}
+                className={`${itemCondicao === "recorrente" ? "w-1/2" : "w-full"}`}
               >
-                <Label>Condição</Label>
-                <Required />
+                <Label>
+                  Condição
+                  <Required />
+                </Label>
                 <Select
                   defaultValue={itemCondicao}
                   name="condicao"
@@ -176,13 +192,13 @@ export default function UpdateBills({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Vista">À Vista</SelectItem>
-                    <SelectItem value="Recorrente">Recorrente</SelectItem>
+                    <SelectItem value="vista">À Vista</SelectItem>
+                    <SelectItem value="recorrente">Recorrente</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {itemCondicao === "Recorrente" && (
+              {itemCondicao === "recorrente" && (
                 <div className="w-1/2">
                   <Label>Quant. recorrencia</Label>
                   <Select
@@ -216,8 +232,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Status de Pagamento</Label>
-                <Required />
+                <Label>
+                  Status de Pagamento
+                  <Required />
+                </Label>
                 <Select
                   defaultValue={itemStatusPagamento}
                   name="status_pagamento"
@@ -227,16 +245,18 @@ export default function UpdateBills({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Pendente">Pendente</SelectItem>
-                    <SelectItem value="Pago">Pago</SelectItem>
+                    <SelectItem value="pendente">Pendente</SelectItem>
+                    <SelectItem value="pago">Pago</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div className="w-full">
-              <Label>Conta Padrão</Label>
-              <Required />
+              <Label>
+                Conta Padrão
+                <Required />
+              </Label>
               <Select defaultValue={itemContaId.toString()} name="conta_id">
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />

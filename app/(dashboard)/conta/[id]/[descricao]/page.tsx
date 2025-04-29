@@ -73,9 +73,9 @@ const TransactionTable = ({
 }) => {
   const getTransactionIcon = (condicao) => {
     const icons = {
-      Parcelado: <CalendarClockIcon size={12} />,
-      Recorrente: <RefreshCw size={12} />,
-      Vista: <Check size={12} />,
+      parcelado: <CalendarClockIcon size={12} />,
+      recorrente: <RefreshCw size={12} />,
+      vista: <Check size={12} />,
     };
     return icons[condicao] || null;
   };
@@ -90,7 +90,7 @@ const TransactionTable = ({
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow className="bg-muted/50">
+            <TableRow>
               <TableHead>Data</TableHead>
               <TableHead>Descrição</TableHead>
               <TableHead>Transação</TableHead>
@@ -109,7 +109,7 @@ const TransactionTable = ({
                 <TableCell>{dateFormatter(item.data_compra)}</TableCell>
                 <TableCell>
                   <span>{item.descricao}</span>
-                  {item.condicao === "Parcelado" && (
+                  {item.condicao === "parcelado" && (
                     <span className="px-1 text-xs text-neutral-400">
                       {`${item.parcela_atual} de ${item.qtde_parcela}`}
                     </span>
@@ -138,7 +138,7 @@ const TransactionTable = ({
                 <TableCell>
                   <MoneyValues value={item.valor} />
                 </TableCell>
-                <TableCell>{item.categoria}</TableCell>
+                <TableCell>{item.categorias?.nome}</TableCell>
                 <TableCell>
                   <DetailsTransactions
                     itemId={item.id}
@@ -146,7 +146,7 @@ const TransactionTable = ({
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
-                    itemCategoria={item.categoria}
+                    itemCategoriaId={item.categorias?.nome}
                     itemCondicao={item.condicao}
                     itemResponsavel={item.responsavel}
                     itemTipoTransacao={item.tipo_transacao}
@@ -172,8 +172,8 @@ const TransactionTable = ({
 const useResponsavelClass = () => {
   return (responsavel) => {
     const classes = {
-      Você: "text-blue-600",
-      Sistema: "text-neutral-600",
+      você: "text-blue-600",
+      sistema: "text-neutral-600",
       default: "text-orange-600",
     };
     return classes[responsavel] || classes.default;
