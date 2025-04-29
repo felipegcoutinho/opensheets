@@ -12,12 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function DeleteButton({
-  handleDelete,
-  isOpen,
-  setIsOpen,
-  itemResponsavel,
-}) {
+export default function DeleteButton({ handleDelete, isOpen, setIsOpen }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger className="text-red-500">Remover</DialogTrigger>

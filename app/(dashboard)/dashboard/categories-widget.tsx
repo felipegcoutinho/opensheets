@@ -18,7 +18,7 @@ type Props = {
   data: CombinedData[];
   totalReceita?: number;
   tipo?: "receita" | "despesa";
-  month: string; // <<< ADICIONADO
+  month: string;
 };
 
 export default function CategoryWidget({
@@ -40,7 +40,6 @@ export default function CategoryWidget({
         {sortedData.map((item, index) => {
           const percentual = ((item.total / totalReceita) * 100).toFixed(1);
 
-          // Montar URL
           const url = `/dashboard/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
 
           return (
@@ -50,7 +49,6 @@ export default function CategoryWidget({
                   href={url}
                   className="flex items-center gap-2 hover:underline"
                 >
-                  <div className="bg-muted h-3 w-3 rounded-full" />
                   <span className="font-bold">{item.categoria}</span>
                   <ArrowUpRight className="text-muted-foreground h-3 w-3" />
                 </Link>

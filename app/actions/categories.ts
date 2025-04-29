@@ -6,15 +6,13 @@ import { revalidatePath } from "next/cache";
 export async function addCategories(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const { nome, tipo_categoria, icone } = Object.fromEntries(
-    formData.entries(),
-  );
+  const { nome, tipo_categoria } = Object.fromEntries(formData.entries());
 
   const { error } = await supabase
     .from("categorias")
-    .insert({ nome, tipo_categoria, icone });
+    .insert({ nome, tipo_categoria });
 
-  revalidatePath("/ajustes");
+  revalidatePath("/categorias");
 
   if (error) {
     console.error("Erro ao adicionar categoria:", error);
@@ -22,25 +20,46 @@ export async function addCategories(prevState: unknown, formData: FormData) {
   }
 
   return { message: "Categoria adicionada com sucesso!" };
+
+  revalidatePath("/categorias");
 }
 
 export async function deleteCategoria(formData: FormData) {
+  const supabase = createClient();
+
   const excluir = formData.get("excluir");
 
-  const supabase = createClient();
-  await supabase.from("categorias").delete().eq("id", excluir);
-  revalidatePath("/ajustes");
+  const { error } = await supabase1
+    .from("categorias")
+    .delete()
+    .eq("id", excluir);
+
+  if (error) {
+    console.error("Erro ao excluir categoria:", error);
+    return { message: "Erro ao excluir categoria!" };
+  }
+
+  return { message: "Categoria excluída com sucesso!" };
+
+  revalidatePath("/categorias");
 }
 
-export async function updateCategoria(formData: FormData) {
-  const { id, nome, tipo_categoria, icone } = Object.fromEntries(
-    formData.entries(),
-  );
-
+export async function updateCategoria(prevState: unknown, formData: FormData) {
   const supabase = createClient();
-  await supabase
+
+  const { id, nome, tipo_categoria } = Object.fromEntries(formData.entries());
+
+  const { error } = await supabase
     .from("categorias")
-    .update({ id, nome, tipo_categoria, icone })
+    .update({ id, nome, tipo_categoria })
     .eq("id", id);
-  revalidatePath("/ajustes");
+
+  if (error) {
+    console.error("Erro ao atualizar categoria:", error);
+    return { message: "Erro ao atualizar categoria!" };
+  }
+
+  return { message: "Categoria atualizada com sucesso!" };
+
+  revalidatePath("/categorias");
 }

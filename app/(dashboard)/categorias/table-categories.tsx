@@ -1,6 +1,14 @@
 "use client";
 import EmptyCard from "@/components/empty-card";
-import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -9,17 +17,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import UpdateCategory from "./modal/update-category";
+import { Ellipsis } from "lucide-react";
+import DeleteCategory from "./modal/delete-category";
 
-export default function ManagerCategoria({ categorias }) {
+export default function TableCategories({ categorias }) {
   return (
     <Card className="border-none">
+      <CardHeader>
+        <CardTitle>Categorias</CardTitle>
+      </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Nome</TableHead>
               <TableHead>Tipo da Categoria</TableHead>
-              <TableHead>Ícone</TableHead>
               <TableHead>Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -28,9 +41,19 @@ export default function ManagerCategoria({ categorias }) {
               categorias?.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell className="font-bold">{item.nome}</TableCell>
-                  <TableCell>{item.tipo_categoria}</TableCell>
-                  <TableCell>{item.icone}</TableCell>
-                  {/* <TableCell className="flex gap-2">
+                  <TableCell>
+                    <Badge
+                      variant={
+                        item.tipo_categoria === "receita"
+                          ? "defaultGreen"
+                          : "defaultRed"
+                      }
+                    >
+                      {item.tipo_categoria}
+                    </Badge>
+                  </TableCell>
+
+                  <TableCell className="flex gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
@@ -41,32 +64,22 @@ export default function ManagerCategoria({ categorias }) {
                           <span className="sr-only">Open menu</span>
                         </Button>
                       </DropdownMenuTrigger>
+
                       <DropdownMenuContent align="end" className="w-[160px]">
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                          <UpdateBills
+                          <UpdateCategory
                             itemId={item.id}
-                            itemDescricao={item.descricao}
-                            itemPeriodo={item.periodo}
-                            itemDtVencimento={item.dt_vencimento}
-                            itemStatusPagamento={item.status_pagamento}
-                            itemResponsavel={item.responsavel}
-                            itemCategoria={item.categoria}
-                            itemValor={item.valor}
-                            itemDtPagamento={item.dt_pagamento}
-                            itemAnotacao={item.anotacao}
-                            itemCondicao={item.condicao}
-                            itemQtdeRecorrencia={item.qtde_recorrencia}
-                    }
-                            itemContaId={item.contas?.id}
+                            itemNome={item.nome}
+                            itemTipoCategoria={item.tipo_categoria}
                           />
                         </DropdownMenuItem>
 
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                          <DeleteBills itemId={item.id} />
+                          <DeleteCategory itemId={item.id} />
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </TableCell> */}
+                  </TableCell>
                 </TableRow>
               ))
             ) : (

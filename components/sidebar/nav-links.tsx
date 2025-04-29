@@ -3,11 +3,11 @@ import {
   CreditCard,
   File,
   LayoutDashboard,
-  LucideStars,
+  NotepadTextIcon,
   Pen,
   PiggyBank,
-  Settings,
   Users,
+  WandSparkles,
 } from "lucide-react";
 
 export function NavLinks(month: string) {
@@ -51,20 +51,13 @@ export function NavLinks(month: string) {
       {
         name: "insights",
         url: `/insights?periodo=${month}`,
-        icon: LucideStars,
+        icon: WandSparkles,
       },
       {
-        name: "configurações",
-        url: `/ajustes`,
-        icon: Settings,
+        name: "categorias",
+        url: `/categorias`,
+        icon: NotepadTextIcon,
       },
-
-      // TODO - Implementar feedback
-      // {
-      //   name: "feedback",
-      //   url: `/feedback?periodo=${month}`,
-      //   icon: LucideStars,
-      // },
     ],
   };
 }

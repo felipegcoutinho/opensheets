@@ -44,7 +44,6 @@ export default function UpdateBills({
 }) {
   const {
     loading,
-    categoriasDespesa,
     handleUpdate,
     setStatusPagamento,
     handleCondicaoChange,

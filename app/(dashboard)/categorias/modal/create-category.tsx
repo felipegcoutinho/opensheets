@@ -4,7 +4,9 @@ import { addCategories } from "@/app/actions/categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -24,16 +26,16 @@ const initialState = {
   message: "",
 };
 
-export default function AddCategoriaForm() {
-  const [state, formAction] = useActionState(addCategories, initialState);
+export default function CreateCategory() {
+  const [state, formAction, loading] = useActionState(
+    addCategories,
+    initialState,
+  );
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="mt-2 mb-4 transition-all hover:scale-110"
-        >
+        <Button variant="default" className="transition-all hover:scale-110">
           Nova Categoria
         </Button>
       </DialogTrigger>
@@ -43,7 +45,7 @@ export default function AddCategoriaForm() {
           <DialogTitle>Nova Categoria</DialogTitle>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-6">
+        <form action={formAction} className="space-y-4">
           <div>
             <Label htmlFor="nome">Nome da Categoria</Label>
             <Input id="nome" name="nome" required placeholder="Digite o nome" />
@@ -56,25 +58,22 @@ export default function AddCategoriaForm() {
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="receita">receita</SelectItem>
-                <SelectItem value="despesa">despesa</SelectItem>
+                <SelectItem value="receita">Receita</SelectItem>
+                <SelectItem value="despesa">Despesa</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <div>
-            <Label htmlFor="icone">Ícone (opcional)</Label>
-            <Input
-              id="icone"
-              name="icone"
-              placeholder="Ex: home, user, etc."
-              required
-            />
-          </div>
-
-          <Button type="submit" className="w-full">
-            Adicionar Categoria
-          </Button>
+          <DialogFooter className="mt-4 flex gap-2">
+            <DialogClose asChild>
+              <Button className="w-1/2" type="button" variant="secondary">
+                Cancelar
+              </Button>
+            </DialogClose>
+            <Button className="w-1/2" type="submit" disabled={loading}>
+              {loading ? "Salvando..." : "Salvar"}
+            </Button>
+          </DialogFooter>
 
           {state.message && (
             <p className="mt-2 text-center text-sm text-red-500">
