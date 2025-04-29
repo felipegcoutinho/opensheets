@@ -57,6 +57,7 @@ export default function UpdateCategory({
               name="nome"
               required
               placeholder="Digite o nome"
+              type="text"
               defaultValue={itemNome}
             />
           </div>
@@ -66,6 +67,8 @@ export default function UpdateCategory({
             <Select
               name="tipo_categoria"
               defaultValue={itemTipoCategoria}
+              type="text"
+              id="tipo_categoria"
               required
             >
               <SelectTrigger>

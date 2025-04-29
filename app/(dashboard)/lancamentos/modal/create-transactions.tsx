@@ -80,14 +80,17 @@ export default function CreateTransactions({
           <form onSubmit={handleSubmit} id="transaction-form">
             <div className="mb-1 flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Data da Transação</Label>
-                <Required />
+                <Label>
+                  Data da Transação <Required />
+                </Label>
+
                 <Input name="data_compra" type="date" required />
               </div>
 
               <div className="w-1/2">
-                <Label>Período</Label>
-                <Required />
+                <Label>
+                  Período <Required />
+                </Label>
                 <Select name="periodo" required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
@@ -105,8 +108,10 @@ export default function CreateTransactions({
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Descrição</Label>
-                <Required />
+                <Label>
+                  Descrição
+                  <Required />
+                </Label>
                 <Input
                   name="descricao"
                   placeholder="Descrição"
@@ -116,8 +121,10 @@ export default function CreateTransactions({
               </div>
 
               <div className="w-1/2">
-                <Label>Valor</Label>
-                <Required />
+                <Label>
+                  Valor
+                  <Required />
+                </Label>
                 <MoneyInput name="valor" placeholder="R$ 0,00" required />
               </div>
             </div>
@@ -134,85 +141,47 @@ export default function CreateTransactions({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="receita">receita</SelectItem>
-                    <SelectItem value="despesa">despesa</SelectItem>
+                    <SelectItem value="receita">Receita</SelectItem>
+                    <SelectItem value="despesa">Despesa</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="w-1/2">
-                <Label>Categoria</Label>
-                <Required />
+                <Label>
+                  Categoria
+                  <Required />
+                </Label>
 
-                <Select name="categoria_id">
+                <Select name="categoria_id" disabled={!tipoTransacao}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {getCategorias?.map((item) => {
-                      const IconComponent = item.icone;
-                      return (
-                        <SelectItem key={item.id} value={item.id.toString()}>
-                          <p>{item.nome}</p>
+                    {getCategorias
+                      ?.filter(
+                        (categoria) =>
+                          categoria.tipo_categoria === tipoTransacao,
+                      )
+                      .map((item) => (
+                        <SelectItem
+                          className="capitalize"
+                          key={item.id}
+                          value={item.id.toString()}
+                        >
+                          {item.nome}
                         </SelectItem>
-                      );
-                    })}
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
-
-              {/* <div className="w-1/2">
-                <Label>Categoria</Label>
-                <Select name="categoria" required>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <>
-                      {tipoTransacao === "receita"
-                        ? categoriasReceita.map((item) => {
-                            const IconComponent = item.icon;
-                            return (
-                              <SelectItem
-                                key={item.id}
-                                value={item.name}
-                                className="flex items-center gap-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <IconComponent className="h-4 w-4 text-green-500 dark:text-green-500" />
-                                  {item.name}
-                                </div>
-                              </SelectItem>
-                            );
-                          })
-                        : categoriasDespesa.map((item) => {
-                            const IconComponent = item.icon;
-                            return (
-                              <SelectItem
-                                key={item.id}
-                                value={item.name}
-                                className="flex items-center gap-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <IconComponent className="h-4 w-4 text-red-500 dark:text-red-500" />
-                                  {item.name}
-                                </div>
-                              </SelectItem>
-                            );
-                          })}
-                    </>
-                  </SelectContent>
-                </Select>
-              </div> */}
             </div>
 
             <Card className="mt-2 flex w-full items-center gap-2">
               <div
                 className={`flex items-center justify-between gap-2 p-2 ${showCartao ? "w-full" : "w-1/2"}`}
               >
-                <Label className="text-muted-foreground text-sm font-medium">
-                  Dividir Lançamento
-                </Label>
+                <Label>Dividir Lançamento</Label>
                 <Switch
                   name="dividir_lancamento"
                   checked={isDividedChecked}
@@ -222,9 +191,7 @@ export default function CreateTransactions({
 
               {!showCartao && (
                 <div className="flex w-1/2 items-center justify-between gap-2 px-2">
-                  <Label className="text-muted-foreground text-sm font-medium">
-                    Status do Lançamento
-                  </Label>
+                  <Label>Status do Lançamento</Label>
 
                   <Toggle
                     disabled={showCartao}
@@ -242,8 +209,10 @@ export default function CreateTransactions({
 
             <div className="flex w-full gap-2">
               <div className="w-full">
-                <Label>Responsável</Label>
-                <Required />
+                <Label>
+                  Responsável
+                  <Required />
+                </Label>
                 <Input
                   required
                   list="responsavel-list"
@@ -270,8 +239,10 @@ export default function CreateTransactions({
 
             <div className="flex gap-2">
               <div className={showConta || showCartao ? "w-1/2" : "w-full"}>
-                <Label>Forma de Pagamento</Label>
-                <Required />
+                <Label>
+                  Forma de Pagamento
+                  <Required />
+                </Label>
                 <Select
                   required
                   name="forma_pagamento"
@@ -295,8 +266,10 @@ export default function CreateTransactions({
 
               {showConta && (
                 <div className="w-1/2">
-                  <Label>Contas</Label>
-                  <Required />
+                  <Label>
+                    Contas <Required />
+                  </Label>
+
                   <Select name="conta_id" placeholder="Selecione">
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
@@ -324,8 +297,9 @@ export default function CreateTransactions({
 
               {showCartao && (
                 <div className="w-1/2">
-                  <Label>Cartão</Label>
-                  <Required />
+                  <Label>
+                    Cartão <Required />
+                  </Label>
                   <Select name="cartao_id">
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
@@ -462,6 +436,7 @@ export default function CreateTransactions({
               Cancelar
             </Button>
           </DialogClose>
+
           <Button
             form="transaction-form"
             className="w-1/2"

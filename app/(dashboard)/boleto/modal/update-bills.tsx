@@ -67,8 +67,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Descrição</Label>
-                <Required />
+                <Label>
+                  Descrição
+                  <Required />
+                </Label>
                 <Input
                   defaultValue={itemDescricao}
                   name="descricao"
@@ -78,8 +80,10 @@ export default function UpdateBills({
               </div>
 
               <div className="w-1/2">
-                <Label>Período</Label>
-                <Required />
+                <Label>
+                  Período
+                  <Required />
+                </Label>
                 <Select defaultValue={itemPeriodo} name="periodo">
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
@@ -97,8 +101,10 @@ export default function UpdateBills({
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Data de Vencimento</Label>
-                <Required />
+                <Label>
+                  Data de Vencimento
+                  <Required />
+                </Label>
                 <Input
                   defaultValue={itemDtVencimento}
                   name="dt_vencimento"
@@ -107,8 +113,10 @@ export default function UpdateBills({
               </div>
 
               <div className="w-1/2">
-                <Label>Categoria</Label>
-                <Required />
+                <Label>
+                  Categoria
+                  <Required />
+                </Label>
                 <Select
                   defaultValue={itemCategoriaId.toString()}
                   name="categoria_id"
@@ -117,13 +125,19 @@ export default function UpdateBills({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {getCategorias?.map((item) => (
-                      <SelectItem key={item.id} value={item.id.toString()}>
-                        <div className="flex items-center gap-2">
-                          <span>{item.nome}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    {getCategorias
+                      ?.filter(
+                        (categoria) => categoria.tipo_categoria === "despesa",
+                      )
+                      .map((item) => (
+                        <SelectItem
+                          className="capitalize"
+                          key={item.id}
+                          value={item.id.toString()}
+                        >
+                          {item.nome}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -131,8 +145,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Valor</Label>
-                <Required />
+                <Label>
+                  Valor
+                  <Required />
+                </Label>
                 <MoneyInput
                   readOnly={itemStatusPagamento === "pago"}
                   defaultValue={itemValor}
@@ -144,8 +160,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Responsável</Label>
-                <Required />
+                <Label>
+                  Responsável
+                  <Required />
+                </Label>
                 <Input
                   defaultValue={itemResponsavel}
                   name="responsavel"
@@ -161,8 +179,10 @@ export default function UpdateBills({
               <div
                 className={`${itemCondicao === "recorrente" ? "w-1/2" : "w-full"}`}
               >
-                <Label>Condição</Label>
-                <Required />
+                <Label>
+                  Condição
+                  <Required />
+                </Label>
                 <Select
                   defaultValue={itemCondicao}
                   name="condicao"
@@ -212,8 +232,10 @@ export default function UpdateBills({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Status de Pagamento</Label>
-                <Required />
+                <Label>
+                  Status de Pagamento
+                  <Required />
+                </Label>
                 <Select
                   defaultValue={itemStatusPagamento}
                   name="status_pagamento"
@@ -231,8 +253,10 @@ export default function UpdateBills({
             </div>
 
             <div className="w-full">
-              <Label>Conta Padrão</Label>
-              <Required />
+              <Label>
+                Conta Padrão
+                <Required />
+              </Label>
               <Select defaultValue={itemContaId.toString()} name="conta_id">
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />

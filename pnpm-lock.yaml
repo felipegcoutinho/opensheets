@@ -18,7 +18,7 @@ importers:
         specifier: 5.0.1
         version: 5.0.1(react-hook-form@7.56.1(react@19.1.0))
       '@radix-ui/react-accordion':
-        specifier: ^1.2.8
+        specifier: 1.2.8
         version: 1.2.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(types-react@19.0.0-rc.1)
       '@radix-ui/react-avatar':
         specifier: 1.1.7

@@ -29,7 +29,7 @@ export async function deleteCategoria(formData: FormData) {
 
   const excluir = formData.get("excluir");
 
-  const { error } = await supabase1
+  const { error } = await supabase
     .from("categorias")
     .delete()
     .eq("id", excluir);

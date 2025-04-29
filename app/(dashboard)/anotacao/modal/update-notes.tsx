@@ -51,8 +51,10 @@ export default function UpdateNotes({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-1/2">
-                <Label>Descrição</Label>
-                <Required />
+                <Label>
+                  Descrição
+                  <Required />{" "}
+                </Label>
                 <Input
                   defaultValue={itemDescricao}
                   name="descricao"
@@ -62,8 +64,10 @@ export default function UpdateNotes({
               </div>
 
               <div className="w-1/2">
-                <Label>Período</Label>
-                <Required />
+                <Label>
+                  Período
+                  <Required />{" "}
+                </Label>
                 <Select defaultValue={itemPeriodo} name="periodo">
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />

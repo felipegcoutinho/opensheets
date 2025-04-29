@@ -5,7 +5,7 @@ export async function getNewCategorias() {
 
   const { data, error } = await supabase
     .from("categorias")
-    .select("*")
+    .select("id, nome, tipo_categoria")
     .order("tipo_categoria", { ascending: false })
     .order("nome", { ascending: true });
 

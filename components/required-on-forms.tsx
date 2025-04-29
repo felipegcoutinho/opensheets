@@ -1,5 +1,7 @@
+import { Asterisk } from "lucide-react";
+
 function Required() {
-  return <span className="items-end px-1 text-xs text-red-400">*</span>;
+  return <Asterisk className="text-red-500" size={11} />;
 }
 
 export default Required;

@@ -28,6 +28,7 @@ export default function CategoryWidget({
   month,
 }: Props) {
   const filteredData = data.filter((item) => item.tipo_transacao === tipo);
+
   const sortedData = filteredData.sort((a, b) => b.total - a.total);
 
   if (!data || data.length === 0) {
@@ -38,7 +39,12 @@ export default function CategoryWidget({
     <div>
       <CardContent className="space-y-6 p-0">
         {sortedData.map((item, index) => {
-          const percentual = ((item.total / totalReceita) * 100).toFixed(1);
+          const percentual =
+            totalReceita && totalReceita > 0
+              ? ((item.total / totalReceita) * 100).toFixed(1)
+              : item.tipo_transacao === "despesa"
+                ? "100.0"
+                : "0.0";
 
           const url = `/dashboard/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
 
@@ -47,16 +53,14 @@ export default function CategoryWidget({
               <div className="flex items-center justify-between">
                 <Link
                   href={url}
-                  className="flex items-center gap-2 hover:underline"
+                  className="flex items-center gap-1 hover:underline"
                 >
-                  <span className="font-bold">{item.categoria}</span>
+                  <span className="font-bold capitalize">{item.categoria}</span>
                   <ArrowUpRight className="text-muted-foreground h-3 w-3" />
                 </Link>
 
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    <MoneyValues value={item.total} />
-                  </span>
+                  <MoneyValues value={item.total} />
 
                   <Badge
                     variant={
@@ -72,7 +76,13 @@ export default function CategoryWidget({
 
               <Progress
                 indicatorColor={`${item.tipo_transacao === "receita" ? "bg-green-500" : "bg-red-500"}`}
-                value={(item.total / totalReceita) * 100}
+                value={
+                  totalReceita && totalReceita > 0
+                    ? (item.total / totalReceita) * 100
+                    : item.tipo_transacao === "despesa"
+                      ? 100
+                      : 0
+                }
                 className="h-1"
               />
             </div>

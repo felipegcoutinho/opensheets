@@ -46,10 +46,7 @@ export default function CreateNotes({ getAccountMap, children }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="mt-2 mb-4 transition-all hover:scale-110"
-        >
+        <Button variant="default" className="transition-all hover:scale-110">
           Nova Anotação
         </Button>
       </DialogTrigger>
@@ -61,8 +58,10 @@ export default function CreateNotes({ getAccountMap, children }: Props) {
         <form onSubmit={handleSubmit}>
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
-              <Label>Título</Label>
-              <Required />
+              <Label>
+                Título
+                <Required />
+              </Label>
               <Input
                 maxLength={24}
                 name="descricao"
@@ -73,8 +72,10 @@ export default function CreateNotes({ getAccountMap, children }: Props) {
             </div>
 
             <div className="w-1/2">
-              <Label>Período</Label>
-              <Required />
+              <Label>
+                Período
+                <Required />
+              </Label>
               <Select value={periodo} onValueChange={setPeriodo} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
