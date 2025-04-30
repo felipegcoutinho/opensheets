@@ -15,6 +15,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getPeriodo } from "@/hooks/periodo";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -23,6 +24,8 @@ async function page(props) {
   const month = await getPeriodo(props);
 
   const { DateFormat, currentMonthName, currentYear } = UseDates();
+
+  const { getButtonVariant, getResponsavelClass } = UseStyles();
 
   const categoria = decodeURIComponent(params.categoria);
   const tipoTransacao = decodeURIComponent(params.tipo_transacao);
@@ -75,14 +78,22 @@ async function page(props) {
 
       {/* Tabs */}
       <Tabs defaultValue="transacoes" className="w-full">
-        <TabsList variant={"underline"} width={"full"}>
-          <TabsTrigger value="transacoes" variant={"underline"} width={"fit"}>
-            Lançamentos
-          </TabsTrigger>
-          <TabsTrigger value="boletos" variant={"underline"} width={"fit"}>
-            Boletos
-          </TabsTrigger>
-        </TabsList>
+        {tipoTransacao !== "receita" && (
+          <TabsList variant={"underline"} width={"full"}>
+            <>
+              <TabsTrigger
+                value="transacoes"
+                variant={"underline"}
+                width={"fit"}
+              >
+                Lançamentos
+              </TabsTrigger>
+              <TabsTrigger value="boletos" variant={"underline"} width={"fit"}>
+                Boletos
+              </TabsTrigger>
+            </>
+          </TabsList>
+        )}
 
         {/* Aba Transações */}
         <TabsContent value="transacoes">
@@ -96,21 +107,45 @@ async function page(props) {
                   <TableRow>
                     <TableHead>Data</TableHead>
                     <TableHead>Descrição</TableHead>
-                    <TableHead>Tipo</TableHead>
-                    <TableHead>Categoria</TableHead>
+                    <TableHead>Transação</TableHead>
                     <TableHead>Valor</TableHead>
+                    <TableHead>Responsável</TableHead>
+                    <TableHead>Categoria</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {transacoes?.map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell>{DateFormat(item.data_compra)}</TableCell>
-                      <TableCell>{item.descricao}</TableCell>
-                      <TableCell>{item.tipo_transacao}</TableCell>
-                      <TableCell>{item.categoria_id?.nome}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {DateFormat(item.data_compra)}
+                      </TableCell>
+
+                      <TableCell className="font-bold">
+                        {item.descricao}
+                      </TableCell>
+
+                      <TableCell>
+                        <Button
+                          size="sm"
+                          variant={getButtonVariant(item.tipo_transacao)}
+                        >
+                          {item.tipo_transacao}
+                        </Button>
+                      </TableCell>
+
                       <TableCell>
                         <MoneyValues value={item.valor} />
                       </TableCell>
+
+                      <TableCell>
+                        <span
+                          className={`${getResponsavelClass(item.responsavel)}`}
+                        >
+                          {item.responsavel}
+                        </span>
+                      </TableCell>
+
+                      <TableCell>{item.categoria_id?.nome}</TableCell>
                     </TableRow>
                   ))}
                   {transacoes?.length === 0 && (
@@ -138,21 +173,26 @@ async function page(props) {
                   <TableRow>
                     <TableHead>Data de Vencimento</TableHead>
                     <TableHead>Descrição</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Categoria</TableHead>
                     <TableHead>Valor</TableHead>
+                    <TableHead>Categoria</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {boletos?.map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
-                      <TableCell>{item.descricao}</TableCell>
-                      <TableCell>{item.status_pagamento}</TableCell>
-                      <TableCell>{item.categoria_id?.nome}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {DateFormat(item.dt_vencimento)}
+                      </TableCell>
+
+                      <TableCell className="font-bold">
+                        {item.descricao}
+                      </TableCell>
+
                       <TableCell>
                         <MoneyValues value={item.valor} />
                       </TableCell>
+
+                      <TableCell>{item.categoria_id?.nome}</TableCell>
                     </TableRow>
                   ))}
                   {boletos?.length === 0 && (

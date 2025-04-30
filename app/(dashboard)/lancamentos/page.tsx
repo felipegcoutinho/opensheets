@@ -8,7 +8,7 @@ import { TableTransaction } from "./table/table-transaction";
 export default async function page(props) {
   const month = await getPeriodo(props);
 
-  const cartoes = await getCards(month);
+  const cartoes = await getCards();
   const contas = await getAccount();
   const lancamentos = await getTransactions(month);
   const getCategorias = await getNewCategorias();

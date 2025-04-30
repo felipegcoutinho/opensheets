@@ -4,8 +4,8 @@ import { UseDates } from "@/hooks/use-dates";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useMemo, useState, useTransition } from "react";
-import { Card } from "./ui/card";
 import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
   const Icon = direction === "left" ? ChevronLeft : ChevronRight;
@@ -26,6 +26,7 @@ const ReturnButton = React.memo(({ onClick, disabled }) => (
     size={"sm"}
     onClick={onClick}
     disabled={disabled}
+    variant={"warning"}
   >
     <span className="px-2">Retornar ao Mês Atual</span>
   </Button>
@@ -141,7 +142,7 @@ export default function MonthPicker() {
           </div>
 
           {isChanging && (
-            <div className="absolute top-1/2 right-4 -translate-y-1/2">
+            <div className="absolute top-1/2 -right-3 -translate-y-1/2">
               <LoadingSpinner />
             </div>
           )}

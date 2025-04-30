@@ -44,7 +44,7 @@ const customGlobalFilter: FilterFn = (row, columnId, filterValue) => {
     row.original.responsavel?.toLowerCase().includes(searchValue) ||
     row.original.tipo_transacao?.toLowerCase().includes(searchValue) ||
     row.original.valor?.toString().toLowerCase().includes(searchValue) ||
-    row.original.categoria?.toLowerCase().includes(searchValue) ||
+    row.original.categorias?.nome?.toLowerCase().includes(searchValue) ||
     descricaoContaCartao.includes(searchValue)
   );
 };
@@ -101,7 +101,11 @@ export function TableTransaction({
           getCards={getCards}
           getAccount={getAccount}
           getCategorias={getCategorias}
-        />
+        >
+          <Button variant="default" className="transition-all hover:scale-110">
+            Nova Transação
+          </Button>
+        </CreateTransactions>
 
         <div className="flex items-center gap-2">
           {/* Exibe a soma dos lançamentos selecionados */}
@@ -145,8 +149,8 @@ export function TableTransaction({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     className={`whitespace-nowrap ${
-                      row.original?.categoria === "Saldo Anterior" &&
-                      "bg-linear-to-r from-green-400/10 to-transparent"
+                      row.original.categorias?.nome === "saldo anterior" &&
+                      "bg-linear-to-r from-lime-300/10 to-transparent"
                     }`}
                     key={row.id}
                   >

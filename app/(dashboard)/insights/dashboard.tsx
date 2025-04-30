@@ -73,11 +73,11 @@ function Home({
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="my-2 max-w-60"
+        className="my-2 max-w-72"
       >
         {loading ? (
           <div className="flex items-center justify-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin" /> Analisando... Calma aí!
+            <Loader2 className="h-4 w-4 animate-spin" /> Analisando...
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2">

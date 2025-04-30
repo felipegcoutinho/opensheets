@@ -1,9 +1,9 @@
 "use client";
 
-import { uiSans } from "@/app/fonts/font";
+import { openRunde } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
-import { useEffect, useState } from "react";
 import { animate, useMotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
 
 type Props = {
   value: number;
@@ -31,7 +31,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${uiSans.className} font-bold tracking-tight ${
+      className={`${openRunde.className} font-bold tracking-tight ${
         !estado &&
         "opacity-80 blur-xl transition-all duration-300 hover:blur-none"
       }`}

@@ -1,12 +1,15 @@
-import MoneyValues from "@/components/money-values";
 import {
   Card,
-  CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import clsx from "clsx";
+import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import MoneyValues from "./money-values";
 import Ping from "./ping-icon";
+import { Badge } from "./ui/badge";
 
 type Props = {
   title: string;
@@ -21,45 +24,55 @@ export default function CardSummary({
   previousValue,
   color,
 }: Props) {
-  const getPercentageChange = () => {
-    if (!previousValue || previousValue === 0) return null;
-    const change = (((value - previousValue) / previousValue) * 100).toFixed(1);
-    return change;
-  };
+  const isReceitaOuDespesa =
+    title.toLowerCase() === "receitas" || title.toLowerCase() === "despesas";
 
-  const percentageChange = getPercentageChange();
-  const isPositive = percentageChange && parseFloat(percentageChange) >= 0;
+  const diffPercent =
+    previousValue !== 0 ? ((value - previousValue) / previousValue) * 100 : 0;
+
+  const isPositive = diffPercent >= 0;
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle>
-          <div className="flex items-center gap-2 text-base sm:text-lg">
+    <Card className="@container/card">
+      <CardHeader className="relative pb-1">
+        <CardDescription className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <Ping color={color} />
-            <span>{title}</span>
+            <span className="text-lg font-bold capitalize">{title}</span>
           </div>
-        </CardTitle>
-        <CardDescription className="text-foreground text-2xl font-semibold">
-          <MoneyValues value={value} />
+
+          <div className="flex items-center">
+            {isReceitaOuDespesa && (
+              <Badge
+                variant="outline"
+                className={clsx(
+                  "flex gap-1 rounded-lg text-xs",
+                  isPositive ? "text-green-600" : "text-red-600",
+                )}
+              >
+                {isPositive ? (
+                  <TrendingUpIcon className="size-3" />
+                ) : (
+                  <TrendingDownIcon className="size-3" />
+                )}
+                {isPositive ? "+" : ""}
+                {diffPercent.toFixed(0)}%
+              </Badge>
+            )}
+          </div>
         </CardDescription>
+
+        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-2xl">
+          <MoneyValues value={value} />
+        </CardTitle>
       </CardHeader>
-      <CardContent className="text-muted-foreground text-xs">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            Anterior: <MoneyValues value={previousValue} />
-          </span>
-          {percentageChange !== null && (
-            <span
-              className={`font-medium ${
-                isPositive ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              {isPositive ? "+" : ""}
-              {percentageChange}% {isPositive ? "↑" : "↓"}
-            </span>
-          )}
+
+      <CardFooter className="flex-col items-start gap-1 text-xs">
+        <div className="text-muted-foreground font-bold">Último mês</div>
+        <div className="text-muted-foreground">
+          <MoneyValues value={previousValue} />
         </div>
-      </CardContent>
+      </CardFooter>
     </Card>
   );
 }

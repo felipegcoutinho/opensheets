@@ -187,52 +187,6 @@ export default function UpdateTransactions({
             </Select>
           </div>
 
-          {/* <div className="mt-1 flex w-full gap-2">
-            <div className="w-full">
-              <Label>Categoria</Label>
-              <Select defaultValue={itemCategoria} name="categoria">
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <>
-                    {itemTipoTransacao === "receita"
-                      ? categoriasReceita.map((item) => {
-                          const IconComponent = item.icon;
-                          return (
-                            <SelectItem
-                              key={item.id}
-                              value={item.name}
-                              className="flex items-center gap-2"
-                            >
-                              <div className="flex items-center gap-2">
-                                <IconComponent className="h-4 w-4 text-green-500 dark:text-green-500" />
-                                {item.name}
-                              </div>
-                            </SelectItem>
-                          );
-                        })
-                      : categoriasDespesa.map((item) => {
-                          const IconComponent = item.icon;
-                          return (
-                            <SelectItem
-                              key={item.id}
-                              value={item.name}
-                              className="flex items-center gap-2"
-                            >
-                              <div className="flex items-center gap-2">
-                                <IconComponent className="h-4 w-4 text-red-500 dark:text-red-500" />
-                                {item.name}
-                              </div>
-                            </SelectItem>
-                          );
-                        })}
-                  </>
-                </SelectContent>
-              </Select>
-            </div>
-          </div> */}
-
           <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
             <Label>Marcar lançamento como Pago</Label>
             <Toggle

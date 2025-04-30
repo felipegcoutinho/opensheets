@@ -1,9 +1,10 @@
 import { getBills } from "@/app/services/boletos";
+import { getNewCategorias } from "@/app/services/categorias";
 import { getAccount } from "@/app/services/contas";
+import { Button } from "@/components/ui/button";
 import { getPeriodo } from "@/hooks/periodo";
 import CreateBills from "./modal/create-bills";
 import TableBills from "./table-bills";
-import { getNewCategorias } from "@/app/services/categorias";
 
 async function page(props) {
   const month = await getPeriodo(props);
@@ -14,10 +15,9 @@ async function page(props) {
 
   return (
     <div className="mt-4 w-full">
-      <CreateBills
-        getAccountMap={getAccountMap}
-        getCategorias={getCategorias}
-      />
+      <CreateBills getAccountMap={getAccountMap} getCategorias={getCategorias}>
+        <Button className="transition-all hover:scale-110">Novo Boleto</Button>
+      </CreateBills>
 
       <TableBills
         getBillsMap={getBillsMap}

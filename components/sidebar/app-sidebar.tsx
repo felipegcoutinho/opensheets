@@ -20,6 +20,9 @@ import { NavLinks } from "./nav-links";
 export function AppSidebar({
   username,
   usermail,
+  cartoes,
+  contas,
+  categorias,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {}) {
   const { open } = useSidebar();
@@ -51,9 +54,14 @@ export function AppSidebar({
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects links={data.projects} />
+        <NavProjects
+          links={data.projects}
+          cartoes={cartoes}
+          contas={contas}
+          categorias={categorias}
+        />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="border-border border-t">
         <NavUser username={username} usermail={usermail} user={data.user} />
       </SidebarFooter>
       <SidebarRail />

@@ -27,7 +27,11 @@ import { UseDates } from "@/hooks/use-dates";
 import Image from "next/image";
 import Utils from "../utils";
 
-export default function CreateBills({ getAccountMap, getCategorias }) {
+export default function CreateBills({
+  getAccountMap,
+  getCategorias,
+  children,
+}) {
   const {
     loading,
     categoriasDespesa,
@@ -45,9 +49,7 @@ export default function CreateBills({ getAccountMap, getCategorias }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button className="transition-all hover:scale-110">Novo Boleto</Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Novo Boleto</DialogTitle>

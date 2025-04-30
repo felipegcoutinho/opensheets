@@ -12,18 +12,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function TogglePaymentDialog({
   id,
   realizadoAtual,
+  periodo,
   formaPagamento,
   onStatusChanged,
+  cartaoId,
+  cartoDescricao,
 }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const isCartaoCredito = formaPagamento === "Cartão de Crédito";
+  const isCartaoCredito = formaPagamento === "cartão de crédito";
+  const cartoDescricaoLowerCase = cartoDescricao?.toLowerCase();
+  const isPago = realizadoAtual;
 
   const handleToggle = async (e) => {
     e.preventDefault();
@@ -35,76 +41,97 @@ export default function TogglePaymentDialog({
       onStatusChanged(!realizadoAtual);
       setOpen(false);
     }
+
     setLoading(false);
   };
 
+  const labelStatus = isPago ? "Pago" : "Pagar";
+  const dialogTitle = isCartaoCredito
+    ? "Pagamento via cartão"
+    : isPago
+      ? "Desfazer pagamento?"
+      : "Marcar como pago?";
+
+  const dialogMessage = isCartaoCredito ? (
+    <span className="space-y-4">
+      <span>
+        Pagamentos com <strong>cartão de crédito</strong> devem ser quitados
+        através da fatura. O status desta transação é vinculado à quitação da
+        fatura e não pode ser alterado manualmente.
+      </span>
+    </span>
+  ) : isPago ? (
+    <span>
+      Essa ação irá marcar a transação como <strong>pendente</strong>.
+    </span>
+  ) : (
+    <span>
+      Essa ação irá marcar a transação como <strong>paga</strong>.
+    </span>
+  );
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger hidden={isCartaoCredito} asChild>
+      <DialogTrigger asChild>
         <span
           className={`cursor-pointer hover:underline ${
-            realizadoAtual ? "text-green-500" : "text-orange-500"
+            isPago ? "text-green-500" : "text-orange-500"
           }`}
         >
-          {realizadoAtual ? "Pago" : "Pagar"}
+          {labelStatus}
         </span>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            {isCartaoCredito
-              ? "Pagamento via cartão"
-              : realizadoAtual
-                ? "Desfazer pagamento?"
-                : "Marcar como pago?"}
-          </DialogTitle>
-          <DialogDescription>
-            {isCartaoCredito ? (
-              <>
-                Para pagamentos com <strong>Cartão de Crédito</strong>, é
-                necessário pagar a fatura do cartão. Você não pode alterar o
-                status manualmente.
-              </>
-            ) : realizadoAtual ? (
-              "Isso marcará a transação como pendente."
-            ) : (
-              "Isso marcará a transação como paga."
-            )}
-          </DialogDescription>
+          <DialogTitle>{dialogTitle}</DialogTitle>
+          <DialogDescription>{dialogMessage}</DialogDescription>
         </DialogHeader>
 
-        {isCartaoCredito ? (
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button className="w-full" variant="default">
-                Entendi
+        <DialogFooter className="flex w-full gap-2">
+          {isCartaoCredito ? (
+            <>
+              <Button variant={"outline"} className="w-full" asChild>
+                <Link
+                  href={`/cartao/${cartaoId}/${cartoDescricaoLowerCase}?periodo=${periodo}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ir para fatura do cartão"
+                >
+                  Ver fatura do cartão
+                </Link>
               </Button>
-            </DialogClose>
-          </DialogFooter>
-        ) : (
-          <DialogFooter className="flex w-full gap-2">
-            <DialogClose className="w-1/2" asChild>
-              <Button type="button" variant="secondary">
-                Cancelar
-              </Button>
-            </DialogClose>
-            <form onSubmit={handleToggle} className="w-1/2">
-              <Button
-                variant={realizadoAtual ? "destructive" : "default"}
-                className="w-full"
-                type="submit"
-                disabled={loading}
-              >
-                {loading
-                  ? "Atualizando..."
-                  : realizadoAtual
-                    ? "Sim, marcar como pendente"
-                    : "Sim, marcar como pago"}
-              </Button>
-            </form>
-          </DialogFooter>
-        )}
+
+              <DialogClose asChild>
+                <Button className="w-full" variant="default">
+                  Entendi
+                </Button>
+              </DialogClose>
+            </>
+          ) : (
+            <>
+              <DialogClose className="w-1/2" asChild>
+                <Button type="button" variant="secondary">
+                  Cancelar
+                </Button>
+              </DialogClose>
+              <form onSubmit={handleToggle} className="w-1/2">
+                <Button
+                  variant={isPago ? "destructive" : "default"}
+                  className="w-full"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading
+                    ? "Atualizando..."
+                    : isPago
+                      ? "Sim, marcar como pendente"
+                      : "Sim, marcar como pago"}
+                </Button>
+              </form>
+            </>
+          )}
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
