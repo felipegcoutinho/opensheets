@@ -1,21 +1,21 @@
+import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
+import { ChartSummary } from "@/components/chart-summary";
 import Widget from "@/components/widget";
-import CardSummary from "@/components/card-summary";
 import { getPeriodo } from "@/hooks/periodo";
 import { UseDates } from "@/hooks/use-dates";
-import { ChartSummary } from "@/components/chart-summary";
-import { PaymentWidget } from "./payment-widget";
-import useUtils from "./utils";
-import InvoiceWidget from "./invoices-widget";
-import BillsWidget from "./bills-widget";
-import RecentesTransactions from "./recents-transactions-widget";
-import StatsWidget from "./stats-widget";
-import CategoryWidget from "./categories-widget";
-import { ConditionWidget } from "./condition-widget";
 import { getNotesStats } from "@/services/anotacoes";
 import { getBillsStats } from "@/services/boletos";
 import { getCardsStats } from "@/services/cartoes";
 import { getAccountsStats } from "@/services/contas";
 import { getTransactionsStats } from "@/services/transacoes";
+import BillsWidget from "./bills-widget";
+import CategoryWidget from "./categories-widget";
+import { ConditionWidget } from "./condition-widget";
+import InvoiceWidget from "./invoices-widget";
+import { PaymentWidget } from "./payment-widget";
+import RecentesTransactions from "./recents-transactions-widget";
+import StatsWidget from "./stats-widget";
+import useUtils from "./utils";
 
 export default async function page(props) {
   const month = await getPeriodo(props);
@@ -60,18 +60,18 @@ export default async function page(props) {
   const anotacoes = await getNotesStats(month);
 
   const statsData = [
-    { title: "Lançamentos", value: lancamentos },
-    { title: "Boletos", value: boletos },
-    { title: "Cartões", value: cartoes },
-    { title: "Contas", value: contas },
-    { title: "Anotações", value: anotacoes },
+    { title: "Lançamentos", qtde: lancamentos },
+    { title: "Boletos", qtde: boletos },
+    { title: "Cartões", qtde: cartoes },
+    { title: "Contas", qtde: contas },
+    { title: "Anotações", qtde: anotacoes },
   ];
 
   return (
     <>
       <div className="mt-4 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {summary.map((item, index) => (
-          <CardSummary
+          <SummaryWidget
             previousValue={item.previousValue}
             title={item.title}
             value={item.value}

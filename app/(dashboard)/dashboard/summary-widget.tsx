@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/card";
 import clsx from "clsx";
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
-import MoneyValues from "./money-values";
-import Ping from "./ping-icon";
-import { Badge } from "./ui/badge";
+import MoneyValues from "../../../components/money-values";
+import Ping from "../../../components/ping-icon";
+import { Badge } from "../../../components/ui/badge";
 
 type Props = {
   title: string;
@@ -18,7 +18,7 @@ type Props = {
   color: string;
 };
 
-export default function CardSummary({
+export default function SummaryWidget({
   title,
   value,
   previousValue,
@@ -36,12 +36,12 @@ export default function CardSummary({
     <Card className="@container/card">
       <CardHeader className="relative pb-1">
         <CardDescription className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <span className="flex items-center gap-2">
             <Ping color={color} />
             <span className="text-lg font-bold capitalize">{title}</span>
-          </div>
+          </span>
 
-          <div className="flex items-center">
+          <span className="flex items-center">
             {isReceitaOuDespesa && (
               <Badge
                 variant="outline"
@@ -59,7 +59,7 @@ export default function CardSummary({
                 {diffPercent.toFixed(0)}%
               </Badge>
             )}
-          </div>
+          </span>
         </CardDescription>
 
         <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-2xl">
@@ -68,10 +68,10 @@ export default function CardSummary({
       </CardHeader>
 
       <CardFooter className="flex-col items-start gap-1 text-xs">
-        <div className="text-muted-foreground font-bold">Último mês</div>
-        <div className="text-muted-foreground">
+        <span className="text-muted-foreground font-bold">Último mês</span>
+        <span className="text-muted-foreground">
           <MoneyValues value={previousValue} />
-        </div>
+        </span>
       </CardFooter>
     </Card>
   );
