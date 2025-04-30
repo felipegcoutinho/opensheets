@@ -11,6 +11,7 @@ function UseStyles() {
         return undefined;
     }
   }
+
   function getResponsavelClass(responsavel) {
     if (responsavel === "você") return "text-blue-600 dark:text-blue-400";
     if (responsavel === "sistema")
