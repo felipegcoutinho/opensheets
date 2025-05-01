@@ -31,15 +31,16 @@ export const signIn = async (formData) => {
   return redirect("/dashboard");
 };
 
-export const signUp = async (formData) => {
+export async function signup(formData: FormData) {
   "use server";
+
+  const supabase = createClient();
 
   const origin = (await headers()).get("origin");
   const email = formData.get("email");
   const firstName = formData.get("first_name");
   const lastName = formData.get("last_name");
   const password = formData.get("password");
-  const supabase = createClient();
 
   const { error } = await supabase.auth.signUp({
     email,
@@ -54,13 +55,14 @@ export const signUp = async (formData) => {
   });
 
   if (error) {
+    console.error(error);
     return redirect("/login/signup?message=Could not authenticate user");
   }
 
   return redirect(
     "/login/signup?message=Check email to continue sign in process",
   );
-};
+}
 
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();

@@ -35,19 +35,19 @@ export const NavProjects = memo(function NavProjects({
           return (
             <SidebarMenuItem key={item.url}>
               <SidebarMenuButton
-                className={`hover:bg-violet-100 active:bg-violet-200 ${isActive && "bg-muted-foreground/10"}`}
+                className={`hover:bg-contrast/30 active:bg-contrast ${isActive && "bg-muted-foreground/10"}`}
                 asChild
               >
                 <div className="flex w-full items-center justify-between">
                   <Link
                     href={item.url}
                     className={`flex items-center gap-2 transition-all ${
-                      isActive ? "text-violet-600" : "text-accent-foreground"
+                      isActive ? "text-violet-500" : "text-accent-foreground"
                     } `}
                   >
                     <item.icon
                       className={`h-4 w-4 ${
-                        isActive ? "text-violet-600" : "text-muted-foreground"
+                        isActive ? "text-violet-500" : "text-muted-foreground"
                       }`}
                     />
                     <p>{item.name}</p>

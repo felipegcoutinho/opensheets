@@ -5,27 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Wand2 } from "lucide-react";
 import { useState } from "react";
 
-type Analysis = {
-  resumo: {
-    total_receitas: string;
-    total_despesas: string;
-    saldo: string;
-  };
-  insights_gerais: string[];
-  categorias_relevantes: {
-    categoria: string;
-    valor_total: string;
-    percentual_sobre_total: string;
-  }[];
-  padrões_de_gastos: string[];
-  alertas: string[];
-  recomendações: string[];
-};
-
 function Home({
   lancamentos,
   boletos,
   cartoes,
+  categorias,
   month,
 }: {
   lancamentos: any[];
@@ -35,6 +19,8 @@ function Home({
 }) {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
+
+  console.log("analysis", analysis);
 
   const handleAnalyze = async () => {
     setLoading(true);
@@ -53,6 +39,11 @@ function Home({
               { role: "user", content: JSON.stringify(lancamentos) },
               { role: "user", content: JSON.stringify(boletos) },
               { role: "user", content: JSON.stringify(cartoes) },
+              { role: "user", content: JSON.stringify(categorias) },
+              // {
+              //   role: "user",
+              //   content: `Me dê uma análise em inglês`,
+              // },
             ],
           }),
         },
@@ -86,77 +77,57 @@ function Home({
         )}
       </Button>
       {analysis && (
+        // Componente simplificado focado em comportamento
         <Card className="my-2 w-full">
           <CardHeader>
-            <CardTitle>Análise Financeira de {month}</CardTitle>
+            <CardTitle>💼 Análise Comportamental de Consumo</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {/* Resumo */}
+              {/* Comportamentos Observados */}
               <Card className="p-4">
-                <h3 className="mb-2 text-lg font-bold">🎯 Resumo</h3>
-                <p>
-                  <strong>Receitas:</strong> {analysis.resumo.total_receitas}
-                </p>
-                <p>
-                  <strong>Despesas:</strong> {analysis.resumo.total_despesas}
-                </p>
-                <p>
-                  <strong>Balanço:</strong> {analysis.resumo.saldo}
-                </p>
-              </Card>
-
-              {/* Insights Gerais */}
-              <Card className="p-4">
-                <h3 className="mb-2 text-lg font-bold">💡 Insights Gerais</h3>
-                <ul className="list-inside list-disc space-y-1">
-                  {analysis.insights_gerais.map((insight, idx) => (
-                    <li key={idx}>{insight}</li>
-                  ))}
-                </ul>
-              </Card>
-
-              {/* Categorias Relevantes */}
-              <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="mb-2 text-lg font-bold">
-                  📊 Categorias Relevantes
+                <h3 className="mb-4 text-2xl font-bold">
+                  🔍 Comportamentos Observados
                 </h3>
-                <ul className="list-inside list-disc space-y-1">
-                  {analysis.categorias_relevantes.map((cat, idx) => (
-                    <li key={idx}>
-                      {cat.categoria}: {cat.valor_total} (
-                      {cat.percentual_sobre_total})
-                    </li>
+                <ul className="space-y-2">
+                  {analysis.comportamentos_observados.map((item, idx) => (
+                    <li key={idx}>{item}</li>
                   ))}
                 </ul>
               </Card>
 
-              {/* Padrões de Gastos */}
+              {/* Gatilhos de Consumo */}
               <Card className="p-4">
-                <h3 className="mb-2 text-lg font-bold">📈 Padrões de Gastos</h3>
-                <ul className="list-inside list-disc space-y-1">
-                  {analysis.padrões_de_gastos.map((padrao, idx) => (
-                    <li key={idx}>{padrao}</li>
+                <h3 className="mb-4 text-2xl font-bold">
+                  ⚠️ Gatilhos de Consumo
+                </h3>
+                <ul className="space-y-2">
+                  {analysis.gatilhos_de_consumo.map((item, idx) => (
+                    <li key={idx}>{item}</li>
                   ))}
                 </ul>
               </Card>
 
-              {/* Alertas */}
-              <Card className="p-4">
-                <h3 className="mb-2 text-lg font-bold">🚨 Alertas</h3>
-                <ul className="list-inside list-disc space-y-1">
-                  {analysis.alertas.map((alerta, idx) => (
-                    <li key={idx}>{alerta}</li>
-                  ))}
-                </ul>
-              </Card>
-
-              {/* Recomendações */}
+              {/* Recomendações Práticas */}
               <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="mb-2 text-lg font-bold">🛡️ Recomendações</h3>
-                <ul className="list-inside list-disc space-y-1">
-                  {analysis.recomendações.map((rec, idx) => (
-                    <li key={idx}>{rec}</li>
+                <h3 className="mb-4 text-2xl font-bold">
+                  ✅ Recomendações Práticas
+                </h3>
+                <ul className="space-y-2">
+                  {analysis.recomendações_práticas.map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </Card>
+
+              {/* Melhorias Sugeridas */}
+              <Card className="col-span-1 p-4 md:col-span-2">
+                <h3 className="mb-4 text-2xl font-bold">
+                  🚀 Melhorias Sugeridas
+                </h3>
+                <ul className="space-y-2">
+                  {analysis.melhorias_sugeridas.map((item, idx) => (
+                    <li key={idx}>{item}</li>
                   ))}
                 </ul>
               </Card>
