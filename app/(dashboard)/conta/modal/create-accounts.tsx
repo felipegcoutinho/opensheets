@@ -97,9 +97,9 @@ export default function CreateAccount() {
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Corrente">Corrente</SelectItem>
-                <SelectItem value="Poupança">Poupança</SelectItem>
-                <SelectItem value="Investimento">Investimento</SelectItem>
+                <SelectItem value="corrente">Corrente</SelectItem>
+                <SelectItem value="poupança">Poupança</SelectItem>
+                <SelectItem value="investimento">Investimento</SelectItem>
               </SelectContent>
             </Select>
           </div>

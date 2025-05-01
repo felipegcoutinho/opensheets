@@ -87,20 +87,24 @@ async function Page({ params, searchParams }) {
                 <TableHead>Data</TableHead>
                 <TableHead>Descrição</TableHead>
                 <TableHead>Transação</TableHead>
+                <TableHead>Valor</TableHead>
                 <TableHead>Condição</TableHead>
                 <TableHead>Pagamento</TableHead>
                 <TableHead>Responsável</TableHead>
-                <TableHead>Valor</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {transactions?.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{DateFormat(item.data_compra)}</TableCell>
+                  <TableCell className="text-muted-foreground capitalize">
+                    {DateFormat(item.data_compra)}
+                  </TableCell>
                   <TableCell>
                     <div className="flex flex-col">
-                      <span>{item.descricao}</span>
+                      <span className="font-bold capitalize">
+                        {item.descricao}
+                      </span>
                       {item.condicao === "parcelado" && (
                         <span className="text-muted-foreground text-xs">
                           Parcela {item.parcela_atual} de {item.qtde_parcela}
@@ -108,6 +112,7 @@ async function Page({ params, searchParams }) {
                       )}
                     </div>
                   </TableCell>
+
                   <TableCell>
                     <Button
                       size="sm"
@@ -116,6 +121,11 @@ async function Page({ params, searchParams }) {
                       {item.tipo_transacao}
                     </Button>
                   </TableCell>
+
+                  <TableCell>
+                    <MoneyValues value={item.valor} />
+                  </TableCell>
+
                   <TableCell>
                     <span className="flex items-center gap-1">
                       {item.condicao === "parcelado" && (
@@ -128,7 +138,9 @@ async function Page({ params, searchParams }) {
                       <span className="capitalize">{item.condicao}</span>
                     </span>
                   </TableCell>
-                  <TableCell>{item.forma_pagamento}</TableCell>
+                  <TableCell className="capitalize">
+                    {item.forma_pagamento}
+                  </TableCell>
                   <TableCell>
                     <span
                       className={`${getResponsavelClass(item.responsavel)}`}
@@ -136,9 +148,7 @@ async function Page({ params, searchParams }) {
                       {item.responsavel}
                     </span>
                   </TableCell>
-                  <TableCell>
-                    <MoneyValues value={item.valor} />
-                  </TableCell>
+
                   <TableCell className="text-right">
                     <DetailsTransactions
                       itemId={item.id}

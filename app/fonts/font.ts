@@ -1,5 +1,5 @@
+import { Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
 
 const uiSans = localFont({
   src: [
@@ -42,9 +42,34 @@ const SharpGrotesk = localFont({
   ],
 });
 
+const openRunde = localFont({
+  src: [
+    {
+      path: "../fonts/OpenRunde-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/OpenRunde-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    // {
+    //   path: "../fonts/OpenRunde-Bold.woff2",
+    //   weight: "600",
+    //   style: "normal",
+    // },
+  ],
+});
+
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 
-export { AtlasGrotesk, jetbrains, SharpGrotesk, uiSans };
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+export { AtlasGrotesk, inter, jetbrains, openRunde, SharpGrotesk, uiSans };

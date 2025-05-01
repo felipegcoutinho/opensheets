@@ -1,6 +1,5 @@
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { signIn } from "../actions/auth";
 
 export default async function Login(props) {
@@ -53,13 +51,13 @@ export default async function Login(props) {
               <FormMessage message={searchParams} />
             </div>
 
-            <div className="text-center text-sm">
-              <Button variant={"link"} asChild className="w-full">
+            {/* <div>
+              <Button variant={"link"} className="w-full" asChild>
                 <Link href="/login/signup">
                   Não possui conta? Faça o cadastro
                 </Link>
               </Button>
-            </div>
+            </div> */}
           </form>
         </CardContent>
       </Card>

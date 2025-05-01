@@ -309,7 +309,6 @@ export const getColumns = (
                   itemNotas={item.anotacao}
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
-                  itemCategoria={item.categoria}
                   itemCondicao={item.condicao}
                   itemResponsavel={item.responsavel}
                   itemTipoTransacao={item.tipo_transacao}
@@ -357,6 +356,9 @@ export const getColumns = (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <TogglePaymentDialog
                     id={item.id}
+                    cartaoId={item.cartoes?.id}
+                    periodo={item.periodo}
+                    cartoDescricao={item.cartoes?.descricao}
                     realizadoAtual={item.realizado}
                     formaPagamento={item.forma_pagamento}
                     onStatusChanged={(novoStatus) => {

@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
-import { uiSans } from "./fonts/font";
+import { openRunde } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${uiSans.className} `}
+      className={`${openRunde.className} `}
       suppressHydrationWarning
     >
       <body>
@@ -32,7 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="subpixel-antialiased">{children}</main>
+            <main className="antialiased">{children}</main>
           </PrivacyProviderApp>
 
           <SpeedInsights />

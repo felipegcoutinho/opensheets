@@ -1,4 +1,6 @@
 "use client";
+import CreateBills from "@/app/(dashboard)/boleto/modal/create-bills";
+import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -6,12 +8,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { PlusSquare } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { memo } from "react";
+import { Button } from "../ui/button";
 
 export const NavProjects = memo(function NavProjects({
   links,
+  cartoes,
+  contas,
+  categorias,
   title = "Menu",
 }) {
   const pathname = usePathname();
@@ -27,20 +34,62 @@ export const NavProjects = memo(function NavProjects({
 
           return (
             <SidebarMenuItem key={item.url}>
-              <SidebarMenuButton asChild>
-                <Link
-                  href={item.url}
-                  className={`flex items-center gap-3 rounded-xl px-3 py-2 capitalize transition-all ${
-                    isActive ? "text-primary" : "text-accent-foreground"
-                  } `}
-                >
-                  <item.icon
-                    className={`h-5 w-5 flex-shrink-0 ${
-                      isActive ? "text-primary" : "text-foreground"
-                    }`}
-                  />
-                  <span className="truncate">{item.name}</span>
-                </Link>
+              <SidebarMenuButton
+                className={`hover:bg-contrast/30 active:bg-contrast ${isActive && "bg-muted-foreground/10"}`}
+                asChild
+              >
+                <div className="flex w-full items-center justify-between">
+                  <Link
+                    href={item.url}
+                    className={`flex items-center gap-2 transition-all ${
+                      isActive ? "text-violet-500" : "text-accent-foreground"
+                    } `}
+                  >
+                    <item.icon
+                      className={`h-4 w-4 ${
+                        isActive ? "text-violet-500" : "text-muted-foreground"
+                      }`}
+                    />
+                    <p>{item.name}</p>
+                  </Link>
+
+                  {item.name === "lançamentos" && (
+                    <CreateTransactions
+                      getCards={cartoes}
+                      getAccount={contas}
+                      getCategorias={categorias}
+                    >
+                      <Button
+                        className="transition-all hover:scale-110"
+                        size="icon"
+                        variant="link"
+                      >
+                        <PlusSquare
+                          className="text-muted-foreground"
+                          size={18}
+                        />
+                      </Button>
+                    </CreateTransactions>
+                  )}
+
+                  {item.name === "boletos" && (
+                    <CreateBills
+                      getAccountMap={contas}
+                      getCategorias={categorias}
+                    >
+                      <Button
+                        className="transition-all hover:scale-110"
+                        size="icon"
+                        variant="link"
+                      >
+                        <PlusSquare
+                          className="text-muted-foreground"
+                          size={18}
+                        />
+                      </Button>
+                    </CreateBills>
+                  )}
+                </div>
               </SidebarMenuButton>
             </SidebarMenuItem>
           );

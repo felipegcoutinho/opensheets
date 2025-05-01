@@ -1,4 +1,3 @@
-import { signUp } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,7 +9,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { SubmitButton } from "../../../components/submit-button";
+import { SubmitButton } from "@/components/submit-button";
+import { signup } from "@/app/actions/auth";
 
 export default async function SignUp(props) {
   const searchParams = await props.searchParams;
@@ -48,7 +48,7 @@ export default async function SignUp(props) {
             required
           />
 
-          <SubmitButton formAction={signUp} pendingText="Criando Conta...">
+          <SubmitButton formAction={signup} pendingText="Criando Conta...">
             Criar Conta
           </SubmitButton>
 

@@ -1,17 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getAccountsStats() {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.from("contas").select("count()");
-
-  if (error) throw error;
-
-  const total = data[0].count;
-
-  return total;
-}
-
 export async function getAccount() {
   const supabase = createClient();
 
@@ -41,4 +29,16 @@ export async function getAccountDetails(id) {
   }
 
   return data;
+}
+
+export async function getAccountsStats() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("contas").select("count()");
+
+  if (error) throw error;
+
+  const total = data[0].count;
+
+  return total;
 }

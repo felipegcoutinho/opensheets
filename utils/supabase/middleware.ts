@@ -14,6 +14,7 @@ export const updateSession = async (request: NextRequest) => {
     "/ajustes",
     "/reset-password",
     "/insights",
+    "/categorias",
   ];
 
   try {
@@ -38,6 +39,17 @@ export const updateSession = async (request: NextRequest) => {
     const {
       data: { user: session },
     } = await supabase.auth.getUser();
+
+    // if (
+    //   !session &&
+    //   !request.nextUrl.pathname.startsWith("/login") &&
+    //   !request.nextUrl.pathname.startsWith("/auth")
+    // ) {
+    //   // no user, potentially respond by redirecting the user to the login page
+    //   const url = request.nextUrl.clone();
+    //   url.pathname = "/login";
+    //   return NextResponse.redirect(url);
+    // }
 
     const currentPath = request.nextUrl.pathname;
 

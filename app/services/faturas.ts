@@ -15,7 +15,7 @@ export async function getFaturas(month: string, cartao_id: number) {
 export async function getInvoiceList(month: string) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.rpc("getinvoicelists", { month });
+  const { data, error } = await supabase.rpc("get_faturas", { month });
 
   if (error) throw error;
 

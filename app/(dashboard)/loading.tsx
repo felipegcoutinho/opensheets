@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   return (
     <>
-      {/* CardSummary Skeletons */}
+      {/* SummaryWidget Skeletons */}
       <div className="mt-4 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {[...Array(4)].map((_, index) => (
           <Skeleton key={index} className="h-24 w-full rounded-lg" />

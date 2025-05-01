@@ -1,11 +1,11 @@
 "use client";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 const chartConfig = {
   stats: {
@@ -15,9 +15,9 @@ const chartConfig = {
 };
 
 function StatsWidget({ statsConfig }) {
-  const chartData = statsConfig.map(({ title, value }) => ({
+  const chartData = statsConfig.map(({ title, qtde }) => ({
     label: title,
-    value: value,
+    qtde: qtde,
   }));
 
   return (
@@ -31,13 +31,13 @@ function StatsWidget({ statsConfig }) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value}
+              tickFormatter={(qtde) => qtde}
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="value" fill="var(--color-stats)" radius={6} />
+            <Bar dataKey="qtde" fill="var(--color-stats)" radius={6} />
           </BarChart>
         </ChartContainer>
       </CardContent>

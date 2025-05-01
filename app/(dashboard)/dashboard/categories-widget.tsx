@@ -46,7 +46,7 @@ export default function CategoryWidget({
                 ? "100.0"
                 : "0.0";
 
-          const url = `/dashboard/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
+          const url = `/categorias/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
 
           return (
             <div key={index} className="space-y-1">
