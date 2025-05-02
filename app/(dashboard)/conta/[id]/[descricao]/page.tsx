@@ -94,10 +94,10 @@ const TransactionTable = ({
               <TableHead>Data</TableHead>
               <TableHead>Descrição</TableHead>
               <TableHead>Transação</TableHead>
+              <TableHead>Valor</TableHead>
               <TableHead>Condição</TableHead>
               <TableHead>Pagamento</TableHead>
               <TableHead>Responsável</TableHead>
-              <TableHead>Valor</TableHead>
               <TableHead>Categoria</TableHead>
               <TableHead>Ações</TableHead>
             </TableRow>
@@ -106,15 +106,19 @@ const TransactionTable = ({
           <TableBody>
             {transactions?.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{dateFormatter(item.data_compra)}</TableCell>
+                <TableCell className="text-muted-foreground">
+                  {dateFormatter(item.data_compra)}
+                </TableCell>
+
                 <TableCell>
-                  <span>{item.descricao}</span>
+                  <span className="font-bold capitalize">{item.descricao}</span>
                   {item.condicao === "parcelado" && (
                     <span className="px-1 text-xs text-neutral-400">
                       {`${item.parcela_atual} de ${item.qtde_parcela}`}
                     </span>
                   )}
                 </TableCell>
+
                 <TableCell>
                   <Button
                     size="sm"
@@ -123,22 +127,30 @@ const TransactionTable = ({
                     {item.tipo_transacao}
                   </Button>
                 </TableCell>
+
+                <TableCell>
+                  <MoneyValues value={item.valor} />
+                </TableCell>
+
                 <TableCell>
                   <span className="flex items-center gap-1">
                     {getTransactionIcon(item.condicao)}
                     <span className="capitalize">{item.condicao}</span>
                   </span>
                 </TableCell>
+
                 <TableCell>{item.forma_pagamento}</TableCell>
+
                 <TableCell>
                   <span className={` ${getResponsavelClass(item.responsavel)}`}>
                     {item.responsavel}
                   </span>
                 </TableCell>
+
                 <TableCell>
-                  <MoneyValues value={item.valor} />
+                  <span className="lowercase">{item.categorias?.nome}</span>
                 </TableCell>
-                <TableCell>{item.categorias?.nome}</TableCell>
+
                 <TableCell>
                   <DetailsTransactions
                     itemId={item.id}

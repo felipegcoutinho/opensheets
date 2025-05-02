@@ -218,7 +218,7 @@ export const getColumns = (
           {item.condicao === "recorrente" && <RefreshCw size={12} />}
           {item.condicao === "vista" && <Check size={12} />}
 
-          <span className="capitalize">{row.getValue("condicao")}</span>
+          <span className="lowercase">{row.getValue("condicao")}</span>
         </span>
       );
     },
@@ -240,7 +240,7 @@ export const getColumns = (
     },
     cell: ({ row }) => {
       return (
-        <span className="capitalize">{row.getValue("forma_pagamento")}</span>
+        <span className="lowercase">{row.getValue("forma_pagamento")}</span>
       );
     },
   },
@@ -335,7 +335,6 @@ export const getColumns = (
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
-                    itemCategoria={item.categoria}
                     itemCondicao={item.condicao}
                     itemResponsavel={item.responsavel}
                     itemTipoTransacao={item.tipo_transacao}
