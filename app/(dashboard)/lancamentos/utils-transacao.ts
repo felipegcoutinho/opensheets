@@ -40,7 +40,7 @@ export default function Utils() {
   };
 
   const handleFormaPagamentoChange = (value: string) => {
-    const isConta = ["Dinheiro", "Pix", "Cartão de Débito"].includes(value);
+    const isConta = ["dinheiro", "pix", "cartão de débito"].includes(value);
     setShowConta(isConta);
     setShowCartao(!isConta);
   };

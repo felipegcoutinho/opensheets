@@ -53,7 +53,7 @@ export default function UpdateNotes({
               <div className="w-1/2">
                 <Label>
                   Descrição
-                  <Required />{" "}
+                  <Required />
                 </Label>
                 <Input
                   defaultValue={itemDescricao}
@@ -66,7 +66,7 @@ export default function UpdateNotes({
               <div className="w-1/2">
                 <Label>
                   Período
-                  <Required />{" "}
+                  <Required />
                 </Label>
                 <Select defaultValue={itemPeriodo} name="periodo">
                   <SelectTrigger>

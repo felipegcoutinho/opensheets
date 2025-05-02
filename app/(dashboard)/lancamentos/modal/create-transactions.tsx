@@ -249,12 +249,12 @@ export default function CreateTransactions({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Pix">Pix</SelectItem>
-                    <SelectItem value="Dinheiro">Dinheiro</SelectItem>
-                    <SelectItem value="Cartão de Débito">
+                    <SelectItem value="pix">Pix</SelectItem>
+                    <SelectItem value="dinheiro">Dinheiro</SelectItem>
+                    <SelectItem value="cartão de débito">
                       Cartão de Débito
                     </SelectItem>
-                    <SelectItem value="Cartão de Crédito">
+                    <SelectItem value="cartão de crédito">
                       Cartão de Crédito
                     </SelectItem>
                   </SelectContent>

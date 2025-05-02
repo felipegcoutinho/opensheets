@@ -99,12 +99,14 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">Categoria</span>
                   <span>{itemCategoriaId}</span>
                 </li>
+
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
                     Tipo de Transação
                   </span>
                   <span>{itemTipoTransacao}</span>
                 </li>
+
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Condição</span>
                   <span>{itemCondicao}</span>
