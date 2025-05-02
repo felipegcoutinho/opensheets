@@ -1,5 +1,4 @@
 import DetailsTransactions from "@/app/(dashboard)/lancamentos/modal/details-transactions";
-
 import { getCardDetails, getCards } from "@/app/services/cartoes";
 import { getFaturas } from "@/app/services/faturas";
 import { getCardInvoice, getCardSum } from "@/app/services/transacoes";
@@ -16,13 +15,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
 import {
   CalendarClockIcon,
   Check,
   CheckCircle2,
+  CheckCircle2Icon,
+  MessageSquareText,
+  PartyPopper,
   RefreshCw,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -137,10 +146,10 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
               <TableHead>Data</TableHead>
               <TableHead>Descrição</TableHead>
               <TableHead>Transação</TableHead>
+              <TableHead>Valor</TableHead>
               <TableHead>Condição</TableHead>
               <TableHead>Pagamento</TableHead>
               <TableHead>Responsável</TableHead>
-              <TableHead>Valor</TableHead>
               <TableHead>Categoria</TableHead>
               <TableHead>Ações</TableHead>
             </TableRow>
@@ -149,15 +158,69 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
           <TableBody>
             {transactions?.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{dateFormatter(item.data_compra)}</TableCell>
-                <TableCell>
-                  <span>{item.descricao}</span>
-                  {item.condicao === "parcelado" && (
-                    <span className="px-1 text-xs text-neutral-400">
-                      {`${item.parcela_atual} de ${item.qtde_parcela}`}
-                    </span>
-                  )}
+                <TableCell className="text-muted-foreground">
+                  {dateFormatter(item.data_compra)}
                 </TableCell>
+
+                <TableCell>
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold capitalize">
+                      {item.descricao}
+                    </span>
+
+                    {item.condicao === "parcelado" && (
+                      <span className="text-muted-foreground text-xs">
+                        {item.parcela_atual} de {item.qtde_parcela}
+                      </span>
+                    )}
+
+                    {item.responsavel === "sistema" && (
+                      <span className="text-muted-foreground text-xs">
+                        <CheckCircle2Icon
+                          fill="green"
+                          className="text-white"
+                          size={15}
+                        />
+                      </span>
+                    )}
+
+                    {item.dividir_lancamento === true && (
+                      <span className="px-1">
+                        <TooltipProvider delayDuration={300}>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Users
+                                className="text-muted-foreground"
+                                size={12}
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent>Conta Dividida</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </span>
+                    )}
+
+                    {item.anotacao != "" && item.responsavel != "sistema" && (
+                      <TooltipProvider delayDuration={300}>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <MessageSquareText
+                              className="text-muted-foreground"
+                              size={12}
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>{item.anotacao}</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+
+                    {item.condicao === "parcelado" &&
+                      item.parcela_atual === item.qtde_parcela && (
+                        <PartyPopper className="text-emerald-600" size={18} />
+                      )}
+                  </div>
+                </TableCell>
+
                 <TableCell>
                   <Button
                     size="sm"
@@ -166,22 +229,30 @@ const TransactionTable = ({ transactions, dateFormatter }) => {
                     {item.tipo_transacao}
                   </Button>
                 </TableCell>
-                <TableCell>
-                  <span className="flex items-center gap-1">
-                    {getTransactionIcon(item.condicao)}
-                    <span className="capitalize">{item.condicao}</span>
-                  </span>
-                </TableCell>
-                <TableCell>{item.forma_pagamento}</TableCell>
-                <TableCell>
-                  <span className={` ${getResponsavelClass(item.responsavel)}`}>
-                    {item.responsavel}
-                  </span>
-                </TableCell>
+
                 <TableCell>
                   <MoneyValues value={item.valor} />
                 </TableCell>
-                <TableCell>{item.categorias?.nome}</TableCell>
+
+                <TableCell>
+                  <span className="flex items-center gap-1">
+                    {getTransactionIcon(item.condicao)}
+                    <span>{item.condicao}</span>
+                  </span>
+                </TableCell>
+
+                <TableCell>{item.forma_pagamento}</TableCell>
+
+                <TableCell>
+                  <span className={`${getResponsavelClass(item.responsavel)}`}>
+                    {item.responsavel}
+                  </span>
+                </TableCell>
+
+                <TableCell>
+                  <span className="lowercase">{item.categorias?.nome}</span>
+                </TableCell>
+
                 <TableCell>
                   <DetailsTransactions
                     itemId={item.id}

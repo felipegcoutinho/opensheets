@@ -30,7 +30,6 @@ import Utils from "../utils-transacao";
 
 export default function UpdateTransactions({
   itemId,
-  itemCategoria,
   itemDescricao,
   itemNotas,
   itemDate,
