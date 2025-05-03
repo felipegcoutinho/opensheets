@@ -58,7 +58,7 @@ export default function TransactionTable({ transactions }) {
             </TableRow>
           )}
           {transactions?.map((item) => (
-            <TableRow key={item.id}>
+            <TableRow key={item.id} className="whitespace-nowrap">
               <TableCell className="text-muted-foreground">
                 <span>{DateFormat(item.data_compra)}</span>
               </TableCell>

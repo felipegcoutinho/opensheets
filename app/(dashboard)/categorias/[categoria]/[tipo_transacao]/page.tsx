@@ -106,7 +106,7 @@ async function page(props) {
                 </TableHeader>
                 <TableBody>
                   {transacoes?.map((item) => (
-                    <TableRow key={item.id}>
+                    <TableRow key={item.id} className="whitespace-nowrap">
                       <TableCell className="text-muted-foreground">
                         {DateFormat(item.data_compra)}
                       </TableCell>

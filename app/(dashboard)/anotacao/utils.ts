@@ -1,74 +1,58 @@
-import { deleteBills } from "@/actions/bills";
-import { addNotes, updateNotes } from "@/actions/notes";
-import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { addNotes, deleteNotes, updateNotes } from "@/actions/notes";
+import { useActionState, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export default function Utils() {
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.target);
+  const [state, formAction, loading] = useActionState(addNotes, null);
+  const [updateState, updateFormAction, updateLoading] = useActionState(
+    updateNotes,
+    null,
+  );
+  const [deleteState, deleteFormAction] = useActionState(deleteNotes, null);
+
+  const handleSubmit = async (formData) => {
     try {
-      await addNotes(formData);
-      toast({
-        variant: "success",
-        title: "Sucesso!",
-        description: "Boleto adicionado com sucesso!",
-      });
+      await formAction(formData);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.success("Anotação criada com sucesso");
       setIsOpen(false);
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Erro ao adicionar Boleto.",
-      });
-    } finally {
-      setLoading(false);
+      toast.error("Erro ao criar Anotação.");
     }
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.target);
+  const handleUpdate = async (formData) => {
     try {
-      await updateNotes(formData);
-      toast({
-        variant: "updated",
-        title: "Sucesso!",
-        description: "Boleto atualizado com sucesso!",
-      });
+      await updateFormAction(formData);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.info("Anotação atualizada com sucesso");
       setIsOpen(false);
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Erro ao atualizar Boleto.",
-      });
-    } finally {
-      setLoading(false);
+      toast.error("Erro ao atualizar Anotação.");
     }
   };
 
-  const handleDelete = (itemId) => async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("excluir", itemId);
-    await deleteBills(formData);
-    // setIsOpen(false);
-    toast({
-      variant: "success",
-      title: "Sucesso!",
-      description: "Boleto removido com sucesso!",
+  const handleDelete = (itemId) => async () => {
+    startTransition(async () => {
+      try {
+        const formData = new FormData();
+        formData.append("excluir", itemId);
+        await deleteFormAction(formData);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setIsOpen(false);
+      } catch (error) {
+        console.error(error, "Erro ao remover Anotação.");
+      }
     });
   };
 
   return {
     loading,
+    updateLoading,
+    isPending,
     handleSubmit,
     handleUpdate,
     isOpen,

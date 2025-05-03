@@ -21,8 +21,6 @@ function TransactionTable({ transactions }) {
 
   const { DateFormat } = UseDates();
 
-  console.log(transactions);
-
   return (
     <Card className="mt-4">
       <CardHeader>
@@ -45,7 +43,7 @@ function TransactionTable({ transactions }) {
           </TableHeader>
           <TableBody>
             {transactions?.map((item) => (
-              <TableRow key={item.id}>
+              <TableRow key={item.id} className="whitespace-nowrap">
                 <TableCell>
                   <span className="text-muted-foreground">
                     {DateFormat(item.data_compra)}

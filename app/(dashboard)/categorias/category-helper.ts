@@ -9,14 +9,11 @@ import { toast } from "sonner";
 export default function CategoryHelper() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-
   const [state, formAction, loading] = useActionState(addCategories, null);
-
   const [updateState, updateFormAction, updateLoading] = useActionState(
     updateCategories,
     null,
   );
-
   const [deleteState, deleteFormAction, deleteLoading] = useActionState(
     deleteCategories,
     null,
@@ -44,7 +41,7 @@ export default function CategoryHelper() {
     }
   };
 
-  const handleDelete = (itemId) => async () => {
+  const handleDelete = async (itemId) => {
     startTransition(async () => {
       try {
         const formData = new FormData();

@@ -1,5 +1,5 @@
 import CardInfo from "./card-info";
-import TableInfo from "./table-info";
+import TableInfo from "./table";
 import { getCardDetails, getCards } from "@/app/services/cartoes";
 import { getFaturas } from "@/app/services/faturas";
 import { getCardInvoice, getCardSum } from "@/app/services/transacoes";

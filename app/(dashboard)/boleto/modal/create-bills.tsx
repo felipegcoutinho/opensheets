@@ -282,13 +282,23 @@ export default function CreateBills({
             </div>
           </div>
 
-          <DialogFooter className="mt-4 flex gap-2">
+          <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
-              <Button className="w-1/2" type="button" variant="secondary">
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
                 Cancelar
               </Button>
             </DialogClose>
-            <Button className="w-1/2" type="submit" disabled={loading}>
+
+            <Button
+              form="transaction-form"
+              className="w-full sm:w-1/2"
+              type="submit"
+              disabled={loading}
+            >
               {loading ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>

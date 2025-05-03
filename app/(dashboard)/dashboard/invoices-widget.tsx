@@ -14,8 +14,6 @@ export default async function InvoiceWidget({ data, month }) {
   return [...dataSorted].map(async (item) => {
     const fatura_status = await getFaturas(month, item.cartao_id);
 
-    console.log(item.logo_image);
-
     return (
       <div
         key={item.cartao_id}
