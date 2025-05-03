@@ -21,14 +21,11 @@ import {
 import UseStyles from "@/hooks/use-styles";
 import {
   ArrowUpDown,
-  CalendarClockIcon,
-  Check,
   CheckCircle2Icon,
   Ellipsis,
   FileImage,
   MessageSquareText,
   PartyPopper,
-  RefreshCw,
   Users,
 } from "lucide-react";
 import DeleteTransactions from "../modal/delete-transactions";
@@ -36,7 +33,7 @@ import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 import Utils from "../utils-transacao";
 
-const { getButtonVariant, getResponsavelClass } = UseStyles();
+const { getButtonVariant, getResponsavelClass, getConditionIcon } = UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -214,10 +211,7 @@ export const getColumns = (
 
       return (
         <span className="flex items-center gap-1">
-          {item.condicao === "parcelado" && <CalendarClockIcon size={12} />}
-          {item.condicao === "recorrente" && <RefreshCw size={12} />}
-          {item.condicao === "vista" && <Check size={12} />}
-
+          {getConditionIcon(item.condicao)}
           <span className="lowercase">{row.getValue("condicao")}</span>
         </span>
       );

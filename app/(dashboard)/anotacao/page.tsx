@@ -9,12 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 
 async function PageNotes(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const notes = await getNotes(month);
 

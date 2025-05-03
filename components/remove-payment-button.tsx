@@ -1,5 +1,4 @@
 "use client";
-
 import { deleteFaturas } from "@/actions/invoices";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Fragment } from "react";
 import Utils from "./utils";
 
 export default function RemovePaymentButton({ fatura_status }) {
@@ -27,7 +25,7 @@ export default function RemovePaymentButton({ fatura_status }) {
   };
 
   return (
-    <Fragment>
+    <>
       {fatura_status &&
         fatura_status.length > 0 &&
         fatura_status.map(
@@ -35,9 +33,9 @@ export default function RemovePaymentButton({ fatura_status }) {
             item.status_pagamento === "pago" && (
               <Dialog key={item.id}>
                 <DialogTrigger asChild>
-                  <Button className="h-6" variant="destructive" type="button">
-                    Remover Pagamento
-                  </Button>
+                  <span className="cursor-pointer text-red-500 hover:underline">
+                    desfazer pagamento
+                  </span>
                 </DialogTrigger>
 
                 <DialogContent>
@@ -46,7 +44,7 @@ export default function RemovePaymentButton({ fatura_status }) {
                       Confirmar Exclusão
                     </DialogTitle>
                     <DialogDescription className="mt-0 flex flex-col py-6 text-center text-lg">
-                      Tem certeza que deseja remover este pagamento? Esta ação
+                      Tem certeza que deseja desfazer este pagamento? Esta ação
                       não poderá ser desfeita.
                     </DialogDescription>
                   </DialogHeader>
@@ -69,7 +67,7 @@ export default function RemovePaymentButton({ fatura_status }) {
                         variant="destructive"
                         disabled={isPending}
                       >
-                        {isPending ? "Removendo..." : "Confirmar Exclusão"}
+                        {isPending ? "Removendo..." : "Confirmar remoção"}
                       </Button>
                     </form>
                   </DialogFooter>
@@ -77,6 +75,6 @@ export default function RemovePaymentButton({ fatura_status }) {
               </Dialog>
             ),
         )}
-    </Fragment>
+    </>
   );
 }

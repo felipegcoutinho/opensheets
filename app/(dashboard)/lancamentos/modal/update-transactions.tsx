@@ -43,8 +43,6 @@ export default function UpdateTransactions({
   getCategorias,
 }) {
   const {
-    categoriasReceita,
-    categoriasDespesa,
     isOpen,
     setIsOpen,
     handleUpdate,

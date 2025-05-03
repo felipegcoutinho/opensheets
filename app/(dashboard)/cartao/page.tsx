@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import { Lock, LockOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -137,7 +137,7 @@ function CartaoCard({ item, getAccountMap, mostrarLimites }) {
 }
 
 async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const cartoesAtivos = await getCards();
   const cartoesInativos = await getCardsDisabled();

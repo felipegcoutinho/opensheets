@@ -29,7 +29,6 @@ export default function UpdateBills({
   itemDescricao,
   itemPeriodo,
   itemDtVencimento,
-  itemCategoria,
   itemValor,
   itemResponsavel,
   itemStatusPagamento,

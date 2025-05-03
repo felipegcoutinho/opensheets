@@ -12,42 +12,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
-import {
-  ArrowLeftIcon,
-  CalendarClockIcon,
-  Check,
-  RefreshCw,
-} from "lucide-react";
-import Link from "next/link";
 
-async function Page({ params, searchParams }) {
+async function page({ params, searchParams }) {
   const { DateFormat } = UseDates();
+  const { getButtonVariant, getResponsavelClass, getConditionIcon } =
+    UseStyles();
 
-  const month = await getPeriodo({ searchParams });
-
-  const condicao = decodeURIComponent(params.condicao);
+  const month = await getMonth({ searchParams });
+  const { condicao } = await params;
 
   const transactions = await getTransactionsByConditions(condicao, month);
 
   const valorTotal = transactions.reduce((acc, item) => acc + item.valor, 0);
 
-  const { getButtonVariant, getResponsavelClass } = UseStyles();
-
   return (
     <div className="mb-4 space-y-6">
-      {/* Botão Voltar */}
-      <Button variant="ghost" className="mt-4">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <ArrowLeftIcon size={16} />
-          <p>Voltar</p>
-        </Link>
-      </Button>
-
       {/* Cabeçalho */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+      <div className="mt-4 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-muted-foreground text-sm font-medium">
@@ -97,17 +81,20 @@ async function Page({ params, searchParams }) {
             <TableBody>
               {transactions?.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="text-muted-foreground capitalize">
-                    {DateFormat(item.data_compra)}
-                  </TableCell>
                   <TableCell>
-                    <div className="flex flex-col">
+                    <span className="text-muted-foreground">
+                      {DateFormat(item.data_compra)}
+                    </span>
+                  </TableCell>
+
+                  <TableCell>
+                    <div className="flex items-center gap-1">
                       <span className="font-bold capitalize">
                         {item.descricao}
                       </span>
                       {item.condicao === "parcelado" && (
                         <span className="text-muted-foreground text-xs">
-                          Parcela {item.parcela_atual} de {item.qtde_parcela}
+                          {item.parcela_atual} de {item.qtde_parcela}
                         </span>
                       )}
                     </div>
@@ -128,19 +115,13 @@ async function Page({ params, searchParams }) {
 
                   <TableCell>
                     <span className="flex items-center gap-1">
-                      {item.condicao === "parcelado" && (
-                        <CalendarClockIcon size={12} />
-                      )}
-                      {item.condicao === "recorrente" && (
-                        <RefreshCw size={12} />
-                      )}
-                      {item.condicao === "vista" && <Check size={12} />}
-                      <span className="capitalize">{item.condicao}</span>
+                      {getConditionIcon(item.condicao)}
+                      <span>{item.condicao}</span>
                     </span>
                   </TableCell>
-                  <TableCell className="capitalize">
-                    {item.forma_pagamento}
-                  </TableCell>
+
+                  <TableCell>{item.forma_pagamento}</TableCell>
+
                   <TableCell>
                     <span
                       className={`${getResponsavelClass(item.responsavel)}`}
@@ -181,4 +162,4 @@ async function Page({ params, searchParams }) {
   );
 }
 
-export default Page;
+export default page;

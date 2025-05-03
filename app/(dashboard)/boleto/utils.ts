@@ -1,6 +1,5 @@
 import { addBills, deleteBills, updateBills } from "@/actions/bills";
 import { useToast } from "@/components/ui/use-toast";
-import UseOptions from "@/hooks/use-options";
 import { useState } from "react";
 
 export default function Utils() {
@@ -8,7 +7,7 @@ export default function Utils() {
   const [loading, setLoading] = useState(false);
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [statusPagamento, setStatusPagamento] = useState(false);
-  const { categoriasDespesa } = UseOptions();
+
   const [showRecorrencia, setShowRecorrencia] = useState(false);
 
   const { toast } = useToast();
@@ -79,7 +78,6 @@ export default function Utils() {
     handleUpdate,
     statusPagamento,
     setStatusPagamento,
-    categoriasDespesa,
     showRecorrencia,
     handleCondicaoChange,
     isDividedChecked,

@@ -8,14 +8,14 @@ import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import Image from "next/image";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
 async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
   const getAccountMap = await getAccount();
 
   const accountData = await Promise.all(

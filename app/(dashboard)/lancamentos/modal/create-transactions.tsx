@@ -46,8 +46,6 @@ export default function CreateTransactions({
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
-    categoriasReceita,
-    categoriasDespesa,
     handleSubmit,
     loading,
     isDividedChecked,

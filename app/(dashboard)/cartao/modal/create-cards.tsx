@@ -179,7 +179,7 @@ export default function CreateCard({ getAccountMap }) {
               Status do Cartão
               <Required />
             </Label>
-            <Select name="status" defaultValue="Ativo" required>
+            <Select name="status" defaultValue="ativo" required>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>

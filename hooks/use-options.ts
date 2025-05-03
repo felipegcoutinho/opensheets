@@ -1,76 +1,4 @@
-import {
-  Award,
-  Beer,
-  Bike,
-  Briefcase,
-  Car,
-  CircleDollarSign,
-  Coffee,
-  CreditCard,
-  Gamepad2,
-  Gift,
-  GraduationCap,
-  Heart,
-  History,
-  Home,
-  Newspaper,
-  PiggyBank,
-  Plane,
-  RefreshCw,
-  Scissors,
-  Shirt,
-  ShoppingBag,
-  ShoppingCart,
-  Stars,
-  TrendingUp,
-  Trophy,
-  Users,
-  UtensilsCrossed,
-  Wallet,
-} from "lucide-react";
-
 export default function UseOptions() {
-  const categoriasReceita = [
-    { id: 1, name: "ajuste de saldo", icon: History },
-    { id: 2, name: "investimentos", icon: TrendingUp },
-    { id: 3, name: "plr", icon: Award },
-    { id: 4, name: "prêmios", icon: Trophy },
-    { id: 5, name: "presente", icon: Gift },
-    { id: 6, name: "reembolso", icon: RefreshCw },
-    { id: 7, name: "salário", icon: Briefcase },
-    { id: 8, name: "saldo anterior", icon: Wallet },
-    { id: 9, name: "vendas", icon: ShoppingCart },
-    { id: 10, name: "rendimentos", icon: PiggyBank },
-    { id: 11, name: "outros", icon: CircleDollarSign },
-  ];
-
-  const categoriasDespesa = [
-    { id: 1, name: "ajuste de saldo", icon: History },
-    { id: 2, name: "alimentação", icon: UtensilsCrossed },
-    { id: 3, name: "assinaturas", icon: Newspaper },
-    { id: 4, name: "bares", icon: Beer },
-    { id: 5, name: "beleza", icon: Scissors },
-    { id: 6, name: "compras", icon: ShoppingBag },
-    { id: 7, name: "cuidados pessoais", icon: Scissors },
-    { id: 8, name: "delivery", icon: Bike },
-    { id: 9, name: "educação", icon: GraduationCap },
-    { id: 10, name: "empréstimos", icon: PiggyBank },
-    { id: 11, name: "lazer e hobbies", icon: Gamepad2 },
-    { id: 12, name: "loteria e apostas", icon: Stars },
-    { id: 13, name: "mercado", icon: ShoppingCart },
-    { id: 14, name: "moradia", icon: Home },
-    { id: 15, name: "outros", icon: CircleDollarSign },
-    { id: 16, name: "pagamentos", icon: CreditCard },
-    { id: 17, name: "presentes", icon: Gift },
-    { id: 18, name: "restaurantes", icon: Coffee },
-    { id: 19, name: "roupas", icon: Shirt },
-    { id: 20, name: "saúde", icon: Heart },
-    { id: 21, name: "terceiros", icon: Users },
-    { id: 22, name: "trabalho", icon: Briefcase },
-    { id: 23, name: "transporte", icon: Car },
-    { id: 24, name: "viagem", icon: Plane },
-  ];
-
   const logos = [
     { file: "99Pay.png", name: "99Pay" },
     { file: "alelo.png", name: "Alelo" },
@@ -138,8 +66,6 @@ export default function UseOptions() {
   ];
 
   return {
-    categoriasDespesa,
-    categoriasReceita,
     logos,
     bandeiras,
   };

@@ -34,7 +34,6 @@ export default function CreateBills({
 }) {
   const {
     loading,
-    categoriasDespesa,
     handleSubmit,
     setStatusPagamento,
     showRecorrencia,

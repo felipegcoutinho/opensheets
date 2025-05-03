@@ -20,10 +20,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
-import { Check, Ellipsis, RefreshCw } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import Image from "next/image";
 import DeleteBills from "./modal/delete-bills";
 import UpdateBills from "./modal/update-bills";
+import UseStyles from "@/hooks/use-styles";
 
 export default function TableBills({
   getBillsMap,
@@ -31,6 +32,8 @@ export default function TableBills({
   getCategorias,
 }) {
   const { DateFormat } = UseDates();
+
+  const { getResponsavelClass, getConditionIcon } = UseStyles();
 
   return (
     <Card className="mt-4">
@@ -40,9 +43,10 @@ export default function TableBills({
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow className="border-b">
-              <TableHead>Descrição</TableHead>
+            <TableRow>
+              <TableHead></TableHead>
               <TableHead>Data de Vencimento</TableHead>
+              <TableHead>Descrição</TableHead>
               <TableHead>Valor</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Responsável</TableHead>
@@ -64,12 +68,24 @@ export default function TableBills({
                       height={30}
                       alt={"Logo do cartão"}
                     />
-                    <p className="text-sm font-semibold">{item.descricao}</p>
                   </TableCell>
-                  <TableCell>{DateFormat(item.dt_vencimento)}</TableCell>
+
+                  <TableCell>
+                    <span className="text-muted-foreground">
+                      {DateFormat(item.dt_vencimento)}
+                    </span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="font-bold capitalize">
+                      {item.descricao}
+                    </span>
+                  </TableCell>
+
                   <TableCell>
                     <MoneyValues value={item.valor} />
                   </TableCell>
+
                   <TableCell>
                     <BillPaymentDialog
                       descricao={item.descricao}
@@ -78,9 +94,10 @@ export default function TableBills({
                       status_pagamento={item.status_pagamento}
                     />
                   </TableCell>
+
                   <TableCell>
                     <span
-                      className={` ${item.responsavel === "você" ? "text-blue-600" : "text-orange-500"}`}
+                      className={`${getResponsavelClass(item.responsavel)}`}
                     >
                       {item.responsavel}
                     </span>
@@ -88,18 +105,14 @@ export default function TableBills({
 
                   <TableCell>
                     <span className="flex items-center gap-1">
-                      {item.condicao === "recorrente" && (
-                        <RefreshCw size={12} />
-                      )}
-                      {item.condicao === "vista" && <Check size={12} />}
-
-                      <span className="capitalize">{item.condicao}</span>
+                      {getConditionIcon(item.condicao)}
+                      <span>{item.condicao}</span>
                     </span>
                   </TableCell>
 
                   <TableCell>{item.categorias?.nome}</TableCell>
 
-                  <TableCell className="flex gap-2">
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
@@ -110,6 +123,7 @@ export default function TableBills({
                           <span className="sr-only">Open menu</span>
                         </Button>
                       </DropdownMenuTrigger>
+
                       <DropdownMenuContent align="end" className="w-[160px]">
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                           <UpdateBills
@@ -119,7 +133,6 @@ export default function TableBills({
                             itemDtVencimento={item.dt_vencimento}
                             itemStatusPagamento={item.status_pagamento}
                             itemResponsavel={item.responsavel}
-                            itemCategoria={item.categoria}
                             itemValor={item.valor}
                             itemDtPagamento={item.dt_pagamento}
                             itemAnotacao={item.anotacao}
