@@ -29,7 +29,7 @@ export default function UpdateNotes({
   itemPeriodo,
   itemAnotacao,
 }) {
-  const { loading, handleUpdate, isOpen, setIsOpen } = Utils();
+  const { updateLoading, handleUpdate, isOpen, setIsOpen } = Utils();
 
   const { getMonthOptions } = UseDates();
 
@@ -46,7 +46,7 @@ export default function UpdateNotes({
             <DialogTitle>Editar Anotação</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleUpdate}>
+          <form action={handleUpdate}>
             <input type="hidden" name="id" value={itemId} />
 
             <div className="mb-1 flex w-full gap-2">
@@ -88,7 +88,7 @@ export default function UpdateNotes({
                 <Label>Anotação</Label>
                 <Textarea
                   maxLength={512}
-                  className="h-64"
+                  className="h-52 border-none bg-amber-100"
                   defaultValue={itemAnotacao}
                   name="anotacao"
                   placeholder="Anotação"
@@ -96,14 +96,23 @@ export default function UpdateNotes({
               </div>
             </div>
 
-            <DialogFooter className="mt-4 flex gap-2">
+            <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
               <DialogClose asChild>
-                <Button className="w-1/2" type="button" variant="secondary">
+                <Button
+                  className="w-full sm:w-1/2"
+                  type="button"
+                  variant="secondary"
+                >
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button className="w-1/2" type="submit" disabled={loading}>
-                {loading ? "Atualizando..." : "Atualizar"}
+
+              <Button
+                className="w-full sm:w-1/2"
+                type="submit"
+                disabled={updateLoading}
+              >
+                {updateLoading ? "Atualizando..." : "Atualizar"}
               </Button>
             </DialogFooter>
           </form>

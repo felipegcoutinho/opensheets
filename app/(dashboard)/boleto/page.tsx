@@ -2,12 +2,12 @@ import { getBills } from "@/app/services/boletos";
 import { getNewCategorias } from "@/app/services/categorias";
 import { getAccount } from "@/app/services/contas";
 import { Button } from "@/components/ui/button";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import CreateBills from "./modal/create-bills";
 import TableBills from "./table-bills";
 
 async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const getBillsMap = await getBills(month);
   const getAccountMap = await getAccount();

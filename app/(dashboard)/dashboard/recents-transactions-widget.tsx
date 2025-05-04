@@ -24,7 +24,7 @@ function RecentesTransactions({ transactions }) {
           <div className="flex items-center gap-2">
             <Image
               src={`/logos/${getLogo(item)}`}
-              className="rounded-full"
+              className="rounded-full border shadow-sm transition-transform hover:scale-105"
               width={28}
               height={28}
               alt="Logo do cartão"

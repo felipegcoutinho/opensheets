@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import confetti from "canvas-confetti";
-import { CheckCircle2, CreditCard } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import Image from "next/image";
 import { useTransition } from "react";
 
@@ -55,27 +55,28 @@ export default function BillPaymentDialog({
             <CreditCard className="h-5 w-5" />
             Confirmação de Pagamento
           </DialogTitle>
+
           <DialogDescription asChild>
-            <div className="space-y-4 pt-4">
-              <div className="flex flex-col items-center gap-2 text-base">
+            <div className="space-y-4 pt-4 text-center">
+              <div className="flex flex-col items-center gap-2">
                 <span>Você está pagando o boleto de:</span>
                 <Image
                   src="/logos/boleto.svg"
                   className="dark:invert dark:filter"
                   width={40}
                   height={40}
-                  alt="Logo do cartão"
+                  alt="Logo do boleto"
                   quality={100}
                 />
-                <span className="text-foreground font-medium">{descricao}</span>
+                <span className="font-bold">{descricao}</span>
               </div>
 
-              <div className="rounded-lg p-4">
+              <div className="border-t pt-4">
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-muted-foreground text-sm">
                     Valor Total
                   </span>
-                  <span className="text-foreground text-2xl font-semibold">
+                  <span className="text-2xl font-semibold">
                     <MoneyValues value={valor} />
                   </span>
                 </div>
@@ -84,30 +85,23 @@ export default function BillPaymentDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="gap-3 sm:gap-0">
+        <DialogFooter className="flex flex-col gap-2 sm:flex-row">
           <DialogClose asChild>
-            <Button variant="outline" className="flex-1" type="button">
+            <Button variant="outline" className="w-full sm:w-1/2" type="button">
               Cancelar
             </Button>
           </DialogClose>
 
-          <form className="flex-1" onSubmit={handlePaymentBills}>
+          <form className="w-full sm:w-1/2" onSubmit={handlePaymentBills}>
             <input type="hidden" name="status_pagamento" defaultValue="pago" />
-            <Button
-              className="w-full bg-green-500 hover:bg-green-600 disabled:bg-green-500/50"
-              type="submit"
-              disabled={isPending}
-            >
+            <Button className="w-full" type="submit" disabled={isPending}>
               {isPending ? (
                 <>
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   <span className="ml-2">Processando...</span>
                 </>
               ) : (
-                <>
-                  <CheckCircle2 className="mr-2 h-4 w-4" />
-                  <span>Confirmar Pagamento</span>
-                </>
+                <span>Pagar</span>
               )}
             </Button>
           </form>

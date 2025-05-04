@@ -1,7 +1,7 @@
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { ChartSummary } from "@/components/chart-summary";
 import Widget from "@/components/widget";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
 import { getNotesStats } from "@/services/anotacoes";
 import { getBillsStats } from "@/services/boletos";
@@ -18,7 +18,7 @@ import StatsWidget from "./stats-widget";
 import useUtils from "./utils";
 
 export default async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const { getLastSixMonths } = await UseDates();
 
@@ -52,7 +52,6 @@ export default async function page(props) {
   } = await useUtils(month);
 
   const categoryData = await getTotalsCategory(month);
-
   const lancamentos = await getTransactionsStats(month);
   const boletos = await getBillsStats(month);
   const cartoes = await getCardsStats(month);

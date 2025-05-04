@@ -43,8 +43,6 @@ export default function UpdateTransactions({
   getCategorias,
 }) {
   const {
-    categoriasReceita,
-    categoriasDespesa,
     isOpen,
     setIsOpen,
     handleUpdate,
@@ -52,6 +50,7 @@ export default function UpdateTransactions({
     setImage,
     removingImage,
     handleRemoveImage,
+    loading,
   } = Utils();
 
   const [imagePreview, setImagePreview] = useState(itemImagemURL);
@@ -254,15 +253,23 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          <DialogFooter className="mt-4 flex gap-2">
+          <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
-              <Button className="w-1/2" type="button" variant="secondary">
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
                 Cancelar
               </Button>
             </DialogClose>
 
-            <Button className="w-1/2" type="submit">
-              Salvar
+            <Button
+              className="w-full sm:w-1/2"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

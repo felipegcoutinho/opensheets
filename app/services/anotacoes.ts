@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getNotesStats(month) {
+export async function getNotesStats(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -15,7 +15,7 @@ export async function getNotesStats(month) {
   return total;
 }
 
-export async function getNotes(month) {
+export async function getNotes(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase

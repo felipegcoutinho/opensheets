@@ -1,11 +1,11 @@
 import { getResponsavelBillList } from "@/app/services/boletos";
 import { getResponsavelTransactionList } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import UsersCard from "./users-card";
 
 async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const TransactionList = await getResponsavelTransactionList(month);
   const BillList = await getResponsavelBillList(month);

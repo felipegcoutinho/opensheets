@@ -50,7 +50,7 @@ export default function UsersCard({
                       <Image
                         quality={100}
                         src={`/logos/${data.logo_image}`}
-                        className="rounded-full shadow-lg"
+                        className="rounded-full border shadow-sm transition-transform hover:scale-105"
                         width={20}
                         height={20}
                         alt="Logo do cartão"
@@ -60,7 +60,7 @@ export default function UsersCard({
                         <Image
                           quality={100}
                           src="/logos/pix.png"
-                          className="rounded-full shadow-lg"
+                          className="rounded-full border shadow-sm transition-transform hover:scale-105"
                           width={20}
                           height={20}
                           alt="Logo do Pix"
@@ -124,7 +124,7 @@ export default function UsersCard({
           </ul>
         </div>
 
-        <div className="border-muted my-2 w-full border-2 dark:border-neutral-700"></div>
+        <div className="border-muted my-2 w-full border dark:border-neutral-700"></div>
 
         <div className="mt-4">
           <li className="flex items-center justify-between">

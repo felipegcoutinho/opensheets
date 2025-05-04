@@ -39,7 +39,7 @@ export default function DeleteButton({
           <form className="w-1/2" onSubmit={handleDelete}>
             <Button
               variant="destructive"
-              className="w-full"
+              className="w-full cursor-pointer"
               type="submit"
               disabled={loading}
             >

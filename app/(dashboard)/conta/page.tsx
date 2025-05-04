@@ -8,14 +8,14 @@ import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import Image from "next/image";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
 async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
   const getAccountMap = await getAccount();
 
   const accountData = await Promise.all(
@@ -43,12 +43,11 @@ async function page(props) {
                     <Image
                       quality={100}
                       src={`/logos/${item.logo_image}`}
-                      className="rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
-                      width={45}
-                      height={45}
+                      className="rounded-full border shadow-sm transition-transform hover:scale-105"
+                      width={54}
+                      height={54}
                       alt="Logo da conta"
                     />
-
                     {item.descricao}
                   </div>
                 </CardTitle>

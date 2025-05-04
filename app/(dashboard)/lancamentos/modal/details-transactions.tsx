@@ -55,7 +55,9 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>Detalhes</DialogTrigger>
+      <DialogTrigger>
+        <span className="cursor-pointer">Detalhes</span>
+      </DialogTrigger>
 
       <DialogContent className="p-0">
         <Card className="space-y-4 p-1">
@@ -68,64 +70,67 @@ export default function DetailsTransactions({
             </div>
           </CardHeader>
           <CardContent className="py-0 text-sm">
-            <div className="grid gap-3">
-              <div className="font-semibold">Detalhes da Transação</div>
+            <div className="grid gap-2">
               <ul className="grid gap-3">
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Descrição</span>
-                  <span>{itemDescricao}</span>
+                  <span className="capitalize">{itemDescricao}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Período</span>
-                  <span>{MonthUppercase(itemPeriodo)}</span>
+                  <span className="capitalize">
+                    {MonthUppercase(itemPeriodo)}
+                  </span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
                     Forma de Pagamento
                   </span>
-                  <span>{itemFormaPagamento}</span>
+                  <span className="capitalize">{itemFormaPagamento}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
                     {itemCartao ? "Cartão" : "Conta"}
                   </span>
-                  <span>{itemCartao ?? itemConta}</span>
+                  <span className="capitalize">{itemCartao ?? itemConta}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Categoria</span>
-                  <span>{itemCategoriaId}</span>
+                  <span className="capitalize">{itemCategoriaId}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
                     Tipo de Transação
                   </span>
-                  <span>{itemTipoTransacao}</span>
+                  <span className="capitalize">{itemTipoTransacao}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Condição</span>
-                  <span>{itemCondicao}</span>
+                  <span className="capitalize">{itemCondicao}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
-                  <span>{itemResponsavel}</span>
+                  <span className="capitalize">{itemResponsavel}</span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Status</span>
-                  <span>{itemPaid ? "pago" : "pendente"}</span>
+                  <span className="capitalize">
+                    {itemPaid ? "pago" : "pendente"}
+                  </span>
                 </li>
 
                 {itemNotas && (
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Notas</span>
-                    <span>{itemNotas}</span>
+                    <span className="capitalize">{itemNotas}</span>
                   </li>
                 )}
 
@@ -147,6 +152,7 @@ export default function DetailsTransactions({
                 )}
 
                 <Separator className="my-2" />
+
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
                     Valor {itemCondicao === "parcelado" && "da Parcela"}
@@ -170,7 +176,9 @@ export default function DetailsTransactions({
                     <span className="text-muted-foreground">
                       Quantidade de Recorrências
                     </span>
-                    <span>{itemQtdeRecorrencia} meses</span>
+                    <span className="capitalize">
+                      {itemQtdeRecorrencia} meses
+                    </span>
                   </li>
                 )}
                 {itemCondicao !== "parcelado" && <Separator className="my-2" />}
@@ -188,7 +196,7 @@ export default function DetailsTransactions({
             </div>
             <DialogFooter className="mb-4">
               <DialogClose asChild>
-                <Button className="w-full" type="button" variant="secondary">
+                <Button className="w-full" type="button">
                   Cancelar
                 </Button>
               </DialogClose>

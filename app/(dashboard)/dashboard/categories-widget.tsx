@@ -32,7 +32,7 @@ export default function CategoryWidget({
   const sortedData = filteredData.sort((a, b) => b.total - a.total);
 
   if (!data || data.length === 0) {
-    return <EmptyCard />;
+    return <EmptyCard height={100} width={100} />;
   }
 
   return (

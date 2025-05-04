@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getExpenseBill(month) {
+export async function getExpenseBill(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -12,7 +12,7 @@ export async function getExpenseBill(month) {
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getExpenseBillPaid(month) {
+export async function getExpenseBillPaid(month: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("boletos")
@@ -23,7 +23,7 @@ export async function getExpenseBillPaid(month) {
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getBillsStats(month) {
+export async function getBillsStats(month: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("boletos")
@@ -38,7 +38,7 @@ export async function getBillsStats(month) {
   return total;
 }
 
-export async function getBillsByResponsavel(month) {
+export async function getBillsByResponsavel(month: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("boletos")
@@ -51,7 +51,7 @@ export async function getBillsByResponsavel(month) {
   return data;
 }
 
-export async function getSumBillsExpensePaid(month) {
+export async function getSumBillsExpensePaid(month: string) {
   const supabase = createClient();
   const { error, data } = await supabase
     .from("boletos")
@@ -64,7 +64,7 @@ export async function getSumBillsExpensePaid(month) {
 }
 
 // Busca a lista de boletos salvos
-export async function getBills(month) {
+export async function getBills(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -84,7 +84,7 @@ export async function getBills(month) {
   return data;
 }
 
-export async function getResponsavelBillList(month) {
+export async function getResponsavelBillList(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase

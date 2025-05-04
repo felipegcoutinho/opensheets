@@ -20,8 +20,6 @@ function Home({
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
 
-  console.log("analysis", analysis);
-
   const handleAnalyze = async () => {
     setLoading(true);
     setAnalysis(null);

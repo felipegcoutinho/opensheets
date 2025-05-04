@@ -9,7 +9,6 @@ export default function PrivacySwitch() {
   const { estado, setEstado } = usePrivacy();
   const [mounted, setMounted] = useState(false);
 
-  // Componente só deve ser renderizado após montagem para evitar problemas de hidratação
   useEffect(() => {
     setMounted(true);
   }, []);

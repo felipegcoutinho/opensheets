@@ -13,15 +13,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
-import { ArrowLeftIcon } from "lucide-react";
-import Link from "next/link";
 
 async function page(props) {
   const params = await props.params;
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const { DateFormat, currentMonthName, currentYear } = UseDates();
 
@@ -41,16 +39,8 @@ async function page(props) {
 
   return (
     <div className="mb-4 space-y-6">
-      {/* Botão Voltar */}
-      <Button variant="ghost" className="mt-4">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <ArrowLeftIcon size={16} />
-          <p>Voltar</p>
-        </Link>
-      </Button>
-
       {/* Banner / Resumo */}
-      <Card>
+      <Card className="mt-4">
         <CardHeader>
           <CardTitle className="text-xl capitalize">{categoria}</CardTitle>
           <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
@@ -66,6 +56,7 @@ async function page(props) {
             </span>
           </div>
         </CardHeader>
+
         <CardContent>
           <div className="text-2xl font-bold">
             <MoneyValues value={valorTotal} />
@@ -115,7 +106,7 @@ async function page(props) {
                 </TableHeader>
                 <TableBody>
                   {transacoes?.map((item) => (
-                    <TableRow key={item.id}>
+                    <TableRow key={item.id} className="whitespace-nowrap">
                       <TableCell className="text-muted-foreground">
                         {DateFormat(item.data_compra)}
                       </TableCell>

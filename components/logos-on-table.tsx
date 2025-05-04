@@ -6,9 +6,9 @@ export function LogosOnTable({ descricao, logo }) {
       <Image
         quality={100}
         src={`/logos/${logo}`}
-        className="rounded-full"
-        width={30}
-        height={30}
+        className="rounded-full border shadow-sm transition-transform hover:scale-105"
+        width={32}
+        height={32}
         alt="Logo do cartão"
       />
       <p>{descricao}</p>

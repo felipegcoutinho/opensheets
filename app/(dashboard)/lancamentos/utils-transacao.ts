@@ -4,14 +4,12 @@ import {
   removeImage,
   updateTransaction,
 } from "@/actions/transactions";
-import UseOptions from "@/hooks/use-options";
 import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Utils() {
-  const { categoriasReceita, categoriasDespesa } = UseOptions();
   const [isOpen, setIsOpen] = useState(false);
   const [isEfetivadoChecked, setIsEfetivadoChecked] = useState(true);
   const [tipoTransacao, setTipoTransacao] = useState("");
@@ -157,8 +155,6 @@ export default function Utils() {
   };
 
   return {
-    categoriasReceita,
-    categoriasDespesa,
     isOpen,
     setIsOpen,
     tipoTransacao,

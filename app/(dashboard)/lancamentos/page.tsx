@@ -2,11 +2,11 @@ import { getCards } from "@/app/services/cartoes";
 import { getNewCategorias } from "@/app/services/categorias";
 import { getAccount } from "@/app/services/contas";
 import { getTransactions } from "@/app/services/transacoes";
-import { getPeriodo } from "@/hooks/periodo";
+import { getMonth } from "@/hooks/get-month";
 import { TableTransaction } from "./table/table-transaction";
 
 export default async function page(props) {
-  const month = await getPeriodo(props);
+  const month = await getMonth(props);
 
   const cartoes = await getCards();
   const contas = await getAccount();
