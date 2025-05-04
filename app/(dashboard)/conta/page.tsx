@@ -43,12 +43,11 @@ async function page(props) {
                     <Image
                       quality={100}
                       src={`/logos/${item.logo_image}`}
-                      className="rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
-                      width={45}
-                      height={45}
+                      className="rounded-full border shadow-sm transition-transform hover:scale-105"
+                      width={54}
+                      height={54}
                       alt="Logo da conta"
                     />
-
                     {item.descricao}
                   </div>
                 </CardTitle>

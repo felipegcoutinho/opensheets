@@ -37,7 +37,7 @@ export default function RootLayout({
 
           <SpeedInsights />
           <Analytics />
-          <Toaster position="top-right" richColors duration={2500} />
+          <Toaster position="top-right" duration={2500} />
           <Script
             defer
             src="https://umami.felipecoutinho.com/script.js"

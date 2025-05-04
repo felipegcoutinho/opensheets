@@ -2,9 +2,9 @@
 import Image from "next/image";
 import MoneyValues from "@/components/money-values";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import RemovePaymentButton from "@/components/remove-payment-button";
+import Ping from "@/components/ping-icon";
 
 export default function CardInfo({ item, cardSum, fatura_status, month }) {
   const isPaga = Array.isArray(fatura_status) && fatura_status.length > 0;
@@ -12,22 +12,32 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
   return (
     <Card className="w-full p-6">
       {/* Cabeçalho */}
-      <div className="mb-4 flex items-start justify-between">
+      <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Image
             src={`/logos/${item.logo_image}`}
             alt={`Logo do cartão ${item.descricao}`}
-            width={60}
-            height={60}
-            className="rounded-full"
+            width={54}
+            height={54}
+            className="rounded-full border shadow-sm transition-transform hover:scale-105"
           />
-          <div className="flex flex-col">
+
+          <div className="flex flex-col items-start">
             <span className="text-lg font-bold">{item.descricao}</span>
-            <Badge className="mt-1 rounded-full" variant="secondary">
-              FATURA ATUAL
-            </Badge>
+            <span className="w-96 truncate text-sm italic">
+              {item.anotacao}
+            </span>
           </div>
         </div>
+        <Image
+          quality={100}
+          src={`/bandeiras/${item.bandeira}`}
+          width={60}
+          height={60}
+          className="rounded-lg border"
+          alt="Bandeira do cartão"
+          priority
+        />
       </div>
 
       {/* Dados principais */}
@@ -62,18 +72,13 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
           </p>
           <span className="font-bold">{item.contas.descricao}</span>
 
-          <p className="text-muted-foreground mt-2 text-xs uppercase">
-            Bandeira
-          </p>
-          <Image
-            quality={100}
-            src={`/bandeiras/${item.bandeira}`}
-            width={40}
-            height={40}
-            className="rounded-full"
-            alt="Bandeira do cartão"
-            priority
-          />
+          <p className="text-muted-foreground mt-2 text-xs uppercase">Status</p>
+          <span className="flex items-center gap-1">
+            <Ping
+              color={item.status === "ativo" ? "bg-green-500" : "bg-zinc-500"}
+            />
+            <span className="font-bold capitalize">{item.status}</span>
+          </span>
         </Card>
 
         <Card className="flex flex-col items-start justify-center p-4">

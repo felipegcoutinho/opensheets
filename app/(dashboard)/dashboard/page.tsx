@@ -52,7 +52,6 @@ export default async function page(props) {
   } = await useUtils(month);
 
   const categoryData = await getTotalsCategory(month);
-
   const lancamentos = await getTransactionsStats(month);
   const boletos = await getBillsStats(month);
   const cartoes = await getCardsStats(month);

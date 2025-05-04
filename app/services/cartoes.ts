@@ -62,7 +62,7 @@ export async function getCardDetails(id) {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, dt_fechamento, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
     )
     .eq("id", id);
 

@@ -1,40 +1,12 @@
 "use client";
 
 import { UseDates } from "@/hooks/use-dates";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useMemo, useState, useTransition } from "react";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
-
-const NavigationButton = React.memo(({ onClick, direction, disabled }) => {
-  const Icon = direction === "left" ? ChevronLeft : ChevronRight;
-  return (
-    <button
-      onClick={onClick}
-      className="text-primary cursor-pointer focus:outline-hidden disabled:opacity-50"
-      disabled={disabled}
-    >
-      <Icon size={16} />
-    </button>
-  );
-});
-
-const ReturnButton = React.memo(({ onClick, disabled }) => (
-  <Button
-    className="ml-2 cursor-pointer rounded disabled:opacity-50"
-    size={"sm"}
-    onClick={onClick}
-    disabled={disabled}
-    variant={"warning"}
-  >
-    <span className="px-2">Retornar ao Mês Atual</span>
-  </Button>
-));
-
-const LoadingSpinner = () => (
-  <Loader2 className="text-primary h-4 w-4 animate-spin dark:text-blue-200" />
-);
+import { useCallback, useMemo, useState, useTransition } from "react";
+import { Card } from "../ui/card";
+import NavigationButton from "./nav-button";
+import ReturnButton from "./return-button";
+import LoadingSpinner from "./loading-spinner";
 
 export default function MonthPicker() {
   const { optionsMeses } = UseDates();
@@ -72,7 +44,7 @@ export default function MonthPicker() {
   );
 
   const navigateToMonth = useCallback(
-    (newMonth, newYear) => {
+    (newMonth: string, newYear: string | number) => {
       setIsLoading(true);
       startTransition(() => {
         replace(`${pathname}?periodo=${newMonth}-${newYear}`);

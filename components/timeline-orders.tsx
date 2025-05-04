@@ -14,7 +14,6 @@ export default function Timeline({
     <div className="rounded-lg px-4">
       <div className="relative">
         {/* Horizontal line */}
-
         <Separator className="bg-primary absolute top-2 left-0 w-full" />
 
         <div className="flex w-full justify-between">

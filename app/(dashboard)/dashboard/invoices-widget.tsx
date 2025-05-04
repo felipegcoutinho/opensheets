@@ -22,7 +22,7 @@ export default async function InvoiceWidget({ data, month }) {
         <div className="flex items-center gap-2">
           <Image
             src={`/logos/${item.logo_image}`}
-            className="rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+            className="rounded-full border shadow-sm transition-transform hover:scale-105"
             width={40}
             height={40}
             alt="Logo do cartão"
