@@ -1,18 +1,16 @@
 "use client";
-
-import DeleteButton from "@/components/delete-button";
 import CategoryHelper from "../category-helper";
+import DeleteButtonCategoria from "@/components/delete-button-categoria";
 
-export default function DeleteCategory({ itemId }) {
-  const { handleDelete, isOpen, setIsOpen, deleteLoading, isPending } =
-    CategoryHelper();
+export default function DeleteCategory({ itemNome, itemId }) {
+  const { isOpen, setIsOpen, handleDelete, isPending } = CategoryHelper();
 
   return (
-    <DeleteButton
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      handleDelete={handleDelete(itemId)}
-      loading={isPending}
+    <DeleteButtonCategoria
+      id={itemId}
+      descricao={itemNome}
+      handleDelete={handleDelete}
+      isPending={isPending}
     />
   );
 }

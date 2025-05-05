@@ -20,7 +20,12 @@ export default function DeleteButton({
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="text-red-500">Remover</DialogTrigger>
+      <DialogTrigger
+        onClick={(e) => e.stopPropagation()}
+        className="text-red-500"
+      >
+        Remover
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
