@@ -23,6 +23,8 @@ export async function getNotes(month: string) {
     .select(`id, descricao, periodo, anotacao`)
     .eq("periodo", month)
     .order("descricao", { ascending: true });
+
   if (error) throw error;
+
   return data;
 }

@@ -73,7 +73,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
       <CardFooter className="flex justify-between px-6 py-1">
         <Button className="p-0" variant="link">
           <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>
-            fatura
+            ver fatura
           </Link>
         </Button>
 
