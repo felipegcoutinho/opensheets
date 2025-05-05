@@ -24,15 +24,30 @@ export async function addCategories(prevState: unknown, formData: FormData) {
   revalidatePath("/categorias");
 }
 
-export async function deleteCategories(prevState: unknown, formData: FormData) {
-  const supabase = createClient();
+// export async function deleteCategories(prevState: unknown, formData: FormData) {
+//   const supabase = createClient();
 
-  const excluir = formData.get("excluir");
+//   const excluir = formData.get("excluir");
 
-  const { error } = await supabase
-    .from("categorias")
-    .delete()
-    .eq("id", excluir);
+//   const { error } = await supabase
+//     .from("categorias")
+//     .delete()
+//     .eq("id", excluir);
+
+//   if (error) {
+//     console.error("Erro ao excluir categoria:", error);
+//     return { message: "Erro ao excluir categoria!" };
+//   }
+
+//   return { message: "Categoria excluída com sucesso!" };
+
+//   revalidatePath("/categorias");
+// }
+
+export async function deleteCategories(id: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("categorias").delete().eq("id", id);
 
   if (error) {
     console.error("Erro ao excluir categoria:", error);
@@ -41,7 +56,7 @@ export async function deleteCategories(prevState: unknown, formData: FormData) {
 
   return { message: "Categoria excluída com sucesso!" };
 
-  revalidatePath("/categorias");
+  redirect("/categorias");
 }
 
 export async function updateCategories(prevState: unknown, formData: FormData) {

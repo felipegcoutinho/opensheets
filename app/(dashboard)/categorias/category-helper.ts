@@ -14,10 +14,6 @@ export default function CategoryHelper() {
     updateCategories,
     null,
   );
-  const [deleteState, deleteFormAction, deleteLoading] = useActionState(
-    deleteCategories,
-    null,
-  );
 
   const handleSubmit = async (formData) => {
     try {
@@ -41,13 +37,26 @@ export default function CategoryHelper() {
     }
   };
 
-  const handleDelete = async (itemId) => {
+  // const handleDelete = async (itemId) => {
+  //   startTransition(async () => {
+  //     try {
+  //       const formData = new FormData();
+  //       formData.append("excluir", itemId);
+  //       await deleteFormAction(formData);
+  //       await new Promise((resolve) => setTimeout(resolve, 1000));
+  //       toast.success("Categoria removida com sucesso!");
+  //       setIsOpen(false);
+  //     } catch (error) {
+  //       toast.error("Erro ao remover categoria.");
+  //     }
+  //   });
+  // };
+
+  const handleDelete = async (id) => {
     startTransition(async () => {
       try {
-        const formData = new FormData();
-        formData.append("excluir", itemId);
-        await deleteFormAction(formData);
         await new Promise((resolve) => setTimeout(resolve, 1000));
+        await deleteCategories(id);
         toast.success("Categoria removida com sucesso!");
         setIsOpen(false);
       } catch (error) {
@@ -61,11 +70,9 @@ export default function CategoryHelper() {
     setIsOpen,
     handleSubmit,
     handleUpdate,
-    handleDelete,
     loading,
     updateLoading,
     state,
-    deleteLoading,
     isPending,
   };
 }
