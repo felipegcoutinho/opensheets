@@ -6,7 +6,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import { openRunde } from "./fonts/font";
 import "./globals.css";
-import { ReactScan } from "@/components/scan";
 
 export const metadata = {
   title: "opensheets",
@@ -25,10 +24,10 @@ export default function RootLayout({
       className={`${openRunde.className} `}
       suppressHydrationWarning
     >
-      <head>
+      {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head>
-      <ReactScan />
+      <ReactScan /> */}
       <body>
         <ThemeProvider
           attribute="class"
