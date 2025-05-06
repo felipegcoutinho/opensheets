@@ -7,18 +7,28 @@ import { useEffect, useState } from "react";
 
 type Props = {
   value: number;
-  animated?: boolean; // NOVO: controle de animação
+  animated?: boolean;
 };
 
 function MoneyValues({ value, animated = true }: Props) {
   const { estado } = usePrivacy();
-  const [displayValue, setDisplayValue] = useState(animated ? 0 : value);
+
+  const isValidNumber =
+    typeof value === "number" && !isNaN(value) && isFinite(value);
+  const sanitizedValue = isValidNumber ? value : 0;
+
+  const [displayValue, setDisplayValue] = useState(
+    animated ? 0 : sanitizedValue,
+  );
   const motionValue = useMotionValue(0);
 
   useEffect(() => {
-    if (!animated) return; // Se animação for desativada, não faz nada
+    if (!animated || !isValidNumber) {
+      setDisplayValue(sanitizedValue); // garante que mesmo sem animação o valor esteja correto
+      return;
+    }
 
-    const controls = animate(motionValue, value, {
+    const controls = animate(motionValue, sanitizedValue, {
       duration: 0.2,
       ease: "easeOut",
       onUpdate: (latest) => {
@@ -26,8 +36,8 @@ function MoneyValues({ value, animated = true }: Props) {
       },
     });
 
-    return controls.stop;
-  }, [animated, value, motionValue]);
+    return () => controls.stop();
+  }, [animated, sanitizedValue, motionValue, isValidNumber]);
 
   return (
     <span
@@ -36,7 +46,7 @@ function MoneyValues({ value, animated = true }: Props) {
         "opacity-80 blur-xl transition-all duration-300 hover:blur-none"
       }`}
     >
-      {(animated ? displayValue : value).toLocaleString("pt-BR", {
+      {displayValue.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
       })}
