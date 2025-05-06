@@ -197,7 +197,7 @@ export default function DetailsTransactions({
             <DialogFooter className="mb-4">
               <DialogClose asChild>
                 <Button className="w-full" type="button">
-                  Cancelar
+                  Entendi
                 </Button>
               </DialogClose>
             </DialogFooter>
