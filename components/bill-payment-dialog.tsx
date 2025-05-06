@@ -56,13 +56,13 @@ export default function BillPaymentDialog({
             Confirmação de Pagamento
           </DialogTitle>
 
-          <DialogDescription asChild>
+          <DialogDescription className="text-foreground" asChild>
             <div className="space-y-4 pt-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <span>Você está pagando o boleto de:</span>
                 <Image
                   src="/logos/boleto.svg"
-                  className="dark:invert dark:filter"
+                  className="transition-transform hover:scale-105 dark:invert dark:filter"
                   width={40}
                   height={40}
                   alt="Logo do boleto"
@@ -73,9 +73,7 @@ export default function BillPaymentDialog({
 
               <div className="border-t pt-4">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-muted-foreground text-sm">
-                    Valor Total
-                  </span>
+                  <span className="text-sm">Valor Total</span>
                   <span className="text-2xl font-semibold">
                     <MoneyValues value={valor} />
                   </span>

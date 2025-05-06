@@ -1,4 +1,3 @@
-import { deleteAccount } from "@/actions/accounts";
 import { getAccount } from "@/app/services/contas";
 import {
   getSumAccountExpense,
@@ -75,7 +74,7 @@ async function page(props) {
                   itemLogo={item.logo_image}
                 />
 
-                <form action={deleteAccount}>
+                {/* <form action={deleteAccount}>
                   <Button
                     className="p-0"
                     variant="link"
@@ -84,7 +83,7 @@ async function page(props) {
                   >
                     excluir
                   </Button>
-                </form>
+                </form> */}
               </CardFooter>
             </Card>
           ))
