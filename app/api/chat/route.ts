@@ -1,5 +1,5 @@
-import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { generateText } from "ai";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -50,6 +50,7 @@ export async function POST(req: Request) {
       - Foque em ações práticas e sugestões de melhoria.
       - Não faça suposições sobre a situação financeira do usuário.
       - Não inclua informações pessoais ou sensíveis.
+      - Seja crítico e duro, mas construtivo.
     `,
     messages,
   });
