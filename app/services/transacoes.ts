@@ -5,11 +5,12 @@ export async function getIncome(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor, categoria_id!inner(id, nome)") // Fazendo join na tabela de categorias
+    .select("valor, categoria_id!inner(id, nome, usado_para_calculos)")
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
     .eq("responsavel", "você")
-    .neq("categoria_id.nome", "saldo anterior"); // Correto: agora o filtro é no nome da categoria
+    .eq("categoria_id.usado_para_calculos", true)
+    .neq("categoria_id.nome", "saldo anterior");
 
   if (error) throw error;
 
@@ -21,10 +22,11 @@ export async function getExpense(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, categoria_id!inner(id, usado_para_calculos)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("categoria_id.usado_para_calculos", true);
 
   if (error) throw error;
 

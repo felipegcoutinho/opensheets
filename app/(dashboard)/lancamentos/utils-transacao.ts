@@ -11,7 +11,6 @@ import { toast } from "sonner";
 
 export default function Utils() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isEfetivadoChecked, setIsEfetivadoChecked] = useState(true);
   const [tipoTransacao, setTipoTransacao] = useState("");
   const [quantidadeParcelas, setQuantidadeParcelas] = useState("");
   const [showParcelas, setShowParcelas] = useState(false);
@@ -150,7 +149,6 @@ export default function Utils() {
     setShowCartao(false);
     setShowParcelas(false);
     setShowRecorrencia(false);
-    setIsEfetivadoChecked(true);
     setIsPaid(true);
   };
 
@@ -177,8 +175,6 @@ export default function Utils() {
     loading,
     setLoading,
     handleUpdate,
-    isEfetivadoChecked,
-    setIsEfetivadoChecked,
     isDividedChecked,
     setIsDividedChecked,
     handleDialogClose,

@@ -5,21 +5,28 @@ export async function getExpenseBill(month: string) {
 
   const { data, error } = await supabase
     .from("boletos")
-    .select("valor")
+    .select("valor, categoria_id!inner(id, usado_para_calculos)")
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("categoria_id.usado_para_calculos", true);
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
 export async function getExpenseBillPaid(month: string) {
   const supabase = createClient();
+
   const { data, error } = await supabase
     .from("boletos")
-    .select("valor")
+    .select("valor, categoria_id!inner(id, usado_para_calculos)")
     .eq("periodo", month)
-    .eq("status_pagamento", "pago");
+    .eq("status_pagamento", "pago")
+    .eq("categoria_id.usado_para_calculos", true);
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
@@ -53,13 +60,16 @@ export async function getBillsByResponsavel(month: string) {
 
 export async function getSumBillsExpensePaid(month: string) {
   const supabase = createClient();
+  
   const { error, data } = await supabase
     .from("boletos")
     .select("valor")
     .eq("periodo", month)
     .eq("status_pagamento", "pago")
     .eq("responsavel", "você");
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 export default function CategoryHelper() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isUsedForCalculations, setIsUsedForCalculations] = useState(true);
   const [isPending, startTransition] = useTransition();
   const [state, formAction, loading] = useActionState(addCategories, null);
   const [updateState, updateFormAction, updateLoading] = useActionState(
@@ -17,7 +18,9 @@ export default function CategoryHelper() {
 
   const handleSubmit = async (formData) => {
     try {
+      formData.append("usado_para_calculos", isUsedForCalculations);
       await formAction(formData);
+
       await new Promise((resolve) => setTimeout(resolve, 1000));
       toast.success("Categoria adicionada com sucesso");
       setIsOpen(false);
@@ -28,6 +31,7 @@ export default function CategoryHelper() {
 
   const handleUpdate = async (formData) => {
     try {
+      formData.append("usado_para_calculos", isUsedForCalculations);
       await updateFormAction(formData);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       toast.info("Categoria atualizada com sucesso");
@@ -55,8 +59,8 @@ export default function CategoryHelper() {
   const handleDelete = async (id) => {
     startTransition(async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
         await deleteCategories(id);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         toast.success("Categoria removida com sucesso!");
         setIsOpen(false);
       } catch (error) {
@@ -70,9 +74,12 @@ export default function CategoryHelper() {
     setIsOpen,
     handleSubmit,
     handleUpdate,
+    handleDelete,
     loading,
     updateLoading,
     state,
     isPending,
+    isUsedForCalculations,
+    setIsUsedForCalculations,
   };
 }

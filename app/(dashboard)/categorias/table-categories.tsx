@@ -18,8 +18,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Ellipsis } from "lucide-react";
-import UpdateCategory from "./modal/update-category";
 import DeleteCategory from "./modal/delete-category";
+import UpdateCategory from "./modal/update-category";
 
 export default function TableCategories({ categorias }) {
   return (
@@ -81,6 +81,7 @@ export default function TableCategories({ categorias }) {
                             itemId={item.id}
                             itemNome={item.nome}
                             itemTipoCategoria={item.tipo_categoria}
+                            itemUsadoParaCalculos={item.usado_para_calculos}
                           />
                         </DropdownMenuItem>
 

@@ -1,6 +1,12 @@
 "use client";
 
 import Required from "@/components/required-on-forms";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -25,7 +31,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { ThumbsUp } from "lucide-react";
+import { CheckCircle2Icon } from "lucide-react";
 import Image from "next/image";
 import Utils from "../utils-transacao";
 
@@ -196,7 +202,7 @@ export default function CreateTransactions({
                     name="realizado"
                     className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
                   >
-                    <ThumbsUp strokeWidth={2} className="h-6 w-6" />
+                    <CheckCircle2Icon strokeWidth={2} className="h-6 w-6" />
                   </Toggle>
                 </div>
               )}
@@ -214,6 +220,7 @@ export default function CreateTransactions({
                   name="responsavel"
                   placeholder="Responsável"
                   type="text"
+                  defaultValue={"você"}
                 />
                 <datalist id="responsavel-list">
                   <option value="você" />
@@ -405,23 +412,32 @@ export default function CreateTransactions({
               )}
             </div>
 
-            <div className="w-full">
-              <Label>Anexo</Label>
-              <Input
-                className="border-dotted border-neutral-400"
-                type="file"
-                name="imagem_url"
-                accept="image/*"
-                onChange={(e) => setImage(e.target.files[0])}
-              />
-            </div>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="border-b">
+                  Anexos e Anotações
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="w-full">
+                    <Label>Anexo</Label>
+                    <Input
+                      className="border-muted-foreground border-dotted"
+                      type="file"
+                      name="imagem_url"
+                      accept="image/*"
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </div>
 
-            <div className="mb-1 flex w-full gap-2">
-              <div className="w-full">
-                <Label>Anotação</Label>
-                <Textarea name="anotacao" placeholder="Anotação" />
-              </div>
-            </div>
+                  <div className="mb-1 flex w-full gap-2">
+                    <div className="w-full">
+                      <Label>Anotação</Label>
+                      <Textarea name="anotacao" placeholder="Anotação" />
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </form>
         </div>
 

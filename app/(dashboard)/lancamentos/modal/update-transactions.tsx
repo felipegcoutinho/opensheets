@@ -187,6 +187,7 @@ export default function UpdateTransactions({
 
           <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
             <Label>Marcar lançamento como Pago</Label>
+
             <Toggle
               onPressedChange={() => setIsPaid(!itemPaid)}
               defaultPressed={itemPaid}

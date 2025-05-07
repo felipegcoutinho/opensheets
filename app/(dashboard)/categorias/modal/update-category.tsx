@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -19,14 +20,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Toggle } from "@/components/ui/toggle";
+import { CheckCircle2Icon } from "lucide-react";
+import { useEffect } from "react";
 import CategoryHelper from "../category-helper";
+
+type Props = {
+  itemId: number;
+  itemNome: string;
+  itemTipoCategoria: string;
+  itemUsadoParaCalculos: boolean;
+};
 
 export default function UpdateCategory({
   itemId,
   itemNome,
   itemTipoCategoria,
-}) {
-  const { handleUpdate, updateLoading, isOpen, setIsOpen } = CategoryHelper();
+  itemUsadoParaCalculos,
+}: Props) {
+  const {
+    handleUpdate,
+    updateLoading,
+    isOpen,
+    setIsOpen,
+    isUsedForCalculations,
+    setIsUsedForCalculations,
+  } = CategoryHelper();
+
+  useEffect(() => {
+    setIsUsedForCalculations(itemUsadoParaCalculos);
+  }, [itemUsadoParaCalculos, setIsUsedForCalculations]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -69,6 +92,35 @@ export default function UpdateCategory({
               </SelectContent>
             </Select>
           </div>
+
+          <Card className="p-4">
+            <div className="items-top flex space-x-2">
+              <Toggle
+                onPressedChange={() =>
+                  setIsUsedForCalculations(!itemUsadoParaCalculos)
+                }
+                defaultPressed={itemUsadoParaCalculos}
+                name="usado_para_calculos"
+                id="isUsedForCalculations"
+                className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+              >
+                <CheckCircle2Icon strokeWidth={2} className="h-6 w-6" />
+              </Toggle>
+
+              <div className="grid gap-1.5 leading-none">
+                <Label
+                  className="text-foreground"
+                  htmlFor="isUsedForCalculations"
+                >
+                  Considerar nos cálculos
+                </Label>
+                <p className="text-muted-foreground text-sm">
+                  Se você desmarcar essa opção, essa categoria NÃO será
+                  considerada nos cálculos de receitas e despesas.
+                </p>
+              </div>
+            </div>
+          </Card>
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
