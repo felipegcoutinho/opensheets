@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -20,8 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Toggle } from "@/components/ui/toggle";
-import { CheckCircle2Icon } from "lucide-react";
 import { useEffect } from "react";
 import CategoryHelper from "../category-helper";
 
@@ -93,7 +90,7 @@ export default function UpdateCategory({
             </Select>
           </div>
 
-          <Card className="p-4">
+          {/* <Card className="p-4">
             <div className="items-top flex space-x-2">
               <Toggle
                 onPressedChange={() =>
@@ -104,7 +101,7 @@ export default function UpdateCategory({
                 id="isUsedForCalculations"
                 className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
               >
-                <CheckCircle2Icon strokeWidth={2} className="h-6 w-6" />
+                <CheckCircleIcon strokeWidth={2} className="h-6 w-6" />
               </Toggle>
 
               <div className="grid gap-1.5 leading-none">
@@ -120,7 +117,7 @@ export default function UpdateCategory({
                 </p>
               </div>
             </div>
-          </Card>
+          </Card> */}
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
