@@ -10,12 +10,13 @@ export async function addTransaction(formData: FormData) {
   const transacoes = [];
 
   const formEntries = Object.fromEntries(formData.entries());
+
   const {
     data_compra,
+    data_vencimento,
     descricao,
     tipo_transacao,
     periodo,
-
     realizado,
     condicao,
     forma_pagamento,
@@ -24,7 +25,6 @@ export async function addTransaction(formData: FormData) {
     valor,
     qtde_parcela,
     parcela_atual,
-    recorrencia,
     qtde_recorrencia,
     cartao_id,
     categoria_id,
@@ -54,10 +54,10 @@ export async function addTransaction(formData: FormData) {
   ) {
     transacoes.push({
       data_compra,
+      data_vencimento,
       descricao,
       tipo_transacao,
       periodo: periodoAtual,
-
       imagem_url: imageUrl,
       realizado,
       condicao,
@@ -67,7 +67,6 @@ export async function addTransaction(formData: FormData) {
       valor: valorUnitario,
       qtde_parcela,
       parcela_atual: parcelaAtual,
-      recorrencia,
       qtde_recorrencia,
       cartao_id,
       categoria_id,
@@ -120,12 +119,14 @@ export async function addTransaction(formData: FormData) {
     }
   }
 
-  try {
-    await supabase.from("transacoes").insert(transacoes);
-    revalidatePath("/dashboard");
-  } catch (error) {
+  const { error } = await supabase.from("transacoes").insert(transacoes);
+
+  if (error) {
     console.error("Erro ao adicionar transações:", error);
+    throw error;
   }
+
+  revalidatePath("/dashboard");
 }
 
 // Função auxiliar para upload da imagem
@@ -170,10 +171,10 @@ export async function updateTransaction(formData: FormData) {
   const {
     id,
     data_compra,
+    data_vencimento,
     descricao,
     tipo_transacao,
     periodo,
-
     realizado,
     condicao,
     forma_pagamento,
@@ -182,7 +183,6 @@ export async function updateTransaction(formData: FormData) {
     valor,
     qtde_parcela,
     parcela_atual,
-    recorrencia,
     qtde_recorrencia,
     cartao_id,
     categoria_id,
@@ -227,10 +227,10 @@ export async function updateTransaction(formData: FormData) {
       .from("transacoes")
       .update({
         data_compra,
+        data_vencimento,
         descricao,
         tipo_transacao,
         periodo,
-
         imagem_url: imageUrl,
         realizado,
         condicao,
@@ -240,7 +240,6 @@ export async function updateTransaction(formData: FormData) {
         valor,
         qtde_parcela,
         parcela_atual,
-        recorrencia,
         qtde_recorrencia,
         cartao_id,
         categoria_id,

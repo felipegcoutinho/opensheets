@@ -1,4 +1,3 @@
-import { getExpenseBill } from "@/app/services/boletos";
 import { fetchAllData } from "@/app/services/fetch-all-data";
 import { getExpense, getIncome } from "@/app/services/transacoes";
 import { UseDates } from "@/hooks/use-dates";
@@ -10,8 +9,7 @@ async function useUtils(month) {
 
   const {
     receitas,
-    despesas: despesasCartoes,
-    despesasBoletos,
+    despesas,
     previstoAnterior,
     invoiceList,
     expenseByCategory,
@@ -26,15 +24,11 @@ async function useUtils(month) {
   } = await fetchAllData(month);
 
   const receitasAnterior = await getIncome(previousMonth);
-  const despesasCartoesAnterior = await getExpense(previousMonth);
-  const despesasBoletosAnterior = await getExpenseBill(previousMonth);
+  const despesasAnterior = await getExpense(previousMonth);
 
   // Calcula o saldo geral
-  const despesasTotal = despesasCartoes + despesasBoletos;
-  const despesasTotalAnterior =
-    despesasCartoesAnterior + despesasBoletosAnterior;
-  const balanco = receitas - despesasTotal;
-  const balancoAnterior = receitasAnterior - despesasTotalAnterior;
+  const balanco = receitas - despesas;
+  const balancoAnterior = receitasAnterior - despesas;
   const previsto = previstoAnterior + balanco;
 
   const saldo =
@@ -49,8 +43,8 @@ async function useUtils(month) {
     },
     {
       title: "Despesas",
-      value: despesasTotal,
-      previousValue: despesasTotalAnterior,
+      value: despesas,
+      previousValue: despesasAnterior,
       color: "bg-chart-2",
     },
     {
@@ -102,8 +96,6 @@ async function useUtils(month) {
   return {
     receitas,
     receitasAnterior,
-    despesasTotal,
-    despesasTotalAnterior,
     balanco,
     balancoAnterior,
     previsto,

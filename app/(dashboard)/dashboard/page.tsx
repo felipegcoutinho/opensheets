@@ -85,11 +85,11 @@ export default async function page(props) {
           <ChartSummary data={chartData} />
         </Widget>
 
-        <Widget title="Faturas" subtitle="faturas a vencer">
+        <Widget title="Faturas" subtitle="faturas deste mês">
           <InvoiceWidget month={month} data={invoiceList} />
         </Widget>
 
-        <Widget title="Boletos" subtitle="boletos a vencer">
+        <Widget title="Boletos" subtitle="boletos deste mês">
           <BillsWidget month={month} data={billsByResponsavel} />
         </Widget>
       </div>

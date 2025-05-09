@@ -22,6 +22,7 @@ export async function getExpenseBillPaid(month: string) {
     .select("valor")
     .eq("periodo", month)
     .eq("status_pagamento", "pago");
+    
   if (error) throw error;
 
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);

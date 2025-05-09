@@ -95,6 +95,12 @@ export const getColumns = (
             {row.getValue("descricao")}
           </span>
 
+          {item.forma_pagamento === "boleto" && (
+            <span className="text-muted-foreground text-xs">
+              vence {DateFormat(item.data_vencimento)}
+            </span>
+          )}
+
           {item.condicao === "parcelado" && (
             <span className="text-muted-foreground text-xs">
               {item.parcela_atual} de {item.qtde_parcela}

@@ -3,12 +3,12 @@ import {
   getBillsByCategory,
   getBillsByResponsavel,
   getBillsStats,
-  getExpenseBill,
   getExpenseBillPaid,
   getSumBillsExpensePaid,
 } from "@/services/boletos";
 import { getCardsStats } from "@/services/cartoes";
 import { getAccountsStats } from "@/services/contas";
+import { getInvoiceList } from "@/services/faturas";
 import {
   getConditions,
   getExpense,
@@ -22,7 +22,6 @@ import {
   getTransactionsByCategory,
   getTransactionsStats,
 } from "@/services/transacoes";
-import { getInvoiceList } from "@/services/faturas";
 
 export async function fetchAllData(month: string) {
   try {
@@ -30,7 +29,6 @@ export async function fetchAllData(month: string) {
       receitas,
       despesas,
       previstoAnterior,
-      despesasBoletos,
       expensePaid,
       expenseBillPaid,
       conditions,
@@ -52,7 +50,6 @@ export async function fetchAllData(month: string) {
       getIncome(month),
       getExpense(month),
       getLastPrevious(month),
-      getExpenseBill(month),
       getExpensePaid(month),
       getExpenseBillPaid(month),
       getConditions(month),
@@ -76,7 +73,6 @@ export async function fetchAllData(month: string) {
       receitas,
       despesas,
       previstoAnterior,
-      despesasBoletos,
       expensePaid,
       expenseBillPaid,
       conditions,

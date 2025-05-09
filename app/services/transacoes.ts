@@ -132,7 +132,7 @@ export async function getRecentTransactions(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)",
+      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)",
     )
     .order("created_at", { ascending: false })
     .eq("responsavel", "você")
@@ -183,8 +183,8 @@ export async function getTransactions(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
-      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("tipo_transacao", { ascending: true })
@@ -234,8 +234,8 @@ export async function getCardInvoice(month: string, cartao_id: number) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, condicao, 
-      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, cartoes (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("data_compra", { ascending: false })
@@ -281,8 +281,8 @@ export async function getCategoria(month: string, categoriaId, tipo_transacao) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, realizado, periodo, descricao, tipo_transacao, condicao, 
-      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      `id, data_compra, data_vencimento, realizado, periodo, descricao, tipo_transacao, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, cartoes (id, descricao), contas (id, descricao), categoria_id!inner(id, nome)`,
     )
     .order("data_compra", { ascending: false })
@@ -342,7 +342,7 @@ export async function getAccountInvoice(month, id) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, periodo, descricao, tipo_transacao, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia, qtde_recorrencia, contas (id, descricao), categorias (id, nome)",
+      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, qtde_recorrencia, contas (id, descricao), categorias (id, nome)",
     )
     .eq("periodo", month)
     .or("responsavel.eq.você,responsavel.eq.sistema")
@@ -433,8 +433,8 @@ export async function getTransactionsByResponsableVoce(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, periodo, descricao, tipo_transacao, realizado, condicao, 
-      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, recorrencia,
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, realizado, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, dividir_lancamento, categorias ( id, nome ), cartoes (id, descricao), contas (id, descricao)`,
     )
     .order("tipo_transacao", { ascending: true })
