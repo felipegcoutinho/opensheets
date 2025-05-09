@@ -37,7 +37,9 @@ export default function Utils() {
   };
 
   const handleFormaPagamentoChange = (value: string) => {
-    const isConta = ["dinheiro", "pix", "cartão de débito"].includes(value);
+    const isConta = ["dinheiro", "pix", "cartão de débito", "boleto"].includes(
+      value,
+    );
     setShowConta(isConta);
     setShowCartao(!isConta);
   };

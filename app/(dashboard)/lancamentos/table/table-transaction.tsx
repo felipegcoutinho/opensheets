@@ -103,7 +103,7 @@ export function TableTransaction({
           getCategorias={getCategorias}
         >
           <Button variant="default" className="transition-all hover:scale-110">
-            Nova Transação
+            Novo Lançamento
           </Button>
         </CreateTransactions>
 
