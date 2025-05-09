@@ -26,20 +26,10 @@ export default async function page(props) {
 
   const allData = await Promise.all(sixmonth.map((month) => useUtils(month)));
 
-  const chartData = sixmonth.map((month, index) => ({
-    month: month.split("-")[0].slice(0, 3), // Ex: "Abr"
-    receita: allData[index].receitas,
-    despesa: allData[index].despesasTotal,
-    balanco: allData[index].balanco,
-  }));
-
   const {
     receitas,
-    receitasAnterior,
-    despesasTotal,
-    despesasTotalAnterior,
+    despesas,
     balanco,
-    balancoAnterior,
     previsto,
     previstoAnterior,
     incomeByCategory,
@@ -50,6 +40,13 @@ export default async function page(props) {
     summary,
     getTotalsCategory,
   } = await useUtils(month);
+
+  const chartData = sixmonth.map((month, index) => ({
+    month: month.split("-")[0].slice(0, 3), // Ex: "Abr"
+    receita: allData[index].receitas,
+    despesa: allData[index].despesas,
+    balanco: allData[index].balanco,
+  }));
 
   const categoryData = await getTotalsCategory(month);
   const lancamentos = await getTransactionsStats(month);

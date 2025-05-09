@@ -95,6 +95,7 @@ async function useUtils(month) {
 
   return {
     receitas,
+    despesas,
     receitasAnterior,
     balanco,
     balancoAnterior,
