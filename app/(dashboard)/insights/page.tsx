@@ -1,4 +1,3 @@
-import { getBillsByResponsavel } from "@/app/services/boletos";
 import { getCards } from "@/app/services/cartoes";
 import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
 import { getMonth } from "@/hooks/get-month";
@@ -9,7 +8,7 @@ async function page(props) {
   const month = await getMonth(props);
 
   const lancamentos = await getTransactionsByResponsableVoce(month);
-  const boletos = await getBillsByResponsavel(month);
+  // const boletos = await getBillsByResponsavel(month);
   const cartoes = await getCards();
   const categorias = await getNewCategorias();
 
@@ -18,7 +17,7 @@ async function page(props) {
       <Dashboard
         month={month}
         lancamentos={lancamentos}
-        boletos={boletos}
+        // boletos={boletos}
         cartoes={cartoes}
         categorias={categorias}
       />

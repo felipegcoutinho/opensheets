@@ -2,14 +2,14 @@ import { fetchAllData } from "@/app/services/fetch-all-data";
 import { getExpense, getIncome } from "@/app/services/transacoes";
 import { UseDates } from "@/hooks/use-dates";
 
-async function useUtils(month) {
+async function HelperDashboard(month) {
   const { getPreviousMonth, currentMonthName, currentYear } = UseDates();
 
   const previousMonth = getPreviousMonth(month);
 
   const {
-    receitas,
-    despesas,
+    incomes,
+    expenses,
     previstoAnterior,
     invoiceList,
     expenseByCategory,
@@ -18,32 +18,29 @@ async function useUtils(month) {
     recentTransactions,
     sumAccountIncomePaid,
     sumAccountExpensePaid,
-    sumBillsExpensePaid,
     transactionsByCategory,
-    billsByCategory,
+    bills,
   } = await fetchAllData(month);
 
   const receitasAnterior = await getIncome(previousMonth);
   const despesasAnterior = await getExpense(previousMonth);
 
   // Calcula o saldo geral
-  const balanco = receitas - despesas;
-  const balancoAnterior = receitasAnterior - despesas;
+  const saldo = sumAccountIncomePaid - sumAccountExpensePaid;
+  const balanco = incomes - expenses;
+  const balancoAnterior = receitasAnterior - despesasAnterior;
   const previsto = previstoAnterior + balanco;
-
-  const saldo =
-    sumAccountIncomePaid - sumAccountExpensePaid - sumBillsExpensePaid;
 
   const summary = [
     {
       title: "Receitas",
-      value: receitas,
+      value: incomes,
       previousValue: receitasAnterior,
       color: "bg-chart-1",
     },
     {
       title: "Despesas",
-      value: despesas,
+      value: expenses,
       previousValue: despesasAnterior,
       color: "bg-chart-2",
     },
@@ -75,17 +72,6 @@ async function useUtils(month) {
       totals.set(chave, (totals.get(chave) || 0) + valor);
     });
 
-    // Depois somar boletos (considerando sempre como 'despesa')
-    billsByCategory.forEach((item) => {
-      const categoriaNome = item.categoria?.nome || "Sem Categoria";
-      const valor = parseFloat(item.valor) || 0;
-      const tipo = "despesa";
-
-      const chave = `${tipo}:${categoriaNome}`;
-
-      totals.set(chave, (totals.get(chave) || 0) + valor);
-    });
-
     // Transformar o Map em array para exibir
     return Array.from(totals.entries()).map(([key, total]) => {
       const [tipo_transacao, categoria] = key.split(":");
@@ -94,8 +80,10 @@ async function useUtils(month) {
   }
 
   return {
-    receitas,
-    despesas,
+    incomes,
+    expenses,
+    bills,
+    saldo,
     receitasAnterior,
     balanco,
     balancoAnterior,
@@ -104,7 +92,6 @@ async function useUtils(month) {
     incomeByCategory,
     invoiceList,
     billsByResponsavel,
-    saldo,
     expenseByCategory,
     recentTransactions,
     summary,
@@ -112,4 +99,4 @@ async function useUtils(month) {
   };
 }
 
-export default useUtils;
+export default HelperDashboard;

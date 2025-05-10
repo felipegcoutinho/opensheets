@@ -145,7 +145,6 @@ async function page({ params, searchParams }) {
                       itemFormaPagamento={item.forma_pagamento}
                       itemQtdeParcelas={item.qtde_parcela}
                       itemParcelaAtual={item.parcela_atual}
-                      itemRecorrencia={item.recorrencia}
                       itemQtdeRecorrencia={item.qtde_recorrencia}
                       itemCartao={item.cartoes?.descricao}
                       itemPaid={item.realizado}

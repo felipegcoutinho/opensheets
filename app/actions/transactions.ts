@@ -288,7 +288,7 @@ export async function removeImage(transactionId, imageUrl) {
   console.log("Imagem removida com sucesso!");
 }
 
-export async function togglePagamento(id, realizadoAtual) {
+export async function togglePagamento(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -302,4 +302,20 @@ export async function togglePagamento(id, realizadoAtual) {
   }
 
   return { data };
+}
+
+export async function payBills(id: number, realizadoAtual: boolean) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("transacoes")
+    .update({ realizado: !realizadoAtual })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao pagar boletos:", error);
+    return null;
+  }
+
+  return data;
 }

@@ -4,10 +4,9 @@ import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
 import { getNotesStats } from "@/services/anotacoes";
-import { getBillsStats } from "@/services/boletos";
 import { getCardsStats } from "@/services/cartoes";
 import { getAccountsStats } from "@/services/contas";
-import { getTransactionsStats } from "@/services/transacoes";
+import { getBillsStats, getTransactionsStats } from "@/services/transacoes";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";
@@ -15,7 +14,7 @@ import InvoiceWidget from "./invoices-widget";
 import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
-import useUtils from "./utils";
+import HelperDashboard from "./helper-dashboard";
 
 export default async function page(props) {
   const month = await getMonth(props);
@@ -24,27 +23,29 @@ export default async function page(props) {
 
   const sixmonth = await getLastSixMonths(month);
 
-  const allData = await Promise.all(sixmonth.map((month) => useUtils(month)));
+  const allData = await Promise.all(
+    sixmonth.map((month) => HelperDashboard(month)),
+  );
 
   const {
-    receitas,
-    despesas,
+    incomes,
+    expenses,
     balanco,
+    bills,
     previsto,
     previstoAnterior,
     incomeByCategory,
     invoiceList,
-    billsByResponsavel,
     expenseByCategory,
     recentTransactions,
     summary,
     getTotalsCategory,
-  } = await useUtils(month);
+  } = await HelperDashboard(month);
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3), // Ex: "Abr"
-    receita: allData[index].receitas,
-    despesa: allData[index].despesas,
+    incomes: allData[index].incomes,
+    expenses: allData[index].expenses,
     balanco: allData[index].balanco,
   }));
 
@@ -87,7 +88,7 @@ export default async function page(props) {
         </Widget>
 
         <Widget title="Boletos" subtitle="boletos deste mês">
-          <BillsWidget month={month} data={billsByResponsavel} />
+          <BillsWidget month={month} data={bills} />
         </Widget>
       </div>
 
@@ -117,13 +118,13 @@ export default async function page(props) {
         </Widget>
 
         <Widget
-          title="Receitas por Categoria"
+          title="receitas por Categoria"
           subtitle="Principais Categorias por Receita"
         >
           <CategoryWidget
             data={categoryData}
             tipo="receita"
-            totalReceita={receitas}
+            totalReceita={incomes}
             month={month}
           />
         </Widget>
@@ -135,7 +136,7 @@ export default async function page(props) {
           <CategoryWidget
             data={categoryData}
             tipo="despesa"
-            totalReceita={receitas}
+            totalReceita={incomes}
             month={month}
           />
         </Widget>

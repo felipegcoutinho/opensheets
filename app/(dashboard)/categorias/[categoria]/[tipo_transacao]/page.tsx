@@ -1,4 +1,3 @@
-import { getCategoriaBoletos } from "@/app/services/boletos";
 import { getCategoria } from "@/app/services/transacoes";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
@@ -29,13 +27,11 @@ async function page(props) {
   const tipoTransacao = decodeURIComponent(params.tipo_transacao);
 
   const transacoes = await getCategoria(month, categoria, tipoTransacao);
-  const boletos = await getCategoriaBoletos(month, categoria);
 
   // 📈 Calcular valores
   const totalTransacoes =
     transacoes?.reduce((acc, item) => acc + item.valor, 0) || 0;
-  const totalBoletos = boletos?.reduce((acc, item) => acc + item.valor, 0) || 0;
-  const valorTotal = totalTransacoes + totalBoletos;
+  const valorTotal = totalTransacoes;
 
   return (
     <div className="mb-4 space-y-6">
@@ -62,143 +58,71 @@ async function page(props) {
             <MoneyValues value={valorTotal} />
           </div>
           <div className="text-muted-foreground mt-2 text-sm">
-            Valor total somando Transações e Boletos
+            Valor total somando os lançamentos por categoria
           </div>
         </CardContent>
       </Card>
 
-      {/* Tabs */}
-      <Tabs defaultValue="transacoes" className="w-full">
-        {tipoTransacao !== "receita" && (
-          <TabsList variant={"underline"} width={"full"}>
-            <>
-              <TabsTrigger
-                value="transacoes"
-                variant={"underline"}
-                width={"fit"}
-              >
-                Lançamentos
-              </TabsTrigger>
-              <TabsTrigger value="boletos" variant={"underline"} width={"fit"}>
-                Boletos
-              </TabsTrigger>
-            </>
-          </TabsList>
-        )}
+      <Card>
+        <CardHeader>
+          <CardTitle>Lançamentos</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Data</TableHead>
+                <TableHead>Descrição</TableHead>
+                <TableHead>Transação</TableHead>
+                <TableHead>Valor</TableHead>
+                <TableHead>Responsável</TableHead>
+                <TableHead>Categoria</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {transacoes?.map((item) => (
+                <TableRow key={item.id} className="whitespace-nowrap">
+                  <TableCell className="text-muted-foreground">
+                    {DateFormat(item.data_compra)}
+                  </TableCell>
 
-        {/* Aba Transações */}
-        <TabsContent value="transacoes">
-          <Card>
-            <CardHeader>
-              <CardTitle>Transações</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Data</TableHead>
-                    <TableHead>Descrição</TableHead>
-                    <TableHead>Transação</TableHead>
-                    <TableHead>Valor</TableHead>
-                    <TableHead>Responsável</TableHead>
-                    <TableHead>Categoria</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transacoes?.map((item) => (
-                    <TableRow key={item.id} className="whitespace-nowrap">
-                      <TableCell className="text-muted-foreground">
-                        {DateFormat(item.data_compra)}
-                      </TableCell>
+                  <TableCell className="font-bold">{item.descricao}</TableCell>
 
-                      <TableCell className="font-bold">
-                        {item.descricao}
-                      </TableCell>
+                  <TableCell>
+                    <Button
+                      size="sm"
+                      variant={getButtonVariant(item.tipo_transacao)}
+                    >
+                      {item.tipo_transacao}
+                    </Button>
+                  </TableCell>
 
-                      <TableCell>
-                        <Button
-                          size="sm"
-                          variant={getButtonVariant(item.tipo_transacao)}
-                        >
-                          {item.tipo_transacao}
-                        </Button>
-                      </TableCell>
+                  <TableCell>
+                    <MoneyValues value={item.valor} />
+                  </TableCell>
 
-                      <TableCell>
-                        <MoneyValues value={item.valor} />
-                      </TableCell>
+                  <TableCell>
+                    <span
+                      className={`${getResponsavelClass(item.responsavel)}`}
+                    >
+                      {item.responsavel}
+                    </span>
+                  </TableCell>
 
-                      <TableCell>
-                        <span
-                          className={`${getResponsavelClass(item.responsavel)}`}
-                        >
-                          {item.responsavel}
-                        </span>
-                      </TableCell>
-
-                      <TableCell>{item.categoria_id?.nome}</TableCell>
-                    </TableRow>
-                  ))}
-                  {transacoes?.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center">
-                        Nenhum lançamento encontrado.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Aba Boletos */}
-        <TabsContent value="boletos">
-          <Card>
-            <CardHeader>
-              <CardTitle>Boletos</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Data de Vencimento</TableHead>
-                    <TableHead>Descrição</TableHead>
-                    <TableHead>Valor</TableHead>
-                    <TableHead>Categoria</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {boletos?.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="text-muted-foreground">
-                        {DateFormat(item.dt_vencimento)}
-                      </TableCell>
-
-                      <TableCell className="font-bold">
-                        {item.descricao}
-                      </TableCell>
-
-                      <TableCell>
-                        <MoneyValues value={item.valor} />
-                      </TableCell>
-
-                      <TableCell>{item.categoria_id?.nome}</TableCell>
-                    </TableRow>
-                  ))}
-                  {boletos?.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center">
-                        Nenhum boleto encontrado.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                  <TableCell>{item.categoria_id?.nome}</TableCell>
+                </TableRow>
+              ))}
+              {transacoes?.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center">
+                    Nenhum lançamento encontrado.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 }

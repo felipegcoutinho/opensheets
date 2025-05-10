@@ -7,13 +7,13 @@ import { useState } from "react";
 
 function Home({
   lancamentos,
-  boletos,
+  // boletos,
   cartoes,
   categorias,
   month,
 }: {
   lancamentos: any[];
-  boletos: any[];
+  // boletos: any[];
   cartoes: any[];
   month: string;
 }) {
@@ -35,7 +35,7 @@ function Home({
           body: JSON.stringify({
             messages: [
               { role: "user", content: JSON.stringify(lancamentos) },
-              { role: "user", content: JSON.stringify(boletos) },
+              // { role: "user", content: JSON.stringify(boletos) },
               { role: "user", content: JSON.stringify(cartoes) },
               { role: "user", content: JSON.stringify(categorias) },
               // {

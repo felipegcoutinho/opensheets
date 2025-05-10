@@ -14,7 +14,7 @@ export default async function BillsWidget({ month, data }) {
 
   return dataSorted.map((item, index) => (
     <div
-      key={`${item.id}-${index}`}
+      key={`${item.id}${index}`}
       className="border-border/50 flex items-center justify-between border-b"
     >
       <div className="flex items-center gap-2">
@@ -28,9 +28,9 @@ export default async function BillsWidget({ month, data }) {
         />
         <div>
           <p className="capitalize">{item.descricao}</p>
-          {item.status_pagamento === "pendente" ? (
+          {item.realizado === false ? (
             <p className="text-muted-foreground text-xs">
-              Vence {DateFormat(item.dt_vencimento)}
+              Vence {DateFormat(item.data_vencimento)}
             </p>
           ) : (
             <Check className="text-green-500" size={16} />
@@ -47,7 +47,7 @@ export default async function BillsWidget({ month, data }) {
           descricao={item.descricao}
           valor={item.valor}
           id={item.id}
-          status_pagamento={item.status_pagamento}
+          status_pagamento={item.realizado}
         />
       </div>
     </div>

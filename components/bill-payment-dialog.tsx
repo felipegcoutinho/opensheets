@@ -1,6 +1,6 @@
 "use client";
 
-import { payBills } from "@/app/actions/bills";
+import { payBills } from "@/app/actions/transactions";
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,24 +18,31 @@ import { CreditCard } from "lucide-react";
 import Image from "next/image";
 import { useTransition } from "react";
 
+interface BillPaymentDialogProps {
+  id: number;
+  descricao: string;
+  valor: number;
+  status_pagamento: boolean;
+}
+
 export default function BillPaymentDialog({
   id,
   descricao,
   valor,
   status_pagamento,
-}) {
+}: BillPaymentDialogProps) {
   const [isPending, startTransition] = useTransition();
 
   const handlePaymentBills = (e) => {
     e.preventDefault();
     startTransition(() => {
-      payBills(id).then(() => {
+      payBills(id, status_pagamento).then(() => {
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       });
     });
   };
 
-  const isPaid = status_pagamento === "pago";
+  const isPaid = status_pagamento === true;
 
   if (isPaid) {
     return <span className="text-green-500">pago</span>;
@@ -91,7 +98,6 @@ export default function BillPaymentDialog({
           </DialogClose>
 
           <form className="w-full sm:w-1/2" onSubmit={handlePaymentBills}>
-            <input type="hidden" name="status_pagamento" defaultValue="pago" />
             <Button className="w-full" type="submit" disabled={isPending}>
               {isPending ? (
                 <>

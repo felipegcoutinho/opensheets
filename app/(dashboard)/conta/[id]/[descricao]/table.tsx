@@ -103,7 +103,6 @@ function TransactionTable({ transactions }) {
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
                     itemQtdeParcelas={item.qtde_parcela}
-                    itemRecorrencia={item.recorrencia}
                     itemQtdeRecorrencia={item.qtde_recorrencia}
                     itemConta={item.contas?.descricao}
                     itemPaid={item.realizado}

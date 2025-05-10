@@ -42,15 +42,14 @@ export default function Utils() {
     setFormaPagamentoAtual(value);
     const isCartaoCredito = value === "cartão de crédito";
     const isBoleto = value === "boleto";
-    // Define que o campo "Conta" deve ser mostrado para dinheiro, pix, débito E boleto
-    const deveMostrarCampoConta = [
+    const showContaInput = [
       "dinheiro",
       "pix",
       "cartão de débito",
       "boleto",
     ].includes(value);
 
-    setShowConta(deveMostrarCampoConta);
+    setShowConta(showContaInput);
     setShowCartao(isCartaoCredito);
 
     if (isBoleto || isCartaoCredito) {

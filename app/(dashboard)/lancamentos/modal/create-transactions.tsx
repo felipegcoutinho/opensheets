@@ -261,6 +261,7 @@ export default function CreateTransactions({
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="boleto">Boleto</SelectItem>
                       <SelectItem value="pix">Pix</SelectItem>
                       <SelectItem value="dinheiro">Dinheiro</SelectItem>
                       <SelectItem value="cartão de débito">
@@ -269,7 +270,6 @@ export default function CreateTransactions({
                       <SelectItem value="cartão de crédito">
                         Cartão de Crédito
                       </SelectItem>
-                      <SelectItem value="boleto">Boleto</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
