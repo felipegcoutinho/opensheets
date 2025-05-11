@@ -52,11 +52,13 @@ export const getColumns = (
   getCardsMap,
   getCategorias,
   DateFormat,
+  hidden,
 ) => [
   {
     id: "selection",
     header: ({ table }) => (
       <input
+        hidden={hidden}
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
         onChange={table.getToggleAllPageRowsSelectedHandler()}
@@ -64,6 +66,7 @@ export const getColumns = (
     ),
     cell: ({ row }) => (
       <Checkbox
+        hidden={hidden}
         className="border-neutral-300"
         checked={row.getIsSelected()}
         onCheckedChange={row.getToggleSelectedHandler()}

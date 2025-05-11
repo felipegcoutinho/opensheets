@@ -66,7 +66,13 @@ export function TableTransaction({
   });
 
   const { DateFormat } = UseDates();
-  const columns = getColumns(getAccount, getCards, getCategorias, DateFormat);
+  const columns = getColumns(
+    getAccount,
+    getCards,
+    getCategorias,
+    DateFormat,
+    hidden,
+  );
 
   const table = useReactTable({
     data,
