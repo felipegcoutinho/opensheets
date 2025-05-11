@@ -1,12 +1,5 @@
 "use client";
-
 import Required from "@/components/required-on-forms";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -419,38 +412,30 @@ export default function CreateTransactions({
               )}
             </div>
 
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="border-b">
-                  Anexos e Anotações
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="w-full">
-                    <Label htmlFor="imagem_url_input">Anexo</Label>
-                    <Input
-                      id="imagem_url_input"
-                      className="border-muted-foreground border-dotted"
-                      type="file"
-                      name="imagem_url"
-                      accept="image/*"
-                      onChange={(e) => setImage(e.target.files[0])}
-                    />
-                  </div>
-                  <div className="mt-2 mb-1 flex w-full gap-2">
-                    <div className="w-full">
-                      <Label htmlFor="anotacao">Anotação</Label>
-                      <Textarea
-                        id="anotacao"
-                        name="anotacao"
-                        placeholder="Anotação"
-                      />
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+            <div className="w-full">
+              <Label htmlFor="imagem_url_input">Anexo</Label>
+              <Input
+                id="imagem_url_input"
+                className="border-muted-foreground border-dotted"
+                type="file"
+                name="imagem_url"
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+            </div>
+            <div className="mt-2 mb-1 flex w-full gap-2">
+              <div className="w-full">
+                <Label htmlFor="anotacao">Anotação</Label>
+                <Textarea
+                  id="anotacao"
+                  name="anotacao"
+                  placeholder="Anotação"
+                />
+              </div>
+            </div>
           </form>
         </div>
+
         <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
           <DialogClose asChild>
             <Button

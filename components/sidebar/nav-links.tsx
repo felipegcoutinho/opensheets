@@ -22,11 +22,6 @@ export function NavLinks(month: string) {
         url: `/lancamentos?periodo=${month}`,
         icon: ArrowRightLeft,
       },
-      // {
-      //   name: "boletos",
-      //   url: `/boleto?periodo=${month}`,
-      //   icon: File,
-      // },
       {
         name: "cartões",
         url: "/cartao",

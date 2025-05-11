@@ -88,7 +88,7 @@ export default function UpdateNotes({
                 <Label>Anotação</Label>
                 <Textarea
                   maxLength={512}
-                  className="h-52 border-none bg-amber-100"
+                  className="h-52"
                   defaultValue={itemAnotacao}
                   name="anotacao"
                   placeholder="Anotação"
