@@ -87,8 +87,7 @@ export async function getPayment(month: string) {
     .select("forma_pagamento, valor.sum()")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você")
-    .order("forma_pagamento", { ascending: true });
+    .eq("responsavel", "você");
 
   if (error) throw error;
 

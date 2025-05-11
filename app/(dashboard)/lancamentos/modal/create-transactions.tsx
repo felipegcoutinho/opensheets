@@ -24,7 +24,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { CheckCircle2Icon } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
 import Utils from "../utils-transacao";
 
@@ -195,10 +195,10 @@ export default function CreateTransactions({
                   <Toggle
                     onPressedChange={setIsPaid}
                     pressed={isPaid}
-                    name="realizado_toggle" // Nome diferente para não conflitar com o 'realizado' do form
+                    name="realizado_toggle"
                     className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
                   >
-                    <CheckCircle2Icon strokeWidth={2} className="h-6 w-6" />
+                    <ThumbsUp strokeWidth={2} className="h-6 w-6" />
                   </Toggle>
                 </div>
               )}

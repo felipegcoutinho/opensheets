@@ -33,7 +33,12 @@ import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 import Utils from "../utils-transacao";
 
-const { getButtonVariant, getResponsavelClass, getConditionIcon } = UseStyles();
+const {
+  getButtonVariant,
+  getResponsavelClass,
+  getConditionIcon,
+  getPaymentIcon,
+} = UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -242,8 +247,12 @@ export const getColumns = (
       );
     },
     cell: ({ row }) => {
+      const item = row.original;
       return (
-        <span className="lowercase">{row.getValue("forma_pagamento")}</span>
+        <span className="flex items-center gap-1">
+          {getPaymentIcon(item.forma_pagamento)}
+          <span className="lowercase">{item.forma_pagamento}</span>
+        </span>
       );
     },
   },

@@ -1,5 +1,5 @@
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
-import { ChartSummary } from "@/components/chart-summary";
+import { ChartSummary } from "@/app/(dashboard)/dashboard/chart-summary";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
@@ -16,6 +16,7 @@ import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
 import helperDashboard from "./helper-dashboard";
 import { fetchAllData } from "@/app/services/fetch-all-data";
+import PaymentStatusWidget from "./payment-status-widget";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -30,7 +31,13 @@ export default async function page(props: { params: { month: string } }) {
   const { incomes, expenses, summary, getTotalsCategory } =
     await helperDashboard(month);
 
-  const { bills, invoiceList, recentTransactions } = await fetchAllData(month);
+  const {
+    bills,
+    invoiceList,
+    recentTransactions,
+    sumPaidExpense,
+    sumPaidIncome,
+  } = await fetchAllData(month);
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3),
@@ -83,9 +90,21 @@ export default async function page(props: { params: { month: string } }) {
         </Widget>
       </div>
 
-      <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-2">
+      <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
         <Widget title="Lançamentos Recentes" subtitle="Últimos 5 Lançamentos">
           <RecentesTransactions transactions={recentTransactions} />
+        </Widget>
+
+        <Widget
+          title="Status Pagamento"
+          subtitle={"Pagamentos Pagos e Pendentes"}
+        >
+          <PaymentStatusWidget
+            expenses={expenses}
+            incomes={incomes}
+            sumPaidExpense={sumPaidExpense}
+            sumPaidIncome={sumPaidIncome}
+          />
         </Widget>
 
         <Widget title="Resumo do Mês" subtitle="Principais Resumos">
