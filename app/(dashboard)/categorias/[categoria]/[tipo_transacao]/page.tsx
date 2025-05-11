@@ -15,7 +15,7 @@ import { getMonth } from "@/hooks/get-month";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
 
-async function page(props) {
+async function page(props: { params: { month: string } }) {
   const params = await props.params;
   const month = await getMonth(props);
 

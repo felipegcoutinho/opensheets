@@ -33,8 +33,8 @@ export async function fetchAllData(month: string) {
       notesStats,
       transactionsByCategory,
       recentTransactions,
-      sumAccountExpensePaid,
-      sumAccountIncomePaid,
+      sumPaidExpense,
+      sumPaidIncome,
       invoiceList,
     ] = await Promise.all([
       getIncome(month),
@@ -69,8 +69,8 @@ export async function fetchAllData(month: string) {
       notesStats,
       transactionsByCategory,
       recentTransactions,
-      sumAccountExpensePaid,
-      sumAccountIncomePaid,
+      sumPaidExpense,
+      sumPaidIncome,
       invoiceList,
     };
   } catch (error) {

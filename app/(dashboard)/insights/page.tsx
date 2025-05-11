@@ -4,7 +4,7 @@ import { getMonth } from "@/hooks/get-month";
 import Dashboard from "./dashboard"; // agora é Home, não Dashboard
 import { getNewCategorias } from "@/app/services/categorias";
 
-async function page(props) {
+async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
   const lancamentos = await getTransactionsByResponsableVoce(month);

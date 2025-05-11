@@ -2,33 +2,29 @@ import { fetchAllData } from "@/app/services/fetch-all-data";
 import { getExpense, getIncome } from "@/app/services/transacoes";
 import { UseDates } from "@/hooks/use-dates";
 
-async function HelperDashboard(month) {
-  const { getPreviousMonth, currentMonthName, currentYear } = UseDates();
+async function helperDashboard(month: string) {
+  const { getPreviousMonth } = UseDates();
 
   const previousMonth = getPreviousMonth(month);
 
   const {
     incomes,
     expenses,
+    bills,
     previstoAnterior,
-    invoiceList,
-    expenseByCategory,
-    incomeByCategory,
-    billsByResponsavel,
-    recentTransactions,
     sumAccountIncomePaid,
     sumAccountExpensePaid,
     transactionsByCategory,
-    bills,
   } = await fetchAllData(month);
 
   const receitasAnterior = await getIncome(previousMonth);
   const despesasAnterior = await getExpense(previousMonth);
 
-  // Calcula o saldo geral
   const saldo = sumAccountIncomePaid - sumAccountExpensePaid;
+
   const balanco = incomes - expenses;
   const balancoAnterior = receitasAnterior - despesasAnterior;
+
   const previsto = previstoAnterior + balanco;
 
   const summary = [
@@ -65,7 +61,7 @@ async function HelperDashboard(month) {
     transactionsByCategory.forEach((item) => {
       const categoriaNome = item.categoria?.nome || "Sem Categoria";
       const valor = parseFloat(item.valor) || 0;
-      const tipo = item.tipo_transacao || "despesa"; // Fallback se vier null
+      const tipo = item.tipo_transacao || "despesa";
 
       const chave = `${tipo}:${categoriaNome}`;
 
@@ -89,14 +85,9 @@ async function HelperDashboard(month) {
     balancoAnterior,
     previsto,
     previstoAnterior,
-    incomeByCategory,
-    invoiceList,
-    billsByResponsavel,
-    expenseByCategory,
-    recentTransactions,
     summary,
     getTotalsCategory,
   };
 }
 
-export default HelperDashboard;
+export default helperDashboard;

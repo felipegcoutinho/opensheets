@@ -14,42 +14,33 @@ import InvoiceWidget from "./invoices-widget";
 import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
-import HelperDashboard from "./helper-dashboard";
+import helperDashboard from "./helper-dashboard";
+import { fetchAllData } from "@/app/services/fetch-all-data";
 
-export default async function page(props) {
+export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
   const { getLastSixMonths } = await UseDates();
-
   const sixmonth = await getLastSixMonths(month);
 
   const allData = await Promise.all(
-    sixmonth.map((month) => HelperDashboard(month)),
+    sixmonth.map((month) => helperDashboard(month)),
   );
 
-  const {
-    incomes,
-    expenses,
-    balanco,
-    bills,
-    previsto,
-    previstoAnterior,
-    incomeByCategory,
-    invoiceList,
-    expenseByCategory,
-    recentTransactions,
-    summary,
-    getTotalsCategory,
-  } = await HelperDashboard(month);
+  const { incomes, expenses, summary, getTotalsCategory } =
+    await helperDashboard(month);
+
+  const { bills, invoiceList, recentTransactions } = await fetchAllData(month);
 
   const chartData = sixmonth.map((month, index) => ({
-    month: month.split("-")[0].slice(0, 3), // Ex: "Abr"
+    month: month.split("-")[0].slice(0, 3),
     incomes: allData[index].incomes,
     expenses: allData[index].expenses,
     balanco: allData[index].balanco,
   }));
 
   const categoryData = await getTotalsCategory(month);
+
   const lancamentos = await getTransactionsStats(month);
   const boletos = await getBillsStats(month);
   const cartoes = await getCardsStats(month);
@@ -65,7 +56,7 @@ export default async function page(props) {
   ];
 
   return (
-    <>
+    <section>
       <div className="mt-4 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {summary.map((item, index) => (
           <SummaryWidget
@@ -141,6 +132,6 @@ export default async function page(props) {
           />
         </Widget>
       </div>
-    </>
+    </section>
   );
 }

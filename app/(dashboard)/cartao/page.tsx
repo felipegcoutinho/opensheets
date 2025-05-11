@@ -8,7 +8,7 @@ import { getMonth } from "@/hooks/get-month";
 import CreateCard from "./modal/create-cards";
 import UiCard from "./ui-card";
 
-export default async function page(props) {
+export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
   const cartoesAtivos = await getCards();

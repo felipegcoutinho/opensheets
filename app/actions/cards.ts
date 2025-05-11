@@ -2,7 +2,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
-// Adiciona um novo cartão
 export async function addCards(formData: FormData) {
   const {
     descricao,
@@ -38,7 +37,6 @@ export async function addCards(formData: FormData) {
   }
 }
 
-// Deleta um cartão
 export async function deleteCards(formData: FormData) {
   const excluir = formData.get("excluir");
 
@@ -52,7 +50,6 @@ export async function deleteCards(formData: FormData) {
   }
 }
 
-// Atualiza um cartão
 export async function updateCards(formData: FormData) {
   const {
     id,
