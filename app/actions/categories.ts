@@ -6,11 +6,13 @@ import { revalidatePath } from "next/cache";
 export async function addCategories(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const { nome, tipo_categoria } = Object.fromEntries(formData.entries());
+  const { nome, tipo_categoria, usado_para_calculos } = Object.fromEntries(
+    formData.entries(),
+  );
 
   const { error } = await supabase
     .from("categorias")
-    .insert({ nome, tipo_categoria });
+    .insert({ nome, tipo_categoria, usado_para_calculos });
 
   revalidatePath("/categorias");
 
@@ -24,27 +26,7 @@ export async function addCategories(prevState: unknown, formData: FormData) {
   revalidatePath("/categorias");
 }
 
-// export async function deleteCategories(prevState: unknown, formData: FormData) {
-//   const supabase = createClient();
-
-//   const excluir = formData.get("excluir");
-
-//   const { error } = await supabase
-//     .from("categorias")
-//     .delete()
-//     .eq("id", excluir);
-
-//   if (error) {
-//     console.error("Erro ao excluir categoria:", error);
-//     return { message: "Erro ao excluir categoria!" };
-//   }
-
-//   return { message: "Categoria excluída com sucesso!" };
-
-//   revalidatePath("/categorias");
-// }
-
-export async function deleteCategories(id: string) {
+export async function deleteCategories(id: number) {
   const supabase = await createClient();
 
   const { error } = await supabase.from("categorias").delete().eq("id", id);
@@ -62,11 +44,13 @@ export async function deleteCategories(id: string) {
 export async function updateCategories(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const { id, nome, tipo_categoria } = Object.fromEntries(formData.entries());
+  const { id, nome, tipo_categoria, usado_para_calculos } = Object.fromEntries(
+    formData.entries(),
+  );
 
   const { error } = await supabase
     .from("categorias")
-    .update({ id, nome, tipo_categoria })
+    .update({ id, nome, tipo_categoria, usado_para_calculos })
     .eq("id", id);
 
   if (error) {

@@ -87,7 +87,7 @@ export default function CreateNotes({ children }: Props) {
               <Textarea
                 required
                 maxLength={512}
-                className="h-52 border-none bg-amber-100"
+                className="h-52"
                 name="anotacao"
                 placeholder="Anotação"
               />

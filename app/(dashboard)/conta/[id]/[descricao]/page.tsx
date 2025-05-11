@@ -1,22 +1,24 @@
-import { getAccountDetails } from "@/app/services/contas";
+import { getAccount, getAccountDetails } from "@/app/services/contas";
 import {
   getAccountInvoice,
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/app/services/transacoes";
 import { getMonth } from "@/hooks/get-month";
-import { UseDates } from "@/hooks/use-dates";
-import TransactionTable from "./table";
 import AccountInfo from "./account-info";
+import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
+import { getCards } from "@/app/services/cartoes";
+import { getNewCategorias } from "@/app/services/categorias";
 
 export default async function page({ searchParams, params }) {
-  const { DateFormat } = UseDates();
-
   const { id } = await params;
-
   const month = await getMonth({ searchParams });
 
-  const [accountDetails, transactionInvoice, sumIncome, sumExpense] =
+  const cards = await getCards(month);
+  const categorias = await getNewCategorias();
+  const contas = await getAccount();
+
+  const [accountDetails, accountInvoice, sumIncome, sumExpense] =
     await Promise.all([
       getAccountDetails(id),
       getAccountInvoice(month, id),
@@ -37,7 +39,14 @@ export default async function page({ searchParams, params }) {
           saldo={saldo}
         />
       ))}
-      <TransactionTable transactions={transactionInvoice} />
+
+      <TableTransaction
+        data={accountInvoice}
+        getAccount={contas}
+        getCards={cards}
+        getCategorias={categorias}
+        hidden={true}
+      />
     </div>
   );
 }

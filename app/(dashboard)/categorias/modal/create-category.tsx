@@ -22,7 +22,14 @@ import {
 import CategoryHelper from "../category-helper";
 
 export default function CreateCategory() {
-  const { handleSubmit, loading, isOpen, setIsOpen } = CategoryHelper();
+  const {
+    handleSubmit,
+    loading,
+    isOpen,
+    setIsOpen,
+    isUsedForCalculations,
+    setIsUsedForCalculations,
+  } = CategoryHelper();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -43,14 +50,14 @@ export default function CreateCategory() {
         <form action={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="nome">Nome da Categoria</Label>
-            <Input id="nome" name="nome" required placeholder="Digite o nome" />
+            <Input id="nome" name="nome" placeholder="Digite o nome" required />
           </div>
 
           <div>
             <Label htmlFor="tipo_categoria">Tipo de Categoria</Label>
             <Select name="tipo_categoria" required>
               <SelectTrigger>
-                <SelectValue placeholder="Selecione o tipo" />
+                <SelectValue placeholder="Selecione o tipo da categoria" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="receita">Receita</SelectItem>
@@ -58,6 +65,36 @@ export default function CreateCategory() {
               </SelectContent>
             </Select>
           </div>
+
+          {/* <Card className="p-4">
+            <div className="items-top flex space-x-2">
+              <Toggle
+                onPressedChange={() =>
+                  setIsUsedForCalculations(!isUsedForCalculations)
+                }
+                id="isUsedForCalculations"
+                // defaultPressed={true}
+                pressed={isUsedForCalculations}
+                name="usado_para_calculos"
+                className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+              >
+                <CheckCircleIcon strokeWidth={2} className="h-6 w-6" />
+              </Toggle>
+
+              <div className="grid gap-1.5 leading-none">
+                <Label
+                  className="text-foreground"
+                  htmlFor="isUsedForCalculations"
+                >
+                  Considerar nos cálculos
+                </Label>
+                <p className="text-muted-foreground text-sm">
+                  Se você desmarcar essa opção, essa categoria NÃO será
+                  considerada nos cálculos de receitas e despesas.
+                </p>
+              </div>
+            </div>
+          </Card> */}
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>

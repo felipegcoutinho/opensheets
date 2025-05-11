@@ -37,7 +37,6 @@ export default function DetailsTransactions({
   itemQtdeParcelas,
   itemParcelaAtual,
   itemPeriodo,
-  itemRecorrencia,
   itemQtdeRecorrencia,
   itemPaid,
   itemImagemURL,

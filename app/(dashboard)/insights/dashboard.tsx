@@ -7,13 +7,11 @@ import { useState } from "react";
 
 function Home({
   lancamentos,
-  boletos,
   cartoes,
   categorias,
   month,
 }: {
   lancamentos: any[];
-  boletos: any[];
   cartoes: any[];
   month: string;
 }) {
@@ -35,7 +33,6 @@ function Home({
           body: JSON.stringify({
             messages: [
               { role: "user", content: JSON.stringify(lancamentos) },
-              { role: "user", content: JSON.stringify(boletos) },
               { role: "user", content: JSON.stringify(cartoes) },
               { role: "user", content: JSON.stringify(categorias) },
               // {
@@ -62,20 +59,23 @@ function Home({
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="my-2 max-w-72"
+        className="my-2 w-72 bg-gradient-to-r from-orange-400 to-purple-400 transition-all hover:scale-110"
       >
-        {loading ? (
-          <div className="flex items-center justify-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin" /> Analisando...
-          </div>
-        ) : (
-          <div className="flex items-center justify-center gap-2">
-            <Wand2 className="h-4 w-4" /> Analisar minhas finanças com IA
-          </div>
-        )}
+        <div className="flex items-center justify-center gap-2">
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Aguarde, analisando...</span>
+            </>
+          ) : (
+            <>
+              <Wand2 className="h-4 w-4" />
+              <span>Analisar minhas finanças com IA</span>
+            </>
+          )}
+        </div>
       </Button>
       {analysis && (
-        // Componente simplificado focado em comportamento
         <Card className="my-2 w-full">
           <CardHeader>
             <CardTitle>💼 Análise Comportamental de Consumo</CardTitle>

@@ -5,10 +5,14 @@ import { CardContent } from "@/components/ui/card";
 export async function PaymentWidget({ month }) {
   const payment = await getPayment(month);
 
+  const dataSorted = payment?.sort((a, b) => {
+    return b.sum - a.sum;
+  });
+
   return (
     <>
-      {payment?.length > 0 ? (
-        payment?.map((item) => (
+      {dataSorted?.length > 0 ? (
+        dataSorted?.map((item) => (
           <CardContent
             key={item.forma_pagamento}
             className="grid gap-2 p-0 py-1"

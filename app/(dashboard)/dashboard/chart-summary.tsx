@@ -13,11 +13,11 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 export function ChartSummary({ data }) {
   // Configuração do gráfico com cores consistentes
   const chartConfig = {
-    receita: {
+    incomes: {
       label: "Receita",
       color: "var(--chart-1, #10b981)", // Verde como fallback
     },
-    despesa: {
+    expenses: {
       label: "Despesa",
       color: "var(--chart-2, #ef4444)", // Vermelho como fallback
     },
@@ -65,13 +65,13 @@ export function ChartSummary({ data }) {
             <ChartLegend content={<ChartLegendContent />} />
 
             <Bar
-              dataKey="receita"
-              fill={chartConfig.receita.color}
+              dataKey="incomes"
+              fill={chartConfig.incomes.color}
               radius={[4, 4, 0, 0]}
             />
             <Bar
-              dataKey="despesa"
-              fill={chartConfig.despesa.color}
+              dataKey="expenses"
+              fill={chartConfig.expenses.color}
               radius={[4, 4, 0, 0]}
             />
             <Bar

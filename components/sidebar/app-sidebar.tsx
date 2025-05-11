@@ -28,7 +28,6 @@ export function AppSidebar({
   const { open } = useSidebar();
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { currentMonthName, currentYear } = UseDates();

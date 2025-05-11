@@ -90,9 +90,9 @@ export default function UpdateTransactions({
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger>Editar</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle>Atualizar Transação</DialogTitle>
+          <DialogTitle>Atualizar lançamento</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleUpdate}>
@@ -187,6 +187,7 @@ export default function UpdateTransactions({
 
           <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
             <Label>Marcar lançamento como Pago</Label>
+
             <Toggle
               onPressedChange={() => setIsPaid(!itemPaid)}
               defaultPressed={itemPaid}

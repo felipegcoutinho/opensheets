@@ -8,9 +8,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function Widget({ title, subtitle, children }) {
+type WidgetProps = {
+  title: string;
+  subtitle: string;
+  children: React.ReactNode;
+};
+
+export default function Widget({ title, subtitle, children }: WidgetProps) {
   return (
-    <Card className="max-h-custom-height-1 relative overflow-hidden">
+    <Card className="h-custom-height-1 relative overflow-hidden">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription className="text-muted-foreground text-sm lowercase">

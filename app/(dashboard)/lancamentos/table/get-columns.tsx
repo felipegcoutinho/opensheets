@@ -1,5 +1,4 @@
 "use client";
-
 import { LogosOnTable } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
@@ -31,9 +30,13 @@ import {
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
-import Utils from "../utils-transacao";
 
-const { getButtonVariant, getResponsavelClass, getConditionIcon } = UseStyles();
+const {
+  getButtonVariant,
+  getResponsavelClass,
+  getConditionIcon,
+  getPaymentIcon,
+} = UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -52,11 +55,13 @@ export const getColumns = (
   getCardsMap,
   getCategorias,
   DateFormat,
+  hidden,
 ) => [
   {
     id: "selection",
     header: ({ table }) => (
       <input
+        hidden={hidden}
         type="checkbox"
         checked={table.getIsAllPageRowsSelected()}
         onChange={table.getToggleAllPageRowsSelectedHandler()}
@@ -64,6 +69,7 @@ export const getColumns = (
     ),
     cell: ({ row }) => (
       <Checkbox
+        hidden={hidden}
         className="border-neutral-300"
         checked={row.getIsSelected()}
         onCheckedChange={row.getToggleSelectedHandler()}
@@ -94,6 +100,12 @@ export const getColumns = (
           <span className="font-bold capitalize">
             {row.getValue("descricao")}
           </span>
+
+          {item.forma_pagamento === "boleto" && (
+            <span className="text-muted-foreground text-xs">
+              vence {DateFormat(item.data_vencimento)}
+            </span>
+          )}
 
           {item.condicao === "parcelado" && (
             <span className="text-muted-foreground text-xs">
@@ -233,8 +245,12 @@ export const getColumns = (
       );
     },
     cell: ({ row }) => {
+      const item = row.original;
       return (
-        <span className="lowercase">{row.getValue("forma_pagamento")}</span>
+        <span className="flex items-center gap-1">
+          {getPaymentIcon(item.forma_pagamento)}
+          <span className="lowercase">{item.forma_pagamento}</span>
+        </span>
       );
     },
   },
@@ -282,8 +298,6 @@ export const getColumns = (
     cell: ({ row }) => {
       const item = row.original;
 
-      const { isPaid, setIsPaid, showCartao, handleSubmit } = Utils();
-
       return (
         <div className="flex items-center gap-4">
           <DropdownMenu>
@@ -310,7 +324,6 @@ export const getColumns = (
                   itemFormaPagamento={item.forma_pagamento}
                   itemQtdeParcelas={item.qtde_parcela}
                   itemParcelaAtual={item.parcela_atual}
-                  itemRecorrencia={item.recorrencia}
                   itemQtdeRecorrencia={item.qtde_recorrencia}
                   itemCartao={item.cartoes?.descricao}
                   itemConta={item.contas?.descricao}
@@ -335,7 +348,6 @@ export const getColumns = (
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
                     itemQtdeParcelas={item.qtde_parcela}
-                    itemRecorrencia={item.recorrencia}
                     itemQtdeRecorrencia={item.qtde_recorrencia}
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}

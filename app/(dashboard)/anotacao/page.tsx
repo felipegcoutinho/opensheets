@@ -13,7 +13,7 @@ import CreateNotes from "./modal/create-notes";
 import UpdateNotes from "./modal/update-notes";
 import DeleteNotes from "./modal/delete-notes";
 
-export default async function page(props) {
+export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
   const notes = await getNotes(month);
 

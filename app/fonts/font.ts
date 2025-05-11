@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Roboto, Fira_Sans, Geist } from "next/font/google";
 
 const openRunde = localFont({
   src: [
@@ -20,4 +21,19 @@ const openRunde = localFont({
   ],
 });
 
-export { openRunde };
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
+
+const firaSans = Fira_Sans({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
+
+const geist = Geist({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
+
+export { openRunde, roboto, firaSans, geist };

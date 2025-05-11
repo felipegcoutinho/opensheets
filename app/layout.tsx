@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
-import { openRunde } from "./fonts/font";
+import { geist } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -21,13 +21,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${openRunde.className} `}
+      className={`${geist.className} `}
       suppressHydrationWarning
     >
-      {/* <head>
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
-      </head>
-      <ReactScan /> */}
       <body>
         <ThemeProvider
           attribute="class"

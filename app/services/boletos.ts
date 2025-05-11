@@ -8,18 +8,23 @@ export async function getExpenseBill(month: string) {
     .select("valor")
     .eq("periodo", month)
     .eq("responsavel", "você");
+
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
 export async function getExpenseBillPaid(month: string) {
   const supabase = createClient();
+
   const { data, error } = await supabase
     .from("boletos")
     .select("valor")
     .eq("periodo", month)
     .eq("status_pagamento", "pago");
+    
   if (error) throw error;
+
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 

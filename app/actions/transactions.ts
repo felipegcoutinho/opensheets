@@ -10,121 +10,268 @@ export async function addTransaction(formData: FormData) {
   const transacoes = [];
 
   const formEntries = Object.fromEntries(formData.entries());
+
   const {
-    data_compra,
+    data_compra, // string "AAAA-MM-DD" ou undefined
+    data_vencimento, // string "AAAA-MM-DD" ou undefined
     descricao,
     tipo_transacao,
-    periodo,
-
+    periodo, // string "MMMM-yyyy" (ex: "maio-2025")
     realizado,
     condicao,
     forma_pagamento,
     anotacao,
     responsavel,
-    valor,
-    qtde_parcela,
-    parcela_atual,
-    recorrencia,
-    qtde_recorrencia,
+    valor, // string
+    qtde_parcela, // string ou undefined
+    qtde_recorrencia, // string ou undefined
     cartao_id,
     categoria_id,
     conta_id,
     segundo_responsavel,
     dividir_lancamento,
-  } = formEntries;
+  } = formEntries as { [k: string]: string | undefined };
 
-  const valorNumerico = parseFloat(valor);
+  const valorNumerico = parseFloat(valor || "0");
   const parcelas = parseInt(qtde_parcela || "1", 10);
   const recorrencias = parseInt(qtde_recorrencia || "1", 10);
-  const [mesInicial, anoInicial] = periodo.split("-");
-  const dataInicial = parse(
-    `01-${mesInicial}-${anoInicial}`,
-    "dd-MMMM-yyyy",
-    new Date(),
-    { locale: ptBR },
-  );
+
+  const [mesNomeInicial, anoInicialString] = (periodo || "").split("-");
+  let dataInicial: Date;
+  if (mesNomeInicial && anoInicialString) {
+    try {
+      dataInicial = parse(
+        `01-${mesNomeInicial}-${anoInicialString}`,
+        "dd-MMMM-yyyy",
+        new Date(),
+        { locale: ptBR },
+      );
+      if (isNaN(dataInicial.getTime())) {
+        throw new Error("Data inicial inválida após o parse do período.");
+      }
+    } catch (e) {
+      console.error("Erro ao fazer parse do período inicial:", periodo, e);
+      throw new Error(
+        `Período inicial inválido: ${periodo}. Formato esperado: MMMM-yyyy (ex: maio-2025)`,
+      );
+    }
+  } else {
+    console.error(
+      "Período inicial não fornecido ou em formato incorreto:",
+      periodo,
+    );
+    throw new Error(
+      "Período inicial é obrigatório e deve estar no formato MMMM-yyyy.",
+    );
+  }
+
+  let diaCompraOriginal: number | null = null;
+  if (data_compra && typeof data_compra === "string") {
+    const dataCompraOriginalUTC = new Date(data_compra + "T00:00:00Z");
+    if (!isNaN(dataCompraOriginalUTC.getTime())) {
+      diaCompraOriginal = dataCompraOriginalUTC.getUTCDate();
+    } else {
+      console.warn(`Data de compra original inválida: ${data_compra}`);
+    }
+  }
+
+  let diaVencimentoOriginal: number | null = null;
+  if (data_vencimento && typeof data_vencimento === "string") {
+    const dataVencOriginalUTC = new Date(data_vencimento + "T00:00:00Z");
+    if (!isNaN(dataVencOriginalUTC.getTime())) {
+      diaVencimentoOriginal = dataVencOriginalUTC.getUTCDate();
+    } else {
+      console.warn(`Data de vencimento original inválida: ${data_vencimento}`);
+    }
+  }
 
   const imageUrl = await uploadImagem(formData.get("imagem_url"), supabase);
 
   function adicionar(
-    valorUnitario,
-    responsavel,
-    periodoAtual,
-    parcelaAtual = null,
+    valorUnitario: number,
+    respAtual: string | undefined,
+    periodoAtual: string,
+    dataCompraAtual: string | null, // Modificado para receber dataCompraAtual
+    dataVencimentoAtual: string | null,
+    parcelaAtualNum: number | null = null,
   ) {
     transacoes.push({
-      data_compra,
+      data_compra: dataCompraAtual, // Usar dataCompraAtual
+      data_vencimento: dataVencimentoAtual,
       descricao,
       tipo_transacao,
       periodo: periodoAtual,
-
       imagem_url: imageUrl,
-      realizado,
+      realizado: realizado === "on" || realizado === "true",
       condicao,
       forma_pagamento,
       anotacao,
-      responsavel,
+      responsavel: respAtual,
       valor: valorUnitario,
-      qtde_parcela,
-      parcela_atual: parcelaAtual,
-      recorrencia,
-      qtde_recorrencia,
-      cartao_id,
-      categoria_id,
-      conta_id,
-      dividir_lancamento,
+      qtde_parcela: parcelas > 1 ? parcelas : null,
+      parcela_atual: parcelaAtualNum,
+      qtde_recorrencia:
+        recorrencias > 1 && condicao === "recorrente" ? recorrencias : null,
+      cartao_id: cartao_id || null,
+      categoria_id: categoria_id || null,
+      conta_id: conta_id || null,
+      dividir_lancamento: dividir_lancamento === "on",
     });
   }
 
-  function gerarPeriodo(offset: number): string {
-    const data = addMonths(dataInicial, offset);
-    return `${format(data, "MMMM", { locale: ptBR })}-${data.getFullYear()}`;
+  function gerarDatasParaIteracao(offsetMeses: number): {
+    periodo: string;
+    dataCompra: string | null;
+    dataVencimento: string | null;
+  } {
+    const dataBaseCalculo = addMonths(dataInicial, offsetMeses);
+    const mesCalculado = dataBaseCalculo.getMonth(); // 0-11
+    const anoCalculado = dataBaseCalculo.getFullYear();
+
+    let dataCompraCalculada: string | null = null;
+    if (diaCompraOriginal !== null) {
+      let novaDataCompra = new Date(
+        Date.UTC(anoCalculado, mesCalculado, diaCompraOriginal),
+      );
+      if (novaDataCompra.getUTCMonth() !== mesCalculado) {
+        novaDataCompra = new Date(Date.UTC(anoCalculado, mesCalculado + 1, 0));
+      }
+      dataCompraCalculada = novaDataCompra.toISOString().split("T")[0];
+    } else if (
+      offsetMeses === 0 &&
+      data_compra &&
+      typeof data_compra === "string"
+    ) {
+      dataCompraCalculada = data_compra; // Usa original se não houver dia para cálculo na primeira iteração
+    }
+
+    let dataVencimentoCalculada: string | null = null;
+    if (diaVencimentoOriginal !== null) {
+      let novaDataVencimento = new Date(
+        Date.UTC(anoCalculado, mesCalculado, diaVencimentoOriginal),
+      );
+      if (novaDataVencimento.getUTCMonth() !== mesCalculado) {
+        novaDataVencimento = new Date(
+          Date.UTC(anoCalculado, mesCalculado + 1, 0),
+        );
+      }
+      dataVencimentoCalculada = novaDataVencimento.toISOString().split("T")[0];
+    } else if (
+      offsetMeses === 0 &&
+      data_vencimento &&
+      typeof data_vencimento === "string"
+    ) {
+      dataVencimentoCalculada = data_vencimento; // Usa original se não houver dia para cálculo na primeira iteração
+    }
+
+    return {
+      periodo: format(dataBaseCalculo, "MMMM-yyyy", { locale: ptBR }),
+      dataCompra: dataCompraCalculada,
+      dataVencimento: dataVencimentoCalculada,
+    };
   }
 
-  function dividirValor(
-    valor: number,
-    parcela: number | null,
-    periodo: string,
+  function dividirEAdicionar(
+    valorParaDividir: number,
+    parcelaNum: number | null,
+    periodoAtual: string,
+    dataCompraAtual: string | null, // Modificado
+    dataVencimentoAtual: string | null,
   ) {
-    const v = parseFloat(valor.toFixed(2));
-    if (dividir_lancamento === "on") {
-      adicionar(v / 2, responsavel, periodo, parcela);
-      adicionar(v / 2, segundo_responsavel, periodo, parcela);
+    const valorAjustado = parseFloat(valorParaDividir.toFixed(2));
+    if (dividir_lancamento === "on" && segundo_responsavel) {
+      const valorDividido = parseFloat((valorAjustado / 2).toFixed(2));
+      adicionar(
+        valorDividido,
+        responsavel,
+        periodoAtual,
+        dataCompraAtual,
+        dataVencimentoAtual,
+        parcelaNum,
+      );
+      adicionar(
+        valorAjustado - valorDividido,
+        segundo_responsavel,
+        periodoAtual,
+        dataCompraAtual,
+        dataVencimentoAtual,
+        parcelaNum,
+      );
     } else {
-      adicionar(v, responsavel, periodo, parcela);
+      adicionar(
+        valorAjustado,
+        responsavel,
+        periodoAtual,
+        dataCompraAtual,
+        dataVencimentoAtual,
+        parcelaNum,
+      );
     }
   }
 
   if (condicao === "vista") {
-    dividirValor(valorNumerico, null, periodo);
-  }
-
-  if (condicao === "parcelado") {
-    const valorParcela = parseFloat((valorNumerico / parcelas).toFixed(2));
-    const valorUltima = parseFloat(
-      (valorNumerico - valorParcela * (parcelas - 1)).toFixed(2),
+    dividirEAdicionar(
+      valorNumerico,
+      null,
+      periodo as string,
+      data_compra || null, // data_compra original
+      data_vencimento || null, // data_vencimento original
     );
-
+  } else if (condicao === "parcelado") {
+    const valorParcelaBase = valorNumerico / parcelas;
     for (let i = 0; i < parcelas; i++) {
-      const parcelaAtual = i + 1;
-      const periodoAtual = gerarPeriodo(i);
-      const valorAtual = i === parcelas - 1 ? valorUltima : valorParcela;
-      dividirValor(valorAtual, parcelaAtual, periodoAtual);
-    }
-  }
+      const parcelaAtualNumero = i + 1;
+      const {
+        periodo: periodoDaParcela,
+        dataCompra: dataCompraDaParcela,
+        dataVencimento: dataVencimentoDaParcela,
+      } = gerarDatasParaIteracao(i);
 
-  if (condicao === "recorrente") {
+      let valorDaParcelaAtual: number;
+      if (i === parcelas - 1) {
+        const valorTotalPagoAnteriormente =
+          parseFloat(valorParcelaBase.toFixed(2)) * (parcelas - 1);
+        valorDaParcelaAtual = valorNumerico - valorTotalPagoAnteriormente;
+      } else {
+        valorDaParcelaAtual = valorParcelaBase;
+      }
+
+      dividirEAdicionar(
+        valorDaParcelaAtual,
+        parcelaAtualNumero,
+        periodoDaParcela,
+        dataCompraDaParcela,
+        dataVencimentoDaParcela,
+      );
+    }
+  } else if (condicao === "recorrente") {
     for (let i = 0; i < recorrencias; i++) {
-      const periodoAtual = gerarPeriodo(i);
-      dividirValor(valorNumerico, null, periodoAtual);
+      const {
+        periodo: periodoDaRecorrencia,
+        dataCompra: dataCompraDaRecorrencia,
+        dataVencimento: dataVencimentoDaRecorrencia,
+      } = gerarDatasParaIteracao(i);
+
+      dividirEAdicionar(
+        valorNumerico,
+        null,
+        periodoDaRecorrencia,
+        dataCompraDaRecorrencia,
+        dataVencimentoDaRecorrencia,
+      );
     }
   }
 
-  try {
-    await supabase.from("transacoes").insert(transacoes);
+  if (transacoes.length > 0) {
+    const { error } = await supabase.from("transacoes").insert(transacoes);
+    if (error) {
+      console.error("Erro ao adicionar transações:", error);
+      throw error;
+    }
     revalidatePath("/dashboard");
-  } catch (error) {
-    console.error("Erro ao adicionar transações:", error);
+    revalidatePath("/transacoes");
+  } else {
+    console.warn("Nenhuma transação foi gerada para ser inserida.");
   }
 }
 
@@ -170,10 +317,10 @@ export async function updateTransaction(formData: FormData) {
   const {
     id,
     data_compra,
+    data_vencimento,
     descricao,
     tipo_transacao,
     periodo,
-
     realizado,
     condicao,
     forma_pagamento,
@@ -182,7 +329,6 @@ export async function updateTransaction(formData: FormData) {
     valor,
     qtde_parcela,
     parcela_atual,
-    recorrencia,
     qtde_recorrencia,
     cartao_id,
     categoria_id,
@@ -227,10 +373,10 @@ export async function updateTransaction(formData: FormData) {
       .from("transacoes")
       .update({
         data_compra,
+        data_vencimento,
         descricao,
         tipo_transacao,
         periodo,
-
         imagem_url: imageUrl,
         realizado,
         condicao,
@@ -240,7 +386,6 @@ export async function updateTransaction(formData: FormData) {
         valor,
         qtde_parcela,
         parcela_atual,
-        recorrencia,
         qtde_recorrencia,
         cartao_id,
         categoria_id,
@@ -289,7 +434,7 @@ export async function removeImage(transactionId, imageUrl) {
   console.log("Imagem removida com sucesso!");
 }
 
-export async function togglePagamento(id, realizadoAtual) {
+export async function togglePagamento(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -303,4 +448,20 @@ export async function togglePagamento(id, realizadoAtual) {
   }
 
   return { data };
+}
+
+export async function payBills(id: number, realizadoAtual: boolean) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("transacoes")
+    .update({ realizado: !realizadoAtual })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Erro ao pagar boletos:", error);
+    return null;
+  }
+
+  return data;
 }

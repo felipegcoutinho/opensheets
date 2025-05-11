@@ -1,16 +1,21 @@
-import { getResponsavelBillList } from "@/app/services/boletos";
-import { getResponsavelTransactionList } from "@/app/services/transacoes";
+import {
+  getBillsByResponsible,
+  getTransactionsByResponsible,
+} from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
 import { getMonth } from "@/hooks/get-month";
 import UsersCard from "./users-card";
 
-async function page(props) {
+async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const TransactionList = await getResponsavelTransactionList(month);
-  const BillList = await getResponsavelBillList(month);
+  const transactionsByResponsible = await getTransactionsByResponsible(month);
+  const billsByResponsible = await getBillsByResponsible(month);
 
-  if (!TransactionList.length || !BillList)
+  if (!transactionsByResponsible.length || !billsByResponsible)
+    return <EmptyCard width={100} height={100} />;
+
+  if (!transactionsByResponsible.length)
     return <EmptyCard width={100} height={100} />;
 
   // Função para reorganizar o objeto
@@ -28,7 +33,7 @@ async function page(props) {
   }
 
   // Agrupa Lançamentos e boletos por responsável
-  const groupedData = TransactionList.reduce((acc, item) => {
+  const groupedData = transactionsByResponsible.reduce((acc, item) => {
     if (!acc[item.responsavel]) {
       acc[item.responsavel] = {
         cartoes: {},
@@ -51,7 +56,7 @@ async function page(props) {
     return acc;
   }, {});
 
-  BillList.forEach((item) => {
+  billsByResponsible.forEach((item) => {
     if (!groupedData[item.responsavel]) {
       groupedData[item.responsavel] = {
         cartoes: {},

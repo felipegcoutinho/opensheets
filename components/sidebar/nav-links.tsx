@@ -1,7 +1,6 @@
 import {
   ArrowRightLeft,
   CreditCard,
-  File,
   LayoutDashboard,
   NotepadTextIcon,
   Pen,
@@ -22,11 +21,6 @@ export function NavLinks(month: string) {
         name: "lançamentos",
         url: `/lancamentos?periodo=${month}`,
         icon: ArrowRightLeft,
-      },
-      {
-        name: "boletos",
-        url: `/boleto?periodo=${month}`,
-        icon: File,
       },
       {
         name: "cartões",

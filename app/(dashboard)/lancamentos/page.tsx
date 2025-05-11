@@ -5,7 +5,7 @@ import { getTransactions } from "@/app/services/transacoes";
 import { getMonth } from "@/hooks/get-month";
 import { TableTransaction } from "./table/table-transaction";
 
-export default async function page(props) {
+export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
   const cartoes = await getCards();
