@@ -12,15 +12,15 @@ async function helperDashboard(month: string) {
     expenses,
     bills,
     previstoAnterior,
-    sumAccountIncomePaid,
-    sumAccountExpensePaid,
+    sumPaidExpense,
+    sumPaidIncome,
     transactionsByCategory,
   } = await fetchAllData(month);
 
   const receitasAnterior = await getIncome(previousMonth);
   const despesasAnterior = await getExpense(previousMonth);
 
-  const saldo = sumAccountIncomePaid - sumAccountExpensePaid;
+  const saldo = sumPaidIncome - sumPaidExpense;
 
   const balanco = incomes - expenses;
   const balancoAnterior = receitasAnterior - despesasAnterior;
