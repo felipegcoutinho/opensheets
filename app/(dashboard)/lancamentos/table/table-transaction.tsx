@@ -54,6 +54,7 @@ export function TableTransaction({
   getAccount,
   getCards,
   getCategorias,
+  hidden,
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -96,7 +97,7 @@ export function TableTransaction({
 
   return (
     <div className="mt-4 w-full">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between" hidden={hidden}>
         <CreateTransactions
           getCards={getCards}
           getAccount={getAccount}
@@ -124,7 +125,7 @@ export function TableTransaction({
 
       <Card className="mt-4">
         <CardHeader>
-          <CardTitle>Lançamentos</CardTitle>
+          <CardTitle hidden={hidden}>Lançamentos</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

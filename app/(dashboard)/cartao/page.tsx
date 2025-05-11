@@ -4,13 +4,10 @@ import { getLimitesCartao } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getMonth } from "@/hooks/get-month";
 import CreateCard from "./modal/create-cards";
 import UiCard from "./ui-card";
 
-export default async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
-
+export default async function page(props) {
   const cartoesAtivos = await getCards();
   const cartoesInativos = await getCardsDisabled();
   const getAccountMap = await getAccount();

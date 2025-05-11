@@ -4,12 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* --color-color-1: #e4ffcd;
-  --color-color-2: #0a353b;
-  --color-color-3: #2c155d;
-  --color-color-4: #fdecff;
-  --color-color-5: #3c0b22;
-  --color-color-6: #00a256; */
   --spacing-custom-height-1: 27rem;
 }
 
@@ -22,9 +16,9 @@
   --card-foreground: oklch(0.216 0 0);
   --popover-foreground: oklch(0.216 0 0);
   --sidebar-foreground: oklch(0.216 0 0);
-  --primary: oklch(0.8 0.1593 69.37);
+  --primary: oklch(0.74 0.1701 49.02);
   --sidebar-primary: oklch(0.87 0.2 125.11);
-  --primary-foreground: oklch(0.21 0 none);
+  --primary-foreground: oklch(1 0 none);
   --sidebar-primary-foreground: oklch(0.961 0 0);
   --secondary: oklch(0.886 0 0);
   --accent: oklch(0.886 0 0);

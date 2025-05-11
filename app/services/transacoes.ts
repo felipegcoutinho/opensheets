@@ -252,7 +252,9 @@ export async function getTransactionsByConditions(
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `*, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -277,9 +279,9 @@ export async function getCardInvoice(month: string, cartao_id: number) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, condicao, 
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, cartoes (id, descricao, logo_image), categorias (id, nome)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -320,17 +322,17 @@ export async function getCardSum(month: string, cartao_id: number) {
 // Busca a lista de categoria para tabela
 export async function getCategoria(
   month: string,
-  categoria_id,
-  tipo_transacao,
+  categoria_id: string,
+  tipo_transacao: string,
 ) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, data_vencimento, realizado, periodo, descricao, tipo_transacao, condicao, 
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, cartoes (id, descricao), contas (id, descricao), categoria_id!inner(id, nome)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome) ,categoria_id!inner(id, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -383,17 +385,17 @@ export async function getLimitesCartao(cartao_id, limite_total) {
 }
 
 // Busca as Lançamentos de uma conta bancária específica na tabela transacoes
-export async function getAccountInvoice(month: string, id: number) {
+export async function getAccountInvoice(month: string, conta_id: number) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, qtde_recorrencia, contas (id, descricao), categorias (id, nome)",
+      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)",
     )
     .eq("periodo", month)
     .eq("realizado", true)
-    .eq("conta_id", id)
+    .eq("conta_id", conta_id)
     .or("responsavel.eq.você,responsavel.eq.sistema");
 
   if (error) {

@@ -8,7 +8,6 @@ async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
   const lancamentos = await getTransactionsByResponsableVoce(month);
-  // const boletos = await getBillsByResponsavel(month);
   const cartoes = await getCards();
   const categorias = await getNewCategorias();
 
@@ -17,7 +16,6 @@ async function page(props: { params: { month: string } }) {
       <Dashboard
         month={month}
         lancamentos={lancamentos}
-        // boletos={boletos}
         cartoes={cartoes}
         categorias={categorias}
       />

@@ -1,6 +1,6 @@
 "use client";
 
-import { openRunde } from "@/app/fonts/font";
+import { geist } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${openRunde.className} font-bold tracking-tight ${
+      className={`${geist.className} font-bold tracking-tight ${
         !estado &&
         "opacity-80 blur-xl transition-all duration-300 hover:blur-none"
       }`}

@@ -73,17 +73,6 @@ async function page(props: { params: { month: string } }) {
                   itemAnotacao={item.anotacao}
                   itemLogo={item.logo_image}
                 />
-
-                {/* <form action={deleteAccount}>
-                  <Button
-                    className="p-0"
-                    variant="link"
-                    value={item.id}
-                    name="excluir"
-                  >
-                    excluir
-                  </Button>
-                </form> */}
               </CardFooter>
             </Card>
           ))
