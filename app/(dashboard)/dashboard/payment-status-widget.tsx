@@ -19,12 +19,12 @@ export default function PaymentStatusWidget({
   const pendingExpense = expenses - sumPaidExpense;
 
   const receiveData = {
-    title: "A Receber",
+    title: "À Receber",
     total: incomes,
     values: [
       {
         amount: sumPaidIncome,
-        label: "realizados",
+        label: "recebidos",
         color: "bg-green-400 dark:bg-green-600",
       },
       {
@@ -36,12 +36,12 @@ export default function PaymentStatusWidget({
   };
 
   const payData = {
-    title: "A Pagar",
+    title: "À Pagar",
     total: expenses,
     values: [
       {
         amount: sumPaidExpense,
-        label: "realizados",
+        label: "pagos",
         color: "bg-orange-400 dark:bg-orange-600",
       },
       {

@@ -1,5 +1,4 @@
 "use client";
-
 import { LogosOnTable } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
@@ -31,7 +30,6 @@ import {
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
-import Utils from "../utils-transacao";
 
 const {
   getButtonVariant,
@@ -299,8 +297,6 @@ export const getColumns = (
     header: () => <span>Ações</span>,
     cell: ({ row }) => {
       const item = row.original;
-
-      const { isPaid, setIsPaid, showCartao, handleSubmit } = Utils();
 
       return (
         <div className="flex items-center gap-4">

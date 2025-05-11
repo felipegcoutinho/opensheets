@@ -16,7 +16,7 @@
   --card-foreground: oklch(0.216 0 0);
   --popover-foreground: oklch(0.216 0 0);
   --sidebar-foreground: oklch(0.216 0 0);
-  --primary: oklch(0.74 0.1701 49.02);
+  --primary: oklch(0.66 0.1877 147.83);
   --sidebar-primary: oklch(0.87 0.2 125.11);
   --primary-foreground: oklch(1 0 none);
   --sidebar-primary-foreground: oklch(0.961 0 0);
@@ -152,5 +152,14 @@
 
   ::selection {
     @apply bg-orange-600 text-orange-50;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
