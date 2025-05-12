@@ -479,7 +479,7 @@ export default function CreateTransactions({
           </form>
         </div>
 
-        <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
+        <DialogFooter className="flex w-full flex-col gap-2 sm:flex-row">
           <DialogClose asChild>
             <Button
               className="w-full sm:w-1/2"

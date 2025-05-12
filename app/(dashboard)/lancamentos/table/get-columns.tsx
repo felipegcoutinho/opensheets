@@ -2,6 +2,7 @@
 import { LogosOnTable } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -161,7 +162,6 @@ export const getColumns = (
       return (
         <Button
           variant="ghost"
-          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Transacao
@@ -171,11 +171,7 @@ export const getColumns = (
     },
     cell: ({ row }) => {
       const item = row.original;
-      return (
-        <Button size="sm" variant={getButtonVariant(item.tipo_transacao)}>
-          {item.tipo_transacao}
-        </Button>
-      );
+      return <Badge>{item.tipo_transacao}</Badge>;
     },
   },
 
@@ -185,7 +181,6 @@ export const getColumns = (
       return (
         <Button
           variant="ghost"
-          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Valor
@@ -198,7 +193,7 @@ export const getColumns = (
       const item = row.original;
       return (
         <div className={`capitalize`}>
-          <MoneyValues value={row.getValue("valor")} />
+          <MoneyValues value={item.valor} />
         </div>
       );
     },
@@ -210,7 +205,6 @@ export const getColumns = (
       return (
         <Button
           variant="ghost"
-          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Condição
@@ -236,7 +230,6 @@ export const getColumns = (
       return (
         <Button
           variant="ghost"
-          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Pagamento
@@ -261,7 +254,6 @@ export const getColumns = (
       return (
         <Button
           variant="ghost"
-          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Responsável
