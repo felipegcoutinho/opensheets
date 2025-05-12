@@ -1,12 +1,12 @@
-import CardInfo from "./card-info";
+import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
 import { getCardDetails, getCards } from "@/app/services/cartoes";
+import { getNewCategorias } from "@/app/services/categorias";
+import { getAccount } from "@/app/services/contas";
 import { getFaturas } from "@/app/services/faturas";
 import { getCardInvoice, getCardSum } from "@/app/services/transacoes";
-import CardStatusIndicator from "./card-status-Indicator";
 import { getMonth } from "@/hooks/get-month";
-import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
-import { getAccount } from "@/app/services/contas";
-import { getNewCategorias } from "@/app/services/categorias";
+import CardInfo from "./card-info";
+import CardStatusIndicator from "./card-status-Indicator";
 
 export default async function page({ searchParams, params }) {
   const { id } = await params;
@@ -43,7 +43,7 @@ export default async function page({ searchParams, params }) {
         getAccount={contas}
         getCards={cards}
         getCategorias={categorias}
-        hidden={true}
+        hidden={false}
       />
     </section>
   );

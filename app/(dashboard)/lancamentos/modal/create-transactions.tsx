@@ -73,8 +73,8 @@ export default function CreateTransactions({
             onSubmit={handleSubmit}
             className="space-y-2"
           >
-            <div className="flex w-full gap-2">
-              <div className="w-1/2">
+            <div className="flex gap-2">
+              <div className="w-1/2 w-full">
                 <Label htmlFor="data_compra">
                   Data da Transação <Required />
                 </Label>
@@ -85,12 +85,12 @@ export default function CreateTransactions({
                   required={!eBoletoSelecionado}
                 />
               </div>
-              <div className={"w-1/2"}>
+              <div className="w-1/2 w-full">
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
                 <Select name="periodo" required>
-                  <SelectTrigger id="periodo">
+                  <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -130,8 +130,8 @@ export default function CreateTransactions({
               </div>
             </div>
 
-            <div className="mt-1 flex w-full gap-2">
-              <div className="w-1/2">
+            <div className="flex gap-2">
+              <div className="w-1/2 w-full">
                 <Label htmlFor="tipo_transacao">Tipo de Transação</Label>
                 <Select
                   required
@@ -139,7 +139,7 @@ export default function CreateTransactions({
                   onValueChange={handleTipoTransacaoChange}
                   value={tipoTransacao}
                 >
-                  <SelectTrigger id="tipo_transacao">
+                  <SelectTrigger id="tipo_transacao" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -148,12 +148,13 @@ export default function CreateTransactions({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="w-1/2">
+
+              <div className="w-1/2 w-full">
                 <Label htmlFor="categoria_id">
                   Categoria <Required />
                 </Label>
                 <Select name="categoria_id" disabled={!tipoTransacao}>
-                  <SelectTrigger id="categoria_id">
+                  <SelectTrigger id="categoria_id" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -176,7 +177,7 @@ export default function CreateTransactions({
               </div>
             </div>
 
-            <Card className="mt-2 flex w-full items-center gap-2">
+            {/* <Card className="flex w-full gap-2">
               <div
                 className={`flex items-center justify-between gap-2 p-2 ${
                   showCartao || eBoletoSelecionado ? "w-full" : "w-1/2"
@@ -202,7 +203,49 @@ export default function CreateTransactions({
                   </Toggle>
                 </div>
               )}
-            </Card>
+            </Card> */}
+
+            <div className="flex w-full gap-2">
+              <Card
+                className={`flex-row p-4 ${
+                  showCartao || eBoletoSelecionado ? "w-full" : "w-1/2"
+                } `}
+              >
+                <div className="flex flex-col gap-0.5">
+                  <Label>Dividir Lançamento</Label>
+                  <p className="text-muted-foreground text-sm">
+                    Dividir o lançamento para um responsável diferente.
+                  </p>
+                </div>
+                <div>
+                  <Switch
+                    name="dividir_lancamento"
+                    checked={isDividedChecked}
+                    onCheckedChange={setIsDividedChecked}
+                  />
+                </div>
+              </Card>
+              {!(showCartao || eBoletoSelecionado) && (
+                <Card className="flex w-1/2 flex-row p-4">
+                  <div className="flex flex-col gap-0.5">
+                    <Label>Status do Lançamento</Label>
+                    <p className="text-muted-foreground text-sm">
+                      Marcar o lançamento como realizado.
+                    </p>
+                  </div>
+                  <div>
+                    <Toggle
+                      onPressedChange={setIsPaid}
+                      pressed={isPaid}
+                      name="realizado_toggle"
+                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+                    >
+                      <ThumbsUp strokeWidth={2} className="h-6 w-6" />
+                    </Toggle>
+                  </div>
+                </Card>
+              )}
+            </div>
 
             <div className="flex w-full gap-2">
               <div className="w-full">
@@ -250,7 +293,7 @@ export default function CreateTransactions({
                     name="forma_pagamento"
                     onValueChange={handleFormaPagamentoChange}
                   >
-                    <SelectTrigger id="forma_pagamento">
+                    <SelectTrigger id="forma_pagamento" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
@@ -278,7 +321,7 @@ export default function CreateTransactions({
                       placeholder="Selecione"
                       required={showConta}
                     >
-                      <SelectTrigger id="conta_id">
+                      <SelectTrigger id="conta_id" className="w-full">
                         <SelectValue placeholder="Selecione" />
                       </SelectTrigger>
                       <SelectContent>
@@ -308,7 +351,7 @@ export default function CreateTransactions({
                       Cartão <Required />
                     </Label>
                     <Select name="cartao_id" required={showCartao}>
-                      <SelectTrigger id="cartao_id">
+                      <SelectTrigger id="cartao_id" className="w-full">
                         <SelectValue placeholder="Selecione" />
                       </SelectTrigger>
                       <SelectContent>
@@ -362,7 +405,7 @@ export default function CreateTransactions({
                   defaultValue="vista"
                   required
                 >
-                  <SelectTrigger id="condicao">
+                  <SelectTrigger id="condicao" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -380,7 +423,7 @@ export default function CreateTransactions({
                     value={quantidadeParcelas}
                     onValueChange={setQuantidadeParcelas}
                   >
-                    <SelectTrigger id="qtde_parcela">
+                    <SelectTrigger id="qtde_parcela" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>

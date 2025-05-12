@@ -75,7 +75,6 @@ export default function CategoryWidget({
               </div>
 
               <Progress
-                indicatorColor={`${item.tipo_transacao === "receita" ? "bg-green-500" : "bg-red-500"}`}
                 value={
                   totalReceita && totalReceita > 0
                     ? (item.total / totalReceita) * 100

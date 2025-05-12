@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
-import MoneyValues from "@/components/money-values";
-import { Card } from "@/components/ui/card";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
-import RemovePaymentButton from "@/components/remove-payment-button";
+import MoneyValues from "@/components/money-values";
 import Ping from "@/components/ping-icon";
+import RemovePaymentButton from "@/components/remove-payment-button";
+import { Card } from "@/components/ui/card";
+import Image from "next/image";
 
 export default function CardInfo({ item, cardSum, fatura_status, month }) {
   const isPaga = Array.isArray(fatura_status) && fatura_status.length > 0;
@@ -12,7 +12,7 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
   return (
     <Card className="w-full p-6">
       {/* Cabeçalho */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className=" flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Image
             src={`/logos/${item.logo_image}`}
@@ -42,10 +42,10 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
 
       {/* Dados principais */}
       <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
-        <Card className="p-4">
-          <p className="text-muted-foreground text-xs uppercase">
+        <Card className="p-4 gap-2">
+          <span>
             Tipo do Cartão
-          </p>
+          </span>
           <span className="font-bold capitalize">{item.tipo}</span>
 
           <p className="text-muted-foreground mt-2 text-xs uppercase">
@@ -59,7 +59,7 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
           <span className="font-bold">Dia {item.dt_vencimento}</span>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-4 gap-2">
           <p className="text-muted-foreground text-xs uppercase">
             Limite Total
           </p>
@@ -81,7 +81,7 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
           </span>
         </Card>
 
-        <Card className="flex flex-col items-start justify-center p-4">
+        <Card className="flex flex-col items-start justify-center p-4 gap-2">
           <p className="text-muted-foreground mb-1 text-xs">VALOR DA FATURA</p>
           <div className="mb-2 text-2xl font-bold">
             <MoneyValues value={cardSum} />

@@ -63,7 +63,6 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }
-              indicatorColor="bg-red-500"
               className="h-2 rounded-full"
             />
           </div>
