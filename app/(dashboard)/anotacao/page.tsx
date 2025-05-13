@@ -20,7 +20,7 @@ export default async function page(props: { params: { month: string } }) {
   return (
     <div className="mt-4">
       <CreateNotes>
-        <Button variant="default" className="transition-all hover:scale-110">
+        <Button className="transition-all hover:scale-110">
           Nova Anotação
         </Button>
       </CreateNotes>

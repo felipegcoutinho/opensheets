@@ -8,8 +8,8 @@ import UpdateCard from "./modal/update-cards";
 
 export default function UiCard({ item, getAccountMap, mostrarLimites }) {
   return (
-    <Card key={item.id}>
-      <CardContent className="space-y-2 p-5">
+    <Card key={item.id} className="gap-2">
+      <CardContent className="space-y-2">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image
@@ -41,7 +41,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
         </div>
 
         {mostrarLimites && item.limites && (
-          <div className="border-y py-3">
+          <div className="border-y py-4">
             <div className="mb-2 flex justify-between text-sm">
               <div className="text-left">
                 <p className="text-muted-foreground">Limite Total</p>
@@ -60,6 +60,8 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
             </div>
 
             <Progress
+              primary_color="bg-red-500"
+              secondary_color="bg-neutral-200"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }
@@ -69,7 +71,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
         )}
       </CardContent>
 
-      <CardFooter className="flex justify-between px-6 py-1">
+      <CardFooter className="flex justify-between">
         <Button className="p-0" variant="link">
           <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>
             ver fatura

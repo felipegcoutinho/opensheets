@@ -40,10 +40,7 @@ export default function CreateCard({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="my-4 transition-all hover:scale-110"
-        >
+        <Button className="my-4 transition-all hover:scale-110">
           Novo Cartão
         </Button>
       </DialogTrigger>
@@ -52,14 +49,14 @@ export default function CreateCard({ getAccountMap }) {
           <DialogTitle>Novo Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-2">
           <div className="w-full">
             <Label>
               Escolha o Logo
               <Required />
             </Label>
             <Select name="logo_image" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>
@@ -134,7 +131,7 @@ export default function CreateCard({ getAccountMap }) {
                 <Required />
               </Label>
               <Select name="bandeira" required>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
@@ -163,7 +160,7 @@ export default function CreateCard({ getAccountMap }) {
                 <Required />
               </Label>
               <Select name="tipo" required>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
@@ -180,7 +177,7 @@ export default function CreateCard({ getAccountMap }) {
               <Required />
             </Label>
             <Select name="status" defaultValue="ativo" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
@@ -204,7 +201,7 @@ export default function CreateCard({ getAccountMap }) {
               <Required />
             </Label>
             <Select name="conta_id" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>

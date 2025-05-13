@@ -46,10 +46,7 @@ export function DraftForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="mb-4 transition-all hover:scale-110"
-        >
+        <Button className="mb-4 transition-all hover:scale-110">
           Nova Categoria New
         </Button>
       </DialogTrigger>

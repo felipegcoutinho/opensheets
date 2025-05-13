@@ -33,8 +33,8 @@ export default function SummaryWidget({
   const isPositive = diffPercent >= 0;
 
   return (
-    <Card className="@container/card">
-      <CardHeader className="relative pb-1">
+    <Card className="gap-2">
+      <CardHeader>
         <CardDescription className="flex items-center justify-between">
           <span className="flex items-center gap-2">
             <Ping color={color} />
@@ -46,7 +46,7 @@ export default function SummaryWidget({
               <Badge
                 variant="outline"
                 className={clsx(
-                  "flex gap-1 rounded-lg text-xs",
+                  "flex gap-1 text-xs",
                   isPositive ? "text-green-600" : "text-red-600",
                 )}
               >
@@ -62,14 +62,14 @@ export default function SummaryWidget({
           </span>
         </CardDescription>
 
-        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-2xl">
+        <CardTitle className="text-2xl font-semibold">
           <MoneyValues value={value} />
         </CardTitle>
       </CardHeader>
 
-      <CardFooter className="flex-col items-start gap-1 text-xs">
-        <span className="text-muted-foreground font-bold">Último mês</span>
-        <span className="text-muted-foreground">
+      <CardFooter className="text-muted-foreground flex-col items-start gap-1 text-xs">
+        <span>Último mês</span>
+        <span>
           <MoneyValues value={previousValue} />
         </span>
       </CardFooter>

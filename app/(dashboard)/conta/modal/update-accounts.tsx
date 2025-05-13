@@ -45,7 +45,7 @@ export default function UpdateAccount({
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate}>
+        <form onSubmit={handleUpdate} className="space-y-2">
           <input type="hidden" name="id" value={itemId} />
 
           <div className="w-full">
@@ -54,7 +54,7 @@ export default function UpdateAccount({
               <Required />
             </Label>
             <Select name="logo_image" defaultValue={itemLogo} required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>
@@ -97,7 +97,7 @@ export default function UpdateAccount({
               <Required />
             </Label>
             <Select defaultValue={itemTipoConta} name="tipo_conta" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>

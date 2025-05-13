@@ -74,7 +74,7 @@ export default function CreateTransactions({
             className="space-y-2"
           >
             <div className="flex gap-2">
-              <div className="w-1/2 w-full">
+              <div className="w-1/2">
                 <Label htmlFor="data_compra">
                   Data da Transação <Required />
                 </Label>
@@ -85,7 +85,7 @@ export default function CreateTransactions({
                   required={!eBoletoSelecionado}
                 />
               </div>
-              <div className="w-1/2 w-full">
+              <div className="w-1/2">
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
@@ -131,7 +131,7 @@ export default function CreateTransactions({
             </div>
 
             <div className="flex gap-2">
-              <div className="w-1/2 w-full">
+              <div className="w-1/2">
                 <Label htmlFor="tipo_transacao">Tipo de Transação</Label>
                 <Select
                   required
@@ -149,7 +149,7 @@ export default function CreateTransactions({
                 </Select>
               </div>
 
-              <div className="w-1/2 w-full">
+              <div className="w-1/2">
                 <Label htmlFor="categoria_id">
                   Categoria <Required />
                 </Label>
@@ -177,43 +177,15 @@ export default function CreateTransactions({
               </div>
             </div>
 
-            {/* <Card className="flex w-full gap-2">
-              <div
-                className={`flex items-center justify-between gap-2 p-2 ${
-                  showCartao || eBoletoSelecionado ? "w-full" : "w-1/2"
-                }`}
-              >
-                <Label>Dividir Lançamento</Label>
-                <Switch
-                  name="dividir_lancamento"
-                  checked={isDividedChecked}
-                  onCheckedChange={setIsDividedChecked}
-                />
-              </div>
-              {!(showCartao || eBoletoSelecionado) && (
-                <div className="flex w-1/2 items-center justify-between gap-2 px-2">
-                  <Label>Status do Lançamento</Label>
-                  <Toggle
-                    onPressedChange={setIsPaid}
-                    pressed={isPaid}
-                    name="realizado_toggle"
-                    className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
-                  >
-                    <ThumbsUp strokeWidth={2} className="h-6 w-6" />
-                  </Toggle>
-                </div>
-              )}
-            </Card> */}
-
             <div className="flex w-full gap-2">
               <Card
                 className={`flex-row p-4 ${
                   showCartao || eBoletoSelecionado ? "w-full" : "w-1/2"
                 } `}
               >
-                <div className="flex flex-col gap-0.5">
+                <div className="flex-col">
                   <Label>Dividir Lançamento</Label>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-muted-foreground text-xs leading-snug">
                     Dividir o lançamento para um responsável diferente.
                   </p>
                 </div>
@@ -225,11 +197,12 @@ export default function CreateTransactions({
                   />
                 </div>
               </Card>
+
               {!(showCartao || eBoletoSelecionado) && (
-                <Card className="flex w-1/2 flex-row p-4">
-                  <div className="flex flex-col gap-0.5">
+                <Card className="w-1/2 flex-row p-4">
+                  <div className="flex-col">
                     <Label>Status do Lançamento</Label>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-xs leading-snug">
                       Marcar o lançamento como realizado.
                     </p>
                   </div>
@@ -240,7 +213,7 @@ export default function CreateTransactions({
                       name="realizado_toggle"
                       className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
                     >
-                      <ThumbsUp strokeWidth={2} className="h-6 w-6" />
+                      <ThumbsUp strokeWidth={2} />
                     </Toggle>
                   </div>
                 </Card>
@@ -440,7 +413,7 @@ export default function CreateTransactions({
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
                   <Select name="qtde_recorrencia">
-                    <SelectTrigger id="qtde_recorrencia">
+                    <SelectTrigger id="qtde_recorrencia" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
@@ -466,15 +439,10 @@ export default function CreateTransactions({
                 onChange={(e) => setImage(e.target.files[0])}
               />
             </div>
-            <div className="mt-2 mb-1 flex w-full gap-2">
-              <div className="w-full">
-                <Label htmlFor="anotacao">Anotação</Label>
-                <Textarea
-                  id="anotacao"
-                  name="anotacao"
-                  placeholder="Anotação"
-                />
-              </div>
+
+            <div className="w-full flex-row gap-2">
+              <Label htmlFor="anotacao">Anotação</Label>
+              <Textarea id="anotacao" name="anotacao" placeholder="Anotação" />
             </div>
           </form>
         </div>

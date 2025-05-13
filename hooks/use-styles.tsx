@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 
 function UseStyles() {
-  function getButtonVariant(tipoTransacao: string) {
+  function getBadgeStyle(tipoTransacao: string) {
     switch (tipoTransacao) {
       case "receita":
         return "receita";
@@ -18,11 +18,15 @@ function UseStyles() {
     }
   }
 
-  function getResponsavelClass(responsavel: string) {
-    if (responsavel === "você") return "text-blue-600 dark:text-blue-400";
-    if (responsavel === "sistema")
-      return "text-neutral-600 dark:text-neutral-300";
-    return "text-orange-600 dark:text-orange-400";
+  function getResponsableStyle(responsavel: string) {
+    switch (responsavel) {
+      case "você":
+        return "voce";
+      case "sistema":
+        return "sistema";
+      default:
+        return "outros";
+    }
   }
 
   function getConditionIcon(condicao: string) {
@@ -40,7 +44,13 @@ function UseStyles() {
       dinheiro: <Banknote size={14} />,
       "cartão de crédito": <CreditCard size={14} />,
       pix: (
-        <Image src="/logos/pix_lucide.svg" alt="Pix" width={14} height={14} />
+        <Image
+          src="/logos/pix_lucide.svg"
+          alt="Pix"
+          className="dark:invert"
+          width={14}
+          height={14}
+        />
       ),
       boleto: <Barcode size={14} />,
       credito: <Banknote size={14} />,
@@ -51,8 +61,8 @@ function UseStyles() {
   }
 
   return {
-    getButtonVariant,
-    getResponsavelClass,
+    getBadgeStyle,
+    getResponsableStyle,
     getConditionIcon,
     getPaymentIcon,
   };

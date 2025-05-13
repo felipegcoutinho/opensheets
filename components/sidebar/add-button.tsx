@@ -1,5 +1,5 @@
 import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
-import { PlusSquare } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { Button } from "../ui/button";
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
 
@@ -17,7 +17,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             size="icon"
             variant="link"
           >
-            <PlusSquare className="text-muted-foreground" size={18} />
+            <PlusCircle className="text-muted-foreground" size={18} />
           </Button>
         </CreateTransactions>
       )}
@@ -29,7 +29,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             size="icon"
             variant="link"
           >
-            <PlusSquare className="text-muted-foreground" size={18} />
+            <PlusCircle className="text-muted-foreground" size={18} />
           </Button>
         </CreateNotes>
       )}

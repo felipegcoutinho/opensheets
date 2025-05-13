@@ -32,10 +32,10 @@ async function page(props: { params: { month: string } }) {
     <div className="w-full">
       <CreateAccount />
 
-      <div className="mb-4 grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-3">
         {accountData.length !== 0 ? (
           accountData.map((item) => (
-            <Card key={item.id}>
+            <Card key={item.id} className="p-2">
               <CardContent className="space-y-4 p-4">
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ async function page(props: { params: { month: string } }) {
                 </p>
               </CardContent>
 
-              <CardFooter className="flex justify-between px-6 py-1">
+              <CardFooter className="flex justify-between px-4">
                 <Button className="p-0" variant="link">
                   <Link
                     href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}

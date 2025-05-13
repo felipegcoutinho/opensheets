@@ -218,7 +218,7 @@ export function TableTransaction({
             }
           >
             <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder="Pagamento" />
+              <SelectValue placeholder="Forma de Pagamento" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todas</SelectItem>

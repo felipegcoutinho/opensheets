@@ -20,8 +20,11 @@ import {
 import { Ellipsis } from "lucide-react";
 import DeleteCategory from "./modal/delete-category";
 import UpdateCategory from "./modal/update-category";
+import UseStyles from "@/hooks/use-styles";
 
 export default function TableCategories({ categorias }) {
+  const { getBadgeStyle } = UseStyles();
+
   return (
     <Card className="border-none">
       <CardHeader>
@@ -52,13 +55,7 @@ export default function TableCategories({ categorias }) {
                     /> */}
                   </TableCell>
                   <TableCell>
-                    <Badge
-                      variant={
-                        item.tipo_categoria === "receita"
-                          ? "defaultGreen"
-                          : "defaultRed"
-                      }
-                    >
+                    <Badge variant={getBadgeStyle(item.tipo_categoria)}>
                       {item.tipo_categoria}
                     </Badge>
                   </TableCell>

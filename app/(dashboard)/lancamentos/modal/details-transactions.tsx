@@ -58,8 +58,8 @@ export default function DetailsTransactions({
         <span className="cursor-pointer">Detalhes</span>
       </DialogTrigger>
 
-      <DialogContent className="p-0">
-        <Card className="space-y-4 p-1">
+      <DialogContent className="p-0 sm:max-w-xl">
+        <Card className="gap-2 space-y-4">
           <CardHeader className="flex flex-row items-start border-b">
             <div>
               <DialogTitle className="group flex items-center gap-2 text-lg">
@@ -68,7 +68,7 @@ export default function DetailsTransactions({
               <CardDescription>{DateFormat(itemDate)}</CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="py-0 text-sm">
+          <CardContent className="text-sm">
             <div className="grid gap-2">
               <ul className="grid gap-3">
                 <li className="flex items-center justify-between">

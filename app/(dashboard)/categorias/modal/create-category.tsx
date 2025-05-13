@@ -34,10 +34,7 @@ export default function CreateCategory() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="mb-4 transition-all hover:scale-110"
-        >
+        <Button className="mb-4 transition-all hover:scale-110">
           Nova Categoria
         </Button>
       </DialogTrigger>
@@ -56,7 +53,7 @@ export default function CreateCategory() {
           <div>
             <Label htmlFor="tipo_categoria">Tipo de Categoria</Label>
             <Select name="tipo_categoria" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione o tipo da categoria" />
               </SelectTrigger>
               <SelectContent>
