@@ -35,10 +35,10 @@ export default function SummaryWidget({
   return (
     <Card className="gap-2">
       <CardHeader>
-        <CardDescription className="flex items-center justify-between">
-          <span className="flex items-center gap-2">
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center gap-1">
             <Ping color={color} />
-            <span className="text-lg font-bold capitalize">{title}</span>
+            <span className="capitalize">{title}</span>
           </span>
 
           <span className="flex items-center">
@@ -46,25 +46,25 @@ export default function SummaryWidget({
               <Badge
                 variant="outline"
                 className={clsx(
-                  "flex gap-1 text-xs",
+                  "flex-row gap-1 text-xs",
                   isPositive ? "text-green-600" : "text-red-600",
                 )}
               >
                 {isPositive ? (
-                  <TrendingUpIcon className="size-3" />
+                  <TrendingUpIcon className="size-2" />
                 ) : (
-                  <TrendingDownIcon className="size-3" />
+                  <TrendingDownIcon className="size-2" />
                 )}
                 {isPositive ? "+" : ""}
                 {diffPercent.toFixed(0)}%
               </Badge>
             )}
           </span>
-        </CardDescription>
-
-        <CardTitle className="text-2xl font-semibold">
-          <MoneyValues value={value} />
         </CardTitle>
+
+        <CardDescription className="text-2xl">
+          <MoneyValues value={value} />
+        </CardDescription>
       </CardHeader>
 
       <CardFooter className="text-muted-foreground flex-col items-start gap-1 text-xs">

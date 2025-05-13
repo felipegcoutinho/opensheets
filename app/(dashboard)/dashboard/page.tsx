@@ -96,7 +96,7 @@ export default async function page(props: { params: { month: string } }) {
         </Widget>
 
         <Widget
-          title="Status Pagamento"
+          title="Status de Pagamento"
           subtitle={"Pagamentos Pagos e Pendentes"}
         >
           <PaymentStatusWidget

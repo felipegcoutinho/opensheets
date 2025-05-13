@@ -60,8 +60,8 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
             </div>
 
             <Progress
-              primary_color="bg-red-500"
-              secondary_color="bg-neutral-200"
+              primary_color="bg-red-500 dark:bg-red-700"
+              secondary_color="bg-neutral-200 dark:bg-neutral-800"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }

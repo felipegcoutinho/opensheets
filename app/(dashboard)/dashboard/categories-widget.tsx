@@ -74,13 +74,13 @@ export default function CategoryWidget({
               <Progress
                 primary_color={
                   item.tipo_transacao === "despesa"
-                    ? "bg-red-500"
-                    : "bg-green-500"
+                    ? "bg-red-500 dark:bg-red-700"
+                    : "bg-green-500 dark:bg-green-700"
                 }
                 secondary_color={
                   item.tipo_transacao === "despesa"
-                    ? "bg-red-100"
-                    : "bg-green-100"
+                    ? "bg-red-100 dark:bg-red-950/50"
+                    : "bg-green-100 dark:bg-green-950/50"
                 }
                 value={
                   totalReceita && totalReceita > 0
