@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
 import {
-  ArrowUpDown,
   CheckCircle2Icon,
   Ellipsis,
   FileImage,
@@ -30,13 +29,10 @@ import {
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
+import { Badge } from "@/components/ui/badge";
 
-const {
-  getButtonVariant,
-  getResponsavelClass,
-  getConditionIcon,
-  getPaymentIcon,
-} = UseStyles();
+const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
+  UseStyles();
 
 export function getDescricao(row) {
   const contaDescricao = row.contas?.descricao;
@@ -158,23 +154,14 @@ export const getColumns = (
   {
     accessorKey: "tipo_transacao",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Transacao
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
+      return <span>Transação</span>;
     },
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Button size="sm" variant={getButtonVariant(item.tipo_transacao)}>
+        <Badge variant={getBadgeStyle(item.tipo_transacao)}>
           {item.tipo_transacao}
-        </Button>
+        </Badge>
       );
     },
   },
@@ -182,23 +169,14 @@ export const getColumns = (
   {
     accessorKey: "valor",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Valor
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
+      return <span>Valor</span>;
     },
 
     cell: ({ row }) => {
       const item = row.original;
       return (
         <div className={`capitalize`}>
-          <MoneyValues value={row.getValue("valor")} />
+          <MoneyValues value={item.valor} />
         </div>
       );
     },
@@ -207,16 +185,7 @@ export const getColumns = (
   {
     accessorKey: "condicao",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Condição
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
+      return <span>Condição</span>;
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -233,16 +202,7 @@ export const getColumns = (
   {
     accessorKey: "forma_pagamento",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Pagamento
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
+      return <span>Forma de Pagamento</span>;
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -258,24 +218,14 @@ export const getColumns = (
   {
     accessorKey: "responsavel",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Responsável
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
+      return <span>Responsável</span>;
     },
     cell: ({ row }) => {
       const item = row.original;
-
       return (
-        <span className={`${getResponsavelClass(item.responsavel)}`}>
+        <Badge variant={getResponsableStyle(item.responsavel)}>
           {item.responsavel}
-        </span>
+        </Badge>
       );
     },
   },
@@ -287,7 +237,6 @@ export const getColumns = (
       const item = row.original;
       const descricao = getDescricao(item);
       const logo = getLogo(item);
-
       return <LogosOnTable logo={logo} descricao={descricao} />;
     },
   },

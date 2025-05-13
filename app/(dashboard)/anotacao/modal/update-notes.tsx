@@ -69,7 +69,7 @@ export default function UpdateNotes({
                   <Required />
                 </Label>
                 <Select defaultValue={itemPeriodo} name="periodo">
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>

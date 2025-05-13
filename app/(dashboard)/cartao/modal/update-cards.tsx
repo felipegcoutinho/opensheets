@@ -62,7 +62,7 @@ export default function UpdateCard({
             <DialogTitle>Editar Cartão</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdate} className="space-y-2">
             <input type="hidden" name="id" value={itemId} />
 
             <div className="w-full">
@@ -71,7 +71,7 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <Select name="logo_image" defaultValue={itemLogo} required>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione a imagem para o cartão" />
                 </SelectTrigger>
                 <SelectContent>
@@ -149,7 +149,7 @@ export default function UpdateCard({
                   <Required />
                 </Label>
                 <Select defaultValue={itemBandeira} name="bandeira" required>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -178,7 +178,7 @@ export default function UpdateCard({
                   <Required />
                 </Label>
                 <Select defaultValue={itemTipo} name="tipo" required>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -195,7 +195,7 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <Select name="status" defaultValue={itemStatus} required>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
@@ -227,7 +227,7 @@ export default function UpdateCard({
                 name="conta_id"
                 required
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>

@@ -80,7 +80,7 @@ export default function UpdateCategory({
               id="tipo_categoria"
               required
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent>

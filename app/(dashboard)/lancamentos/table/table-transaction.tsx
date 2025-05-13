@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
 import {
+  ColumnFiltersState,
   FilterFn,
   PaginationState,
   SortingState,
@@ -32,9 +33,8 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-  ColumnFiltersState, // Added ColumnFiltersState
 } from "@tanstack/react-table";
-import { useState, useMemo } from "react"; // Added useMemo
+import { useMemo, useState } from "react"; // Added useMemo
 import CreateTransactions from "../modal/create-transactions";
 import { getColumns, getDescricao } from "./get-columns";
 
@@ -67,7 +67,7 @@ export function TableTransaction({
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]); // State for column filters
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [pagination, setPagination] = useState<PaginationState>({
@@ -76,6 +76,7 @@ export function TableTransaction({
   });
 
   const { DateFormat } = UseDates();
+
   const columns = getColumns(
     getAccount,
     getCards,
@@ -90,14 +91,14 @@ export function TableTransaction({
     state: {
       sorting,
       globalFilter,
-      columnFilters, // Pass columnFilters to table state
+      columnFilters,
       columnVisibility,
       rowSelection,
       pagination,
     },
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,
-    onColumnFiltersChange: setColumnFilters, // Handler for column filter changes
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -113,7 +114,13 @@ export function TableTransaction({
     .filter((_, index) => rowSelection[index])
     .reduce((sum, rowData) => sum + rowData.valor, 0);
 
-  // Get unique values for filter dropdowns
+  const tipoTransacaoOptions = useMemo(() => {
+    const values = new Set(
+      data.map((item) => item.tipo_transacao).filter(Boolean),
+    );
+    return Array.from(values);
+  }, [data]);
+
   const condicaoOptions = useMemo(() => {
     const values = new Set(data.map((item) => item.condicao).filter(Boolean));
     return Array.from(values);
@@ -166,6 +173,25 @@ export function TableTransaction({
         </CreateTransactions>
 
         <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center">
+          <Select
+            value={getColumnFilterValue("tipo_transacao")}
+            onValueChange={(value) =>
+              setColumnFilterValue("tipo_transacao", value)
+            }
+          >
+            <SelectTrigger className="w-full sm:w-[180px]">
+              <SelectValue placeholder="Transação" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos</SelectItem>
+              {tipoTransacaoOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           {/* Condição Filter */}
           <Select
             value={getColumnFilterValue("condicao")}
@@ -192,7 +218,7 @@ export function TableTransaction({
             }
           >
             <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder="Pagamento" />
+              <SelectValue placeholder="Forma de Pagamento" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todas</SelectItem>
@@ -228,7 +254,7 @@ export function TableTransaction({
             placeholder="Pesquisar..."
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
-            className="w-full sm:max-w-xs"
+            className="w-64"
           />
         </div>
       </div>
@@ -273,7 +299,7 @@ export function TableTransaction({
                       "bg-linear-to-r from-lime-300/10 to-transparent"
                     }`}
                     key={row.id}
-                    data-state={row.getIsSelected() && "selected"} // Added for potential styling
+                    data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>

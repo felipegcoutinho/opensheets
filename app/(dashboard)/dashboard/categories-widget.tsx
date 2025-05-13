@@ -61,12 +61,9 @@ export default function CategoryWidget({
 
                 <div className="flex items-center gap-2">
                   <MoneyValues value={item.total} />
-
                   <Badge
                     variant={
-                      item.tipo_transacao === "receita"
-                        ? "defaultGreen"
-                        : "defaultRed"
+                      item.tipo_transacao === "despesa" ? "despesa" : "receita"
                     }
                   >
                     {percentual}%
@@ -75,7 +72,16 @@ export default function CategoryWidget({
               </div>
 
               <Progress
-                indicatorColor={`${item.tipo_transacao === "receita" ? "bg-green-500" : "bg-red-500"}`}
+                primary_color={
+                  item.tipo_transacao === "despesa"
+                    ? "bg-red-500 dark:bg-red-700"
+                    : "bg-green-500 dark:bg-green-700"
+                }
+                secondary_color={
+                  item.tipo_transacao === "despesa"
+                    ? "bg-red-100 dark:bg-red-950/50"
+                    : "bg-green-100 dark:bg-green-950/50"
+                }
                 value={
                   totalReceita && totalReceita > 0
                     ? (item.total / totalReceita) * 100
@@ -83,7 +89,7 @@ export default function CategoryWidget({
                       ? 100
                       : 0
                 }
-                className="h-1"
+                className="h-1.5"
               />
             </div>
           );

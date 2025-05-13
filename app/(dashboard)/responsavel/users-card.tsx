@@ -15,9 +15,9 @@ export default function UsersCard({
 
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="flex w-full">
-        <CardTitle className="flex justify-between gap-2">
-          <p className="capitalize">{responsavel}</p>
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between gap-2">
+          <p className="text-xl capitalize">{responsavel}</p>
           {responsavel === "você" ? (
             <User className="text-blue-600" size={22} />
           ) : (

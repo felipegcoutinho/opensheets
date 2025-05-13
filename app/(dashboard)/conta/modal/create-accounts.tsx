@@ -32,10 +32,7 @@ export default function CreateAccount() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="mt-2 mb-4 transition-all hover:scale-110"
-        >
+        <Button className="mt-2 mb-4 transition-all hover:scale-110">
           Nova Conta
         </Button>
       </DialogTrigger>
@@ -44,14 +41,14 @@ export default function CreateAccount() {
           <DialogTitle>Nova Conta</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-2">
           <div className="w-full">
             <Label>
               Escolha o Logo
               <Required />
             </Label>
             <Select name="logo_image" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione a imagem para a conta" />
               </SelectTrigger>
               <SelectContent>
@@ -93,7 +90,7 @@ export default function CreateAccount() {
               <Required />
             </Label>
             <Select name="tipo_conta" required>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>

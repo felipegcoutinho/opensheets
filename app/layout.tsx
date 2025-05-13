@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${geist.className} `}
+      className={`${geist.className} antialiased`}
       suppressHydrationWarning
     >
       <body>
@@ -32,7 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PrivacyProviderApp>
-            <main className="antialiased">{children}</main>
+            <main>{children}</main>
           </PrivacyProviderApp>
 
           <SpeedInsights />

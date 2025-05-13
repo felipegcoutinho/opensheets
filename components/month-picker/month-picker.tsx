@@ -29,7 +29,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="my-2 flex h-14 items-center justify-start p-4">
+    <Card className="flex-row p-4">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -37,15 +37,11 @@ export default function MonthPicker() {
           disabled={isChanging}
         />
         <div className="flex items-center">
-          <div className="mx-2 text-lg font-bold capitalize">
+          <div className="mx-2 font-bold capitalize">
             {currentMonth} <span className="text-primary">{currentYear}</span>
           </div>
 
-          {isChanging && (
-            <div className="absolute top-1/2 -right-3 -translate-y-1/2">
-              <LoadingSpinner />
-            </div>
-          )}
+          {isChanging && <LoadingSpinner />}
         </div>
         <NavigationButton
           onClick={goToNextMonth}

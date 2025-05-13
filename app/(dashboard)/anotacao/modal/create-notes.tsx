@@ -67,7 +67,7 @@ export default function CreateNotes({ children }: Props) {
               </Label>
 
               <Select name="periodo" required>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>

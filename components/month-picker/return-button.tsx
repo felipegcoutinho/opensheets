@@ -12,11 +12,10 @@ interface ReturnButtonProps {
 
 const ReturnButton = React.memo(({ onClick, disabled }: ReturnButtonProps) => (
   <Button
-    className="ml-2 cursor-pointer rounded disabled:opacity-50"
-    size={"sm"}
+    className="ml-2 w-52 cursor-pointer disabled:opacity-50"
     onClick={onClick}
     disabled={disabled}
-    variant={"warning"}
+    size={"sm"}
   >
     <span className="px-2">Retornar ao Mês Atual</span>
   </Button>

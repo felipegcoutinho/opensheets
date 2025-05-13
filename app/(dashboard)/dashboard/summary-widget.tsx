@@ -33,12 +33,12 @@ export default function SummaryWidget({
   const isPositive = diffPercent >= 0;
 
   return (
-    <Card className="@container/card">
-      <CardHeader className="relative pb-1">
-        <CardDescription className="flex items-center justify-between">
-          <span className="flex items-center gap-2">
+    <Card className="gap-2">
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center gap-1">
             <Ping color={color} />
-            <span className="text-lg font-bold capitalize">{title}</span>
+            <span className="capitalize">{title}</span>
           </span>
 
           <span className="flex items-center">
@@ -46,30 +46,30 @@ export default function SummaryWidget({
               <Badge
                 variant="outline"
                 className={clsx(
-                  "flex gap-1 rounded-lg text-xs",
+                  "flex-row gap-1 text-xs",
                   isPositive ? "text-green-600" : "text-red-600",
                 )}
               >
                 {isPositive ? (
-                  <TrendingUpIcon className="size-3" />
+                  <TrendingUpIcon className="size-2" />
                 ) : (
-                  <TrendingDownIcon className="size-3" />
+                  <TrendingDownIcon className="size-2" />
                 )}
                 {isPositive ? "+" : ""}
                 {diffPercent.toFixed(0)}%
               </Badge>
             )}
           </span>
-        </CardDescription>
-
-        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-2xl">
-          <MoneyValues value={value} />
         </CardTitle>
+
+        <CardDescription className="text-2xl">
+          <MoneyValues value={value} />
+        </CardDescription>
       </CardHeader>
 
-      <CardFooter className="flex-col items-start gap-1 text-xs">
-        <span className="text-muted-foreground font-bold">Último mês</span>
-        <span className="text-muted-foreground">
+      <CardFooter className="text-muted-foreground flex-col items-start gap-1 text-xs">
+        <span>Último mês</span>
+        <span>
           <MoneyValues value={previousValue} />
         </span>
       </CardFooter>

@@ -33,9 +33,7 @@ export default async function page(props: { params: { month: string } }) {
 
             <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
               <Badge
-                variant={
-                  tipoTransacao === "receita" ? "defaultGreen" : "defaultRed"
-                }
+                variant={tipoTransacao === "receita" ? "receita" : "despesa"}
               >
                 {tipoTransacao}
               </Badge>

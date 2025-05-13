@@ -95,7 +95,7 @@ export default function UpdateTransactions({
           <DialogTitle>Atualizar lançamento</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate}>
+        <form onSubmit={handleUpdate} className="space-y-2">
           <input type="hidden" name="id" value={itemId} />
 
           <div className="mb-1 flex w-full gap-2">
@@ -117,7 +117,7 @@ export default function UpdateTransactions({
                 name="periodo"
                 disabled={itemPaid}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
@@ -163,7 +163,7 @@ export default function UpdateTransactions({
               defaultValue={itemCategoriaId.toString()}
               name="categoria_id"
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
@@ -185,7 +185,7 @@ export default function UpdateTransactions({
             </Select>
           </div>
 
-          <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
+          {/* <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
             <Label>Marcar lançamento como Pago</Label>
 
             <Toggle
@@ -196,6 +196,25 @@ export default function UpdateTransactions({
             >
               <ThumbsUp strokeWidth={2} className="h-6 w-6" />
             </Toggle>
+          </Card> */}
+
+          <Card className="w-full flex-row justify-between p-4">
+            <div className="flex flex-col">
+              <Label>Status do Lançamento</Label>
+              <p className="text-muted-foreground text-xs leading-snug">
+                Marcar o lançamento como realizado.
+              </p>
+            </div>
+            <div>
+              <Toggle
+                defaultPressed={itemPaid}
+                onPressedChange={() => setIsPaid(!itemPaid)}
+                name="realizado"
+                className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+              >
+                <ThumbsUp strokeWidth={2} />
+              </Toggle>
+            </div>
           </Card>
 
           <div className="w-full">
