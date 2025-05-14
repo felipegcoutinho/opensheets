@@ -268,11 +268,11 @@ export function TableTransaction({
         </div>
       )}
 
-      <Card className="mt-4">
+      <Card>
         <CardHeader>
           <CardTitle hidden={hidden}>Lançamentos</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
