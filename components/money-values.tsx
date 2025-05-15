@@ -24,7 +24,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   useEffect(() => {
     if (!animated || !isValidNumber) {
-      setDisplayValue(sanitizedValue); // garante que mesmo sem animação o valor esteja correto
+      setDisplayValue(sanitizedValue);
       return;
     }
 
@@ -42,8 +42,7 @@ function MoneyValues({ value, animated = true }: Props) {
   return (
     <span
       className={`${geist.className} font-bold tracking-tight ${
-        !estado &&
-        "opacity-80 blur-xl transition-all duration-300 hover:blur-none"
+        !estado && "blur-sm transition-all duration-300 hover:blur-none"
       }`}
     >
       {displayValue.toLocaleString("pt-BR", {

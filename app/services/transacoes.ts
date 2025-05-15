@@ -348,7 +348,7 @@ export async function getCategoria(
 }
 
 // Função para obter o limite em uso
-export async function getLimiteEmUso(cartao_id) {
+export async function getLimiteEmUso(cartao_id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -372,7 +372,10 @@ export async function getLimiteEmUso(cartao_id) {
 }
 
 // Função para calcular o limite disponível
-export async function getLimitesCartao(cartao_id, limite_total) {
+export async function getLimitesCartao(
+  cartao_id: number,
+  limite_total: number,
+) {
   const limiteEmUso = await getLimiteEmUso(cartao_id);
   const limiteDisponivel = limite_total - limiteEmUso;
 
@@ -406,7 +409,7 @@ export async function getAccountInvoice(month: string, conta_id: number) {
 }
 
 // Busca as receitas de uma conta bancária específica e soma os valores
-export async function getSumAccountIncome(month, id) {
+export async function getSumAccountIncome(month: string, id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -432,7 +435,7 @@ export async function getSumAccountIncome(month, id) {
 }
 
 // Busca as despesas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpense(month, id) {
+export async function getSumAccountExpense(month: string, id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -457,7 +460,7 @@ export async function getSumAccountExpense(month, id) {
   return sumAccountExpense;
 }
 
-export async function getTransactionsByResponsible(month) {
+export async function getTransactionsByResponsible(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -477,7 +480,7 @@ export async function getTransactionsByResponsible(month) {
   return data;
 }
 
-export async function getBillsByResponsible(month) {
+export async function getBillsByResponsible(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase

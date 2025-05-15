@@ -56,7 +56,7 @@ export default async function page(props: { params: { month: string } }) {
         getAccount={contas}
         getCards={cartoes}
         getCategorias={categorias}
-        hidden={true}
+        hidden={false}
       />
     </div>
   );
