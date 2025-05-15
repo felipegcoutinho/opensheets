@@ -10,7 +10,7 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
   const isPaga = Array.isArray(fatura_status) && fatura_status.length > 0;
 
   return (
-    <Card className="w-full gap-2 p-6">
+    <Card className="mt-4 w-full gap-2 p-6">
       {/* Cabeçalho */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">

@@ -1,11 +1,11 @@
-import Image from "next/image";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import Image from "next/image";
 import BalanceItem from "./balance-item";
 
 function AccountInfo({ item, sumAccountIncome, accountExpense, saldo }) {
   return (
-    <Card className="w-full p-6">
+    <Card className="mt-4 w-full p-6">
       <div className="mb-4 flex items-start justify-between">
         <div className="flex items-center gap-4">
           <Image
