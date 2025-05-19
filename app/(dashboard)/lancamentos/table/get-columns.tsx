@@ -1,7 +1,9 @@
 "use client";
+
 import { LogosOnTable } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -29,7 +31,6 @@ import {
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
-import { Badge } from "@/components/ui/badge";
 
 const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
   UseStyles();

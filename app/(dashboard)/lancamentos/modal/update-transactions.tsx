@@ -26,7 +26,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import Utils from "../utils-transacao";
+import UtilitiesLancamento from "../utilities-lancamento";
 
 export default function UpdateTransactions({
   itemId,
@@ -51,7 +51,7 @@ export default function UpdateTransactions({
     removingImage,
     handleRemoveImage,
     loading,
-  } = Utils();
+  } = UtilitiesLancamento();
 
   const [imagePreview, setImagePreview] = useState(itemImagemURL);
 

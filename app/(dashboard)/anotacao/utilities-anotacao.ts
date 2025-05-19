@@ -2,7 +2,7 @@ import { addNotes, deleteNotes, updateNotes } from "@/actions/notes";
 import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export default function Utils() {
+export default function UtilitiesAnotacao() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 

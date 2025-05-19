@@ -11,10 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Utils from "../utils";
+import UtilitiesCartao from "../utilities-cartao";
 
 export default function DeleteCard({ itemId }) {
-  const { handleDelete } = Utils();
+  const { handleDelete } = UtilitiesCartao();
 
   return (
     <Dialog>

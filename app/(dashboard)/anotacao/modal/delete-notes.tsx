@@ -1,9 +1,9 @@
 "use client";
 import DeleteButton from "@/components/delete-button";
-import Utils from "../utils";
+import UtilitiesAnotacao from "../utilities-anotacao";
 
 export default function DeleteNotes({ itemId }) {
-  const { handleDelete, isOpen, setIsOpen, isPending } = Utils();
+  const { handleDelete, isOpen, setIsOpen, isPending } = UtilitiesAnotacao();
 
   return (
     <DeleteButton

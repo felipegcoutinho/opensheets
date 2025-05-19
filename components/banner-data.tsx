@@ -1,4 +1,4 @@
-import Utils from "@/app/(dashboard)/dashboard/helper-dashboard";
+import Utils from "@/app/(dashboard)/dashboard/utilities-dashboard";
 import { getUserName } from "@/app/actions/users";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";

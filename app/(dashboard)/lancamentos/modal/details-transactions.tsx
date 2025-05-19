@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/use-dates";
-import Utils from "../utils-transacao";
+import UtilitiesLancamento from "../utilities-lancamento";
 import ViewImage from "./view-image";
 
 export default function DetailsTransactions({
@@ -42,7 +42,8 @@ export default function DetailsTransactions({
   itemImagemURL,
   itemCategoriaId,
 }) {
-  const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } = Utils();
+  const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } =
+    UtilitiesLancamento();
 
   const { DateFormat } = UseDates();
 

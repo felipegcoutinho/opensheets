@@ -20,12 +20,12 @@ import {
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";
-import helperDashboard from "./helper-dashboard";
 import InvoiceWidget from "./invoices-widget";
 import PaymentStatusWidget from "./payment-status-widget";
 import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
+import UtilitiesDashboard from "./utilities-dashboard";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -34,11 +34,11 @@ export default async function page(props: { params: { month: string } }) {
   const sixmonth = await getLastSixMonths(month);
 
   const allData = await Promise.all(
-    sixmonth.map((month) => helperDashboard(month)),
+    sixmonth.map((month) => UtilitiesDashboard(month)),
   );
 
   const { incomes, expenses, summary, getTotalsCategory } =
-    await helperDashboard(month);
+    await UtilitiesDashboard(month);
 
   const {
     bills,

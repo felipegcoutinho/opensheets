@@ -22,7 +22,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import Utils from "../utils";
+import UtilitiesCartao from "../utilities-cartao";
 
 export default function UpdateCard({
   itemId,
@@ -46,7 +46,7 @@ export default function UpdateCard({
     setStatusPagamento,
     handleUpdate,
     loading,
-  } = Utils();
+  } = UtilitiesCartao();
 
   const { logos, bandeiras } = UseOptions();
 

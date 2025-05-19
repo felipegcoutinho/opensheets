@@ -26,7 +26,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import Utils from "../utils-transacao";
+import UtilitiesLancamento from "../utilities-lancamento";
 
 export default function CreateTransactions({
   getCards,
@@ -56,7 +56,7 @@ export default function CreateTransactions({
     image,
     setQuantidadeParcelas,
     eBoletoSelecionado,
-  } = Utils();
+  } = UtilitiesLancamento();
 
   const { getMonthOptions } = UseDates();
 
