@@ -1,31 +1,4 @@
-import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
-
-export async function getLastPrevious(month: string) {
-  const supabase = createClient();
-  const { getPreviousMonth } = UseDates();
-  const previousMonth = getPreviousMonth(month);
-
-  const { data, error } = await supabase
-    .from("saldo_acumulado")
-    .select("saldo_final")
-    .eq("mes", previousMonth)
-    .eq("auth_id", (await supabase.auth.getUser()).data.user?.id)
-    .single();
-
-  if (error || !data) return 0; // Retorna 0 se for o primeiro mês
-
-  return data.saldo_final;
-}
-
-export async function storeCurrentBalance(month: string, balance: number) {
-  const supabase = createClient();
-
-  await supabase.from("saldo_acumulado").upsert({
-    mes: month,
-    saldo_final: balance,
-  });
-}
 
 export async function getIncome(month: string) {
   const supabase = createClient();
@@ -58,7 +31,7 @@ export async function getExpense(month: string) {
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getLastPreviousx(month: string) {
+export async function getLastPrevious(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase

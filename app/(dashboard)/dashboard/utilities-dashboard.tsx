@@ -1,9 +1,5 @@
 import { fetchAllData } from "@/app/services/fetch-all-data";
-import {
-  getExpense,
-  getIncome,
-  storeCurrentBalance,
-} from "@/app/services/transacoes";
+import { getExpense, getIncome } from "@/app/services/transacoes";
 import { UseDates } from "@/hooks/use-dates";
 
 export default async function UtilitiesDashboard(month: string) {
@@ -30,9 +26,6 @@ export default async function UtilitiesDashboard(month: string) {
   const balancoAnterior = receitasAnterior - despesasAnterior;
 
   const previsto = previstoAnterior + balanco;
-  const previstoAjustado = previsto.toFixed(2);
-
-  await storeCurrentBalance(month, previstoAjustado);
 
   const summary = [
     {
