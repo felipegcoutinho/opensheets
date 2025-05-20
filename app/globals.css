@@ -8,7 +8,7 @@
 }
 
 :root {
-  --background: oklch(0.985 0 0);
+  --background: oklch(0.97 0.0069 124.45);
   --card: oklch(1 0 none);
   --popover: oklch(0.985 0 0);
   --sidebar: oklch(1 0 none);
