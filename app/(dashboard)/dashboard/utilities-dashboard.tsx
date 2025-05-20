@@ -47,7 +47,7 @@ export default async function UtilitiesDashboard(month: string) {
       color: "bg-chart-3",
     },
     {
-      title: "Saldo Previsto",
+      title: "Previsto",
       value: previsto,
       previousValue: previstoAnterior,
       color: "bg-chart-4",
