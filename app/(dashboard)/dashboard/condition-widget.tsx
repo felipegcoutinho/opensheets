@@ -18,7 +18,7 @@ export async function ConditionWidget({ month }) {
         <CardContent key={item.condicao} className="grid gap-2 p-0 py-1">
           <div className="flex items-center justify-between">
             <Link
-              href={`/dashboard/condicao/${item.condicao}`}
+              href={`/dashboard/condicao/${item.condicao}?periodo=${month}`}
               className="flex items-center gap-1 hover:underline"
             >
               {item.condicao}

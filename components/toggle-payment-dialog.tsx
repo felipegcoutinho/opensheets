@@ -96,7 +96,7 @@ export default function TogglePaymentDialog({
         <DialogFooter className="flex-row gap-2">
           {isCartaoCredito ? (
             <>
-              <Button variant={"outline"} className="w-1/2" asChild>
+              <Button variant="secondary" className="w-1/2" asChild>
                 <Link
                   href={`/cartao/${cartaoId}/${cartoDescricaoLowerCase}?periodo=${periodo}`}
                   target="_blank"

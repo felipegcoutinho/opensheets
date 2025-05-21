@@ -111,9 +111,7 @@ export const getColumns = (
           )}
 
           {item.responsavel === "sistema" && (
-            <span className="text-muted-foreground text-xs">
-              <CheckCircle2Icon fill="green" className="text-white" size={15} />
-            </span>
+            <CheckCircle2Icon color="green" size={16} />
           )}
 
           {item.dividir_lancamento === true && (
@@ -232,7 +230,16 @@ export const getColumns = (
   },
 
   {
-    accessorKey: "contaCartao",
+    id: "categoria",
+    accessorFn: (row) => row.categorias?.nome,
+    header: "Categoria",
+    enableHiding: true,
+    cell: () => null,
+  },
+
+  {
+    id: "conta_cartao",
+    accessorFn: (row) => getDescricao(row),
     header: () => <span>Conta/Cartão</span>,
     cell: ({ row }) => {
       const item = row.original;
@@ -327,7 +334,9 @@ export const getColumns = (
             </div>
           )}
 
-          {item.responsavel != "sistema" && (
+          {item.responsavel === "sistema" ? (
+            <CheckCircle2Icon className="text-muted" size={16} />
+          ) : (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>

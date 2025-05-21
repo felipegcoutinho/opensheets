@@ -2,9 +2,9 @@ import {
   Banknote,
   Barcode,
   CalendarClockIcon,
-  Check,
+  CheckLine,
   CreditCard,
-  RefreshCw,
+  RotateCw,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -32,8 +32,8 @@ function UseStyles() {
   function getConditionIcon(condicao: string) {
     const icons = {
       parcelado: <CalendarClockIcon size={15} />,
-      recorrente: <RefreshCw size={15} />,
-      vista: <Check size={15} />,
+      recorrente: <RotateCw size={15} />,
+      vista: <CheckLine size={15} />,
     };
 
     return icons[condicao] || null;
