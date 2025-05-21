@@ -48,8 +48,8 @@ export function AppSidebar({
       {...props}
       className="dark:border-border/30 border-border border-r dark:border-r"
     >
-      <SidebarHeader className="flex items-center justify-center">
-        <div className="flex items-center gap-2">
+      <SidebarHeader>
+        <div className="mt-4 flex items-center gap-2">
           {open ? <Logo /> : <SidebarIcon />}
         </div>
       </SidebarHeader>

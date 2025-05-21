@@ -2,20 +2,18 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 
-function Logo() {
+export default function Logo() {
   const { resolvedTheme } = useTheme();
   const darkMode = resolvedTheme === "dark";
 
   return (
-    <Link href="#" className="flex items-center">
+    <Link href="#">
       <Image
         src={darkMode ? "/new_logo_dark.svg" : "/new_logo.svg"}
         alt="OpenSheets Logo"
-        width={200}
+        width={180}
         height={50}
       />
     </Link>
   );
 }
-
-export default Logo;
