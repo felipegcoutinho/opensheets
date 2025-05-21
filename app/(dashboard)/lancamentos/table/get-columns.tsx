@@ -22,7 +22,7 @@ import {
 import UseStyles from "@/hooks/use-styles";
 import {
   CheckCircle2Icon,
-  Ellipsis,
+  EllipsisVertical,
   FileImage,
   MessageSquareText,
   PartyPopper,
@@ -256,7 +256,7 @@ export const getColumns = (
                 variant="ghost"
                 className="data-[state=open]:bg-muted flex p-0"
               >
-                <Ellipsis size={16} />
+                <EllipsisVertical size={16} />
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -308,22 +308,6 @@ export const getColumns = (
               )}
 
               {item.responsavel != "sistema" && (
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <TogglePaymentDialog
-                    id={item.id}
-                    cartaoId={item.cartoes?.id}
-                    periodo={item.periodo}
-                    cartoDescricao={item.cartoes?.descricao}
-                    realizadoAtual={item.realizado}
-                    formaPagamento={item.forma_pagamento}
-                    onStatusChanged={(novoStatus) => {
-                      item.realizado = novoStatus;
-                    }}
-                  />
-                </DropdownMenuItem>
-              )}
-
-              {item.responsavel != "sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -341,6 +325,37 @@ export const getColumns = (
             <div className="flex text-center">
               <FileImage className="stroke-gray-500" size={16} />
             </div>
+          )}
+
+          {item.responsavel != "sistema" && (
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <TogglePaymentDialog
+                    id={item.id}
+                    cartaoId={item.cartoes?.id}
+                    periodo={item.periodo}
+                    cartoDescricao={item.cartoes?.descricao}
+                    realizadoAtual={item.realizado}
+                    formaPagamento={item.forma_pagamento}
+                    onStatusChanged={(novoStatus) => {
+                      item.realizado = novoStatus;
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {item.realizado ? (
+                    <span>
+                      Pagamento realizado, deseja <strong>desfazer</strong>?
+                    </span>
+                  ) : (
+                    <span>
+                      Pagamento pendente, deseja <strong>pagar</strong>?
+                    </span>
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       );

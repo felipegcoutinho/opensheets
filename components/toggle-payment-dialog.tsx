@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -45,7 +46,11 @@ export default function TogglePaymentDialog({
     setLoading(false);
   };
 
-  const labelStatus = isPago ? "Pago" : "Pagar";
+  const labelStatus = isPago ? (
+    <ThumbsUp size={16} />
+  ) : (
+    <ThumbsDown className="text-muted-foreground" size={16} />
+  );
   const dialogTitle = isCartaoCredito
     ? "Pagamento via cartão"
     : isPago

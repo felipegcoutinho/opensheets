@@ -254,7 +254,7 @@ export function TableTransaction({
             placeholder="Pesquisar..."
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
-            className="w-64"
+            className="w-42"
           />
         </div>
       </div>
