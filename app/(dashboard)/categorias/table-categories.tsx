@@ -17,10 +17,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import UseStyles from "@/hooks/use-styles";
 import { Ellipsis } from "lucide-react";
 import DeleteCategory from "./modal/delete-category";
 import UpdateCategory from "./modal/update-category";
-import UseStyles from "@/hooks/use-styles";
 
 export default function TableCategories({ categorias }) {
   const { getBadgeStyle } = UseStyles();
@@ -96,7 +96,7 @@ export default function TableCategories({ categorias }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={8} className="text-center">
-                  <EmptyCard width={100} height={100} />
+                  <EmptyCard />
                 </TableCell>
               </TableRow>
             )}

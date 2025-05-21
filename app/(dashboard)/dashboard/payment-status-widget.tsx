@@ -1,4 +1,5 @@
 "use client";
+import EmptyCard from "@/components/empty-card";
 import { Separator } from "@/components/ui/separator";
 import { PaymentSection } from "./payment-section";
 
@@ -15,6 +16,8 @@ export default function PaymentStatusWidget({
   sumPaidExpense,
   sumPaidIncome,
 }: PaymentStatusWidgetProps) {
+  if (!expenses && !incomes) return <EmptyCard />;
+
   const pendingIncome = incomes - sumPaidIncome;
   const pendingExpense = expenses - sumPaidExpense;
 

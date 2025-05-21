@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyCard from "@/components/empty-card";
 import { CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
@@ -11,6 +12,10 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 export function ChartSummary({ data }) {
+  if (!data || data.length === 0) {
+    return <EmptyCard />;
+  }
+
   // Configuração do gráfico com cores consistentes
   const chartConfig = {
     incomes: {

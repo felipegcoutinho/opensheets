@@ -1,4 +1,5 @@
 import { getPayment } from "@/app/services/transacoes";
+import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { CardContent } from "@/components/ui/card";
 
@@ -8,6 +9,8 @@ export async function PaymentWidget({ month }) {
   const dataSorted = payment?.sort((a, b) => {
     return b.sum - a.sum;
   });
+
+  if (dataSorted?.length === 0) return <EmptyCard />;
 
   return (
     <>

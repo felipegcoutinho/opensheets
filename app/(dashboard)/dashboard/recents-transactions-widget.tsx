@@ -12,7 +12,7 @@ function RecentesTransactions({ transactions }) {
 
   const { DateFormat } = UseDates();
 
-  if (!transactions.length) return <EmptyCard width={100} height={100} />;
+  if (!transactions.length) return <EmptyCard />;
 
   return (
     <div className="mb-4">
