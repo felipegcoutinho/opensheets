@@ -78,7 +78,11 @@ export default function InvoicePaymentDialog({
 
         <DialogFooter className="flex flex-col gap-2 sm:flex-row">
           <DialogClose asChild>
-            <Button variant="outline" className="w-full sm:w-1/2" type="button">
+            <Button
+              className="w-full sm:w-1/2"
+              type="button"
+              variant="secondary"
+            >
               Cancelar
             </Button>
           </DialogClose>
