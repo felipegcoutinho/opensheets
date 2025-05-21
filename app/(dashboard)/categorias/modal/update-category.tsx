@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect } from "react";
-import CategoryHelper from "../category-helper";
+import UtilitiesCategoria from "../utilities-categoria";
 
 type Props = {
   itemId: number;
@@ -42,7 +42,7 @@ export default function UpdateCategory({
     setIsOpen,
     isUsedForCalculations,
     setIsUsedForCalculations,
-  } = CategoryHelper();
+  } = UtilitiesCategoria();
 
   useEffect(() => {
     setIsUsedForCalculations(itemUsadoParaCalculos);

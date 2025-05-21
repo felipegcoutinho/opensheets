@@ -2,7 +2,7 @@ import { fetchAllData } from "@/app/services/fetch-all-data";
 import { getExpense, getIncome } from "@/app/services/transacoes";
 import { UseDates } from "@/hooks/use-dates";
 
-async function helperDashboard(month: string) {
+export default async function UtilitiesDashboard(month: string) {
   const { getPreviousMonth } = UseDates();
 
   const previousMonth = getPreviousMonth(month);
@@ -47,7 +47,7 @@ async function helperDashboard(month: string) {
       color: "bg-chart-3",
     },
     {
-      title: "Saldo Previsto",
+      title: "Previsto",
       value: previsto,
       previousValue: previstoAnterior,
       color: "bg-chart-4",
@@ -89,5 +89,3 @@ async function helperDashboard(month: string) {
     getTotalsCategory,
   };
 }
-
-export default helperDashboard;

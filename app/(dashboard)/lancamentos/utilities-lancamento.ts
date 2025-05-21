@@ -9,7 +9,7 @@ import { ptBR } from "date-fns/locale";
 import { useState } from "react"; // Removido useEffect não utilizado aqui
 import { toast } from "sonner";
 
-export default function Utils() {
+export default function UtilitiesLancamento() {
   const [isOpen, setIsOpen] = useState(false);
   const [tipoTransacao, setTipoTransacao] = useState("");
   const [quantidadeParcelas, setQuantidadeParcelas] = useState("");

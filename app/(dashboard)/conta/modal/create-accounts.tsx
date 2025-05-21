@@ -22,10 +22,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import Utils from "../utils";
+import UtilitiesConta from "../utilities-conta";
 
 export default function CreateAccount() {
-  const { isOpen, setIsOpen, handleSubmit, loading } = Utils();
+  const { isOpen, setIsOpen, handleSubmit, loading } = UtilitiesConta();
 
   const { logos } = UseOptions();
 

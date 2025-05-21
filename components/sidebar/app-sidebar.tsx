@@ -15,6 +15,7 @@ import { useTheme } from "next-themes";
 import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
+import SidebarIcon from "../sidebar-icon";
 import { NavLinks } from "./nav-links";
 
 export function AppSidebar({
@@ -47,9 +48,9 @@ export function AppSidebar({
       {...props}
       className="dark:border-border/30 border-border border-r dark:border-r"
     >
-      <SidebarHeader className="flex items-center justify-center">
-        <div className="flex items-center gap-2">
-          {open ? <Logo /> : <p>OP</p>}
+      <SidebarHeader>
+        <div className="mt-4 flex items-center gap-2">
+          {open ? <Logo /> : <SidebarIcon />}
         </div>
       </SidebarHeader>
       <SidebarContent>

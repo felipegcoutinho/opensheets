@@ -2,7 +2,7 @@ import { addAccount, updateAccount } from "@/actions/accounts";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 
-function Utils() {
+export default function UtilitiesConta() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusPagamento, setStatusPagamento] = useState(false);
@@ -62,5 +62,3 @@ function Utils() {
     handleUpdate,
   };
 }
-
-export default Utils;

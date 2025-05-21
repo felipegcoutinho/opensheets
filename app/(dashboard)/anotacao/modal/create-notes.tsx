@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
-import Utils from "../utils";
+import UtilitiesAnotacao from "../utilities-anotacao";
 
 type MonthOption = {
   value: string;
@@ -33,7 +33,7 @@ type Props = {
 };
 
 export default function CreateNotes({ children }: Props) {
-  const { loading, handleSubmit, isOpen, setIsOpen } = Utils();
+  const { loading, handleSubmit, isOpen, setIsOpen } = UtilitiesAnotacao();
   const { getMonthOptions } = UseDates();
 
   return (

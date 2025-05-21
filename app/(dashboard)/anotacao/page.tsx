@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
 import CreateNotes from "./modal/create-notes";
-import UpdateNotes from "./modal/update-notes";
 import DeleteNotes from "./modal/delete-notes";
+import UpdateNotes from "./modal/update-notes";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -28,7 +28,7 @@ export default async function page(props: { params: { month: string } }) {
       <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {notes.length === 0 && (
           <Card className="w-full">
-            <EmptyCard width={100} height={100} />
+            <EmptyCard />
           </Card>
         )}
 

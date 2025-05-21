@@ -37,7 +37,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
       <div className="flex justify-between">
         {values.map((value, index) => (
           <div key={index} className="flex items-center text-sm">
-            <div className={`mr-2 h-4 w-4 rounded ${value.color}`} />
+            <div className={`mr-2 h-2 w-2 rounded ${value.color}`} />
             <span className="font-bold">
               <MoneyValues value={value.amount} />
             </span>

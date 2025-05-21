@@ -1,7 +1,9 @@
 "use client";
+
 import { LogosOnTable } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -20,7 +22,7 @@ import {
 import UseStyles from "@/hooks/use-styles";
 import {
   CheckCircle2Icon,
-  Ellipsis,
+  EllipsisVertical,
   FileImage,
   MessageSquareText,
   PartyPopper,
@@ -29,7 +31,6 @@ import {
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
-import { Badge } from "@/components/ui/badge";
 
 const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
   UseStyles();
@@ -110,9 +111,7 @@ export const getColumns = (
           )}
 
           {item.responsavel === "sistema" && (
-            <span className="text-muted-foreground text-xs">
-              <CheckCircle2Icon fill="green" className="text-white" size={15} />
-            </span>
+            <CheckCircle2Icon color="green" size={16} />
           )}
 
           {item.dividir_lancamento === true && (
@@ -231,7 +230,16 @@ export const getColumns = (
   },
 
   {
-    accessorKey: "contaCartao",
+    id: "categoria",
+    accessorFn: (row) => row.categorias?.nome,
+    header: "Categoria",
+    enableHiding: true,
+    cell: () => null,
+  },
+
+  {
+    id: "conta_cartao",
+    accessorFn: (row) => getDescricao(row),
     header: () => <span>Conta/Cartão</span>,
     cell: ({ row }) => {
       const item = row.original;
@@ -255,7 +263,7 @@ export const getColumns = (
                 variant="ghost"
                 className="data-[state=open]:bg-muted flex p-0"
               >
-                <Ellipsis size={16} />
+                <EllipsisVertical size={16} />
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -307,22 +315,6 @@ export const getColumns = (
               )}
 
               {item.responsavel != "sistema" && (
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <TogglePaymentDialog
-                    id={item.id}
-                    cartaoId={item.cartoes?.id}
-                    periodo={item.periodo}
-                    cartoDescricao={item.cartoes?.descricao}
-                    realizadoAtual={item.realizado}
-                    formaPagamento={item.forma_pagamento}
-                    onStatusChanged={(novoStatus) => {
-                      item.realizado = novoStatus;
-                    }}
-                  />
-                </DropdownMenuItem>
-              )}
-
-              {item.responsavel != "sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -340,6 +332,39 @@ export const getColumns = (
             <div className="flex text-center">
               <FileImage className="stroke-gray-500" size={16} />
             </div>
+          )}
+
+          {item.responsavel === "sistema" ? (
+            <CheckCircle2Icon className="text-muted" size={16} />
+          ) : (
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <TogglePaymentDialog
+                    id={item.id}
+                    cartaoId={item.cartoes?.id}
+                    periodo={item.periodo}
+                    cartoDescricao={item.cartoes?.descricao}
+                    realizadoAtual={item.realizado}
+                    formaPagamento={item.forma_pagamento}
+                    onStatusChanged={(novoStatus) => {
+                      item.realizado = novoStatus;
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {item.realizado ? (
+                    <span>
+                      Pagamento realizado, deseja <strong>desfazer</strong>?
+                    </span>
+                  ) : (
+                    <span>
+                      Pagamento pendente, deseja <strong>pagar</strong>?
+                    </span>
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       );

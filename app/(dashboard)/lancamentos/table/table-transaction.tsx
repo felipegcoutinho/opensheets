@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"; // Added Select imports
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -34,16 +34,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react"; // Added useMemo
+import { useMemo, useState } from "react";
 import CreateTransactions from "../modal/create-transactions";
+import { ComboboxFilter } from "./combo-filter";
 import { getColumns, getDescricao } from "./get-columns";
 
-// Função personalizada para filtrar em várias colunas (global filter)
 const customGlobalFilter: FilterFn<any> = (row, columnId, filterValue) => {
   const searchValue = filterValue.toLowerCase();
   const item = row.original;
-
-  // Pega a descrição da conta ou cartão
   const descricaoContaCartao = getDescricao(item)?.toLowerCase() || "";
 
   return (
@@ -95,6 +93,9 @@ export function TableTransaction({
       columnVisibility,
       rowSelection,
       pagination,
+      columnVisibility: {
+        categoria: false,
+      },
     },
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,
@@ -109,7 +110,6 @@ export function TableTransaction({
     onPaginationChange: setPagination,
   });
 
-  // Cálculo da soma das Lançamentos selecionadas
   const selectedTransactionSum = data
     .filter((_, index) => rowSelection[index])
     .reduce((sum, rowData) => sum + rowData.valor, 0);
@@ -136,6 +136,20 @@ export function TableTransaction({
   const responsavelOptions = useMemo(() => {
     const values = new Set(
       data.map((item) => item.responsavel).filter(Boolean),
+    );
+    return Array.from(values);
+  }, [data]);
+
+  const categoriaOptions = useMemo(() => {
+    const values = new Set(
+      data.map((item) => item.categorias?.nome).filter(Boolean),
+    );
+    return Array.from(values);
+  }, [data]);
+
+  const contaCartaoOptions = useMemo(() => {
+    const values = new Set(
+      data.map((item) => getDescricao(item)).filter(Boolean),
     );
     return Array.from(values);
   }, [data]);
@@ -179,7 +193,7 @@ export function TableTransaction({
               setColumnFilterValue("tipo_transacao", value)
             }
           >
-            <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
               <SelectValue placeholder="Transação" />
             </SelectTrigger>
             <SelectContent>
@@ -192,12 +206,11 @@ export function TableTransaction({
             </SelectContent>
           </Select>
 
-          {/* Condição Filter */}
           <Select
             value={getColumnFilterValue("condicao")}
             onValueChange={(value) => setColumnFilterValue("condicao", value)}
           >
-            <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
               <SelectValue placeholder="Condição" />
             </SelectTrigger>
             <SelectContent>
@@ -210,15 +223,14 @@ export function TableTransaction({
             </SelectContent>
           </Select>
 
-          {/* Forma de Pagamento Filter */}
           <Select
             value={getColumnFilterValue("forma_pagamento")}
             onValueChange={(value) =>
               setColumnFilterValue("forma_pagamento", value)
             }
           >
-            <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder="Forma de Pagamento" />
+            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
+              <SelectValue placeholder="Pagamento" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todas</SelectItem>
@@ -230,14 +242,13 @@ export function TableTransaction({
             </SelectContent>
           </Select>
 
-          {/* Responsável Filter */}
           <Select
             value={getColumnFilterValue("responsavel")}
             onValueChange={(value) =>
               setColumnFilterValue("responsavel", value)
             }
           >
-            <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
               <SelectValue placeholder="Responsável" />
             </SelectTrigger>
             <SelectContent>
@@ -250,27 +261,40 @@ export function TableTransaction({
             </SelectContent>
           </Select>
 
+          <ComboboxFilter
+            placeholder="Categoria"
+            options={categoriaOptions}
+            value={getColumnFilterValue("categoria")}
+            onChange={(value) => setColumnFilterValue("categoria", value)}
+          />
+
+          <ComboboxFilter
+            placeholder="Conta/Cartão"
+            options={contaCartaoOptions}
+            value={getColumnFilterValue("conta_cartao")}
+            onChange={(value) => setColumnFilterValue("conta_cartao", value)}
+          />
+
           <Input
             placeholder="Pesquisar..."
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
-            className="w-64"
+            className="w-full sm:w-[140px]"
           />
         </div>
       </div>
 
-      {Object.keys(rowSelection).length > 0 && !hidden && (
-        <div
-          className="text-muted-foreground mb-2 text-right text-xs"
-          hidden={hidden}
-        >
-          Total Selecionado: <MoneyValues value={selectedTransactionSum} />
-        </div>
-      )}
-
       <Card>
         <CardHeader>
-          <CardTitle hidden={hidden}>Lançamentos</CardTitle>
+          <CardTitle className="flex justify-between" hidden={hidden}>
+            Lançamentos
+            {Object.keys(rowSelection).length > 0 && !hidden && (
+              <div className="text-muted-foreground text-xs">
+                Total Selecionado:{" "}
+                <MoneyValues value={selectedTransactionSum} />
+              </div>
+            )}
+          </CardTitle>
         </CardHeader>
         <CardContent className="px-4">
           <Table>
@@ -294,10 +318,7 @@ export function TableTransaction({
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
-                    className={`whitespace-nowrap ${
-                      row.original.categorias?.nome === "saldo anterior" &&
-                      "bg-linear-to-r from-lime-300/10 to-transparent"
-                    }`}
+                    className={`whitespace-nowrap ${row.original.categorias?.nome === "saldo anterior" && "bg-linear-to-r from-lime-300/10 to-transparent"}`}
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                   >
@@ -313,15 +334,8 @@ export function TableTransaction({
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    <EmptyCard
-                      message="Nenhum lançamento encontrado."
-                      width={100}
-                      height={100}
-                    />
+                  <TableCell colSpan={columns.length}>
+                    <EmptyCard />
                   </TableCell>
                 </TableRow>
               )}

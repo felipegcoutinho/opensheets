@@ -13,10 +13,9 @@ async function page(props: { params: { month: string } }) {
   const billsByResponsible = await getBillsByResponsible(month);
 
   if (!transactionsByResponsible.length || !billsByResponsible)
-    return <EmptyCard width={100} height={100} />;
+    return <EmptyCard />;
 
-  if (!transactionsByResponsible.length)
-    return <EmptyCard width={100} height={100} />;
+  if (!transactionsByResponsible.length) return <EmptyCard />;
 
   // Função para reorganizar o objeto
   function prioritizeResponsavel(data, prioridade) {

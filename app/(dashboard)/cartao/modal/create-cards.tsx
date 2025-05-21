@@ -23,7 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import Utils from "../utils";
+import UtilitiesCartao from "../utilities-cartao";
 
 export default function CreateCard({ getAccountMap }) {
   const {
@@ -33,7 +33,7 @@ export default function CreateCard({ getAccountMap }) {
     loading,
     statusPagamento,
     setStatusPagamento,
-  } = Utils();
+  } = UtilitiesCartao();
 
   const { logos, bandeiras } = UseOptions();
 

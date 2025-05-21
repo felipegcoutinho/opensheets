@@ -1,10 +1,10 @@
 import {
-  Check,
-  CalendarClockIcon,
-  RefreshCw,
   Banknote,
   Barcode,
+  CalendarClockIcon,
+  CheckLine,
   CreditCard,
+  RotateCw,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -31,9 +31,9 @@ function UseStyles() {
 
   function getConditionIcon(condicao: string) {
     const icons = {
-      parcelado: <CalendarClockIcon size={14} />,
-      recorrente: <RefreshCw size={14} />,
-      vista: <Check size={14} />,
+      parcelado: <CalendarClockIcon size={15} />,
+      recorrente: <RotateCw size={15} />,
+      vista: <CheckLine size={15} />,
     };
 
     return icons[condicao] || null;
@@ -41,20 +41,20 @@ function UseStyles() {
 
   function getPaymentIcon(pagamento: string) {
     const icons = {
-      dinheiro: <Banknote size={14} />,
-      "cartão de crédito": <CreditCard size={14} />,
+      dinheiro: <Banknote size={15} />,
+      "cartão de crédito": <CreditCard size={15} />,
       pix: (
         <Image
           src="/logos/pix_lucide.svg"
           alt="Pix"
           className="dark:invert"
-          width={14}
-          height={14}
+          width={15}
+          height={15}
         />
       ),
-      boleto: <Barcode size={14} />,
-      credito: <Banknote size={14} />,
-      "cartão de débito": <CreditCard size={14} />,
+      boleto: <Barcode size={15} />,
+      credito: <Banknote size={15} />,
+      "cartão de débito": <CreditCard size={15} />,
     };
 
     return icons[pagamento] || null;

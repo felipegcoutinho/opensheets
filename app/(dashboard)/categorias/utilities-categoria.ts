@@ -6,7 +6,7 @@ import {
 import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export default function CategoryHelper() {
+export default function UtilitiesCategoria() {
   const [isOpen, setIsOpen] = useState(false);
   const [isUsedForCalculations, setIsUsedForCalculations] = useState(true);
   const [isPending, startTransition] = useTransition();

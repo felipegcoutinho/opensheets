@@ -1,10 +1,10 @@
 "use client";
 
 import DeleteButton from "@/components/delete-button";
-import Utils from "../utils-transacao";
+import UtilitiesLancamento from "../utilities-lancamento";
 
 export default function DeleteTransactions({ itemId, itemResponsavel }) {
-  const { handleDelete, isOpen, setIsOpen } = Utils();
+  const { handleDelete, isOpen, setIsOpen } = UtilitiesLancamento();
 
   return (
     <DeleteButton

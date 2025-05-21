@@ -2,7 +2,7 @@ import { addCards, updateCards } from "@/actions/cards";
 import { useState } from "react";
 import { toast } from "sonner";
 
-function Utils() {
+export default async function UtilitiesCartao() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusPagamento, setStatusPagamento] = useState(false);
@@ -61,5 +61,3 @@ function Utils() {
     setStatusPagamento,
   };
 }
-
-export default Utils;

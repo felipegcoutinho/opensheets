@@ -1,4 +1,5 @@
 "use client";
+import EmptyCard from "@/components/empty-card";
 import { CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
@@ -19,6 +20,8 @@ function StatsWidget({ statsConfig }) {
     label: title,
     qtde: qtde,
   }));
+
+  if (!chartData) return <EmptyCard />;
 
   return (
     <>

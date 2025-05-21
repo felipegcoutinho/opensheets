@@ -22,7 +22,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import Utils from "../utils";
+import UtilitiesConta from "../utilities-conta";
 
 export default function UpdateAccount({
   itemId,
@@ -31,7 +31,7 @@ export default function UpdateAccount({
   itemTipoConta,
   itemLogo,
 }) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = Utils();
+  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesConta();
 
   const { logos } = UseOptions();
 

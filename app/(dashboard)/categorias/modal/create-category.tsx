@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import CategoryHelper from "../category-helper";
+import UtilitiesCategoria from "../utilities-categoria";
 
 export default function CreateCategory() {
   const {
@@ -29,7 +29,7 @@ export default function CreateCategory() {
     setIsOpen,
     isUsedForCalculations,
     setIsUsedForCalculations,
-  } = CategoryHelper();
+  } = UtilitiesCategoria();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

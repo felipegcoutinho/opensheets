@@ -8,7 +8,7 @@ import Image from "next/image";
 export default async function BillsWidget({ month, data }) {
   const { DateFormat } = UseDates();
 
-  if (!data.length) return <EmptyCard width={100} height={100} />;
+  if (!data.length) return <EmptyCard />;
 
   const dataSorted = data.sort((a, b) => b.valor - a.valor);
 

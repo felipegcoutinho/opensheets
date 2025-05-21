@@ -1,4 +1,5 @@
 "use client";
+import EmptyCard from "@/components/empty-card";
 import { Separator } from "@/components/ui/separator";
 import { PaymentSection } from "./payment-section";
 
@@ -15,6 +16,8 @@ export default function PaymentStatusWidget({
   sumPaidExpense,
   sumPaidIncome,
 }: PaymentStatusWidgetProps) {
+  if (!expenses && !incomes) return <EmptyCard />;
+
   const pendingIncome = incomes - sumPaidIncome;
   const pendingExpense = expenses - sumPaidExpense;
 
@@ -30,7 +33,7 @@ export default function PaymentStatusWidget({
       {
         amount: pendingIncome,
         label: "pendentes",
-        color: "bg-green-100 dark:bg-green-300",
+        color: "bg-zinc-200 dark:bg-zinc-300",
       },
     ],
   };
@@ -47,7 +50,7 @@ export default function PaymentStatusWidget({
       {
         amount: pendingExpense,
         label: "pendentes",
-        color: "bg-orange-100 dark:bg-orange-300",
+        color: "bg-zinc-200 dark:bg-zinc-300",
       },
     ],
   };

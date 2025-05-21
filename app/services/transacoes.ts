@@ -132,7 +132,7 @@ export async function getTransactionsByCategory(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select(`valor, tipo_transacao, categoria:categoria_id ( nome )`)
+    .select(`valor, tipo_transacao, categoria:categoria_id (id, nome )`)
     .eq("periodo", month)
     .eq("responsavel", "você");
 

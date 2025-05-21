@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -45,7 +46,11 @@ export default function TogglePaymentDialog({
     setLoading(false);
   };
 
-  const labelStatus = isPago ? "Pago" : "Pagar";
+  const labelStatus = isPago ? (
+    <ThumbsUp size={16} />
+  ) : (
+    <ThumbsDown className="text-muted-foreground" size={16} />
+  );
   const dialogTitle = isCartaoCredito
     ? "Pagamento via cartão"
     : isPago
@@ -88,10 +93,10 @@ export default function TogglePaymentDialog({
           <DialogDescription>{dialogMessage}</DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="flex w-full gap-2">
+        <DialogFooter className="flex-row gap-2">
           {isCartaoCredito ? (
             <>
-              <Button variant={"outline"} className="w-full" asChild>
+              <Button variant="secondary" className="w-1/2" asChild>
                 <Link
                   href={`/cartao/${cartaoId}/${cartoDescricaoLowerCase}?periodo=${periodo}`}
                   target="_blank"
@@ -103,7 +108,7 @@ export default function TogglePaymentDialog({
               </Button>
 
               <DialogClose asChild>
-                <Button className="w-full" variant="default">
+                <Button className="w-1/2" variant="default">
                   Entendi
                 </Button>
               </DialogClose>
