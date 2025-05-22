@@ -2,6 +2,7 @@
 
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -110,6 +111,9 @@ export function TableTransaction({
     onPaginationChange: setPagination,
   });
 
+  const isAnyFilterActive =
+    globalFilter.trim() !== "" || columnFilters.length > 0;
+
   const selectedTransactionSum = data
     .filter((_, index) => rowSelection[index])
     .reduce((sum, rowData) => sum + rowData.valor, 0);
@@ -193,7 +197,14 @@ export function TableTransaction({
               setColumnFilterValue("tipo_transacao", value)
             }
           >
-            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
+            <SelectTrigger
+              className={`w-full border-dashed sm:w-[140px] ${
+                getColumnFilterValue("tipo_transacao") &&
+                getColumnFilterValue("tipo_transacao") !== "all"
+                  ? "ring-primary font-bold ring-2"
+                  : ""
+              }`}
+            >
               <SelectValue placeholder="Transação" />
             </SelectTrigger>
             <SelectContent>
@@ -210,7 +221,14 @@ export function TableTransaction({
             value={getColumnFilterValue("condicao")}
             onValueChange={(value) => setColumnFilterValue("condicao", value)}
           >
-            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
+            <SelectTrigger
+              className={`w-full border-dashed sm:w-[140px] ${
+                getColumnFilterValue("condicao") &&
+                getColumnFilterValue("condicao") !== "all"
+                  ? "ring-primary font-bold ring-2"
+                  : ""
+              }`}
+            >
               <SelectValue placeholder="Condição" />
             </SelectTrigger>
             <SelectContent>
@@ -229,7 +247,14 @@ export function TableTransaction({
               setColumnFilterValue("forma_pagamento", value)
             }
           >
-            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
+            <SelectTrigger
+              className={`w-full border-dashed sm:w-[140px] ${
+                getColumnFilterValue("forma_pagamento") &&
+                getColumnFilterValue("forma_pagamento") !== "all"
+                  ? "ring-primary font-bold ring-2"
+                  : ""
+              }`}
+            >
               <SelectValue placeholder="Pagamento" />
             </SelectTrigger>
             <SelectContent>
@@ -248,7 +273,14 @@ export function TableTransaction({
               setColumnFilterValue("responsavel", value)
             }
           >
-            <SelectTrigger className="w-full border-dashed sm:w-[140px]">
+            <SelectTrigger
+              className={`w-full border-dashed sm:w-[140px] ${
+                getColumnFilterValue("responsavel") &&
+                getColumnFilterValue("responsavel") !== "all"
+                  ? "ring-primary font-bold ring-2"
+                  : ""
+              }`}
+            >
               <SelectValue placeholder="Responsável" />
             </SelectTrigger>
             <SelectContent>
@@ -276,7 +308,7 @@ export function TableTransaction({
           />
 
           <Input
-            placeholder="Pesquisar..."
+            placeholder="Pesquisar"
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
             className="w-full sm:w-[140px]"
@@ -285,16 +317,29 @@ export function TableTransaction({
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex justify-between" hidden={hidden}>
+        <CardHeader className="flex justify-between">
+          <CardTitle className="flex items-center gap-4" hidden={hidden}>
             Lançamentos
             {Object.keys(rowSelection).length > 0 && !hidden && (
-              <div className="text-muted-foreground text-xs">
-                Total Selecionado:{" "}
+              <Badge variant={"outline"} className="py-0">
+                Total Selecionado:
                 <MoneyValues value={selectedTransactionSum} />
-              </div>
+              </Badge>
             )}
           </CardTitle>
+          {isAnyFilterActive && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-destructive"
+              onClick={() => {
+                setGlobalFilter("");
+                setColumnFilters([]);
+              }}
+            >
+              Limpar Filtros
+            </Button>
+          )}
         </CardHeader>
         <CardContent className="px-4">
           <Table>

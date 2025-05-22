@@ -40,7 +40,10 @@ export function ComboboxFilter({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="border-input w-[140px] justify-between truncate border-dashed font-normal"
+          className={cn(
+            "border-input w-[140px] justify-between truncate border-dashed font-normal",
+            value && value !== "all" && "ring-primary font-bold ring-2",
+          )}
         >
           {value && value !== "all" ? value : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -58,7 +61,10 @@ export function ComboboxFilter({
                 onChange("all");
                 setOpen(false);
               }}
-              className={cn("cursor-pointer", value === "all" && "bg-accent")}
+              className={cn(
+                "cursor-pointer",
+                value === "all" && "bg-accent text-foreground font-bold",
+              )}
             >
               <Check
                 className={cn(
@@ -68,6 +74,7 @@ export function ComboboxFilter({
               />
               Todas
             </CommandItem>
+
             {options.map((option) => (
               <CommandItem
                 key={option}
@@ -75,7 +82,10 @@ export function ComboboxFilter({
                   onChange(option);
                   setOpen(false);
                 }}
-                className="cursor-pointer capitalize"
+                className={cn(
+                  "cursor-pointer capitalize",
+                  value === option && "bg-accent text-foreground font-bold",
+                )}
               >
                 <Check
                   className={cn(
