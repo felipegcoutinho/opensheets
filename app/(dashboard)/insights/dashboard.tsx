@@ -59,7 +59,7 @@ function Home({
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="my-2 w-72 bg-gradient-to-r from-orange-400 to-purple-400 transition-all hover:scale-110"
+        className="to-primary my-2 w-72 bg-gradient-to-l from-violet-500 transition-all hover:scale-110"
       >
         <div className="flex items-center justify-center gap-2">
           {loading ? (

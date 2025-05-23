@@ -32,20 +32,14 @@ import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 
-const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
-  UseStyles();
-
-export function getDescricao(row) {
-  const contaDescricao = row.contas?.descricao;
-  const cartaoDescricao = row.cartoes?.descricao;
-  return contaDescricao ?? cartaoDescricao;
-}
-
-export function getLogo(row) {
-  const contaLogo = row.contas?.logo_image;
-  const cartaoLogo = row.cartoes?.logo_image;
-  return contaLogo ?? cartaoLogo;
-}
+const {
+  getResponsableStyle,
+  getConditionIcon,
+  getPaymentIcon,
+  getBadgeStyle,
+  getDescricao,
+  getLogo,
+} = UseStyles();
 
 export const getColumns = (
   getAccountMap,
@@ -67,7 +61,7 @@ export const getColumns = (
     cell: ({ row }) => (
       <Checkbox
         hidden={hidden}
-        className="border-neutral-300"
+        className="border-input"
         checked={row.getIsSelected()}
         onCheckedChange={row.getToggleSelectedHandler()}
       />
@@ -80,7 +74,7 @@ export const getColumns = (
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <span className="text-muted-foreground">
+        <span className="text-muted-foreground text-sm">
           {DateFormat(item.data_compra)}
         </span>
       );
@@ -173,11 +167,7 @@ export const getColumns = (
 
     cell: ({ row }) => {
       const item = row.original;
-      return (
-        <div className={`capitalize`}>
-          <MoneyValues value={item.valor} />
-        </div>
-      );
+      return <MoneyValues value={item.valor} />;
     },
   },
 
@@ -188,7 +178,6 @@ export const getColumns = (
     },
     cell: ({ row }) => {
       const item = row.original;
-
       return (
         <span className="flex items-center gap-1">
           {getConditionIcon(item.condicao)}

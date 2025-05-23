@@ -77,7 +77,7 @@ async function page(props: { params: { month: string } }) {
             </Card>
           ))
         ) : (
-          <EmptyCard height={100} width={100} />
+          <EmptyCard />
         )}
       </div>
     </div>

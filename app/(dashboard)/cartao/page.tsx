@@ -8,16 +8,18 @@ import CreateCard from "./modal/create-cards";
 import UiCard from "./ui-card";
 
 export default async function page(props) {
-  const cartoesAtivos = await getCards();
-  const cartoesInativos = await getCardsDisabled();
-  const getAccountMap = await getAccount();
+  const [cartoesAtivosData, cartoesInativos, getAccountMap] = await Promise.all(
+    [getCards(), getCardsDisabled(), getAccount()],
+  );
 
-  const cardsWithLimits = await Promise.all(
-    cartoesAtivos?.map(async (card) => {
+  let cardsWithLimits = [];
+  if (cartoesAtivosData && cartoesAtivosData.length > 0) {
+    const cardsWithLimitsPromises = cartoesAtivosData.map(async (card) => {
       const limites = await getLimitesCartao(card.id, card.limite);
       return { ...card, limites };
-    }),
-  );
+    });
+    cardsWithLimits = await Promise.all(cardsWithLimitsPromises);
+  }
 
   return (
     <div className="mb-4 w-full">
@@ -35,7 +37,7 @@ export default async function page(props) {
 
         <TabsContent value="ativos">
           <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
-            {cardsWithLimits?.length !== 0 ? (
+            {cardsWithLimits?.length > 0 ? (
               cardsWithLimits.map((item) => (
                 <UiCard
                   key={item.id}
@@ -45,14 +47,14 @@ export default async function page(props) {
                 />
               ))
             ) : (
-              <EmptyCard height={100} width={100} />
+              <EmptyCard />
             )}
           </div>
         </TabsContent>
 
         <TabsContent value="inativos">
           <div className="grid gap-4 saturate-0 sm:grid-cols-1 lg:grid-cols-3">
-            {cartoesInativos?.length !== 0 ? (
+            {cartoesInativos?.length > 0 ? ( // Verificação ajustada para > 0 para clareza
               cartoesInativos.map((item) => (
                 <UiCard
                   key={item.id}
@@ -62,7 +64,7 @@ export default async function page(props) {
                 />
               ))
             ) : (
-              <EmptyCard height={100} width={100} />
+              <EmptyCard />
             )}
           </div>
         </TabsContent>

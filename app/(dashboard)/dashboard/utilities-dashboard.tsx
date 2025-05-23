@@ -4,7 +4,6 @@ import { UseDates } from "@/hooks/use-dates";
 
 export default async function UtilitiesDashboard(month: string) {
   const { getPreviousMonth } = UseDates();
-
   const previousMonth = getPreviousMonth(month);
 
   const {
@@ -21,10 +20,8 @@ export default async function UtilitiesDashboard(month: string) {
   const despesasAnterior = await getExpense(previousMonth);
 
   const saldo = sumPaidIncome - sumPaidExpense;
-
   const balanco = incomes - expenses;
   const balancoAnterior = receitasAnterior - despesasAnterior;
-
   const previsto = previstoAnterior + balanco;
 
   const summary = [
@@ -54,7 +51,7 @@ export default async function UtilitiesDashboard(month: string) {
     },
   ];
 
-  async function getTotalsCategory(month: string) {
+  function getTotalsCategory(month: string) {
     const totals = new Map<string, number>();
 
     // Primeiro somar transacoes

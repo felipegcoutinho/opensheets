@@ -30,7 +30,7 @@ import UtilitiesDashboard from "./utilities-dashboard";
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const { getLastSixMonths } = await UseDates();
+  const { getLastSixMonths } = UseDates();
   const sixmonth = await getLastSixMonths(month);
 
   const allData = await Promise.all(

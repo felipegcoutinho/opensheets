@@ -89,7 +89,7 @@ export default function UpdateTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>Editar</DialogTrigger>
+      <DialogTrigger className="cursor-pointer">Editar</DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Atualizar lançamento</DialogTitle>

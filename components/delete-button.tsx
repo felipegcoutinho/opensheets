@@ -22,7 +22,7 @@ export default function DeleteButton({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger
         onClick={(e) => e.stopPropagation()}
-        className="text-red-500"
+        className="cursor-pointer text-red-500"
       >
         Remover
       </DialogTrigger>
@@ -44,7 +44,7 @@ export default function DeleteButton({
           <form className="w-1/2" onSubmit={handleDelete}>
             <Button
               variant="destructive"
-              className="w-full cursor-pointer"
+              className="w-full"
               type="submit"
               disabled={loading}
             >
