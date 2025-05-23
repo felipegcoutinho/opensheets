@@ -12,12 +12,12 @@ interface ReturnButtonProps {
 
 const ReturnButton = React.memo(({ onClick, disabled }: ReturnButtonProps) => (
   <Button
-    className="ml-2 w-52 disabled:opacity-50"
+    className="w-52 disabled:opacity-50"
     onClick={onClick}
     disabled={disabled}
     size={"sm"}
   >
-    <span className="px-2">Retornar ao Mês Atual</span>
+    Retornar ao Mês Atual
   </Button>
 ));
 
