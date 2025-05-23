@@ -49,7 +49,7 @@ export function AppSidebar({
       className="dark:border-border/30 border-border border-r dark:border-r"
     >
       <SidebarHeader>
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-4 flex items-center justify-center gap-2">
           {open ? <Logo /> : <SidebarIcon />}
         </div>
       </SidebarHeader>

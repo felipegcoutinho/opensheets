@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 import {
   ColumnFiltersState,
   FilterFn,
@@ -38,7 +39,7 @@ import {
 import { useMemo, useState } from "react";
 import CreateTransactions from "../modal/create-transactions";
 import { ComboboxFilter } from "./combo-filter";
-import { getColumns, getDescricao } from "./get-columns";
+import { getColumns } from "./get-columns";
 
 const customGlobalFilter: FilterFn<any> = (row, columnId, filterValue) => {
   const searchValue = filterValue.toLowerCase();
@@ -75,6 +76,7 @@ export function TableTransaction({
   });
 
   const { DateFormat } = UseDates();
+  const { getDescricao, getLogo } = UseStyles();
 
   const columns = getColumns(
     getAccount,

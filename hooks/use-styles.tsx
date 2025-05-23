@@ -60,11 +60,25 @@ function UseStyles() {
     return icons[pagamento] || null;
   }
 
+  function getDescricao(row) {
+    const contaDescricao = row.contas?.descricao;
+    const cartaoDescricao = row.cartoes?.descricao;
+    return contaDescricao ?? cartaoDescricao;
+  }
+
+  function getLogo(row) {
+    const contaLogo = row.contas?.logo_image;
+    const cartaoLogo = row.cartoes?.logo_image;
+    return contaLogo ?? cartaoLogo;
+  }
+
   return {
     getBadgeStyle,
     getResponsableStyle,
     getConditionIcon,
     getPaymentIcon,
+    getDescricao,
+    getLogo,
   };
 }
 

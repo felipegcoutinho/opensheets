@@ -31,7 +31,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
           />
         </CardTitle>
 
-        <div className="text-muted-foreground space-y-1 text-sm">
+        <div className="text-muted-foreground mt-4 flex justify-between text-sm">
           <p>
             Fecha dia <strong>{item.dt_fechamento}</strong>
           </p>
@@ -53,7 +53,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
               </div>
               <div className="text-right">
                 <p className="text-muted-foreground">Disponível</p>
-                <span className="text-green-600">
+                <span className="text-emerald-600">
                   <MoneyValues value={item.limites.limiteDisponivel} />
                 </span>
               </div>
@@ -61,7 +61,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
 
             <Progress
               primary_color="bg-red-500 dark:bg-red-700"
-              secondary_color="bg-neutral-200 dark:bg-neutral-800"
+              secondary_color="bg-emerald-500 dark:bg-emerald-700"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }

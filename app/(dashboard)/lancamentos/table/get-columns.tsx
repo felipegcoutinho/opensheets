@@ -32,20 +32,14 @@ import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
 
-const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
-  UseStyles();
-
-export function getDescricao(row) {
-  const contaDescricao = row.contas?.descricao;
-  const cartaoDescricao = row.cartoes?.descricao;
-  return contaDescricao ?? cartaoDescricao;
-}
-
-export function getLogo(row) {
-  const contaLogo = row.contas?.logo_image;
-  const cartaoLogo = row.cartoes?.logo_image;
-  return contaLogo ?? cartaoLogo;
-}
+const {
+  getResponsableStyle,
+  getConditionIcon,
+  getPaymentIcon,
+  getBadgeStyle,
+  getDescricao,
+  getLogo,
+} = UseStyles();
 
 export const getColumns = (
   getAccountMap,

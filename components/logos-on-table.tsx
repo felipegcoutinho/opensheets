@@ -11,10 +11,7 @@ export function LogosOnTable({ descricao, logo }) {
         height={32}
         alt="Logo do cartão"
       />
-      <p>{descricao}
-
-        
-      </p>
+      <p>{descricao}</p>
     </div>
   );
 }

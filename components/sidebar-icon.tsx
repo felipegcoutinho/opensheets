@@ -13,8 +13,8 @@ function SidebarIcon() {
           darkMode ? "/sidebar_icon_logo_dark.svg" : "/sidebar_icon_logo.svg"
         }
         alt="OpenSheets Logo"
-        width={200}
-        height={50}
+        width={30}
+        height={30}
       />
     </Link>
   );

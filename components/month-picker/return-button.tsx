@@ -2,8 +2,8 @@
 
 "use client";
 
-import { Button } from "../ui/button";
 import React from "react";
+import { Button } from "../ui/button";
 
 interface ReturnButtonProps {
   onClick: () => void;
@@ -12,7 +12,7 @@ interface ReturnButtonProps {
 
 const ReturnButton = React.memo(({ onClick, disabled }: ReturnButtonProps) => (
   <Button
-    className="ml-2 w-52 cursor-pointer disabled:opacity-50"
+    className="ml-2 w-52 disabled:opacity-50"
     onClick={onClick}
     disabled={disabled}
     size={"sm"}

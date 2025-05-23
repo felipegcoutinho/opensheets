@@ -2,6 +2,7 @@
 
 import MoneyValues from "@/components/money-values";
 import Timeline from "@/components/timeline-orders";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 import UtilitiesLancamento from "../utilities-lancamento";
 import ViewImage from "./view-image";
 
@@ -47,6 +49,13 @@ export default function DetailsTransactions({
 
   const { DateFormat } = UseDates();
 
+  const {
+    getResponsableStyle,
+    getConditionIcon,
+    getPaymentIcon,
+    getBadgeStyle,
+  } = UseStyles();
+
   const handleDialogClose = (val) => {
     setIsOpen(val);
   };
@@ -55,9 +64,7 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger>
-        <span className="cursor-pointer">Detalhes</span>
-      </DialogTrigger>
+      <DialogTrigger className="cursor-pointer">Detalhes</DialogTrigger>
 
       <DialogContent className="p-0 sm:max-w-xl">
         <Card className="gap-2 space-y-4">
@@ -88,7 +95,11 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">
                     Forma de Pagamento
                   </span>
-                  <span className="capitalize">{itemFormaPagamento}</span>
+
+                  <span className="flex items-center gap-1">
+                    {getPaymentIcon(itemFormaPagamento)}
+                    <span className="capitalize">{itemFormaPagamento}</span>
+                  </span>
                 </li>
 
                 <li className="flex items-center justify-between">
@@ -107,7 +118,11 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">
                     Tipo de Transação
                   </span>
-                  <span className="capitalize">{itemTipoTransacao}</span>
+                  <span className="capitalize">
+                    <Badge variant={getBadgeStyle(itemTipoTransacao)}>
+                      {itemTipoTransacao}
+                    </Badge>
+                  </span>
                 </li>
 
                 <li className="flex items-center justify-between">
@@ -117,7 +132,11 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
-                  <span className="capitalize">{itemResponsavel}</span>
+                  <span className="capitalize">
+                    <Badge variant={getResponsableStyle(itemResponsavel)}>
+                      {itemResponsavel}
+                    </Badge>
+                  </span>
                 </li>
 
                 <li className="flex items-center justify-between">
@@ -194,7 +213,7 @@ export default function DetailsTransactions({
                 </li>
               </ul>
             </div>
-            <DialogFooter className="mb-4">
+            <DialogFooter>
               <DialogClose asChild>
                 <Button className="w-full" type="button">
                   Entendi

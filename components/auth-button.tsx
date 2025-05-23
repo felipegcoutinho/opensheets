@@ -23,7 +23,7 @@ export default async function AuthButton({ session }) {
             <Link href="/dashboard/" className="w-full">
               <Button
                 variant="ghost"
-                className="flex w-full cursor-pointer items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                className="flex w-full items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
               >
                 <LayoutDashboardIcon className="h-4 w-4" />
                 <span>Dashboard</span>
@@ -33,7 +33,7 @@ export default async function AuthButton({ session }) {
             <form action={signOut} className="w-full">
               <Button
                 variant="ghost"
-                className="flex w-full cursor-pointer items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700"
+                className="flex w-full items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sair</span>
