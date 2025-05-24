@@ -25,8 +25,8 @@ export default async function page(props) {
     <div className="mb-4 w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
-      <Tabs defaultValue="ativos" className="w-full">
-        <TabsList className="mb-4">
+      <Tabs defaultValue="ativos">
+        <TabsList className="mb-2">
           <TabsTrigger value="ativos">
             <Ping color="bg-green-500" /> Ativos
           </TabsTrigger>

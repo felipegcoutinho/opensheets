@@ -321,7 +321,7 @@ export async function getCardSum(month: string, cartao_id: number) {
 // Busca a lista de categoria para tabela
 export async function getCategoria(
   month: string,
-  categoria_id: string,
+  categoria_nome: string,
   tipo_transacao: string,
 ) {
   const supabase = createClient();
@@ -337,7 +337,7 @@ export async function getCategoria(
     .eq("periodo", month)
     .eq("responsavel", "você")
     .eq("tipo_transacao", tipo_transacao)
-    .eq("categoria_id.nome", categoria_id);
+    .eq("categoria_id.nome", categoria_nome);
 
   if (error) {
     console.error("Erro ao buscar faturas:", error);

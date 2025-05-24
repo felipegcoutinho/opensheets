@@ -58,11 +58,7 @@ async function page(props: { params: { month: string } }) {
 
               <CardFooter className="flex justify-between px-4">
                 <Button className="p-0" variant="link">
-                  <Link
-                    href={`/conta/${item.id}/${item.descricao.toLowerCase()}`}
-                  >
-                    extrato
-                  </Link>
+                  <Link href={`/conta/${item.id}`}>extrato</Link>
                 </Button>
 
                 <UpdateCard
