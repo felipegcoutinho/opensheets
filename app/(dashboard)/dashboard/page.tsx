@@ -3,11 +3,6 @@ import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/services/fetch-all-data";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
-import { UseDates } from "@/hooks/use-dates";
-import { getNotesStats } from "@/services/anotacoes";
-import { getCardsStats } from "@/services/cartoes";
-import { getAccountsStats } from "@/services/contas";
-import { getBillsStats, getTransactionsStats } from "@/services/transacoes";
 import {
   ArrowRightLeft,
   ChartColumn,
@@ -30,8 +25,19 @@ import UtilitiesDashboard from "./utilities-dashboard";
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const { getLastSixMonths } = UseDates();
-  const sixmonth = await getLastSixMonths(month);
+  const {
+    bills,
+    invoiceList,
+    recentTransactions,
+    sumPaidExpense,
+    sumPaidIncome,
+    transactionsStats,
+    billsStats,
+    cardsStats,
+    accountsStats,
+    notesStats,
+    sixmonth,
+  } = await fetchAllData(month);
 
   const allData = await Promise.all(
     sixmonth.map((month) => UtilitiesDashboard(month)),
@@ -40,13 +46,7 @@ export default async function page(props: { params: { month: string } }) {
   const { incomes, expenses, summary, getTotalsCategory } =
     await UtilitiesDashboard(month);
 
-  const {
-    bills,
-    invoiceList,
-    recentTransactions,
-    sumPaidExpense,
-    sumPaidIncome,
-  } = await fetchAllData(month);
+  const categoryData = getTotalsCategory(month);
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3),
@@ -54,22 +54,6 @@ export default async function page(props: { params: { month: string } }) {
     expenses: allData[index].expenses,
     balanco: allData[index].balanco,
   }));
-
-  const categoryData = await getTotalsCategory(month);
-
-  const lancamentos = await getTransactionsStats(month);
-  const boletos = await getBillsStats(month);
-  const cartoes = await getCardsStats(month);
-  const contas = await getAccountsStats(month);
-  const anotacoes = await getNotesStats(month);
-
-  const statsData = [
-    { title: "Lançamentos", qtde: lancamentos },
-    { title: "Boletos", qtde: boletos },
-    { title: "Cartões", qtde: cartoes },
-    { title: "Contas", qtde: contas },
-    { title: "Anotações", qtde: anotacoes },
-  ];
 
   return (
     <section>
@@ -138,7 +122,14 @@ export default async function page(props: { params: { month: string } }) {
           subtitle="Principais Resumos"
           icon={<ChartColumn className="mr-2 inline size-4" />}
         >
-          <StatsWidget month={month} statsConfig={statsData} />
+          <StatsWidget
+            month={month}
+            transactionsStats={transactionsStats}
+            billsStats={billsStats}
+            cardsStats={cardsStats}
+            accountsStats={accountsStats}
+            notesStats={notesStats}
+          />
         </Widget>
       </div>
 

@@ -250,7 +250,7 @@ export const getColumns = (
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="data-[state=open]:bg-muted flex p-0"
+                className="data-[state=open]:bg-muted flex"
               >
                 <EllipsisVertical size={16} />
                 <span className="sr-only">Open menu</span>
@@ -317,12 +317,6 @@ export const getColumns = (
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {item.imagem_url && (
-            <div className="flex text-center">
-              <FileImage className="stroke-gray-500" size={16} />
-            </div>
-          )}
-
           {item.responsavel === "sistema" ? (
             <CheckCircle2Icon className="text-muted" size={16} />
           ) : (
@@ -354,6 +348,12 @@ export const getColumns = (
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          )}
+
+          {item.imagem_url && (
+            <div className="flex text-center">
+              <FileImage size={16} />
+            </div>
           )}
         </div>
       );

@@ -73,9 +73,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
 
       <CardFooter className="flex justify-between">
         <Button className="p-0" variant="link">
-          <Link href={`/cartao/${item.id}/${item.descricao.toLowerCase()}`}>
-            ver fatura
-          </Link>
+          <Link href={`/cartao/${item.id}`}>ver fatura</Link>
         </Button>
 
         <UpdateCard

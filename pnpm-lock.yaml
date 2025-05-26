@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@ai-sdk/openai':
         specifier: 1.3.22
-        version: 1.3.22(zod@3.25.23)
+        version: 1.3.22(zod@3.25.27)
       '@ai-sdk/react':
         specifier: 1.2.12
-        version: 1.2.12(react@19.1.0)(zod@3.25.23)
+        version: 1.2.12(react@19.1.0)(zod@3.25.27)
       '@hookform/resolvers':
         specifier: 5.0.1
         version: 5.0.1(react-hook-form@7.56.4(react@19.1.0))
@@ -118,7 +118,7 @@ importers:
         version: 1.2.0(next@15.3.2(@babel/core@7.27.1)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       ai:
         specifier: 4.3.16
-        version: 4.3.16(react@19.1.0)(zod@3.25.23)
+        version: 4.3.16(react@19.1.0)(zod@3.25.27)
       canvas-confetti:
         specifier: 1.9.3
         version: 1.9.3
@@ -138,8 +138,8 @@ importers:
         specifier: 8.6.0
         version: 8.6.0(react@19.1.0)
       framer-motion:
-        specifier: 12.12.1
-        version: 12.12.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 12.12.2
+        version: 12.12.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       input-otp:
         specifier: 1.4.2
         version: 1.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -195,8 +195,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(types-react@19.0.0-rc.1)
       zod:
-        specifier: 3.25.23
-        version: 3.25.23
+        specifier: 3.25.27
+        version: 3.25.27
     devDependencies:
       '@types/react':
         specifier: npm:types-react@19.0.0-rc.1
@@ -1778,8 +1778,8 @@ packages:
     resolution: {integrity: sha512-V7/RktU11J3I36Nwq2JnZEM7tNm17eBJz+u25qdxBZeCKiX6BkVSZQjwWIr+IobgnZy+ag73tTZgZi7tr0LrBw==}
     engines: {node: '>=6.0.0'}
 
-  framer-motion@12.12.1:
-    resolution: {integrity: sha512-PFw4/GCREHI2suK/NlPSUxd+x6Rkp80uQsfCRFSOQNrm5pZif7eGtmG1VaD/UF1fW9tRBy5AaS77StatB3OJDg==}
+  framer-motion@12.12.2:
+    resolution: {integrity: sha512-qCszZCiGWkilL40E3VuhIJJC/CS3SIBl2IHyGK8FU30nOUhTmhBNWPrNFyozAWH/bXxwzi19vJHIGVdALF0LCg==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -2397,44 +2397,44 @@ packages:
     peerDependencies:
       zod: ^3.24.1
 
-  zod@3.25.23:
-    resolution: {integrity: sha512-Od2bdMosahjSrSgJtakrwjMDb1zM1A3VIHCPGveZt/3/wlrTWBya2lmEh2OYe4OIu8mPTmmr0gnLHIWQXdtWBg==}
+  zod@3.25.27:
+    resolution: {integrity: sha512-xkYsE+ztNLzBeoAG8Ipd2ICr86gyMpovQlB+Vid1LT7V16/Dj0z+Up1u1qxNX58cmJ/AtG2mvGw/7+jK48xEYw==}
 
 snapshots:
 
-  '@ai-sdk/openai@1.3.22(zod@3.25.23)':
+  '@ai-sdk/openai@1.3.22(zod@3.25.27)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
-      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.23)
-      zod: 3.25.23
+      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.27)
+      zod: 3.25.27
 
-  '@ai-sdk/provider-utils@2.2.8(zod@3.25.23)':
+  '@ai-sdk/provider-utils@2.2.8(zod@3.25.27)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
       nanoid: 3.3.11
       secure-json-parse: 2.7.0
-      zod: 3.25.23
+      zod: 3.25.27
 
   '@ai-sdk/provider@1.1.3':
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@1.2.12(react@19.1.0)(zod@3.25.23)':
+  '@ai-sdk/react@1.2.12(react@19.1.0)(zod@3.25.27)':
     dependencies:
-      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.23)
-      '@ai-sdk/ui-utils': 1.2.11(zod@3.25.23)
+      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.27)
+      '@ai-sdk/ui-utils': 1.2.11(zod@3.25.27)
       react: 19.1.0
       swr: 2.3.3(react@19.1.0)
       throttleit: 2.1.0
     optionalDependencies:
-      zod: 3.25.23
+      zod: 3.25.27
 
-  '@ai-sdk/ui-utils@1.2.11(zod@3.25.23)':
+  '@ai-sdk/ui-utils@1.2.11(zod@3.25.27)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
-      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.23)
-      zod: 3.25.23
-      zod-to-json-schema: 3.24.5(zod@3.25.23)
+      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.27)
+      zod: 3.25.27
+      zod-to-json-schema: 3.24.5(zod@3.25.27)
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -3619,15 +3619,15 @@ snapshots:
   acorn@8.14.1:
     optional: true
 
-  ai@4.3.16(react@19.1.0)(zod@3.25.23):
+  ai@4.3.16(react@19.1.0)(zod@3.25.27):
     dependencies:
       '@ai-sdk/provider': 1.1.3
-      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.23)
-      '@ai-sdk/react': 1.2.12(react@19.1.0)(zod@3.25.23)
-      '@ai-sdk/ui-utils': 1.2.11(zod@3.25.23)
+      '@ai-sdk/provider-utils': 2.2.8(zod@3.25.27)
+      '@ai-sdk/react': 1.2.12(react@19.1.0)(zod@3.25.27)
+      '@ai-sdk/ui-utils': 1.2.11(zod@3.25.27)
       '@opentelemetry/api': 1.9.0
       jsondiffpatch: 0.6.0
-      zod: 3.25.23
+      zod: 3.25.27
     optionalDependencies:
       react: 19.1.0
 
@@ -3827,7 +3827,7 @@ snapshots:
 
   fast-equals@5.2.2: {}
 
-  framer-motion@12.12.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  framer-motion@12.12.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       motion-dom: 12.12.1
       motion-utils: 12.12.1
@@ -4344,8 +4344,8 @@ snapshots:
 
   yallist@5.0.0: {}
 
-  zod-to-json-schema@3.24.5(zod@3.25.23):
+  zod-to-json-schema@3.24.5(zod@3.25.27):
     dependencies:
-      zod: 3.25.23
+      zod: 3.25.27
 
-  zod@3.25.23: {}
+  zod@3.25.27: {}

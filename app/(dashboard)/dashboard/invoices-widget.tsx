@@ -46,7 +46,7 @@ export default async function InvoiceWidget({ data, month }) {
               <div>
                 <Link
                   className="flex items-center gap-1 hover:underline"
-                  href={`/cartao/${item.cartao_id}/${item.descricao.toLowerCase()}/?periodo=${month}`}
+                  href={`/cartao/${item.cartao_id}/?periodo=${month}`}
                 >
                   {item.descricao}
                   <ArrowUpRight className="text-muted-foreground h-3 w-3" />

@@ -1,40 +1,33 @@
 import { fetchAllData } from "@/app/services/fetch-all-data";
-import { getExpense, getIncome } from "@/app/services/transacoes";
-import { UseDates } from "@/hooks/use-dates";
 
 export default async function UtilitiesDashboard(month: string) {
-  const { getPreviousMonth } = UseDates();
-  const previousMonth = getPreviousMonth(month);
-
   const {
     incomes,
     expenses,
-    bills,
     previstoAnterior,
     sumPaidExpense,
     sumPaidIncome,
     transactionsByCategory,
+    expensesAnterior,
+    incomesAnterior,
   } = await fetchAllData(month);
-
-  const receitasAnterior = await getIncome(previousMonth);
-  const despesasAnterior = await getExpense(previousMonth);
 
   const saldo = sumPaidIncome - sumPaidExpense;
   const balanco = incomes - expenses;
-  const balancoAnterior = receitasAnterior - despesasAnterior;
+  const balancoAnterior = incomesAnterior - expensesAnterior;
   const previsto = previstoAnterior + balanco;
 
   const summary = [
     {
       title: "Receitas",
       value: incomes,
-      previousValue: receitasAnterior,
+      previousValue: incomesAnterior,
       color: "bg-chart-1",
     },
     {
       title: "Despesas",
       value: expenses,
-      previousValue: despesasAnterior,
+      previousValue: expensesAnterior,
       color: "bg-chart-2",
     },
     {
@@ -57,27 +50,27 @@ export default async function UtilitiesDashboard(month: string) {
     // Primeiro somar transacoes
     transactionsByCategory.forEach((item) => {
       const categoriaNome = item.categoria?.nome || "Sem Categoria";
+      const id = item.categoria?.id || "sem_categoria";
       const valor = parseFloat(item.valor) || 0;
       const tipo = item.tipo_transacao || "despesa";
 
-      const chave = `${tipo}:${categoriaNome}`;
+      const chave = `${tipo}:${categoriaNome}:${id}`;
 
       totals.set(chave, (totals.get(chave) || 0) + valor);
     });
 
     // Transformar o Map em array para exibir
     return Array.from(totals.entries()).map(([key, total]) => {
-      const [tipo_transacao, categoria] = key.split(":");
-      return { tipo_transacao, categoria, total };
+      const [tipo_transacao, categoria, id] = key.split(":");
+      return { tipo_transacao, categoria, id, total };
     });
   }
 
   return {
     incomes,
     expenses,
-    bills,
     saldo,
-    receitasAnterior,
+    incomesAnterior,
     balanco,
     balancoAnterior,
     previsto,

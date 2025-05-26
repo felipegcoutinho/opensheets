@@ -1,4 +1,5 @@
 "use client";
+
 import EmptyCard from "@/components/empty-card";
 import { CardContent } from "@/components/ui/card";
 import {
@@ -15,8 +16,30 @@ const chartConfig = {
   },
 };
 
-function StatsWidget({ statsConfig }) {
-  const chartData = statsConfig.map(({ title, qtde }) => ({
+type StatsWidgetProps = {
+  transactionsStats: number;
+  billsStats: number;
+  cardsStats: number;
+  accountsStats: number;
+  notesStats: number;
+};
+
+function StatsWidget({
+  transactionsStats,
+  billsStats,
+  cardsStats,
+  accountsStats,
+  notesStats,
+}: StatsWidgetProps) {
+  const statsData = [
+    { title: "Lançamentos", qtde: transactionsStats },
+    { title: "Boletos", qtde: billsStats },
+    { title: "Cartões", qtde: cardsStats },
+    { title: "Contas", qtde: accountsStats },
+    { title: "Anotações", qtde: notesStats },
+  ];
+
+  const chartData = statsData.map(({ title, qtde }) => ({
     label: title,
     qtde: qtde,
   }));

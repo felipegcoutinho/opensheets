@@ -8,7 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
 
-export default async function page(props: { params: { month: string } }) {
+export default async function page(props: {
+  params: { month: string; categoria: string; tipo_transacao: string };
+}) {
   const params = await props.params;
   const month = await getMonth(props);
 
@@ -16,6 +18,7 @@ export default async function page(props: { params: { month: string } }) {
   const contas = await getAccount();
   const categorias = await getNewCategorias();
 
+  const categoriaId = decodeURIComponent(params.id);
   const categoria = decodeURIComponent(params.categoria);
   const tipoTransacao = decodeURIComponent(params.tipo_transacao);
 
