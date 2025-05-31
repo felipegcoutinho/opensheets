@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
+import Ping from "@/components/ping-icon";
 
 export default function UiCard({ item, getAccountMap, mostrarLimites }) {
   return (
@@ -49,19 +50,24 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
               </div>
               <div className="text-center">
                 <p className="text-muted-foreground">Em Uso</p>
-                <MoneyValues value={item.limites.limiteEmUso} />
+                <span className="flex items-center gap-1">
+                  <Ping color={"bg-orange-400"} />
+                  <MoneyValues value={item.limites.limiteEmUso} />
+                </span>
               </div>
+
               <div className="text-right">
                 <p className="text-muted-foreground">Disponível</p>
-                <span className="text-emerald-600">
+                <span className="flex items-center gap-1">
+                  <Ping color={"bg-primary"} />
                   <MoneyValues value={item.limites.limiteDisponivel} />
                 </span>
               </div>
             </div>
 
             <Progress
-              primary_color="bg-red-500 dark:bg-red-700"
-              secondary_color="bg-emerald-500 dark:bg-emerald-700"
+              primary_color="bg-orange-400"
+              secondary_color="bg-primary "
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }

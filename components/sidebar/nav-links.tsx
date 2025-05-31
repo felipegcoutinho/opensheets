@@ -1,10 +1,10 @@
 import {
-  ArrowRightLeft,
+  ArrowDownUp,
   CreditCard,
   LayoutDashboard,
-  NotepadTextIcon,
-  Pen,
-  PiggyBank,
+  ListOrdered,
+  NotebookPen,
+  Landmark,
   Users,
   WandSparkles,
 } from "lucide-react";
@@ -20,7 +20,7 @@ export function NavLinks(month: string) {
       {
         name: "lançamentos",
         url: `/lancamentos?periodo=${month}`,
-        icon: ArrowRightLeft,
+        icon: ArrowDownUp,
       },
       {
         name: "cartões",
@@ -30,7 +30,7 @@ export function NavLinks(month: string) {
       {
         name: "contas",
         url: "/conta",
-        icon: PiggyBank,
+        icon: Landmark,
       },
       {
         name: "responsáveis",
@@ -40,7 +40,7 @@ export function NavLinks(month: string) {
       {
         name: "anotações",
         url: `/anotacao?periodo=${month}`,
-        icon: Pen,
+        icon: NotebookPen,
       },
       {
         name: "insights",
@@ -50,7 +50,7 @@ export function NavLinks(month: string) {
       {
         name: "categorias",
         url: `/categorias`,
-        icon: NotepadTextIcon,
+        icon: ListOrdered,
       },
     ],
   };

@@ -8,7 +8,6 @@ import {
 import clsx from "clsx";
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import MoneyValues from "../../../components/money-values";
-import Ping from "../../../components/ping-icon";
 import { Badge } from "../../../components/ui/badge";
 
 type Props = {
@@ -37,8 +36,8 @@ export default function SummaryWidget({
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
-            <Ping color={color} />
-            <span className="capitalize">{title}</span>
+            {/* <Ping color={color} /> */}
+            <span className="font-medium capitalize">{title}</span>
           </span>
 
           <span className="flex items-center">

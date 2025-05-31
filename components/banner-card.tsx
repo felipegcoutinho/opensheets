@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { Card } from "./ui/card";
 
 function Banner({ children }) {
   const pathname = usePathname();
@@ -10,7 +11,11 @@ function Banner({ children }) {
     return null;
   }
 
-  return <div className="my-2 w-full px-4 dark:text-white">{children}</div>;
+  return (
+    <Card className="dark:bg-card mt-4 border-none bg-blue-50 px-6 py-4">
+      {children}
+    </Card>
+  );
 }
 
 export default Banner;

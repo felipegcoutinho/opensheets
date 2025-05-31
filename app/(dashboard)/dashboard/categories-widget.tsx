@@ -80,8 +80,8 @@ export default function CategoryWidget({
                 }
                 secondary_color={
                   item.tipo_transacao === "despesa"
-                    ? "bg-red-100 dark:bg-red-950/50"
-                    : "bg-green-100 dark:bg-green-950/50"
+                    ? "bg-zinc-200 dark:bg-zinc-700/50"
+                    : "bg-zinc-200 dark:bg-zinc-700/50"
                 }
                 value={
                   totalReceita && totalReceita > 0
@@ -90,7 +90,7 @@ export default function CategoryWidget({
                       ? 100
                       : 0
                 }
-                className="h-1.5"
+                className="h-2"
               />
             </div>
           );

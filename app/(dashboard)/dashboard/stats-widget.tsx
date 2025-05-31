@@ -12,7 +12,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 const chartConfig = {
   stats: {
     label: "Quantidade",
-    color: "var(--chart-3, #10b981)",
+    color: "var(--primary, #10b981)",
   },
 };
 

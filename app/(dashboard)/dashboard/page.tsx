@@ -4,12 +4,12 @@ import { fetchAllData } from "@/app/services/fetch-all-data";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {
-  ArrowRightLeft,
+  ArrowDownUp,
+  Barcode,
   ChartColumn,
   ChartNoAxesCombined,
-  FileSpreadsheet,
-  FileText,
-  List,
+  CreditCard,
+  ListOrdered,
   Wallet,
 } from "lucide-react";
 import BillsWidget from "./bills-widget";
@@ -81,7 +81,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Faturas"
           subtitle="faturas deste mês"
-          icon={<FileSpreadsheet className="mr-2 inline size-4" />}
+          icon={<CreditCard className="mr-2 inline size-4" />}
         >
           <InvoiceWidget month={month} data={invoiceList} />
         </Widget>
@@ -89,7 +89,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Boletos"
           subtitle="boletos deste mês"
-          icon={<FileText className="mr-2 inline size-4" />}
+          icon={<Barcode className="mr-2 inline size-4" />}
         >
           <BillsWidget month={month} data={bills} />
         </Widget>
@@ -99,7 +99,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Lançamentos Recentes"
           subtitle="Últimos 5 Lançamentos"
-          icon={<ArrowRightLeft className="mr-2 inline size-4" />}
+          icon={<ArrowDownUp className="mr-2 inline size-4" />}
         >
           <RecentesTransactions transactions={recentTransactions} />
         </Widget>
@@ -153,7 +153,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Receitas por Categoria"
           subtitle="Principais Categorias por Receita"
-          icon={<List className="mr-2 inline size-4" />}
+          icon={<ListOrdered className="mr-2 inline size-4" />}
         >
           <CategoryWidget
             data={categoryData}
@@ -166,7 +166,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Despesas por Categoria"
           subtitle="Principais Categorias por Despesa"
-          icon={<List className="mr-2 inline size-4" />}
+          icon={<ListOrdered className="mr-2 inline size-4" />}
         >
           <CategoryWidget
             data={categoryData}

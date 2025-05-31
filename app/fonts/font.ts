@@ -1,13 +1,8 @@
-import { Geist, Roboto } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["400", "500", "700"],
+const roboto_flex = Roboto_Flex({
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
-const geist = Geist({
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
-});
-
-export { geist, roboto };
+export { roboto_flex };

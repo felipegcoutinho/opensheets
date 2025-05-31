@@ -37,7 +37,7 @@ export default function InvoicePaymentDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <span className="cursor-pointer text-orange-500 hover:underline">
+        <span className="cursor-pointer text-orange-400 hover:underline">
           pagar
         </span>
       </DialogTrigger>

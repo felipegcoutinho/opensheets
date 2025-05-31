@@ -23,7 +23,7 @@ import UseStyles from "@/hooks/use-styles";
 import {
   CheckCircle2Icon,
   EllipsisVertical,
-  FileImage,
+  Paperclip,
   MessageSquareText,
   PartyPopper,
   Users,
@@ -352,7 +352,7 @@ export const getColumns = (
 
           {item.imagem_url && (
             <div className="flex text-center">
-              <FileImage size={16} />
+              <Paperclip size={16} />
             </div>
           )}
         </div>

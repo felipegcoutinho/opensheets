@@ -35,17 +35,21 @@ export const NavProjects = memo(function NavProjects({
                 className={`${isActive && "bg-muted-foreground/5"}`}
                 asChild
               >
-                <div className="flex w-full items-center justify-between">
+                <div className="flex w-full items-center justify-between px-3 py-5">
                   <Link
                     href={item.url}
                     className={`flex items-center gap-2 transition-all ${
-                      isActive ? "text-primary" : "text-accent-foreground"
+                      isActive
+                        ? "text-foreground font-bold"
+                        : "text-accent-foreground"
                     } `}
                   >
                     <item.icon
-                      className={`h-4 w-4 ${
-                        isActive ? "text-primary" : "text-muted-foreground"
-                      }`}
+                      className={`h-4.5 w-4.5 ${
+                        isActive
+                          ? "var(--foreground)"
+                          : "var(--muted-foreground)"
+                      } }`}
                     />
                     <p>{item.name}</p>
                   </Link>

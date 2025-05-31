@@ -1,4 +1,4 @@
-import Utils from "@/app/(dashboard)/dashboard/utilities-dashboard";
+import UtilitiesDashboard from "@/app/(dashboard)/dashboard/utilities-dashboard";
 import { getUserName } from "@/app/actions/users";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
@@ -8,7 +8,9 @@ export default async function BannerData() {
   const { currentDate, fliendlyDate, currentMonthName, currentYear } =
     UseDates();
 
-  const { saldo } = await Utils(`${currentMonthName}-${currentYear}`);
+  const { saldo } = await UtilitiesDashboard(
+    `${currentMonthName}-${currentYear}`,
+  );
 
   const userName = await getUserName();
 
@@ -16,9 +18,7 @@ export default async function BannerData() {
     <Banner>
       <div className="flex items-center justify-between py-6">
         <div>
-          <p className="text-2xl font-bold">
-            Olá, {userName.split(" ")[0]}! 👋
-          </p>
+          <p className="text-xl font-bold">Olá, {userName.split(" ")[0]}! 👋</p>
           <p className="text-muted-foreground">
             <span>{fliendlyDate(currentDate)}.</span>
           </p>

@@ -1,6 +1,6 @@
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
 import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
-import { PlusCircle } from "lucide-react";
+import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../ui/button";
 
 function AddButton({ item, cartoes, contas, categorias }) {
@@ -17,7 +17,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             size="icon"
             variant="link"
           >
-            <PlusCircle className="text-muted-foreground" size={18} />
+            <CircleFadingPlus className="text-muted-foreground" size={18} />
           </Button>
         </CreateTransactions>
       )}
@@ -29,7 +29,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             size="icon"
             variant="link"
           >
-            <PlusCircle className="text-muted-foreground" size={18} />
+            <CircleFadingPlus className="text-muted-foreground" size={18} />
           </Button>
         </CreateNotes>
       )}
