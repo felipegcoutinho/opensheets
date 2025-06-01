@@ -27,10 +27,10 @@ export default async function page(props) {
 
       <Tabs defaultValue="ativos">
         <TabsList className="mb-2">
-          <TabsTrigger value="ativos">
+          <TabsTrigger value="ativos" className="flex items-center gap-2">
             <Ping color="bg-green-500" /> Ativos
           </TabsTrigger>
-          <TabsTrigger value="inativos">
+          <TabsTrigger value="inativos" className="flex items-center gap-2">
             <Ping color="bg-zinc-400" /> Inativos
           </TabsTrigger>
         </TabsList>

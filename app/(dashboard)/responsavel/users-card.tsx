@@ -1,6 +1,6 @@
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CreditCard, File, User, Users } from "lucide-react";
+import { Barcode, CreditCard, User, Users } from "lucide-react";
 import Image from "next/image";
 
 export default function UsersCard({
@@ -87,7 +87,7 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <File size={14} />
+              <Barcode size={14} />
               <p>Boletos</p>
             </div>
             <p className="text-lg">

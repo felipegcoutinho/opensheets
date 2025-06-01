@@ -5,7 +5,7 @@ export async function getIncome(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor, categoria_id!inner(id, nome)") // Fazendo join na tabela de categorias
+    .select("valor, categoria_id!inner(id, nome)")
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
     .eq("responsavel", "você")

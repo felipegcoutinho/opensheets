@@ -25,73 +25,100 @@ export async function fetchAllData(month: string) {
   const previousMonth = getPreviousMonth(month);
   const sixmonth = getLastSixMonths(month);
 
-  try {
-    const [
-      incomes,
-      incomesAnterior,
-      expenses,
-      expensesAnterior,
-      bills,
-      previstoAnterior,
-      expensePaid,
-      conditions,
-      payment,
-      transactionsByCategory,
-      recentTransactions,
-      sumPaidExpense,
-      sumPaidIncome,
-      invoiceList,
-      transactionsStats,
-      billsStats,
-      cardsStats,
-      accountsStats,
-      notesStats,
-    ] = await Promise.all([
-      getIncome(month),
-      getIncome(previousMonth),
-      getExpense(month),
-      getExpense(previousMonth),
-      getBills(month),
-      getLastPrevious(month),
-      getPaidExpense(month),
-      getConditions(month),
-      getPayment(month),
-      getTransactionsByCategory(month),
-      getRecentTransactions(month),
-      getSumPaidExpense(month),
-      getSumPaidIncome(month),
-      getInvoiceList(month),
-      getTransactionsStats(month),
-      getBillsStats(month),
-      getCardsStats(month),
-      getAccountsStats(month),
-      getNotesStats(month),
-    ]);
+  const promises = [
+    getIncome(month),
+    getIncome(previousMonth),
+    getExpense(month),
+    getExpense(previousMonth),
+    getBills(month),
+    getLastPrevious(month),
+    getPaidExpense(month),
+    getConditions(month),
+    getPayment(month),
+    getTransactionsByCategory(month),
+    getRecentTransactions(month),
+    getSumPaidExpense(month),
+    getSumPaidIncome(month),
+    getInvoiceList(month),
+    getTransactionsStats(month),
+    getBillsStats(month),
+    getCardsStats(month),
+    getAccountsStats(month),
+    getNotesStats(month),
+  ];
 
-    return {
-      incomes,
-      incomesAnterior,
-      expenses,
-      expensesAnterior,
-      bills,
-      previstoAnterior,
-      expensePaid,
-      conditions,
-      payment,
-      transactionsByCategory,
-      recentTransactions,
-      sumPaidExpense,
-      sumPaidIncome,
-      invoiceList,
-      transactionsStats,
-      billsStats,
-      cardsStats,
-      accountsStats,
-      notesStats,
-      sixmonth,
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  }
+  const resultados = await Promise.allSettled(promises);
+
+  // Mapeia os dados com fallback em caso de erro
+  const [
+    incomes,
+    incomesAnterior,
+    expenses,
+    expensesAnterior,
+    bills,
+    previstoAnterior,
+    expensePaid,
+    conditions,
+    payment,
+    transactionsByCategory,
+    recentTransactions,
+    sumPaidExpense,
+    sumPaidIncome,
+    invoiceList,
+    transactionsStats,
+    billsStats,
+    cardsStats,
+    accountsStats,
+    notesStats,
+  ] = resultados.map((res, index) => {
+    if (res.status === "fulfilled") return res.value;
+
+    const nomes = [
+      "incomes",
+      "incomesAnterior",
+      "expenses",
+      "expensesAnterior",
+      "bills",
+      "previstoAnterior",
+      "expensePaid",
+      "conditions",
+      "payment",
+      "transactionsByCategory",
+      "recentTransactions",
+      "sumPaidExpense",
+      "sumPaidIncome",
+      "invoiceList",
+      "transactionsStats",
+      "billsStats",
+      "cardsStats",
+      "accountsStats",
+      "notesStats",
+    ];
+
+    console.error(`Erro ao buscar ${nomes[index]}:`, res.reason);
+    return null; // ou undefined, se preferir
+  });
+
+  return {
+    incomes,
+    incomesAnterior,
+    expenses,
+    expensesAnterior,
+    bills,
+    previstoAnterior,
+    expensePaid,
+    conditions,
+    payment,
+    transactionsByCategory,
+    recentTransactions,
+    sumPaidExpense,
+    sumPaidIncome,
+    invoiceList,
+    transactionsStats,
+    billsStats,
+    cardsStats,
+    accountsStats,
+    notesStats,
+    sixmonth,
+  };
 }

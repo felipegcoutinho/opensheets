@@ -20,15 +20,15 @@ export function ChartSummary({ data }) {
   const chartConfig = {
     incomes: {
       label: "Receita",
-      color: "var(--chart-1, #10b981)", // Verde como fallback
+      color: "var(--chart-1)", // Verde como fallback
     },
     expenses: {
       label: "Despesa",
-      color: "var(--chart-2, #ef4444)", // Vermelho como fallback
+      color: "var(--chart-2)", // Vermelho como fallback
     },
     balanco: {
       label: "Balanço",
-      color: "var(--chart-3, #3b82f6)", // Azul como fallback
+      color: "var(--chart-3)", // Azul como fallback
     },
   };
 
