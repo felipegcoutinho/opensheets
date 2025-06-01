@@ -5,7 +5,6 @@ import { toast } from "sonner";
 export default function UtilitiesAnotacao() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-
   const [state, formAction, loading] = useActionState(addNotes, null);
   const [updateState, updateFormAction, updateLoading] = useActionState(
     updateNotes,

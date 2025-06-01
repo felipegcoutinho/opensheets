@@ -331,7 +331,7 @@ export async function getCategoria(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome) ,categoria_id!inner(id, nome)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -515,6 +515,30 @@ export async function getTransactionsByResponsableVoce(month: string) {
     .order("created_at", { ascending: false })
     .eq("responsavel", "você")
     .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar Lançamentos:", error);
+    return [];
+  }
+
+  return data;
+}
+
+export async function getLancamentostTeste(month: string, id: number) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
+      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome), pagador_id!inner(id, nome)`,
+    )
+    .eq("periodo", month)
+    .eq("pagador_id.id", id)
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);

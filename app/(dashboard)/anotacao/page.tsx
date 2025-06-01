@@ -25,13 +25,13 @@ export default async function page(props: { params: { month: string } }) {
         </Button>
       </CreateNotes>
 
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {notes.length === 0 && (
-          <Card className="w-full">
-            <EmptyCard />
-          </Card>
-        )}
+      {notes.length === 0 && (
+        <Card className="mt-4 w-full">
+          <EmptyCard />
+        </Card>
+      )}
 
+      <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {notes.map((item) => (
           <Card className="flex flex-col justify-between" key={item.id}>
             <CardHeader>

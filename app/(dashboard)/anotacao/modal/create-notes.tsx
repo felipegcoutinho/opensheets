@@ -44,7 +44,7 @@ export default function CreateNotes({ children }: Props) {
           <DialogTitle>Nova Anotação</DialogTitle>
         </DialogHeader>
 
-        <form action={handleSubmit}>
+        <form action={handleSubmit} className="space-y-2">
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
               <Label>

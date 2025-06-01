@@ -7,6 +7,7 @@ import {
   Landmark,
   Users,
   WandSparkles,
+  UserSquare,
 } from "lucide-react";
 
 export function NavLinks(month: string) {
@@ -31,6 +32,11 @@ export function NavLinks(month: string) {
         name: "contas",
         url: "/conta",
         icon: Landmark,
+      },
+      {
+        name: "pagadores",
+        url: `/pagador`,
+        icon: UserSquare,
       },
       {
         name: "responsáveis",
