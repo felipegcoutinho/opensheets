@@ -1,13 +1,12 @@
 import {
   ArrowDownUp,
   CreditCard,
+  Landmark,
   LayoutDashboard,
   ListOrdered,
   NotebookPen,
-  Landmark,
   Users,
   WandSparkles,
-  UserSquare,
 } from "lucide-react";
 
 export function NavLinks(month: string) {
@@ -33,11 +32,11 @@ export function NavLinks(month: string) {
         url: "/conta",
         icon: Landmark,
       },
-      {
-        name: "pagadores",
-        url: `/pagador`,
-        icon: UserSquare,
-      },
+      // {
+      //   name: "pagadores",
+      //   url: `/pagador`,
+      //   icon: UserSquare,
+      // },
       {
         name: "responsáveis",
         url: `/responsavel?periodo=${month}`,

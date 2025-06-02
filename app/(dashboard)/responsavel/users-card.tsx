@@ -1,7 +1,11 @@
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Barcode, CreditCard, User, Users } from "lucide-react";
+import { Barcode, CreditCard, User, Users, Verified } from "lucide-react";
 import Image from "next/image";
+
+interface UserCardHeaderProps {
+  responsavel: string;
+}
 
 export default function UsersCard({
   responsavel,
@@ -13,17 +17,46 @@ export default function UsersCard({
   const hasCartoesData = Object.keys(cartoes).length > 0;
   const hasBoletosData = Object.keys(boletos).length > 0;
 
+  const isCurrentUser = responsavel === "você";
+
+  const getUserIcon = () => {
+    return isCurrentUser ? (
+      <User
+        className="text-blue-600 dark:text-blue-400"
+        size={24}
+        aria-label="Usuário atual"
+      />
+    ) : (
+      <Users
+        className="text-orange-600 dark:text-orange-400"
+        size={24}
+        aria-label="Outros usuários"
+      />
+    );
+  };
   return (
-    <Card className="overflow-hidden">
+    <Card className="gap-4 overflow-hidden">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between gap-2">
-          <p className="text-xl capitalize">{responsavel}</p>
-          {responsavel === "você" ? (
-            <User className="text-blue-600" size={22} />
-          ) : (
-            <Users className="text-orange-600" size={22} />
-          )}
-        </CardTitle>
+        <div
+          className={`${isCurrentUser ? "bg-blue-50 dark:bg-blue-900/30" : "bg-orange-50 dark:bg-orange-900/30"} flex justify-between rounded-lg p-4`}
+        >
+          {/* User Name and Badge */}
+          <div className="flex items-center gap-1">
+            <CardTitle className="text-center capitalize">
+              {responsavel}
+            </CardTitle>
+            {isCurrentUser && (
+              <Verified
+                className="text-blue-500"
+                size={18}
+                aria-label="Usuário verificado"
+              />
+            )}
+          </div>
+
+          {/* Avatar Circle */}
+          <div className="relative">{getUserIcon()}</div>
+        </div>
       </CardHeader>
 
       <CardContent className="text-sm">
