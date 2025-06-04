@@ -25,6 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 
@@ -41,6 +42,11 @@ export default function UpdateTransactions({
   itemImagemURL,
   itemCategoriaId,
   getCategorias,
+  itemFormaPagamento,
+  itemCartaoId,
+  itemContaId,
+  getCards,
+  getAccount,
 }) {
   const {
     isOpen,
@@ -112,11 +118,7 @@ export default function UpdateTransactions({
                 Período
                 <Required />
               </Label>
-              <Select
-                defaultValue={itemPeriodo}
-                name="periodo"
-                disabled={itemPaid}
-              >
+              <Select defaultValue={itemPeriodo} name="periodo">
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -185,37 +187,93 @@ export default function UpdateTransactions({
             </Select>
           </div>
 
-          {/* <Card className="mt-2 flex w-full items-center justify-between gap-2 px-2">
-            <Label>Marcar lançamento como Pago</Label>
+          {itemFormaPagamento !== "cartão de crédito" && (
+            <Card className="w-full flex-row justify-between p-4">
+              <div className="flex flex-col">
+                <Label>Status do Lançamento</Label>
+                <p className="text-muted-foreground text-xs leading-snug">
+                  Marcar o lançamento como realizado.
+                </p>
+              </div>
+              <div>
+                <Toggle
+                  defaultPressed={itemPaid}
+                  onPressedChange={() => setIsPaid(!itemPaid)}
+                  name="realizado"
+                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+                >
+                  <ThumbsUp strokeWidth={2} />
+                </Toggle>
+              </div>
+            </Card>
+          )}
 
-            <Toggle
-              onPressedChange={() => setIsPaid(!itemPaid)}
-              defaultPressed={itemPaid}
-              name="realizado"
-              className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
-            >
-              <ThumbsUp strokeWidth={2} className="h-6 w-6" />
-            </Toggle>
-          </Card> */}
-
-          <Card className="w-full flex-row justify-between p-4">
-            <div className="flex flex-col">
-              <Label>Status do Lançamento</Label>
-              <p className="text-muted-foreground text-xs leading-snug">
-                Marcar o lançamento como realizado.
-              </p>
-            </div>
-            <div>
-              <Toggle
-                defaultPressed={itemPaid}
-                onPressedChange={() => setIsPaid(!itemPaid)}
-                name="realizado"
-                className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+          {itemFormaPagamento !== "cartão de crédito" ? (
+            <div className="w-full">
+              <Label htmlFor="conta_id">
+                Contas <Required />
+              </Label>
+              <Select
+                name="conta_id"
+                placeholder="Selecione"
+                defaultValue={itemContaId.toString()}
+                required
               >
-                <ThumbsUp strokeWidth={2} />
-              </Toggle>
+                <SelectTrigger id="conta_id" className="w-full">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getAccount?.map((item) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          quality={100}
+                          src={`/logos/${item.logo_image}`}
+                          className="h-8 w-8 rounded-full border"
+                          width={32}
+                          height={32}
+                          alt="Logo da Conta"
+                        />
+                        <span>{item.descricao}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-          </Card>
+          ) : (
+            <div className="w-full">
+              <Label htmlFor="cartao_id">
+                Cartão <Required />
+              </Label>
+              <Select
+                name="cartao_id"
+                defaultValue={itemCartaoId.toString()}
+                required
+              >
+                <SelectTrigger id="cartao_id" className="w-full">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getCards?.map((item) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          quality={100}
+                          src={`/logos/${item.logo_image}`}
+                          className="h-8 w-8 rounded-full border"
+                          width={32}
+                          height={32}
+                          alt="Logo do cartão"
+                        />
+                        <span>{item.descricao}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           <div className="w-full">
             <Label>

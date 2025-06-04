@@ -23,8 +23,8 @@ import UseStyles from "@/hooks/use-styles";
 import {
   CheckCircle2Icon,
   EllipsisVertical,
-  Paperclip,
   MessageSquareText,
+  Paperclip,
   PartyPopper,
   Users,
 } from "lucide-react";
@@ -293,12 +293,14 @@ export const getColumns = (
                     itemTipoTransacao={item.tipo_transacao}
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
-                    itemQtdeParcelas={item.qtde_parcela}
-                    itemQtdeRecorrencia={item.qtde_recorrencia}
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}
                     itemCategoriaId={item.categorias?.id}
                     getCategorias={getCategorias}
+                    itemCartaoId={item.cartoes?.id}
+                    itemContaId={item.contas?.id}
+                    getCards={getCardsMap}
+                    getAccount={getAccountMap}
                   />
                 </DropdownMenuItem>
               )}

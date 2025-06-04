@@ -253,9 +253,7 @@ export default function CreateTransactions({
               )}
             </div>
 
-            {/* Container para Forma de Pagamento, Conta/Cartão e Data de Vencimento do Boleto */}
             <div className="flex flex-col gap-2">
-              {/* Linha para Forma de Pagamento e (Conta OU Cartão) */}
               <div className="flex w-full gap-2">
                 <div className={showConta || showCartao ? "w-1/2" : "w-full"}>
                   <Label htmlFor="forma_pagamento">
@@ -352,8 +350,6 @@ export default function CreateTransactions({
               {/* Data de Vencimento do Boleto - Mostra apenas se for boleto */}
               {eBoletoSelecionado && (
                 <div className="w-full">
-                  {" "}
-                  {/* Ocupa a largura toda da linha abaixo */}
                   <Label htmlFor="data_vencimento">
                     Data de Vencimento do Boleto <Required />
                   </Label>
