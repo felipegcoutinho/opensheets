@@ -83,7 +83,7 @@ export const getColumns = (
 
   {
     accessorKey: "descricao",
-    header: "Descrição",
+    header: "Estabelecimento",
     cell: ({ row }) => {
       const item = row.original;
       return (
