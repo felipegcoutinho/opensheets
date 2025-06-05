@@ -12,19 +12,19 @@ export async function addTransaction(formData: FormData) {
   const formEntries = Object.fromEntries(formData.entries());
 
   const {
-    data_compra, // string "AAAA-MM-DD" ou undefined
-    data_vencimento, // string "AAAA-MM-DD" ou undefined
+    data_compra,
+    data_vencimento,
     descricao,
     tipo_transacao,
-    periodo, // string "MMMM-yyyy" (ex: "maio-2025")
+    periodo,
     realizado,
     condicao,
     forma_pagamento,
     anotacao,
     responsavel,
-    valor, // string
-    qtde_parcela, // string ou undefined
-    qtde_recorrencia, // string ou undefined
+    valor,
+    qtde_parcela,
+    qtde_recorrencia,
     cartao_id,
     categoria_id,
     conta_id,
@@ -65,16 +65,6 @@ export async function addTransaction(formData: FormData) {
     );
   }
 
-  let diaCompraOriginal: number | null = null;
-  if (data_compra && typeof data_compra === "string") {
-    const dataCompraOriginalUTC = new Date(data_compra + "T00:00:00Z");
-    if (!isNaN(dataCompraOriginalUTC.getTime())) {
-      diaCompraOriginal = dataCompraOriginalUTC.getUTCDate();
-    } else {
-      console.warn(`Data de compra original inválida: ${data_compra}`);
-    }
-  }
-
   let diaVencimentoOriginal: number | null = null;
   if (data_vencimento && typeof data_vencimento === "string") {
     const dataVencOriginalUTC = new Date(data_vencimento + "T00:00:00Z");
@@ -91,12 +81,12 @@ export async function addTransaction(formData: FormData) {
     valorUnitario: number,
     respAtual: string | undefined,
     periodoAtual: string,
-    dataCompraAtual: string | null, // Modificado para receber dataCompraAtual
+    dataCompraAtual: string | null,
     dataVencimentoAtual: string | null,
     parcelaAtualNum: number | null = null,
   ) {
     transacoes.push({
-      data_compra: dataCompraAtual, // Usar dataCompraAtual
+      data_compra: dataCompraAtual,
       data_vencimento: dataVencimentoAtual,
       descricao,
       tipo_transacao,
@@ -121,29 +111,11 @@ export async function addTransaction(formData: FormData) {
 
   function gerarDatasParaIteracao(offsetMeses: number): {
     periodo: string;
-    dataCompra: string | null;
     dataVencimento: string | null;
   } {
     const dataBaseCalculo = addMonths(dataInicial, offsetMeses);
     const mesCalculado = dataBaseCalculo.getMonth(); // 0-11
     const anoCalculado = dataBaseCalculo.getFullYear();
-
-    let dataCompraCalculada: string | null = null;
-    if (diaCompraOriginal !== null) {
-      let novaDataCompra = new Date(
-        Date.UTC(anoCalculado, mesCalculado, diaCompraOriginal),
-      );
-      if (novaDataCompra.getUTCMonth() !== mesCalculado) {
-        novaDataCompra = new Date(Date.UTC(anoCalculado, mesCalculado + 1, 0));
-      }
-      dataCompraCalculada = novaDataCompra.toISOString().split("T")[0];
-    } else if (
-      offsetMeses === 0 &&
-      data_compra &&
-      typeof data_compra === "string"
-    ) {
-      dataCompraCalculada = data_compra; // Usa original se não houver dia para cálculo na primeira iteração
-    }
 
     let dataVencimentoCalculada: string | null = null;
     if (diaVencimentoOriginal !== null) {
@@ -161,12 +133,11 @@ export async function addTransaction(formData: FormData) {
       data_vencimento &&
       typeof data_vencimento === "string"
     ) {
-      dataVencimentoCalculada = data_vencimento; // Usa original se não houver dia para cálculo na primeira iteração
+      dataVencimentoCalculada = data_vencimento;
     }
 
     return {
       periodo: format(dataBaseCalculo, "MMMM-yyyy", { locale: ptBR }),
-      dataCompra: dataCompraCalculada,
       dataVencimento: dataVencimentoCalculada,
     };
   }
@@ -175,7 +146,7 @@ export async function addTransaction(formData: FormData) {
     valorParaDividir: number,
     parcelaNum: number | null,
     periodoAtual: string,
-    dataCompraAtual: string | null, // Modificado
+    dataCompraOriginalParaTodasIteracoes: string | null,
     dataVencimentoAtual: string | null,
   ) {
     const valorAjustado = parseFloat(valorParaDividir.toFixed(2));
@@ -185,7 +156,7 @@ export async function addTransaction(formData: FormData) {
         valorDividido,
         responsavel,
         periodoAtual,
-        dataCompraAtual,
+        dataCompraOriginalParaTodasIteracoes,
         dataVencimentoAtual,
         parcelaNum,
       );
@@ -193,7 +164,7 @@ export async function addTransaction(formData: FormData) {
         valorAjustado - valorDividido,
         segundo_responsavel,
         periodoAtual,
-        dataCompraAtual,
+        dataCompraOriginalParaTodasIteracoes,
         dataVencimentoAtual,
         parcelaNum,
       );
@@ -202,20 +173,22 @@ export async function addTransaction(formData: FormData) {
         valorAjustado,
         responsavel,
         periodoAtual,
-        dataCompraAtual,
+        dataCompraOriginalParaTodasIteracoes,
         dataVencimentoAtual,
         parcelaNum,
       );
     }
   }
 
+  const dataCompraOriginalInput = data_compra || null; // A data de compra do formulário
+
   if (condicao === "vista") {
     dividirEAdicionar(
       valorNumerico,
       null,
       periodo as string,
-      data_compra || null, // data_compra original
-      data_vencimento || null, // data_vencimento original
+      dataCompraOriginalInput, // Passa a data de compra original
+      data_vencimento || null,
     );
   } else if (condicao === "parcelado") {
     const valorParcelaBase = valorNumerico / parcelas;
@@ -223,12 +196,13 @@ export async function addTransaction(formData: FormData) {
       const parcelaAtualNumero = i + 1;
       const {
         periodo: periodoDaParcela,
-        dataCompra: dataCompraDaParcela,
+        // dataCompra: dataCompraDaParcela, // Não vamos usar esta
         dataVencimento: dataVencimentoDaParcela,
       } = gerarDatasParaIteracao(i);
 
       let valorDaParcelaAtual: number;
       if (i === parcelas - 1) {
+        // Ajuste para a última parcela para evitar problemas de arredondamento
         const valorTotalPagoAnteriormente =
           parseFloat(valorParcelaBase.toFixed(2)) * (parcelas - 1);
         valorDaParcelaAtual = valorNumerico - valorTotalPagoAnteriormente;
@@ -240,7 +214,7 @@ export async function addTransaction(formData: FormData) {
         valorDaParcelaAtual,
         parcelaAtualNumero,
         periodoDaParcela,
-        dataCompraDaParcela,
+        dataCompraOriginalInput,
         dataVencimentoDaParcela,
       );
     }
@@ -248,7 +222,7 @@ export async function addTransaction(formData: FormData) {
     for (let i = 0; i < recorrencias; i++) {
       const {
         periodo: periodoDaRecorrencia,
-        dataCompra: dataCompraDaRecorrencia,
+        // dataCompra: dataCompraDaRecorrencia, // Não vamos usar esta
         dataVencimento: dataVencimentoDaRecorrencia,
       } = gerarDatasParaIteracao(i);
 
@@ -256,7 +230,7 @@ export async function addTransaction(formData: FormData) {
         valorNumerico,
         null,
         periodoDaRecorrencia,
-        dataCompraDaRecorrencia,
+        dataCompraOriginalInput,
         dataVencimentoDaRecorrencia,
       );
     }
@@ -266,12 +240,14 @@ export async function addTransaction(formData: FormData) {
     const { error } = await supabase.from("transacoes").insert(transacoes);
     if (error) {
       console.error("Erro ao adicionar transações:", error);
-      throw error;
+      return { success: false, error: error.message };
     }
     revalidatePath("/dashboard");
     revalidatePath("/transacoes");
+    return { success: true };
   } else {
     console.warn("Nenhuma transação foi gerada para ser inserida.");
+    return { success: false, error: "Nenhuma transação gerada." };
   }
 }
 
@@ -283,6 +259,7 @@ async function uploadImagem(
   if (!(imageFile instanceof File) || !imageFile.name) return null;
 
   const fileName = `${Date.now()}_${imageFile.name}`;
+
   const { error: uploadError } = await supabase.storage
     .from("comprovantes")
     .upload(fileName, imageFile, { upsert: true });

@@ -2,7 +2,7 @@
 import EmptyCard from "@/components/empty-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,11 +50,6 @@ export default function TableCategories({ categorias }) {
       </Tabs>
 
       <Card>
-        <CardHeader>
-          <CardTitle>
-            Categorias - {activeTab === "receita" ? "Receitas" : "Despesas"}
-          </CardTitle>
-        </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>

@@ -154,7 +154,10 @@ export default function CreateTransactions({
                   Categoria <Required />
                 </Label>
                 <Select name="categoria_id" disabled={!tipoTransacao}>
-                  <SelectTrigger id="categoria_id" className="w-full">
+                  <SelectTrigger
+                    id="categoria_id"
+                    className="w-full capitalize"
+                  >
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -232,6 +235,7 @@ export default function CreateTransactions({
                   name="responsavel"
                   placeholder="Responsável"
                   type="text"
+                  className="capitalize"
                   defaultValue="você"
                 />
                 <datalist id="responsavel-list">

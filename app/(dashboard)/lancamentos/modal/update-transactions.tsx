@@ -165,7 +165,7 @@ export default function UpdateTransactions({
               defaultValue={itemCategoriaId.toString()}
               name="categoria_id"
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full capitalize">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
@@ -285,6 +285,7 @@ export default function UpdateTransactions({
               name="responsavel"
               placeholder="Responsável"
               type="text"
+              className="capitalize"
             />
           </div>
 
