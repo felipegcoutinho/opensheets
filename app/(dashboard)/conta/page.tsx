@@ -14,7 +14,7 @@ import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
 
 async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
+  const month = getMonth(props);
   const getAccountMap = await getAccount();
 
   const accountData = await Promise.all(
