@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
 
 export default async function page({ params, searchParams }) {
-  const month = await getMonth({ searchParams });
+  const month = getMonth({ searchParams });
   const { condicao } = await params;
 
   const cartoes = await getCards();
