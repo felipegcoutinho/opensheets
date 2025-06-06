@@ -12,7 +12,7 @@ import { getNewCategorias } from "@/app/services/categorias";
 
 export default async function page({ searchParams, params }) {
   const { id } = await params;
-  const month = getMonth({ searchParams });
+  const month = await getMonth({ searchParams });
 
   const cards = await getCards(month);
   const categorias = await getNewCategorias();

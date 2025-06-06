@@ -7,7 +7,7 @@ import { getMonth } from "@/hooks/get-month";
 import UsersCard from "./users-card";
 
 async function page(props: { params: { month: string } }) {
-  const month = getMonth(props);
+  const month = await getMonth(props);
 
   const transactionsByResponsible = await getTransactionsByResponsible(month);
   const billsByResponsible = await getBillsByResponsible(month);

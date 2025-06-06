@@ -5,7 +5,7 @@ import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 
 export default async function BannerData() {
-  const { currentDate, friendlyDate, currentMonthName, currentYear } =
+  const { currentDate, fliendlyDate, currentMonthName, currentYear } =
     UseDates();
 
   const { saldo } = await UtilitiesDashboard(
@@ -20,7 +20,7 @@ export default async function BannerData() {
         <div>
           <p className="text-xl font-bold">Olá, {userName.split(" ")[0]}! 👋</p>
           <p className="text-muted-foreground">
-            <span>{friendlyDate(currentDate)}.</span>
+            <span>{fliendlyDate(currentDate)}.</span>
           </p>
         </div>
         <div className="text-right">

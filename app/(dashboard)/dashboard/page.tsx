@@ -23,7 +23,7 @@ import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
 
 export default async function page(props: { params: { month: string } }) {
-  const month = getMonth(props);
+  const month = await getMonth(props);
 
   const {
     bills,

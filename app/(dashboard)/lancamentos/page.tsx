@@ -6,7 +6,7 @@ import { getMonth } from "@/hooks/get-month";
 import { TableTransaction } from "./table/table-transaction";
 
 export default async function page(props: { params: { month: string } }) {
-  const month = getMonth(props);
+  const month = await getMonth(props);
 
   const cartoes = await getCards();
   const contas = await getAccount();

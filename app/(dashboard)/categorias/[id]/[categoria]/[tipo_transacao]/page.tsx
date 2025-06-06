@@ -12,7 +12,7 @@ export default async function page(props: {
   params: { month: string; categoria: string; tipo_transacao: string };
 }) {
   const params = await props.params;
-  const month = getMonth(props);
+  const month = await getMonth(props);
 
   const cartoes = await getCards();
   const contas = await getAccount();
