@@ -47,6 +47,26 @@ export default function UpdateTransactions({
   itemContaId,
   getCards,
   getAccount,
+  responsaveis = [],
+}: {
+  itemId: number;
+  itemDescricao: string;
+  itemNotas: string;
+  itemDate: string;
+  itemResponsavel: string;
+  itemTipoTransacao: string;
+  itemValor: number;
+  itemPeriodo: string;
+  itemPaid: boolean;
+  itemImagemURL: string;
+  itemCategoriaId: number;
+  getCategorias: any;
+  itemFormaPagamento: string;
+  itemCartaoId: number;
+  itemContaId: number;
+  getCards: any;
+  getAccount: any;
+  responsaveis?: string[];
 }) {
   const {
     isOpen,
@@ -62,6 +82,12 @@ export default function UpdateTransactions({
   const [imagePreview, setImagePreview] = useState(itemImagemURL);
 
   const { getMonthOptions } = UseDates();
+
+  const uniqueResponsaveis = Array.from(new Set(responsaveis));
+  const responsavelOptions = [
+    "você",
+    ...uniqueResponsaveis.filter((r) => r !== "você"),
+  ];
 
   useEffect(() => {
     setIsPaid(itemPaid);
@@ -281,12 +307,18 @@ export default function UpdateTransactions({
               <Required />
             </Label>
             <Input
+              list="responsavel-list"
               defaultValue={itemResponsavel}
               name="responsavel"
               placeholder="Responsável"
               type="text"
               className="capitalize"
             />
+            <datalist id="responsavel-list">
+              {responsavelOptions.map((item) => (
+                <option key={item} value={item} />
+              ))}
+            </datalist>
           </div>
 
           <div>

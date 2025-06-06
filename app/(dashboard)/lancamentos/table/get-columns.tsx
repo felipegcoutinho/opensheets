@@ -47,6 +47,7 @@ export const getColumns = (
   getCategorias,
   DateFormat,
   hidden,
+  responsaveis: string[],
 ) => [
   {
     id: "selection",
@@ -301,6 +302,7 @@ export const getColumns = (
                     itemContaId={item.contas?.id}
                     getCards={getCardsMap}
                     getAccount={getAccountMap}
+                    responsaveis={responsaveis}
                   />
                 </DropdownMenuItem>
               )}

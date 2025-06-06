@@ -57,6 +57,7 @@ export function TransactionTableFilters<TData>({
         getCards={getCards}
         getAccount={getAccount}
         getCategorias={getCategorias}
+        responsaveis={responsavelOptions}
       >
         <Button
           variant="default"

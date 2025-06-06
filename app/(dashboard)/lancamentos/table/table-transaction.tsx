@@ -69,6 +69,7 @@ export function TableTransaction({
       getCategorias,
       DateFormat,
       hidden,
+      responsavelOptions,
     ),
     getDescricao,
   });

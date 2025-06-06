@@ -32,7 +32,14 @@ export default function CreateTransactions({
   getCards,
   getAccount,
   getCategorias,
+  responsaveis = [],
   children,
+}: {
+  getCards: any;
+  getAccount: any;
+  getCategorias: any;
+  responsaveis?: string[];
+  children: React.ReactNode;
 }) {
   const {
     isOpen,
@@ -59,6 +66,15 @@ export default function CreateTransactions({
   } = UtilitiesLancamento();
 
   const { getMonthOptions } = UseDates();
+
+  const uniqueResponsaveis = Array.from(new Set(responsaveis));
+  const responsavelOptions = [
+    "você",
+    ...uniqueResponsaveis.filter((r) => r !== "você"),
+  ];
+  const secondResponsavelOptions = uniqueResponsaveis.filter(
+    (r) => r !== "você",
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -239,7 +255,9 @@ export default function CreateTransactions({
                   defaultValue="você"
                 />
                 <datalist id="responsavel-list">
-                  <option value="você" />
+                  {responsavelOptions.map((item) => (
+                    <option key={item} value={item} />
+                  ))}
                 </datalist>
               </div>
               {isDividedChecked && (
@@ -248,11 +266,17 @@ export default function CreateTransactions({
                     Segundo Responsável
                   </Label>
                   <Input
+                    list="segundo-responsavel-list"
                     id="segundo_responsavel"
                     name="segundo_responsavel"
                     placeholder="Segundo Responsável"
                     type="text"
                   />
+                  <datalist id="segundo-responsavel-list">
+                    {secondResponsavelOptions.map((item) => (
+                      <option key={item} value={item} />
+                    ))}
+                  </datalist>
                 </div>
               )}
             </div>
