@@ -65,7 +65,7 @@ export function UseDates() {
       .replace(" de", "");
   }
 
-  function fliendlyDate(date) {
+  function friendlyDate(date) {
     const dayOfWeek = diasDaSemana[date.getDay()];
     const day = date.getDate();
     const month = optionsMeses[date.getMonth()];
@@ -152,7 +152,7 @@ export function UseDates() {
     getPreviousMonth,
     getLastSixMonths,
     DateFormat,
-    fliendlyDate,
+    friendlyDate,
     getGreeting,
     getMonthOptions,
   };

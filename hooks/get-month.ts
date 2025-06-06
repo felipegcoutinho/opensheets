@@ -1,7 +1,7 @@
 import { UseDates } from "@/hooks/use-dates";
 
-export async function getMonth(props?: { [key: string]: string }) {
-  const searchParams = await props?.searchParams;
+export function getMonth(props?: { searchParams?: { periodo?: string } }) {
+  const searchParams = props?.searchParams;
   const { currentMonthName, currentYear } = UseDates();
   const defaultPeriodo = `${currentMonthName}-${currentYear}`;
   return searchParams?.periodo ?? defaultPeriodo;
