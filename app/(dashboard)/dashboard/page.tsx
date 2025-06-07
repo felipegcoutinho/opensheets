@@ -11,7 +11,7 @@ import {
   CreditCard,
   ListOrdered,
   Wallet,
-} from "lucide-react";
+} from "@/lib/remix-icons";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";

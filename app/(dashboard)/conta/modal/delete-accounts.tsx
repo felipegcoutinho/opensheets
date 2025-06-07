@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2Icon } from "lucide-react";
+import { Trash2Icon } from "@/lib/remix-icons";
 import UtilitiesConta from "../utilities-conta";
 
 export default function DeleteAccount({ itemId }) {

@@ -5,7 +5,7 @@ import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/lib/remix-icons";
 import Link from "next/link";
 
 type CombinedData = {

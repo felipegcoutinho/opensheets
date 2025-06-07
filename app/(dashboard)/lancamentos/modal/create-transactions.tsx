@@ -24,7 +24,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "@/lib/remix-icons";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
 

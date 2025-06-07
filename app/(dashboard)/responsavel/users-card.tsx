@@ -1,7 +1,7 @@
 import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Barcode, CreditCard, User, Users, Verified } from "lucide-react";
+import { Barcode, CreditCard, User, Users, Verified } from "@/lib/remix-icons";
 import Image from "next/image";
 
 interface UserCardHeaderProps {

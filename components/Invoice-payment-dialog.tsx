@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CreditCard } from "lucide-react";
+import { CreditCard } from "@/lib/remix-icons";
 import Utils from "./utils";
 import { PaymentMethodLogo } from "./logos-on-table";
 
