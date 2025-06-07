@@ -22,7 +22,7 @@ export default function PaymentStatusWidget({
   const pendingExpense = expenses - sumPaidExpense;
 
   const receiveData = {
-    title: "À Receber",
+    title: "A Receber",
     total: incomes,
     values: [
       {
@@ -39,7 +39,7 @@ export default function PaymentStatusWidget({
   };
 
   const payData = {
-    title: "À Pagar",
+    title: "A Pagar",
     total: expenses,
     values: [
       {
@@ -59,7 +59,7 @@ export default function PaymentStatusWidget({
     <>
       <PaymentSection {...receiveData} />
 
-      <Separator className="my-3.5" />
+      <Separator className="my-6" />
 
       <PaymentSection {...payData} />
     </>

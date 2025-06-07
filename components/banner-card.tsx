@@ -12,7 +12,7 @@ function Banner({ children }) {
   }
 
   return (
-    <Card className="dark:bg-card mt-4 border-none bg-blue-50 px-6 py-4">
+    <Card className="bg-contrast-foreground/10 mt-4 border-none px-6 py-4">
       {children}
     </Card>
   );

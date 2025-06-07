@@ -14,7 +14,7 @@ import DeleteNotes from "./modal/delete-notes";
 import UpdateNotes from "./modal/update-notes";
 
 export default async function page(props: { params: { month: string } }) {
-  const month = getMonth(props);
+  const month = await getMonth(props);
   const notes = await getNotes(month);
 
   return (

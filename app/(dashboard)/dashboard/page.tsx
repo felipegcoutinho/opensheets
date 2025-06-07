@@ -23,7 +23,7 @@ import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
 
 export default async function page(props: { params: { month: string } }) {
-  const month = getMonth(props);
+  const month = await getMonth(props);
 
   const {
     bills,
@@ -106,7 +106,7 @@ export default async function page(props: { params: { month: string } }) {
 
         <Widget
           title="Status de Pagamento"
-          subtitle={"Pagamentos Pagos e Pendentes"}
+          subtitle={"Resumo de valores, pagos e pendentes"}
           icon={<Wallet className="mr-2 inline size-4" />}
         >
           <PaymentStatusWidget

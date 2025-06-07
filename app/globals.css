@@ -16,7 +16,7 @@
   --card-foreground: oklch(0.216 0 0);
   --popover-foreground: oklch(0.216 0 0);
   --sidebar-foreground: oklch(0.216 0 0);
-  --primary: oklch(0.43 0.07 190.83);
+  --primary: oklch(0.7 0.15 162.42);
   --sidebar-primary: oklch(0.87 0.2 125.11);
   --primary-foreground: oklch(1 0 none);
   --sidebar-primary-foreground: oklch(0.961 0 0);
@@ -34,17 +34,18 @@
   --sidebar-border: oklch(0.85 0.012 153);
   --ring: oklch(0.64 0 none);
   --sidebar-ring: oklch(0.832 0.06 153);
-  --input: oklch(0.85 0.012 153);
+  --input: oklch(0.92 0 none);
   --chart-1: oklch(0.74 0.2174 146.04);
   --chart-2: oklch(0.6 0.2273 31.53);
   --chart-3: oklch(0.59 0.263 299.05);
   --chart-4: oklch(0.9 0.1898 107.39);
   --radius: 0.5rem;
-  --contrast: oklch(0.79 0.19 120.69)
+  --contrast: oklch(0.79 0.19 120.69);
+  --contrast-foreground: oklch(0.59 0.2 277.45);
 }
 
 .dark {
-  --background: oklch(0.228 0 0);
+  --background: oklch(0.18 0 none);
   --card: oklch(0.2 0 none);
   --popover: oklch(0.228 0 0);
   --sidebar: oklch(0.2 0 none);
@@ -52,7 +53,7 @@
   --card-foreground: oklch(0.961 0 0);
   --popover-foreground: oklch(0.961 0 0);
   --sidebar-foreground: oklch(0.961 0 0);
-  --primary: oklch(0.64 0.2 149.46);
+  --primary: oklch(0.73 0.1922 150.48);
   --sidebar-primary: oklch(0.87 0.269 145);
   --primary-foreground: oklch(0.218 0 0);
   --sidebar-primary-foreground: oklch(0.218 0 0);
@@ -75,7 +76,8 @@
   --chart-2: oklch(0.6 0.2273 31.53);
   --chart-3: oklch(0.59 0.263 299.05);
   --chart-4: oklch(0.9 0.1898 107.39);
-  --contrast: oklch(0.94 0.2028 119.64);
+  --contrast: oklch(0.69 0.2012 146.94);
+  --contrast-foreground: oklch(0.59 0.2 277.45);
 }
 
 /* Add Tailwind v4 @theme configuration as needed */
@@ -121,6 +123,7 @@
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --color-contrast: var(--contrast);
+  --color-contrast-foreground: var(--contrast-foreground);
 
   @keyframes accordion-down {
     from {

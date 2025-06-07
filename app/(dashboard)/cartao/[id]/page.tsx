@@ -10,7 +10,7 @@ import CardStatusIndicator from "./card-status-Indicator";
 
 export default async function page({ searchParams, params }) {
   const { id } = await params;
-  const month = getMonth({ searchParams });
+  const month = await getMonth({ searchParams });
 
   const contas = await getAccount();
   const categorias = await getNewCategorias();
