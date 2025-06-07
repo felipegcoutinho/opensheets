@@ -21,8 +21,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
-import Image from "next/image";
 import UtilitiesConta from "../utilities-conta";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UpdateAccount({
   itemId,
@@ -60,17 +60,12 @@ export default function UpdateAccount({
               <SelectContent>
                 {logos.map((item) => (
                   <SelectItem key={item.name} value={item.file}>
-                    <div className="flex items-center gap-2">
-                      <Image
-                        quality={100}
-                        src={`/logos/${item.file}`}
-                        className="rounded-full border"
-                        width={32}
-                        height={32}
-                        alt="Logo da conta"
-                      />
-                      <span>{item.name}</span>
-                    </div>
+                    <PaymentMethodLogo
+                      url_name={`/logos/${item.file}`}
+                      descricao={item.name}
+                      width={32}
+                      height={32}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>

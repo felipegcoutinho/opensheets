@@ -6,22 +6,19 @@ import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
 import Ping from "@/components/ping-icon";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UiCard({ item, getAccountMap, mostrarLimites }) {
   return (
     <Card key={item.id} className="gap-2">
       <CardContent className="space-y-2">
         <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image
-              src={`/logos/${item.logo_image}`}
-              alt={`Logo de ${item.descricao}`}
-              width={54}
-              height={54}
-              className="rounded-full border shadow-sm transition-transform hover:scale-105"
-            />
-            <span className="text-lg font-semibold">{item.descricao}</span>
-          </div>
+          <PaymentMethodLogo
+            url_name={`/logos/${item.logo_image}`}
+            descricao={item.descricao}
+            width={50}
+            height={50}
+          />
 
           <Image
             src={`/bandeiras/${item.bandeira}`}

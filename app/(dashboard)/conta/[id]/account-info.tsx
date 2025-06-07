@@ -1,19 +1,17 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import Image from "next/image";
 import BalanceItem from "./balance-item";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 function AccountInfo({ item, sumAccountIncome, accountExpense, saldo }) {
   return (
     <Card className="mt-4 w-full p-6">
       <div className="mb-4 flex items-start justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            src={`/logos/${item.logo_image}`}
-            alt={`Logo do cartão ${item.descricao}`}
+        <div className="flex items-center">
+          <PaymentMethodLogo
+            url_name={`/logos/${item.logo_image}`}
             width={60}
             height={60}
-            className="rounded-full"
           />
           <div className="flex flex-col">
             <span className="text-lg font-bold">{item.descricao}</span>

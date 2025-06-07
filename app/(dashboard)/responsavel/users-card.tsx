@@ -1,3 +1,4 @@
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Barcode, CreditCard, User, Users, Verified } from "lucide-react";
@@ -78,30 +79,25 @@ export default function UsersCard({
                   className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
                   key={descricao}
                 >
-                  <p className="flex items-center gap-1">
+                  <div className="flex items-center">
                     {data.logo_image ? (
-                      <Image
-                        quality={100}
-                        src={`/logos/${data.logo_image}`}
-                        className="rounded-full border shadow-sm transition-transform hover:scale-105"
-                        width={20}
-                        height={20}
-                        alt="Logo do cartão"
+                      <PaymentMethodLogo
+                        url_name={`/logos/${data.logo_image}`}
+                        descricao={descricao}
+                        width={24}
+                        height={24}
                       />
                     ) : (
                       descricao === "Pix/Dinheiro/Débito" && (
-                        <Image
-                          quality={100}
-                          src="/logos/pix.png"
-                          className="rounded-full border shadow-sm transition-transform hover:scale-105"
-                          width={20}
-                          height={20}
-                          alt="Logo do Pix"
+                        <PaymentMethodLogo
+                          url_name={`/logos/pix.png`}
+                          descricao={descricao}
+                          width={24}
+                          height={24}
                         />
                       )
                     )}
-                    {descricao}
-                  </p>
+                  </div>
                   <p>
                     <MoneyValues value={data.valor} />
                   </p>

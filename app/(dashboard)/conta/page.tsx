@@ -8,10 +8,10 @@ import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
-import Image from "next/image";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -38,17 +38,12 @@ async function page(props: { params: { month: string } }) {
             <Card key={item.id} className="p-2">
               <CardContent className="space-y-4 p-4">
                 <CardTitle className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      quality={100}
-                      src={`/logos/${item.logo_image}`}
-                      className="rounded-full border shadow-sm transition-transform hover:scale-105"
-                      width={54}
-                      height={54}
-                      alt="Logo da conta"
-                    />
-                    {item.descricao}
-                  </div>
+                  <PaymentMethodLogo
+                    url_name={`/logos/${item.logo_image}`}
+                    descricao={item.descricao}
+                    width={50}
+                    height={50}
+                  />
                 </CardTitle>
 
                 <p className="text-muted-foreground text-sm">

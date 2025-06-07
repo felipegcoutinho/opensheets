@@ -106,7 +106,7 @@ export default async function page(props: { params: { month: string } }) {
 
         <Widget
           title="Status de Pagamento"
-          subtitle={"Resumo de valores, pagos e pendentes"}
+          subtitle={"Resumo de valores, confirmados e pendentes"}
           icon={<Wallet className="mr-2 inline size-4" />}
         >
           <PaymentStatusWidget

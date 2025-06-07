@@ -24,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import UtilitiesCartao from "../utilities-cartao";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function CreateCard({ getAccountMap }) {
   const {
@@ -62,17 +63,12 @@ export default function CreateCard({ getAccountMap }) {
               <SelectContent>
                 {logos.map((item) => (
                   <SelectItem key={item.name} value={item.file}>
-                    <div className="flex items-center gap-2">
-                      <Image
-                        quality={100}
-                        src={`/logos/${item.file}`}
-                        className="h-8 w-8 rounded-full border"
-                        width={32}
-                        height={32}
-                        alt="Logo do cartão"
-                      />
-                      <span>{item.name}</span>
-                    </div>
+                    <PaymentMethodLogo
+                      url_name={`/logos/${item.file}`}
+                      descricao={item.name}
+                      width={34}
+                      height={34}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -207,17 +203,12 @@ export default function CreateCard({ getAccountMap }) {
               <SelectContent>
                 {getAccountMap?.map((item) => (
                   <SelectItem key={item.id} value={item.id.toString()}>
-                    <div className="flex items-center gap-2">
-                      <Image
-                        quality={100}
-                        src={`/logos/${item.logo_image}`}
-                        className="h-8 w-8 rounded-full border"
-                        width={32}
-                        height={32}
-                        alt="Logo da Conta"
-                      />
-                      <span>{item.descricao}</span>
-                    </div>
+                    <PaymentMethodLogo
+                      url_name={`/logos/${item.logo_image}`}
+                      descricao={item.descricao}
+                      width={34}
+                      height={34}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>

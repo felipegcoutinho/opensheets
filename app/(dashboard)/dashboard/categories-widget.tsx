@@ -37,65 +37,63 @@ export default function CategoryWidget({
   }
 
   return (
-    <div>
-      <CardContent className="space-y-6 p-0">
-        {sortedData.map((item, index) => {
-          const percentual =
-            totalReceita && totalReceita > 0
-              ? ((item.total / totalReceita) * 100).toFixed(1)
-              : item.tipo_transacao === "despesa"
-                ? "100.0"
-                : "0.0";
+    <CardContent className="space-y-6 p-0">
+      {sortedData.map((item, index) => {
+        const percentual =
+          totalReceita && totalReceita > 0
+            ? ((item.total / totalReceita) * 100).toFixed(1)
+            : item.tipo_transacao === "despesa"
+              ? "100.0"
+              : "0.0";
 
-          const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
+        const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
 
-          return (
-            <div key={index} className="space-y-1">
-              <div className="flex items-center justify-between">
-                <Link
-                  href={url}
-                  className="flex items-center gap-1 hover:underline"
+        return (
+          <div key={index} className="space-y-1">
+            <div className="flex items-center justify-between">
+              <Link
+                href={url}
+                className="flex items-center gap-1 hover:underline"
+              >
+                <span className="font-bold capitalize">{item.categoria}</span>
+                <ArrowUpRight className="text-muted-foreground h-3 w-3" />
+              </Link>
+
+              <div className="flex items-center gap-2">
+                <MoneyValues value={item.total} />
+                <Badge
+                  variant={
+                    item.tipo_transacao === "despesa" ? "despesa" : "receita"
+                  }
                 >
-                  <span className="font-bold capitalize">{item.categoria}</span>
-                  <ArrowUpRight className="text-muted-foreground h-3 w-3" />
-                </Link>
-
-                <div className="flex items-center gap-2">
-                  <MoneyValues value={item.total} />
-                  <Badge
-                    variant={
-                      item.tipo_transacao === "despesa" ? "despesa" : "receita"
-                    }
-                  >
-                    {percentual}%
-                  </Badge>
-                </div>
+                  {percentual}%
+                </Badge>
               </div>
-
-              <Progress
-                primary_color={
-                  item.tipo_transacao === "despesa"
-                    ? "bg-red-500 dark:bg-red-700"
-                    : "bg-green-500 dark:bg-green-700"
-                }
-                secondary_color={
-                  item.tipo_transacao === "despesa"
-                    ? "bg-zinc-200 dark:bg-zinc-700/50"
-                    : "bg-zinc-200 dark:bg-zinc-700/50"
-                }
-                value={
-                  totalReceita && totalReceita > 0
-                    ? (item.total / totalReceita) * 100
-                    : item.tipo_transacao === "despesa"
-                      ? 100
-                      : 0
-                }
-                className="h-2"
-              />
             </div>
-          );
-        })}
-      </CardContent>
-    </div>
+
+            <Progress
+              primary_color={
+                item.tipo_transacao === "despesa"
+                  ? "bg-red-500 dark:bg-red-700"
+                  : "bg-green-500 dark:bg-green-700"
+              }
+              secondary_color={
+                item.tipo_transacao === "despesa"
+                  ? "bg-zinc-200 dark:bg-zinc-700/50"
+                  : "bg-zinc-200 dark:bg-zinc-700/50"
+              }
+              value={
+                totalReceita && totalReceita > 0
+                  ? (item.total / totalReceita) * 100
+                  : item.tipo_transacao === "despesa"
+                    ? 100
+                    : 0
+              }
+              className="h-2"
+            />
+          </div>
+        );
+      })}
+    </CardContent>
   );
 }

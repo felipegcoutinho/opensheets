@@ -1,5 +1,6 @@
 "use client";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import Ping from "@/components/ping-icon";
 import RemovePaymentButton from "@/components/remove-payment-button";
@@ -13,13 +14,11 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
     <Card className="mt-4 w-full gap-2 p-6">
       {/* Cabeçalho */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            src={`/logos/${item.logo_image}`}
-            alt={`Logo do cartão ${item.descricao}`}
+        <div className="flex items-center">
+          <PaymentMethodLogo
+            url_name={`/logos/${item.logo_image}`}
             width={54}
             height={54}
-            className="rounded-full border shadow-sm transition-transform hover:scale-105"
           />
 
           <div className="flex flex-col items-start">
@@ -36,7 +35,6 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
           height={60}
           className="rounded-lg border"
           alt="Bandeira do cartão"
-          priority
         />
       </div>
 

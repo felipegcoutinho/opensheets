@@ -1,9 +1,9 @@
 import { getFaturas } from "@/app/services/faturas";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import EmptyCard from "@/components/empty-card";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import { ArrowUpRight, Check } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function InvoiceWidget({ data, month }) {
@@ -34,14 +34,11 @@ export default async function InvoiceWidget({ data, month }) {
             key={item.cartao_id}
             className="border-border/50 flex items-center justify-between border-b"
           >
-            <div className="flex items-center gap-2">
-              <Image
-                src={`/logos/${item.logo_image}`}
-                className="rounded-full border shadow-sm transition-transform hover:scale-105"
+            <div className="flex items-center">
+              <PaymentMethodLogo
+                url_name={`/logos/${item.logo_image}`}
                 width={40}
                 height={40}
-                alt="Logo do cartão"
-                quality={100}
               />
               <div>
                 <Link

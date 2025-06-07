@@ -1,5 +1,4 @@
 "use client";
-
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,8 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { CreditCard } from "lucide-react";
-import Image from "next/image";
 import Utils from "./utils";
+import { PaymentMethodLogo } from "./logos-on-table";
 
 export default function InvoicePaymentDialog({
   fatura_status,
@@ -53,18 +52,15 @@ export default function InvoicePaymentDialog({
             <div className="space-y-4 pt-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <span>Você está pagando a fatura de:</span>
-                <Image
-                  src={`/logos/${logo_imagem}`}
-                  className="rounded-full border shadow-sm transition-transform hover:scale-105"
+                <PaymentMethodLogo
+                  url_name={`/logos/${logo_imagem}`}
                   width={40}
                   height={40}
-                  alt="Logo do cartão"
-                  quality={100}
                 />
                 <span className="font-bold">{descricao}</span>
               </div>
 
-              <div className="border-t pt-4">
+              <div className="border p-6">
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-sm">Valor Total</span>
                   <span className="text-2xl font-semibold">

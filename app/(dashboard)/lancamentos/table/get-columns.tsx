@@ -1,6 +1,6 @@
 "use client";
 
-import { LogosOnTable } from "@/components/logos-on-table";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
 import { Badge } from "@/components/ui/badge";
@@ -234,7 +234,14 @@ export const getColumns = (
       const item = row.original;
       const descricao = getDescricao(item);
       const logo = getLogo(item);
-      return <LogosOnTable logo={logo} descricao={descricao} />;
+      return (
+        <PaymentMethodLogo
+          url_name={`/logos/${logo}`}
+          descricao={descricao}
+          height={36}
+          width={36}
+        />
+      );
     },
   },
 

@@ -25,8 +25,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "lucide-react";
-import Image from "next/image";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function CreateTransactions({
   getCards,
@@ -302,17 +302,12 @@ export default function CreateTransactions({
                       <SelectContent>
                         {getAccount?.map((item) => (
                           <SelectItem key={item.id} value={item.id.toString()}>
-                            <div className="flex items-center gap-2">
-                              <Image
-                                quality={100}
-                                src={`/logos/${item.logo_image}`}
-                                className="h-8 w-8 rounded-full border"
-                                width={32}
-                                height={32}
-                                alt="Logo da Conta"
-                              />
-                              <span>{item.descricao}</span>
-                            </div>
+                            <PaymentMethodLogo
+                              url_name={`/logos/${item.logo_image}`}
+                              descricao={item.descricao}
+                              width={32}
+                              height={32}
+                            />
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -332,17 +327,12 @@ export default function CreateTransactions({
                       <SelectContent>
                         {getCards?.map((item) => (
                           <SelectItem key={item.id} value={item.id.toString()}>
-                            <div className="flex items-center gap-2">
-                              <Image
-                                quality={100}
-                                src={`/logos/${item.logo_image}`}
-                                className="h-8 w-8 rounded-full border"
-                                width={32}
-                                height={32}
-                                alt="Logo do cartão"
-                              />
-                              <span>{item.descricao}</span>
-                            </div>
+                            <PaymentMethodLogo
+                              url_name={`/logos/${item.logo_image}`}
+                              descricao={item.descricao}
+                              width={32}
+                              height={32}
+                            />
                           </SelectItem>
                         ))}
                       </SelectContent>

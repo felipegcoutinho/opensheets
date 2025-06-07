@@ -26,6 +26,7 @@ export default async function BillsWidget({ month, data }) {
           alt="Logo do cartão"
           quality={100}
         />
+
         <div>
           <p className="capitalize">{item.descricao}</p>
           {item.realizado === false ? (

@@ -1,7 +1,7 @@
 import EmptyCard from "@/components/empty-card";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
-import Image from "next/image";
 
 function RecentesTransactions({ transactions }) {
   function getLogo(item) {
@@ -21,15 +21,13 @@ function RecentesTransactions({ transactions }) {
           key={item.id}
           className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"
         >
-          <div className="flex items-center gap-2">
-            <Image
-              src={`/logos/${getLogo(item)}`}
-              className="rounded-full border shadow-sm transition-transform hover:scale-105"
-              width={28}
-              height={28}
-              alt="Logo do cartão"
-              quality={100}
+          <div className="flex items-center">
+            <PaymentMethodLogo
+              url_name={`/logos/${getLogo(item)}`}
+              height={40}
+              width={40}
             />
+
             <div className="flex flex-col items-start py-2">
               <p>{item.descricao}</p>
               <p className="text-muted-foreground text-xs">

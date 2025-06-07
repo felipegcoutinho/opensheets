@@ -27,7 +27,7 @@ export default function PaymentStatusWidget({
     values: [
       {
         amount: sumPaidIncome,
-        label: "recebidos",
+        label: "confirmados",
         color: "bg-primary ",
       },
       {
@@ -44,7 +44,7 @@ export default function PaymentStatusWidget({
     values: [
       {
         amount: sumPaidExpense,
-        label: "pagos",
+        label: "confirmados",
         color: "bg-orange-400 dark:bg-orange-600",
       },
       {
