@@ -1,6 +1,7 @@
 "use client";
 
-import { LogOut, MoreVerticalIcon } from "lucide-react";
+import LogOut from "remixicon-react/LogoutBoxLineIcon";
+import MoreVerticalIcon from "remixicon-react/More2LineIcon";
 
 import { signOut } from "@/app/actions/auth";
 import {

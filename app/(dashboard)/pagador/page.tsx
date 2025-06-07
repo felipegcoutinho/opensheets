@@ -6,7 +6,7 @@ import EmptyCard from "@/components/empty-card";
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { VerifiedIcon } from "lucide-react";
+import VerifiedIcon from "remixicon-react/ShieldCheckLineIcon";
 
 export default async function page() {
   const pagadores = await getPayers();

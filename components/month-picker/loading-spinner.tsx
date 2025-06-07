@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import Loader2 from "remixicon-react/Loader2LineIcon";
 
 const LoadingSpinner = () => (
   <Loader2

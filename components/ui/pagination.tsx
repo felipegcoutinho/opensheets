@@ -1,9 +1,7 @@
 import * as React from "react"
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from "lucide-react"
+import ChevronLeftIcon from "remixicon-react/ArrowLeftSLineIcon"
+import ChevronRightIcon from "remixicon-react/ArrowRightSLineIcon"
+import MoreHorizontalIcon from "remixicon-react/MoreLineIcon"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"

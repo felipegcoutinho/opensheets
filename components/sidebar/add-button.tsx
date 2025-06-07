@@ -1,6 +1,6 @@
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
 import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
-import { CircleFadingPlus } from "lucide-react";
+import CircleFadingPlus from "remixicon-react/AddCircleLineIcon";
 import { Button } from "../ui/button";
 
 function AddButton({ item, cartoes, contas, categorias }) {

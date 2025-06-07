@@ -20,14 +20,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
-import {
-  CheckCircle2Icon,
-  EllipsisVertical,
-  MessageSquareText,
-  Paperclip,
-  PartyPopper,
-  Users,
-} from "lucide-react";
+import CheckCircle2Icon from "remixicon-react/CheckboxCircleLineIcon";
+import EllipsisVertical from "remixicon-react/More2LineIcon";
+import MessageSquareText from "remixicon-react/Message2LineIcon";
+import Paperclip from "remixicon-react/AttachmentLineIcon";
+import PartyPopper from "remixicon-react/MagicLineIcon";
+import Users from "remixicon-react/TeamLineIcon";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";

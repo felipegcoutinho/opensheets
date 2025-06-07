@@ -6,7 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import clsx from "clsx";
-import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import TrendingDownIcon from "remixicon-react/ArrowDownLineIcon";
+import TrendingUpIcon from "remixicon-react/ArrowUpLineIcon";
 import MoneyValues from "../../../components/money-values";
 import { Badge } from "../../../components/ui/badge";
 

@@ -1,6 +1,7 @@
 import { signOut } from "@/actions/auth";
 import { getEmail, getUserName } from "@/app/actions/users";
-import { LayoutDashboardIcon, LogOut } from "lucide-react"; // Adicionando ícone de configurações
+import LayoutDashboardIcon from "remixicon-react/DashboardLineIcon";
+import LogOut from "remixicon-react/LogoutBoxLineIcon"; // Adicionando ícone de configurações
 import Link from "next/link";
 import { Button } from "./ui/button";
 

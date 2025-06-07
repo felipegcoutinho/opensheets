@@ -3,15 +3,13 @@ import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/services/fetch-all-data";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
-import {
-  ArrowDownUp,
-  Barcode,
-  ChartColumn,
-  ChartNoAxesCombined,
-  CreditCard,
-  ListOrdered,
-  Wallet,
-} from "lucide-react";
+import ArrowDownUp from "remixicon-react/ArrowUpDownLineIcon";
+import Barcode from "remixicon-react/BarcodeLineIcon";
+import ChartColumn from "remixicon-react/BarChart2LineIcon";
+import ChartNoAxesCombined from "remixicon-react/LineChartLineIcon";
+import CreditCard from "remixicon-react/BankCardLineIcon";
+import ListOrdered from "remixicon-react/ListOrderedIcon";
+import Wallet from "remixicon-react/WalletLineIcon";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";

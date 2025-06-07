@@ -1,6 +1,10 @@
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Barcode, CreditCard, User, Users, Verified } from "lucide-react";
+import Barcode from "remixicon-react/BarcodeLineIcon";
+import CreditCard from "remixicon-react/BankCardLineIcon";
+import User from "remixicon-react/UserLineIcon";
+import Users from "remixicon-react/TeamLineIcon";
+import Verified from "remixicon-react/ShieldCheckLineIcon";
 import Image from "next/image";
 
 interface UserCardHeaderProps {

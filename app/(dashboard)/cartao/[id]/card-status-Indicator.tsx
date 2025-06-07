@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import CheckCircle2 from "remixicon-react/CheckboxCircleLineIcon";
 
 export default function CardStatusIndicator({ fatura_status }) {
   const isPaga = Array.isArray(fatura_status) && fatura_status.length > 0;

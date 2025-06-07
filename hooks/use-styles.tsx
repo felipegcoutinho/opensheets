@@ -1,11 +1,9 @@
-import {
-  Banknote,
-  Barcode,
-  CalendarClockIcon,
-  CheckLine,
-  CreditCard,
-  RotateCw,
-} from "lucide-react";
+import Banknote from "remixicon-react/MoneyDollarBoxLineIcon";
+import Barcode from "remixicon-react/BarcodeLineIcon";
+import CalendarClockIcon from "remixicon-react/TimeLineIcon";
+import CheckLine from "remixicon-react/CheckLineIcon";
+import CreditCard from "remixicon-react/BankCardLineIcon";
+import RotateCw from "remixicon-react/RefreshLineIcon";
 import Image from "next/image";
 
 function UseStyles() {

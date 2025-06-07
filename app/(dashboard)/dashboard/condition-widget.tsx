@@ -2,7 +2,7 @@ import { getConditions } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { CardContent } from "@/components/ui/card";
-import { ArrowUpRight } from "lucide-react";
+import ArrowUpRight from "remixicon-react/ArrowRightUpLineIcon";
 import Link from "next/link";
 
 export async function ConditionWidget({ month }) {

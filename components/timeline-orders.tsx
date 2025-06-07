@@ -1,5 +1,6 @@
 import { UseDates } from "@/hooks/use-dates";
-import { CircleCheck, CircleEllipsisIcon } from "lucide-react";
+import CircleCheck from "remixicon-react/CheckboxCircleLineIcon";
+import CircleEllipsisIcon from "remixicon-react/MoreLineIcon";
 import { Separator } from "./ui/separator";
 
 export default function Timeline({

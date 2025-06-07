@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CreditCard } from "lucide-react";
+import CreditCard from "remixicon-react/BankCardLineIcon";
 import Image from "next/image";
 import Utils from "./utils";
 

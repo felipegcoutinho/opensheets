@@ -24,7 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { ThumbsUp } from "lucide-react";
+import ThumbsUp from "remixicon-react/ThumbUpLineIcon";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";

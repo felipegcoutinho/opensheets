@@ -1,13 +1,11 @@
-import {
-  ArrowDownUp,
-  CreditCard,
-  Landmark,
-  LayoutDashboard,
-  ListOrdered,
-  NotebookPen,
-  Users,
-  WandSparkles,
-} from "lucide-react";
+import ArrowDownUp from "remixicon-react/ArrowUpDownLineIcon";
+import CreditCard from "remixicon-react/BankCardLineIcon";
+import Landmark from "remixicon-react/BankLineIcon";
+import LayoutDashboard from "remixicon-react/DashboardLineIcon";
+import ListOrdered from "remixicon-react/ListOrderedIcon";
+import NotebookPen from "remixicon-react/FileEditLineIcon";
+import Users from "remixicon-react/TeamLineIcon";
+import WandSparkles from "remixicon-react/MagicLineIcon";
 
 export function NavLinks(month: string) {
   return {

@@ -2,7 +2,8 @@
 
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import ChevronLeft from "remixicon-react/ArrowLeftSLineIcon";
+import ChevronRight from "remixicon-react/ArrowRightSLineIcon";
 import React from "react";
 
 interface NavigationButtonProps {

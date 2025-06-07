@@ -1,15 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  BarChart3,
-  PieChart,
-  Shield,
-  Wallet,
-  Bell,
-  TrendingUp,
-  CreditCard,
-  BadgeCheck,
-  MousePointer,
-} from "lucide-react";
+import BarChart3 from "remixicon-react/BarChart2LineIcon";
+import PieChart from "remixicon-react/PieChart2LineIcon";
+import Shield from "remixicon-react/ShieldLineIcon";
+import Wallet from "remixicon-react/WalletLineIcon";
+import Bell from "remixicon-react/BellLineIcon";
+import TrendingUp from "remixicon-react/ArrowUpLineIcon";
+import CreditCard from "remixicon-react/BankCardLineIcon";
+import BadgeCheck from "remixicon-react/ShieldCheckLineIcon";
+import MousePointer from "remixicon-react/MouseLineIcon";
 
 export default function Index() {
   const features = [

@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import confetti from "canvas-confetti";
-import { CreditCard } from "lucide-react";
+import CreditCard from "remixicon-react/BankCardLineIcon";
 import Image from "next/image";
 import { useTransition } from "react";
 

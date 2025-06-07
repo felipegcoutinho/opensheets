@@ -15,7 +15,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import Check from "remixicon-react/CheckLineIcon";
+import ChevronsUpDown from "remixicon-react/ArrowUpDownLineIcon";
 import { useState } from "react";
 
 interface ComboboxFilterProps {

@@ -2,7 +2,8 @@ import { getFaturas } from "@/app/services/faturas";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
-import { ArrowUpRight, Check } from "lucide-react";
+import ArrowUpRight from "remixicon-react/ArrowRightUpLineIcon";
+import Check from "remixicon-react/CheckLineIcon";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -12,7 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
+import ThumbsDown from "remixicon-react/ThumbDownLineIcon";
+import ThumbsUp from "remixicon-react/ThumbUpLineIcon";
 import Link from "next/link";
 import { useState } from "react";
 
