@@ -5,7 +5,7 @@ import {
   CheckLine,
   CreditCard,
   RotateCw,
-} from "lucide-react";
+} from "@/lib/remix-icons";
 import Image from "next/image";
 
 function UseStyles() {

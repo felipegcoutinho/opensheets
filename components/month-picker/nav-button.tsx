@@ -2,7 +2,7 @@
 
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "@/lib/remix-icons";
 import React from "react";
 
 interface NavigationButtonProps {

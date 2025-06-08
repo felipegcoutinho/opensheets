@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UseStyles from "@/hooks/use-styles";
-import { ArrowUpRight, EllipsisVertical } from "lucide-react";
+import { ArrowUpRight, EllipsisVertical } from "@/lib/remix-icons";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";

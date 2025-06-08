@@ -9,7 +9,7 @@ import {
   CreditCard,
   BadgeCheck,
   MousePointer,
-} from "lucide-react";
+} from "@/lib/remix-icons";
 
 export default function Index() {
   const features = [

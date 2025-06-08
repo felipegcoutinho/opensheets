@@ -7,7 +7,7 @@ import {
   NotebookPen,
   Users,
   WandSparkles,
-} from "lucide-react";
+} from "@/lib/remix-icons";
 
 export function NavLinks(month: string) {
   return {

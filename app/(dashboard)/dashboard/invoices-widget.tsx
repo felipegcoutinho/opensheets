@@ -3,7 +3,7 @@ import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check } from "@/lib/remix-icons";
 import Link from "next/link";
 
 export default async function InvoiceWidget({ data, month }) {

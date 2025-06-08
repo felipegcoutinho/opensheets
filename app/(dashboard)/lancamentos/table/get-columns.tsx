@@ -27,7 +27,7 @@ import {
   Paperclip,
   PartyPopper,
   Users,
-} from "lucide-react";
+} from "@/lib/remix-icons";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
