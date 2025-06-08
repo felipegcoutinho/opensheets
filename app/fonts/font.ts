@@ -1,4 +1,4 @@
-import { Inter, Roboto_Flex } from "next/font/google";
+import { IBM_Plex_Sans, Inter, Roboto_Flex } from "next/font/google";
 
 const roboto_flex = Roboto_Flex({
   weight: ["300", "400", "500", "600", "700"],
@@ -10,4 +10,9 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-export { roboto_flex, inter };
+const ibmPlex = IBM_Plex_Sans({
+  weight: ["500", "700"],
+  subsets: ["latin"],
+});
+
+export { roboto_flex, inter, ibmPlex };

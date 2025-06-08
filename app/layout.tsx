@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
-import { inter } from "./fonts/font";
+import { ibmPlex } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.className} antialiased`}
+      className={`${ibmPlex.className} antialiased`}
       suppressHydrationWarning
     >
       <body>
