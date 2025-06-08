@@ -137,7 +137,7 @@ export const getColumns = (
 
           {item.condicao === "parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
-              <PartyPopper className="text-emerald-600" size={18} />
+              <PartyPopper className="text-emerald-600" size={16} />
             )}
         </div>
       );
