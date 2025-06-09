@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,8 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "@/lib/remix-icons";
+import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function CreateTransactions({
   getCards,
@@ -58,7 +59,33 @@ export default function CreateTransactions({
     eBoletoSelecionado,
   } = UtilitiesLancamento();
 
-  const { getMonthOptions } = UseDates();
+  const { getMonthOptions, formatted_current_month } = UseDates();
+
+  const month = formatted_current_month;
+
+  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
+  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchOptions() {
+      const descRes = await fetch(`/api/descriptions?month=${month}`);
+      const descJson = await descRes.json();
+      setDescricaoOptions(descJson.data || []);
+
+      const respRes = await fetch(`/api/responsaveis?month=${month}`);
+      const respJson = await respRes.json();
+      setResponsavelOptions(respJson.data || []);
+    }
+    fetchOptions();
+  }, [month]);
+
+  const mainResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "sistema",
+  );
+
+  const secondResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -89,7 +116,7 @@ export default function CreateTransactions({
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select name="periodo" required>
+                <Select name="periodo" defaultValue={month} required>
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -115,8 +142,15 @@ export default function CreateTransactions({
                   placeholder="Descrição"
                   type="text"
                   required
+                  list="descricao-list"
                 />
+                <datalist id="descricao-list">
+                  {descricaoOptions.map((opt) => (
+                    <option key={opt} value={opt} />
+                  ))}
+                </datalist>
               </div>
+
               <div className="w-1/2">
                 <Label htmlFor="valor">
                   Valor <Required />
@@ -239,9 +273,12 @@ export default function CreateTransactions({
                   defaultValue="você"
                 />
                 <datalist id="responsavel-list">
-                  <option value="você" />
+                  {mainResponsavelOptions.map((opt) => (
+                    <option key={opt} value={opt} />
+                  ))}
                 </datalist>
               </div>
+
               {isDividedChecked && (
                 <div className="w-full">
                   <Label htmlFor="segundo_responsavel">
@@ -252,7 +289,13 @@ export default function CreateTransactions({
                     name="segundo_responsavel"
                     placeholder="Segundo Responsável"
                     type="text"
+                    list="segundo-responsavel-list"
                   />
+                  <datalist id="segundo-responsavel-list">
+                    {secondResponsavelOptions.map((opt) => (
+                      <option key={opt} value={opt} />
+                    ))}
+                  </datalist>
                 </div>
               )}
             </div>

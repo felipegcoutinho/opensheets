@@ -547,3 +547,50 @@ export async function getLancamentostTeste(month: string, id: number) {
 
   return data;
 }
+// Retorna lista de descricoes unicas para um periodo
+export async function getDescriptionsList(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("descricao")
+    .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar descricoes:", error);
+    return [] as string[];
+  }
+
+  const set = new Set<string>();
+  data?.forEach((item) => {
+    if (item.descricao) {
+      set.add(item.descricao as string);
+    }
+  });
+
+  return Array.from(set);
+}
+
+// Retorna lista de responsaveis unicos para um periodo
+export async function getResponsaveisList(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("transacoes")
+    .select("responsavel")
+    .eq("periodo", month);
+
+  if (error) {
+    console.error("Erro ao buscar responsaveis:", error);
+    return [] as string[];
+  }
+
+  const set = new Set<string>();
+  data?.forEach((item) => {
+    if (item.responsavel) {
+      set.add(item.responsavel as string);
+    }
+  });
+
+  return Array.from(set);
+}

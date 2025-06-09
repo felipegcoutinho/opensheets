@@ -5,12 +5,9 @@ import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 
 export default async function BannerData() {
-  const { currentDate, friendlyDate, currentMonthName, currentYear } =
-    UseDates();
+  const { currentDate, friendlyDate, formatted_current_month } = UseDates();
 
-  const { saldo } = await UtilitiesDashboard(
-    `${currentMonthName}-${currentYear}`,
-  );
+  const { saldo } = await UtilitiesDashboard(formatted_current_month);
 
   const userName = await getUserName();
 
