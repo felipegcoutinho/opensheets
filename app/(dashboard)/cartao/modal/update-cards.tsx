@@ -24,6 +24,12 @@ import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import UtilitiesCartao from "../utilities-cartao";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { CardUpdateSchema } from "@/schema/card-schema";
+import { z } from "zod";
+import { useRef, startTransition } from "react";
 
 export default function UpdateCard({
   itemId,
@@ -51,6 +57,31 @@ export default function UpdateCard({
 
   const { logos, bandeiras } = UseOptions();
 
+  const form = useForm<z.infer<typeof CardUpdateSchema>>({
+    resolver: zodResolver(CardUpdateSchema),
+    defaultValues: {
+      id: itemId.toString(),
+      descricao: itemDescricao,
+      dt_vencimento: itemDtVencimento.toString(),
+      dt_fechamento: itemDtFechamento.toString(),
+      bandeira: itemBandeira,
+      logo_image: itemLogo,
+      tipo: itemTipo,
+      status: itemStatus,
+      limite: itemLimite,
+      conta_id: itemContaId.toString(),
+      anotacao: itemAnotacao ?? "",
+    },
+  });
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  function onSubmitHandler() {
+    startTransition(() => {
+      handleUpdate(new FormData(formRef.current!));
+    });
+  }
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -63,192 +94,279 @@ export default function UpdateCard({
             <DialogTitle>Editar Cartão</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleUpdate} className="space-y-2">
-            <input type="hidden" name="id" value={itemId} />
+          <Form {...form}>
+            <form
+              ref={formRef}
+              onSubmit={form.handleSubmit(onSubmitHandler)}
+              className="space-y-2"
+            >
+            <input type="hidden" {...form.register("id")} />
 
-            <div className="w-full">
-              <Label>
-                Escolha o Logo
-                <Required />
-              </Label>
-              <Select name="logo_image" defaultValue={itemLogo} required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione a imagem para o cartão" />
-                </SelectTrigger>
-                <SelectContent>
-                  {logos.map((item) => (
-                    <SelectItem key={item.name} value={item.file}>
-                      <PaymentMethodLogo
-                        url_name={`/logos/${item.file}`}
-                        descricao={item.name}
-                        width={34}
-                        height={34}
-                      />
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="w-full">
-              <Label>
-                Descrição
-                <Required />
-              </Label>
-              <Input
-                defaultValue={itemDescricao}
-                name="descricao"
-                placeholder="Descrição"
-                type="text"
-                required
-              />
-            </div>
-
-            <div className="flex w-full gap-2">
-              <div className="w-1/2">
-                <Label>
-                  Data de Fechamento
-                  <Required />
-                </Label>
-                <Input
-                  min={1}
-                  max={31}
-                  defaultValue={itemDtFechamento}
-                  name="dt_fechamento"
-                  placeholder="Data de Fechamento"
-                  type="number"
-                  required
-                />
-              </div>
-
-              <div className="w-1/2">
-                <Label>
-                  Data de Vencimento
-                  <Required />
-                </Label>
-                <Input
-                  min={1}
-                  max={31}
-                  defaultValue={itemDtVencimento}
-                  name="dt_vencimento"
-                  placeholder="Data de Vencimento"
-                  type="number"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="flex w-full gap-2">
-              <div className="w-1/2">
-                <Label>
-                  Bandeira
-                  <Required />
-                </Label>
-                <Select defaultValue={itemBandeira} name="bandeira" required>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {bandeiras.map((item) => (
-                      <SelectItem key={item.name} value={item.file}>
-                        <div className="flex items-center gap-2">
-                          <Image
-                            quality={100}
-                            src={`/bandeiras/${item.file}`}
-                            className="rounded-full"
-                            width={32}
-                            height={32}
-                            alt="Logo do cartão"
+            <FormField
+              control={form.control}
+              name="logo_image"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>
+                    Escolha o Logo
+                    <Required />
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    required
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecione a imagem para o cartão" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {logos.map((item) => (
+                        <SelectItem key={item.name} value={item.file}>
+                          <PaymentMethodLogo
+                            url_name={`/logos/${item.file}`}
+                            descricao={item.name}
+                            width={34}
+                            height={34}
                           />
-                          <span>{item.name}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="w-1/2">
-                <Label>
-                  Tipo do Cartão
-                  <Required />
-                </Label>
-                <Select defaultValue={itemTipo} name="tipo" required>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="virtual">Virtual</SelectItem>
-                    <SelectItem value="físico">Físico</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="descricao"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>
+                    Descrição
+                    <Required />
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Descrição" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div>
-              <Label>
-                Status do Cartão
-                <Required />
-              </Label>
-              <Select name="status" defaultValue={itemStatus} required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ativo">Ativo</SelectItem>
-                  <SelectItem value="inativo">Inativo</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="w-full">
-              <Label>
-                Limite
-                <Required />
-              </Label>
-              <MoneyInput
-                defaultValue={itemLimite}
-                name="limite"
-                placeholder="R$ 0,00"
-              />
-            </div>
-
-            <div className="w-full">
-              <Label>
-                Conta Padrão
-                <Required />
-              </Label>
-              <Select
-                defaultValue={itemContaId.toString()}
-                name="conta_id"
-                required
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {getAccountMap?.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                      <PaymentMethodLogo
-                        url_name={`/logos/${item.logo_image}`}
-                        descricao={item.descricao}
-                        width={34}
-                        height={34}
+            <div className="flex w-full gap-2">
+              <FormField
+                control={form.control}
+                name="dt_fechamento"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>
+                      Data de Fechamento
+                      <Required />
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        min={1}
+                        max={31}
+                        type="number"
+                        placeholder="Data de Fechamento"
+                        {...field}
                       />
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <div className="w-full">
-              <Label>Anotação</Label>
-              <Textarea
-                defaultValue={itemAnotacao}
-                name="anotacao"
-                placeholder="Anotação"
+              <FormField
+                control={form.control}
+                name="dt_vencimento"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>
+                      Data de Vencimento
+                      <Required />
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        min={1}
+                        max={31}
+                        type="number"
+                        placeholder="Data de Vencimento"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
+
+            <div className="flex w-full gap-2">
+              <FormField
+                control={form.control}
+                name="bandeira"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>
+                      Bandeira
+                      <Required />
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      required
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {bandeiras.map((item) => (
+                          <SelectItem key={item.name} value={item.file}>
+                            <div className="flex items-center gap-2">
+                              <Image
+                                quality={100}
+                                src={`/bandeiras/${item.file}`}
+                                className="rounded-full"
+                                width={32}
+                                height={32}
+                                alt="Logo do cartão"
+                              />
+                              <span>{item.name}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="tipo"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>
+                      Tipo do Cartão
+                      <Required />
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      required
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="virtual">Virtual</SelectItem>
+                        <SelectItem value="físico">Físico</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Status do Cartão
+                    <Required />
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    required
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ativo">Ativo</SelectItem>
+                      <SelectItem value="inativo">Inativo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="limite"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>
+                    Limite
+                    <Required />
+                  </FormLabel>
+                  <FormControl>
+                    <MoneyInput
+                      placeholder="R$ 0,00"
+                      value={field.value}
+                      onValueChange={(values) => field.onChange(values.value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="conta_id"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>
+                    Conta Padrão
+                    <Required />
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    required
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {getAccountMap?.map((item) => (
+                        <SelectItem key={item.id} value={item.id.toString()}>
+                          <PaymentMethodLogo
+                            url_name={`/logos/${item.logo_image}`}
+                            descricao={item.descricao}
+                            width={34}
+                            height={34}
+                          />
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="anotacao"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Anotação</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Anotação" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
               <DialogClose asChild>
@@ -270,6 +388,7 @@ export default function UpdateCard({
               </Button>
             </DialogFooter>
           </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </>
