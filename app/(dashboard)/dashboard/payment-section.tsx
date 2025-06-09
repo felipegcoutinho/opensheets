@@ -1,4 +1,6 @@
 import MoneyValues from "@/components/money-values";
+import { CheckCircle2Icon } from "@/lib/remix-icons";
+import { RiHourglass2Fill } from "@remixicon/react";
 
 interface PaymentSectionProps {
   title: string;
@@ -35,17 +37,25 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
         ))}
       </div>
 
-      {/* Legenda */}
       <div className="flex justify-between">
-        {values.map((value, index) => (
-          <div key={index} className="flex items-center text-sm">
-            <div className={`mr-2 h-2.5 w-2.5 ${value.color}`} />
-            <span className="font-bold">
-              <MoneyValues value={value.amount} />
-            </span>
-            <span className="ml-1 text-gray-500">{value.label}</span>
-          </div>
-        ))}
+        {values.map((value, index) => {
+          return (
+            <div key={index} className="flex items-center text-sm">
+              {value.label === "confirmados" ? (
+                <CheckCircle2Icon
+                  className={`${title === "A Receber" ? "text-primary" : "text-orange-400"} mr-1 h-3 w-3`}
+                />
+              ) : (
+                <RiHourglass2Fill className="mr-1 h-3 w-3 text-zinc-400" />
+              )}
+
+              <span className="font-bold">
+                <MoneyValues value={value.amount} />
+              </span>
+              <span className="ml-1 text-gray-500">{value.label}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
