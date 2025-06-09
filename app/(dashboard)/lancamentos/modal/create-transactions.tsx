@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,9 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "@/lib/remix-icons";
-import UtilitiesLancamento from "../utilities-lancamento";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import { useEffect, useState } from "react";
+import UtilitiesLancamento from "../utilities-lancamento";
 
 export default function CreateTransactions({
   getCards,
@@ -69,22 +69,22 @@ export default function CreateTransactions({
 
   useEffect(() => {
     async function fetchOptions() {
-      const descRes = await fetch(
-        `/api/descriptions?month=${selectedMonth}`,
-      );
+      const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(
-        `/api/responsaveis?month=${selectedMonth}`,
-      );
+      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
       const respJson = await respRes.json();
       setResponsavelOptions(respJson.data || []);
     }
     fetchOptions();
   }, [selectedMonth]);
 
+  const mainResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "sistema",
+  );
+
   const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você",
+    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
   );
 
   return (
@@ -155,6 +155,7 @@ export default function CreateTransactions({
                   ))}
                 </datalist>
               </div>
+
               <div className="w-1/2">
                 <Label htmlFor="valor">
                   Valor <Required />
@@ -277,12 +278,12 @@ export default function CreateTransactions({
                   defaultValue="você"
                 />
                 <datalist id="responsavel-list">
-                  <option value="você" />
-                  {responsavelOptions.map((opt) => (
+                  {mainResponsavelOptions.map((opt) => (
                     <option key={opt} value={opt} />
                   ))}
                 </datalist>
               </div>
+
               {isDividedChecked && (
                 <div className="w-full">
                   <Label htmlFor="segundo_responsavel">
