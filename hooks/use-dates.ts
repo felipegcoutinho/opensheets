@@ -52,6 +52,9 @@ export function UseDates() {
   // Obtém o nome do mês atual
   const currentMonthName = optionsMeses[currentDate.getMonth()];
 
+  // Formata o mês atual no formato "Mês-Ano"
+  const formatted_current_month = `${currentMonthName}-${currentYear}`;
+
   function DateFormat(dateString) {
     const [year, month, day] = dateString.split("-");
     const date = new Date(year, month - 1, day);
@@ -146,6 +149,7 @@ export function UseDates() {
     currentDate,
     currentYear,
     currentMonthName,
+    formatted_current_month,
     optionsMeses,
     optionsAnos,
     diasDaSemana,

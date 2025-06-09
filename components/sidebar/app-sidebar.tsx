@@ -31,10 +31,9 @@ export function AppSidebar({
   const [mounted, setMounted] = React.useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { currentMonthName, currentYear } = UseDates();
+  const { formatted_current_month } = UseDates();
 
-  let month =
-    searchParams.get("periodo") || `${currentMonthName}-${currentYear}`;
+  let month = searchParams.get("periodo") || formatted_current_month;
 
   const data = NavLinks(month);
 
