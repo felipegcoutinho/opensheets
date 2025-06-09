@@ -59,25 +59,25 @@ export default function CreateTransactions({
     eBoletoSelecionado,
   } = UtilitiesLancamento();
 
-  const { getMonthOptions, currentMonthName, currentYear } = UseDates();
+  const { getMonthOptions, formatted_current_month } = UseDates();
 
-  const [selectedMonth, setSelectedMonth] = useState(
-    `${currentMonthName}-${currentYear}`,
-  );
+  const month = formatted_current_month;
+
   const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
   const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchOptions() {
-      const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
+      const descRes = await fetch(`/api/descriptions?month=${month}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
+
+      const respRes = await fetch(`/api/responsaveis?month=${month}`);
       const respJson = await respRes.json();
       setResponsavelOptions(respJson.data || []);
     }
     fetchOptions();
-  }, [selectedMonth]);
+  }, [month]);
 
   const mainResponsavelOptions = responsavelOptions.filter(
     (r) => r.toLowerCase() !== "sistema",
@@ -116,12 +116,7 @@ export default function CreateTransactions({
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select
-                  name="periodo"
-                  required
-                  value={selectedMonth}
-                  onValueChange={setSelectedMonth}
-                >
+                <Select name="periodo" defaultValue={month} required>
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
