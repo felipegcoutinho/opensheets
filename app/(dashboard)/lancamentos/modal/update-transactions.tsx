@@ -62,6 +62,30 @@ export default function UpdateTransactions({
 
   const { getMonthOptions } = UseDates();
 
+  const [selectedMonth, setSelectedMonth] = useState(itemPeriodo);
+  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
+  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchOptions() {
+      const descRes = await fetch(
+        `/api/descriptions?month=${selectedMonth}`,
+      );
+      const descJson = await descRes.json();
+      setDescricaoOptions(descJson.data || []);
+      const respRes = await fetch(
+        `/api/responsaveis?month=${selectedMonth}`,
+      );
+      const respJson = await respRes.json();
+      setResponsavelOptions(respJson.data || []);
+    }
+    if (selectedMonth) fetchOptions();
+  }, [selectedMonth]);
+
+  const secondResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "você",
+  );
+
   useEffect(() => {
     setIsPaid(itemPaid);
   }, [itemPaid, setIsPaid]);
@@ -117,7 +141,11 @@ export default function UpdateTransactions({
                 Período
                 <Required />
               </Label>
-              <Select defaultValue={itemPeriodo} name="periodo">
+              <Select
+                name="periodo"
+                value={selectedMonth}
+                onValueChange={setSelectedMonth}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -143,7 +171,13 @@ export default function UpdateTransactions({
                 name="descricao"
                 placeholder="Descrição"
                 type="text"
+                list="descricao-update-list"
               />
+              <datalist id="descricao-update-list">
+                {descricaoOptions.map((opt) => (
+                  <option key={opt} value={opt} />
+                ))}
+              </datalist>
             </div>
 
             <div className="w-1/2">
@@ -275,7 +309,13 @@ export default function UpdateTransactions({
               placeholder="Responsável"
               type="text"
               className="capitalize"
+              list="responsavel-update-list"
             />
+            <datalist id="responsavel-update-list">
+              {responsavelOptions.map((opt) => (
+                <option key={opt} value={opt} />
+              ))}
+            </datalist>
           </div>
 
           <div>

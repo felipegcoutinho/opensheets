@@ -27,6 +27,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { ThumbsUp } from "@/lib/remix-icons";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
+import { useEffect, useState } from "react";
 
 export default function CreateTransactions({
   getCards,
@@ -58,7 +59,33 @@ export default function CreateTransactions({
     eBoletoSelecionado,
   } = UtilitiesLancamento();
 
-  const { getMonthOptions } = UseDates();
+  const { getMonthOptions, currentMonthName, currentYear } = UseDates();
+
+  const [selectedMonth, setSelectedMonth] = useState(
+    `${currentMonthName}-${currentYear}`,
+  );
+  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
+  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchOptions() {
+      const descRes = await fetch(
+        `/api/descriptions?month=${selectedMonth}`,
+      );
+      const descJson = await descRes.json();
+      setDescricaoOptions(descJson.data || []);
+      const respRes = await fetch(
+        `/api/responsaveis?month=${selectedMonth}`,
+      );
+      const respJson = await respRes.json();
+      setResponsavelOptions(respJson.data || []);
+    }
+    fetchOptions();
+  }, [selectedMonth]);
+
+  const secondResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "você",
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -89,7 +116,12 @@ export default function CreateTransactions({
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select name="periodo" required>
+                <Select
+                  name="periodo"
+                  required
+                  value={selectedMonth}
+                  onValueChange={setSelectedMonth}
+                >
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -115,7 +147,13 @@ export default function CreateTransactions({
                   placeholder="Descrição"
                   type="text"
                   required
+                  list="descricao-list"
                 />
+                <datalist id="descricao-list">
+                  {descricaoOptions.map((opt) => (
+                    <option key={opt} value={opt} />
+                  ))}
+                </datalist>
               </div>
               <div className="w-1/2">
                 <Label htmlFor="valor">
@@ -240,6 +278,9 @@ export default function CreateTransactions({
                 />
                 <datalist id="responsavel-list">
                   <option value="você" />
+                  {responsavelOptions.map((opt) => (
+                    <option key={opt} value={opt} />
+                  ))}
                 </datalist>
               </div>
               {isDividedChecked && (
@@ -252,7 +293,13 @@ export default function CreateTransactions({
                     name="segundo_responsavel"
                     placeholder="Segundo Responsável"
                     type="text"
+                    list="segundo-responsavel-list"
                   />
+                  <datalist id="segundo-responsavel-list">
+                    {secondResponsavelOptions.map((opt) => (
+                      <option key={opt} value={opt} />
+                    ))}
+                  </datalist>
                 </div>
               )}
             </div>
