@@ -96,6 +96,7 @@ export default function CreateCard({ getAccountMap }) {
                   <Required />
                 </FormLabel>
                 <Select
+                  name={field.name}
                   onValueChange={field.onChange}
                   value={field.value}
                   required
@@ -197,6 +198,7 @@ export default function CreateCard({ getAccountMap }) {
                     <Required />
                   </FormLabel>
                   <Select
+                    name={field.name}
                     onValueChange={field.onChange}
                     value={field.value}
                     required
@@ -237,6 +239,7 @@ export default function CreateCard({ getAccountMap }) {
                     <Required />
                   </FormLabel>
                   <Select
+                    name={field.name}
                     onValueChange={field.onChange}
                     value={field.value}
                     required
@@ -265,6 +268,7 @@ export default function CreateCard({ getAccountMap }) {
                   <Required />
                 </FormLabel>
                 <Select
+                  name={field.name}
                   onValueChange={field.onChange}
                   value={field.value}
                   required
@@ -293,6 +297,7 @@ export default function CreateCard({ getAccountMap }) {
                 </FormLabel>
                 <FormControl>
                   <MoneyInput
+                    name={field.name}
                     placeholder="R$ 0,00"
                     value={field.value}
                     onValueChange={(values) => field.onChange(values.value)}

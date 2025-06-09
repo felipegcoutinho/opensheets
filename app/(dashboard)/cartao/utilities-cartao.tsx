@@ -12,12 +12,14 @@ export default function UtilitiesCartao() {
   const [statusPagamento, setStatusPagamento] = useState(false);
 
   const handleSubmit = async (formData: FormData) => {
-    const limiteFormatado = formData
-      .get("limite")!
-      .toString()
-      .replace(/[R$\.\s]/g, "")
-      .replace(",", ".");
-    formData.set("limite", limiteFormatado);
+    const rawLimite = formData.get("limite");
+    if (rawLimite) {
+      const limiteFormatado = rawLimite
+        .toString()
+        .replace(/[R$\.\s]/g, "")
+        .replace(",", ".");
+      formData.set("limite", limiteFormatado);
+    }
     try {
       await formAction(formData);
       toast.success("Cartão adicionado com sucesso!");
@@ -28,12 +30,14 @@ export default function UtilitiesCartao() {
   };
 
   const handleUpdate = async (formData: FormData) => {
-    const limiteFormatado = formData
-      .get("limite")!
-      .toString()
-      .replace(/[R$\.\s]/g, "")
-      .replace(",", ".");
-    formData.set("limite", limiteFormatado);
+    const rawLimite = formData.get("limite");
+    if (rawLimite) {
+      const limiteFormatado = rawLimite
+        .toString()
+        .replace(/[R$\.\s]/g, "")
+        .replace(",", ".");
+      formData.set("limite", limiteFormatado);
+    }
     try {
       await updateFormAction(formData);
       toast.info("Cartão atualizado com sucesso!");
