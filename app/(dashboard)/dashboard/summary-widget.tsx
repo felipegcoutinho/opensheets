@@ -5,10 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import clsx from "clsx";
-import { TrendingDownIcon, TrendingUpIcon } from "@/lib/remix-icons";
+import { RiArrowDownSFill, RiArrowUpSFill } from "@remixicon/react";
 import MoneyValues from "../../../components/money-values";
-import { Badge } from "../../../components/ui/badge";
 
 type Props = {
   title: string;
@@ -36,27 +34,22 @@ export default function SummaryWidget({
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
-            {/* <Ping color={color} /> */}
-            <span className="font-medium capitalize">{title}</span>
+            <span className="font-normal capitalize">{title}</span>
           </span>
 
           <span className="flex items-center">
             {isReceitaOuDespesa && (
-              <Badge
-                variant="outline"
-                className={clsx(
-                  "flex-row gap-1 text-xs",
-                  isPositive ? "text-green-600" : "text-red-600",
-                )}
+              <div
+                className={`flex ${isPositive ? "text-green-600" : "text-red-600"}`}
               >
                 {isPositive ? (
-                  <TrendingUpIcon className="size-2" />
+                  <RiArrowUpSFill size={18} />
                 ) : (
-                  <TrendingDownIcon className="size-2" />
+                  <RiArrowDownSFill size={18} />
                 )}
                 {isPositive ? "+" : ""}
-                {diffPercent.toFixed(0)}%
-              </Badge>
+                <span className="text-xs">{diffPercent.toFixed(0)}%</span>
+              </div>
             )}
           </span>
         </CardTitle>
