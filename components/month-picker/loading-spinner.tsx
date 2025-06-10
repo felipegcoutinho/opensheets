@@ -1,9 +1,9 @@
 "use client";
 
-import { Loader2 } from "@/lib/remix-icons";
+import { RiLoader2Line } from "@remixicon/react";
 
 const LoadingSpinner = () => (
-  <Loader2
+  <RiLoader2Line
     size={"20"}
     className="text-primary animate-spin dark:text-blue-200"
   />

@@ -1,13 +1,13 @@
 import {
-  ArrowDownUp,
-  CreditCard,
-  Landmark,
-  LayoutDashboard,
-  ListOrdered,
-  NotebookPen,
-  Users,
-  WandSparkles,
-} from "@/lib/remix-icons";
+  RiArrowUpDownLine,
+  RiBankCardLine,
+  RiGovernmentLine,
+  RiDashboardLine,
+  RiListOrdered,
+  RiBook2Line,
+  RiGroupLine,
+  RiSparkling2Line,
+} from "@remixicon/react";
 
 export function NavLinks(month: string) {
   return {
@@ -15,22 +15,22 @@ export function NavLinks(month: string) {
       {
         name: "dashboard",
         url: `/dashboard?periodo=${month}`,
-        icon: LayoutDashboard,
+        icon: RiDashboardLine,
       },
       {
         name: "lançamentos",
         url: `/lancamentos?periodo=${month}`,
-        icon: ArrowDownUp,
+        icon: RiArrowUpDownLine,
       },
       {
         name: "cartões",
         url: "/cartao",
-        icon: CreditCard,
+        icon: RiBankCardLine,
       },
       {
         name: "contas",
         url: "/conta",
-        icon: Landmark,
+        icon: RiGovernmentLine,
       },
       // {
       //   name: "pagadores",
@@ -40,22 +40,22 @@ export function NavLinks(month: string) {
       {
         name: "responsáveis",
         url: `/responsavel?periodo=${month}`,
-        icon: Users,
+        icon: RiGroupLine,
       },
       {
         name: "anotações",
         url: `/anotacao?periodo=${month}`,
-        icon: NotebookPen,
+        icon: RiBook2Line,
       },
       {
         name: "insights",
         url: `/insights?periodo=${month}`,
-        icon: WandSparkles,
+        icon: RiSparkling2Line,
       },
       {
         name: "categorias",
         url: `/categorias`,
-        icon: ListOrdered,
+        icon: RiListOrdered,
       },
     ],
   };

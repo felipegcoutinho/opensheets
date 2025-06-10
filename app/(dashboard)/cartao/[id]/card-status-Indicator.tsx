@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { CheckCircle2 } from "@/lib/remix-icons";
+import { RiCheckboxCircleLine } from "@remixicon/react";
 
 export default function CardStatusIndicator({ fatura_status }) {
   const isPaga = Array.isArray(fatura_status) && fatura_status.length > 0;
@@ -9,7 +9,7 @@ export default function CardStatusIndicator({ fatura_status }) {
 
   return (
     <Card className="my-4 flex-row items-center gap-3 border-none bg-green-100 p-4 text-green-900 dark:bg-green-900/40 dark:text-green-100">
-      <CheckCircle2
+      <RiCheckboxCircleLine
         className="h-5 w-5 text-green-900 dark:text-green-100"
         aria-hidden="true"
       />

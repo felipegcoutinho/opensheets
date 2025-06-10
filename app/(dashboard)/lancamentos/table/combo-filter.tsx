@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "@/lib/remix-icons";
+import { RiCheckLine, RiArrowUpDownLine } from "@remixicon/react";
 import { useState } from "react";
 
 interface ComboboxFilterProps {
@@ -46,7 +46,7 @@ export function ComboboxFilter({
           )}
         >
           {value && value !== "all" ? value : placeholder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <RiArrowUpDownLine className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-fit p-0">
@@ -66,7 +66,7 @@ export function ComboboxFilter({
                 value === "all" && "bg-accent text-foreground font-bold",
               )}
             >
-              <Check
+              <RiCheckLine
                 className={cn(
                   "mr-2 h-4 w-4",
                   value === "all" ? "opacity-100" : "opacity-0",
@@ -87,7 +87,7 @@ export function ComboboxFilter({
                   value === option && "bg-accent text-foreground font-bold",
                 )}
               >
-                <Check
+                <RiCheckLine
                   className={cn(
                     "mr-2 h-4 w-4",
                     value === option ? "opacity-100" : "opacity-0",

@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2Icon } from "@/lib/remix-icons";
+import { RiDeleteBin2Line } from "@remixicon/react";
 import UtilitiesConta from "../utilities-conta";
 
 export default function DeleteAccount({ itemId }) {
@@ -20,7 +20,7 @@ export default function DeleteAccount({ itemId }) {
   return (
     <Dialog>
       <DialogTrigger>
-        <Trash2Icon color="red" />
+        <RiDeleteBin2Line color="red" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

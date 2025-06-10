@@ -2,7 +2,7 @@
 
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeftIcon } from "@/lib/remix-icons"
+import { RiSidebarFoldLine } from "@remixicon/react"
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
@@ -273,7 +273,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <RiSidebarFoldLine />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { OTPInput, OTPInputContext } from "input-otp"
-import { MinusIcon } from "@/lib/remix-icons"
+import { RiSubtractLine } from "@remixicon/react"
 
 import { cn } from "@/lib/utils"
 
@@ -69,7 +69,7 @@ function InputOTPSlot({
 function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
   return (
     <div data-slot="input-otp-separator" role="separator" {...props}>
-      <MinusIcon />
+      <RiSubtractLine />
     </div>
   )
 }

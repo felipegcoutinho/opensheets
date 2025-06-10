@@ -3,7 +3,7 @@ import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
-import { ArrowUpRight, Check } from "@/lib/remix-icons";
+import { RiArrowRightUpLine, RiCheckLine } from "@remixicon/react";
 import Link from "next/link";
 
 export default async function InvoiceWidget({ data, month }) {
@@ -46,12 +46,12 @@ export default async function InvoiceWidget({ data, month }) {
                   href={`/cartao/${item.cartao_id}/?periodo=${month}`}
                 >
                   {item.descricao}
-                  <ArrowUpRight className="text-muted-foreground h-3 w-3" />
+                  <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
                 </Link>
 
                 {fatura_status.length > 0 &&
                 fatura_status[0]?.status_pagamento === "pago" ? (
-                  <Check className="text-green-500" size={16} />
+                  <RiCheckLine className="text-green-500" size={16} />
                 ) : (
                   <p className="text-muted-foreground text-xs">
                     Vence dia {item.dt_vencimento}

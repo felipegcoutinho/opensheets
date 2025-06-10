@@ -6,7 +6,7 @@ import EmptyCard from "@/components/empty-card";
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { VerifiedIcon } from "@/lib/remix-icons";
+import { RiVerifiedBadgeLine } from "@remixicon/react";
 
 export default async function page() {
   const pagadores = await getPayers();
@@ -47,7 +47,7 @@ export default async function page() {
                       <h1 className="flex items-center justify-center gap-1 font-bold">
                         {item.nome}
                         <span className="text-blue-500">
-                          <VerifiedIcon className="h-4 w-4" />
+                          <RiVerifiedBadgeLine className="h-4 w-4" />
                         </span>
                       </h1>
                       <p className="text-muted-foreground text-sm">

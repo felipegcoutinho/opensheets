@@ -2,7 +2,7 @@ import { getConditions } from "@/app/services/transacoes";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { CardContent } from "@/components/ui/card";
-import { ArrowUpRight } from "@/lib/remix-icons";
+import { RiArrowRightUpLine } from "@remixicon/react";
 import Link from "next/link";
 
 export async function ConditionWidget({ month }) {
@@ -22,7 +22,7 @@ export async function ConditionWidget({ month }) {
               className="flex items-center gap-1 hover:underline"
             >
               {item.condicao}
-              <ArrowUpRight className="text-muted-foreground h-3 w-3" />
+              <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
             </Link>
 
             <p>
