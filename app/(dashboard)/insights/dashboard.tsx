@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Wand2 } from "@/lib/remix-icons";
+import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
 import { useState } from "react";
 
 function Home({
@@ -64,12 +64,12 @@ function Home({
         <div className="flex items-center justify-center gap-2">
           {loading ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <RiLoader2Line className="h-4 w-4 animate-spin" />
               <span>Aguarde, analisando...</span>
             </>
           ) : (
             <>
-              <Wand2 className="h-4 w-4" />
+              <RiMagicLine className="h-4 w-4" />
               <span>Analisar minhas finanças com IA</span>
             </>
           )}

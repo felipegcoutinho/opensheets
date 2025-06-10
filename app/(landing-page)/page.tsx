@@ -1,15 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  BarChart3,
-  PieChart,
-  Shield,
-  Wallet,
-  Bell,
-  TrendingUp,
-  CreditCard,
-  BadgeCheck,
-  MousePointer,
-} from "@/lib/remix-icons";
+  RiBarChartLine,
+  RiPieChartLine,
+  RiShieldLine,
+  RiWalletLine,
+  RiNotification3Line,
+  RiArrowUpLine,
+  RiBankCardLine,
+  RiCheckboxCircleLine,
+  RiMouseLine,
+} from "@remixicon/react";
 
 export default function Index() {
   const features = [
@@ -17,37 +17,37 @@ export default function Index() {
       title: "Rastreamento de Despesas",
       description:
         "Registre todas as suas despesas diárias de maneira simples e rápida.",
-      icon: <Wallet className="h-6 w-6" />,
+      icon: <RiWalletLine className="h-6 w-6" />,
     },
     {
       title: "Orçamento Personalizado",
       description:
         "Defina limites de gastos por categoria e acompanhe seu progresso.",
-      icon: <PieChart className="h-6 w-6" />,
+      icon: <RiPieChartLine className="h-6 w-6" />,
     },
     {
       title: "Relatórios Detalhados",
       description:
         "Gráficos interativos que mostram para onde vai o seu dinheiro.",
-      icon: <BarChart3 className="h-6 w-6" />,
+      icon: <RiBarChartLine className="h-6 w-6" />,
     },
     {
       title: "Segurança de Dados",
       description:
         "Proteção total das suas informações com criptografia e backups.",
-      icon: <Shield className="h-6 w-6" />,
+      icon: <RiShieldLine className="h-6 w-6" />,
     },
     {
       title: "Integração Bancária",
       description:
         "Conecte suas contas bancárias e visualize tudo em um só lugar.",
-      icon: <CreditCard className="h-6 w-6" />,
+      icon: <RiBankCardLine className="h-6 w-6" />,
     },
     {
       title: "Alertas Inteligentes",
       description:
         "Receba notificações quando estiver perto de extrapolar seu orçamento.",
-      icon: <Bell className="h-6 w-6" />,
+      icon: <RiNotification3Line className="h-6 w-6" />,
     },
   ];
 
@@ -55,18 +55,18 @@ export default function Index() {
     {
       title: "Facilidade de Uso",
       description: "Interface intuitiva pensada para qualquer pessoa.",
-      icon: <MousePointer className="h-6 w-6" />,
+      icon: <RiMouseLine className="h-6 w-6" />,
     },
     {
       title: "Controle Total",
       description:
         "Organize suas contas e metas financeiras em poucos cliques.",
-      icon: <TrendingUp className="h-6 w-6" />,
+      icon: <RiArrowUpLine className="h-6 w-6" />,
     },
     {
       title: "Gratuito",
       description: "Utilize todas as funcionalidades sem pagar nada.",
-      icon: <BadgeCheck className="h-6 w-6" />,
+      icon: <RiCheckboxCircleLine className="h-6 w-6" />,
     },
   ];
 

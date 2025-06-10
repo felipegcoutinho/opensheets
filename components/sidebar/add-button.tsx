@@ -1,6 +1,6 @@
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
 import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
-import { CircleFadingPlus } from "@/lib/remix-icons";
+import { RiAddCircleLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 
 function AddButton({ item, cartoes, contas, categorias }) {
@@ -17,7 +17,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             size="icon"
             variant="link"
           >
-            <CircleFadingPlus className="text-muted-foreground" size={18} />
+            <RiAddCircleLine className="text-muted-foreground" size={18} />
           </Button>
         </CreateTransactions>
       )}
@@ -29,7 +29,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             size="icon"
             variant="link"
           >
-            <CircleFadingPlus className="text-muted-foreground" size={18} />
+            <RiAddCircleLine className="text-muted-foreground" size={18} />
           </Button>
         </CreateNotes>
       )}

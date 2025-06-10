@@ -1,11 +1,11 @@
 import {
-  Banknote,
-  Barcode,
-  CalendarClockIcon,
-  CheckLine,
-  CreditCard,
-  RotateCw,
-} from "@/lib/remix-icons";
+  RiMoneyDollarCircleLine,
+  RiBarcodeLine,
+  RiTimeLine,
+  RiCheckLine,
+  RiBankCardLine,
+  RiRefreshLine,
+} from "@remixicon/react";
 import Image from "next/image";
 
 function UseStyles() {
@@ -31,9 +31,9 @@ function UseStyles() {
 
   function getConditionIcon(condicao: string) {
     const icons = {
-      parcelado: <CalendarClockIcon size={15} />,
-      recorrente: <RotateCw size={15} />,
-      vista: <CheckLine size={15} />,
+      parcelado: <RiTimeLine size={15} />,
+      recorrente: <RiRefreshLine size={15} />,
+      vista: <RiCheckLine size={15} />,
     };
 
     return icons[condicao] || null;
@@ -41,8 +41,8 @@ function UseStyles() {
 
   function getPaymentIcon(pagamento: string) {
     const icons = {
-      dinheiro: <Banknote size={15} />,
-      "cartão de crédito": <CreditCard size={15} />,
+      dinheiro: <RiMoneyDollarCircleLine size={15} />,
+      "cartão de crédito": <RiBankCardLine size={15} />,
       pix: (
         <Image
           src="/logos/pix_lucide.svg"
@@ -52,9 +52,9 @@ function UseStyles() {
           height={15}
         />
       ),
-      boleto: <Barcode size={15} />,
-      credito: <Banknote size={15} />,
-      "cartão de débito": <CreditCard size={15} />,
+      boleto: <RiBarcodeLine size={15} />,
+      credito: <RiMoneyDollarCircleLine size={15} />,
+      "cartão de débito": <RiBankCardLine size={15} />,
     };
 
     return icons[pagamento] || null;

@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import confetti from "canvas-confetti";
-import { CreditCard } from "@/lib/remix-icons";
+import { RiBankCardLine } from "@remixicon/react";
 import Image from "next/image";
 import { useTransition } from "react";
 
@@ -59,7 +59,7 @@ export default function BillPaymentDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-center gap-2 text-xl">
-            <CreditCard className="h-5 w-5" />
+            <RiBankCardLine className="h-5 w-5" />
             Confirmação de Pagamento
           </DialogTitle>
 

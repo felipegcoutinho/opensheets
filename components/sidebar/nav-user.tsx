@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, MoreVerticalIcon } from "@/lib/remix-icons";
+import { RiLogoutBoxLine, RiMoreLine } from "@remixicon/react";
 
 import { signOut } from "@/app/actions/auth";
 import {
@@ -50,7 +50,7 @@ export function NavUser({
                 <span className="truncate font-bold">{username}</span>
                 <span className="truncate text-xs">{usermail}</span>
               </div>
-              <MoreVerticalIcon className="ml-auto size-4" />
+              <RiMoreLine className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -101,7 +101,7 @@ export function NavUser({
                   type="submit"
                   className="text-destructive flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors"
                 >
-                  <LogOut className="h-4 w-4" />
+                  <RiLogoutBoxLine className="h-4 w-4" />
                   <span>Sair</span>
                 </button>
               </form>

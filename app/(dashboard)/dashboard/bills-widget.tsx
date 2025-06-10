@@ -2,7 +2,7 @@ import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
-import { Check } from "@/lib/remix-icons";
+import { RiCheckLine } from "@remixicon/react";
 import Image from "next/image";
 
 export default async function BillsWidget({ month, data }) {
@@ -34,7 +34,7 @@ export default async function BillsWidget({ month, data }) {
               Vence {DateFormat(item.data_vencimento)}
             </p>
           ) : (
-            <Check className="text-green-500" size={16} />
+            <RiCheckLine className="text-green-500" size={16} />
           )}
         </div>
       </div>

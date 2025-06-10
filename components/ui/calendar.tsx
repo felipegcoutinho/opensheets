@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "@/lib/remix-icons"
+import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -61,10 +61,10 @@ function Calendar({
       }}
       components={{
         IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
+          <RiArrowLeftSLine className={cn("size-4", className)} {...props} />
         ),
         IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
+          <RiArrowRightSLine className={cn("size-4", className)} {...props} />
         ),
       }}
       {...props}

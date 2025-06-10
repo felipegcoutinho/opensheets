@@ -1,7 +1,13 @@
 import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Barcode, CreditCard, User, Users, Verified } from "@/lib/remix-icons";
+import {
+  RiBarcodeLine,
+  RiBankCardLine,
+  RiUserLine,
+  RiGroupLine,
+  RiVerifiedBadgeLine,
+} from "@remixicon/react";
 import Image from "next/image";
 
 interface UserCardHeaderProps {
@@ -22,13 +28,13 @@ export default function UsersCard({
 
   const getUserIcon = () => {
     return isCurrentUser ? (
-      <User
+      <RiUserLine
         className="text-blue-600 dark:text-blue-400"
         size={24}
         aria-label="Usuário atual"
       />
     ) : (
-      <Users
+      <RiGroupLine
         className="text-orange-600 dark:text-orange-400"
         size={24}
         aria-label="Outros usuários"
@@ -47,7 +53,7 @@ export default function UsersCard({
               {responsavel}
             </CardTitle>
             {isCurrentUser && (
-              <Verified
+              <RiVerifiedBadgeLine
                 className="text-blue-500"
                 size={18}
                 aria-label="Usuário verificado"
@@ -64,7 +70,7 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <CreditCard size={14} />
+              <RiBankCardLine size={14} />
               <p>Cartões</p>
             </div>
             <p className="text-lg">
@@ -116,7 +122,7 @@ export default function UsersCard({
         <div className="grid">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <Barcode size={14} />
+              <RiBarcodeLine size={14} />
               <p>Boletos</p>
             </div>
             <p className="text-lg">

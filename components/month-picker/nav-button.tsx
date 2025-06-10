@@ -2,7 +2,7 @@
 
 "use client";
 
-import { ChevronLeft, ChevronRight } from "@/lib/remix-icons";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import React from "react";
 
 interface NavigationButtonProps {
@@ -13,7 +13,7 @@ interface NavigationButtonProps {
 
 const NavigationButton = React.memo(
   ({ onClick, direction, disabled }: NavigationButtonProps) => {
-    const Icon = direction === "left" ? ChevronLeft : ChevronRight;
+    const Icon = direction === "left" ? RiArrowLeftSLine : RiArrowRightSLine;
     return (
       <button
         onClick={onClick}

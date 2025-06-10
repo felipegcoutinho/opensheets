@@ -25,7 +25,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { ThumbsUp } from "@/lib/remix-icons";
+import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 
@@ -250,7 +250,7 @@ export default function CreateTransactions({
                       name="realizado_toggle"
                       className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
                     >
-                      <ThumbsUp strokeWidth={2} />
+                      <RiThumbUpLine strokeWidth={2} />
                     </Toggle>
                   </div>
                 </Card>
