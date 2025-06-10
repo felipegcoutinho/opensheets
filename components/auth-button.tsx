@@ -1,6 +1,6 @@
 import { signOut } from "@/actions/auth";
 import { getEmail, getUserName } from "@/app/actions/users";
-import { LayoutDashboardIcon, LogOut } from "@/lib/remix-icons"; // Adicionando ícone de configurações
+import { RiDashboardLine, RiLogoutBoxLine } from "@remixicon/react"; // Adicionando ícone de configurações
 import Link from "next/link";
 import { Button } from "./ui/button";
 
@@ -25,7 +25,7 @@ export default async function AuthButton({ session }) {
                 variant="ghost"
                 className="flex w-full items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
               >
-                <LayoutDashboardIcon className="h-4 w-4" />
+                <RiDashboardLine className="h-4 w-4" />
                 <span>Dashboard</span>
               </Button>
             </Link>
@@ -35,7 +35,7 @@ export default async function AuthButton({ session }) {
                 variant="ghost"
                 className="flex w-full items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700"
               >
-                <LogOut className="h-4 w-4" />
+                <RiLogoutBoxLine className="h-4 w-4" />
                 <span>Sair</span>
               </Button>
             </form>

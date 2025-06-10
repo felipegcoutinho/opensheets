@@ -1,7 +1,7 @@
-import { Asterisk } from "@/lib/remix-icons";
+import { RiAsterisk } from "@remixicon/react";
 
 function Required() {
-  return <Asterisk className="text-red-500" size={11} />;
+  return <RiAsterisk className="text-red-500" size={11} />;
 }
 
 export default Required;

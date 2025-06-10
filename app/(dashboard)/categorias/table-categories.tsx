@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UseStyles from "@/hooks/use-styles";
-import { ArrowUpRight, EllipsisVertical } from "@/lib/remix-icons";
+import { RiArrowRightUpLine, RiMoreLine } from "@remixicon/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";
@@ -71,7 +71,7 @@ export default function TableCategories({ categorias }) {
                         className="text-muted-foreground ml-2 flex items-center gap-1 text-sm hover:underline"
                       >
                         {item.nome}
-                        <ArrowUpRight className="text-muted-foreground h-3 w-3" />
+                        <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
                       </Link>
                     </TableCell>
                     <TableCell>
@@ -87,7 +87,7 @@ export default function TableCategories({ categorias }) {
                             variant="ghost"
                             className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
                           >
-                            <EllipsisVertical size={16} />
+                            <RiMoreLine size={16} />
                             <span className="sr-only">Open menu</span>
                           </Button>
                         </DropdownMenuTrigger>

@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ThumbsDown, ThumbsUp } from "@/lib/remix-icons";
+import { RiThumbDownLine, RiThumbUpLine } from "@remixicon/react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -47,9 +47,9 @@ export default function TogglePaymentDialog({
   };
 
   const labelStatus = isPago ? (
-    <ThumbsUp size={16} />
+    <RiThumbUpLine size={16} />
   ) : (
-    <ThumbsDown className="text-muted-foreground" size={16} />
+    <RiThumbDownLine className="text-muted-foreground" size={16} />
   );
   const dialogTitle = isCartaoCredito
     ? "Pagamento via cartão"

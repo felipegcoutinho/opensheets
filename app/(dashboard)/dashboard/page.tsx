@@ -4,14 +4,14 @@ import { fetchAllData } from "@/app/services/fetch-all-data";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {
-  ArrowDownUp,
-  Barcode,
-  ChartColumn,
-  ChartNoAxesCombined,
-  CreditCard,
-  ListOrdered,
-  Wallet,
-} from "@/lib/remix-icons";
+  RiArrowUpDownLine,
+  RiBarcodeLine,
+  RiBarChartLine,
+  RiBarChartBoxLine,
+  RiBankCardLine,
+  RiListOrdered,
+  RiWalletLine,
+} from "@remixicon/react";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";
@@ -73,7 +73,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Receita, Despesa e Balanço"
           subtitle="Últimos 6 Meses"
-          icon={<ChartNoAxesCombined className="mr-2 inline size-4" />}
+          icon={<RiBarChartBoxLine className="mr-2 inline size-4" />}
         >
           <ChartSummary data={chartData} />
         </Widget>
@@ -81,7 +81,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Faturas"
           subtitle="faturas deste mês"
-          icon={<CreditCard className="mr-2 inline size-4" />}
+          icon={<RiBankCardLine className="mr-2 inline size-4" />}
         >
           <InvoiceWidget month={month} data={invoiceList} />
         </Widget>
@@ -89,7 +89,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Boletos"
           subtitle="boletos deste mês"
-          icon={<Barcode className="mr-2 inline size-4" />}
+          icon={<RiBarcodeLine className="mr-2 inline size-4" />}
         >
           <BillsWidget month={month} data={bills} />
         </Widget>
@@ -99,7 +99,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Lançamentos Recentes"
           subtitle="Últimos 5 Lançamentos"
-          icon={<ArrowDownUp className="mr-2 inline size-4" />}
+          icon={<RiArrowUpDownLine className="mr-2 inline size-4" />}
         >
           <RecentesTransactions transactions={recentTransactions} />
         </Widget>
@@ -107,7 +107,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Status de Pagamento"
           subtitle={"Resumo de valores, confirmados e pendentes"}
-          icon={<Wallet className="mr-2 inline size-4" />}
+          icon={<RiWalletLine className="mr-2 inline size-4" />}
         >
           <PaymentStatusWidget
             expenses={expenses}
@@ -120,7 +120,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Resumo do Mês"
           subtitle="Principais Resumos"
-          icon={<ChartColumn className="mr-2 inline size-4" />}
+          icon={<RiBarChartLine className="mr-2 inline size-4" />}
         >
           <StatsWidget
             month={month}
@@ -137,7 +137,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Condições de Pagamento"
           subtitle={"Principais Condições de Pagamento"}
-          icon={<Wallet className="mr-2 inline size-4" />}
+          icon={<RiWalletLine className="mr-2 inline size-4" />}
         >
           <ConditionWidget month={month} />
         </Widget>
@@ -145,7 +145,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Formas de Pagamentos"
           subtitle={"Principais Formas de Pagamento"}
-          icon={<Wallet className="mr-2 inline size-4" />}
+          icon={<RiWalletLine className="mr-2 inline size-4" />}
         >
           <PaymentWidget month={month} />
         </Widget>
@@ -153,7 +153,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Receitas por Categoria"
           subtitle="Principais Categorias por Receita"
-          icon={<ListOrdered className="mr-2 inline size-4" />}
+          icon={<RiListOrdered className="mr-2 inline size-4" />}
         >
           <CategoryWidget
             data={categoryData}
@@ -166,7 +166,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Despesas por Categoria"
           subtitle="Principais Categorias por Despesa"
-          icon={<ListOrdered className="mr-2 inline size-4" />}
+          icon={<RiListOrdered className="mr-2 inline size-4" />}
         >
           <CategoryWidget
             data={categoryData}

@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CreditCard } from "@/lib/remix-icons";
+import { RiBankCardLine } from "@remixicon/react";
 import Utils from "./utils";
 import { PaymentMethodLogo } from "./logos-on-table";
 
@@ -44,7 +44,7 @@ export default function InvoicePaymentDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-center gap-2 text-xl">
-            <CreditCard className="h-5 w-5" />
+            <RiBankCardLine className="h-5 w-5" />
             Confirmação de Pagamento
           </DialogTitle>
 

@@ -21,13 +21,13 @@ import {
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
 import {
-  CheckCircle2Icon,
-  EllipsisVertical,
-  MessageSquareText,
-  Paperclip,
-  PartyPopper,
-  Users,
-} from "@/lib/remix-icons";
+  RiCheckboxCircleFill,
+  RiMoreLine,
+  RiMessage2Line,
+  RiAttachmentLine,
+  RiCalendarCheckFill,
+  RiGroupLine,
+} from "@remixicon/react";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
@@ -105,7 +105,7 @@ export const getColumns = (
           )}
 
           {item.responsavel === "sistema" && (
-            <CheckCircle2Icon color="green" size={16} />
+            <RiCheckboxCircleFill color="green" size={16} />
           )}
 
           {item.dividir_lancamento === true && (
@@ -113,7 +113,7 @@ export const getColumns = (
               <TooltipProvider delayDuration={300}>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Users className="text-muted-foreground" size={12} />
+                    <RiGroupLine className="text-muted-foreground" size={12} />
                   </TooltipTrigger>
                   <TooltipContent>Conta Dividida</TooltipContent>
                 </Tooltip>
@@ -125,7 +125,7 @@ export const getColumns = (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
-                  <MessageSquareText
+                  <RiMessage2Line
                     className="text-muted-foreground"
                     size={12}
                   />
@@ -137,7 +137,7 @@ export const getColumns = (
 
           {item.condicao === "parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
-              <PartyPopper className="text-emerald-600" size={16} />
+              <RiCalendarCheckFill className="text-emerald-600" size={16} />
             )}
         </div>
       );
@@ -259,7 +259,7 @@ export const getColumns = (
                 variant="ghost"
                 className="data-[state=open]:bg-muted flex"
               >
-                <EllipsisVertical size={16} />
+                <RiMoreLine size={16} />
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -327,7 +327,7 @@ export const getColumns = (
           </DropdownMenu>
 
           {item.responsavel === "sistema" ? (
-            <CheckCircle2Icon className="text-muted" size={16} />
+            <RiCheckboxCircleFill className="text-muted" size={16} />
           ) : (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
@@ -361,7 +361,7 @@ export const getColumns = (
 
           {item.imagem_url && (
             <div className="flex text-center">
-              <Paperclip size={16} />
+              <RiAttachmentLine size={16} />
             </div>
           )}
         </div>

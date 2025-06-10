@@ -5,7 +5,7 @@ import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowUpRight } from "@/lib/remix-icons";
+import { RiArrowRightUpLine } from "@remixicon/react";
 import Link from "next/link";
 
 type CombinedData = {
@@ -56,7 +56,7 @@ export default function CategoryWidget({
                 className="flex items-center gap-1 hover:underline"
               >
                 <span className="font-bold capitalize">{item.categoria}</span>
-                <ArrowUpRight className="text-muted-foreground h-3 w-3" />
+                <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
               </Link>
 
               <div className="flex items-center gap-2">
