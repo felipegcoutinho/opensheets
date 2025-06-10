@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Insights | opensheets",
+  title: "insights | opensheets",
 };
 
 export default function RootLayout({ children }) {
