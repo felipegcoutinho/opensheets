@@ -9,7 +9,7 @@ import {
 import { cookies } from "next/headers";
 
 export const metadata = {
-  title: "Dashboard | opensheets",
+  title: "dashboard | opensheets",
 };
 
 export default async function Layout({
