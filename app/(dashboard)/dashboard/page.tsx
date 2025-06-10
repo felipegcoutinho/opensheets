@@ -9,6 +9,7 @@ import {
   RiBarChartLine,
   RiBarChartBoxLine,
   RiBankCardLine,
+  RiCalendarEventLine,
   RiListOrdered,
   RiWalletLine,
 } from "@remixicon/react";
@@ -16,6 +17,7 @@ import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";
 import InvoiceWidget from "./invoices-widget";
+import CalendarWidget from "./calendar-widget";
 import PaymentStatusWidget from "./payment-status-widget";
 import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
@@ -92,6 +94,14 @@ export default async function page(props: { params: { month: string } }) {
           icon={<RiBarcodeLine className="mr-2 inline size-4" />}
         >
           <BillsWidget month={month} data={bills} />
+        </Widget>
+
+        <Widget
+          title="Agenda"
+          subtitle="vencimentos"
+          icon={<RiCalendarEventLine className="mr-2 inline size-4" />}
+        >
+          <CalendarWidget month={month} bills={bills} invoiceList={invoiceList} />
         </Widget>
       </div>
 
