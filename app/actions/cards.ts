@@ -1,40 +1,51 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import {
+  ActionResponse,
+  CardFormSchema,
+  UpdateCardFormSchema,
+  cardFormSchema,
+  updateCardFormSchema,
+} from "../(dashboard)/cartao/modal/form-schema";
 
-export async function addCards(formData: FormData) {
-  const {
-    descricao,
-    dt_vencimento,
-    dt_fechamento,
-    anotacao,
-    limite,
-    bandeira,
-    logo_image,
-    tipo,
-    status,
-    conta_id,
-  } = Object.fromEntries(formData.entries());
+export async function addCards(
+  prevState: ActionResponse<CardFormSchema> | null,
+  formData: FormData,
+): Promise<ActionResponse<CardFormSchema>> {
+  const raw = Object.fromEntries(formData.entries());
+  const parsed = cardFormSchema.safeParse(raw);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Dados inv\xE1lidos",
+      errors: parsed.error.flatten().fieldErrors,
+      inputs: raw as CardFormSchema,
+    };
+  }
 
   const supabase = createClient();
+  const { error } = await supabase.from("cartoes").insert({
+    descricao: parsed.data.descricao,
+    dt_vencimento: parsed.data.dt_vencimento.toString(),
+    dt_fechamento: parsed.data.dt_fechamento.toString(),
+    anotacao: parsed.data.anotacao,
+    limite: parsed.data.limite.replace(/[R$\.\s]/g, "").replace(",", "."),
+    bandeira: parsed.data.bandeira,
+    logo_image: parsed.data.logo_image,
+    tipo: parsed.data.tipo,
+    status: parsed.data.status,
+    conta_id: Number(parsed.data.conta_id),
+  });
 
-  try {
-    await supabase.from("cartoes").insert({
-      descricao,
-      dt_vencimento,
-      dt_fechamento,
-      anotacao,
-      limite,
-      bandeira,
-      logo_image,
-      tipo,
-      status,
-      conta_id,
-    });
-    revalidatePath("/cartao");
-  } catch (error) {
+  if (error) {
     console.error("Erro ao adicionar cartao:", error);
+    return { success: false, message: "Erro ao adicionar cart\xE3o" };
   }
+
+  revalidatePath("/cartao");
+  return { success: true, message: "Cart\xE3o adicionado com sucesso!" };
 }
 
 export async function deleteCards(formData: FormData) {
@@ -50,42 +61,44 @@ export async function deleteCards(formData: FormData) {
   }
 }
 
-export async function updateCards(formData: FormData) {
-  const {
-    id,
-    descricao,
-    dt_vencimento,
-    dt_fechamento,
-    anotacao,
-    limite,
-    bandeira,
-    logo_image,
-    tipo,
-    status,
-    conta_id,
-  } = Object.fromEntries(formData.entries());
+export async function updateCards(
+  prevState: ActionResponse<UpdateCardFormSchema> | null,
+  formData: FormData,
+): Promise<ActionResponse<UpdateCardFormSchema>> {
+  const raw = Object.fromEntries(formData.entries());
+  const parsed = updateCardFormSchema.safeParse(raw);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Dados inv\xE1lidos",
+      errors: parsed.error.flatten().fieldErrors,
+      inputs: raw as UpdateCardFormSchema,
+    };
+  }
 
   const supabase = createClient();
+  const { error } = await supabase
+    .from("cartoes")
+    .update({
+      descricao: parsed.data.descricao,
+      dt_vencimento: parsed.data.dt_vencimento.toString(),
+      dt_fechamento: parsed.data.dt_fechamento.toString(),
+      anotacao: parsed.data.anotacao,
+      limite: parsed.data.limite.replace(/[R$\.\s]/g, "").replace(",", "."),
+      bandeira: parsed.data.bandeira,
+      logo_image: parsed.data.logo_image,
+      tipo: parsed.data.tipo,
+      status: parsed.data.status,
+      conta_id: Number(parsed.data.conta_id),
+    })
+    .eq("id", parsed.data.id);
 
-  try {
-    await supabase
-      .from("cartoes")
-      .update({
-        id,
-        descricao,
-        dt_vencimento,
-        dt_fechamento,
-        anotacao,
-        limite,
-        bandeira,
-        logo_image,
-        tipo,
-        status,
-        conta_id,
-      })
-      .eq("id", id);
-    revalidatePath("/cartao");
-  } catch (error) {
+  if (error) {
     console.error("Erro ao atualizar cartao:", error);
+    return { success: false, message: "Erro ao atualizar cart\xE3o" };
   }
+
+  revalidatePath("/cartao");
+  return { success: true, message: "Cart\xE3o atualizado com sucesso!" };
 }

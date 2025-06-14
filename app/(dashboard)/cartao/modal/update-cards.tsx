@@ -22,8 +22,17 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useActionState, useState } from "react";
+import {
+  updateCardFormSchema,
+  type UpdateCardFormSchema,
+  type ActionResponse,
+} from "./form-schema";
+import { updateCards } from "@/actions/cards";
+import { toast } from "sonner";
 
 export default function UpdateCard({
   itemId,
@@ -40,16 +49,40 @@ export default function UpdateCard({
   getAccountMap,
   itemLogo,
 }) {
-  const {
-    isOpen,
-    setIsOpen,
-    statusPagamento,
-    setStatusPagamento,
-    handleUpdate,
-    loading,
-  } = UtilitiesCartao();
-
   const { logos, bandeiras } = UseOptions();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const form = useForm<UpdateCardFormSchema>({
+    resolver: zodResolver(updateCardFormSchema),
+    defaultValues: {
+      id: String(itemId),
+      descricao: itemDescricao,
+      dt_vencimento: Number(itemDtVencimento),
+      dt_fechamento: Number(itemDtFechamento),
+      bandeira: itemBandeira,
+      tipo: itemTipo,
+      status: itemStatus,
+      limite: String(itemLimite),
+      conta_id: itemContaId.toString(),
+      anotacao: itemAnotacao ?? "",
+      logo_image: itemLogo,
+    },
+  });
+
+  const initialState: ActionResponse = { success: false, message: "" };
+  const [state, action, isPending] = useActionState(updateCards, initialState);
+
+  const onSubmit = async (values: UpdateCardFormSchema) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([k, v]) => formData.append(k, String(v ?? "")));
+    const result = await action(formData);
+    if (result.success) {
+      toast.info(result.message);
+      setIsOpen(false);
+    } else {
+      toast.error(result.message);
+    }
+  };
 
   return (
     <>
@@ -63,15 +96,18 @@ export default function UpdateCard({
             <DialogTitle>Editar Cartão</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleUpdate} className="space-y-2">
-            <input type="hidden" name="id" value={itemId} />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
 
             <div className="w-full">
               <Label>
                 Escolha o Logo
                 <Required />
               </Label>
-              <Select name="logo_image" defaultValue={itemLogo} required>
+              <Select
+                onValueChange={(val) => form.setValue("logo_image", val)}
+                value={form.watch("logo_image")}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione a imagem para o cartão" />
                 </SelectTrigger>
@@ -96,11 +132,9 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <Input
-                defaultValue={itemDescricao}
-                name="descricao"
                 placeholder="Descrição"
                 type="text"
-                required
+                {...form.register("descricao")}
               />
             </div>
 
@@ -113,11 +147,9 @@ export default function UpdateCard({
                 <Input
                   min={1}
                   max={31}
-                  defaultValue={itemDtFechamento}
-                  name="dt_fechamento"
                   placeholder="Data de Fechamento"
                   type="number"
-                  required
+                  {...form.register("dt_fechamento", { valueAsNumber: true })}
                 />
               </div>
 
@@ -129,11 +161,9 @@ export default function UpdateCard({
                 <Input
                   min={1}
                   max={31}
-                  defaultValue={itemDtVencimento}
-                  name="dt_vencimento"
                   placeholder="Data de Vencimento"
                   type="number"
-                  required
+                  {...form.register("dt_vencimento", { valueAsNumber: true })}
                 />
               </div>
             </div>
@@ -144,7 +174,11 @@ export default function UpdateCard({
                   Bandeira
                   <Required />
                 </Label>
-                <Select defaultValue={itemBandeira} name="bandeira" required>
+                <Select
+                  onValueChange={(val) => form.setValue("bandeira", val)}
+                  value={form.watch("bandeira")}
+                  required
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -173,7 +207,11 @@ export default function UpdateCard({
                   Tipo do Cartão
                   <Required />
                 </Label>
-                <Select defaultValue={itemTipo} name="tipo" required>
+                <Select
+                  onValueChange={(val) => form.setValue("tipo", val)}
+                  value={form.watch("tipo")}
+                  required
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -190,7 +228,11 @@ export default function UpdateCard({
                 Status do Cartão
                 <Required />
               </Label>
-              <Select name="status" defaultValue={itemStatus} required>
+              <Select
+                onValueChange={(val) => form.setValue("status", val)}
+                value={form.watch("status")}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -207,9 +249,8 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <MoneyInput
-                defaultValue={itemLimite}
-                name="limite"
                 placeholder="R$ 0,00"
+                {...form.register("limite")}
               />
             </div>
 
@@ -219,8 +260,8 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <Select
-                defaultValue={itemContaId.toString()}
-                name="conta_id"
+                onValueChange={(val) => form.setValue("conta_id", val)}
+                value={form.watch("conta_id")}
                 required
               >
                 <SelectTrigger className="w-full">
@@ -244,9 +285,8 @@ export default function UpdateCard({
             <div className="w-full">
               <Label>Anotação</Label>
               <Textarea
-                defaultValue={itemAnotacao}
-                name="anotacao"
                 placeholder="Anotação"
+                {...form.register("anotacao")}
               />
             </div>
 
@@ -264,9 +304,9 @@ export default function UpdateCard({
               <Button
                 className="w-full sm:w-1/2"
                 type="submit"
-                disabled={loading}
+                disabled={isPending}
               >
-                {loading ? "Atualizando..." : "Atualizar"}
+                {isPending ? "Atualizando..." : "Atualizar"}
               </Button>
             </DialogFooter>
           </form>

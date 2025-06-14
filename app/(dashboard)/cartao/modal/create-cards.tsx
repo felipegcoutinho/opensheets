@@ -23,20 +23,44 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useActionState, useState } from "react";
+import {
+  cardFormSchema,
+  type CardFormSchema,
+  type ActionResponse,
+} from "./form-schema";
+import { addCards } from "@/actions/cards";
+import { toast } from "sonner";
 
 export default function CreateCard({ getAccountMap }) {
-  const {
-    isOpen,
-    setIsOpen,
-    handleSubmit,
-    loading,
-    statusPagamento,
-    setStatusPagamento,
-  } = UtilitiesCartao();
-
   const { logos, bandeiras } = UseOptions();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const form = useForm<CardFormSchema>({
+    resolver: zodResolver(cardFormSchema),
+    defaultValues: { status: "ativo" } as Partial<CardFormSchema>,
+  });
+
+  const initialState: ActionResponse = { success: false, message: "" };
+  const [state, action, isPending] = useActionState(addCards, initialState);
+
+  const onSubmit = async (values: CardFormSchema) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, String(value ?? ""));
+    });
+    const result = await action(formData);
+    if (result.success) {
+      toast.success(result.message);
+      setIsOpen(false);
+      form.reset();
+    } else {
+      toast.error(result.message);
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -50,13 +74,17 @@ export default function CreateCard({ getAccountMap }) {
           <DialogTitle>Novo Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-2">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <div className="w-full">
             <Label>
               Escolha o Logo
               <Required />
             </Label>
-            <Select name="logo_image" required>
+            <Select
+              onValueChange={(val) => form.setValue("logo_image", val)}
+              value={form.watch("logo_image")}
+              required
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
@@ -81,10 +109,9 @@ export default function CreateCard({ getAccountMap }) {
               <Required />
             </Label>
             <Input
-              name="descricao"
               placeholder="Descrição"
               type="text"
-              required
+              {...form.register("descricao")}
             />
           </div>
 
@@ -97,10 +124,9 @@ export default function CreateCard({ getAccountMap }) {
               <Input
                 min={1}
                 max={31}
-                name="dt_fechamento"
                 placeholder="Data de Fechamento"
                 type="number"
-                required
+                {...form.register("dt_fechamento", { valueAsNumber: true })}
               />
             </div>
 
@@ -112,10 +138,9 @@ export default function CreateCard({ getAccountMap }) {
               <Input
                 min={1}
                 max={31}
-                name="dt_vencimento"
                 placeholder="Data de Vencimento"
                 type="number"
-                required
+                {...form.register("dt_vencimento", { valueAsNumber: true })}
               />
             </div>
           </div>
@@ -126,7 +151,11 @@ export default function CreateCard({ getAccountMap }) {
                 Bandeira
                 <Required />
               </Label>
-              <Select name="bandeira" required>
+              <Select
+                onValueChange={(val) => form.setValue("bandeira", val)}
+                value={form.watch("bandeira")}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -155,7 +184,11 @@ export default function CreateCard({ getAccountMap }) {
                 Tipo do Cartão
                 <Required />
               </Label>
-              <Select name="tipo" required>
+              <Select
+                onValueChange={(val) => form.setValue("tipo", val)}
+                value={form.watch("tipo")}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -172,7 +205,11 @@ export default function CreateCard({ getAccountMap }) {
               Status do Cartão
               <Required />
             </Label>
-            <Select name="status" defaultValue="ativo" required>
+            <Select
+              onValueChange={(val) => form.setValue("status", val)}
+              value={form.watch("status")}
+              required
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
@@ -188,7 +225,7 @@ export default function CreateCard({ getAccountMap }) {
               Limite
               <Required />
             </Label>
-            <MoneyInput name="limite" placeholder="R$ 0,00" />
+            <MoneyInput placeholder="R$ 0,00" {...form.register("limite")} />
           </div>
 
           <div className="w-full">
@@ -196,7 +233,11 @@ export default function CreateCard({ getAccountMap }) {
               Conta Padrão
               <Required />
             </Label>
-            <Select name="conta_id" required>
+            <Select
+              onValueChange={(val) => form.setValue("conta_id", val)}
+              value={form.watch("conta_id")}
+              required
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
@@ -217,7 +258,7 @@ export default function CreateCard({ getAccountMap }) {
 
           <div className="w-full">
             <Label>Anotação</Label>
-            <Textarea name="anotacao" placeholder="Anotação" />
+            <Textarea placeholder="Anotação" {...form.register("anotacao")} />
           </div>
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
@@ -234,9 +275,9 @@ export default function CreateCard({ getAccountMap }) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Salvando..." : "Salvar"}
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>
