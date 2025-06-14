@@ -40,17 +40,6 @@ export const updateSession = async (request: NextRequest) => {
       data: { user: session },
     } = await supabase.auth.getUser();
 
-    // if (
-    //   !session &&
-    //   !request.nextUrl.pathname.startsWith("/login") &&
-    //   !request.nextUrl.pathname.startsWith("/auth")
-    // ) {
-    //   // no user, potentially respond by redirecting the user to the login page
-    //   const url = request.nextUrl.clone();
-    //   url.pathname = "/login";
-    //   return NextResponse.redirect(url);
-    // }
-
     const currentPath = request.nextUrl.pathname;
 
     // Verifica se a rota atual é "/" ou "/login" e se o usuário está logado
