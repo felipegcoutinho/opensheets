@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { UseDates } from "@/hooks/use-dates";
 import { getNotesStats } from "@/services/anotacoes";
 import { getCardsStats } from "@/services/cartoes";
@@ -19,7 +20,7 @@ import {
   getTransactionsStats,
 } from "@/services/transacoes";
 
-export async function fetchAllData(month: string) {
+export const fetchAllData = cache(async (month: string) => {
   const { getPreviousMonth, getLastSixMonths } = UseDates();
 
   const previousMonth = getPreviousMonth(month);
@@ -121,4 +122,4 @@ export async function fetchAllData(month: string) {
     notesStats,
     sixmonth,
   };
-}
+});

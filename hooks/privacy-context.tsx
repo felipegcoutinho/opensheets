@@ -1,10 +1,22 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from "react";
 
-export const PrivacyContext = createContext({});
+interface PrivacyState {
+  estado: boolean;
+  setEstado: Dispatch<SetStateAction<boolean>>;
+}
 
-export function PrivacyProviderApp({ children }) {
+const PrivacyContext = createContext<PrivacyState | undefined>(undefined);
+
+export function PrivacyProviderApp({ children }: { children: ReactNode }) {
   const [estado, setEstado] = useState(true);
 
   return (
@@ -14,6 +26,12 @@ export function PrivacyProviderApp({ children }) {
   );
 }
 
-export function usePrivacy() {
-  return useContext(PrivacyContext);
+export function usePrivacy(): PrivacyState {
+  const context = useContext(PrivacyContext);
+  if (!context) {
+    throw new Error(
+      "usePrivacy must be used within PrivacyProviderApp",
+    );
+  }
+  return context;
 }

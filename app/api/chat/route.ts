@@ -3,10 +3,11 @@ import { generateText } from "ai";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { messages } = await req.json();
 
-  const result = await generateText({
-    model: openai("gpt-4.1-mini"),
+    const result = await generateText({
+      model: openai("gpt-4.1-mini"),
     system: `
       Você é um analista financeiro pessoal especializado em comportamento de consumo.
   
@@ -55,7 +56,14 @@ export async function POST(req: Request) {
     messages,
   });
 
-  const { text } = result;
+    const { text } = result;
 
-  return NextResponse.json({ analysis: text });
+    return NextResponse.json({ analysis: text });
+  } catch (error) {
+    console.error("Erro em /api/chat:", error);
+    return NextResponse.json(
+      { error: "Erro ao gerar análise" },
+      { status: 500 },
+    );
+  }
 }
