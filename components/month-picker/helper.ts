@@ -2,7 +2,18 @@ import { UseDates } from "@/hooks/use-dates";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useTransition } from "react";
 
-function Helper() {
+export interface MonthNavigation {
+  isChanging: boolean;
+  currentMonth: string;
+  currentYear: string;
+  goToPreviousMonth: () => void;
+  goToNextMonth: () => void;
+  goToCurrentMonthYear: () => void;
+  isDifferentFromCurrent: boolean;
+  pathname: string | null;
+}
+
+function Helper(): MonthNavigation {
   const { optionsMeses } = UseDates();
   const searchParams = useSearchParams();
   const pathname = usePathname();

@@ -1,8 +1,10 @@
 import { UseDates } from "@/hooks/use-dates";
 
-export async function getMonth(props?: {
+export interface GetMonthProps {
   searchParams?: { periodo?: string };
-}) {
+}
+
+export async function getMonth(props?: GetMonthProps): Promise<string> {
   const searchParams = await props?.searchParams;
   const { formatted_current_month } = UseDates();
   const defaultPeriodo = formatted_current_month;

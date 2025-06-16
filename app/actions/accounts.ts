@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 // Adiciona uma nova conta bancária
-export async function addAccount(formData: FormData) {
+export async function addAccount(formData: FormData): Promise<void> {
   const { descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 
@@ -25,7 +25,7 @@ export async function addAccount(formData: FormData) {
 }
 
 // Deleta uma conta bancária
-export async function deleteAccount(formData: FormData) {
+export async function deleteAccount(formData: FormData): Promise<void> {
   const excluir = formData.get("excluir");
   const supabase = createClient();
 
@@ -38,7 +38,7 @@ export async function deleteAccount(formData: FormData) {
 }
 
 // Atualiza uma conta bancária
-export async function updateAccount(formData: FormData) {
+export async function updateAccount(formData: FormData): Promise<void> {
   const { id, descricao, status, tipo_conta, logo_image, anotacao } =
     Object.fromEntries(formData.entries());
 

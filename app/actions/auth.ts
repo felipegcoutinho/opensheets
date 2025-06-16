@@ -5,14 +5,14 @@ import { encodedRedirect } from "@/utils/utils";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function signOut(data) {
+export async function signOut(data: unknown): Promise<never> {
   const supabase = createClient();
 
   await supabase.auth.signOut();
   return redirect("/login");
 }
 
-export const signIn = async (formData) => {
+export const signIn = async (formData: FormData): Promise<never> => {
   "use server";
 
   const email = formData.get("email");
@@ -31,7 +31,7 @@ export const signIn = async (formData) => {
   return redirect("/dashboard");
 };
 
-export async function signup(formData: FormData) {
+export async function signup(formData: FormData): Promise<never> {
   "use server";
 
   const supabase = createClient();
@@ -64,7 +64,7 @@ export async function signup(formData: FormData) {
   );
 }
 
-export const forgotPasswordAction = async (formData: FormData) => {
+export const forgotPasswordAction = async (formData: FormData): Promise<void> => {
   const email = formData.get("email")?.toString();
   const supabase = createClient();
   const origin = (await headers()).get("origin");
@@ -102,7 +102,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   );
 };
 
-export const resetPasswordAction = async (formData: FormData) => {
+export const resetPasswordAction = async (formData: FormData): Promise<void> => {
   const supabase = createClient();
 
   const password = formData.get("password") as string;

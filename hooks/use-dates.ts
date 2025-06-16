@@ -1,6 +1,27 @@
-export function UseDates() {
+export interface MonthOption {
+  value: string;
+  label: string;
+}
+
+export interface UseDatesReturn {
+  currentDate: Date;
+  currentYear: number;
+  currentMonthName: string;
+  formatted_current_month: string;
+  optionsMeses: string[];
+  optionsAnos: string[];
+  diasDaSemana: string[];
+  getPreviousMonth: (currentMonth: string) => string;
+  getLastSixMonths: (currentMonth: string) => string[];
+  DateFormat: (dateString: string) => string;
+  friendlyDate: (date: Date) => string;
+  getGreeting: () => string;
+  getMonthOptions: () => MonthOption[];
+}
+
+export function UseDates(): UseDatesReturn {
   // Lista dos nomes dos meses
-  const optionsMeses = [
+  const optionsMeses: string[] = [
     "janeiro",
     "fevereiro",
     "março",
@@ -16,7 +37,7 @@ export function UseDates() {
   ];
 
   // Lista dos anos
-  const optionsAnos = [
+  const optionsAnos: string[] = [
     "2023",
     "2024",
     "2025",
@@ -33,7 +54,7 @@ export function UseDates() {
   ];
 
   // Lista dos nomes dos dias da semana
-  const diasDaSemana = [
+  const diasDaSemana: string[] = [
     "Domingo",
     "Segunda",
     "Terça",
@@ -55,7 +76,7 @@ export function UseDates() {
   // Formata o mês atual no formato "Mês-Ano"
   const formatted_current_month = `${currentMonthName}-${currentYear}`;
 
-  function DateFormat(dateString) {
+  function DateFormat(dateString: string): string {
     const [year, month, day] = dateString.split("-");
     const date = new Date(year, month - 1, day);
     return new Intl.DateTimeFormat("pt-BR", {
@@ -68,7 +89,7 @@ export function UseDates() {
       .replace(" de", "");
   }
 
-  function friendlyDate(date) {
+  function friendlyDate(date: Date): string {
     const dayOfWeek = diasDaSemana[date.getDay()];
     const day = date.getDate();
     const month = optionsMeses[date.getMonth()];
@@ -76,7 +97,7 @@ export function UseDates() {
     return `${dayOfWeek}, ${day} de ${month} de ${year}`;
   }
 
-  function getGreeting() {
+  function getGreeting(): string {
     const currentHour = currentDate.getHours();
     const greeting =
       currentHour >= 5 && currentHour < 12
@@ -87,7 +108,7 @@ export function UseDates() {
     return greeting;
   }
 
-  const getPreviousMonth = (currentMonth) => {
+  const getPreviousMonth = (currentMonth: string): string => {
     const [monthName, year] = currentMonth.split("-");
     const monthIndex = optionsMeses.findIndex(
       (m) => m.toLowerCase() === monthName.toLowerCase(),
@@ -105,7 +126,7 @@ export function UseDates() {
     return `${previousMonth}-${previousYear}`;
   };
 
-  const getLastSixMonths = (currentMonth: string) => {
+  const getLastSixMonths = (currentMonth: string): string[] => {
     const [monthName, year] = currentMonth.split("-");
     const startIndex = optionsMeses.findIndex(
       (m) => m.toLowerCase() === monthName.toLowerCase(),
@@ -123,8 +144,8 @@ export function UseDates() {
     return months;
   };
 
-  const getMonthOptions = () => {
-    const options = [];
+  const getMonthOptions = (): MonthOption[] => {
+    const options: MonthOption[] = [];
     const currentDate = new Date();
 
     for (let i = -2; i <= 2; i++) {

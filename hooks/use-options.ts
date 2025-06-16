@@ -1,5 +1,13 @@
-export default function UseOptions() {
-  const logos = [
+export interface LogoOption {
+  file: string;
+  name: string;
+}
+
+export default function UseOptions(): {
+  logos: LogoOption[];
+  bandeiras: LogoOption[];
+} {
+  const logos: LogoOption[] = [
     { file: "99Pay.png", name: "99Pay" },
     { file: "alelo.png", name: "Alelo" },
     { file: "azul.png", name: "Azul" },
@@ -59,7 +67,7 @@ export default function UseOptions() {
     { file: "xp.png", name: "XP" },
   ];
 
-  const bandeiras = [
+  const bandeiras: LogoOption[] = [
     { file: "visa.svg", name: "Visa" },
     { file: "mastercard.svg", name: "Mastercard" },
     { file: "vuon.svg", name: "Vuoncard" },

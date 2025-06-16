@@ -2,7 +2,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function addFaturas(formData: FormData) {
+export async function addFaturas(formData: FormData): Promise<void> {
   const supabase = createClient();
 
   const { status_pagamento, periodo, cartao_id } = Object.fromEntries(
@@ -22,7 +22,7 @@ export async function addFaturas(formData: FormData) {
   revalidatePath("/cartao");
 }
 
-export async function updateFaturas(formData: FormData) {
+export async function updateFaturas(formData: FormData): Promise<void> {
   const { id, status_pagamento } = Object.fromEntries(formData.entries());
 
   const supabase = createClient();
@@ -38,7 +38,7 @@ export async function updateFaturas(formData: FormData) {
   revalidatePath("/cartao");
 }
 
-export async function deleteFaturas(formData: FormData) {
+export async function deleteFaturas(formData: FormData): Promise<void> {
   const excluir = formData.get("excluir");
 
   const supabase = createClient();
