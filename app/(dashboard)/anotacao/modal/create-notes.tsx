@@ -1,6 +1,6 @@
 "use client";
 import Required from "@/components/required-on-forms";
-import { useState } from "react";
+import TasksInput from "@/components/tasks-input";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -21,9 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import TasksInput from "@/components/tasks-input";
 import { UseDates } from "@/hooks/use-dates";
+import { useState } from "react";
 import UtilitiesAnotacao from "../utilities-anotacao";
 
 type MonthOption = {
@@ -50,7 +50,7 @@ export default function CreateNotes({ children }: Props) {
         </DialogHeader>
 
         <form action={handleSubmit} className="space-y-2">
-          <div className="mb-1 flex w-full gap-2">
+          <div className="flex w-full gap-2">
             <div className="w-1/2">
               <Label>
                 Título
@@ -86,7 +86,7 @@ export default function CreateNotes({ children }: Props) {
             </div>
           </div>
 
-          <div className="mb-1 flex w-full gap-2">
+          <div className="my-4 flex w-full gap-2">
             <div className="w-full">
               <Label>Tipo</Label>
               <RadioGroup
@@ -107,13 +107,13 @@ export default function CreateNotes({ children }: Props) {
           </div>
 
           {mode === "nota" && (
-            <div className="mb-1 flex w-full gap-2">
+            <div className="flex w-full gap-2">
               <div className="w-full">
                 <Label>Anotação</Label>
                 <Textarea
                   required
                   maxLength={512}
-                  className="h-52"
+                  className="h-32"
                   name="anotacao"
                   placeholder="Anotação"
                   value={note}
