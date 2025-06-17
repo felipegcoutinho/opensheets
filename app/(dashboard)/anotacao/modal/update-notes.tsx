@@ -20,6 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import TasksInput from "@/components/tasks-input";
+import { useState } from "react";
 import { UseDates } from "@/hooks/use-dates";
 import UtilitiesAnotacao from "../utilities-anotacao";
 
@@ -33,6 +36,24 @@ export default function UpdateNotes({
     UtilitiesAnotacao();
 
   const { getMonthOptions } = UseDates();
+  let parsed: { mode?: string; tasks?: any[]; content?: string } | null = null;
+  try {
+    parsed = JSON.parse(itemAnotacao);
+  } catch {}
+  const initialTasks =
+    parsed && parsed.mode === "tarefas" && Array.isArray(parsed.tasks)
+      ? parsed.tasks
+      : [];
+  const [mode, setMode] = useState<"nota" | "tarefas">(
+    parsed && parsed.mode === "tarefas" ? "tarefas" : "nota",
+  );
+  const [note, setNote] = useState(
+    parsed && parsed.mode === "nota"
+      ? (parsed.content ?? "")
+      : parsed
+        ? ""
+        : itemAnotacao,
+  );
 
   return (
     <>
@@ -86,16 +107,41 @@ export default function UpdateNotes({
 
             <div className="mb-1 flex w-full gap-2">
               <div className="w-full">
-                <Label>Anotação</Label>
-                <Textarea
-                  maxLength={512}
-                  className="h-52"
-                  defaultValue={itemAnotacao}
-                  name="anotacao"
-                  placeholder="Anotação"
-                />
+                <Label>Tipo</Label>
+                <RadioGroup
+                  className="mt-1 flex gap-4"
+                  value={mode}
+                  onValueChange={(val) => setMode(val as "nota" | "tarefas")}
+                >
+                  <div className="flex items-center gap-1">
+                    <RadioGroupItem value="nota" id="modo-nota" />
+                    <Label htmlFor="modo-nota">Notas</Label>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <RadioGroupItem value="tarefas" id="modo-tarefas" />
+                    <Label htmlFor="modo-tarefas">Tarefas</Label>
+                  </div>
+                </RadioGroup>
               </div>
             </div>
+
+            {mode === "nota" && (
+              <div className="mb-1 flex w-full gap-2">
+                <div className="w-full">
+                  <Label>Anotação</Label>
+                  <Textarea
+                    maxLength={512}
+                    className="h-52"
+                    name="anotacao"
+                    placeholder="Anotação"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+
+            {mode === "tarefas" && <TasksInput value={initialTasks} />}
 
             <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
               <DialogClose asChild>

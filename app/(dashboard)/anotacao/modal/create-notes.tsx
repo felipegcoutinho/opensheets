@@ -1,5 +1,6 @@
 "use client";
 import Required from "@/components/required-on-forms";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,6 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import TasksInput from "@/components/tasks-input";
 import { UseDates } from "@/hooks/use-dates";
 import UtilitiesAnotacao from "../utilities-anotacao";
 
@@ -35,6 +38,8 @@ type Props = {
 export default function CreateNotes({ children }: Props) {
   const { loading, handleSubmit, isOpen, setIsOpen } = UtilitiesAnotacao();
   const { getMonthOptions } = UseDates();
+  const [mode, setMode] = useState<"nota" | "tarefas">("nota");
+  const [note, setNote] = useState("");
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -83,16 +88,42 @@ export default function CreateNotes({ children }: Props) {
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-full">
-              <Label>Anotação</Label>
-              <Textarea
-                required
-                maxLength={512}
-                className="h-52"
-                name="anotacao"
-                placeholder="Anotação"
-              />
+              <Label>Tipo</Label>
+              <RadioGroup
+                className="mt-1 flex gap-4"
+                value={mode}
+                onValueChange={(val) => setMode(val as "nota" | "tarefas")}
+              >
+                <div className="flex items-center gap-1">
+                  <RadioGroupItem value="nota" id="modo-nota" />
+                  <Label htmlFor="modo-nota">Notas</Label>
+                </div>
+                <div className="flex items-center gap-1">
+                  <RadioGroupItem value="tarefas" id="modo-tarefas" />
+                  <Label htmlFor="modo-tarefas">Tarefas</Label>
+                </div>
+              </RadioGroup>
             </div>
           </div>
+
+          {mode === "nota" && (
+            <div className="mb-1 flex w-full gap-2">
+              <div className="w-full">
+                <Label>Anotação</Label>
+                <Textarea
+                  required
+                  maxLength={512}
+                  className="h-52"
+                  name="anotacao"
+                  placeholder="Anotação"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
+
+          {mode === "tarefas" && <TasksInput />}
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
