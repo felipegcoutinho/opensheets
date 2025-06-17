@@ -112,7 +112,7 @@ export default function CreateNotes({ children }: Props) {
                 <Label>Anotação</Label>
                 <Textarea
                   required
-                  maxLength={512}
+                  maxLength={1024}
                   className="h-32"
                   name="anotacao"
                   placeholder="Anotação"

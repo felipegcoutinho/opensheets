@@ -9,10 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
+import { RiCheckboxCircleFill } from "@remixicon/react";
 import CreateNotes from "./modal/create-notes";
 import DeleteNotes from "./modal/delete-notes";
 import UpdateNotes from "./modal/update-notes";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -52,10 +52,13 @@ export default async function page(props: { params: { month: string } }) {
                       <ul className="space-y-1">
                         {content.tasks.map((task: any, idx: number) => (
                           <li key={idx} className="flex items-center gap-2">
-                            <Checkbox checked={task.done} disabled />
+                            {/* <Checkbox checked={task.done} disabled /> */}
                             <span className={task.done ? "line-through" : ""}>
                               {task.text}
                             </span>
+                            {task.done && (
+                              <RiCheckboxCircleFill color="green" size={16} />
+                            )}
                           </li>
                         ))}
                       </ul>

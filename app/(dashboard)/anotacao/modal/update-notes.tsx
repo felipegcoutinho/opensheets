@@ -130,7 +130,7 @@ export default function UpdateNotes({
                 <div className="w-full">
                   <Label>Anotação</Label>
                   <Textarea
-                    maxLength={512}
+                    maxLength={1024}
                     className="h-32"
                     name="anotacao"
                     placeholder="Anotação"
