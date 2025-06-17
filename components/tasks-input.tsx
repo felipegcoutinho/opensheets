@@ -1,7 +1,7 @@
-import { RiAddLine, RiDeleteBinLine } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { RiAddLine, RiDeleteBinLine } from "@remixicon/react";
 import { useState } from "react";
 
 export type Task = {
@@ -49,15 +49,15 @@ export default function TasksInput({ value = [], onChange }: TasksInputProps) {
     <div className="space-y-2">
       {tasks.map((task, index) => (
         <div key={index} className="flex items-center gap-2">
-          <Checkbox
-            checked={task.done}
-            onCheckedChange={(checked) => handleDoneChange(index, !!checked)}
-          />
           <Input
             value={task.text}
             onChange={(e) => handleTextChange(index, e.target.value)}
             className={task.done ? "line-through" : ""}
             placeholder={`Tarefa ${index + 1}`}
+          />
+          <Checkbox
+            checked={task.done}
+            onCheckedChange={(checked) => handleDoneChange(index, !!checked)}
           />
           <Button
             type="button"
@@ -77,7 +77,7 @@ export default function TasksInput({ value = [], onChange }: TasksInputProps) {
       >
         <RiAddLine className="mr-2 size-4" /> Adicionar tarefa
       </Button>
-      {/* hidden input to propagate value */}
+
       <input
         type="hidden"
         name="anotacao"
