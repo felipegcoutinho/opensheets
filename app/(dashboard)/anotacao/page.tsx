@@ -12,6 +12,7 @@ import { getMonth } from "@/hooks/get-month";
 import CreateNotes from "./modal/create-notes";
 import DeleteNotes from "./modal/delete-notes";
 import UpdateNotes from "./modal/update-notes";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -39,7 +40,34 @@ export default async function page(props: { params: { month: string } }) {
                 {item.descricao}
               </CardTitle>
             </CardHeader>
-            <CardContent className="break-all">{item.anotacao}</CardContent>
+            <CardContent className="break-all">
+              {(() => {
+                try {
+                  const content = JSON.parse(item.anotacao);
+                  if (
+                    content.mode === "tarefas" &&
+                    Array.isArray(content.tasks)
+                  ) {
+                    return (
+                      <ul className="space-y-1">
+                        {content.tasks.map((task: any, idx: number) => (
+                          <li key={idx} className="flex items-center gap-2">
+                            <Checkbox checked={task.done} disabled />
+                            <span className={task.done ? "line-through" : ""}>
+                              {task.text}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  if (content.mode === "nota") {
+                    return content.content;
+                  }
+                } catch {}
+                return item.anotacao;
+              })()}
+            </CardContent>
             <CardFooter>
               <div className="flex gap-4 text-sm">
                 <UpdateNotes
