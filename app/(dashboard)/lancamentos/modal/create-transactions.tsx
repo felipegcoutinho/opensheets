@@ -25,7 +25,9 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpLine } from "@remixicon/react";
+import { RiThumbUpLine, RiFileList2Line } from "@remixicon/react";
+import MoneyValues from "@/components/money-values";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 
@@ -65,6 +67,12 @@ export default function CreateTransactions({
 
   const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
   const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+
+  const [valorResumo, setValorResumo] = useState(0);
+  const [dataResumo, setDataResumo] = useState("");
+  const [formaResumo, setFormaResumo] = useState("");
+  const [condicaoResumo, setCondicaoResumo] = useState("vista");
+  const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
 
   useEffect(() => {
     async function fetchOptions() {
@@ -110,6 +118,7 @@ export default function CreateTransactions({
                   name="data_compra"
                   type="date"
                   required={!eBoletoSelecionado}
+                  onChange={(e) => setDataResumo(e.target.value)}
                 />
               </div>
               <div className="w-1/2">
@@ -160,6 +169,7 @@ export default function CreateTransactions({
                   name="valor"
                   placeholder="R$ 0,00"
                   required
+                  onValueChange={(val) => setValorResumo(val.floatValue || 0)}
                 />
               </div>
             </div>
@@ -309,7 +319,10 @@ export default function CreateTransactions({
                   <Select
                     required
                     name="forma_pagamento"
-                    onValueChange={handleFormaPagamentoChange}
+                    onValueChange={(val) => {
+                      handleFormaPagamentoChange(val);
+                      setFormaResumo(val);
+                    }}
                   >
                     <SelectTrigger id="forma_pagamento" className="w-full">
                       <SelectValue placeholder="Selecione" />
@@ -407,7 +420,10 @@ export default function CreateTransactions({
                 <Label htmlFor="condicao">Condição</Label>
                 <Select
                   name="condicao"
-                  onValueChange={handleCondicaoChange}
+                  onValueChange={(val) => {
+                    handleCondicaoChange(val);
+                    setCondicaoResumo(val);
+                  }}
                   defaultValue="vista"
                   required
                 >
@@ -445,7 +461,10 @@ export default function CreateTransactions({
               {showRecorrencia && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
-                  <Select name="qtde_recorrencia">
+                  <Select
+                    name="qtde_recorrencia"
+                    onValueChange={(val) => setRecorrenciaResumo(val)}
+                  >
                     <SelectTrigger id="qtde_recorrencia" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
@@ -476,6 +495,40 @@ export default function CreateTransactions({
             <div className="w-full flex-row gap-2">
               <Label htmlFor="anotacao">Anotação</Label>
               <Textarea id="anotacao" name="anotacao" placeholder="Anotação" />
+            </div>
+
+            <div className="border-muted rounded border p-4 text-sm space-y-1">
+              <div className="font-semibold flex items-center gap-1">
+                <RiFileList2Line className="h-4 w-4" /> Resumo do Lançamento
+              </div>
+              {condicaoResumo === "vista" && (
+                <ul className="space-y-1 pl-4 list-disc">
+                  <li>
+                    Valor Total: <MoneyValues value={valorResumo} />
+                  </li>
+                  <li>Data: {dataResumo ? format(new Date(dataResumo), "dd/MM/yyyy") : ""}</li>
+                  <li>Pagamento: {formaResumo}</li>
+                </ul>
+              )}
+              {condicaoResumo === "parcelado" && quantidadeParcelas && (
+                <ul className="space-y-1 pl-4 list-disc">
+                  <li>
+                    {quantidadeParcelas}x de{' '}
+                    <MoneyValues value={valorResumo / Number(quantidadeParcelas)} />
+                  </li>
+                  <li>Total: <MoneyValues value={valorResumo} /></li>
+                  <li>Início: {dataResumo ? format(new Date(dataResumo), "dd/MM/yyyy") : ""}</li>
+                </ul>
+              )}
+              {condicaoResumo === "recorrente" && (
+                <ul className="space-y-1 pl-4 list-disc">
+                  <li>
+                    Valor recorrente: <MoneyValues value={valorResumo} />
+                  </li>
+                  <li>Frequência: {recorrenciaResumo ? `${recorrenciaResumo} meses` : ''}</li>
+                  <li>Início: {dataResumo ? format(new Date(dataResumo), "dd/MM/yyyy") : ""}</li>
+                </ul>
+              )}
             </div>
           </form>
         </div>
