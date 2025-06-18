@@ -1,14 +1,15 @@
 import { ChartSummary } from "@/app/(dashboard)/dashboard/chart-summary";
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/services/fetch-all-data";
+import { getResumoFinanceiroPorPeriodo } from "@/app/services/transacoes";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {
   RiArrowUpDownLine,
-  RiBarcodeLine,
-  RiBarChartLine,
-  RiBarChartBoxLine,
   RiBankCardLine,
+  RiBarChartBoxLine,
+  RiBarChartLine,
+  RiBarcodeLine,
   RiListOrdered,
   RiWalletLine,
 } from "@remixicon/react";
@@ -24,6 +25,13 @@ import UtilitiesDashboard from "./utilities-dashboard";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
+
+  const teste = await getResumoFinanceiroPorPeriodo(
+    "925644d7-0cc1-49a2-87dd-09e317a6f4f0",
+    month,
+  );
+
+  console.log(teste);
 
   const {
     bills,
@@ -67,6 +75,11 @@ export default async function page(props: { params: { month: string } }) {
             color={item.color}
           />
         ))}
+        <div>
+          {teste.map((item, index) => (
+            <p key={index}>{item.saldo_previsto}</p>
+          ))}
+        </div>
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">

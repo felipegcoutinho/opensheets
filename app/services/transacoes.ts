@@ -594,3 +594,22 @@ export async function getResponsaveisList(month: string) {
 
   return Array.from(set);
 }
+
+export async function getResumoFinanceiroPorPeriodo(
+  authId: string,
+  periodo: string,
+) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.rpc(
+    "buscar_resumo_financeiro_por_periodo",
+    {
+      p_auth_id: authId,
+      p_periodo: periodo,
+    },
+  );
+
+  if (error)
+    throw new Error(`Erro ao buscar resumo financeiro: ${error.message}`);
+  return data;
+}
