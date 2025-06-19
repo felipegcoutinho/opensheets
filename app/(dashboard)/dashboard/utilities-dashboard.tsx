@@ -1,5 +1,6 @@
 import { fetchAllData } from "@/app/services/fetch-all-data";
 import { getResumoFinanceiroPorPeriodo } from "@/app/services/transacoes";
+import { UseDates } from "@/hooks/use-dates";
 
 export default async function UtilitiesDashboard(month: string) {
   const {
@@ -18,22 +19,44 @@ export default async function UtilitiesDashboard(month: string) {
     month,
   );
 
+  const { getPreviousMonth } = UseDates();
+
+  const formatNumber = (value: any) => parseFloat(value) || 0;
+
+  const resumoAtual =
+    sumarioTeste.find((item) => item.periodo === month) || sumarioTeste[0];
+  const resumoAnterior =
+    sumarioTeste.find((item) => item.periodo === getPreviousMonth(month)) ||
+    sumarioTeste[1] ||
+    {};
+
   const saldo = sumPaidIncome - sumPaidExpense;
-  const balanco = incomes - expenses;
-  const balancoAnterior = incomesAnterior - expensesAnterior;
-  const previsto = previstoAnterior + balanco;
+  const balanco = formatNumber(resumoAtual?.balanco ?? incomes - expenses);
+  const balancoAnterior =
+    formatNumber(resumoAnterior?.balanco ?? incomesAnterior - expensesAnterior);
+  const previsto = formatNumber(resumoAtual?.saldo_previsto ?? 0);
 
   const summary = [
     {
       title: "Receitas",
-      value: incomes,
-      previousValue: incomesAnterior,
+      value: formatNumber(
+        resumoAtual?.receitas ?? resumoAtual?.total_receitas ?? incomes,
+      ),
+      previousValue: formatNumber(
+        resumoAnterior?.receitas ?? resumoAnterior?.total_receitas ??
+          incomesAnterior,
+      ),
       color: "bg-chart-1",
     },
     {
       title: "Despesas",
-      value: expenses,
-      previousValue: expensesAnterior,
+      value: formatNumber(
+        resumoAtual?.despesas ?? resumoAtual?.total_despesas ?? expenses,
+      ),
+      previousValue: formatNumber(
+        resumoAnterior?.despesas ?? resumoAnterior?.total_despesas ??
+          expensesAnterior,
+      ),
       color: "bg-chart-2",
     },
     {
@@ -45,7 +68,7 @@ export default async function UtilitiesDashboard(month: string) {
     {
       title: "Previsto",
       value: previsto,
-      previousValue: previstoAnterior,
+      previousValue: formatNumber(resumoAnterior?.saldo_previsto ?? previstoAnterior),
       color: "bg-chart-4",
     },
   ];
@@ -80,7 +103,7 @@ export default async function UtilitiesDashboard(month: string) {
     balanco,
     balancoAnterior,
     previsto,
-    previstoAnterior,
+    previstoAnterior: formatNumber(resumoAnterior?.saldo_previsto ?? previstoAnterior),
     summary,
     getTotalsCategory,
     sumarioTeste,
