@@ -1,4 +1,5 @@
 import { fetchAllData } from "@/app/services/fetch-all-data";
+import { getResumoFinanceiroPorPeriodo } from "@/app/services/transacoes";
 
 export default async function UtilitiesDashboard(month: string) {
   const {
@@ -11,6 +12,11 @@ export default async function UtilitiesDashboard(month: string) {
     expensesAnterior,
     incomesAnterior,
   } = await fetchAllData(month);
+
+  const sumarioTeste = await getResumoFinanceiroPorPeriodo(
+    "925644d7-0cc1-49a2-87dd-09e317a6f4f0",
+    month,
+  );
 
   const saldo = sumPaidIncome - sumPaidExpense;
   const balanco = incomes - expenses;
@@ -77,5 +83,6 @@ export default async function UtilitiesDashboard(month: string) {
     previstoAnterior,
     summary,
     getTotalsCategory,
+    sumarioTeste,
   };
 }

@@ -1,7 +1,6 @@
 import { ChartSummary } from "@/app/(dashboard)/dashboard/chart-summary";
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/services/fetch-all-data";
-import { getResumoFinanceiroPorPeriodo } from "@/app/services/transacoes";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {
@@ -26,13 +25,6 @@ import UtilitiesDashboard from "./utilities-dashboard";
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const teste = await getResumoFinanceiroPorPeriodo(
-    "925644d7-0cc1-49a2-87dd-09e317a6f4f0",
-    month,
-  );
-
-  console.log(teste);
-
   const {
     bills,
     invoiceList,
@@ -51,8 +43,10 @@ export default async function page(props: { params: { month: string } }) {
     sixmonth.map((month) => UtilitiesDashboard(month)),
   );
 
-  const { incomes, expenses, summary, getTotalsCategory } =
+  const { incomes, expenses, summary, getTotalsCategory, sumarioTeste } =
     await UtilitiesDashboard(month);
+
+  console.log(sumarioTeste);
 
   const categoryData = getTotalsCategory(month);
 
@@ -76,8 +70,13 @@ export default async function page(props: { params: { month: string } }) {
           />
         ))}
         <div>
-          {teste.map((item, index) => (
-            <p key={index}>{item.saldo_previsto}</p>
+          {sumarioTeste.map((item, index) => (
+            <div key={index}>
+              <p>{item.receitas}</p>
+              <p>{item.despesas}</p>
+              <p>{item.balanco}</p>
+              <p>{item.saldo_previsto}</p>
+            </div>
           ))}
         </div>
       </div>
