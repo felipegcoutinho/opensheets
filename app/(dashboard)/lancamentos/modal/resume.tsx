@@ -44,15 +44,15 @@ export function ResumoLancamentoCard({
   }[condicaoResumo];
 
   return (
-    <Card className="border-amber-200 bg-amber-50">
+    <Card className="border-amber-200 bg-amber-50 dark:bg-amber-950">
       <CardHeader className="flex items-center gap-2 pb-0">
         {icone}
-        <CardTitle className="font-semibold text-amber-700">
+        <CardTitle className="text-amber-900 dark:text-amber-50">
           Resumo do Lançamento
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-2 gap-4 pt-2 text-amber-800">
+      <CardContent className="grid grid-cols-2 gap-4 pt-2 text-amber-950 dark:text-amber-50">
         {condicaoResumo === "vista" && (
           <>
             <div>
