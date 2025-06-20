@@ -12,6 +12,8 @@ export function ResumoLancamentoCard({
   formaResumo,
   quantidadeParcelas,
   recorrenciaResumo,
+  periodoResumo,
+  responsavelResumo,
 }: {
   condicaoResumo: "vista" | "parcelado" | "recorrente";
   valorResumo: number;
@@ -19,10 +21,19 @@ export function ResumoLancamentoCard({
   formaResumo?: string;
   quantidadeParcelas?: string;
   recorrenciaResumo?: number;
+  periodoResumo?: string;
+  responsavelResumo?: string;
 }) {
   // Helper para data formatada
   const dataFormatada = dataResumo
     ? format(new Date(dataResumo), "dd/MM/yyyy")
+    : "—";
+
+  const periodoFormatado = periodoResumo
+    ? `${
+        periodoResumo.split("-")[0].charAt(0).toUpperCase() +
+        periodoResumo.split("-")[0].slice(1)
+      } de ${periodoResumo.split("-")[1]}`
     : "—";
 
   // Mapeamento de ícones por tipo
@@ -76,10 +87,6 @@ export function ResumoLancamentoCard({
                 <MoneyValues value={valorResumo} />
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium">Início</p>
-              <p>{dataFormatada}</p>
-            </div>
           </>
         )}
 
@@ -95,12 +102,17 @@ export function ResumoLancamentoCard({
               <p className="text-sm font-medium">Frequência</p>
               <p>{recorrenciaResumo ? `${recorrenciaResumo} meses` : "—"}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium">Início</p>
-              <p>{dataFormatada}</p>
-            </div>
           </>
         )}
+
+        <div>
+          <p className="text-sm font-medium">Período</p>
+          <p>{periodoFormatado}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium">Responsável</p>
+          <p className="capitalize">{responsavelResumo || "—"}</p>
+        </div>
       </CardContent>
     </Card>
   );

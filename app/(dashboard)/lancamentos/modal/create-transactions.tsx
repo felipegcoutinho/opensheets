@@ -100,6 +100,8 @@ export default function CreateTransactions({
   const [formaResumo, setFormaResumo] = useState("");
   const [condicaoResumo, setCondicaoResumo] = useState("vista");
   const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
+  const [periodoResumo, setPeriodoResumo] = useState(month);
+  const [responsavelResumo, setResponsavelResumo] = useState("você");
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -139,7 +141,12 @@ export default function CreateTransactions({
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select name="periodo" defaultValue={month} required>
+                <Select
+                  name="periodo"
+                  defaultValue={month}
+                  required
+                  onValueChange={(val) => setPeriodoResumo(val)}
+                >
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -295,6 +302,7 @@ export default function CreateTransactions({
                   type="text"
                   className="capitalize"
                   defaultValue="você"
+                  onChange={(e) => setResponsavelResumo(e.target.value)}
                 />
                 <datalist id="responsavel-list">
                   {mainResponsavelOptions.map((opt) => (
@@ -518,6 +526,8 @@ export default function CreateTransactions({
               formaResumo={formaResumo}
               quantidadeParcelas={quantidadeParcelas}
               recorrenciaResumo={recorrenciaResumo}
+              periodoResumo={periodoResumo}
+              responsavelResumo={responsavelResumo}
             />
           </form>
         </div>
