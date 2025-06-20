@@ -31,23 +31,6 @@ export async function getExpense(month: string) {
   return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
 }
 
-export async function getLastPrevious(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("transacoes")
-    .select("valor, categoria_id!inner(id, nome)")
-    .eq("tipo_transacao", "receita")
-    .eq("periodo", month)
-    .eq("categoria_id.nome", "saldo anterior");
-
-  if (error) throw error;
-
-  const total = data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
-
-  return total;
-}
-
 export async function getPaidExpense(month: string) {
   const supabase = createClient();
 
@@ -595,7 +578,7 @@ export async function getResponsaveisList(month: string) {
   return Array.from(set);
 }
 
-export async function getResumoFinanceiroPorPeriodo(
+export async function getFinancialSummaryForPeriod(
   authId: string,
   periodo: string,
 ) {

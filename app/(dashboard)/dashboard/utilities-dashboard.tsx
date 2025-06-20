@@ -1,50 +1,56 @@
 import { fetchAllData } from "@/app/services/fetch-all-data";
-import { getResumoFinanceiroPorPeriodo } from "@/app/services/transacoes";
 
 export default async function UtilitiesDashboard(month: string) {
   const {
     incomes,
     expenses,
-    previstoAnterior,
     sumPaidExpense,
     sumPaidIncome,
     transactionsByCategory,
     expensesAnterior,
     incomesAnterior,
+    financialResumeByMonth,
+    financialResumeByPreviousMonth,
   } = await fetchAllData(month);
 
-  const sumarioTeste = await getResumoFinanceiroPorPeriodo(
-    "925644d7-0cc1-49a2-87dd-09e317a6f4f0",
-    month,
-  );
+  const data = financialResumeByMonth?.[0] || {
+    receitas: 0,
+    despesas: 0,
+    balanco: 0,
+    saldo_previsto: 0,
+  };
 
-  const saldo = sumPaidIncome - sumPaidExpense;
+  const dataAnterior = financialResumeByPreviousMonth?.[0] || {
+    saldo_previsto: 0,
+  };
+
   const balanco = incomes - expenses;
   const balancoAnterior = incomesAnterior - expensesAnterior;
-  const previsto = previstoAnterior + balanco;
+  const previstoAnterior = dataAnterior.saldo_previsto || 0;
+  const saldo = sumPaidIncome - sumPaidExpense + previstoAnterior;
 
   const summary = [
     {
       title: "Receitas",
-      value: incomes,
+      value: data.receitas,
       previousValue: incomesAnterior,
       color: "bg-chart-1",
     },
     {
       title: "Despesas",
-      value: expenses,
+      value: data.despesas,
       previousValue: expensesAnterior,
       color: "bg-chart-2",
     },
     {
       title: "Balanço",
-      value: balanco,
-      previousValue: balancoAnterior,
+      value: data.balanco,
+      previousValue: incomesAnterior - expensesAnterior,
       color: "bg-chart-3",
     },
     {
       title: "Previsto",
-      value: previsto,
+      value: data.saldo_previsto,
       previousValue: previstoAnterior,
       color: "bg-chart-4",
     },
@@ -72,17 +78,17 @@ export default async function UtilitiesDashboard(month: string) {
     });
   }
 
+  const categoryData = getTotalsCategory(month);
+
   return {
     incomes,
     expenses,
+    balanco,
     saldo,
     incomesAnterior,
-    balanco,
     balancoAnterior,
-    previsto,
     previstoAnterior,
     summary,
-    getTotalsCategory,
-    sumarioTeste,
+    categoryData,
   };
 }

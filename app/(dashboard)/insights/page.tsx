@@ -1,10 +1,10 @@
 import { getCards } from "@/app/services/cartoes";
 import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
 import { getMonth } from "@/hooks/get-month";
-import Dashboard from "./dashboard"; // agora é Home, não Dashboard
+import Dashboard from "./dashboard";
 import { getNewCategorias } from "@/app/services/categorias";
 
-async function page(props: { params: { month: string } }) {
+export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
   const lancamentos = await getTransactionsByResponsableVoce(month);
@@ -22,5 +22,3 @@ async function page(props: { params: { month: string } }) {
     </div>
   );
 }
-
-export default page;

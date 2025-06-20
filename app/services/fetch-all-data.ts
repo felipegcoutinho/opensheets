@@ -9,116 +9,88 @@ import {
   getConditions,
   getExpense,
   getIncome,
-  getLastPrevious,
   getPaidExpense,
   getPayment,
   getRecentTransactions,
+  getFinancialSummaryForPeriod,
   getSumPaidExpense,
   getSumPaidIncome,
   getTransactionsByCategory,
   getTransactionsStats,
 } from "@/services/transacoes";
+import { getSession } from "../actions/users";
 
-export async function fetchAllData(month: string) {
+// Tipagem opcional para retorno estruturado (torna o código mais robusto e IDE-friendly)
+type FetchAllDataReturn = {
+  incomes: number | null;
+  incomesAnterior: number | null;
+  expenses: number | null;
+  expensesAnterior: number | null;
+  bills: any;
+  expensePaid: any;
+  conditions: any;
+  payment: any;
+  transactionsByCategory: any;
+  recentTransactions: any;
+  sumPaidExpense: number | null;
+  sumPaidIncome: number | null;
+  invoiceList: any;
+  transactionsStats: any;
+  billsStats: any;
+  cardsStats: any;
+  accountsStats: any;
+  notesStats: any;
+  sixmonth: any;
+  financialResumeByMonth: any;
+  financialResumeByPreviousMonth: any;
+};
+
+export async function fetchAllData(month: string): Promise<FetchAllDataReturn> {
   const { getPreviousMonth, getLastSixMonths } = UseDates();
-
   const previousMonth = getPreviousMonth(month);
-  const sixmonth = getLastSixMonths(month);
+  const userId = await getSession();
 
-  const promises = [
-    getIncome(month),
-    getIncome(previousMonth),
-    getExpense(month),
-    getExpense(previousMonth),
-    getBills(month),
-    getLastPrevious(month),
-    getPaidExpense(month),
-    getConditions(month),
-    getPayment(month),
-    getTransactionsByCategory(month),
-    getRecentTransactions(month),
-    getSumPaidExpense(month),
-    getSumPaidIncome(month),
-    getInvoiceList(month),
-    getTransactionsStats(month),
-    getBillsStats(month),
-    getCardsStats(month),
-    getAccountsStats(month),
-    getNotesStats(month),
-  ];
+  const fetchMap: Record<keyof FetchAllDataReturn, Promise<any>> = {
+    incomes: getIncome(month),
+    incomesAnterior: getIncome(previousMonth),
+    expenses: getExpense(month),
+    expensesAnterior: getExpense(previousMonth),
+    bills: getBills(month),
+    expensePaid: getPaidExpense(month),
+    conditions: getConditions(month),
+    payment: getPayment(month),
+    transactionsByCategory: getTransactionsByCategory(month),
+    recentTransactions: getRecentTransactions(month),
+    sumPaidExpense: getSumPaidExpense(month),
+    sumPaidIncome: getSumPaidIncome(month),
+    invoiceList: getInvoiceList(month),
+    transactionsStats: getTransactionsStats(month),
+    billsStats: getBillsStats(month),
+    cardsStats: getCardsStats(month),
+    accountsStats: getAccountsStats(month),
+    notesStats: getNotesStats(month),
+    sixmonth: getLastSixMonths(month),
+    financialResumeByMonth: getFinancialSummaryForPeriod(userId.id, month),
+    financialResumeByPreviousMonth: getFinancialSummaryForPeriod(
+      userId.id,
+      previousMonth,
+    ),
+  };
 
-  const resultados = await Promise.allSettled(promises);
+  const results = await Promise.allSettled(Object.values(fetchMap));
+  const keys = Object.keys(fetchMap) as (keyof FetchAllDataReturn)[];
 
-  // Mapeia os dados com fallback em caso de erro
-  const [
-    incomes,
-    incomesAnterior,
-    expenses,
-    expensesAnterior,
-    bills,
-    previstoAnterior,
-    expensePaid,
-    conditions,
-    payment,
-    transactionsByCategory,
-    recentTransactions,
-    sumPaidExpense,
-    sumPaidIncome,
-    invoiceList,
-    transactionsStats,
-    billsStats,
-    cardsStats,
-    accountsStats,
-    notesStats,
-  ] = resultados.map((res, index) => {
-    if (res.status === "fulfilled") return res.value;
+  const finalResult: Partial<FetchAllDataReturn> = {};
 
-    const nomes = [
-      "incomes",
-      "incomesAnterior",
-      "expenses",
-      "expensesAnterior",
-      "bills",
-      "previstoAnterior",
-      "expensePaid",
-      "conditions",
-      "payment",
-      "transactionsByCategory",
-      "recentTransactions",
-      "sumPaidExpense",
-      "sumPaidIncome",
-      "invoiceList",
-      "transactionsStats",
-      "billsStats",
-      "cardsStats",
-      "accountsStats",
-      "notesStats",
-    ];
-
-    console.error(`Erro ao buscar ${nomes[index]}:`, res.reason);
-    return null; // ou undefined, se preferir
+  results.forEach((res, index) => {
+    const key = keys[index];
+    if (res.status === "fulfilled") {
+      finalResult[key] = res.value;
+    } else {
+      console.error(`Erro ao buscar ${key}:`, res.reason);
+      finalResult[key] = null;
+    }
   });
 
-  return {
-    incomes,
-    incomesAnterior,
-    expenses,
-    expensesAnterior,
-    bills,
-    previstoAnterior,
-    expensePaid,
-    conditions,
-    payment,
-    transactionsByCategory,
-    recentTransactions,
-    sumPaidExpense,
-    sumPaidIncome,
-    invoiceList,
-    transactionsStats,
-    billsStats,
-    cardsStats,
-    accountsStats,
-    notesStats,
-    sixmonth,
-  };
+  return finalResult as FetchAllDataReturn;
 }

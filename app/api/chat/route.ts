@@ -6,7 +6,8 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await generateText({
-    model: openai("gpt-4.1-mini"),
+    maxTokens: 2000,
+    model: openai("gpt-4.1-nano"),
     system: `
       Você é um analista financeiro pessoal especializado em comportamento de consumo.
   

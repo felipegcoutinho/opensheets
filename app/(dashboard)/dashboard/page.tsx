@@ -43,12 +43,8 @@ export default async function page(props: { params: { month: string } }) {
     sixmonth.map((month) => UtilitiesDashboard(month)),
   );
 
-  const { incomes, expenses, summary, getTotalsCategory, sumarioTeste } =
+  const { incomes, expenses, summary, categoryData } =
     await UtilitiesDashboard(month);
-
-  console.log(sumarioTeste);
-
-  const categoryData = getTotalsCategory(month);
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3),
@@ -69,16 +65,6 @@ export default async function page(props: { params: { month: string } }) {
             color={item.color}
           />
         ))}
-        <div>
-          {sumarioTeste.map((item, index) => (
-            <div key={index}>
-              <p>{item.receitas}</p>
-              <p>{item.despesas}</p>
-              <p>{item.balanco}</p>
-              <p>{item.saldo_previsto}</p>
-            </div>
-          ))}
-        </div>
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">

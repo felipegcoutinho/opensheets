@@ -35,10 +35,6 @@ function Home({
               { role: "user", content: JSON.stringify(lancamentos) },
               { role: "user", content: JSON.stringify(cartoes) },
               { role: "user", content: JSON.stringify(categorias) },
-              // {
-              //   role: "user",
-              //   content: `Me dê uma análise em inglês`,
-              // },
             ],
           }),
         },
