@@ -25,11 +25,17 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpLine, RiFileList2Line } from "@remixicon/react";
-import MoneyValues from "@/components/money-values";
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { RiThumbUpLine } from "@remixicon/react";
+import { useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import useSWR from "swr";
+import { ResumoLancamentoCard } from "./resume";
+
+const fetcher = (url) =>
+  fetch(url).then((res) => {
+    if (!res.ok) throw new Error("Falha ao carregar dados");
+    return res.json();
+  });
 
 export default function CreateTransactions({
   getCards,
@@ -62,38 +68,38 @@ export default function CreateTransactions({
   } = UtilitiesLancamento();
 
   const { getMonthOptions, formatted_current_month } = UseDates();
-
   const month = formatted_current_month;
 
-  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+  // 2. Hooks SWR para descrições e responsáveis
+  const {
+    data: descData,
+    error: descError,
+    isLoading: isLoadingDesc,
+  } = useSWR(`/api/descriptions?month=${month}`, fetcher);
 
+  const {
+    data: respData,
+    error: respError,
+    isLoading: isLoadingResp,
+  } = useSWR(`/api/responsaveis?month=${month}`, fetcher);
+
+  const descricaoOptions = descData?.data || [];
+  const responsavelOptions = respData?.data || [];
+
+  // 4. Filtragens auxiliares
+  const mainResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "sistema",
+  );
+  const secondResponsavelOptions = responsavelOptions.filter(
+    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
+  );
+
+  // Resumos para o card de pré-visualização
   const [valorResumo, setValorResumo] = useState(0);
   const [dataResumo, setDataResumo] = useState("");
   const [formaResumo, setFormaResumo] = useState("");
   const [condicaoResumo, setCondicaoResumo] = useState("vista");
   const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
-
-  useEffect(() => {
-    async function fetchOptions() {
-      const descRes = await fetch(`/api/descriptions?month=${month}`);
-      const descJson = await descRes.json();
-      setDescricaoOptions(descJson.data || []);
-
-      const respRes = await fetch(`/api/responsaveis?month=${month}`);
-      const respJson = await respRes.json();
-      setResponsavelOptions(respJson.data || []);
-    }
-    fetchOptions();
-  }, [month]);
-
-  const mainResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "sistema",
-  );
-
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
-  );
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -102,6 +108,14 @@ export default function CreateTransactions({
         <DialogHeader>
           <DialogTitle>Novo lançamento</DialogTitle>
         </DialogHeader>
+
+        {(isLoadingDesc || isLoadingResp) && <p>Carregando opções...</p>}
+        {(descError || respError) && (
+          <p className="text-red-600">
+            Erro ao carregar opções: {descError?.message || respError?.message}
+          </p>
+        )}
+
         <div className="-mx-6 max-h-[530px] overflow-y-auto px-6">
           <form
             id="transaction-form"
@@ -497,39 +511,14 @@ export default function CreateTransactions({
               <Textarea id="anotacao" name="anotacao" placeholder="Anotação" />
             </div>
 
-            <div className="border-muted rounded border p-4 text-sm space-y-1">
-              <div className="font-semibold flex items-center gap-1">
-                <RiFileList2Line className="h-4 w-4" /> Resumo do Lançamento
-              </div>
-              {condicaoResumo === "vista" && (
-                <ul className="space-y-1 pl-4 list-disc">
-                  <li>
-                    Valor Total: <MoneyValues value={valorResumo} />
-                  </li>
-                  <li>Data: {dataResumo ? format(new Date(dataResumo), "dd/MM/yyyy") : ""}</li>
-                  <li>Pagamento: {formaResumo}</li>
-                </ul>
-              )}
-              {condicaoResumo === "parcelado" && quantidadeParcelas && (
-                <ul className="space-y-1 pl-4 list-disc">
-                  <li>
-                    {quantidadeParcelas}x de{' '}
-                    <MoneyValues value={valorResumo / Number(quantidadeParcelas)} />
-                  </li>
-                  <li>Total: <MoneyValues value={valorResumo} /></li>
-                  <li>Início: {dataResumo ? format(new Date(dataResumo), "dd/MM/yyyy") : ""}</li>
-                </ul>
-              )}
-              {condicaoResumo === "recorrente" && (
-                <ul className="space-y-1 pl-4 list-disc">
-                  <li>
-                    Valor recorrente: <MoneyValues value={valorResumo} />
-                  </li>
-                  <li>Frequência: {recorrenciaResumo ? `${recorrenciaResumo} meses` : ''}</li>
-                  <li>Início: {dataResumo ? format(new Date(dataResumo), "dd/MM/yyyy") : ""}</li>
-                </ul>
-              )}
-            </div>
+            <ResumoLancamentoCard
+              condicaoResumo={condicaoResumo}
+              valorResumo={valorResumo}
+              dataResumo={dataResumo}
+              formaResumo={formaResumo}
+              quantidadeParcelas={quantidadeParcelas}
+              recorrenciaResumo={recorrenciaResumo}
+            />
           </form>
         </div>
 
