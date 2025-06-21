@@ -1,4 +1,3 @@
-
 {
   "inputs": [
     {
@@ -11,10 +10,26 @@
   "servers": {
     "supabase": {
       "command": "npx",
-      "args": ["-y", "@supabase/mcp-server-supabase@latest"],
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--read-only",
+        "--project-ref=kylahucyscyiwmgoccux"
+      ],
       "env": {
         "SUPABASE_ACCESS_TOKEN": "${input:supabase-access-token}"
       }
     }
   }
 }
+// Note: Replace <project-ref> with your actual Supabase project reference.
+// This configuration file is used to set up a Supabase MCP server with a personal access token.
+// The server will run in read-only mode, and the access token is provided securely.
+// Ensure you have the necessary permissions and that the token is valid for the operations you intend to perform.
+// The MCP server will be started using the command specified in the "command" field.
+// Make sure to install the required package by running:
+// npm install -g @supabase/mcp-server-supabase
+// This file is typically used in a development environment to facilitate interaction with Supabase services.
+
+
+// The MCP server allows for efficient data management and querying within Supabase projects.
