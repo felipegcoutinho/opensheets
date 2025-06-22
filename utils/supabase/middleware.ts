@@ -15,6 +15,7 @@ export const updateSession = async (request: NextRequest) => {
     "/reset-password",
     "/insights",
     "/categorias",
+    "/api/chat",
   ];
 
   try {

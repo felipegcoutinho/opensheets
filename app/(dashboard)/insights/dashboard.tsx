@@ -3,62 +3,44 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { generateInsights } from "@/actions/insights";
 
-function Home({
-  lancamentos,
-  cartoes,
-  categorias,
-  month,
-}: {
-  lancamentos: any[];
-  cartoes: any[];
-  month: string;
-}) {
+interface Analysis {
+  comportamentos_observados: string[];
+  gatilhos_de_consumo: string[];
+  recomendações_práticas: string[];
+  melhorias_sugeridas: string[];
+}
+
+function Home({ month }: { month: string }) {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  const handleAnalyze = async () => {
-    setLoading(true);
-    setAnalysis(null);
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/api/chat`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: [
-              { role: "user", content: JSON.stringify(lancamentos) },
-              { role: "user", content: JSON.stringify(cartoes) },
-              { role: "user", content: JSON.stringify(categorias) },
-            ],
-          }),
-        },
-      );
-
-      const { analysis } = await response.json();
-      setAnalysis(JSON.parse(analysis));
-    } catch (error) {
-      console.error("Erro ao buscar análise:", error);
+  const handleAnalyze = () => {
+    startTransition(async () => {
       setAnalysis(null);
-    } finally {
-      setLoading(false);
-    }
+
+      try {
+        const formData = new FormData();
+        formData.append("month", month);
+        const result = await generateInsights(null, formData);
+        setAnalysis(result);
+      } catch (error) {
+        console.error("Erro ao buscar análise:", error);
+      }
+    });
   };
 
   return (
     <>
       <Button
         onClick={handleAnalyze}
-        disabled={loading}
+        disabled={isPending}
         className="from-primary dark:to-chart-1 to-contrast-foreground my-2 w-72 bg-gradient-to-tr transition-all hover:scale-110"
       >
         <div className="flex items-center justify-center gap-2">
-          {loading ? (
+          {isPending ? (
             <>
               <RiLoader2Line className="h-4 w-4 animate-spin" />
               <span>Aguarde, analisando...</span>

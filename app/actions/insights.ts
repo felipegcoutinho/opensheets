@@ -1,7 +1,11 @@
+"use server";
+
 import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
-import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getCards } from "@/app/services/cartoes";
+import { getNewCategorias } from "@/app/services/categorias";
+import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
 import { createClient } from "@/utils/supabase/server";
 
 const messagesSchema = z
@@ -13,39 +17,20 @@ const messagesSchema = z
   )
   .max(6);
 
-export async function POST(req: Request) {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const { messages } = await req.json();
-  const parsed = messagesSchema.safeParse(messages);
-
-  if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
-  }
-
-  const result = await generateText({
-    model: openai("gpt-4.1-mini"),
-    system: `
+const SYSTEM_PROMPT = `
       Você é um analista financeiro pessoal especializado em comportamento de consumo.
-  
+
       Seu papel é interpretar hábitos de consumo com base em transações financeiras. Não forneça resumo numérico. Em vez disso, foque em:
-  
+
       1. Detecção de comportamentos de consumo recorrentes.
       2. Identificação de gatilhos de compra e padrões emocionais.
       3. Recomendações práticas para melhorar o controle de gastos e estimular hábitos financeiros saudáveis.
       4. Sugestões de pequenas mudanças com alto impacto.
       5. Sinais de consumo impulsivo ou desorganizado.
       6. Áreas com potencial de economia imediata ou reestruturação.
-  
+
       Responda exclusivamente em JSON com o seguinte formato:
-  
+
       {
         "comportamentos_observados": [
           "🔍 Hábito ou padrão identificado...",
@@ -64,7 +49,7 @@ export async function POST(req: Request) {
           ...
         ]
       }
-  
+
       Regras:
       - Não inclua dados brutos ou valores em reais.
       - Sempre use linguagem clara, direta e interpretativa.
@@ -76,11 +61,51 @@ export async function POST(req: Request) {
       - Não faça suposições sobre a situação financeira do usuário.
       - Não inclua informações pessoais ou sensíveis.
       - Seja crítico e duro, mas construtivo.
-    `,
-    messages: parsed.data,
+    `;
+
+export async function generateInsights(
+  _prevState: unknown,
+  formData: FormData,
+) {
+  const month = formData.get("month")?.toString() ?? "";
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const [lancamentos, cartoes, categorias] = await Promise.all([
+    getTransactionsByResponsableVoce(month),
+    getCards(),
+    getNewCategorias(),
+  ]);
+
+  const messages = [
+    { role: "user", content: JSON.stringify(lancamentos) },
+    { role: "user", content: JSON.stringify(cartoes) },
+    { role: "user", content: JSON.stringify(categorias) },
+  ];
+
+  const validated = messagesSchema.safeParse(messages);
+  if (!validated.success) {
+    throw new Error("Invalid input");
+  }
+
+  const result = await generateText({
+    model: openai("gpt-4.1-mini"),
+    system: SYSTEM_PROMPT,
+    messages: validated.data,
   });
 
   const { text } = result;
 
-  return NextResponse.json({ analysis: text });
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
 }
