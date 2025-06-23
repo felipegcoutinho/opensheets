@@ -16,12 +16,13 @@ export async function getAccount() {
 }
 
 // Busca detalhes de uma conta bancária específica
-export async function getAccountDetails(id) {
+export async function getAccountDetails(id: number) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("contas")
     .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)
-    .eq("id", id);
+    .eq("id", id)
+    .single();
 
   if (error) {
     console.error("Erro ao buscar detalhes das contas:", error);
@@ -34,11 +35,11 @@ export async function getAccountDetails(id) {
 export async function getAccountsStats() {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("contas").select("count()");
+  const { count, error } = await supabase
+    .from("contas")
+    .select("id", { count: "exact", head: true });
 
   if (error) throw error;
 
-  const total = data[0].count;
-
-  return total;
+  return count ?? 0;
 }

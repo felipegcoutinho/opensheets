@@ -3,16 +3,14 @@ import { createClient } from "@/utils/supabase/server";
 export async function getNotesStats(month: string) {
   const supabase = createClient();
 
-  const { data, error } = await supabase
+  const { count, error } = await supabase
     .from("anotacoes")
-    .select("count()")
+    .select("id", { count: "exact", head: true })
     .eq("periodo", month);
 
   if (error) throw error;
 
-  const total = data[0].count;
-
-  return total;
+  return count ?? 0;
 }
 
 export async function getNotes(month: string) {

@@ -3,16 +3,14 @@ import { createClient } from "@/utils/supabase/server";
 export async function getCardsStats() {
   const supabase = createClient();
 
-  const { data, error } = await supabase
+  const { count, error } = await supabase
     .from("cartoes")
-    .select("count()")
+    .select("id", { count: "exact", head: true })
     .eq("status", "ativo");
 
   if (error) throw error;
 
-  const total = data[0].count;
-
-  return total;
+  return count ?? 0;
 }
 
 // Busca a lista de cartões salvos
@@ -56,7 +54,7 @@ export async function getCardsDisabled() {
 }
 
 // Busca os detalhes do cartão para a página de fatura
-export async function getCardDetails(id) {
+export async function getCardDetails(id: number) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -64,7 +62,8 @@ export async function getCardDetails(id) {
     .select(
       `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
     )
-    .eq("id", id);
+    .eq("id", id)
+    .single();
 
   if (error) {
     console.error("Erro ao buscar detalhes do cartão:", error);
