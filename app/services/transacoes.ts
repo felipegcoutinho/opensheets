@@ -80,34 +80,30 @@ export async function getPayment(month: string) {
 export async function getTransactionsStats(month: string) {
   const supabase = createClient();
 
-  const { data, error } = await supabase
+  const { count, error } = await supabase
     .from("transacoes")
-    .select("count()")
+    .select("id", { count: "exact", head: true })
     .eq("periodo", month)
     .eq("responsavel", "você");
 
   if (error) throw error;
 
-  const total = data[0].count;
-
-  return total;
+  return count ?? 0;
 }
 
 export async function getBillsStats(month: string) {
   const supabase = createClient();
 
-  const { data, error } = await supabase
+  const { count, error } = await supabase
     .from("transacoes")
-    .select("count()")
+    .select("id", { count: "exact", head: true })
     .eq("periodo", month)
     .eq("forma_pagamento", "boleto")
     .eq("responsavel", "você");
 
   if (error) throw error;
 
-  const total = data[0].count;
-
-  return total;
+  return count ?? 0;
 }
 
 export async function getTransactionsByCategory(month: string) {
