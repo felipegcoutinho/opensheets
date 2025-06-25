@@ -31,15 +31,15 @@ export default async function page({ searchParams, params }) {
     <section>
       <CardStatusIndicator fatura_status={faturaStatus} />
 
-      {cardDetails?.map((item) => (
+      {cardDetails && (
         <CardInfo
-          key={item.id}
-          item={item}
+          key={cardDetails.id}
+          item={cardDetails}
           cardSum={cardSum}
           fatura_status={faturaStatus}
           month={month}
         />
-      ))}
+      )}
 
       <TableTransaction
         data={cardInvoice}

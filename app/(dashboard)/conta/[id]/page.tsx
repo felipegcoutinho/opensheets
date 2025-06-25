@@ -33,15 +33,15 @@ export default async function page({ searchParams, params }) {
 
   return (
     <div>
-      {accountDetails?.map((item) => (
+      {accountDetails && (
         <AccountInfo
-          key={item.id}
-          item={item}
+          key={accountDetails.id}
+          item={accountDetails}
           sumAccountIncome={sumIncome}
           accountExpense={sumExpense}
           saldo={saldo}
         />
-      ))}
+      )}
 
       <TableTransaction
         data={accountInvoice}
