@@ -16,7 +16,7 @@ export async function deleteNotes(prevState: unknown, formData: FormData) {
 
   if (error) throw error;
 
-  return { message: "Anotação excluída com sucesso!" };
-
   revalidatePath("/anotacao");
+
+  return { message: "Anotação excluída com sucesso!" };
 }
