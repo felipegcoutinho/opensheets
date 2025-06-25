@@ -22,6 +22,18 @@ export async function transferTransactions(formData: FormData) {
     anotacao,
   } = Object.fromEntries(formData.entries()) as Record<string, string>;
 
+  const { data: catDespesa } = await supabase
+    .from("categorias")
+    .select("id")
+    .eq("nome", "Outros despesas")
+    .single();
+
+  const { data: catReceita } = await supabase
+    .from("categorias")
+    .select("id")
+    .eq("nome", "Outros receitas")
+    .single();
+
   const valorNumerico = parseFloat(
     valor.replace(/[R$\.\s]/g, "").replace(",", "."),
   );
@@ -37,6 +49,7 @@ export async function transferTransactions(formData: FormData) {
     valor: valorNumerico,
     anotacao: anotacao || null,
     auth_id,
+    responsavel: "você",
     condicao: "vista",
     forma_pagamento: "transferência",
     realizado: true,
@@ -46,13 +59,23 @@ export async function transferTransactions(formData: FormData) {
     cartao_id: null,
     categoria_id: null,
     dividir_lancamento: false,
-    descricao: "Transferência entre contas",
+    descricao: "Transferência",
     transfer_id,
   };
 
   const { error } = await supabase.from("transacoes").insert([
-    { ...base, conta_id: conta_origem_id, tipo_transacao: "despesa" },
-    { ...base, conta_id: conta_destino_id, tipo_transacao: "receita" },
+    {
+      ...base,
+      conta_id: conta_origem_id,
+      tipo_transacao: "despesa",
+      categoria_id: catDespesa?.id ?? null,
+    },
+    {
+      ...base,
+      conta_id: conta_destino_id,
+      tipo_transacao: "receita",
+      categoria_id: catReceita?.id ?? null,
+    },
   ]);
 
   if (error) {
