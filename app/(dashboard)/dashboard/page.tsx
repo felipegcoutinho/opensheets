@@ -1,6 +1,6 @@
 import { ChartSummary } from "@/app/(dashboard)/dashboard/chart-summary";
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
-import { fetchAllData } from "@/app/services/fetch-all-data";
+import { fetchAllData } from "@/app/actions/fetch-all-data";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {

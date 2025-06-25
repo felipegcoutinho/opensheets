@@ -18,7 +18,7 @@ import {
   getTransactionsStats,
 } from "@/app/actions/transactions/fetch_transactions";
 import { UseDates } from "@/hooks/use-dates";
-import { getSession } from "../actions/users/fetch_users";
+import { getSession } from "./users/fetch_users";
 
 // Tipagem opcional para retorno estruturado (torna o código mais robusto e IDE-friendly)
 type FetchAllDataReturn = {

@@ -1,4 +1,4 @@
-import { fetchAllData } from "@/app/services/fetch-all-data";
+import { fetchAllData } from "@/app/actions/fetch-all-data";
 
 export default async function UtilitiesDashboard(month: string) {
   const {
