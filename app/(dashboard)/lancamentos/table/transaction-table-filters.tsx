@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CreateTransactions from "../modal/create-transactions"; // Ajuste o caminho conforme necessário
+import TransferBetweenAccounts from "../modal/transfer-between-accounts";
 import { ComboboxFilter } from "./combo-filter"; // Ajuste o caminho conforme necessário
 import { Table } from "@tanstack/react-table";
 
@@ -65,6 +66,15 @@ export function TransactionTableFilters<TData>({
           Novo Lançamento
         </Button>
       </CreateTransactions>
+
+      <TransferBetweenAccounts getAccount={getAccount}>
+        <Button
+          variant="secondary"
+          className="w-full transition-all hover:scale-110 sm:w-auto"
+        >
+          Transferir entre contas
+        </Button>
+      </TransferBetweenAccounts>
 
       <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center">
         <Select

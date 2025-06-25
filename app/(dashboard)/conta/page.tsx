@@ -63,6 +63,7 @@ async function page(props: { params: { month: string } }) {
                   itemTipoConta={item.tipo_conta}
                   itemAnotacao={item.anotacao}
                   itemLogo={item.logo_image}
+                  itemIsIgnored={item.is_ignored}
                 />
               </CardFooter>
             </Card>
