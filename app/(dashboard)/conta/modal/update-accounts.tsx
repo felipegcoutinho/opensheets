@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import UseOptions from "@/hooks/use-options";
 import UtilitiesConta from "../utilities-conta";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
@@ -30,8 +31,10 @@ export default function UpdateAccount({
   itemAnotacao,
   itemTipoConta,
   itemLogo,
+  itemIsIgnored,
 }) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesConta();
+  const { isOpen, setIsOpen, handleUpdate, loading, isIgnored, setIsIgnored } =
+    UtilitiesConta(itemIsIgnored);
 
   const { logos } = UseOptions();
 
@@ -110,6 +113,13 @@ export default function UpdateAccount({
               name="anotacao"
               placeholder="Anotação"
             />
+          </div>
+
+          <div className="flex items-center justify-between rounded-md border p-4">
+            <Label className="text-sm">
+              Desconsiderar essa conta nos cálculos mensais
+            </Label>
+            <Switch checked={isIgnored} onCheckedChange={setIsIgnored} />
           </div>
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
