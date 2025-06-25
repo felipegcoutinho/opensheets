@@ -1,7 +1,7 @@
-import { getEmail, getUserName } from "@/app/actions/users";
-import { getCards } from "@/app/services/cartoes";
-import { getNewCategorias } from "@/app/services/categorias";
-import { getAccount } from "@/app/services/contas";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getEmail, getUserName } from "@/app/actions/users/fetch_users";
 import { AppSidebar } from "./app-sidebar";
 
 async function page() {

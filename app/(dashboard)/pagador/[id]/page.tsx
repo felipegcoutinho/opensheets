@@ -1,7 +1,7 @@
-import { getCards } from "@/app/services/cartoes";
-import { getNewCategorias } from "@/app/services/categorias";
-import { getAccount } from "@/app/services/contas";
-import { getLancamentostTeste } from "@/app/services/transacoes";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getLancamentostTeste } from "@/app/actions/transactions/fetch_transactions";
 import { getMonth } from "@/hooks/get-month";
 import { TableTransaction } from "../../lancamentos/table/table-transaction";
 

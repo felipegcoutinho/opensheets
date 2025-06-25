@@ -1,5 +1,5 @@
 import UtilitiesDashboard from "@/app/(dashboard)/dashboard/utilities-dashboard";
-import { getUserName } from "@/app/actions/users";
+import { getUserName } from "@/app/actions/users/fetch_users";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";

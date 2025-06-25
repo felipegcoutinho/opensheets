@@ -1,8 +1,8 @@
 import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
-import { getCards } from "@/app/services/cartoes";
-import { getNewCategorias } from "@/app/services/categorias";
-import { getAccount } from "@/app/services/contas";
-import { getTransactionsByConditions } from "@/app/services/transacoes";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getTransactionsByConditions } from "@/app/actions/transactions/fetch_transactions";
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";

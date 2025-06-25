@@ -1,5 +1,5 @@
+import { getResponsaveisList } from "@/app/actions/transactions/fetch_transactions";
 import { NextResponse } from "next/server";
-import { getResponsaveisList } from "@/app/services/transacoes";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

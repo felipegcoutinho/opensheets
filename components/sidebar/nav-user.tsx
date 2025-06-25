@@ -2,7 +2,7 @@
 
 import { RiLogoutBoxLine, RiMoreLine } from "@remixicon/react";
 
-import { signOut } from "@/app/actions/auth";
+import { signOut } from "@/app/actions/auth/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,8 +17,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import PrivacyButton from "../privacy-button";
 import { ModeToggle } from "../darkmode-button";
+import PrivacyButton from "../privacy-button";
 
 export function NavUser({
   user,

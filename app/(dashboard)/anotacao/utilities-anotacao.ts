@@ -1,4 +1,6 @@
-import { addNotes, deleteNotes, updateNotes } from "@/actions/notes";
+import { addNotes } from "@/app/actions/notes/create_notes";
+import { deleteNotes } from "@/app/actions/notes/delete_notes";
+import { updateNotes } from "@/app/actions/notes/update_notes";
 import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
 

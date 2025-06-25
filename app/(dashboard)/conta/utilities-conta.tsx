@@ -1,4 +1,5 @@
-import { addAccount, updateAccount } from "@/actions/accounts";
+import { addAccount } from "@/app/actions/accounts/create_accounts";
+import { updateAccount } from "@/app/actions/accounts/update_account";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 

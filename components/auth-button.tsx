@@ -1,5 +1,5 @@
-import { signOut } from "@/actions/auth";
-import { getEmail, getUserName } from "@/app/actions/users";
+import { signOut } from "@/app/actions/auth/auth";
+import { getEmail, getUserName } from "@/app/actions/users/fetch_users";
 import { RiDashboardLine, RiLogoutBoxLine } from "@remixicon/react"; // Adicionando ícone de configurações
 import Link from "next/link";
 import { Button } from "./ui/button";

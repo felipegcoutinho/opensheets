@@ -1,4 +1,4 @@
-import { getNewCategorias } from "@/app/services/categorias";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
 import CreateCategory from "./modal/create-category";
 import TableCategories from "./table-categories";
 

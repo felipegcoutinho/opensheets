@@ -3,7 +3,7 @@
 import {
   ActionResponse,
   formSchema,
-} from "../(dashboard)/categorias/modal/form-schema";
+} from "../../(dashboard)/categorias/modal/form-schema";
 
 export const serverAction = async (
   prevState: ActionResponse | null,

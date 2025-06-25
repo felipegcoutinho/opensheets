@@ -1,4 +1,4 @@
-import { getFaturas } from "@/app/services/faturas";
+import { getFaturas } from "@/app/actions/invoices/fetch_invoices";
 import InvoicePaymentDialog from "@/components/Invoice-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import { PaymentMethodLogo } from "@/components/logos-on-table";

@@ -5,7 +5,9 @@ export async function getAccount() {
 
   const { data, error } = await supabase
     .from("contas")
-    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`);
+    .select(
+      `id, descricao, status, tipo_conta, logo_image, is_ignored, anotacao`,
+    );
 
   if (error) {
     console.error("Erro ao buscar contas:", error);
@@ -20,7 +22,9 @@ export async function getAccountDetails(id: number) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("contas")
-    .select(`id, descricao, status, tipo_conta, logo_image, anotacao`)
+    .select(
+      `id, descricao, status, tipo_conta, logo_image, is_ignored, anotacao`,
+    )
     .eq("id", id)
     .single();
 

@@ -1,9 +1,12 @@
 import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
-import { getCardDetails, getCards } from "@/app/services/cartoes";
-import { getNewCategorias } from "@/app/services/categorias";
-import { getAccount } from "@/app/services/contas";
-import { getFaturas } from "@/app/services/faturas";
-import { getCardInvoice, getCardSum } from "@/app/services/transacoes";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getCardDetails, getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getFaturas } from "@/app/actions/invoices/fetch_invoices";
+import {
+  getCardInvoice,
+  getCardSum,
+} from "@/app/actions/transactions/fetch_transactions";
 import { getMonth } from "@/hooks/get-month";
 import CardInfo from "./card-info";
 import CardStatusIndicator from "./card-status-Indicator";

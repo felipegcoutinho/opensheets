@@ -1,8 +1,8 @@
-import { getCards } from "@/app/services/cartoes";
-import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
+import { getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getTransactionsByResponsableVoce } from "@/app/actions/transactions/fetch_transactions";
 import { getMonth } from "@/hooks/get-month";
 import Dashboard from "./dashboard";
-import { getNewCategorias } from "@/app/services/categorias";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);

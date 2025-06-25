@@ -1,9 +1,10 @@
-import { getAccount } from "@/app/services/contas";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import {
   getSumAccountExpense,
   getSumAccountIncome,
-} from "@/app/services/transacoes";
+} from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
@@ -11,7 +12,6 @@ import { getMonth } from "@/hooks/get-month";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);

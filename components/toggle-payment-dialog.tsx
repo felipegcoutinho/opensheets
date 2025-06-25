@@ -1,6 +1,6 @@
 "use client";
 
-import { togglePagamento } from "@/app/actions/transactions";
+import { togglePagamento } from "@/app/actions/transactions/update_transactions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

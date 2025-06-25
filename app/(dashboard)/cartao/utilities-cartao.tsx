@@ -1,4 +1,5 @@
-import { addCards, updateCards } from "@/actions/cards";
+import { addCards } from "@/app/actions/cards/create_cards";
+import { updateCards } from "@/app/actions/cards/update_cards";
 import { useState } from "react";
 import { toast } from "sonner";
 

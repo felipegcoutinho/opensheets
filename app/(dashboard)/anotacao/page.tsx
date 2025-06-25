@@ -1,4 +1,4 @@
-import { getNotes } from "@/app/services/anotacoes";
+import { getNotes } from "@/app/actions/notes/fetch_notes";
 import EmptyCard from "@/components/empty-card";
 import { Button } from "@/components/ui/button";
 import {

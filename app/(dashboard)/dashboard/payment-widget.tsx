@@ -1,4 +1,4 @@
-import { getPayment } from "@/app/services/transacoes";
+import { getPayment } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { CardContent } from "@/components/ui/card";

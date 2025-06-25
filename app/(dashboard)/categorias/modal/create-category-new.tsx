@@ -1,5 +1,5 @@
 "use client";
-import { serverAction } from "@/app/actions/categorias-new";
+import { serverAction } from "@/app/actions/categories/categorias-new";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

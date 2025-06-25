@@ -1,7 +1,7 @@
 import {
   getBillsByResponsible,
   getTransactionsByResponsible,
-} from "@/app/services/transacoes";
+} from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import { getMonth } from "@/hooks/get-month";
 import UsersCard from "./users-card";

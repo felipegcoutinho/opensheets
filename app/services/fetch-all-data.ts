@@ -1,24 +1,24 @@
-import { UseDates } from "@/hooks/use-dates";
-import { getNotesStats } from "@/services/anotacoes";
-import { getCardsStats } from "@/services/cartoes";
-import { getAccountsStats } from "@/services/contas";
-import { getInvoiceList } from "@/services/faturas";
+import { getAccountsStats } from "@/app/actions/accounts/fetch_accounts";
+import { getCardsStats } from "@/app/actions/cards/fetch_cards";
+import { getInvoiceList } from "@/app/actions/invoices/fetch_invoices";
+import { getNotesStats } from "@/app/actions/notes/fetch_notes";
 import {
   getBills,
   getBillsStats,
   getConditions,
   getExpense,
+  getFinancialSummaryForPeriod,
   getIncome,
   getPaidExpense,
   getPayment,
   getRecentTransactions,
-  getFinancialSummaryForPeriod,
   getSumPaidExpense,
   getSumPaidIncome,
   getTransactionsByCategory,
   getTransactionsStats,
-} from "@/services/transacoes";
-import { getSession } from "../actions/users";
+} from "@/app/actions/transactions/fetch_transactions";
+import { UseDates } from "@/hooks/use-dates";
+import { getSession } from "../actions/users/fetch_users";
 
 // Tipagem opcional para retorno estruturado (torna o código mais robusto e IDE-friendly)
 type FetchAllDataReturn = {
