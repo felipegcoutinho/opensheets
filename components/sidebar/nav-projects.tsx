@@ -41,7 +41,7 @@ export const NavProjects = memo(function NavProjects({
                     className={`flex items-center gap-2 transition-all ${
                       isActive
                         ? "text-foreground font-bold"
-                        : "text-accent-foreground"
+                        : "text-accent-foreground font-medium"
                     } `}
                   >
                     <item.icon
