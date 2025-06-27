@@ -29,7 +29,6 @@ export default function TogglePaymentDialog({
   const [loading, setLoading] = useState(false);
 
   const isCartaoCredito = formaPagamento === "cartão de crédito";
-  const cartoDescricaoLowerCase = cartoDescricao?.toLowerCase();
   const isPago = realizadoAtual;
 
   const handleToggle = async (e) => {
@@ -98,7 +97,7 @@ export default function TogglePaymentDialog({
             <>
               <Button variant="secondary" className="w-1/2" asChild>
                 <Link
-                  href={`/cartao/${cartaoId}/${cartoDescricaoLowerCase}?periodo=${periodo}`}
+                  href={`/cartao/${cartaoId}/?periodo=${periodo}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Ir para fatura do cartão"

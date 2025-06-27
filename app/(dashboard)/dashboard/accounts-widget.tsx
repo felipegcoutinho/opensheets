@@ -6,7 +6,7 @@ import MoneyValues from "@/components/money-values";
 import { RiArrowRightUpLine, RiCheckLine } from "@remixicon/react";
 import Link from "next/link";
 
-export default async function InvoiceWidget({ data, month }) {
+export default async function AccountWidget({ data, month }) {
   if (!data || data.length === 0) return <EmptyCard />;
 
   const dataSorted = [...data].sort((a, b) => b.total_valor - a.total_valor);
@@ -42,7 +42,7 @@ export default async function InvoiceWidget({ data, month }) {
               />
               <div>
                 <Link
-                  className="flex items-center gap-1 font-medium hover:underline"
+                  className="flex items-center gap-1 hover:underline"
                   href={`/cartao/${item.cartao_id}/?periodo=${month}`}
                 >
                   {item.descricao}

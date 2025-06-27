@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/logos-on-table";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,6 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import UtilitiesConta from "../utilities-conta";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function CreateAccount() {
   const { isOpen, setIsOpen, handleSubmit, loading, isIgnored, setIsIgnored } =
@@ -98,16 +98,16 @@ export default function CreateAccount() {
             </Select>
           </div>
 
-          <div className="w-full">
-            <Label>Anotação</Label>
-            <Textarea name="anotacao" placeholder="Anotação" />
-          </div>
-
           <div className="flex items-center justify-between rounded-md border p-4">
             <Label className="text-sm">
               Desconsiderar essa conta nos cálculos mensais
             </Label>
             <Switch checked={isIgnored} onCheckedChange={setIsIgnored} />
+          </div>
+
+          <div className="w-full">
+            <Label>Anotação</Label>
+            <Textarea name="anotacao" placeholder="Anotação" />
           </div>
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">

@@ -1,4 +1,3 @@
-import { ChartSummary } from "@/app/(dashboard)/dashboard/chart-summary";
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/actions/fetch-all-data";
 import Widget from "@/components/widget";
@@ -68,13 +67,13 @@ export default async function page(props: { params: { month: string } }) {
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
-        <Widget
+        {/* <Widget
           title="Receita, Despesa e Balanço"
           subtitle="Últimos 6 Meses"
           icon={<RiBarChartBoxLine className="mr-2 inline size-4" />}
         >
           <ChartSummary data={chartData} />
-        </Widget>
+        </Widget> */}
 
         <Widget
           title="Faturas"
@@ -90,6 +89,14 @@ export default async function page(props: { params: { month: string } }) {
           icon={<RiBarcodeLine className="mr-2 inline size-4" />}
         >
           <BillsWidget month={month} data={bills} />
+        </Widget>
+
+        <Widget
+          title="Minhas Contas"
+          subtitle="Minhas contas"
+          icon={<RiBarChartBoxLine className="mr-2 inline size-4" />}
+        >
+          {/* <AccountWidget month={month} data={data} /> */}
         </Widget>
       </div>
 

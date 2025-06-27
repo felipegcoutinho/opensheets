@@ -28,7 +28,7 @@ export default async function BillsWidget({ month, data }) {
         />
 
         <div>
-          <p className="capitalize">{item.descricao}</p>
+          <p className="font-medium capitalize">{item.descricao}</p>
           {item.realizado === false ? (
             <p className="text-muted-foreground text-xs">
               Vence {DateFormat(item.data_vencimento)}
