@@ -19,8 +19,8 @@ async function page(props: { params: { month: string } }) {
 
   const accountData = await Promise.all(
     getAccountMap.map(async (item) => {
-      const accountExpense = await getSumAccountExpense(item.id);
-      const sumAccountIncome = await getSumAccountIncome(item.id);
+      const accountExpense = await getSumAccountExpense(month, item.id);
+      const sumAccountIncome = await getSumAccountIncome(month, item.id);
       return {
         ...item,
         saldo: sumAccountIncome - accountExpense,
