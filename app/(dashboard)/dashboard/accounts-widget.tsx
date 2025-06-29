@@ -1,80 +1,62 @@
-import { getFaturas } from "@/app/actions/invoices/fetch_invoices";
 import EmptyCard from "@/components/empty-card";
-import InvoicePaymentDialog from "@/components/invoice-payment-dialog";
 import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
-import { RiArrowRightUpLine, RiCheckLine } from "@remixicon/react";
 import Link from "next/link";
+import { RiArrowRightUpLine } from "@remixicon/react";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import {
+  getSumAccountExpense,
+  getSumAccountIncome,
+} from "@/app/actions/transactions/fetch_transactions";
 
-export default async function AccountWidget({ data, month }) {
+export default async function AccountWidget({ month }: { month?: string }) {
+  const data = await getAccount();
+
   if (!data || data.length === 0) return <EmptyCard />;
 
-  const dataSorted = [...data].sort((a, b) => b.total_valor - a.total_valor);
+  const sortedData = [...data].sort((a, b) => b.saldo - a.saldo);
 
-  const cartaoIds = dataSorted.map((item) => item.cartao_id);
-
-  const allFaturaStatusPromises = cartaoIds.map((cartaoId) =>
-    getFaturas(month, cartaoId),
+  const accountData = await Promise.all(
+    data.map(async (item) => {
+      const sumAccountIncome = await getSumAccountIncome(item.id);
+      const accountExpense = await getSumAccountExpense(item.id);
+      return {
+        ...item,
+        saldo: sumAccountIncome - accountExpense,
+      };
+    }),
   );
-  const allFaturaStatusResults = await Promise.all(allFaturaStatusPromises);
-
-  const faturaStatusMap = new Map();
-  cartaoIds.forEach((cartaoId, index) => {
-    faturaStatusMap.set(cartaoId, allFaturaStatusResults[index]);
-  });
 
   return (
     <>
-      {dataSorted.map((item) => {
-        // Obter o status da fatura do mapa pré-buscado
-        const fatura_status = faturaStatusMap.get(item.cartao_id) || [];
-
-        return (
-          <div
-            key={item.cartao_id}
-            className="border-border/50 flex items-center justify-between border-b"
-          >
-            <div className="flex items-center">
-              <PaymentMethodLogo
-                url_name={`/logos/${item.logo_image}`}
-                width={40}
-                height={40}
-              />
-              <div>
-                <Link
-                  className="flex items-center gap-1 hover:underline"
-                  href={`/cartao/${item.cartao_id}/?periodo=${month}`}
-                >
-                  {item.descricao}
-                  <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
-                </Link>
-
-                {fatura_status.length > 0 &&
-                fatura_status[0]?.status_pagamento === "pago" ? (
-                  <RiCheckLine className="text-green-500" size={16} />
-                ) : (
-                  <p className="text-muted-foreground text-xs">
-                    Vence dia {item.dt_vencimento}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="py-1 text-right">
-              <p>
-                <MoneyValues value={item.total_valor} />
-              </p>
-              <InvoicePaymentDialog
-                fatura_status={fatura_status}
-                month={month}
-                cartao_id={item.cartao_id}
-                descricao={item.descricao}
-                valor={item.total_valor}
-                logo_imagem={item.logo_image}
-              />
+      {accountData.map((item) => (
+        <div
+          key={item.id}
+          className="border-border/50 flex items-center justify-between border-b py-2"
+        >
+          <div className="flex items-center gap-3">
+            <PaymentMethodLogo
+              url_name={`/logos/${item.logo_image}`}
+              width={40}
+              height={40}
+            />
+            <div>
+              <Link
+                className="flex items-center gap-1 hover:underline"
+                href={`/conta/${item.id}`}
+              >
+                {item.descricao}
+                <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
+              </Link>
+              <p className="text-muted-foreground text-xs">{item.tipo_conta}</p>
             </div>
           </div>
-        );
-      })}
+
+          <div className="text-right">
+            <MoneyValues value={item.saldo} />
+          </div>
+        </div>
+      ))}
     </>
   );
 }

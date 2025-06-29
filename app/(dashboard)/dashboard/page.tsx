@@ -20,6 +20,7 @@ import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
+import AccountWidget from "./accounts-widget";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -76,6 +77,14 @@ export default async function page(props: { params: { month: string } }) {
         </Widget> */}
 
         <Widget
+          title="Minhas Contas"
+          subtitle="Contas e Saldos"
+          icon={<RiBarChartBoxLine className="mr-2 inline size-4" />}
+        >
+          <AccountWidget month={month} />
+        </Widget>
+
+        <Widget
           title="Faturas"
           subtitle="faturas deste mês"
           icon={<RiBankCardLine className="mr-2 inline size-4" />}
@@ -89,14 +98,6 @@ export default async function page(props: { params: { month: string } }) {
           icon={<RiBarcodeLine className="mr-2 inline size-4" />}
         >
           <BillsWidget month={month} data={bills} />
-        </Widget>
-
-        <Widget
-          title="Minhas Contas"
-          subtitle="Minhas contas"
-          icon={<RiBarChartBoxLine className="mr-2 inline size-4" />}
-        >
-          {/* <AccountWidget month={month} data={data} /> */}
         </Widget>
       </div>
 

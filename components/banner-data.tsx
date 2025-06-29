@@ -21,7 +21,7 @@ export default async function BannerData() {
           </p>
         </div>
         <div className="text-right">
-          <p>Saldo Atual</p>
+          <p>Saldo Geral Atual</p>
           <p className="text-2xl">
             <MoneyValues value={saldo} />
           </p>

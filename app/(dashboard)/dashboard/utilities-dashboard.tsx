@@ -27,7 +27,7 @@ export default async function UtilitiesDashboard(month: string) {
   const balanco = incomes - expenses;
   const balancoAnterior = incomesAnterior - expensesAnterior;
   const previstoAnterior = dataAnterior.saldo_previsto || 0;
-  const saldo = sumPaidIncome - sumPaidExpense + previstoAnterior;
+  const saldo = sumPaidIncome - sumPaidExpense;
 
   const summary = [
     {

@@ -388,14 +388,14 @@ export async function getAccountInvoice(month: string, conta_id: number) {
 }
 
 // Busca as receitas de uma conta bancária específica e soma os valores
-export async function getSumAccountIncome(month: string, id: number) {
+export async function getSumAccountIncome(id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
     .select(`valor`)
     .eq("conta_id", id)
-    .eq("periodo", month)
+
     .eq("tipo_transacao", "receita")
     .or("responsavel.eq.você,responsavel.eq.sistema")
     .eq("realizado", true);
@@ -414,14 +414,14 @@ export async function getSumAccountIncome(month: string, id: number) {
 }
 
 // Busca as despesas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpense(month: string, id: number) {
+export async function getSumAccountExpense(id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
     .select(`valor`)
     .eq("conta_id", id)
-    .eq("periodo", month)
+
     .eq("tipo_transacao", "despesa")
     .or("responsavel.eq.você, responsavel.eq.sistema")
     .eq("realizado", true);
