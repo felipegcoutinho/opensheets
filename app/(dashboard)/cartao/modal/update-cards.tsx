@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,6 @@ import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import UtilitiesCartao from "../utilities-cartao";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UpdateCard({
   itemId,

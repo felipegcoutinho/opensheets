@@ -1,11 +1,11 @@
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  RiBarcodeLine,
   RiBankCardLine,
-  RiUserLine,
+  RiBarcodeLine,
   RiGroupLine,
+  RiUserLine,
   RiVerifiedBadgeLine,
 } from "@remixicon/react";
 import Image from "next/image";

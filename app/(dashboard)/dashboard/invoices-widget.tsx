@@ -1,8 +1,8 @@
 import { getFaturas } from "@/app/actions/invoices/fetch_invoices";
 import EmptyCard from "@/components/empty-card";
 import InvoicePaymentDialog from "@/components/invoice-payment-dialog";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { RiArrowRightUpLine, RiCheckLine } from "@remixicon/react";
 import Link from "next/link";
 

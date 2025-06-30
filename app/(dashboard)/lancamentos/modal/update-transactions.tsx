@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,7 +27,6 @@ import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UpdateTransactions({
   itemId,
@@ -68,14 +68,10 @@ export default function UpdateTransactions({
 
   useEffect(() => {
     async function fetchOptions() {
-      const descRes = await fetch(
-        `/api/descriptions?month=${selectedMonth}`,
-      );
+      const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(
-        `/api/responsaveis?month=${selectedMonth}`,
-      );
+      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
       const respJson = await respRes.json();
       setResponsavelOptions(respJson.data || []);
     }

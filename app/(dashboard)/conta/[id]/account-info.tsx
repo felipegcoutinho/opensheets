@@ -1,7 +1,7 @@
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import BalanceItem from "./balance-item";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 function AccountInfo({ item, sumAccountIncome, accountExpense, saldo }) {
   return (

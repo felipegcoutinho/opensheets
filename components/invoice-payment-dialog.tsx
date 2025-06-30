@@ -12,8 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { RiBankCardLine } from "@remixicon/react";
+import { PaymentMethodLogo } from "./payment-method-logo";
 import Utils from "./utils";
-import { PaymentMethodLogo } from "./logos-on-table";
 
 export default function InvoicePaymentDialog({
   fatura_status,

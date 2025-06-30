@@ -1,8 +1,8 @@
 "use client";
 
 import InvoicePaymentDialog from "@/components/invoice-payment-dialog";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Ping from "@/components/ping-icon";
 import RemovePaymentButton from "@/components/remove-payment-button";
 import { Card } from "@/components/ui/card";

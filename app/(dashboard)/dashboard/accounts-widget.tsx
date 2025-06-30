@@ -1,13 +1,13 @@
-import EmptyCard from "@/components/empty-card";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
-import MoneyValues from "@/components/money-values";
-import Link from "next/link";
-import { RiArrowRightUpLine } from "@remixicon/react";
 import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import {
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/app/actions/transactions/fetch_transactions";
+import EmptyCard from "@/components/empty-card";
+import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import { RiArrowRightUpLine } from "@remixicon/react";
+import Link from "next/link";
 
 export default async function AccountWidget({ month }: { month?: string }) {
   const data = await getAccount();

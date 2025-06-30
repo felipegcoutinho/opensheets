@@ -1,7 +1,7 @@
 "use client";
 
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,12 +21,12 @@ import {
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
 import {
-  RiCheckboxCircleFill,
-  RiMoreLine,
-  RiMessage2Line,
   RiAttachmentLine,
   RiCalendarCheckFill,
+  RiCheckboxCircleFill,
   RiGroupLine,
+  RiMessage2Line,
+  RiMoreLine,
 } from "@remixicon/react";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
@@ -125,10 +125,7 @@ export const getColumns = (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
-                  <RiMessage2Line
-                    className="text-muted-foreground"
-                    size={12}
-                  />
+                  <RiMessage2Line className="text-muted-foreground" size={12} />
                 </TooltipTrigger>
                 <TooltipContent>{item.anotacao}</TooltipContent>
               </Tooltip>

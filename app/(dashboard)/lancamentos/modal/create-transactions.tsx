@@ -1,5 +1,5 @@
 "use client";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -27,8 +27,8 @@ import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useState } from "react";
-import UtilitiesLancamento from "../utilities-lancamento";
 import useSWR from "swr";
+import UtilitiesLancamento from "../utilities-lancamento";
 import { ResumoLancamentoCard } from "./resume";
 
 const fetcher = (url) =>

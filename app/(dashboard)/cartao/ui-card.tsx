@@ -1,12 +1,12 @@
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import Ping from "@/components/ping-icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
-import Ping from "@/components/ping-icon";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UiCard({ item, getAccountMap, mostrarLimites }) {
   return (

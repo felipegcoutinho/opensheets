@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { format } from "date-fns";
 import MoneyValues from "@/components/money-values";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiMoneyDollarBoxFill } from "@remixicon/react";
+import { format } from "date-fns";
 
 export function ResumoLancamentoCard({
   condicaoResumo,
@@ -44,7 +44,7 @@ export function ResumoLancamentoCard({
   }[condicaoResumo];
 
   return (
-    <Card className="border-amber-200 bg-amber-50 dark:bg-amber-950">
+    <Card className="border-none bg-amber-50 dark:bg-amber-950">
       <CardHeader className="flex items-center gap-2 pb-0">
         {icone}
         <CardTitle className="text-amber-900 dark:text-amber-50">
@@ -67,7 +67,7 @@ export function ResumoLancamentoCard({
             </div>
             <div>
               <p className="text-sm font-medium">Pagamento</p>
-              <p>{formaResumo}</p>
+              <p>{formaResumo ? formaResumo : "—"}</p>
             </div>
           </>
         )}
