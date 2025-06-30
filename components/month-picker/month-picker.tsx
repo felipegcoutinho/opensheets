@@ -27,6 +27,7 @@ export default function MonthPicker() {
       "/login",
       "/",
       "/pagador",
+      "/orcamentos",
     ];
     return !notShowPaths.includes(pathname);
   }, [pathname]);
