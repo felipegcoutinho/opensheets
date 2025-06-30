@@ -7,6 +7,7 @@ import {
   RiBook2Line,
   RiGroupLine,
   RiSparkling2Line,
+  RiMoneyDollarCircleLine,
 } from "@remixicon/react";
 
 export function NavLinks(month: string) {
@@ -56,6 +57,11 @@ export function NavLinks(month: string) {
         name: "categorias",
         url: `/categorias`,
         icon: RiListOrdered,
+      },
+      {
+        name: "orçamento",
+        url: `/orcamentos`,
+        icon: RiMoneyDollarCircleLine,
       },
     ],
   };
