@@ -1,4 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
+import { parse } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
 export async function getIncome(month: string) {
   const supabase = createClient();
@@ -388,12 +390,12 @@ export async function getAccountInvoice(month: string, conta_id: number) {
 }
 
 // Busca as receitas de uma conta bancária específica e soma os valores
-export async function getSumAccountIncome(id: number) {
+export async function getSumAccountIncome(month: string, id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
-    .select(`valor`)
+    .select(`valor, periodo`)
     .eq("conta_id", id)
 
     .eq("tipo_transacao", "receita")
@@ -405,21 +407,33 @@ export async function getSumAccountIncome(id: number) {
     return null;
   }
 
+  const limitDate = parse(`01-${month}`, "dd-MMMM-yyyy", new Date(), {
+    locale: ptBR,
+  });
+
   const sumAccountIncome = data.reduce((sum, item) => {
-    const valor = parseFloat(item.valor);
-    return sum + (isNaN(valor) ? 0 : valor);
+    const itemDate = parse(`01-${item.periodo}`, "dd-MMMM-yyyy", new Date(), {
+      locale: ptBR,
+    });
+
+    if (itemDate <= limitDate) {
+      const valor = parseFloat(item.valor);
+      return sum + (isNaN(valor) ? 0 : valor);
+    }
+
+    return sum;
   }, 0);
 
   return sumAccountIncome;
 }
 
 // Busca as despesas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpense(id: number) {
+export async function getSumAccountExpense(month: string, id: number) {
   const supabase = createClient();
 
   const { error, data } = await supabase
     .from("transacoes")
-    .select(`valor`)
+    .select(`valor, periodo`)
     .eq("conta_id", id)
 
     .eq("tipo_transacao", "despesa")
@@ -431,9 +445,21 @@ export async function getSumAccountExpense(id: number) {
     return null;
   }
 
+  const limitDate = parse(`01-${month}`, "dd-MMMM-yyyy", new Date(), {
+    locale: ptBR,
+  });
+
   const sumAccountExpense = data.reduce((sum, item) => {
-    const valor = parseFloat(item.valor);
-    return sum + (isNaN(valor) ? 0 : valor);
+    const itemDate = parse(`01-${item.periodo}`, "dd-MMMM-yyyy", new Date(), {
+      locale: ptBR,
+    });
+
+    if (itemDate <= limitDate) {
+      const valor = parseFloat(item.valor);
+      return sum + (isNaN(valor) ? 0 : valor);
+    }
+
+    return sum;
   }, 0);
 
   return sumAccountExpense;
