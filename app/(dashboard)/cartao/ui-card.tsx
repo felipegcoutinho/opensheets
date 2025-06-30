@@ -56,7 +56,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
               <div className="text-right">
                 <p className="text-muted-foreground">Disponível</p>
                 <span className="flex items-center gap-1">
-                  <Ping color={"bg-primary"} />
+                  <Ping color={"bg-secondary"} />
                   <MoneyValues value={item.limites.limiteDisponivel} />
                 </span>
               </div>
@@ -64,11 +64,11 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
 
             <Progress
               primary_color="bg-orange-400"
-              secondary_color="bg-primary "
+              secondary_color="bg-secondary"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }
-              className="h-2 rounded-full"
+              className="h-4 rounded"
             />
           </div>
         )}
