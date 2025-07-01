@@ -79,21 +79,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
           <Link href={`/cartao/${item.id}`}>ver fatura</Link>
         </Button>
 
-        <UpdateCard
-          itemContaId={item.contas?.id}
-          itemDescricao={item.descricao}
-          itemBandeira={item.bandeira}
-          itemTipo={item.tipo}
-          itemId={item.id}
-          itemLimite={item.limite}
-          itemStatus={item.status}
-          itemDtFechamento={item.dt_fechamento}
-          itemDtPagamento={item.dt_pagamento}
-          itemDtVencimento={item.dt_vencimento}
-          itemAnotacao={item.anotacao}
-          getAccountMap={getAccountMap}
-          itemLogo={item.logo_image}
-        />
+        <UpdateCard item={item} getAccountMap={getAccountMap} />
 
         {/* <form action={deleteCards}>
           <Button className="p-0" variant="link" value={item.id} name="excluir">

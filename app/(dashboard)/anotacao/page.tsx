@@ -73,14 +73,8 @@ export default async function page(props: { params: { month: string } }) {
             </CardContent>
             <CardFooter>
               <div className="flex gap-4 text-sm">
-                <UpdateNotes
-                  itemId={item.id}
-                  itemDescricao={item.descricao}
-                  itemAnotacao={item.anotacao}
-                  itemPeriodo={item.periodo}
-                />
-
-                <DeleteNotes itemId={item.id} />
+                <UpdateNotes item={item} />
+                <DeleteNotes item={item} />
               </div>
             </CardFooter>
           </Card>

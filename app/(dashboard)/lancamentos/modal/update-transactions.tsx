@@ -46,6 +46,7 @@ export default function UpdateTransactions({
   itemContaId,
   getCards,
   getAccount,
+  item,
 }) {
   const {
     isOpen,
@@ -121,7 +122,7 @@ export default function UpdateTransactions({
         </DialogHeader>
 
         <form onSubmit={handleUpdate} className="space-y-2">
-          <input type="hidden" name="id" value={itemId} />
+          <input type="hidden" name="id" value={item.id} />
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
@@ -163,7 +164,7 @@ export default function UpdateTransactions({
                 <Required />
               </Label>
               <Input
-                defaultValue={itemDescricao}
+                defaultValue={item.descricao}
                 name="descricao"
                 placeholder="Descrição"
                 type="text"
