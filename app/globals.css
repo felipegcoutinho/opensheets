@@ -8,10 +8,10 @@
 }
 
 :root {
-  --background: oklch(1 0 none);
+  --background: oklch(97.439% 0.01217 121.964);
   --card: oklch(1 0 none);
   --popover: oklch(0.985 0 0);
-  --sidebar:  oklch(78.874% 0.18927 121.054 / 0.10);
+  --sidebar: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.216 0 0);
   --card-foreground: oklch(0.216 0 0);
   --popover-foreground: oklch(0.216 0 0);
