@@ -1,11 +1,14 @@
-import { getBudgets } from "@/app/actions/orcamentos/getBudgets";
 import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
+import { getMonth } from "@/hooks/get-month";
 import CreateBudget from "./modal/create-budget";
 import TableBudgets from "./table-budgets";
 
-export default async function page() {
+export default async function page(props: { params: { month: string } }) {
+  const month = await getMonth(props);
+
   const [budgets, categorias] = await Promise.all([
-    getBudgets(),
+    getBudgets(month),
     getNewCategorias(),
   ]);
 

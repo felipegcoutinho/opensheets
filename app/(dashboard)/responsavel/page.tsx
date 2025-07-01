@@ -9,8 +9,10 @@ import UsersCard from "./users-card";
 async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const transactionsByResponsible = await getTransactionsByResponsible(month);
-  const billsByResponsible = await getBillsByResponsible(month);
+  const [transactionsByResponsible, billsByResponsible] = await Promise.all([
+    getTransactionsByResponsible(month),
+    getBillsByResponsible(month),
+  ]);
 
   if (!transactionsByResponsible.length || !billsByResponsible)
     return <EmptyCard />;

@@ -1,11 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getBudgets() {
+export async function getBudgets(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("orcamentos")
     .select("id, descricao, valor_orcado, periodo, categorias ( id, nome )")
+    .eq("periodo", month)
     .order("created_at", { ascending: false });
 
   if (error) {

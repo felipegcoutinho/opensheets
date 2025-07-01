@@ -18,8 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import UtilitiesOrcamento from "../utilities-orcamento";
 import { useEffect } from "react";
+import UtilitiesOrcamento from "../utilities-orcamento";
 
 type Props = {
   item: any;
@@ -43,28 +43,7 @@ export default function UpdateBudget({ item, categorias }: Props) {
         </DialogHeader>
         <form action={handleUpdate} className="space-y-4">
           <input type="hidden" name="id" value={item.id} />
-          <div>
-            <Label htmlFor="descricao">Descrição</Label>
-            <Input
-              id="descricao"
-              name="descricao"
-              defaultValue={item.descricao}
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="valor_orcado">Valor Orçado</Label>
-            <MoneyInput
-              id="valor_orcado"
-              name="valor_orcado"
-              defaultValue={item.valor_orcado}
-              placeholder="R$ 0,00"
-            />
-          </div>
-          <div>
-            <Label htmlFor="periodo">Período</Label>
-            <Input id="periodo" name="periodo" defaultValue={item.periodo} />
-          </div>
+
           <div>
             <Label htmlFor="categoria_id">Categoria</Label>
             <Select
@@ -83,6 +62,22 @@ export default function UpdateBudget({ item, categorias }: Props) {
               </SelectContent>
             </Select>
           </div>
+
+          <div>
+            <Label htmlFor="periodo">Período</Label>
+            <Input id="periodo" name="periodo" defaultValue={item.periodo} />
+          </div>
+
+          <div>
+            <Label htmlFor="valor_orcado">Valor Orçado</Label>
+            <MoneyInput
+              id="valor_orcado"
+              name="valor_orcado"
+              defaultValue={item.valor_orcado}
+              placeholder="R$ 0,00"
+            />
+          </div>
+
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button

@@ -1,13 +1,13 @@
 import {
   RiArrowUpDownLine,
   RiBankCardLine,
-  RiGovernmentLine,
-  RiDashboardLine,
-  RiListOrdered,
   RiBook2Line,
+  RiDashboardLine,
+  RiGovernmentLine,
   RiGroupLine,
-  RiSparkling2Line,
+  RiListOrdered,
   RiMoneyDollarCircleLine,
+  RiSparkling2Line,
 } from "@remixicon/react";
 
 export function NavLinks(month: string) {
@@ -59,7 +59,7 @@ export function NavLinks(month: string) {
         icon: RiListOrdered,
       },
       {
-        name: "orçamento",
+        name: "limite de gastos",
         url: `/orcamentos`,
         icon: RiMoneyDollarCircleLine,
       },

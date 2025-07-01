@@ -11,6 +11,7 @@ import {
   RiListOrdered,
   RiWalletLine,
 } from "@remixicon/react";
+import AccountWidget from "./accounts-widget";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";
@@ -20,7 +21,6 @@ import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
-import AccountWidget from "./accounts-widget";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);

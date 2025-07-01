@@ -15,7 +15,7 @@ function parseMoney(value: FormDataEntryValue | null) {
 export async function createBudget(prev: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const { descricao, valor_orcado, periodo, categoria_id } = Object.fromEntries(
+  const { valor_orcado, periodo, categoria_id } = Object.fromEntries(
     formData.entries(),
   );
 
@@ -40,7 +40,6 @@ export async function createBudget(prev: unknown, formData: FormData) {
   }
 
   const { error } = await supabase.from("orcamentos").insert({
-    descricao,
     valor_orcado: valor,
     periodo,
     categoria_id,

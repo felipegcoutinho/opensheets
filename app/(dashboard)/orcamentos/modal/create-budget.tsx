@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input, MoneyInput } from "@/components/ui/input";
+import { MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { UseDates } from "@/hooks/use-dates";
 import UtilitiesOrcamento from "../utilities-orcamento";
 
 type Props = {
@@ -26,6 +27,8 @@ type Props = {
 
 export default function CreateBudget({ categorias }: Props) {
   const { handleSubmit, loading, isOpen, setIsOpen } = UtilitiesOrcamento();
+  const { getMonthOptions, formatted_current_month } = UseDates();
+  const month = formatted_current_month;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -39,22 +42,6 @@ export default function CreateBudget({ categorias }: Props) {
           <DialogTitle>Novo Orçamento</DialogTitle>
         </DialogHeader>
         <form action={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="descricao">Descrição</Label>
-            <Input id="descricao" name="descricao" required />
-          </div>
-          <div>
-            <Label htmlFor="valor_orcado">Valor Orçado</Label>
-            <MoneyInput
-              id="valor_orcado"
-              name="valor_orcado"
-              placeholder="R$ 0,00"
-            />
-          </div>
-          <div>
-            <Label htmlFor="periodo">Período</Label>
-            <Input id="periodo" name="periodo" placeholder="2024-07" required />
-          </div>
           <div>
             <Label htmlFor="categoria_id">Categoria</Label>
             <Select name="categoria_id" required>
@@ -70,6 +57,32 @@ export default function CreateBudget({ categorias }: Props) {
               </SelectContent>
             </Select>
           </div>
+
+          <div>
+            <Label htmlFor="periodo">Período</Label>
+            <Select name="periodo" defaultValue={month} required>
+              <SelectTrigger id="periodo" className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {getMonthOptions().map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="valor_orcado">Valor Limite</Label>
+            <MoneyInput
+              id="valor_orcado"
+              name="valor_orcado"
+              placeholder="R$ 0,00"
+            />
+          </div>
+
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button
