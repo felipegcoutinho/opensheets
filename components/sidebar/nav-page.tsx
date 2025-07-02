@@ -5,12 +5,13 @@ import { getEmail, getUserName } from "@/app/actions/users/fetch_users";
 import { AppSidebar } from "./app-sidebar";
 
 async function page() {
-  const name = await getUserName();
-  const email = await getEmail();
-
-  const cartoes = await getCards();
-  const contas = await getAccount();
-  const getCategorias = await getNewCategorias();
+  const [name, email, cartoes, contas, categorias] = await Promise.all([
+    getUserName(),
+    getEmail(),
+    getCards(),
+    getAccount(),
+    getNewCategorias(),
+  ]);
 
   return (
     <AppSidebar
@@ -19,7 +20,7 @@ async function page() {
       variant="sidebar"
       cartoes={cartoes}
       contas={contas}
-      categorias={getCategorias}
+      categorias={categorias}
     />
   );
 }

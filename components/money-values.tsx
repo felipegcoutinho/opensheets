@@ -41,7 +41,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${inter.className} font-bold text-emerald-900 ${
+      className={`${inter.className} font-bold text-violet-950 dark:text-white ${
         !estado && "blur-sm transition-all duration-300 hover:blur-none"
       }`}
     >

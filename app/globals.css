@@ -8,7 +8,7 @@
 }
 
 :root {
-  --background: oklch(99% 0.01 121.964);
+  --background: oklch(100% 0.00011 271.152);
   --card: oklch(1 0 none);
   --popover: oklch(0.985 0 0);
   --sidebar: oklch(100% 0.00011 271.152);
@@ -42,6 +42,7 @@
   --radius: 0.5rem;
   --contrast: oklch(0.79 0.19 120.69);
   --contrast-foreground: oklch(0.59 0.2 277.45);
+  --background-alt: oklch(96.741% 0.00454 215.494);
 }
 
 .dark {
@@ -78,6 +79,7 @@
   --chart-4: oklch(0.9 0.1898 107.39);
   --contrast: oklch(0.69 0.2012 146.94);
   --contrast-foreground: oklch(0.59 0.2 277.45);
+  --background-alt: oklch(0.18 0 none);
 }
 
 /* Add Tailwind v4 @theme configuration as needed */
@@ -124,6 +126,7 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --color-contrast: var(--contrast);
   --color-contrast-foreground: var(--contrast-foreground);
+  --color-background-alt: var(--background-alt);
 
   @keyframes accordion-down {
     from {
