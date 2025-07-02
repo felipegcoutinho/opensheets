@@ -287,6 +287,7 @@ export const getColumns = (
               {item.responsavel != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <UpdateTransactions
+                    item={item}
                     itemId={item.id}
                     itemPeriodo={item.periodo}
                     itemNotas={item.anotacao}

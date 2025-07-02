@@ -7,9 +7,11 @@ import Dashboard from "./dashboard";
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const lancamentos = await getTransactionsByResponsableVoce(month);
-  const cartoes = await getCards();
-  const categorias = await getNewCategorias();
+  const [lancamentos, cartoes, categorias] = await Promise.all([
+    getTransactionsByResponsableVoce(month),
+    getCards(),
+    getNewCategorias(),
+  ]);
 
   return (
     <div>

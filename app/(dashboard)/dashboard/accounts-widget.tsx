@@ -42,7 +42,7 @@ export default async function AccountWidget({ month }: { month?: string }) {
             />
             <div>
               <Link
-                className="flex items-center gap-1 hover:underline"
+                className="flex items-center gap-1 font-medium hover:underline"
                 href={`/conta/${item.id}`}
               >
                 {item.descricao}

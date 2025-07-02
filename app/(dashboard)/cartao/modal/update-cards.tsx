@@ -25,21 +25,12 @@ import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import UtilitiesCartao from "../utilities-cartao";
 
-export default function UpdateCard({
-  itemId,
-  itemDescricao,
-  itemDtVencimento,
-  itemDtFechamento,
-  itemDtPagamento,
-  itemAnotacao,
-  itemLimite,
-  itemBandeira,
-  itemStatus,
-  itemTipo,
-  itemContaId,
-  getAccountMap,
-  itemLogo,
-}) {
+type Props = {
+  getAccountMap: Array<string>;
+  item: any;
+};
+
+export default function UpdateCard({ getAccountMap, item }: Props) {
   const {
     isOpen,
     setIsOpen,
@@ -64,14 +55,14 @@ export default function UpdateCard({
           </DialogHeader>
 
           <form onSubmit={handleUpdate} className="space-y-2">
-            <input type="hidden" name="id" value={itemId} />
+            <input type="hidden" name="id" value={item.id} />
 
             <div className="w-full">
               <Label>
                 Escolha o Logo
                 <Required />
               </Label>
-              <Select name="logo_image" defaultValue={itemLogo} required>
+              <Select name="logo_image" defaultValue={item.logo_image} required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione a imagem para o cartão" />
                 </SelectTrigger>
@@ -96,7 +87,7 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <Input
-                defaultValue={itemDescricao}
+                defaultValue={item.descricao}
                 name="descricao"
                 placeholder="Descrição"
                 type="text"
@@ -113,7 +104,7 @@ export default function UpdateCard({
                 <Input
                   min={1}
                   max={31}
-                  defaultValue={itemDtFechamento}
+                  defaultValue={item.dt_fechamento}
                   name="dt_fechamento"
                   placeholder="Data de Fechamento"
                   type="number"
@@ -129,7 +120,7 @@ export default function UpdateCard({
                 <Input
                   min={1}
                   max={31}
-                  defaultValue={itemDtVencimento}
+                  defaultValue={item.dt_vencimento}
                   name="dt_vencimento"
                   placeholder="Data de Vencimento"
                   type="number"
@@ -144,7 +135,7 @@ export default function UpdateCard({
                   Bandeira
                   <Required />
                 </Label>
-                <Select defaultValue={itemBandeira} name="bandeira" required>
+                <Select defaultValue={item.bandeira} name="bandeira" required>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -173,7 +164,7 @@ export default function UpdateCard({
                   Tipo do Cartão
                   <Required />
                 </Label>
-                <Select defaultValue={itemTipo} name="tipo" required>
+                <Select defaultValue={item.tipo} name="tipo" required>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -190,7 +181,7 @@ export default function UpdateCard({
                 Status do Cartão
                 <Required />
               </Label>
-              <Select name="status" defaultValue={itemStatus} required>
+              <Select name="status" defaultValue={item.status} required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -207,7 +198,7 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <MoneyInput
-                defaultValue={itemLimite}
+                defaultValue={item.limite}
                 name="limite"
                 placeholder="R$ 0,00"
               />
@@ -219,7 +210,7 @@ export default function UpdateCard({
                 <Required />
               </Label>
               <Select
-                defaultValue={itemContaId.toString()}
+                defaultValue={item.contas?.id.toString()}
                 name="conta_id"
                 required
               >
@@ -244,7 +235,7 @@ export default function UpdateCard({
             <div className="w-full">
               <Label>Anotação</Label>
               <Textarea
-                defaultValue={itemAnotacao}
+                defaultValue={item.anotacao}
                 name="anotacao"
                 placeholder="Anotação"
               />

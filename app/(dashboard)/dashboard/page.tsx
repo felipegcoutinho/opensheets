@@ -1,5 +1,6 @@
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/actions/fetch-all-data";
+import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {
@@ -11,6 +12,7 @@ import {
   RiListOrdered,
   RiWalletLine,
 } from "@remixicon/react";
+import AccountWidget from "./accounts-widget";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import { ConditionWidget } from "./condition-widget";
@@ -20,7 +22,6 @@ import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
-import AccountWidget from "./accounts-widget";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -45,6 +46,8 @@ export default async function page(props: { params: { month: string } }) {
 
   const { incomes, expenses, summary, categoryData } =
     await UtilitiesDashboard(month);
+
+  const budgets = await getBudgets(month);
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3),
@@ -164,8 +167,9 @@ export default async function page(props: { params: { month: string } }) {
           <CategoryWidget
             data={categoryData}
             tipo="receita"
-            totalReceita={incomes}
+            total={incomes}
             month={month}
+            budgets={budgets}
           />
         </Widget>
 
@@ -177,8 +181,9 @@ export default async function page(props: { params: { month: string } }) {
           <CategoryWidget
             data={categoryData}
             tipo="despesa"
-            totalReceita={incomes}
+            total={expenses}
             month={month}
+            budgets={budgets}
           />
         </Widget>
       </div>

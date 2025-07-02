@@ -26,19 +26,14 @@ import { UseDates } from "@/hooks/use-dates";
 import { useState } from "react";
 import UtilitiesAnotacao from "../utilities-anotacao";
 
-export default function UpdateNotes({
-  itemId,
-  itemDescricao,
-  itemPeriodo,
-  itemAnotacao,
-}) {
+export default function UpdateNotes({ item }: { item: any }) {
   const { updateLoading, handleUpdate, isOpen, setIsOpen } =
     UtilitiesAnotacao();
 
   const { getMonthOptions } = UseDates();
   let parsed: { mode?: string; tasks?: any[]; content?: string } | null = null;
   try {
-    parsed = JSON.parse(itemAnotacao);
+    parsed = JSON.parse(item.anotacao);
   } catch {}
   const initialTasks =
     parsed && parsed.mode === "tarefas" && Array.isArray(parsed.tasks)
@@ -52,7 +47,7 @@ export default function UpdateNotes({
       ? (parsed.content ?? "")
       : parsed
         ? ""
-        : itemAnotacao,
+        : item.anotacao,
   );
 
   return (
@@ -69,7 +64,7 @@ export default function UpdateNotes({
           </DialogHeader>
 
           <form action={handleUpdate}>
-            <input type="hidden" name="id" value={itemId} />
+            <input type="hidden" name="id" value={item.id} />
 
             <div className="flex w-full gap-2">
               <div className="w-1/2">
@@ -78,7 +73,7 @@ export default function UpdateNotes({
                   <Required />
                 </Label>
                 <Input
-                  defaultValue={itemDescricao}
+                  defaultValue={item.descricao}
                   name="descricao"
                   placeholder="Descrição"
                   type="text"
@@ -90,7 +85,7 @@ export default function UpdateNotes({
                   Período
                   <Required />
                 </Label>
-                <Select defaultValue={itemPeriodo} name="periodo">
+                <Select defaultValue={item.periodo} name="periodo">
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
