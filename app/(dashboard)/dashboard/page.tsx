@@ -1,5 +1,6 @@
 import SummaryWidget from "@/app/(dashboard)/dashboard/summary-widget";
 import { fetchAllData } from "@/app/actions/fetch-all-data";
+import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
 import Widget from "@/components/widget";
 import { getMonth } from "@/hooks/get-month";
 import {
@@ -21,7 +22,6 @@ import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
-import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -167,7 +167,7 @@ export default async function page(props: { params: { month: string } }) {
           <CategoryWidget
             data={categoryData}
             tipo="receita"
-            totalReceita={incomes}
+            total={incomes}
             month={month}
             budgets={budgets}
           />
@@ -181,7 +181,7 @@ export default async function page(props: { params: { month: string } }) {
           <CategoryWidget
             data={categoryData}
             tipo="despesa"
-            totalReceita={incomes}
+            total={expenses}
             month={month}
             budgets={budgets}
           />
