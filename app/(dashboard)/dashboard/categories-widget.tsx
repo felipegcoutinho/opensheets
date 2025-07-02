@@ -20,6 +20,7 @@ type Props = {
   totalReceita?: number;
   tipo?: "receita" | "despesa";
   month: string;
+  budgets?: any[];
 };
 
 export default function CategoryWidget({
@@ -27,6 +28,7 @@ export default function CategoryWidget({
   totalReceita,
   tipo,
   month,
+  budgets,
 }: Props) {
   const filteredData = data.filter((item) => item.tipo_transacao === tipo);
 
@@ -39,12 +41,14 @@ export default function CategoryWidget({
   return (
     <CardContent className="space-y-6 p-0">
       {sortedData.map((item, index) => {
+        const budget = budgets?.find(
+          (b) => String(b.categorias?.id) === String(item.id),
+        );
+        const limite = budget?.valor_orcado as number | undefined;
         const percentual =
-          totalReceita && totalReceita > 0
-            ? ((item.total / totalReceita) * 100).toFixed(1)
-            : item.tipo_transacao === "despesa"
-              ? "100.0"
-              : "0.0";
+          limite && limite > 0
+            ? ((item.total / limite) * 100).toFixed(1)
+            : null;
 
         const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
 
@@ -59,15 +63,26 @@ export default function CategoryWidget({
                 <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
               </Link>
 
-              <div className="flex items-center gap-2">
-                <MoneyValues value={item.total} />
-                <Badge
-                  variant={
-                    item.tipo_transacao === "despesa" ? "despesa" : "receita"
-                  }
-                >
-                  {percentual}%
-                </Badge>
+              <div className="flex flex-col items-end gap-1">
+                <div className="flex items-center gap-2">
+                  <MoneyValues value={item.total} />
+                  {percentual && (
+                    <Badge
+                      variant={
+                        item.tipo_transacao === "despesa" ? "despesa" : "receita"
+                      }
+                    >
+                      {percentual}%
+                    </Badge>
+                  )}
+                </div>
+                <span className="text-muted-foreground text-xs">
+                  {limite ? (
+                    <MoneyValues value={limite} />
+                  ) : (
+                    "Orçamento não configuravel"
+                  )}
+                </span>
               </div>
             </div>
 
@@ -83,11 +98,13 @@ export default function CategoryWidget({
                   : "bg-zinc-200 dark:bg-zinc-700/50"
               }
               value={
-                totalReceita && totalReceita > 0
-                  ? (item.total / totalReceita) * 100
-                  : item.tipo_transacao === "despesa"
-                    ? 100
-                    : 0
+                percentual
+                  ? parseFloat(percentual)
+                  : totalReceita && totalReceita > 0
+                    ? (item.total / totalReceita) * 100
+                    : item.tipo_transacao === "despesa"
+                      ? 100
+                      : 0
               }
               className="h-2"
             />

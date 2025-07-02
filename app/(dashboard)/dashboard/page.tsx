@@ -21,6 +21,7 @@ import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
+import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -45,6 +46,8 @@ export default async function page(props: { params: { month: string } }) {
 
   const { incomes, expenses, summary, categoryData } =
     await UtilitiesDashboard(month);
+
+  const budgets = await getBudgets(month);
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3),
@@ -166,6 +169,7 @@ export default async function page(props: { params: { month: string } }) {
             tipo="receita"
             totalReceita={incomes}
             month={month}
+            budgets={budgets}
           />
         </Widget>
 
@@ -179,6 +183,7 @@ export default async function page(props: { params: { month: string } }) {
             tipo="despesa"
             totalReceita={incomes}
             month={month}
+            budgets={budgets}
           />
         </Widget>
       </div>
