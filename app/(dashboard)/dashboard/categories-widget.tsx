@@ -89,7 +89,11 @@ export default function CategoryProgress({
                             variant="destructive"
                             className="px-1 py-0 text-xs"
                           >
-                            excedido
+                            excedido em
+                            <MoneyValues
+                              value={item.spent - item.limit}
+                              className="ml-1"
+                            />
                           </Badge>
                         )}
                       </div>

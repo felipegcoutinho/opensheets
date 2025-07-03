@@ -92,6 +92,7 @@ export default function UsersCard({
                         descricao={descricao}
                         width={24}
                         height={24}
+                        
                       />
                     ) : (
                       descricao === "Pix/Dinheiro/Débito" && (

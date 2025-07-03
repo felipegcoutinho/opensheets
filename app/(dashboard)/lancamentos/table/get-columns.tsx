@@ -22,8 +22,10 @@ import {
 import UseStyles from "@/hooks/use-styles";
 import {
   RiAttachmentLine,
+  RiBankCardLine,
   RiCalendarCheckFill,
   RiCheckboxCircleFill,
+  RiGovernmentLine,
   RiGroupLine,
   RiMessage2Line,
   RiMoreLine,
@@ -93,15 +95,15 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <span className="text-muted-foreground text-xs">
-              vence {DateFormat(item.data_vencimento)}
-            </span>
+            <Badge variant={"sistema"}>
+              {DateFormat(item.data_vencimento)}
+            </Badge>
           )}
 
           {item.condicao === "parcelado" && (
-            <span className="text-muted-foreground text-xs">
+            <Badge variant={"sistema"}>
               {item.parcela_atual} de {item.qtde_parcela}
-            </span>
+            </Badge>
           )}
 
           {item.responsavel === "sistema" && (
@@ -231,13 +233,23 @@ export const getColumns = (
       const item = row.original;
       const descricao = getDescricao(item);
       const logo = getLogo(item);
+
+      const Icon = item.contas
+        ? RiGovernmentLine
+        : item.cartoes
+          ? RiBankCardLine
+          : null;
+
       return (
-        <PaymentMethodLogo
-          url_name={`/logos/${logo}`}
-          descricao={descricao}
-          height={36}
-          width={36}
-        />
+        <div className="flex items-center gap-2">
+          <PaymentMethodLogo
+            url_name={`/logos/${logo}`}
+            descricao={descricao}
+            height={36}
+            width={36}
+          />
+          {Icon && <Icon size={18} className="size-3.5" />}
+        </div>
       );
     },
   },

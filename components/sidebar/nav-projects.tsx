@@ -36,7 +36,7 @@ export const NavProjects = memo(function NavProjects({
     <>
       {groups.map((group) => (
         <SidebarGroup key={group.title}>
-          <SidebarGroupLabel className="text-muted-foreground text-sm">
+          <SidebarGroupLabel className="text-muted-foreground text-xs">
             {group.title}
           </SidebarGroupLabel>
           <SidebarMenu>
@@ -55,11 +55,11 @@ export const NavProjects = memo(function NavProjects({
                         className={`flex items-center gap-2 transition-all ${
                           isActive
                             ? "text-foreground font-bold"
-                            : "text-accent-foreground font-medium"
+                            : "text-accent-foreground font-normal"
                         }`}
                       >
                         <item.icon
-                          className={`h-4.5 w-4.5 ${
+                          className={`h-4 w-4 ${
                             isActive
                               ? "var(--foreground)"
                               : "var(--muted-foreground)"
