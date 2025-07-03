@@ -53,12 +53,14 @@ export function AppSidebar({
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects
-          links={data.projects}
-          cartoes={cartoes}
-          contas={contas}
-          categorias={categorias}
-        />
+        <SidebarContent>
+          <NavProjects
+            groups={data.groups}
+            cartoes={cartoes}
+            contas={contas}
+            categorias={categorias}
+          />
+        </SidebarContent>
       </SidebarContent>
       <SidebarFooter className="border-border border-t">
         <NavUser username={username} usermail={usermail} user={data.user} />

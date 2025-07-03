@@ -12,56 +12,71 @@ import {
 
 export function NavLinks(month: string) {
   return {
-    projects: [
+    groups: [
       {
-        name: "dashboard",
-        url: `/dashboard?periodo=${month}`,
-        icon: RiDashboardLine,
+        title: "Visão Geral",
+        items: [
+          {
+            name: "dashboard",
+            url: `/dashboard?periodo=${month}`,
+            icon: RiDashboardLine,
+          },
+        ],
       },
       {
-        name: "lançamentos",
-        url: `/lancamentos?periodo=${month}`,
-        icon: RiArrowUpDownLine,
+        title: "Gestão Financeira",
+        items: [
+          {
+            name: "lançamentos",
+            url: `/lancamentos?periodo=${month}`,
+            icon: RiArrowUpDownLine,
+          },
+          {
+            name: "cartões",
+            url: "/cartao",
+            icon: RiBankCardLine,
+          },
+          {
+            name: "contas",
+            url: "/conta",
+            icon: RiGovernmentLine,
+          },
+          {
+            name: "limite de gastos",
+            url: `/orcamentos`,
+            icon: RiMoneyDollarCircleLine,
+          },
+        ],
       },
       {
-        name: "cartões",
-        url: "/cartao",
-        icon: RiBankCardLine,
+        title: "Organização",
+        items: [
+          {
+            name: "responsáveis",
+            url: `/responsavel?periodo=${month}`,
+            icon: RiGroupLine,
+          },
+          {
+            name: "categorias",
+            url: `/categorias`,
+            icon: RiListOrdered,
+          },
+        ],
       },
       {
-        name: "contas",
-        url: "/conta",
-        icon: RiGovernmentLine,
-      },
-      // {
-      //   name: "pagadores",
-      //   url: `/pagador`,
-      //   icon: UserSquare,
-      // },
-      {
-        name: "responsáveis",
-        url: `/responsavel?periodo=${month}`,
-        icon: RiGroupLine,
-      },
-      {
-        name: "anotações",
-        url: `/anotacao?periodo=${month}`,
-        icon: RiBook2Line,
-      },
-      {
-        name: "insights",
-        url: `/insights?periodo=${month}`,
-        icon: RiSparkling2Line,
-      },
-      {
-        name: "categorias",
-        url: `/categorias`,
-        icon: RiListOrdered,
-      },
-      {
-        name: "limite de gastos",
-        url: `/orcamentos`,
-        icon: RiMoneyDollarCircleLine,
+        title: "Análise e Anotações",
+        items: [
+          {
+            name: "anotações",
+            url: `/anotacao?periodo=${month}`,
+            icon: RiBook2Line,
+          },
+          {
+            name: "insights",
+            url: `/insights?periodo=${month}`,
+            icon: RiSparkling2Line,
+          },
+        ],
       },
     ],
   };
