@@ -3,7 +3,7 @@ import { PrivacyProviderApp } from "@/hooks/privacy-context";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
-import { ibmPlex } from "./fonts/font";
+import { itau } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${ibmPlex.className} antialiased`}
+      className={`${itau.className} antialiased`}
       suppressHydrationWarning
     >
       <body>
