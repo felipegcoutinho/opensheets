@@ -25,8 +25,8 @@ export default async function Layout({
       <NavPage />
 
       <SidebarInset>
-        <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b border-dashed transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-          <div className="flex w-full items-center gap-1 px-4 py-3 lg:gap-2 lg:px-6">
+        <header>
+          <div className="flex w-full items-center gap-1 px-4 py-2 lg:gap-2 lg:px-6">
             <SidebarTrigger size="icon" className="-ml-1" />
           </div>
         </header>

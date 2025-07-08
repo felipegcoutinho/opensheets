@@ -258,7 +258,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, isMobile } = useSidebar();
 
   return (
     <Button
@@ -271,6 +271,7 @@ function SidebarTrigger({
         onClick?.(event);
         toggleSidebar();
       }}
+      hidden={!isMobile} // Hide if no aria-label is provided
       {...props}
     >
       <RiSidebarFoldLine />

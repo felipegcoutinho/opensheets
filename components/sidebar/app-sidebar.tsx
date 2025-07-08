@@ -1,5 +1,4 @@
 "use client";
-
 import { NavProjects } from "@/components/sidebar/nav-projects";
 import { NavUser } from "@/components/sidebar/nav-user";
 import {
@@ -15,7 +14,6 @@ import { useTheme } from "next-themes";
 import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
-import SidebarIcon from "../sidebar-icon";
 import { NavLinks } from "./nav-links";
 
 export function AppSidebar({
@@ -43,13 +41,15 @@ export function AppSidebar({
 
   return (
     <Sidebar
-      collapsible="icon"
+      collapsible="sidebar"
       {...props}
       className="dark:border-border/30 border-border border-r dark:border-r"
     >
       <SidebarHeader>
         <div className="mt-4 flex items-center justify-center gap-2">
-          {open ? <Logo /> : <SidebarIcon />}
+          {/* {open ? <Logo /> : <SidebarIcon />} */}
+
+          <Logo />
         </div>
       </SidebarHeader>
       <SidebarContent>
