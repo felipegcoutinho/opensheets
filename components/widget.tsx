@@ -32,10 +32,10 @@ export default function Widget({
   return (
     <Card className="h-custom-height-1 relative overflow-hidden">
       <CardHeader>
-        <CardTitle className="flex items-center">
+        <CardTitle className="flex">
           {icon}
           {title}
-          <div className="ml-1">
+          <div className="ml-1 flex items-center">
             <Tooltip>
               <TooltipTrigger>
                 <RiInformation2Fill size={16} className="text-muted" />

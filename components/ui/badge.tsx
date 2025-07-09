@@ -15,16 +15,18 @@ const badgeVariants = cva(
           "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        destructive_lite:
+          "border-destructive bg-destructive/5 text-destructive dark:text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         receita:
-          " bg-green-50  text-green-600 dark:text-green-400 dark:bg-green-600/20",
-        despesa: " bg-red-50 text-red-600 dark:text-red-400 dark:bg-red-600/20",
-        voce: " bg-blue-50 text-blue-600 dark:text-blue-400 dark:bg-blue-600/20",
+          " bg-green-50  text-green-600 dark:text-green-100 dark:bg-green-600/20",
+        despesa: " bg-red-50 text-red-600 dark:text-red-100 dark:bg-red-600/20",
+        voce: " bg-blue-50 text-blue-600 dark:text-blue-100 dark:bg-blue-600/20",
         sistema:
           " bg-neutral-50 text-neutral-600 dark:text-neutral-400 dark:bg-neutral-600/20",
         outros:
-          " bg-orange-50 text-orange-600 dark:text-orange-400 dark:bg-orange-600/20",
+          " bg-orange-50 text-orange-600 dark:text-orange-100 dark:bg-orange-600/20",
       },
     },
     defaultVariants: {

@@ -1,9 +1,14 @@
 "use client";
 
+import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import Ping from "@/components/ping-icon";
 import { Badge } from "@/components/ui/badge";
-import { RiArrowRightSFill } from "@remixicon/react";
+import {
+  RiArrowRightSFill,
+  RiCheckboxCircleLine,
+  RiSkull2Fill,
+} from "@remixicon/react";
 import Link from "next/link";
 
 type CombinedData = {
@@ -53,6 +58,8 @@ export default function CategoryProgress({
   const sortedData = categories.sort((a, b) => b.spent - a.spent);
   const totalSpent = categories.reduce((sum, cat) => sum + cat.spent, 0);
 
+  if (!sortedData.length && !totalSpent) return <EmptyCard />;
+
   return (
     <div className="w-full">
       <div className="space-y-2">
@@ -65,67 +72,60 @@ export default function CategoryProgress({
           const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
 
           return (
-            <div key={item.id} className="mb-0 w-full">
-              <div>
-                <div className="flex items-center justify-between border-b border-dashed py-2">
-                  <div className="flex items-center">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <Link
-                          href={url}
-                          className="flex items-center gap-2 capitalize hover:underline"
-                        >
-                          <Ping color={item.color} />
-                          <span className="capitalize">{item.name}</span>
-                          <RiArrowRightSFill className="text-muted-foreground -ml-1 h-3 w-3" />
-                        </Link>
+            <div key={item.id} className="mb-2 w-full">
+              <div className="flex items-start justify-between border-b border-dashed py-2">
+                <div>
+                  <Link
+                    href={url}
+                    className="flex items-center gap-2 capitalize hover:underline"
+                  >
+                    <Ping color={item.color} />
+                    <span className="text-base font-medium">{item.name}</span>
+                    <RiArrowRightSFill className="text-muted-foreground -ml-1 h-4 w-4" />
+                  </Link>
 
-                        {limitPercentage && limitPercentage > 100 && (
-                          <Badge
-                            variant="destructive"
-                            className="px-1 py-0 text-xs"
-                          >
-                            excedido em
+                  {item.limit ? (
+                    <div className="mt-1 space-x-1 text-sm">
+                      <Badge
+                        variant={
+                          item.spent > item.limit
+                            ? "destructive_lite"
+                            : "sistema"
+                        }
+                      >
+                        {limitPercentage!.toFixed(1)}% do limite
+                        <MoneyValues value={item.limit} className="ml-1" />
+                      </Badge>
+
+                      {item.spent > item.limit ? (
+                        <>
+                          <Badge variant="destructive_lite">
+                            excedeu em
                             <MoneyValues
                               value={item.spent - item.limit}
                               className="ml-1"
                             />
                           </Badge>
-                        )}
-                      </div>
+                          <RiSkull2Fill className="text-destructive ml-1 inline-block h-3 w-3" />
+                        </>
+                      ) : (
+                        <RiCheckboxCircleLine className="ml-1 inline-block h-3 w-3 text-emerald-500" />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-muted-foreground mt-1 text-sm">
+                      sem limite configurado
+                    </div>
+                  )}
+                </div>
 
-                      <div className="text-muted-foreground text-sm">
-                        {item.limit ? (
-                          <span>
-                            <Badge
-                              variant={
-                                item.spent > item.limit ? "outros" : "sistema"
-                              }
-                            >
-                              {limitPercentage.toFixed(1)}% do limite{" "}
-                              <MoneyValues
-                                value={item.limit}
-                                className="ml-1"
-                              />
-                            </Badge>
-                          </span>
-                        ) : (
-                          <span>sem limite configurado</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div>
-                      <MoneyValues value={item.spent} />
-                    </div>
-
-                    <div>
-                      <Badge variant={"sistema"}>
-                        {categoryProgressPercentage.toFixed(1)}%{" "}
-                        {tipo === "despesa" ? "da despesa" : "da receita"} total
-                      </Badge>
-                    </div>
+                <div className="text-right">
+                  <MoneyValues value={item.spent} />
+                  <div>
+                    <Badge variant="sistema" className="mt-1">
+                      {categoryProgressPercentage.toFixed(1)}%{" "}
+                      {tipo === "despesa" ? "da despesa" : "da receita"} total
+                    </Badge>
                   </div>
                 </div>
               </div>
