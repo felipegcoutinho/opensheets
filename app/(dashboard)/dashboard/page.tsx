@@ -7,7 +7,6 @@ import {
   RiArrowUpDownLine,
   RiBankCardLine,
   RiBarChartBoxLine,
-  RiBarChartLine,
   RiBarcodeLine,
   RiFileList2Line,
   RiWalletLine,
@@ -20,8 +19,8 @@ import InvoiceWidget from "./invoices-widget";
 import PaymentStatusWidget from "./payment-status-widget";
 import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
-import StatsWidget from "./stats-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
+import { ChartSummary } from "./chart-summary";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -136,7 +135,7 @@ export default async function page(props: { params: { month: string } }) {
           />
         </Widget>
 
-        <Widget
+        {/* <Widget
           title="Resumo do Mês"
           subtitle="Principais Resumos"
           information="Resumo do mês, inclui apenas transações de Você"
@@ -150,6 +149,16 @@ export default async function page(props: { params: { month: string } }) {
             accountsStats={accountsStats}
             notesStats={notesStats}
           />
+        </Widget> */}
+
+        <Widget
+          title="Receita, Despesa e Balanço"
+          subtitle="Últimos 6 Meses"
+          icon={
+            <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
+          }
+        >
+          <ChartSummary data={chartData} />
         </Widget>
       </div>
 

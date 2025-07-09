@@ -1,6 +1,6 @@
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
 import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
-import { RiAddCircleLine, RiExchangeDollarLine } from "@remixicon/react";
+import { RiAddCircleLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 
 function AddButton({ item, cartoes, contas, categorias }) {
@@ -24,7 +24,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
 
       {/* This button is used to create transfer between contas, it will show a
       different icon */}
-      {item.name === "lançamentos" && (
+      {/* {item.name === "lançamentos" && (
         <CreateTransactions
           getCards={cartoes}
           getAccount={contas}
@@ -38,7 +38,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
             <RiExchangeDollarLine className="text-muted-foreground" size={18} />
           </Button>
         </CreateTransactions>
-      )}
+      )} */}
 
       {item.name === "anotações" && (
         <CreateNotes>
