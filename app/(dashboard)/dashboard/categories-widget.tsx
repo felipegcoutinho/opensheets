@@ -73,13 +73,11 @@ export default function CategoryProgress({
                       <div className="flex items-center gap-2">
                         <Link
                           href={url}
-                          className="flex items-center gap-1 capitalize hover:underline"
+                          className="flex items-center gap-2 capitalize hover:underline"
                         >
                           <Ping color={item.color} />
-                          <span className="font-bold capitalize">
-                            {item.name}
-                          </span>
-                          <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
+                          <span className="capitalize">{item.name}</span>
+                          <RiArrowRightSFill className="text-muted-foreground -ml-1 h-3 w-3" />
                         </Link>
 
                         {limitPercentage && limitPercentage > 100 && (

@@ -32,17 +32,19 @@ export default function Widget({
   return (
     <Card className="h-custom-height-1 relative overflow-hidden">
       <CardHeader>
-        <CardTitle className="flex items-center gap-1">
+        <CardTitle className="flex items-center">
           {icon}
           {title}
-          <Tooltip>
-            <TooltipTrigger>
-              <RiInformation2Fill size={16} className="text-muted" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{information}</p>
-            </TooltipContent>
-          </Tooltip>
+          <div className="ml-1">
+            <Tooltip>
+              <TooltipTrigger>
+                <RiInformation2Fill size={16} className="text-muted" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="ml-1">{information}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </CardTitle>
         <CardDescription className="text-muted-foreground text-sm capitalize">
           {subtitle}
