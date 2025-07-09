@@ -16,17 +16,15 @@ import { RiThumbDownLine, RiThumbUpLine } from "@remixicon/react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TogglePaymentDialog({
-  id,
-  realizadoAtual,
-  periodo,
-  formaPagamento,
-  onStatusChanged,
-  cartaoId,
-  cartoDescricao,
-}) {
+export default function TogglePaymentDialog({ onStatusChanged, item }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const id = item.id;
+  const realizadoAtual = item.realizado;
+  const periodo = item.periodo;
+  const formaPagamento = item.forma_pagamento;
+  const cartaoId = item.cartoes?.id;
 
   const isCartaoCredito = formaPagamento === "cartão de crédito";
   const isPago = realizadoAtual;

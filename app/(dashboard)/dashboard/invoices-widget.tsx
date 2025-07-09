@@ -3,7 +3,7 @@ import EmptyCard from "@/components/empty-card";
 import InvoicePaymentDialog from "@/components/invoice-payment-dialog";
 import MoneyValues from "@/components/money-values";
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
-import { RiArrowRightUpLine, RiCheckLine } from "@remixicon/react";
+import { RiArrowRightSFill, RiCheckLine } from "@remixicon/react";
 import Link from "next/link";
 
 export default async function InvoiceWidget({ data, month }) {
@@ -32,7 +32,7 @@ export default async function InvoiceWidget({ data, month }) {
         return (
           <div
             key={item.cartao_id}
-            className="border-border/50 flex items-center justify-between border-b"
+            className="flex items-center justify-between border-b border-dashed py-0 last:border-0"
           >
             <div className="flex items-center">
               <PaymentMethodLogo
@@ -42,11 +42,11 @@ export default async function InvoiceWidget({ data, month }) {
               />
               <div>
                 <Link
-                  className="flex items-center gap-1 font-medium hover:underline"
+                  className="flex items-center font-medium hover:underline"
                   href={`/cartao/${item.cartao_id}/?periodo=${month}`}
                 >
                   {item.descricao}
-                  <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
+                  <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
                 </Link>
 
                 {fatura_status.length > 0 &&

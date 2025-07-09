@@ -25,7 +25,7 @@ import {
   RiBankCardLine,
   RiCalendarCheckFill,
   RiCheckboxCircleFill,
-  RiGovernmentLine,
+  RiBankLine,
   RiGroupLine,
   RiMessage2Line,
   RiMoreLine,
@@ -235,7 +235,7 @@ export const getColumns = (
       const logo = getLogo(item);
 
       const Icon = item.contas
-        ? RiGovernmentLine
+        ? RiBankLine
         : item.cartoes
           ? RiBankCardLine
           : null;
@@ -343,15 +343,10 @@ export const getColumns = (
               <Tooltip>
                 <TooltipTrigger>
                   <TogglePaymentDialog
-                    id={item.id}
-                    cartaoId={item.cartoes?.id}
-                    periodo={item.periodo}
-                    cartoDescricao={item.cartoes?.descricao}
-                    realizadoAtual={item.realizado}
-                    formaPagamento={item.forma_pagamento}
                     onStatusChanged={(novoStatus) => {
                       item.realizado = novoStatus;
                     }}
+                    item={item}
                   />
                 </TooltipTrigger>
                 <TooltipContent>

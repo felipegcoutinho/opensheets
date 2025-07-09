@@ -9,7 +9,7 @@ import {
   RiBarChartBoxLine,
   RiBarChartLine,
   RiBarcodeLine,
-  RiListOrdered,
+  RiFileList2Line,
   RiWalletLine,
 } from "@remixicon/react";
 import AccountWidget from "./accounts-widget";
@@ -66,6 +66,7 @@ export default async function page(props: { params: { month: string } }) {
             value={item.value}
             key={index}
             color={item.color}
+            information={item.information}
           />
         ))}
       </div>
@@ -82,6 +83,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Minhas Contas"
           subtitle="Contas e Saldos"
+          information="Resumo de contas e saldos, inclui apenas contas de Você"
           icon={
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
           }
@@ -92,6 +94,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Faturas"
           subtitle="faturas deste mês"
+          information="O valor mostrado é referente a transações de todos os responsáveis"
           icon={<RiBankCardLine className="text-primary mr-2 inline size-4" />}
         >
           <InvoiceWidget month={month} data={invoiceList} />
@@ -100,6 +103,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Boletos"
           subtitle="boletos deste mês"
+          information="Resumo de boletos, inclui apenas transações de Você"
           icon={<RiBarcodeLine className="text-primary mr-2 inline size-4" />}
         >
           <BillsWidget month={month} data={bills} />
@@ -110,6 +114,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Lançamentos Recentes"
           subtitle="Últimos 5 Lançamentos"
+          information="Resumo dos últimos lançamentos, inclui apenas transações de Você"
           icon={
             <RiArrowUpDownLine className="text-primary mr-2 inline size-4" />
           }
@@ -120,6 +125,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Status de Pagamento"
           subtitle={"Resumo de valores, confirmados e pendentes"}
+          information="Resumo de valores pagos e pendentes, inclui apenas transações de Você"
           icon={<RiWalletLine className="text-primary mr-2 inline size-4" />}
         >
           <PaymentStatusWidget
@@ -133,6 +139,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Resumo do Mês"
           subtitle="Principais Resumos"
+          information="Resumo do mês, inclui apenas transações de Você"
           icon={<RiBarChartLine className="text-primary mr-2 inline size-4" />}
         >
           <StatsWidget
@@ -150,6 +157,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Condições de Pagamento"
           subtitle={"Principais Condições de Pagamento"}
+          information="Resumo das condições de pagamento, inclui apenas transações de Você"
           icon={<RiWalletLine className="text-primary mr-2 inline size-4" />}
         >
           <ConditionWidget month={month} />
@@ -158,6 +166,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Formas de Pagamentos"
           subtitle={"Principais Formas de Pagamento"}
+          information="Resumo das formas de pagamento, inclui apenas transações de Você"
           icon={<RiWalletLine className="text-primary mr-2 inline size-4" />}
         >
           <PaymentWidget month={month} />
@@ -166,7 +175,8 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Receitas por Categoria"
           subtitle="Principais Categorias por Receita"
-          icon={<RiListOrdered className="text-primary mr-2 inline size-4" />}
+          information="Resumo das categorias de receitas, inclui apenas transações de Você"
+          icon={<RiFileList2Line className="text-primary mr-2 inline size-4" />}
         >
           <CategoryWidget
             data={categoryData}
@@ -180,7 +190,8 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Despesas por Categoria"
           subtitle="Principais Categorias por Despesa"
-          icon={<RiListOrdered className="text-primary mr-2 inline size-4" />}
+          information="Resumo das categorias de despesas, inclui apenas transações de Você"
+          icon={<RiFileList2Line className="text-primary mr-2 inline size-4" />}
         >
           <CategoryWidget
             data={categoryData}

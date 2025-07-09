@@ -7,12 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { RiInformation2Fill } from "@remixicon/react";
 
 type WidgetProps = {
   title: string;
   subtitle: string;
   children: React.ReactNode;
   icon: React.ReactNode;
+  information?: string;
 };
 
 export default function Widget({
@@ -20,13 +27,22 @@ export default function Widget({
   subtitle,
   icon,
   children,
+  information,
 }: WidgetProps) {
   return (
     <Card className="h-custom-height-1 relative overflow-hidden">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="flex items-center gap-1">
           {icon}
           {title}
+          <Tooltip>
+            <TooltipTrigger>
+              <RiInformation2Fill size={16} className="text-muted" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{information}</p>
+            </TooltipContent>
+          </Tooltip>
         </CardTitle>
         <CardDescription className="text-muted-foreground text-sm capitalize">
           {subtitle}

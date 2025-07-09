@@ -3,7 +3,7 @@
 import MoneyValues from "@/components/money-values";
 import Ping from "@/components/ping-icon";
 import { Badge } from "@/components/ui/badge";
-import { RiArrowRightUpLine } from "@remixicon/react";
+import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
 type CombinedData = {
@@ -67,22 +67,20 @@ export default function CategoryProgress({
           return (
             <div key={item.id} className="mb-0 w-full">
               <div>
-                <div className="flex items-center justify-between border-b border-dashed py-1">
+                <div className="flex items-center justify-between border-b border-dashed py-2">
                   <div className="flex items-center">
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="capitalize">
-                          <Link
-                            href={url}
-                            className="flex items-center gap-1 hover:underline"
-                          >
-                            <Ping color={item.color} />
-                            <span className="font-bold capitalize">
-                              {item.name}
-                            </span>
-                            <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
-                          </Link>
-                        </p>
+                        <Link
+                          href={url}
+                          className="flex items-center gap-1 capitalize hover:underline"
+                        >
+                          <Ping color={item.color} />
+                          <span className="font-bold capitalize">
+                            {item.name}
+                          </span>
+                          <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
+                        </Link>
 
                         {limitPercentage && limitPercentage > 100 && (
                           <Badge
@@ -101,7 +99,11 @@ export default function CategoryProgress({
                       <div className="text-muted-foreground text-sm">
                         {item.limit ? (
                           <span>
-                            <Badge variant={"outros"}>
+                            <Badge
+                              variant={
+                                item.spent > item.limit ? "outros" : "sistema"
+                              }
+                            >
                               {limitPercentage.toFixed(1)}% do limite{" "}
                               <MoneyValues
                                 value={item.limit}

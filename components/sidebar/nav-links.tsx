@@ -1,13 +1,13 @@
 import {
-  RiArrowUpDownLine,
-  RiBankCardLine,
-  RiBook2Line,
-  RiDashboardLine,
-  RiGovernmentLine,
-  RiGroupLine,
-  RiListOrdered,
-  RiMoneyDollarCircleLine,
-  RiSparkling2Line,
+  RiArrowUpDownFill,
+  RiBankCardFill,
+  RiBankFill,
+  RiBook2Fill,
+  RiDashboardFill,
+  RiFileList2Fill,
+  RiGroupFill,
+  RiMoneyDollarCircleFill,
+  RiSparkling2Fill,
 } from "@remixicon/react";
 
 export function NavLinks(month: string) {
@@ -19,7 +19,7 @@ export function NavLinks(month: string) {
           {
             name: "dashboard",
             url: `/dashboard?periodo=${month}`,
-            icon: RiDashboardLine,
+            icon: RiDashboardFill,
           },
         ],
       },
@@ -29,22 +29,22 @@ export function NavLinks(month: string) {
           {
             name: "lançamentos",
             url: `/lancamentos?periodo=${month}`,
-            icon: RiArrowUpDownLine,
+            icon: RiArrowUpDownFill,
           },
           {
             name: "cartões",
             url: "/cartao",
-            icon: RiBankCardLine,
+            icon: RiBankCardFill,
           },
           {
             name: "contas",
             url: "/conta",
-            icon: RiGovernmentLine,
+            icon: RiBankFill,
           },
           {
             name: "limite de gastos",
             url: `/orcamentos`,
-            icon: RiMoneyDollarCircleLine,
+            icon: RiMoneyDollarCircleFill,
           },
         ],
       },
@@ -54,12 +54,12 @@ export function NavLinks(month: string) {
           {
             name: "responsáveis",
             url: `/responsavel?periodo=${month}`,
-            icon: RiGroupLine,
+            icon: RiGroupFill,
           },
           {
             name: "categorias",
             url: `/categorias`,
-            icon: RiListOrdered,
+            icon: RiFileList2Fill,
           },
         ],
       },
@@ -69,12 +69,12 @@ export function NavLinks(month: string) {
           {
             name: "anotações",
             url: `/anotacao?periodo=${month}`,
-            icon: RiBook2Line,
+            icon: RiBook2Fill,
           },
           {
             name: "insights",
             url: `/insights?periodo=${month}`,
-            icon: RiSparkling2Line,
+            icon: RiSparkling2Fill,
           },
         ],
       },

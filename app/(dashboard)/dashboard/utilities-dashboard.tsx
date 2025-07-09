@@ -35,24 +35,32 @@ export default async function UtilitiesDashboard(month: string) {
       value: data.receitas,
       previousValue: incomesAnterior,
       color: "bg-chart-1",
+      information:
+        "Total de receitas no mês atual. Inclui apenas receitas de Você",
     },
     {
       title: "Despesas",
       value: data.despesas,
       previousValue: expensesAnterior,
       color: "bg-chart-2",
+      information:
+        "Total de despesas no mês atual. Inclui apenas despesas de Você",
     },
     {
       title: "Balanço",
       value: data.balanco,
       previousValue: incomesAnterior - expensesAnterior,
       color: "bg-chart-3",
+      information:
+        "Balanço do mês atual. Calculado como Receitas - Despesas. Inclui apenas transações de Você",
     },
     {
       title: "Previsto",
       value: data.saldo_previsto,
       previousValue: previstoAnterior,
       color: "bg-chart-4",
+      information:
+        "Saldo previsto para o mês atual. Inclui apenas transações de Você",
     },
   ];
 

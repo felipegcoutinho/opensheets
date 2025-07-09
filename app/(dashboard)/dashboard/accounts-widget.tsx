@@ -6,7 +6,7 @@ import {
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
-import { RiArrowRightUpLine } from "@remixicon/react";
+import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
 export default async function AccountWidget({ month }: { month?: string }) {
@@ -32,9 +32,9 @@ export default async function AccountWidget({ month }: { month?: string }) {
       {accountData.map((item) => (
         <div
           key={item.id}
-          className="border-border/50 flex items-center justify-between border-b py-2"
+          className="flex items-center justify-between border-b border-dashed py-2 last:border-0"
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
             <PaymentMethodLogo
               url_name={`/logos/${item.logo_image}`}
               width={40}
@@ -42,11 +42,11 @@ export default async function AccountWidget({ month }: { month?: string }) {
             />
             <div>
               <Link
-                className="flex items-center gap-1 font-medium hover:underline"
+                className="flex items-center font-medium hover:underline"
                 href={`/conta/${item.id}`}
               >
                 {item.descricao}
-                <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
+                <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
               </Link>
               <p className="text-muted-foreground text-xs">{item.tipo_conta}</p>
             </div>
