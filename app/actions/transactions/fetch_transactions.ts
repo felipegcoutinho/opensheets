@@ -7,10 +7,11 @@ export async function getIncome(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor, categoria_id!inner(id, nome)")
+    .select("valor, categoria_id!inner(id, nome), contas!inner(id)")
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
     .eq("responsavel", "você")
+    .eq("contas.is_ignored", false)
     .neq("categoria_id.nome", "saldo anterior");
 
   if (error) throw error;
@@ -23,10 +24,11 @@ export async function getExpense(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, contas!inner(id)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -38,11 +40,12 @@ export async function getPaidExpense(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, contas!inner(id)")
     .eq("tipo_transacao", "despesa")
     .neq("forma_pagamento", "cartão de crédito")
     .eq("periodo", month)
-    .eq("realizado", true);
+    .eq("realizado", true)
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -54,10 +57,11 @@ export async function getConditions(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("condicao, valor.sum()")
+    .select("condicao, valor.sum(), contas!inner(id)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
     .eq("responsavel", "você")
+    .eq("contas.is_ignored", false)
     .order("condicao", { ascending: true });
 
   if (error) throw error;
@@ -69,10 +73,11 @@ export async function getPayment(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("forma_pagamento, valor.sum()")
+    .select("forma_pagamento, valor.sum(), contas!inner(id)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -84,9 +89,10 @@ export async function getTransactionsStats(month: string) {
 
   const { count, error } = await supabase
     .from("transacoes")
-    .select("id", { count: "exact", head: true })
+    .select("id, contas!inner(id)", { count: "exact", head: true })
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -98,10 +104,11 @@ export async function getBillsStats(month: string) {
 
   const { count, error } = await supabase
     .from("transacoes")
-    .select("id", { count: "exact", head: true })
+    .select("id, contas!inner(id)", { count: "exact", head: true })
     .eq("periodo", month)
     .eq("forma_pagamento", "boleto")
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -113,9 +120,12 @@ export async function getTransactionsByCategory(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select(`valor, tipo_transacao, categoria:categoria_id (id, nome )`)
+    .select(
+      `valor, tipo_transacao, categoria:categoria_id (id, nome ), contas!inner(id)`,
+    )
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("responsavel", "você")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -128,11 +138,12 @@ export async function getRecentTransactions(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)",
+      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas!inner(id, logo_image)",
     )
     .order("created_at", { ascending: false })
     .eq("responsavel", "você")
     .eq("periodo", month)
+    .eq("contas.is_ignored", false)
     .limit(5);
 
   if (error) throw error;
@@ -145,12 +156,13 @@ export async function getSumPaidExpense(month: string) {
 
   const { error, data } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, contas!inner(id)")
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
     .eq("realizado", true)
     .eq("responsavel", "você")
-    .neq("responsavel", "sistema");
+    .neq("responsavel", "sistema")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -167,12 +179,13 @@ export async function getSumPaidIncome(month: string) {
 
   const { error, data } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, contas!inner(id)")
     .eq("periodo", month)
     .eq("tipo_transacao", "receita")
     .eq("realizado", true)
     .eq("responsavel", "você")
-    .neq("responsavel", "sistema");
+    .neq("responsavel", "sistema")
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -190,9 +203,9 @@ export async function getTransactions(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao,
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas!inner(id, descricao, logo_image), categorias (id, nome)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -212,11 +225,14 @@ export async function getBills(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("id, valor, descricao, data_vencimento, realizado")
+    .select(
+      "id, valor, descricao, data_vencimento, realizado, contas!inner(id)",
+    )
     .eq("tipo_transacao", "despesa")
     .eq("forma_pagamento", "boleto")
     .eq("responsavel", "você")
-    .eq("periodo", month);
+    .eq("periodo", month)
+    .eq("contas.is_ignored", false);
 
   if (error) throw error;
 
@@ -242,7 +258,8 @@ export async function getTransactionsByConditions(
     .eq("periodo", month)
     .eq("responsavel", "você")
     .eq("condicao", condicao)
-    .eq("tipo_transacao", "despesa");
+    .eq("tipo_transacao", "despesa")
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -310,15 +327,16 @@ export async function getCategoria(
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao,
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas!inner(id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
     .eq("responsavel", "você")
     .eq("tipo_transacao", tipo_transacao)
-    .eq("categoria_id.nome", categoria_nome);
+    .eq("categoria_id.nome", categoria_nome)
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar faturas:", error);
@@ -470,12 +488,15 @@ export async function getTransactionsByResponsible(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("responsavel, cartoes (descricao, logo_image), valor")
+    .select(
+      "responsavel, cartoes (descricao, logo_image), valor, contas!inner(id)",
+    )
     .order("responsavel", { ascending: true })
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
     .neq("responsavel", "sistema")
-    .neq("forma_pagamento", "boleto");
+    .neq("forma_pagamento", "boleto")
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -490,12 +511,13 @@ export async function getBillsByResponsible(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("responsavel, descricao, valor")
+    .select("responsavel, descricao, valor, contas!inner(id)")
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
     .eq("forma_pagamento", "boleto")
     .order("responsavel", { ascending: true })
-    .neq("responsavel", "sistema");
+    .neq("responsavel", "sistema")
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -511,15 +533,16 @@ export async function getTransactionsByResponsableVoce(month: string) {
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, realizado, condicao, 
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, realizado, condicao,
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, categorias ( id, nome ), cartoes (id, descricao), contas (id, descricao)`,
+      qtde_recorrencia, dividir_lancamento, categorias ( id, nome ), cartoes (id, descricao), contas!inner(id, descricao)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false })
     .eq("responsavel", "você")
-    .eq("periodo", month);
+    .eq("periodo", month)
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -558,8 +581,9 @@ export async function getDescriptionsList(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("descricao")
-    .eq("periodo", month);
+    .select("descricao, contas!inner(id)")
+    .eq("periodo", month)
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar descricoes:", error);
@@ -582,8 +606,9 @@ export async function getResponsaveisList(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("responsavel")
-    .eq("periodo", month);
+    .select("responsavel, contas!inner(id)")
+    .eq("periodo", month)
+    .eq("contas.is_ignored", false);
 
   if (error) {
     console.error("Erro ao buscar responsaveis:", error);
