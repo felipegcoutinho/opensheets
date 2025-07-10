@@ -29,7 +29,9 @@ export async function ConditionWidget({ month }) {
             >
               <span className="flex items-center gap-1">
                 {getConditionIcon(item.condicao)}
-                <span className="lowercase">{item.condicao}</span>
+                <span className="lowercase">
+                  {item.condicao === "vista" ? "à vista" : item.condicao}
+                </span>
               </span>
               <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
             </Link>

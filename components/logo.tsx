@@ -9,11 +9,11 @@ export default function Logo() {
 
   return (
     <Image
-      // src={darkMode ? "/new_logo_dark.svg" : "/new_logo.svg"}
       src={"/new_logo.svg"}
       alt="OpenSheets Logo"
       width={180}
       height={50}
+      className="dark:brightness-0 dark:invert"
     />
   );
 }

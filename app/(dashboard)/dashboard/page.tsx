@@ -154,6 +154,7 @@ export default async function page(props: { params: { month: string } }) {
         <Widget
           title="Receita, Despesa e Balanço"
           subtitle="Últimos 6 Meses"
+          information="Últimos 6 Meses, inclui apenas transações de Você"
           icon={
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
           }
