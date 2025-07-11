@@ -1,4 +1,5 @@
-import Banner from "@/components/banner-data";
+import BannerData from "@/components/banner-data";
+import UpcomingPaymentsBanner from "@/components/upcoming-payments-banner";
 import MonthPicker from "@/components/month-picker/month-picker";
 import NavPage from "@/components/sidebar/nav-page";
 import {
@@ -31,7 +32,8 @@ export default async function Layout({
           </div>
         </header>
         <div className="px-6">
-          <Banner />
+          <BannerData />
+          <UpcomingPaymentsBanner />
           <MonthPicker />
           {children}
         </div>
