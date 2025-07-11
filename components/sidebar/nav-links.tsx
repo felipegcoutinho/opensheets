@@ -43,7 +43,7 @@ export function NavLinks(month: string) {
           },
           {
             name: "limite de gastos",
-            url: `/orcamentos`,
+            url: `/orcamentos?periodo=${month}`,
             icon: RiMoneyDollarCircleFill,
           },
         ],
