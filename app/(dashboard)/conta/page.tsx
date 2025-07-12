@@ -56,15 +56,7 @@ async function page(props: { params: { month: string } }) {
                   <Link href={`/conta/${item.id}`}>extrato</Link>
                 </Button>
 
-                <UpdateCard
-                  itemId={item.id}
-                  itemContaId={item.contas?.id}
-                  itemDescricao={item.descricao}
-                  itemTipoConta={item.tipo_conta}
-                  itemAnotacao={item.anotacao}
-                  itemLogo={item.logo_image}
-                  itemIsIgnored={item.is_ignored}
-                />
+                <UpdateCard item={item} />
               </CardFooter>
             </Card>
           ))

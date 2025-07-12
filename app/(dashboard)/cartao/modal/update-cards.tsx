@@ -31,15 +31,7 @@ type Props = {
 };
 
 export default function UpdateCard({ getAccountMap, item }: Props) {
-  const {
-    isOpen,
-    setIsOpen,
-    statusPagamento,
-    setStatusPagamento,
-    handleUpdate,
-    loading,
-  } = UtilitiesCartao();
-
+  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesCartao();
   const { logos, bandeiras } = UseOptions();
 
   return (

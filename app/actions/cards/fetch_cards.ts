@@ -1,18 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getCardsStats() {
-  const supabase = createClient();
-
-  const { count, error } = await supabase
-    .from("cartoes")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "ativo");
-
-  if (error) throw error;
-
-  return count ?? 0;
-}
-
 // Busca a lista de cartões salvos
 export async function getCards() {
   const supabase = createClient();
@@ -31,6 +18,19 @@ export async function getCards() {
   }
 
   return data;
+}
+
+export async function getCardsStats() {
+  const supabase = createClient();
+
+  const { count, error } = await supabase
+    .from("cartoes")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "ativo");
+
+  if (error) throw error;
+
+  return count ?? 0;
 }
 
 // Busca a lista de cartões salvos

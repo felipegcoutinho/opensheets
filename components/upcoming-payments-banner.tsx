@@ -2,7 +2,7 @@ import { getBills } from "@/app/actions/transactions/fetch_transactions";
 import { getInvoiceList } from "@/app/actions/invoices/fetch_invoices";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
-import { RiAlarmLine } from "@remixicon/react";
+import { RiAlarmWarningFill } from "@remixicon/react";
 
 export default async function UpcomingPaymentsBanner() {
   const { formatted_current_month } = UseDates();
@@ -32,14 +32,18 @@ export default async function UpcomingPaymentsBanner() {
   return (
     <Banner
       className={
-        "bg-amber-200 text-yellow-900 dark:bg-amber-800 dark:text-yellow-200"
+        "bg-orange-100 text-yellow-900 dark:bg-orange-800 dark:text-yellow-200"
       }
     >
-      <p className="text-left">
-        <RiAlarmLine size={18} className="mr-2 inline-block" />
-        <strong className="font-semibold">Atenção!</strong> Você possui{" "}
-        {totalDue} conta(s) com vencimento nos próximos 3 dias.
-      </p>
+      <div className="flex items-center gap-1 text-left text-sm">
+        <p>
+          <RiAlarmWarningFill size={18} />
+        </p>
+        <p>
+          <strong className="font-bold">Atenção!</strong> Você possui {totalDue}{" "}
+          conta(s) com vencimento nos próximos 3 dias.
+        </p>
+      </div>
     </Banner>
   );
 }
