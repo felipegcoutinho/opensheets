@@ -12,7 +12,7 @@ export default async function BannerData() {
   const userName = await getUserName();
 
   return (
-    <Banner>
+    <Banner className={"bg-contrast-foreground/10"}>
       <div className="flex items-center justify-between py-6">
         <div>
           <p className="text-xl font-bold">Olá, {userName.split(" ")[0]}! 👋</p>

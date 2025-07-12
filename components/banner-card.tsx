@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Card } from "./ui/card";
 
-function Banner({ children }) {
+function Banner({ children, className }) {
   const pathname = usePathname();
   const isDashboard = pathname === "/dashboard";
 
@@ -12,7 +12,7 @@ function Banner({ children }) {
   }
 
   return (
-    <Card className="bg-contrast-foreground/10 mt-4 border-none px-6 py-4">
+    <Card className={`mt-4 border-none px-6 py-4 ${className}`}>
       {children}
     </Card>
   );
