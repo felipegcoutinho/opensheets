@@ -1,6 +1,7 @@
 import { getBills } from "@/app/actions/transactions/fetch_transactions";
 import { getInvoiceList } from "@/app/actions/invoices/fetch_invoices";
 import { UseDates } from "@/hooks/use-dates";
+import { differenceInCalendarDays } from "date-fns";
 import Banner from "./banner-card";
 import { RiAlarmWarningFill } from "@remixicon/react";
 
@@ -12,17 +13,20 @@ export default async function UpcomingPaymentsBanner() {
     getInvoiceList(formatted_current_month),
   ]);
 
-  const today = new Date().getDate();
-  const limitDay = today + 3;
+  const today = new Date();
 
   const dueBills = bills.filter((bill) => {
-    const dueDay = new Date(bill.data_vencimento).getDate();
-    return dueDay >= today && dueDay <= limitDay;
+    const dueDate = new Date(bill.data_vencimento);
+    const diff = differenceInCalendarDays(dueDate, today);
+    return diff >= 0 && diff <= 3 && bill.realizado !== true;
   });
 
   const dueInvoices = invoices.filter((invoice) => {
-    const dueDay = Number(invoice.dt_vencimento);
-    return dueDay >= today && dueDay <= limitDay;
+    const invoiceDue = new Date(today);
+    invoiceDue.setDate(Number(invoice.dt_vencimento));
+    if (invoiceDue < today) invoiceDue.setMonth(invoiceDue.getMonth() + 1);
+    const diff = differenceInCalendarDays(invoiceDue, today);
+    return diff >= 0 && diff <= 3 && invoice.status_pagamento !== "pago";
   });
 
   const totalDue = dueBills.length + dueInvoices.length;

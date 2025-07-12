@@ -43,7 +43,7 @@ export default async function page(props: { params: { month: string } }) {
     sixmonth.map((month) => UtilitiesDashboard(month)),
   );
 
-  const { incomes, expenses, summary, categoryData } =
+  const { incomes, expenses, summary, categoryData, saldo } =
     await UtilitiesDashboard(month);
 
   const budgets = await getBudgets(month);
@@ -83,6 +83,7 @@ export default async function page(props: { params: { month: string } }) {
           title="Minhas Contas"
           subtitle="Contas e Saldos"
           information="Resumo de contas e saldos, inclui apenas contas de Você"
+          saldo={saldo}
           icon={
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
           }

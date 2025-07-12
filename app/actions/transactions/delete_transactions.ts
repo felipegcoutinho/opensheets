@@ -8,6 +8,7 @@ export async function deleteTransaction(formData: FormData) {
 
   const supabase = createClient();
   await supabase.from("transacoes").delete().eq("id", excluir);
+
   revalidatePath("/dashboard");
 }
 
