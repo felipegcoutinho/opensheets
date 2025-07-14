@@ -15,7 +15,7 @@ export default async function BillsWidget({ month, data }) {
   return dataSorted.map((item, index) => (
     <div
       key={`${item.id}${index}`}
-      className="border-border/50 flex items-center justify-between border-b"
+      className="flex items-center justify-between border-b border-dashed py-0 last:border-0"
     >
       <div className="flex items-center gap-2">
         <Image
@@ -28,7 +28,7 @@ export default async function BillsWidget({ month, data }) {
         />
 
         <div>
-          <p className="capitalize">{item.descricao}</p>
+          <p className="font-medium capitalize">{item.descricao}</p>
           {item.realizado === false ? (
             <p className="text-muted-foreground text-xs">
               Vence {DateFormat(item.data_vencimento)}

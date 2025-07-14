@@ -1,4 +1,4 @@
-import { getSession } from "@/app/actions/users";
+import { getSession } from "@/app/actions/users/fetch_users";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

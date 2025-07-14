@@ -1,8 +1,6 @@
-import {
-  addCategories,
-  deleteCategories,
-  updateCategories,
-} from "@/app/actions/categories";
+import { addCategories } from "@/app/actions/categories/create_categories";
+import { deleteCategories } from "@/app/actions/categories/delete_categories";
+import { updateCategories } from "@/app/actions/categories/update_categories";
 import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
 

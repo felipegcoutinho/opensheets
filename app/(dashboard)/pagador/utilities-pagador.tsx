@@ -1,4 +1,4 @@
-import { addPayers, updatePayers } from "@/app/actions/payers";
+import { addPayers, updatePayers } from "@/app/actions/payers/payers";
 import { useActionState, useState } from "react";
 import { toast } from "sonner";
 

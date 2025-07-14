@@ -1,4 +1,4 @@
-import { getPayers } from "@/app/services/pagadores";
+import { getPayers } from "@/app/actions/payers/fetch_payers";
 import CreatePagador from "./modal/create-pagador";
 import Image from "next/image";
 import Link from "next/link";

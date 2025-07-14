@@ -27,7 +27,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
       </div>
 
       {/* Barra de progresso */}
-      <div className="mb-4 flex h-2 w-full overflow-hidden rounded-full">
+      <div className="mb-4 flex h-4 w-full overflow-hidden rounded">
         {values.map((value, index) => (
           <div
             key={index}
@@ -52,7 +52,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
               <span className="font-bold">
                 <MoneyValues value={value.amount} />
               </span>
-              <span className="ml-1 text-gray-500">{value.label}</span>
+              <span className="text-muted-foreground ml-1">{value.label}</span>
             </div>
           );
         })}

@@ -22,6 +22,24 @@ function AddButton({ item, cartoes, contas, categorias }) {
         </CreateTransactions>
       )}
 
+      {/* This button is used to create transfer between contas, it will show a
+      different icon */}
+      {/* {item.name === "lançamentos" && (
+        <CreateTransactions
+          getCards={cartoes}
+          getAccount={contas}
+          getCategorias={categorias}
+        >
+          <Button
+            className="transition-all hover:scale-110"
+            size="icon"
+            variant="link"
+          >
+            <RiExchangeDollarLine className="text-muted-foreground" size={18} />
+          </Button>
+        </CreateTransactions>
+      )} */}
+
       {item.name === "anotações" && (
         <CreateNotes>
           <Button

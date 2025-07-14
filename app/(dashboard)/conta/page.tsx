@@ -1,17 +1,17 @@
-import { getAccount } from "@/app/services/contas";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import {
   getSumAccountExpense,
   getSumAccountIncome,
-} from "@/app/services/transacoes";
+} from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
 import Link from "next/link";
 import CreateAccount from "./modal/create-accounts";
 import UpdateCard from "./modal/update-accounts";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -56,14 +56,7 @@ async function page(props: { params: { month: string } }) {
                   <Link href={`/conta/${item.id}`}>extrato</Link>
                 </Button>
 
-                <UpdateCard
-                  itemId={item.id}
-                  itemContaId={item.contas?.id}
-                  itemDescricao={item.descricao}
-                  itemTipoConta={item.tipo_conta}
-                  itemAnotacao={item.anotacao}
-                  itemLogo={item.logo_image}
-                />
+                <UpdateCard item={item} />
               </CardFooter>
             </Card>
           ))

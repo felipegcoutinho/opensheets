@@ -1,7 +1,7 @@
 "use client";
 
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,12 +21,14 @@ import {
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
 import {
-  RiCheckboxCircleFill,
-  RiMoreLine,
-  RiMessage2Line,
   RiAttachmentLine,
+  RiBankCardLine,
   RiCalendarCheckFill,
+  RiCheckboxCircleFill,
+  RiBankLine,
   RiGroupLine,
+  RiMessage2Line,
+  RiMoreLine,
 } from "@remixicon/react";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
@@ -93,15 +95,15 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <span className="text-muted-foreground text-xs">
-              vence {DateFormat(item.data_vencimento)}
-            </span>
+            <Badge variant={"sistema"}>
+              {DateFormat(item.data_vencimento)}
+            </Badge>
           )}
 
           {item.condicao === "parcelado" && (
-            <span className="text-muted-foreground text-xs">
+            <Badge variant={"sistema"}>
               {item.parcela_atual} de {item.qtde_parcela}
-            </span>
+            </Badge>
           )}
 
           {item.responsavel === "sistema" && (
@@ -125,10 +127,7 @@ export const getColumns = (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
-                  <RiMessage2Line
-                    className="text-muted-foreground"
-                    size={12}
-                  />
+                  <RiMessage2Line className="text-muted-foreground" size={12} />
                 </TooltipTrigger>
                 <TooltipContent>{item.anotacao}</TooltipContent>
               </Tooltip>
@@ -234,13 +233,23 @@ export const getColumns = (
       const item = row.original;
       const descricao = getDescricao(item);
       const logo = getLogo(item);
+
+      const Icon = item.contas
+        ? RiBankLine
+        : item.cartoes
+          ? RiBankCardLine
+          : null;
+
       return (
-        <PaymentMethodLogo
-          url_name={`/logos/${logo}`}
-          descricao={descricao}
-          height={36}
-          width={36}
-        />
+        <div className="flex items-center gap-2">
+          <PaymentMethodLogo
+            url_name={`/logos/${logo}`}
+            descricao={descricao}
+            height={36}
+            width={36}
+          />
+          {Icon && <Icon size={18} className="size-3.5" />}
+        </div>
       );
     },
   },
@@ -290,6 +299,7 @@ export const getColumns = (
               {item.responsavel != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <UpdateTransactions
+                    item={item}
                     itemId={item.id}
                     itemPeriodo={item.periodo}
                     itemNotas={item.anotacao}
@@ -333,15 +343,10 @@ export const getColumns = (
               <Tooltip>
                 <TooltipTrigger>
                   <TogglePaymentDialog
-                    id={item.id}
-                    cartaoId={item.cartoes?.id}
-                    periodo={item.periodo}
-                    cartoDescricao={item.cartoes?.descricao}
-                    realizadoAtual={item.realizado}
-                    formaPagamento={item.forma_pagamento}
                     onStatusChanged={(novoStatus) => {
                       item.realizado = novoStatus;
                     }}
+                    item={item}
                   />
                 </TooltipTrigger>
                 <TooltipContent>

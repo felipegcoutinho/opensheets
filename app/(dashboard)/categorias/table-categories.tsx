@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UseStyles from "@/hooks/use-styles";
-import { RiArrowRightUpLine, RiMoreLine } from "@remixicon/react";
+import { RiArrowRightSFill, RiMoreLine } from "@remixicon/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";
@@ -68,10 +68,10 @@ export default function TableCategories({ categorias }) {
                         href={`/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(
                           item.nome,
                         )}/${encodeURIComponent(item.tipo_categoria)}`}
-                        className="text-muted-foreground ml-2 flex items-center gap-1 text-sm hover:underline"
+                        className="ml-2 flex items-center gap-1 text-sm hover:underline"
                       >
                         {item.nome}
-                        <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
+                        <RiArrowRightSFill className="h-3 w-3" />
                       </Link>
                     </TableCell>
                     <TableCell>

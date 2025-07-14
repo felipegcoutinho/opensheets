@@ -35,10 +35,6 @@ function Home({
               { role: "user", content: JSON.stringify(lancamentos) },
               { role: "user", content: JSON.stringify(cartoes) },
               { role: "user", content: JSON.stringify(categorias) },
-              // {
-              //   role: "user",
-              //   content: `Me dê uma análise em inglês`,
-              // },
             ],
           }),
         },
@@ -59,7 +55,7 @@ function Home({
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="from-primary dark:to-chart-1 to-contrast-foreground my-2 w-72 bg-gradient-to-tr transition-all hover:scale-110"
+        className="from-primary dark:to-chart-1 to-contrast-foreground mt-4 mb-2 w-72 bg-gradient-to-tr transition-all hover:scale-110"
       >
         <div className="flex items-center justify-center gap-2">
           {loading ? (

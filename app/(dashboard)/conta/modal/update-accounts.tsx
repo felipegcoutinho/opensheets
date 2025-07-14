@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,19 +20,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import UtilitiesConta from "../utilities-conta";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
-export default function UpdateAccount({
-  itemId,
-  itemDescricao,
-  itemAnotacao,
-  itemTipoConta,
-  itemLogo,
-}) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesConta();
+export default function UpdateAccount({ item }) {
+  const { isOpen, setIsOpen, handleUpdate, loading, isIgnored, setIsIgnored } =
+    UtilitiesConta(item.is_ignored);
 
   const { logos } = UseOptions();
 
@@ -46,14 +42,14 @@ export default function UpdateAccount({
         </DialogHeader>
 
         <form onSubmit={handleUpdate} className="space-y-2">
-          <input type="hidden" name="id" value={itemId} />
+          <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
             <Label>
               Escolha o Logo
               <Required />
             </Label>
-            <Select name="logo_image" defaultValue={itemLogo} required>
+            <Select name="logo_image" defaultValue={item.logo_image} required>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
@@ -78,7 +74,7 @@ export default function UpdateAccount({
               <Required />
             </Label>
             <Input
-              defaultValue={itemDescricao}
+              defaultValue={item.descricao}
               name="descricao"
               placeholder="Descrição"
               type="text"
@@ -91,7 +87,7 @@ export default function UpdateAccount({
               Tipo da Conta
               <Required />
             </Label>
-            <Select defaultValue={itemTipoConta} name="tipo_conta" required>
+            <Select defaultValue={item.tipo_conta} name="tipo_conta" required>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
@@ -103,10 +99,17 @@ export default function UpdateAccount({
             </Select>
           </div>
 
+          <div className="flex items-center justify-between rounded-md border p-4">
+            <Label className="text-sm">
+              Desconsiderar essa conta nos cálculos mensais
+            </Label>
+            <Switch checked={isIgnored} onCheckedChange={setIsIgnored} />
+          </div>
+
           <div className="w-full">
             <Label>Anotação</Label>
             <Textarea
-              defaultValue={itemAnotacao}
+              defaultValue={item.anotacao}
               name="anotacao"
               placeholder="Anotação"
             />

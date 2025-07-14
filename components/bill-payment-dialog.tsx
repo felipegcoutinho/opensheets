@@ -1,6 +1,6 @@
 "use client";
 
-import { payBills } from "@/app/actions/transactions";
+import { payBills } from "@/app/actions/transactions/update_transactions";
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,8 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import confetti from "canvas-confetti";
 import { RiBankCardLine } from "@remixicon/react";
+import confetti from "canvas-confetti";
 import Image from "next/image";
 import { useTransition } from "react";
 

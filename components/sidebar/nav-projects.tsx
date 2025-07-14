@@ -1,4 +1,5 @@
 "use client";
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -12,60 +13,72 @@ import { memo } from "react";
 import AddButton from "./add-button";
 
 export const NavProjects = memo(function NavProjects({
-  links,
+  groups,
   cartoes,
   contas,
   categorias,
-  title = "Menu",
+}: {
+  groups: {
+    title: string;
+    items: {
+      name: string;
+      url: string;
+      icon: React.ElementType;
+    }[];
+  }[];
+  cartoes: any;
+  contas: any;
+  categorias: any;
 }) {
   const pathname = usePathname();
 
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel className="text-muted-foreground text-sm">
-        {title}
-      </SidebarGroupLabel>
-      <SidebarMenu className="mt-1">
-        {links.map((item) => {
-          const isActive = pathname.startsWith(item.url.split("?")[0]);
+    <>
+      {groups.map((group) => (
+        <SidebarGroup key={group.title}>
+          <SidebarGroupLabel className="text-muted-foreground text-xs">
+            {group.title}
+          </SidebarGroupLabel>
+          <SidebarMenu>
+            {group.items.map((item) => {
+              const isActive = pathname.startsWith(item.url.split("?")[0]);
 
-          return (
-            <SidebarMenuItem key={item.url}>
-              <SidebarMenuButton
-                className={`${isActive && "bg-muted-foreground/5"}`}
-                asChild
-              >
-                <div className="flex w-full items-center justify-between px-3 py-5">
-                  <Link
-                    href={item.url}
-                    className={`flex items-center gap-2 transition-all ${
-                      isActive
-                        ? "text-foreground font-bold"
-                        : "text-accent-foreground"
-                    } `}
+              return (
+                <SidebarMenuItem key={item.url}>
+                  <SidebarMenuButton
+                    className={`${isActive && "bg-muted-foreground/5"}`}
+                    asChild
                   >
-                    <item.icon
-                      className={`h-4.5 w-4.5 ${
-                        isActive
-                          ? "var(--foreground)"
-                          : "var(--muted-foreground)"
-                      } }`}
-                    />
-                    <p>{item.name}</p>
-                  </Link>
-
-                  <AddButton
-                    cartoes={cartoes}
-                    contas={contas}
-                    categorias={categorias}
-                    item={item}
-                  />
-                </div>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          );
-        })}
-      </SidebarMenu>
-    </SidebarGroup>
+                    <div className="flex w-full items-center justify-between px-3 py-4.5">
+                      <Link
+                        href={item.url}
+                        className={`flex items-center gap-2 transition-all ${
+                          isActive
+                            ? "text-foreground font-bold"
+                            : "text-accent-foreground font-normal"
+                        }`}
+                      >
+                        <item.icon
+                          className={`h-4 w-4 ${
+                            isActive ? "text-primary" : "text-muted-foreground"
+                          }`}
+                        />
+                        <p>{item.name}</p>
+                      </Link>
+                      <AddButton
+                        cartoes={cartoes}
+                        contas={contas}
+                        categorias={categorias}
+                        item={item}
+                      />
+                    </div>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
+      ))}
+    </>
   );
 });

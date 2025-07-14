@@ -1,5 +1,5 @@
 "use client";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,8 +26,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useSWR from "swr";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { ResumoLancamentoCard } from "./resume";
+
+const fetcher = (url) =>
+  fetch(url).then((res) => {
+    if (!res.ok) throw new Error("Falha ao carregar dados");
+    return res.json();
+  });
 
 export default function CreateTransactions({
   getCards,
@@ -60,32 +68,40 @@ export default function CreateTransactions({
   } = UtilitiesLancamento();
 
   const { getMonthOptions, formatted_current_month } = UseDates();
-
   const month = formatted_current_month;
 
-  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+  // 2. Hooks SWR para descrições e responsáveis
+  const {
+    data: descData,
+    error: descError,
+    isLoading: isLoadingDesc,
+  } = useSWR(`/api/descriptions?month=${month}`, fetcher);
 
-  useEffect(() => {
-    async function fetchOptions() {
-      const descRes = await fetch(`/api/descriptions?month=${month}`);
-      const descJson = await descRes.json();
-      setDescricaoOptions(descJson.data || []);
+  const {
+    data: respData,
+    error: respError,
+    isLoading: isLoadingResp,
+  } = useSWR(`/api/responsaveis?month=${month}`, fetcher);
 
-      const respRes = await fetch(`/api/responsaveis?month=${month}`);
-      const respJson = await respRes.json();
-      setResponsavelOptions(respJson.data || []);
-    }
-    fetchOptions();
-  }, [month]);
+  const descricaoOptions = descData?.data || [];
+  const responsavelOptions = respData?.data || [];
 
+  // 4. Filtragens auxiliares
   const mainResponsavelOptions = responsavelOptions.filter(
     (r) => r.toLowerCase() !== "sistema",
   );
-
   const secondResponsavelOptions = responsavelOptions.filter(
     (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
   );
+
+  // Resumos para o card de pré-visualização
+  const [valorResumo, setValorResumo] = useState(0);
+  const [dataResumo, setDataResumo] = useState("");
+  const [formaResumo, setFormaResumo] = useState("");
+  const [condicaoResumo, setCondicaoResumo] = useState("vista");
+  const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
+  const [periodoResumo, setPeriodoResumo] = useState(month);
+  const [responsavelResumo, setResponsavelResumo] = useState("você");
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -94,6 +110,14 @@ export default function CreateTransactions({
         <DialogHeader>
           <DialogTitle>Novo lançamento</DialogTitle>
         </DialogHeader>
+
+        {(isLoadingDesc || isLoadingResp) && <p>Carregando opções...</p>}
+        {(descError || respError) && (
+          <p className="text-red-600">
+            Erro ao carregar opções: {descError?.message || respError?.message}
+          </p>
+        )}
+
         <div className="-mx-6 max-h-[530px] overflow-y-auto px-6">
           <form
             id="transaction-form"
@@ -110,13 +134,19 @@ export default function CreateTransactions({
                   name="data_compra"
                   type="date"
                   required={!eBoletoSelecionado}
+                  onChange={(e) => setDataResumo(e.target.value)}
                 />
               </div>
               <div className="w-1/2">
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select name="periodo" defaultValue={month} required>
+                <Select
+                  name="periodo"
+                  defaultValue={month}
+                  required
+                  onValueChange={(val) => setPeriodoResumo(val)}
+                >
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -160,6 +190,7 @@ export default function CreateTransactions({
                   name="valor"
                   placeholder="R$ 0,00"
                   required
+                  onValueChange={(val) => setValorResumo(val.floatValue || 0)}
                 />
               </div>
             </div>
@@ -248,7 +279,7 @@ export default function CreateTransactions({
                       onPressedChange={setIsPaid}
                       pressed={isPaid}
                       name="realizado_toggle"
-                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+                      className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
                     >
                       <RiThumbUpLine strokeWidth={2} />
                     </Toggle>
@@ -271,6 +302,7 @@ export default function CreateTransactions({
                   type="text"
                   className="capitalize"
                   defaultValue="você"
+                  onChange={(e) => setResponsavelResumo(e.target.value)}
                 />
                 <datalist id="responsavel-list">
                   {mainResponsavelOptions.map((opt) => (
@@ -309,7 +341,10 @@ export default function CreateTransactions({
                   <Select
                     required
                     name="forma_pagamento"
-                    onValueChange={handleFormaPagamentoChange}
+                    onValueChange={(val) => {
+                      handleFormaPagamentoChange(val);
+                      setFormaResumo(val);
+                    }}
                   >
                     <SelectTrigger id="forma_pagamento" className="w-full">
                       <SelectValue placeholder="Selecione" />
@@ -407,7 +442,10 @@ export default function CreateTransactions({
                 <Label htmlFor="condicao">Condição</Label>
                 <Select
                   name="condicao"
-                  onValueChange={handleCondicaoChange}
+                  onValueChange={(val) => {
+                    handleCondicaoChange(val);
+                    setCondicaoResumo(val);
+                  }}
                   defaultValue="vista"
                   required
                 >
@@ -445,7 +483,10 @@ export default function CreateTransactions({
               {showRecorrencia && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
-                  <Select name="qtde_recorrencia">
+                  <Select
+                    name="qtde_recorrencia"
+                    onValueChange={(val) => setRecorrenciaResumo(val)}
+                  >
                     <SelectTrigger id="qtde_recorrencia" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
@@ -477,6 +518,17 @@ export default function CreateTransactions({
               <Label htmlFor="anotacao">Anotação</Label>
               <Textarea id="anotacao" name="anotacao" placeholder="Anotação" />
             </div>
+
+            <ResumoLancamentoCard
+              condicaoResumo={condicaoResumo}
+              valorResumo={valorResumo}
+              dataResumo={dataResumo}
+              formaResumo={formaResumo}
+              quantidadeParcelas={quantidadeParcelas}
+              recorrenciaResumo={recorrenciaResumo}
+              periodoResumo={periodoResumo}
+              responsavelResumo={responsavelResumo}
+            />
           </form>
         </div>
 

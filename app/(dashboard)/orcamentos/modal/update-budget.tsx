@@ -1,0 +1,122 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { MoneyInput } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { UseDates } from "@/hooks/use-dates";
+import { useEffect } from "react";
+import UtilitiesOrcamento from "../utilities-orcamento";
+
+type Props = {
+  item: any;
+  categorias: any[];
+};
+
+export default function UpdateBudget({ item, categorias }: Props) {
+  const { handleUpdate, updateLoading, isOpen, setIsOpen } =
+    UtilitiesOrcamento();
+
+  const { getMonthOptions, formatted_current_month } = UseDates();
+  const month = formatted_current_month;
+
+  useEffect(() => {
+    if (!isOpen) return;
+  }, [isOpen]);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger>Editar</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Atualizar Orçamento</DialogTitle>
+        </DialogHeader>
+        <form action={handleUpdate} className="space-y-4">
+          <input type="hidden" name="id" value={item.id} />
+
+          <div className="w-full">
+            <Label>Categoria</Label>
+            <Select
+              defaultValue={item.categorias?.id.toString()}
+              name="categoria_id"
+            >
+              <SelectTrigger className="w-full capitalize">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {categorias.map((item) => (
+                  <SelectItem
+                    className="capitalize"
+                    key={item.id}
+                    value={item.id.toString()}
+                  >
+                    {item.nome}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label>Período</Label>
+            <Select name="periodo" defaultValue={item.periodo}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {getMonthOptions().map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="valor_orcado">Valor Limite</Label>
+            <MoneyInput
+              id="valor_orcado"
+              name="valor_orcado"
+              defaultValue={item.valor_orcado}
+              placeholder="R$ 0,00"
+            />
+          </div>
+
+          <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
+            <DialogClose asChild>
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
+                Cancelar
+              </Button>
+            </DialogClose>
+            <Button
+              className="w-full sm:w-1/2"
+              type="submit"
+              disabled={updateLoading}
+            >
+              {updateLoading ? "Atualizando..." : "Atualizar"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}

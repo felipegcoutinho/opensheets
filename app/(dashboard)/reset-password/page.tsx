@@ -1,4 +1,4 @@
-import { resetPasswordAction } from "@/app/actions/auth";
+import { resetPasswordAction } from "@/app/actions/auth/auth";
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ export default async function ResetPassword(props) {
   return (
     <form className="flex w-full max-w-md flex-col gap-2 p-4 [&>input]:mb-4">
       <h1 className="text-2xl font-medium">Reset password</h1>
-      <p className="text-sm text-foreground/60">
+      <p className="text-foreground/60 text-sm">
         Please enter your new password below.
       </p>
       <Label htmlFor="password">New password</Label>

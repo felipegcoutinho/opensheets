@@ -1,14 +1,17 @@
-import { getAccount, getAccountDetails } from "@/app/services/contas";
+import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
+import {
+  getAccount,
+  getAccountDetails,
+} from "@/app/actions/accounts/fetch_accounts";
+import { getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
 import {
   getAccountInvoice,
   getSumAccountExpense,
   getSumAccountIncome,
-} from "@/app/services/transacoes";
+} from "@/app/actions/transactions/fetch_transactions";
 import { getMonth } from "@/hooks/get-month";
 import AccountInfo from "./account-info";
-import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
-import { getCards } from "@/app/services/cartoes";
-import { getNewCategorias } from "@/app/services/categorias";
 
 export default async function page({ searchParams, params }) {
   const { id } = await params;
@@ -30,15 +33,15 @@ export default async function page({ searchParams, params }) {
 
   return (
     <div>
-      {accountDetails?.map((item) => (
+      {accountDetails && (
         <AccountInfo
-          key={item.id}
-          item={item}
+          key={accountDetails.id}
+          item={accountDetails}
           sumAccountIncome={sumIncome}
           accountExpense={sumExpense}
           saldo={saldo}
         />
-      ))}
+      )}
 
       <TableTransaction
         data={accountInvoice}

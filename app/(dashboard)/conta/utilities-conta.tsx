@@ -1,17 +1,20 @@
-import { addAccount, updateAccount } from "@/actions/accounts";
+import { addAccount } from "@/app/actions/accounts/create_accounts";
+import { updateAccount } from "@/app/actions/accounts/update_account";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 
-export default function UtilitiesConta() {
+export default function UtilitiesConta(defaultIgnored = false) {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusPagamento, setStatusPagamento] = useState(false);
+  const [isIgnored, setIsIgnored] = useState(defaultIgnored);
   const { toast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+    formData.append("is_ignored", String(isIgnored));
     try {
       await addAccount(formData);
       toast({
@@ -35,6 +38,7 @@ export default function UtilitiesConta() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+    formData.append("is_ignored", String(isIgnored));
     try {
       await updateAccount(formData);
       toast({
@@ -57,6 +61,8 @@ export default function UtilitiesConta() {
   return {
     isOpen,
     setIsOpen,
+    isIgnored,
+    setIsIgnored,
     loading,
     handleSubmit,
     handleUpdate,

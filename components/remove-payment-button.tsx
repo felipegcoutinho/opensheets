@@ -1,5 +1,6 @@
 "use client";
-import { deleteFaturas } from "@/actions/invoices";
+
+import { deleteFaturas } from "@/app/actions/invoices/delete_invoices";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

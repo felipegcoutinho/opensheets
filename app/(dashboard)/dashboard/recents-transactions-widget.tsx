@@ -1,6 +1,6 @@
 import EmptyCard from "@/components/empty-card";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { UseDates } from "@/hooks/use-dates";
 
 function RecentesTransactions({ transactions }) {
@@ -19,7 +19,7 @@ function RecentesTransactions({ transactions }) {
       {transactions?.map((item) => (
         <div
           key={item.id}
-          className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700"
+          className="flex items-center justify-between border-b border-dashed py-0 last:border-0"
         >
           <div className="flex items-center">
             <PaymentMethodLogo

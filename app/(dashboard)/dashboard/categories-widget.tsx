@@ -2,10 +2,13 @@
 
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
+import Ping from "@/components/ping-icon";
 import { Badge } from "@/components/ui/badge";
-import { CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { RiArrowRightUpLine } from "@remixicon/react";
+import {
+  RiArrowRightSFill,
+  RiCheckboxCircleLine,
+  RiSkull2Fill,
+} from "@remixicon/react";
 import Link from "next/link";
 
 type CombinedData = {
@@ -15,85 +18,127 @@ type CombinedData = {
   id: string;
 };
 
-type Props = {
-  data: CombinedData[];
-  totalReceita?: number;
-  tipo?: "receita" | "despesa";
-  month: string;
+type BudgetData = {
+  categorias: { id: string };
+  valor_orcado: number;
 };
 
-export default function CategoryWidget({
+interface CategoryProgressProps {
+  data: CombinedData[];
+  budgets?: BudgetData[];
+  tipo: "despesa" | "receita";
+  total?: number;
+  month: string;
+}
+
+export default function CategoryProgress({
   data,
-  totalReceita,
+  budgets = [],
   tipo,
+  total,
   month,
-}: Props) {
-  const filteredData = data.filter((item) => item.tipo_transacao === tipo);
+}: CategoryProgressProps) {
+  // Mapeia e adapta os dados recebidos para o formato interno
+  const categories = data
+    .filter((item) => item.tipo_transacao === tipo)
+    .map((item) => {
+      const budget = budgets.find(
+        (b) => b.categorias?.id?.toString() === item.id.toString(),
+      );
+      return {
+        id: item.id,
+        name: item.categoria,
+        spent: item.total,
+        limit: budget?.valor_orcado,
+        color: tipo === "despesa" ? "bg-red-500" : "bg-green-500",
+        tipo: item.tipo_transacao,
+      };
+    });
 
-  const sortedData = filteredData.sort((a, b) => b.total - a.total);
+  const sortedData = categories.sort((a, b) => b.spent - a.spent);
+  const totalSpent = categories.reduce((sum, cat) => sum + cat.spent, 0);
 
-  if (!data || data.length === 0) {
-    return <EmptyCard />;
-  }
+  if (!sortedData.length && !totalSpent) return <EmptyCard />;
 
   return (
-    <CardContent className="space-y-6 p-0">
-      {sortedData.map((item, index) => {
-        const percentual =
-          totalReceita && totalReceita > 0
-            ? ((item.total / totalReceita) * 100).toFixed(1)
-            : item.tipo_transacao === "despesa"
-              ? "100.0"
-              : "0.0";
+    <div className="w-full">
+      <div className="space-y-2">
+        {sortedData.map((item) => {
+          const categoryProgressPercentage = (item.spent / totalSpent) * 100;
+          const limitPercentage = item.limit
+            ? (item.spent / item.limit) * 100
+            : null;
 
-        const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.categoria)}/${encodeURIComponent(item.tipo_transacao)}?periodo=${month}`;
+          const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
 
-        return (
-          <div key={index} className="space-y-1">
-            <div className="flex items-center justify-between">
-              <Link
-                href={url}
-                className="flex items-center gap-1 hover:underline"
-              >
-                <span className="font-bold capitalize">{item.categoria}</span>
-                <RiArrowRightUpLine className="text-muted-foreground h-3 w-3" />
-              </Link>
+          return (
+            <div key={item.id} className="mb-2 w-full">
+              <div className="flex items-start justify-between border-b border-dashed py-2">
+                <div>
+                  <Link
+                    href={url}
+                    className="flex items-center gap-2 capitalize hover:underline"
+                  >
+                    <Ping color={item.color} />
+                    <span className="text-base font-medium">{item.name}</span>
+                    <RiArrowRightSFill className="text-muted-foreground -ml-1 h-4 w-4" />
+                  </Link>
 
-              <div className="flex items-center gap-2">
-                <MoneyValues value={item.total} />
-                <Badge
-                  variant={
-                    item.tipo_transacao === "despesa" ? "despesa" : "receita"
-                  }
-                >
-                  {percentual}%
-                </Badge>
+                  {item.limit ? (
+                    <div className="mt-1 space-x-1 text-sm">
+                      <Badge
+                        variant={
+                          item.spent > item.limit
+                            ? "destructive_lite"
+                            : "sistema"
+                        }
+                      >
+                        {limitPercentage!.toFixed(1)}% do limite
+                        <MoneyValues value={item.limit} className="ml-1" />
+                      </Badge>
+
+                      {item.spent > item.limit ? (
+                        <>
+                          <Badge variant="destructive_lite">
+                            excedeu em
+                            <MoneyValues
+                              value={item.spent - item.limit}
+                              className="ml-1"
+                            />
+                          </Badge>
+                          <RiSkull2Fill className="text-destructive ml-1 inline-block h-3 w-3" />
+                        </>
+                      ) : (
+                        <RiCheckboxCircleLine className="ml-1 inline-block h-3 w-3 text-emerald-500" />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-muted-foreground mt-1 text-sm">
+                      sem limite configurado
+                    </div>
+                  )}
+                </div>
+
+                <div className="text-right">
+                  <MoneyValues value={item.spent} />
+                  <div>
+                    <Badge variant="sistema" className="mt-1">
+                      {categoryProgressPercentage.toFixed(1)}%{" "}
+                      {tipo === "despesa" ? "da despesa" : "da receita"} total
+                    </Badge>
+                  </div>
+                </div>
               </div>
             </div>
+          );
+        })}
+      </div>
 
-            <Progress
-              primary_color={
-                item.tipo_transacao === "despesa"
-                  ? "bg-red-500 dark:bg-red-700"
-                  : "bg-green-500 dark:bg-green-700"
-              }
-              secondary_color={
-                item.tipo_transacao === "despesa"
-                  ? "bg-zinc-200 dark:bg-zinc-700/50"
-                  : "bg-zinc-200 dark:bg-zinc-700/50"
-              }
-              value={
-                totalReceita && totalReceita > 0
-                  ? (item.total / totalReceita) * 100
-                  : item.tipo_transacao === "despesa"
-                    ? 100
-                    : 0
-              }
-              className="h-2"
-            />
-          </div>
-        );
-      })}
-    </CardContent>
+      {/* {categories.length === 0 && (
+        <div className="mt-4 text-center text-sm text-gray-500">
+          Nenhuma categoria encontrada para este mês.
+        </div>
+      )} */}
+    </div>
   );
 }

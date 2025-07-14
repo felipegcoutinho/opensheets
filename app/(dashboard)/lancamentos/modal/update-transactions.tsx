@@ -1,4 +1,5 @@
 "use client";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,7 +27,6 @@ import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UpdateTransactions({
   itemId,
@@ -46,6 +46,7 @@ export default function UpdateTransactions({
   itemContaId,
   getCards,
   getAccount,
+  item,
 }) {
   const {
     isOpen,
@@ -68,14 +69,10 @@ export default function UpdateTransactions({
 
   useEffect(() => {
     async function fetchOptions() {
-      const descRes = await fetch(
-        `/api/descriptions?month=${selectedMonth}`,
-      );
+      const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(
-        `/api/responsaveis?month=${selectedMonth}`,
-      );
+      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
       const respJson = await respRes.json();
       setResponsavelOptions(respJson.data || []);
     }
@@ -125,7 +122,7 @@ export default function UpdateTransactions({
         </DialogHeader>
 
         <form onSubmit={handleUpdate} className="space-y-2">
-          <input type="hidden" name="id" value={itemId} />
+          <input type="hidden" name="id" value={item.id} />
 
           <div className="mb-1 flex w-full gap-2">
             <div className="w-1/2">
@@ -167,7 +164,7 @@ export default function UpdateTransactions({
                 <Required />
               </Label>
               <Input
-                defaultValue={itemDescricao}
+                defaultValue={item.descricao}
                 name="descricao"
                 placeholder="Descrição"
                 type="text"
@@ -233,7 +230,7 @@ export default function UpdateTransactions({
                   defaultPressed={itemPaid}
                   onPressedChange={() => setIsPaid(!itemPaid)}
                   name="realizado"
-                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+                  className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
                 >
                   <RiThumbUpLine strokeWidth={2} />
                 </Toggle>
@@ -340,7 +337,7 @@ export default function UpdateTransactions({
                     className="h-full w-full object-cover"
                   />
 
-                  <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
                     <span className="font-semibold text-white">
                       {removingImage ? "Removendo..." : "Remover Imagem"}
                     </span>

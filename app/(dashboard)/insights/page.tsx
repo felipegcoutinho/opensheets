@@ -1,15 +1,17 @@
-import { getCards } from "@/app/services/cartoes";
-import { getTransactionsByResponsableVoce } from "@/app/services/transacoes";
+import { getCards } from "@/app/actions/cards/fetch_cards";
+import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getTransactionsByResponsableVoce } from "@/app/actions/transactions/fetch_transactions";
 import { getMonth } from "@/hooks/get-month";
-import Dashboard from "./dashboard"; // agora é Home, não Dashboard
-import { getNewCategorias } from "@/app/services/categorias";
+import Dashboard from "./dashboard";
 
-async function page(props: { params: { month: string } }) {
+export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const lancamentos = await getTransactionsByResponsableVoce(month);
-  const cartoes = await getCards();
-  const categorias = await getNewCategorias();
+  const [lancamentos, cartoes, categorias] = await Promise.all([
+    getTransactionsByResponsableVoce(month),
+    getCards(),
+    getNewCategorias(),
+  ]);
 
   return (
     <div>
@@ -22,5 +24,3 @@ async function page(props: { params: { month: string } }) {
     </div>
   );
 }
-
-export default page;

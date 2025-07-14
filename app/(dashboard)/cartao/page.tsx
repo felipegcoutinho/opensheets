@@ -1,6 +1,6 @@
-import { getCards, getCardsDisabled } from "@/app/services/cartoes";
-import { getAccount } from "@/app/services/contas";
-import { getLimitesCartao } from "@/app/services/transacoes";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getCards, getCardsDisabled } from "@/app/actions/cards/fetch_cards";
+import { getLimitesCartao } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

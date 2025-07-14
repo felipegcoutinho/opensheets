@@ -1,61 +1,82 @@
 import {
-  RiArrowUpDownLine,
-  RiBankCardLine,
-  RiGovernmentLine,
-  RiDashboardLine,
-  RiListOrdered,
-  RiBook2Line,
-  RiGroupLine,
-  RiSparkling2Line,
+  RiArrowUpDownFill,
+  RiBankCardFill,
+  RiBankFill,
+  RiBook2Fill,
+  RiDashboardFill,
+  RiFileList2Fill,
+  RiGroupFill,
+  RiMoneyDollarCircleFill,
+  RiSparkling2Fill,
 } from "@remixicon/react";
 
 export function NavLinks(month: string) {
   return {
-    projects: [
+    groups: [
       {
-        name: "dashboard",
-        url: `/dashboard?periodo=${month}`,
-        icon: RiDashboardLine,
+        title: "Visão Geral",
+        items: [
+          {
+            name: "dashboard",
+            url: `/dashboard?periodo=${month}`,
+            icon: RiDashboardFill,
+          },
+        ],
       },
       {
-        name: "lançamentos",
-        url: `/lancamentos?periodo=${month}`,
-        icon: RiArrowUpDownLine,
+        title: "Gestão Financeira",
+        items: [
+          {
+            name: "lançamentos",
+            url: `/lancamentos?periodo=${month}`,
+            icon: RiArrowUpDownFill,
+          },
+          {
+            name: "cartões",
+            url: "/cartao",
+            icon: RiBankCardFill,
+          },
+          {
+            name: "contas",
+            url: "/conta",
+            icon: RiBankFill,
+          },
+          {
+            name: "limite de gastos",
+            url: `/orcamentos?periodo=${month}`,
+            icon: RiMoneyDollarCircleFill,
+          },
+        ],
       },
       {
-        name: "cartões",
-        url: "/cartao",
-        icon: RiBankCardLine,
+        title: "Organização",
+        items: [
+          {
+            name: "responsáveis",
+            url: `/responsavel?periodo=${month}`,
+            icon: RiGroupFill,
+          },
+          {
+            name: "categorias",
+            url: `/categorias`,
+            icon: RiFileList2Fill,
+          },
+        ],
       },
       {
-        name: "contas",
-        url: "/conta",
-        icon: RiGovernmentLine,
-      },
-      // {
-      //   name: "pagadores",
-      //   url: `/pagador`,
-      //   icon: UserSquare,
-      // },
-      {
-        name: "responsáveis",
-        url: `/responsavel?periodo=${month}`,
-        icon: RiGroupLine,
-      },
-      {
-        name: "anotações",
-        url: `/anotacao?periodo=${month}`,
-        icon: RiBook2Line,
-      },
-      {
-        name: "insights",
-        url: `/insights?periodo=${month}`,
-        icon: RiSparkling2Line,
-      },
-      {
-        name: "categorias",
-        url: `/categorias`,
-        icon: RiListOrdered,
+        title: "Análise e Anotações",
+        items: [
+          {
+            name: "anotações",
+            url: `/anotacao?periodo=${month}`,
+            icon: RiBook2Fill,
+          },
+          {
+            name: "insights",
+            url: `/insights?periodo=${month}`,
+            icon: RiSparkling2Fill,
+          },
+        ],
       },
     ],
   };

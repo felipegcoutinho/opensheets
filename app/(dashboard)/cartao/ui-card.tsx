@@ -1,12 +1,12 @@
 import MoneyValues from "@/components/money-values";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import Ping from "@/components/ping-icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
-import Ping from "@/components/ping-icon";
-import { PaymentMethodLogo } from "@/components/logos-on-table";
 
 export default function UiCard({ item, getAccountMap, mostrarLimites }) {
   return (
@@ -56,7 +56,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
               <div className="text-right">
                 <p className="text-muted-foreground">Disponível</p>
                 <span className="flex items-center gap-1">
-                  <Ping color={"bg-primary"} />
+                  <Ping color={"bg-secondary"} />
                   <MoneyValues value={item.limites.limiteDisponivel} />
                 </span>
               </div>
@@ -64,11 +64,11 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
 
             <Progress
               primary_color="bg-orange-400"
-              secondary_color="bg-primary "
+              secondary_color="bg-secondary"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }
-              className="h-2 rounded-full"
+              className="h-4 rounded"
             />
           </div>
         )}
@@ -79,21 +79,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }) {
           <Link href={`/cartao/${item.id}`}>ver fatura</Link>
         </Button>
 
-        <UpdateCard
-          itemContaId={item.contas?.id}
-          itemDescricao={item.descricao}
-          itemBandeira={item.bandeira}
-          itemTipo={item.tipo}
-          itemId={item.id}
-          itemLimite={item.limite}
-          itemStatus={item.status}
-          itemDtFechamento={item.dt_fechamento}
-          itemDtPagamento={item.dt_pagamento}
-          itemDtVencimento={item.dt_vencimento}
-          itemAnotacao={item.anotacao}
-          getAccountMap={getAccountMap}
-          itemLogo={item.logo_image}
-        />
+        <UpdateCard item={item} getAccountMap={getAccountMap} />
 
         {/* <form action={deleteCards}>
           <Button className="p-0" variant="link" value={item.id} name="excluir">

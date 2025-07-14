@@ -1,6 +1,6 @@
 "use client";
 
-import { ibmPlex } from "@/app/fonts/font";
+import { itau } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${ibmPlex.className} font-bold tracking-tight ${
+      className={`${itau.className} font-bold ${
         !estado && "blur-sm transition-all duration-300 hover:blur-none"
       }`}
     >

@@ -5,14 +5,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { RiArrowDownSFill, RiArrowUpSFill } from "@remixicon/react";
+import {
+  RiArrowDownSFill,
+  RiArrowUpSFill,
+  RiInformation2Fill,
+} from "@remixicon/react";
 import MoneyValues from "../../../components/money-values";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type Props = {
   title: string;
   value: number;
   previousValue: number;
   color: string;
+  information: string;
 };
 
 export default function SummaryWidget({
@@ -20,6 +30,7 @@ export default function SummaryWidget({
   value,
   previousValue,
   color,
+  information,
 }: Props) {
   const isReceitaOuDespesa =
     title.toLowerCase() === "receitas" || title.toLowerCase() === "despesas";
@@ -34,7 +45,16 @@ export default function SummaryWidget({
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
-            <span className="font-normal capitalize">{title}</span>
+            <span className="capitalize">{title}</span>
+
+            <Tooltip>
+              <TooltipTrigger>
+                <RiInformation2Fill size={16} className="text-muted" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{information}</p>
+              </TooltipContent>
+            </Tooltip>
           </span>
 
           <span className="flex items-center">

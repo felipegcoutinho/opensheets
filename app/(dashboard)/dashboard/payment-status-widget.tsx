@@ -1,6 +1,5 @@
 "use client";
 import EmptyCard from "@/components/empty-card";
-import { Separator } from "@/components/ui/separator";
 import { PaymentSection } from "./payment-section";
 
 type PaymentStatusWidgetProps = {
@@ -59,7 +58,7 @@ export default function PaymentStatusWidget({
     <>
       <PaymentSection {...receiveData} />
 
-      <Separator className="my-6" />
+      <div className="my-6 border-b border-dashed"></div>
 
       <PaymentSection {...payData} />
     </>

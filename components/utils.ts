@@ -1,4 +1,4 @@
-import { addFaturas } from "@/app/actions/invoices";
+import { addFaturas } from "@/app/actions/invoices/create_invoices";
 import confetti from "canvas-confetti";
 import { useTransition } from "react";
 
