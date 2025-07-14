@@ -12,10 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { RiBankCardLine } from "@remixicon/react";
-<<<<<<< HEAD:components/Invoice-payment-dialog.tsx
-=======
 import { PaymentMethodLogo } from "./payment-method-logo";
->>>>>>> dev:components/invoice-payment-dialog.tsx
 import Utils from "./utils";
 
 export default function InvoicePaymentDialog({
