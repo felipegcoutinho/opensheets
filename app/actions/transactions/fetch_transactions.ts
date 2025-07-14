@@ -599,8 +599,6 @@ export async function getResponsaveisList(month: string) {
 
   return Array.from(set);
 }
-<<<<<<< HEAD:app/services/transacoes.ts
-=======
 
 export async function getFinancialSummaryForPeriod(
   authId: string,
@@ -620,4 +618,3 @@ export async function getFinancialSummaryForPeriod(
     throw new Error(`Erro ao buscar resumo financeiro: ${error.message}`);
   return data;
 }
->>>>>>> dev:app/actions/transactions/fetch_transactions.ts
