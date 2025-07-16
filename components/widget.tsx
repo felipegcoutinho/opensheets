@@ -33,11 +33,11 @@ export default function Widget({
   saldo,
 }: WidgetProps) {
   return (
-    <Card className="h-custom-height-1 relative overflow-hidden">
+    <Card className="h-custom-height-1 from-primary/2 relative overflow-hidden from-10% to-transparent dark:bg-gradient-to-br">
       <CardHeader>
         <div className="flex w-full items-start justify-between">
           <div>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-1">
               {icon}
               {title}
             </CardTitle>
@@ -47,13 +47,16 @@ export default function Widget({
           </div>
 
           {saldo !== undefined && (
-            <div className="text-muted-foreground flex items-center gap-1 text-sm">
+            <div className="flex items-center gap-1 text-sm">
               <span>Saldo Geral</span>
               <MoneyValues value={saldo} />
               {information && (
                 <Tooltip>
                   <TooltipTrigger>
-                    <RiInformation2Fill size={16} className="text-muted" />
+                    <RiInformation2Fill
+                      size={16}
+                      className="text-muted-foreground"
+                    />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="ml-1">{information}</p>
