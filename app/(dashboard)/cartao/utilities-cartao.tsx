@@ -3,7 +3,7 @@ import { updateCards } from "@/app/actions/cards/update_cards";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default async function UtilitiesCartao() {
+export default function UtilitiesCartao() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusPagamento, setStatusPagamento] = useState(false);
