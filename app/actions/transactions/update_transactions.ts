@@ -15,7 +15,7 @@ export async function updateTransaction(formData: FormData) {
     condicao,
     forma_pagamento,
     anotacao,
-    responsavel,
+    pagador_id,
     valor,
     qtde_parcela,
     parcela_atual,
@@ -23,7 +23,7 @@ export async function updateTransaction(formData: FormData) {
     cartao_id,
     categoria_id,
     conta_id,
-    segundo_responsavel,
+    segundo_pagador_id,
     dividir_lancamento,
     imagem_url_atual, // URL da imagem existente
   } = Object.fromEntries(formData.entries());
@@ -72,7 +72,7 @@ export async function updateTransaction(formData: FormData) {
         condicao,
         forma_pagamento,
         anotacao,
-        responsavel,
+        pagador_id,
         valor,
         qtde_parcela,
         parcela_atual,
@@ -80,7 +80,7 @@ export async function updateTransaction(formData: FormData) {
         cartao_id,
         categoria_id,
         conta_id,
-        segundo_responsavel,
+        segundo_pagador_id,
         dividir_lancamento,
       })
       .eq("id", id);
