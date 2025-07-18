@@ -54,7 +54,9 @@ export async function getConditions(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select("condicao, valor:sum(valor)", { group: "condicao" })
+    .select("condicao, valor:sum(valor), pagador_id!inner()", {
+      group: "condicao",
+    })
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
     .eq("pagador_id.role", "principal")
@@ -69,7 +71,9 @@ export async function getPayment(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select("forma_pagamento, valor:sum(valor)", { group: "forma_pagamento" })
+    .select("forma_pagamento, valor:sum(valor), pagador_id!inner()", {
+      group: "forma_pagamento",
+    })
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
     .eq("pagador_id.role", "principal");
