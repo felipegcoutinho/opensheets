@@ -35,8 +35,9 @@ async function page(props: { params: { month: string } }) {
 
   // Agrupa Lançamentos e boletos por responsável
   const groupedData = transactionsByResponsible.reduce((acc, item) => {
-    if (!acc[item.responsavel]) {
-      acc[item.responsavel] = {
+    const nome = item.pagador_id?.nome || "";
+    if (!acc[nome]) {
+      acc[nome] = {
         cartoes: {},
         boletos: {},
         totalCartao: 0,
@@ -45,21 +46,22 @@ async function page(props: { params: { month: string } }) {
     }
 
     const descricaoCartao = item.cartoes?.descricao || "Pix/Dinheiro/Débito";
-    if (!acc[item.responsavel].cartoes[descricaoCartao]) {
-      acc[item.responsavel].cartoes[descricaoCartao] = {
+    if (!acc[nome].cartoes[descricaoCartao]) {
+      acc[nome].cartoes[descricaoCartao] = {
         valor: 0,
         logo_image: item.cartoes?.logo_image,
       };
     }
-    acc[item.responsavel].cartoes[descricaoCartao].valor += item.valor;
-    acc[item.responsavel].totalCartao += item.valor;
+    acc[nome].cartoes[descricaoCartao].valor += item.valor;
+    acc[nome].totalCartao += item.valor;
 
     return acc;
   }, {});
 
   billsByResponsible.forEach((item) => {
-    if (!groupedData[item.responsavel]) {
-      groupedData[item.responsavel] = {
+    const nome = item.pagador_id?.nome || "";
+    if (!groupedData[nome]) {
+      groupedData[nome] = {
         cartoes: {},
         boletos: {},
         totalCartao: 0,
@@ -68,10 +70,9 @@ async function page(props: { params: { month: string } }) {
     }
 
     const descricaoBoleto = item.descricao;
-    groupedData[item.responsavel].boletos[descricaoBoleto] =
-      (groupedData[item.responsavel].boletos[descricaoBoleto] || 0) +
-      item.valor;
-    groupedData[item.responsavel].totalBoleto += item.valor;
+    groupedData[nome].boletos[descricaoBoleto] =
+      (groupedData[nome].boletos[descricaoBoleto] || 0) + item.valor;
+    groupedData[nome].totalBoleto += item.valor;
   });
 
   // Reorganiza os dados para priorizar o responsável "você"
