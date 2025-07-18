@@ -57,6 +57,11 @@ export function NavLinks(month: string) {
             icon: RiGroupFill,
           },
           {
+            name: "pagadores",
+            url: `/pagador?periodo=${month}`,
+            icon: RiGroupFill,
+          },
+          {
             name: "categorias",
             url: `/categorias`,
             icon: RiFileList2Fill,
