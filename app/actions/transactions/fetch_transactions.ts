@@ -54,7 +54,7 @@ export async function getConditions(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select("condicao, valor.sum(), pagador_id!inner(role)")
+    .select("condicao, valor:sum(valor)", { group: "condicao" })
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
     .eq("pagador_id.role", "principal")
@@ -69,7 +69,7 @@ export async function getPayment(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select("forma_pagamento, valor.sum(), pagador_id!inner(role)")
+    .select("forma_pagamento, valor:sum(valor)", { group: "forma_pagamento" })
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
     .eq("pagador_id.role", "principal");
@@ -113,7 +113,9 @@ export async function getTransactionsByCategory(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select(`valor, tipo_transacao, categoria:categoria_id (id, nome ), pagador_id!inner(id, role)`)
+    .select(
+      `valor, tipo_transacao, categoria:categoria_id (id, nome ), pagador_id!inner(id, role)`,
+    )
     .eq("periodo", month)
     .eq("pagador_id.role", "principal");
 
@@ -212,7 +214,9 @@ export async function getBills(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select("id, valor, descricao, data_vencimento, realizado, pagador_id!inner(role)")
+    .select(
+      "id, valor, descricao, data_vencimento, realizado, pagador_id!inner(role)",
+    )
     .eq("tipo_transacao", "despesa")
     .eq("forma_pagamento", "boleto")
     .eq("pagador_id.role", "principal")
@@ -379,7 +383,7 @@ export async function getAccountInvoice(month: string, conta_id: number) {
     .eq("periodo", month)
     .eq("realizado", true)
     .eq("conta_id", conta_id)
-    .or("pagador_id.role.eq.principal,pagador_id.role.eq.sistema");
+    .in("pagador_id.role", ["principal", "sistema"]);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -399,7 +403,7 @@ export async function getSumAccountIncome(month: string, id: number) {
     .eq("conta_id", id)
 
     .eq("tipo_transacao", "receita")
-    .or("pagador_id.role.eq.principal,pagador_id.role.eq.sistema")
+    .in("pagador_id.role", ["principal", "sistema"])
     .eq("realizado", true);
 
   if (error) {
@@ -437,7 +441,7 @@ export async function getSumAccountExpense(month: string, id: number) {
     .eq("conta_id", id)
 
     .eq("tipo_transacao", "despesa")
-    .or("pagador_id.role.eq.principal,pagador_id.role.eq.sistema")
+    .in("pagador_id.role", ["principal", "sistema"])
     .eq("realizado", true);
 
   if (error) {
@@ -470,7 +474,9 @@ export async function getTransactionsByResponsible(month: string) {
 
   const { data, error } = await supabase
     .from("lancamentos_temp")
-    .select("pagador_id!inner(id, nome, role), cartoes (descricao, logo_image), valor")
+    .select(
+      "pagador_id!inner(id, nome, role), cartoes (descricao, logo_image), valor",
+    )
     .order("pagador_id.nome", { ascending: true })
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
