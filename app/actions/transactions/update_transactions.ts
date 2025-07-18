@@ -60,7 +60,7 @@ export async function updateTransaction(formData: FormData) {
   // Atualizar a transação no banco de dados
   try {
     await supabase
-      .from("transacoes")
+      .from("lancamentos_temp")
       .update({
         data_compra,
         data_vencimento,
@@ -96,7 +96,7 @@ export async function togglePagamento(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("transacoes")
+    .from("lancamentos_temp")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
 
@@ -112,7 +112,7 @@ export async function payBills(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("transacoes")
+    .from("lancamentos_temp")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
 

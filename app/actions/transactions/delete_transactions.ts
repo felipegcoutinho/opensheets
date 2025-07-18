@@ -32,7 +32,7 @@ export async function removeImage(transactionId: number, imageUrl: string) {
 
   // 2. Limpar o campo imagem_url na tabela transacoes
   const { error: updateError } = await supabase
-    .from("transacoes")
+    .from("lancamentos_temp")
     .update({ imagem_url: null }) // Define como null
     .eq("id", transactionId); // Filtra pela transação
 
