@@ -11,11 +11,7 @@ function Banner({ children, className }) {
     return null;
   }
 
-  return (
-    <Card className={`mt-4 border-none px-6 py-4 ${className}`}>
-      {children}
-    </Card>
-  );
+  return <Card className={`p-6 ${className}`}>{children}</Card>;
 }
 
 export default Banner;
