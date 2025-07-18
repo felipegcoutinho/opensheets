@@ -8,14 +8,8 @@ export default async function BannerData() {
   const { currentDate, friendlyDate } = UseDates();
   const userName = await getUserName();
 
-  const headersList = await headers();
-  const ip =
-    headersList.get("x-forwarded-for")?.split(",")[0] ||
-    headersList.get("x-real-ip") ||
-    headersList.get("cf-connecting-ip") ||
-    null;
-
-  const locationWeather = await getLocationWeather(ip);
+  const headersList = headers();
+  const locationWeather = await getLocationWeather(headersList);
   const locationText = locationWeather
     ? `${locationWeather.city}, ${locationWeather.temperature} °C`
     : "Localização desconhecida";

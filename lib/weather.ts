@@ -5,14 +5,42 @@ interface LocationWeather {
   temperature: number;
 }
 
-export const getLocationWeather = cache(async (ip: string | null): Promise<LocationWeather | null> => {
+export const getLocationWeather = cache(async (
+  headersList: Headers,
+): Promise<LocationWeather | null> => {
   try {
-    const locationUrl = ip ? `https://ipapi.co/${ip}/json/` : "https://ipapi.co/json/";
-    const locationRes = await fetch(locationUrl, { next: { revalidate: 86400 } });
-    if (!locationRes.ok) return null;
-    const locationData = await locationRes.json();
-    const { city, latitude, longitude } = locationData;
-    if (!city || latitude === undefined || longitude === undefined) return null;
+    const cityHeader = headersList.get("x-vercel-ip-city");
+    const latHeader = headersList.get("x-vercel-ip-latitude");
+    const lonHeader = headersList.get("x-vercel-ip-longitude");
+
+    let city = cityHeader ?? undefined;
+    let latitude = latHeader ? parseFloat(latHeader) : undefined;
+    let longitude = lonHeader ? parseFloat(lonHeader) : undefined;
+
+    if (latitude === undefined || longitude === undefined || !city) {
+      const ip =
+        headersList.get("x-forwarded-for")?.split(",")[0] ||
+        headersList.get("x-real-ip") ||
+        headersList.get("cf-connecting-ip") ||
+        headersList.get("x-vercel-forwarded-for") ||
+        null;
+
+      const locationUrl = ip
+        ? `https://ipapi.co/${ip}/json/`
+        : "https://ipapi.co/json/";
+      const locationRes = await fetch(locationUrl, {
+        next: { revalidate: 86400 },
+      });
+      if (!locationRes.ok) return null;
+      const locationData = await locationRes.json();
+      city = locationData.city;
+      latitude = locationData.latitude;
+      longitude = locationData.longitude;
+    }
+
+    if (!city || latitude === undefined || longitude === undefined)
+      return null;
+
     const weatherRes = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=celsius`,
       { next: { revalidate: 1800 } },
