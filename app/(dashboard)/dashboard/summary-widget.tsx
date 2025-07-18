@@ -51,7 +51,7 @@ export default function SummaryWidget({
               <TooltipTrigger>
                 <RiInformation2Fill
                   size={16}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground/40"
                 />
               </TooltipTrigger>
               <TooltipContent>

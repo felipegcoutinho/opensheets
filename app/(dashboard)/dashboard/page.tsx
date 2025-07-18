@@ -71,18 +71,11 @@ export default async function page(props: { params: { month: string } }) {
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
-        {/* <Widget
-          title="Receita, Despesa e Balanço"
-          subtitle="Últimos 6 Meses"
-          icon={<RiBarChartBoxLine className="mr-2 inline size-4 text-primary" />}
-        >
-          <ChartSummary data={chartData} />
-        </Widget> */}
-
         <Widget
           title="Minhas Contas"
           subtitle="Contas e Saldos"
           information="Resumo de contas e saldos, inclui apenas contas de Você"
+          saldo_information="Saldo geral é a soma de todas as contas"
           saldo={saldo}
           icon={
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />

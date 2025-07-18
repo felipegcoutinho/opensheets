@@ -20,6 +20,7 @@ type WidgetProps = {
   subtitle: string;
   children: React.ReactNode;
   icon: React.ReactNode;
+  saldo_information?: string;
   information?: string;
   saldo?: number;
 };
@@ -29,8 +30,9 @@ export default function Widget({
   subtitle,
   icon,
   children,
-  information,
+  saldo_information,
   saldo,
+  information,
 }: WidgetProps) {
   return (
     <Card className="h-custom-height-1 from-primary/2 relative overflow-hidden from-10% to-transparent dark:bg-gradient-to-br">
@@ -40,6 +42,19 @@ export default function Widget({
             <CardTitle className="flex items-center gap-1">
               {icon}
               {title}
+              {information && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <RiInformation2Fill
+                      size={16}
+                      className="text-muted-foreground/40"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="ml-1">{information}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </CardTitle>
             <CardDescription className="text-muted-foreground mt-1 text-sm capitalize">
               {subtitle}
@@ -50,16 +65,16 @@ export default function Widget({
             <div className="flex items-center gap-1 text-sm">
               <span>Saldo Geral</span>
               <MoneyValues value={saldo} />
-              {information && (
+              {saldo_information && (
                 <Tooltip>
                   <TooltipTrigger>
                     <RiInformation2Fill
                       size={16}
-                      className="text-muted-foreground"
+                      className="text-muted-foreground/40"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="ml-1">{information}</p>
+                    <p className="ml-1">{saldo_information}</p>
                   </TooltipContent>
                 </Tooltip>
               )}
