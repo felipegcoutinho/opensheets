@@ -30,8 +30,8 @@ export default async function page() {
             {pagadores?.length > 0 ? (
               pagadores.map((item) => (
                 <div key={item.id} className="col-span-3 lg:col-span-1">
-                  <Card className="mx-auto w-full p-4 text-center">
-                    <div className="flex justify-center rounded bg-orange-100">
+                  <Card className="mx-auto h-72 w-full p-4 text-center">
+                    <div className="mb-4 flex justify-center rounded bg-orange-100 p-2 dark:bg-orange-950">
                       <div className="relative z-10">
                         <Image
                           src={`/logos/${item.foto}`}

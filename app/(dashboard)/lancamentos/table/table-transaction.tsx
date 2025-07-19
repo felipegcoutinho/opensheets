@@ -22,6 +22,7 @@ interface Transaction {
   data_transacao: string; // Exemplo, adicione todos os campos relevantes
   conta_id?: string | number;
   cartao_id?: string | number;
+  pagador_id?: string | number; // Adicione o campo pagador_id
   // Adicione outras propriedades conforme necessário
   [key: string]: any; // Para flexibilidade, mas tente ser específico
 }
@@ -31,6 +32,7 @@ interface TableTransactionProps {
   getAccount: any;
   getCards: any;
   getCategorias: any;
+  getPayers: any;
   hidden?: boolean;
 }
 
@@ -39,6 +41,7 @@ export function TableTransaction({
   getAccount,
   getCards,
   getCategorias,
+  getPayers,
   hidden,
 }: TableTransactionProps) {
   const { getDescricao } = UseStyles();
@@ -67,8 +70,9 @@ export function TableTransaction({
       getAccount,
       getCards,
       getCategorias,
-      DateFormat,
+      getPayers,
       hidden,
+      DateFormat,
     ),
     getDescricao,
   });
@@ -84,6 +88,7 @@ export function TableTransaction({
         getAccount={getAccount}
         getCards={getCards}
         getCategorias={getCategorias}
+        getPayers={getPayers}
         hidden={hidden}
         tipoTransacaoOptions={tipoTransacaoOptions}
         condicaoOptions={condicaoOptions}

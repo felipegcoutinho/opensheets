@@ -30,7 +30,6 @@ export default function DetailsTransactions({
   itemDescricao,
   itemNotas,
   itemDate,
-  itemResponsavel,
   itemTipoTransacao,
   itemValor,
   itemFormaPagamento,
@@ -43,6 +42,7 @@ export default function DetailsTransactions({
   itemPaid,
   itemImagemURL,
   itemCategoriaId,
+  itemPagador,
 }) {
   const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } =
     UtilitiesLancamento();
@@ -132,11 +132,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
-                  <span className="capitalize">
-                    <Badge variant={getResponsableStyle(itemResponsavel)}>
-                      {itemResponsavel}
-                    </Badge>
-                  </span>
+                  <span className="capitalize">{itemPagador}</span>
                 </li>
 
                 <li className="flex items-center justify-between">

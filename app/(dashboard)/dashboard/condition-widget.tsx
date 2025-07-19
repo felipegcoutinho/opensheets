@@ -15,6 +15,8 @@ export async function ConditionWidget({ month }) {
 
   const { getConditionIcon } = UseStyles();
 
+  console.log("condicoesSorted", condicoesSorted);
+
   return (
     <>
       {condicoesSorted?.map((item) => (
@@ -37,7 +39,7 @@ export async function ConditionWidget({ month }) {
             </Link>
 
             <p>
-              <MoneyValues value={item.sum} />
+              <MoneyValues value={item.valor} />
             </p>
           </div>
         </CardContent>

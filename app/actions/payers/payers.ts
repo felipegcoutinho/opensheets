@@ -6,13 +6,13 @@ import { revalidatePath } from "next/cache";
 export async function addPayers(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const { nome, email, foto, status, anotacao } = Object.fromEntries(
+  const { nome, email, foto, status, anotacao, role } = Object.fromEntries(
     formData.entries(),
   );
 
   const { error } = await supabase
     .from("pagadores")
-    .insert({ nome, email, foto, status, anotacao });
+    .insert({ nome, email, foto, status, anotacao, role });
 
   if (error) {
     console.error("Erro ao adicionar pagador:", error);
@@ -25,13 +25,13 @@ export async function addPayers(prevState: unknown, formData: FormData) {
 export async function updatePayers(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const { id, nome, email, foto, status, anotacao } = Object.fromEntries(
+  const { id, nome, email, foto, status, anotacao, role } = Object.fromEntries(
     formData.entries(),
   );
 
   const { error } = await supabase
     .from("pagadores")
-    .update({ id, nome, email, foto, status, anotacao })
+    .update({ id, nome, email, foto, status, anotacao, role })
     .eq("id", id);
 
   if (error) {

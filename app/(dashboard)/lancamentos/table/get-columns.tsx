@@ -44,11 +44,12 @@ const {
 } = UseStyles();
 
 export const getColumns = (
-  getAccountMap,
-  getCardsMap,
+  getAccount,
+  getCards,
   getCategorias,
-  DateFormat,
+  getPayers,
   hidden,
+  DateFormat,
 ) => [
   {
     id: "selection",
@@ -210,9 +211,17 @@ export const getColumns = (
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Badge variant={getResponsableStyle(item.responsavel)}>
-          {item.responsavel}
-        </Badge>
+        // <Badge variant={getResponsableStyle(item.responsavel)}>
+        //   {item.responsavel}
+        //   {item.pagador_id?.role}
+        // </Badge>
+        <span className="capitalize">
+          {item.pagador_id?.role === "principal" ? (
+            <Badge variant={"voce"}>Principal</Badge>
+          ) : (
+            <Badge variant={"outros"}>{item.pagador_id?.nome}</Badge>
+          )}
+        </span>
       );
     },
   },
@@ -280,7 +289,6 @@ export const getColumns = (
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
                   itemCondicao={item.condicao}
-                  itemResponsavel={item.responsavel}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
@@ -289,6 +297,7 @@ export const getColumns = (
                   itemQtdeRecorrencia={item.qtde_recorrencia}
                   itemCartao={item.cartoes?.descricao}
                   itemConta={item.contas?.descricao}
+                  itemPagador={item.pagadores?.nome}
                   itemPaid={item.realizado}
                   itemImagemURL={item.imagem_url}
                   itemCategoriaId={item.categorias?.nome}
@@ -313,11 +322,13 @@ export const getColumns = (
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}
                     itemCategoriaId={item.categorias?.id}
-                    getCategorias={getCategorias}
                     itemCartaoId={item.cartoes?.id}
                     itemContaId={item.contas?.id}
-                    getCards={getCardsMap}
-                    getAccount={getAccountMap}
+                    itemPagadorId={item.pagadores?.id}
+                    getCategorias={getCategorias}
+                    getCards={getCards}
+                    getAccount={getAccount}
+                    getPayers={getPayers}
                   />
                 </DropdownMenuItem>
               )}

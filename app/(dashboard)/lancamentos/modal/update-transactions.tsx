@@ -44,8 +44,10 @@ export default function UpdateTransactions({
   itemFormaPagamento,
   itemCartaoId,
   itemContaId,
+  itemPagadorId,
   getCards,
   getAccount,
+  getPayers,
   item,
 }) {
   const {
@@ -65,23 +67,15 @@ export default function UpdateTransactions({
 
   const [selectedMonth, setSelectedMonth] = useState(itemPeriodo);
   const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchOptions() {
       const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
-      const respJson = await respRes.json();
-      setResponsavelOptions(respJson.data || []);
     }
     if (selectedMonth) fetchOptions();
   }, [selectedMonth]);
-
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você",
-  );
 
   useEffect(() => {
     setIsPaid(itemPaid);
@@ -296,23 +290,26 @@ export default function UpdateTransactions({
           )}
 
           <div className="w-full">
-            <Label>
-              Responsável
-              <Required />
+            <Label htmlFor="pagador_id">
+              Responsável <Required />
             </Label>
-            <Input
-              defaultValue={itemResponsavel}
-              name="responsavel"
-              placeholder="Responsável"
-              type="text"
-              className="capitalize"
-              list="responsavel-update-list"
-            />
-            <datalist id="responsavel-update-list">
-              {responsavelOptions.map((opt) => (
-                <option key={opt} value={opt} />
-              ))}
-            </datalist>
+            <Select
+              name="pagador_id"
+              placeholder="Selecione"
+              defaultValue={itemPagadorId.toString()}
+              required
+            >
+              <SelectTrigger id="pagador_id" className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {getPayers?.map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    {item.nome}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>

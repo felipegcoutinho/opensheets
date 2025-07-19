@@ -20,14 +20,16 @@ export async function addTransaction(formData: FormData) {
 
   // 4. Inserção no banco de dados
   if (transacoes.length > 0) {
-    const { error } = await supabase.from("transacoes").insert(transacoes);
+    const { error } = await supabase
+      .from("lancamentos_temp")
+      .insert(transacoes);
     if (error) {
       console.error("Erro ao adicionar transações:", error);
       return { success: false, error: error.message };
     }
 
     revalidatePath("/dashboard");
-    revalidatePath("/transacoes");
+    revalidatePath("/lancamentos");
     return { success: true };
   } else {
     console.warn("Nenhuma transação foi gerada para ser inserida.");

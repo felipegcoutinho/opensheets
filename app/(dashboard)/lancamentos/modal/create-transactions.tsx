@@ -40,6 +40,7 @@ const fetcher = (url) =>
 export default function CreateTransactions({
   getCards,
   getAccount,
+  getPayers,
   getCategorias,
   children,
 }) {
@@ -70,51 +71,35 @@ export default function CreateTransactions({
   const { getMonthOptions, formatted_current_month } = UseDates();
   const month = formatted_current_month;
 
-  // 2. Hooks SWR para descrições e responsáveis
-  const {
-    data: descData,
-    error: descError,
-    isLoading: isLoadingDesc,
-  } = useSWR(`/api/descriptions?month=${month}`, fetcher);
-
-  const {
-    data: respData,
-    error: respError,
-    isLoading: isLoadingResp,
-  } = useSWR(`/api/responsaveis?month=${month}`, fetcher);
-
-  const descricaoOptions = descData?.data || [];
-  const responsavelOptions = respData?.data || [];
-
-  // 4. Filtragens auxiliares
-  const mainResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "sistema",
-  );
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
+  // Hooks SWR para descrições
+  const { data, error, isLoading } = useSWR(
+    `/api/descriptions?month=${month}`,
+    fetcher,
   );
 
-  // Resumos para o card de pré-visualização
+  const descricaoOptions = data?.data || [];
+
   const [valorResumo, setValorResumo] = useState(0);
   const [dataResumo, setDataResumo] = useState("");
   const [formaResumo, setFormaResumo] = useState("");
   const [condicaoResumo, setCondicaoResumo] = useState("vista");
   const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
   const [periodoResumo, setPeriodoResumo] = useState(month);
-  const [responsavelResumo, setResponsavelResumo] = useState("você");
+  const [responsavelResumo, setResponsavelResumo] = useState();
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger asChild>{children}</DialogTrigger>
+
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Novo lançamento</DialogTitle>
         </DialogHeader>
 
-        {(isLoadingDesc || isLoadingResp) && <p>Carregando opções...</p>}
-        {(descError || respError) && (
+        {isLoading && <p>Carregando opções...</p>}
+        {error && (
           <p className="text-red-600">
-            Erro ao carregar opções: {descError?.message || respError?.message}
+            Erro ao carregar opções: {error?.message}
           </p>
         )}
 
@@ -137,6 +122,7 @@ export default function CreateTransactions({
                   onChange={(e) => setDataResumo(e.target.value)}
                 />
               </div>
+
               <div className="w-1/2">
                 <Label htmlFor="periodo">
                   Período <Required />
@@ -290,44 +276,48 @@ export default function CreateTransactions({
 
             <div className="flex w-full gap-2">
               <div className="w-full">
-                <Label htmlFor="responsavel">
+                <Label htmlFor="pagador_id">
                   Responsável <Required />
                 </Label>
-                <Input
+                <Select
+                  name="pagador_id"
                   required
-                  list="responsavel-list"
-                  id="responsavel"
-                  name="responsavel"
-                  placeholder="Responsável"
-                  type="text"
-                  className="capitalize"
-                  defaultValue="você"
                   onChange={(e) => setResponsavelResumo(e.target.value)}
-                />
-                <datalist id="responsavel-list">
-                  {mainResponsavelOptions.map((opt) => (
-                    <option key={opt} value={opt} />
-                  ))}
-                </datalist>
+                >
+                  <SelectTrigger id="pagador_id" className="w-full">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getPayers?.map((item) => (
+                      <SelectItem key={item.id} value={item.id.toString()}>
+                        {item.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {isDividedChecked && (
                 <div className="w-full">
                   <Label htmlFor="segundo_responsavel">
-                    Segundo Responsável
+                    Segundo Responsável <Required />
                   </Label>
-                  <Input
-                    id="segundo_responsavel"
+                  <Select
                     name="segundo_responsavel"
-                    placeholder="Segundo Responsável"
-                    type="text"
-                    list="segundo-responsavel-list"
-                  />
-                  <datalist id="segundo-responsavel-list">
-                    {secondResponsavelOptions.map((opt) => (
-                      <option key={opt} value={opt} />
-                    ))}
-                  </datalist>
+                    required
+                    onChange={(e) => setResponsavelResumo(e.target.value)}
+                  >
+                    <SelectTrigger id="segundo_responsavel" className="w-full">
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {getPayers?.map((item) => (
+                        <SelectItem key={item.id} value={item.nome}>
+                          {item.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             </div>

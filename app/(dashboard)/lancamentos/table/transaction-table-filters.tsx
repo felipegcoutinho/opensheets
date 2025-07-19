@@ -38,6 +38,7 @@ export function TransactionTableFilters<TData>({
   setColumnFilterValue,
   getAccount,
   getCards,
+  getPayers,
   getCategorias,
   hidden,
   tipoTransacaoOptions,
@@ -57,6 +58,7 @@ export function TransactionTableFilters<TData>({
         getCards={getCards}
         getAccount={getAccount}
         getCategorias={getCategorias}
+        getPayers={getPayers}
       >
         <Button
           variant="default"

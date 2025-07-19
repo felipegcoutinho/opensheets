@@ -30,7 +30,7 @@ export async function PaymentWidget({ month }) {
                   <span className="lowercase">{item.forma_pagamento}</span>
                 </span>
 
-                <MoneyValues value={item.sum} />
+                <MoneyValues value={item.valor} />
               </div>
             </div>
           </CardContent>
