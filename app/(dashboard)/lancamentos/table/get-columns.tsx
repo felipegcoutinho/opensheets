@@ -217,7 +217,7 @@ export const getColumns = (
         // </Badge>
         <span className="capitalize">
           {item.pagador_id?.role === "principal" ? (
-            <Badge variant={"voce"}>Principal</Badge>
+            <Badge variant={"voce"}>{item.pagador_id?.nome}</Badge>
           ) : (
             <Badge variant={"outros"}>{item.pagador_id?.nome}</Badge>
           )}
