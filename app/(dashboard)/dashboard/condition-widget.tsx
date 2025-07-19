@@ -15,8 +15,6 @@ export async function ConditionWidget({ month }) {
 
   const { getConditionIcon } = UseStyles();
 
-  console.log("condicoesSorted", condicoesSorted);
-
   return (
     <>
       {condicoesSorted?.map((item) => (

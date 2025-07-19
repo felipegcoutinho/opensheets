@@ -11,7 +11,7 @@ export default async function page({ searchParams, params }) {
 
   const teste = await getLancamentostTeste(id, month);
 
-  console.log("teste", teste);
+  // console.log("teste", teste);
 
   const cartoes = await getCards();
   const contas = await getAccount();

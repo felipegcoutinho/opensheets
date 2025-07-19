@@ -53,11 +53,6 @@ export function NavLinks(month: string) {
         items: [
           {
             name: "responsáveis",
-            url: `/responsavel?periodo=${month}`,
-            icon: RiGroupFill,
-          },
-          {
-            name: "pagadores",
             url: `/pagador?periodo=${month}`,
             icon: RiGroupFill,
           },

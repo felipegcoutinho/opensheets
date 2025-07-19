@@ -50,7 +50,7 @@ export default function CreatePagador() {
               <Required />
             </Label>
             <Select name="foto" required>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>

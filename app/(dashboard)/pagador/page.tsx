@@ -6,7 +6,8 @@ import EmptyCard from "@/components/empty-card";
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { RiVerifiedBadgeLine } from "@remixicon/react";
+import { RiVerifiedBadgeFill } from "@remixicon/react";
+import { PaymentMethodLogo } from "@/components/payment-method-logo";
 
 export default async function page() {
   const pagadores = await getPayers();
@@ -30,26 +31,25 @@ export default async function page() {
             {pagadores?.length > 0 ? (
               pagadores.map((item) => (
                 <div key={item.id} className="col-span-3 lg:col-span-1">
-                  <Card className="mx-auto h-72 w-full p-4 text-center">
-                    <div className="mb-4 flex justify-center rounded bg-orange-100 p-2 dark:bg-orange-950">
-                      <div className="relative z-10">
-                        <Image
-                          src={`/logos/${item.foto}`}
-                          alt={item.nome}
-                          width={60}
-                          height={60}
-                          className="rounded-full border-2 border-white"
-                        />
-                      </div>
+                  <Card className="mx-auto max-h-72 w-full p-4 text-center">
+                    <div className="bg-muted flex justify-center rounded p-4">
+                      <PaymentMethodLogo
+                        url_name={`/logos/${item.foto}`}
+                        width={60}
+                        height={60}
+                      />
                     </div>
 
                     <div>
-                      <h1 className="flex items-center justify-center gap-1 font-bold">
-                        {item.nome}
-                        <span className="text-blue-500">
-                          <RiVerifiedBadgeLine className="h-4 w-4" />
-                        </span>
-                      </h1>
+                      <div className="flex items-center justify-center gap-1 font-bold">
+                        <span className="text-lg">{item.nome}</span>
+
+                        {item.role === "principal" && (
+                          <span className="text-blue-600">
+                            <RiVerifiedBadgeFill className="h-4 w-4" />
+                          </span>
+                        )}
+                      </div>
                       <p className="text-muted-foreground text-sm">
                         {item.email}
                       </p>
@@ -62,7 +62,7 @@ export default async function page() {
                     )}
 
                     <Link href={`/pagador/${item.id}`}>
-                      <p className="text-primary mt-4 hover:underline">
+                      <p className="text-primary mt-2 hover:underline">
                         detalhes
                       </p>
                     </Link>
