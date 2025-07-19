@@ -22,6 +22,7 @@ export function AppSidebar({
   cartoes,
   contas,
   categorias,
+  pagadores,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {}) {
   const { open } = useSidebar();
@@ -59,6 +60,7 @@ export function AppSidebar({
             cartoes={cartoes}
             contas={contas}
             categorias={categorias}
+            pagadores={pagadores}
           />
         </SidebarContent>
       </SidebarContent>

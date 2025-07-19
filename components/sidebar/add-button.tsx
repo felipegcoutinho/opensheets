@@ -3,7 +3,7 @@ import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-trans
 import { RiAddCircleLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 
-function AddButton({ item, cartoes, contas, categorias }) {
+function AddButton({ item, cartoes, contas, categorias, pagadores }) {
   return (
     <>
       {item.name === "lançamentos" && (
@@ -11,6 +11,7 @@ function AddButton({ item, cartoes, contas, categorias }) {
           getCards={cartoes}
           getAccount={contas}
           getCategorias={categorias}
+          getPayers={pagadores}
         >
           <Button
             className="transition-all hover:scale-110"

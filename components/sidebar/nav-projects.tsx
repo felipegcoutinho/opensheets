@@ -17,6 +17,7 @@ export const NavProjects = memo(function NavProjects({
   cartoes,
   contas,
   categorias,
+  pagadores,
 }: {
   groups: {
     title: string;
@@ -70,6 +71,7 @@ export const NavProjects = memo(function NavProjects({
                         contas={contas}
                         categorias={categorias}
                         item={item}
+                        pagadores={pagadores}
                       />
                     </div>
                   </SidebarMenuButton>

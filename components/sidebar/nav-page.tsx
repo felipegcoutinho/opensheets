@@ -3,15 +3,18 @@ import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getEmail, getUserName } from "@/app/actions/users/fetch_users";
 import { AppSidebar } from "./app-sidebar";
+import { getPayers } from "@/app/actions/payers/fetch_payers";
 
 async function page() {
-  const [name, email, cartoes, contas, categorias] = await Promise.all([
-    getUserName(),
-    getEmail(),
-    getCards(),
-    getAccount(),
-    getNewCategorias(),
-  ]);
+  const [name, email, cartoes, contas, categorias, pagadores] =
+    await Promise.all([
+      getUserName(),
+      getEmail(),
+      getCards(),
+      getAccount(),
+      getNewCategorias(),
+      getPayers(),
+    ]);
 
   return (
     <AppSidebar
@@ -21,6 +24,7 @@ async function page() {
       cartoes={cartoes}
       contas={contas}
       categorias={categorias}
+      pagadores={pagadores}
     />
   );
 }
