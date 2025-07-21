@@ -4,7 +4,6 @@ import Banner from "./banner-card";
 
 export default async function BannerData() {
   const { currentDate, friendlyDate } = UseDates();
-
   const userName = await getUserName();
 
   return (

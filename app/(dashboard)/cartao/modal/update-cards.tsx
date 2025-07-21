@@ -54,7 +54,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
               <Required />
             </Label>
             <Select name="logo_image" defaultValue={item.logo_image} required>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>
@@ -205,7 +205,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
               name="conta_id"
               required
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>

@@ -77,7 +77,7 @@ export function TransactionTableFilters<TData>({
             className={`w-full border-dashed sm:w-[140px] ${
               getColumnFilterValue("tipo_transacao") &&
               getColumnFilterValue("tipo_transacao") !== "all"
-                ? "ring-primary font-bold ring-2"
+                ? "ring-primary bg-primary/20 font-bold ring-1"
                 : ""
             }`}
           >
@@ -101,7 +101,7 @@ export function TransactionTableFilters<TData>({
             className={`w-full border-dashed sm:w-[140px] ${
               getColumnFilterValue("condicao") &&
               getColumnFilterValue("condicao") !== "all"
-                ? "ring-primary font-bold ring-2"
+                ? "ring-primary bg-primary/20 font-bold ring-1"
                 : ""
             }`}
           >
@@ -127,7 +127,7 @@ export function TransactionTableFilters<TData>({
             className={`w-full border-dashed sm:w-[140px] ${
               getColumnFilterValue("forma_pagamento") &&
               getColumnFilterValue("forma_pagamento") !== "all"
-                ? "ring-primary font-bold ring-2"
+                ? "ring-primary bg-primary/20 font-bold ring-1"
                 : ""
             }`}
           >
@@ -151,7 +151,7 @@ export function TransactionTableFilters<TData>({
             className={`w-full border-dashed sm:w-[140px] ${
               getColumnFilterValue("responsavel") &&
               getColumnFilterValue("responsavel") !== "all"
-                ? "ring-primary font-bold ring-2"
+                ? "ring-primary bg-primary/20 font-bold ring-1"
                 : ""
             }`}
           >
@@ -189,7 +189,7 @@ export function TransactionTableFilters<TData>({
           placeholder="Pesquisar"
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="w-full sm:w-[140px]"
+          className="bg-muted/40 w-full sm:w-[160px]"
         />
       </div>
     </div>

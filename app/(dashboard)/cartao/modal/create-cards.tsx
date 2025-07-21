@@ -57,7 +57,7 @@ export default function CreateCard({ getAccountMap }) {
               <Required />
             </Label>
             <Select name="logo_image" required>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>
@@ -197,7 +197,7 @@ export default function CreateCard({ getAccountMap }) {
               <Required />
             </Label>
             <Select name="conta_id" required>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>

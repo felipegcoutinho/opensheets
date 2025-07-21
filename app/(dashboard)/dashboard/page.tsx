@@ -31,11 +31,6 @@ export default async function page(props: { params: { month: string } }) {
     recentTransactions,
     sumPaidExpense,
     sumPaidIncome,
-    transactionsStats,
-    billsStats,
-    cardsStats,
-    accountsStats,
-    notesStats,
     sixmonth,
   } = await fetchAllData(month);
 
@@ -71,18 +66,11 @@ export default async function page(props: { params: { month: string } }) {
       </div>
 
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
-        {/* <Widget
-          title="Receita, Despesa e Balanço"
-          subtitle="Últimos 6 Meses"
-          icon={<RiBarChartBoxLine className="mr-2 inline size-4 text-primary" />}
-        >
-          <ChartSummary data={chartData} />
-        </Widget> */}
-
         <Widget
           title="Minhas Contas"
           subtitle="Contas e Saldos"
           information="Resumo de contas e saldos, inclui apenas contas de Você"
+          saldo_information="Saldo geral é a soma de todas as contas"
           saldo={saldo}
           icon={
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
@@ -135,22 +123,6 @@ export default async function page(props: { params: { month: string } }) {
             sumPaidIncome={sumPaidIncome}
           />
         </Widget>
-
-        {/* <Widget
-          title="Resumo do Mês"
-          subtitle="Principais Resumos"
-          information="Resumo do mês, inclui apenas transações de Você"
-          icon={<RiBarChartLine className="text-primary mr-2 inline size-4" />}
-        >
-          <StatsWidget
-            month={month}
-            transactionsStats={transactionsStats}
-            billsStats={billsStats}
-            cardsStats={cardsStats}
-            accountsStats={accountsStats}
-            notesStats={notesStats}
-          />
-        </Widget> */}
 
         <Widget
           title="Receita, Despesa e Balanço"

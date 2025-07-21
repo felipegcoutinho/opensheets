@@ -50,7 +50,7 @@ export default function UpdateAccount({ item }) {
               <Required />
             </Label>
             <Select name="logo_image" defaultValue={item.logo_image} required>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>

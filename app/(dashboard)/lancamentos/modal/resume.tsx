@@ -38,21 +38,21 @@ export function ResumoLancamentoCard({
 
   // Mapeamento de ícones por tipo
   const icone = {
-    vista: <RiMoneyDollarBoxFill size={20} className="text-amber-500" />,
-    parcelado: <RiMoneyDollarBoxFill size={20} className="text-amber-500" />,
-    recorrente: <RiMoneyDollarBoxFill size={20} className="text-amber-500" />,
+    vista: <RiMoneyDollarBoxFill size={20} className="text-primary" />,
+    parcelado: <RiMoneyDollarBoxFill size={20} className="text-primary" />,
+    recorrente: <RiMoneyDollarBoxFill size={20} className="text-primary" />,
   }[condicaoResumo];
 
   return (
-    <Card className="border-none bg-amber-50 dark:bg-amber-950">
+    <Card>
       <CardHeader className="flex items-center gap-2 pb-0">
         {icone}
-        <CardTitle className="text-amber-900 dark:text-amber-50">
+        <CardTitle className="text-primary dark:text-amber-50">
           Resumo do Lançamento
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-2 gap-4 pt-2 text-amber-950 dark:text-amber-50">
+      <CardContent className="grid grid-cols-2 gap-4 pt-2 text-green-900 dark:text-amber-50">
         {condicaoResumo === "vista" && (
           <>
             <div>

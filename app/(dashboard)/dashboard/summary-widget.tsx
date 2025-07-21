@@ -41,7 +41,7 @@ export default function SummaryWidget({
   const isPositive = diffPercent >= 0;
 
   return (
-    <Card className="gap-2">
+    <Card className="from-primary/2 gap-2 from-10% to-transparent dark:bg-gradient-to-br">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
@@ -49,7 +49,10 @@ export default function SummaryWidget({
 
             <Tooltip>
               <TooltipTrigger>
-                <RiInformation2Fill size={16} className="text-muted" />
+                <RiInformation2Fill
+                  size={16}
+                  className="text-muted-foreground/40"
+                />
               </TooltipTrigger>
               <TooltipContent>
                 <p>{information}</p>
