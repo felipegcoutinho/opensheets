@@ -35,15 +35,3 @@ export async function getAccountDetails(id: number) {
 
   return data;
 }
-
-export async function getAccountsStats() {
-  const supabase = createClient();
-
-  const { count, error } = await supabase
-    .from("contas")
-    .select("id", { count: "exact", head: true });
-
-  if (error) throw error;
-
-  return count ?? 0;
-}

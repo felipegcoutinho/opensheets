@@ -79,35 +79,6 @@ export async function getPayment(month: string) {
   return data;
 }
 
-export async function getTransactionsStats(month: string) {
-  const supabase = createClient();
-
-  const { count, error } = await supabase
-    .from("transacoes")
-    .select("id", { count: "exact", head: true })
-    .eq("periodo", month)
-    .eq("responsavel", "você");
-
-  if (error) throw error;
-
-  return count ?? 0;
-}
-
-export async function getBillsStats(month: string) {
-  const supabase = createClient();
-
-  const { count, error } = await supabase
-    .from("transacoes")
-    .select("id", { count: "exact", head: true })
-    .eq("periodo", month)
-    .eq("forma_pagamento", "boleto")
-    .eq("responsavel", "você");
-
-  if (error) throw error;
-
-  return count ?? 0;
-}
-
 export async function getTransactionsByCategory(month: string) {
   const supabase = createClient();
 
@@ -529,29 +500,6 @@ export async function getTransactionsByResponsableVoce(month: string) {
   return data;
 }
 
-export async function getLancamentostTeste(month: string, id: number) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("lancamentos")
-    .select(
-      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
-      forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome), pagador_id!inner(id, nome)`,
-    )
-    .eq("periodo", month)
-    .eq("pagador_id.id", id)
-    .order("tipo_transacao", { ascending: true })
-    .order("data_compra", { ascending: false })
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Erro ao buscar Lançamentos:", error);
-    return [];
-  }
-
-  return data;
-}
 // Retorna lista de descricoes unicas para um periodo
 export async function getDescriptionsList(month: string) {
   const supabase = createClient();

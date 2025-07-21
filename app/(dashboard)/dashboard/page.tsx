@@ -31,11 +31,6 @@ export default async function page(props: { params: { month: string } }) {
     recentTransactions,
     sumPaidExpense,
     sumPaidIncome,
-    transactionsStats,
-    billsStats,
-    cardsStats,
-    accountsStats,
-    notesStats,
     sixmonth,
   } = await fetchAllData(month);
 
@@ -128,22 +123,6 @@ export default async function page(props: { params: { month: string } }) {
             sumPaidIncome={sumPaidIncome}
           />
         </Widget>
-
-        {/* <Widget
-          title="Resumo do Mês"
-          subtitle="Principais Resumos"
-          information="Resumo do mês, inclui apenas transações de Você"
-          icon={<RiBarChartLine className="text-primary mr-2 inline size-4" />}
-        >
-          <StatsWidget
-            month={month}
-            transactionsStats={transactionsStats}
-            billsStats={billsStats}
-            cardsStats={cardsStats}
-            accountsStats={accountsStats}
-            notesStats={notesStats}
-          />
-        </Widget> */}
 
         <Widget
           title="Receita, Despesa e Balanço"

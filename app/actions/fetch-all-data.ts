@@ -1,10 +1,8 @@
-import { getAccountsStats } from "@/app/actions/accounts/fetch_accounts";
-import { getCardsStats } from "@/app/actions/cards/fetch_cards";
 import { getInvoiceList } from "@/app/actions/invoices/fetch_invoices";
-import { getNotesStats } from "@/app/actions/notes/fetch_notes";
+import { UseDates } from "@/hooks/use-dates";
+import { getSession } from "./users/fetch_users";
 import {
   getBills,
-  getBillsStats,
   getConditions,
   getExpense,
   getFinancialSummaryForPeriod,
@@ -15,12 +13,8 @@ import {
   getSumPaidExpense,
   getSumPaidIncome,
   getTransactionsByCategory,
-  getTransactionsStats,
 } from "@/app/actions/transactions/fetch_transactions";
-import { UseDates } from "@/hooks/use-dates";
-import { getSession } from "./users/fetch_users";
 
-// Tipagem opcional para retorno estruturado (torna o código mais robusto e IDE-friendly)
 type FetchAllDataReturn = {
   incomes: number | null;
   incomesAnterior: number | null;
@@ -35,11 +29,6 @@ type FetchAllDataReturn = {
   sumPaidExpense: number | null;
   sumPaidIncome: number | null;
   invoiceList: any;
-  transactionsStats: any;
-  billsStats: any;
-  cardsStats: any;
-  accountsStats: any;
-  notesStats: any;
   sixmonth: any;
   financialResumeByMonth: any;
   financialResumeByPreviousMonth: any;
@@ -64,11 +53,6 @@ export async function fetchAllData(month: string): Promise<FetchAllDataReturn> {
     sumPaidExpense: getSumPaidExpense(month),
     sumPaidIncome: getSumPaidIncome(month),
     invoiceList: getInvoiceList(month),
-    transactionsStats: getTransactionsStats(month),
-    billsStats: getBillsStats(month),
-    cardsStats: getCardsStats(month),
-    accountsStats: getAccountsStats(month),
-    notesStats: getNotesStats(month),
     sixmonth: getLastSixMonths(month),
     financialResumeByMonth: getFinancialSummaryForPeriod(userId.id, month),
     financialResumeByPreviousMonth: getFinancialSummaryForPeriod(
