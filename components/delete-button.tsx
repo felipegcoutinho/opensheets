@@ -2,57 +2,55 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-export default function DeleteButton({
-  handleDelete,
-  isOpen,
-  setIsOpen,
-  loading,
-}) {
+export default function DeleteButton({ handleDelete, isOpen, setIsOpen, loading }) {
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger
         onClick={(e) => e.stopPropagation()}
         className="cursor-pointer text-red-500"
       >
         Remover
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
-          <DialogDescription>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Tem certeza que deseja excluir ?</AlertDialogTitle>
+          <AlertDialogDescription>
             Isso não pode ser desfeito. Isso removerá
             <strong> permanentemente</strong> seu conteúdo e removerá seus dados
             de nossos servidores.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="flex w-full gap-2">
-          <DialogClose className="w-1/2" asChild>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex w-full gap-2">
+          <AlertDialogCancel asChild className="w-1/2">
             <Button type="button" variant="secondary">
               Cancelar
             </Button>
-          </DialogClose>
+          </AlertDialogCancel>
           <form className="w-1/2" onSubmit={handleDelete}>
-            <Button
-              variant="destructive"
-              className="w-full"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Removendo..." : " Sim, quero excluir"}
-            </Button>
+            <AlertDialogAction asChild>
+              <Button
+                variant="destructive"
+                className="w-full"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Removendo..." : " Sim, quero excluir"}
+              </Button>
+            </AlertDialogAction>
           </form>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

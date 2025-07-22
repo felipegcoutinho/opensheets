@@ -36,14 +36,18 @@ function DeleteButtonCategoria({ handleDelete, id, isPending, descricao }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => handleDelete(id)}
-            className="cursor-pointer"
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending ? "Removendo..." : " Sim, quero excluir"}
+          <AlertDialogCancel asChild>
+            <Button variant="secondary">Cancelar</Button>
+          </AlertDialogCancel>
+          <AlertDialogAction asChild>
+            <Button
+              onClick={() => handleDelete(id)}
+              variant="destructive"
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending ? "Removendo..." : " Sim, quero excluir"}
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
