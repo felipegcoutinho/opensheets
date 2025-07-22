@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import Ping from "@/components/ping-icon";
 import UseOptions from "@/hooks/use-options";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -34,7 +35,10 @@ export default function CreateAccount() {
   const { logos } = UseOptions();
   const [isOpen, setIsOpen] = useState(false);
   const [isIgnored, setIsIgnored] = useState(false);
-  const [state, action, isPending] = useActionState(createAccount, initialState);
+  const [state, action, isPending] = useActionState(
+    createAccount,
+    initialState,
+  );
 
   useEffect(() => {
     if (!state.message) return;
@@ -87,7 +91,12 @@ export default function CreateAccount() {
               Descrição
               <Required />
             </Label>
-            <Input name="descricao" placeholder="Descrição" type="text" required />
+            <Input
+              name="descricao"
+              placeholder="Descrição"
+              type="text"
+              required
+            />
           </div>
           <div className="w-full">
             <Label>
@@ -105,6 +114,29 @@ export default function CreateAccount() {
               </SelectContent>
             </Select>
           </div>
+          <div className="w-full">
+            <Label>
+              Status da Conta
+              <Required />
+            </Label>
+            <Select name="status" defaultValue="ativo" required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-green-500" /> Ativo
+                  </div>
+                </SelectItem>
+                <SelectItem value="inativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-zinc-400" /> Inativo
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center justify-between rounded-md border p-4">
             <Label className="text-sm">
               Desconsiderar essa conta nos cálculos mensais
@@ -117,11 +149,19 @@ export default function CreateAccount() {
           </div>
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
-              <Button className="w-full sm:w-1/2" type="button" variant="secondary">
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
                 Cancelar
               </Button>
             </DialogClose>
-            <Button className="w-full sm:w-1/2" type="submit" disabled={isPending}>
+            <Button
+              className="w-full sm:w-1/2"
+              type="submit"
+              disabled={isPending}
+            >
               {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>

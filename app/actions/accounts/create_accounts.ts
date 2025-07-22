@@ -1,7 +1,11 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { ActionResponse, AccountFormData, accountSchema } from "../../(dashboard)/conta/modal/form-schema";
+import {
+  ActionResponse,
+  AccountFormData,
+  accountSchema,
+} from "../../(dashboard)/conta/modal/form-schema";
 
 export async function createAccount(
   _prev: ActionResponse | null,
@@ -11,6 +15,7 @@ export async function createAccount(
     descricao: String(formData.get("descricao")),
     tipo_conta: String(formData.get("tipo_conta")),
     logo_image: String(formData.get("logo_image")),
+    status: String(formData.get("status")),
     anotacao: (formData.get("anotacao") as string) || "",
     is_ignored: String(formData.get("is_ignored")),
   };

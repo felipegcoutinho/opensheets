@@ -28,7 +28,6 @@ export async function createCard(
     limite: String(formData.get("limite")),
     bandeira: String(formData.get("bandeira")),
     logo_image: String(formData.get("logo_image")),
-    tipo: String(formData.get("tipo")),
     status: String(formData.get("status")),
     conta_id: String(formData.get("conta_id")),
   };

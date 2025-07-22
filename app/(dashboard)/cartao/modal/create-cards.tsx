@@ -27,6 +27,7 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { createCard } from "@/app/actions/cards/create_cards";
 import type { ActionResponse } from "./form-schema";
+import Ping from "@/components/ping-icon";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
@@ -48,7 +49,7 @@ export default function CreateCard({ getAccountMap }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="my-4 transition-all hover:scale-110">
+        <Button className="mt-2 mb-4 transition-all hover:scale-110">
           Novo Cartão
         </Button>
       </DialogTrigger>
@@ -127,51 +128,33 @@ export default function CreateCard({ getAccountMap }) {
             </div>
           </div>
 
-          <div className="flex w-full gap-2">
-            <div className="w-1/2">
-              <Label>
-                Bandeira
-                <Required />
-              </Label>
-              <Select name="bandeira" required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {bandeiras.map((item) => (
-                    <SelectItem key={item.name} value={item.file}>
-                      <div className="flex items-center gap-2">
-                        <Image
-                          quality={100}
-                          src={`/bandeiras/${item.file}`}
-                          className="rounded-full"
-                          width={32}
-                          height={32}
-                          alt="Logo do cartão"
-                        />
-                        <span>{item.name}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="w-1/2">
-              <Label>
-                Tipo do Cartão
-                <Required />
-              </Label>
-              <Select name="tipo" required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="virtual">Virtual</SelectItem>
-                  <SelectItem value="físico">Físico</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="full">
+            <Label>
+              Bandeira
+              <Required />
+            </Label>
+            <Select name="bandeira" required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {bandeiras.map((item) => (
+                  <SelectItem key={item.name} value={item.file}>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        quality={100}
+                        src={`/bandeiras/${item.file}`}
+                        className="rounded-full"
+                        width={32}
+                        height={32}
+                        alt="Logo do cartão"
+                      />
+                      <span>{item.name}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
@@ -184,8 +167,16 @@ export default function CreateCard({ getAccountMap }) {
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ativo">Ativo</SelectItem>
-                <SelectItem value="inativo">Inativo</SelectItem>
+                <SelectItem value="ativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-green-500" /> Ativo
+                  </div>
+                </SelectItem>
+                <SelectItem value="inativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-zinc-400" /> Inativo
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
