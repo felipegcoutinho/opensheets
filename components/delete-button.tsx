@@ -47,7 +47,7 @@ export default function DeleteButton({
       )}
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Tem certeza que deseja excluir ?</AlertDialogTitle>
+          <AlertDialogTitle>Tem certeza que deseja remover ?</AlertDialogTitle>
           <AlertDialogDescription>
             Isso não pode ser desfeito. Isso removerá
             <strong> permanentemente</strong> seu conteúdo e removerá seus dados
@@ -61,7 +61,10 @@ export default function DeleteButton({
             </Button>
           </AlertDialogCancel>
           <form className="w-1/2" onSubmit={handleDelete}>
-            <AlertDialogAction asChild>
+            <AlertDialogAction
+              className="bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white shadow-xs"
+              asChild
+            >
               <Button
                 variant="destructive"
                 className="w-full"

@@ -11,7 +11,9 @@ function Banner({ children, className }) {
     return null;
   }
 
-  return <Card className={`p-6 ${className}`}>{children}</Card>;
+  return (
+    <Card className={`my-4 border-none p-6 ${className}`}>{children}</Card>
+  );
 }
 
 export default Banner;
