@@ -23,16 +23,33 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { updateCard } from "@/app/actions/cards/update_cards";
+import type { ActionResponse } from "./form-schema";
 
 type Props = {
   getAccountMap: Array<string>;
   item: unknown;
 };
 
+const initialState: ActionResponse = { success: false, message: "" };
+
 export default function UpdateCard({ getAccountMap, item }: Props) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesCartao();
+  const [isOpen, setIsOpen] = useState(false);
   const { logos, bandeiras } = UseOptions();
+  const [state, action, isPending] = useActionState(updateCard, initialState);
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +62,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form action={action} className="space-y-2">
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
@@ -246,9 +263,9 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Atualizando..." : "Atualizar"}
+              {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

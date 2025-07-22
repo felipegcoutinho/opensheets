@@ -1,5 +1,4 @@
 "use client";
-
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
@@ -24,19 +23,27 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { createCard } from "@/app/actions/cards/create_cards";
+import type { ActionResponse } from "./form-schema";
+
+const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreateCard({ getAccountMap }) {
-  const {
-    isOpen,
-    setIsOpen,
-    handleSubmit,
-    loading,
-    statusPagamento,
-    setStatusPagamento,
-  } = UtilitiesCartao();
-
+  const [isOpen, setIsOpen] = useState(false);
   const { logos, bandeiras } = UseOptions();
+  const [state, action, isPending] = useActionState(createCard, initialState);
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -50,7 +57,7 @@ export default function CreateCard({ getAccountMap }) {
           <DialogTitle>Novo Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-2">
+        <form action={action} className="space-y-2">
           <div className="w-full">
             <Label>
               Escolha o Logo
@@ -234,9 +241,9 @@ export default function CreateCard({ getAccountMap }) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Salvando..." : "Salvar"}
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>
