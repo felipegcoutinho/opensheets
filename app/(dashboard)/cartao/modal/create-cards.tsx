@@ -1,5 +1,4 @@
 "use client";
-
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
@@ -26,8 +25,6 @@ import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2 } from "lucide-react";
 import { createCard } from "@/app/actions/cards/create_cards";
 import type { ActionResponse } from "./form-schema";
 
@@ -229,13 +226,6 @@ export default function CreateCard({ getAccountMap }) {
             <Label>Anotação</Label>
             <Textarea name="anotacao" placeholder="Anotação" />
           </div>
-
-          {state.message && (
-            <Alert variant={state.success ? "default" : "destructive"}>
-              {state.success && <CheckCircle2 className="h-4 w-4" />} 
-              <AlertDescription>{state.message}</AlertDescription>
-            </Alert>
-          )}
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>

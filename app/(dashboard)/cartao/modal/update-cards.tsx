@@ -25,8 +25,7 @@ import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2 } from "lucide-react";
+
 import { updateCard } from "@/app/actions/cards/update_cards";
 import type { ActionResponse } from "./form-schema";
 
@@ -249,13 +248,6 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
               placeholder="Anotação"
             />
           </div>
-
-          {state.message && (
-            <Alert variant={state.success ? "default" : "destructive"}>
-              {state.success && <CheckCircle2 className="h-4 w-4" />}
-              <AlertDescription>{state.message}</AlertDescription>
-            </Alert>
-          )}
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
