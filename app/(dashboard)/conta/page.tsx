@@ -1,9 +1,11 @@
-import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getAccount, getAccountDisabled } from "@/app/actions/accounts/fetch_accounts";
 import {
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
+import Ping from "@/components/ping-icon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MoneyValues from "@/components/money-values";
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
@@ -15,10 +17,17 @@ import UpdateCard from "./modal/update-accounts";
 
 async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
-  const getAccountMap = await getAccount();
+  const [contasAtivas, contasInativas] = await Promise.all([
+    getAccount(),
+    getAccountDisabled(),
+  ]);
+
+  const activeAccounts = contasAtivas.filter(
+    (item) => item.status === "ativo",
+  );
 
   const accountData = await Promise.all(
-    getAccountMap.map(async (item) => {
+    activeAccounts.map(async (item) => {
       const accountExpense = await getSumAccountExpense(month, item.id);
       const sumAccountIncome = await getSumAccountIncome(month, item.id);
       return {
@@ -32,38 +41,82 @@ async function page(props: { params: { month: string } }) {
     <div className="w-full">
       <CreateAccount />
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        {accountData.length !== 0 ? (
-          accountData.map((item) => (
-            <Card key={item.id} className="p-2">
-              <CardContent className="space-y-4 p-4">
-                <CardTitle className="flex items-center justify-between">
-                  <PaymentMethodLogo
-                    url_name={`/logos/${item.logo_image}`}
-                    descricao={item.descricao}
-                    width={50}
-                    height={50}
-                  />
-                </CardTitle>
+      <Tabs defaultValue="ativas">
+        <TabsList className="mb-2">
+          <TabsTrigger value="ativas" className="flex items-center gap-2">
+            <Ping color="bg-green-500" /> Ativas
+          </TabsTrigger>
+          <TabsTrigger value="inativas" className="flex items-center gap-2">
+            <Ping color="bg-zinc-400" /> Inativas
+          </TabsTrigger>
+        </TabsList>
 
-                <p className="text-muted-foreground text-sm">
-                  Saldo <MoneyValues value={item.saldo} />
-                </p>
-              </CardContent>
+        <TabsContent value="ativas">
+          <div className="grid gap-4 lg:grid-cols-3">
+            {accountData.length !== 0 ? (
+              accountData.map((item) => (
+                <Card key={item.id} className="p-2">
+                  <CardContent className="space-y-4 p-4">
+                    <CardTitle className="flex items-center justify-between">
+                      <PaymentMethodLogo
+                        url_name={`/logos/${item.logo_image}`}
+                        descricao={item.descricao}
+                        width={50}
+                        height={50}
+                      />
+                    </CardTitle>
 
-              <CardFooter className="flex justify-between px-4">
-                <Button className="p-0" variant="link">
-                  <Link href={`/conta/${item.id}`}>extrato</Link>
-                </Button>
+                    <p className="text-muted-foreground text-sm">
+                      Saldo <MoneyValues value={item.saldo} />
+                    </p>
+                  </CardContent>
 
-                <UpdateCard item={item} />
-              </CardFooter>
-            </Card>
-          ))
-        ) : (
-          <EmptyCard />
-        )}
-      </div>
+                  <CardFooter className="flex justify-between px-4">
+                    <Button className="p-0" variant="link">
+                      <Link href={`/conta/${item.id}`}>extrato</Link>
+                    </Button>
+
+                    <UpdateCard item={item} />
+                  </CardFooter>
+                </Card>
+              ))
+            ) : (
+              <EmptyCard />
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="inativas">
+          <div className="grid gap-4 saturate-0 lg:grid-cols-3">
+            {contasInativas && contasInativas.length > 0 ? (
+              contasInativas.map((item) => (
+                <Card key={item.id} className="p-2">
+                  <CardContent className="space-y-4 p-4">
+                    <CardTitle className="flex items-center justify-between">
+                      <PaymentMethodLogo
+                        url_name={`/logos/${item.logo_image}`}
+                        descricao={item.descricao}
+                        width={50}
+                        height={50}
+                      />
+                    </CardTitle>
+                  </CardContent>
+
+                  <CardFooter className="flex justify-between px-4">
+                    <Button className="p-0" variant="link">
+                      <Link href={`/conta/${item.id}`}>extrato</Link>
+                    </Button>
+
+                    <UpdateCard item={item} />
+                  </CardFooter>
+                </Card>
+              ))
+            ) : (
+              <EmptyCard />
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
