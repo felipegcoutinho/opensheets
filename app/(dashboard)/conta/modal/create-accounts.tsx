@@ -23,13 +23,28 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
-import UtilitiesConta from "../utilities-conta";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { createAccount } from "@/app/actions/accounts/create_accounts";
+import type { ActionResponse } from "./form-schema";
+
+const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreateAccount() {
-  const { isOpen, setIsOpen, handleSubmit, loading, isIgnored, setIsIgnored } =
-    UtilitiesConta();
-
   const { logos } = UseOptions();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isIgnored, setIsIgnored] = useState(false);
+  const [state, action, isPending] = useActionState(createAccount, initialState);
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -42,8 +57,8 @@ export default function CreateAccount() {
         <DialogHeader>
           <DialogTitle>Nova Conta</DialogTitle>
         </DialogHeader>
-
-        <form onSubmit={handleSubmit} className="space-y-2">
+        <form action={action} className="space-y-2">
+          <input type="hidden" name="is_ignored" value={String(isIgnored)} />
           <div className="w-full">
             <Label>
               Escolha o Logo
@@ -67,20 +82,13 @@ export default function CreateAccount() {
               </SelectContent>
             </Select>
           </div>
-
           <div className="w-full">
             <Label>
               Descrição
               <Required />
             </Label>
-            <Input
-              name="descricao"
-              placeholder="Descrição"
-              type="text"
-              required
-            />
+            <Input name="descricao" placeholder="Descrição" type="text" required />
           </div>
-
           <div className="w-full">
             <Label>
               Tipo da Conta
@@ -97,36 +105,24 @@ export default function CreateAccount() {
               </SelectContent>
             </Select>
           </div>
-
           <div className="flex items-center justify-between rounded-md border p-4">
             <Label className="text-sm">
               Desconsiderar essa conta nos cálculos mensais
             </Label>
             <Switch checked={isIgnored} onCheckedChange={setIsIgnored} />
           </div>
-
           <div className="w-full">
             <Label>Anotação</Label>
             <Textarea name="anotacao" placeholder="Anotação" />
           </div>
-
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
-              <Button
-                className="w-full sm:w-1/2"
-                type="button"
-                variant="secondary"
-              >
+              <Button className="w-full sm:w-1/2" type="button" variant="secondary">
                 Cancelar
               </Button>
             </DialogClose>
-
-            <Button
-              className="w-full sm:w-1/2"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Salvando..." : "Salvar"}
+            <Button className="w-full sm:w-1/2" type="submit" disabled={isPending}>
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>
