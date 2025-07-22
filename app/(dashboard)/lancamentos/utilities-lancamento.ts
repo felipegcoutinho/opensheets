@@ -1,4 +1,4 @@
-import { addTransaction } from "@/app/actions/transactions/create_transactions ";
+import { createTransaction } from "@/app/actions/transactions/create_transactions";
 import {
   deleteTransaction,
   removeImage,
@@ -84,7 +84,7 @@ export default function UtilitiesLancamento() {
     // Para boleto, isPaid é false, então 'realizado' será "false"
     formData.append("realizado", String(isPaid));
 
-    await addTransaction(formData);
+    await createTransaction(null, formData);
     toast.success("Transação adicionada com sucesso!");
     setIsOpen(false);
     setLoading(false);
@@ -109,7 +109,7 @@ export default function UtilitiesLancamento() {
     }
     formData.append("realizado", String(isPaid));
 
-    await updateTransaction(formData);
+    await updateTransaction(null, formData);
     toast.success("Transação atualizada com sucesso!");
     setIsOpen(false);
     setLoading(false);
@@ -119,7 +119,7 @@ export default function UtilitiesLancamento() {
     event.preventDefault();
     const formData = new FormData();
     formData.append("excluir", itemId);
-    await deleteTransaction(formData);
+    await deleteTransaction(null, formData);
     toast.success("Transação removida com sucesso!");
     setIsOpen(false);
   };
