@@ -1,49 +1,38 @@
 "use client";
+import DeleteButton from "@/components/delete-button";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { deleteAccount } from "@/app/actions/accounts/delete_accounts";
+import type { ActionResponse } from "./form-schema";
 
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { RiDeleteBin2Line } from "@remixicon/react";
-import UtilitiesConta from "../utilities-conta";
+const initialState: ActionResponse = { success: false, message: "" };
 
 export default function DeleteAccount({ itemId }) {
-  const { handleDelete } = UtilitiesConta();
+  const [isOpen, setIsOpen] = useState(false);
+  const [state, action, isPending] = useActionState(deleteAccount, initialState);
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
+
+  const handleDelete = async () => {
+    const formData = new FormData();
+    formData.append("excluir", itemId);
+    await action(formData);
+  };
 
   return (
-    <Dialog>
-      <DialogTrigger>
-        <RiDeleteBin2Line color="red" />
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
-          <DialogDescription>
-            Isso não pode ser desfeito. Isso excluirá
-            <strong>permanentemente</strong> seu lançamento e removerá seus
-            dados de nossos servidores.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="flex gap-2">
-          <DialogClose asChild>
-            <Button className="w-full" type="button" variant="secondary">
-              Cancelar
-            </Button>
-          </DialogClose>
-          <form onSubmit={handleDelete(itemId)}>
-            <Button variant="destructive" className="w-full" type="submit">
-              Sim, quero excluir
-            </Button>
-          </form>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <DeleteButton
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      handleDelete={handleDelete}
+      loading={isPending}
+    />
   );
 }
