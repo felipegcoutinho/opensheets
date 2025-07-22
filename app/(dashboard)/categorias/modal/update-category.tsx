@@ -19,8 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect } from "react";
-import UtilitiesCategoria from "../utilities-categoria";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { updateCategory } from "@/app/actions/categories/update_categories";
+import type { ActionResponse } from "./form-schema";
 
 type Props = {
   itemId: number;
@@ -35,18 +37,21 @@ export default function UpdateCategory({
   itemTipoCategoria,
   itemUsadoParaCalculos,
 }: Props) {
-  const {
-    handleUpdate,
-    updateLoading,
-    isOpen,
-    setIsOpen,
-    isUsedForCalculations,
-    setIsUsedForCalculations,
-  } = UtilitiesCategoria();
+  const [isOpen, setIsOpen] = useState(false);
+  const [state, action, isPending] = useActionState(
+    updateCategory,
+    { success: false, message: "" },
+  );
 
   useEffect(() => {
-    setIsUsedForCalculations(itemUsadoParaCalculos);
-  }, [itemUsadoParaCalculos, setIsUsedForCalculations]);
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -56,7 +61,7 @@ export default function UpdateCategory({
           <DialogTitle>Atualizar Categoria</DialogTitle>
         </DialogHeader>
 
-        <form action={handleUpdate} className="space-y-4">
+        <form action={action} className="space-y-4">
           <input type="hidden" name="id" value={itemId} />
 
           <div>
@@ -133,9 +138,9 @@ export default function UpdateCategory({
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={updateLoading}
+              disabled={isPending}
             >
-              {updateLoading ? "Atualizando..." : "Atualizar"}
+              {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

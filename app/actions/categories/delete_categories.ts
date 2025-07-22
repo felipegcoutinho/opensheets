@@ -1,18 +1,22 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
+import type { ActionResponse } from "../../(dashboard)/categorias/modal/form-schema";
 
-export async function deleteCategories(id: number) {
-  const supabase = await createClient();
+export async function deleteCategory(
+  _prev: ActionResponse | null,
+  formData: FormData,
+): Promise<ActionResponse> {
+  const excluir = formData.get("excluir");
+  const supabase = createClient();
 
-  const { error } = await supabase.from("categorias").delete().eq("id", id);
-
-  if (error) {
+  try {
+    await supabase.from("categorias").delete().eq("id", excluir);
+    revalidatePath("/categorias");
+    return { success: true, message: "Categoria removida com sucesso!" };
+  } catch (error) {
     console.error("Erro ao excluir categoria:", error);
-    return { message: "Erro ao excluir categoria!" };
+    return { success: false, message: "Erro ao remover Categoria" };
   }
-
-  return { message: "Categoria excluída com sucesso!" };
-
-  redirect("/categorias");
 }
