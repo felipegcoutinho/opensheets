@@ -51,7 +51,10 @@ export default async function page(props: { params: { month: string } }) {
                     return (
                       <ul className="space-y-1">
                         {content.tasks.map((task: any, idx: number) => (
-                          <li key={idx} className="flex items-center gap-2">
+                          <li
+                            key={idx}
+                            className="flex items-center gap-2 border-b border-dashed pb-2 last:border-b-0"
+                          >
                             {/* <Checkbox checked={task.done} disabled /> */}
                             <span className={task.done ? "line-through" : ""}>
                               {task.text}
