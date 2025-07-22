@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -13,15 +14,37 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-export default function DeleteButton({ handleDelete, isOpen, setIsOpen, loading }) {
+type Props = {
+  handleDelete: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  loading?: boolean;
+  trigger?: ReactNode;
+  isOpen?: boolean;
+  setIsOpen?: (open: boolean) => void;
+};
+
+export default function DeleteButton({
+  handleDelete,
+  loading = false,
+  trigger,
+  isOpen,
+  setIsOpen,
+}: Props) {
+  const [open, setOpen] = useState(false);
+  const dialogOpen = isOpen ?? open;
+  const handleOpenChange = setIsOpen ?? setOpen;
+
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger
-        onClick={(e) => e.stopPropagation()}
-        className="cursor-pointer text-red-500"
-      >
-        Remover
-      </AlertDialogTrigger>
+    <AlertDialog open={dialogOpen} onOpenChange={handleOpenChange}>
+      {trigger ? (
+        <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger
+          onClick={(e) => e.stopPropagation()}
+          className="cursor-pointer text-red-500"
+        >
+          Remover
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Tem certeza que deseja excluir ?</AlertDialogTitle>

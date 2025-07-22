@@ -1,5 +1,6 @@
 "use client";
-import DeleteButtonCategoria from "@/components/delete-button-categoria";
+import DeleteButton from "@/components/delete-button";
+import { Button } from "@/components/ui/button";
 import { useActionState, useEffect, startTransition } from "react";
 import { toast } from "sonner";
 import { deleteCategory } from "@/app/actions/categories/delete_categories";
@@ -27,11 +28,20 @@ export default function DeleteCategory({ itemNome, itemId }) {
   };
 
   return (
-    <DeleteButtonCategoria
-      id={itemId}
-      descricao={itemNome}
-      handleDelete={handleDelete}
-      isPending={isPending}
+    <DeleteButton
+      handleDelete={() => handleDelete(itemId)}
+      loading={isPending}
+      trigger={
+        <Button
+          onClick={(e) => e.stopPropagation()}
+          variant="link"
+          size="sm"
+          className="p-0 text-red-600"
+          disabled={itemNome === "pagamentos"}
+        >
+          excluir
+        </Button>
+      }
     />
   );
 }
