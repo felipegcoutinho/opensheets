@@ -22,7 +22,7 @@ export default async function page(props) {
   }
 
   return (
-    <div className="mb-4 w-full">
+    <div className="w-full">
       <CreateCard getAccountMap={getAccountMap} />
 
       <Tabs defaultValue="ativos">

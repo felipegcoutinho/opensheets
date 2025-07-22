@@ -7,7 +7,7 @@ export async function getCards() {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, contas (id, descricao)`,
     )
     .order("descricao", { ascending: true })
     .eq("status", "ativo");
@@ -27,7 +27,7 @@ export async function getCardsDisabled() {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, contas (id, descricao)`,
     )
     .order("descricao", { ascending: true })
     .eq("status", "inativo");
@@ -47,7 +47,7 @@ export async function getCardDetails(id: number) {
   const { data, error } = await supabase
     .from("cartoes")
     .select(
-      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, tipo, contas (id, descricao)`,
+      `id, descricao, dt_vencimento, dt_fechamento, status, anotacao, limite, bandeira, logo_image, contas (id, descricao)`,
     )
     .eq("id", id)
     .single();
