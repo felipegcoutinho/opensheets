@@ -1,10 +1,10 @@
 "use server";
-import { updateTransaction } from "@/services/lancamentos";
+import { addTransaction } from "@/services/lancamentos";
 import { ActionResponse } from "@/services/lancamentos";
 
-export async function editTransaction(
+export async function createTransaction(
   _prev: ActionResponse | null,
   formData: FormData,
 ): Promise<ActionResponse> {
-  return updateTransaction(formData);
+  return addTransaction(formData);
 }

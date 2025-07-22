@@ -1,6 +1,6 @@
 import { createBudget } from "@/app/actions/orcamentos/create_budget";
-import { updateBudget } from "@/app/actions/orcamentos/update_budget";
-import { deleteBudget } from "@/app/actions/orcamentos/delete_budget";
+import { editBudget } from "@/app/actions/orcamentos/update_budget";
+import { removeBudget } from "@/app/actions/orcamentos/delete_budget";
 import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -9,7 +9,7 @@ export default function UtilitiesOrcamento() {
   const [isPending, startTransition] = useTransition();
   const [state, formAction, loading] = useActionState(createBudget, null);
   const [updateState, updateFormAction, updateLoading] = useActionState(
-    updateBudget,
+    editBudget,
     null,
   );
 
@@ -38,7 +38,7 @@ export default function UtilitiesOrcamento() {
   const handleDelete = (id: number) =>
     startTransition(async () => {
       try {
-        await deleteBudget(id);
+        await removeBudget(id);
         await new Promise((r) => setTimeout(r, 1000));
         toast.success("Orçamento removido com sucesso!");
         setIsOpen(false);

@@ -1,9 +1,9 @@
-import { addTransaction } from "@/app/actions/transactions/create_transactions ";
+import { createTransaction } from "@/app/actions/transactions/create_transactions";
 import {
-  deleteTransaction,
+  removeTransaction,
   removeImage,
 } from "@/app/actions/transactions/delete_transactions";
-import { updateTransaction } from "@/app/actions/transactions/update_transactions";
+import { editTransaction } from "@/app/actions/transactions/update_transactions";
 import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react"; // Removido useEffect não utilizado aqui
@@ -84,7 +84,7 @@ export default function UtilitiesLancamento() {
     // Para boleto, isPaid é false, então 'realizado' será "false"
     formData.append("realizado", String(isPaid));
 
-    await addTransaction(formData);
+    await createTransaction(formData);
     toast.success("Transação adicionada com sucesso!");
     setIsOpen(false);
     setLoading(false);
@@ -109,7 +109,7 @@ export default function UtilitiesLancamento() {
     }
     formData.append("realizado", String(isPaid));
 
-    await updateTransaction(formData);
+    await editTransaction(formData);
     toast.success("Transação atualizada com sucesso!");
     setIsOpen(false);
     setLoading(false);
@@ -119,7 +119,7 @@ export default function UtilitiesLancamento() {
     event.preventDefault();
     const formData = new FormData();
     formData.append("excluir", itemId);
-    await deleteTransaction(formData);
+    await removeTransaction(formData);
     toast.success("Transação removida com sucesso!");
     setIsOpen(false);
   };
