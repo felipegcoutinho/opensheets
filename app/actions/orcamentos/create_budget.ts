@@ -2,6 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import {
+  ActionResponse,
+  BudgetFormData,
+  budgetSchema,
+} from "../../(dashboard)/orcamentos/modal/form-schema";
 
 function parseMoney(value: FormDataEntryValue | null) {
   if (!value) return 0;
@@ -12,12 +17,29 @@ function parseMoney(value: FormDataEntryValue | null) {
   return parseFloat(str) || 0;
 }
 
-export async function createBudget(prev: unknown, formData: FormData) {
+export async function createBudget(
+  _prev: ActionResponse | null,
+  formData: FormData,
+): Promise<ActionResponse> {
+  const rawData: BudgetFormData = {
+    categoria_id: String(formData.get("categoria_id")),
+    periodo: String(formData.get("periodo")),
+    valor_orcado: String(formData.get("valor_orcado")),
+  };
+
+  const validated = budgetSchema.omit({ id: true }).safeParse(rawData);
+
+  if (!validated.success) {
+    return {
+      success: false,
+      message: "Corrija os erros do formulário",
+      errors: validated.error.flatten().fieldErrors,
+    };
+  }
+
   const supabase = createClient();
 
-  const { valor_orcado, periodo, categoria_id } = Object.fromEntries(
-    formData.entries(),
-  );
+  const { valor_orcado, periodo, categoria_id } = validated.data;
 
   const valor = parseMoney(valor_orcado);
 
@@ -30,11 +52,12 @@ export async function createBudget(prev: unknown, formData: FormData) {
 
   if (checkError) {
     console.error("Erro ao verificar orçamento:", checkError);
-    return { message: "Erro ao verificar orçamento" };
+    return { success: false, message: "Erro ao verificar orçamento" };
   }
 
   if (existing) {
     return {
+      success: false,
       message: "Já existe orçamento para esta categoria e período",
     };
   }
@@ -49,6 +72,8 @@ export async function createBudget(prev: unknown, formData: FormData) {
 
   if (error) {
     console.error("Erro ao adicionar orçamento:", error);
-    return { message: "Erro ao adicionar orçamento" };
+    return { success: false, message: "Erro ao adicionar orçamento" };
   }
+
+  return { success: true, message: "Orçamento criado com sucesso!" };
 }

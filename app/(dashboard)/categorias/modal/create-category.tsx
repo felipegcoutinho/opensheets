@@ -19,17 +19,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import UtilitiesCategoria from "../utilities-categoria";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { createCategory } from "@/app/actions/categories/create_categories";
+import type { ActionResponse } from "./form-schema";
+
+const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreateCategory() {
-  const {
-    handleSubmit,
-    loading,
-    isOpen,
-    setIsOpen,
-    isUsedForCalculations,
-    setIsUsedForCalculations,
-  } = UtilitiesCategoria();
+  const [isOpen, setIsOpen] = useState(false);
+  const [state, action, isPending] = useActionState(
+    createCategory,
+    initialState,
+  );
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -44,7 +56,7 @@ export default function CreateCategory() {
           <DialogTitle>Nova Categoria</DialogTitle>
         </DialogHeader>
 
-        <form action={handleSubmit} className="space-y-4">
+        <form action={action} className="space-y-4">
           <div>
             <Label htmlFor="nome">Nome da Categoria</Label>
             <Input id="nome" name="nome" placeholder="Digite o nome" required />
@@ -107,9 +119,9 @@ export default function CreateCategory() {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Salvando..." : "Salvar"}
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>
