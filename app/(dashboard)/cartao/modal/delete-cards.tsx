@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { deleteCards } from "@/app/actions/cards/delete_cards";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2 } from "lucide-react";
@@ -24,10 +25,14 @@ export default function DeleteCard({ itemId }) {
   const [state, action, isPending] = useActionState(deleteCards, initialState);
 
   useEffect(() => {
+    if (!state.message) return;
     if (state.success) {
+      toast.success(state.message);
       setOpen(false);
+    } else {
+      toast.error(state.message);
     }
-  }, [state.success]);
+  }, [state]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

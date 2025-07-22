@@ -25,6 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2 } from "lucide-react";
 import { createCard } from "@/app/actions/cards/create_cards";
@@ -38,10 +39,14 @@ export default function CreateCard({ getAccountMap }) {
   const [state, action, isPending] = useActionState(createCard, initialState);
 
   useEffect(() => {
+    if (!state.message) return;
     if (state.success) {
+      toast.success(state.message);
       setIsOpen(false);
+    } else {
+      toast.error(state.message);
     }
-  }, [state.success]);
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
