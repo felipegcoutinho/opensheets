@@ -27,14 +27,7 @@ import Image from "next/image";
 import UtilitiesCartao from "../utilities-cartao";
 
 export default function CreateCard({ getAccountMap }) {
-  const {
-    isOpen,
-    setIsOpen,
-    handleSubmit,
-    loading,
-    statusPagamento,
-    setStatusPagamento,
-  } = UtilitiesCartao();
+  const { isOpen, setIsOpen, handleSubmit, loading } = UtilitiesCartao();
 
   const { logos, bandeiras } = UseOptions();
 
@@ -50,7 +43,7 @@ export default function CreateCard({ getAccountMap }) {
           <DialogTitle>Novo Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-2">
+        <form action={handleSubmit} className="space-y-2">
           <div className="w-full">
             <Label>
               Escolha o Logo

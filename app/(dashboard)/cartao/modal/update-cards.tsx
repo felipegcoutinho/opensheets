@@ -31,7 +31,7 @@ type Props = {
 };
 
 export default function UpdateCard({ getAccountMap, item }: Props) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesCartao();
+  const { isOpen, setIsOpen, handleUpdate, updateLoading } = UtilitiesCartao();
   const { logos, bandeiras } = UseOptions();
 
   return (
@@ -45,7 +45,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form action={handleUpdate} className="space-y-2">
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
@@ -246,9 +246,9 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={updateLoading}
             >
-              {loading ? "Atualizando..." : "Atualizar"}
+              {updateLoading ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

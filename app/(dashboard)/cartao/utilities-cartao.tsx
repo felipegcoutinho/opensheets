@@ -1,64 +1,44 @@
-import { addCards } from "@/app/actions/cards/create_cards";
-import { updateCards } from "@/app/actions/cards/update_cards";
-import { useState } from "react";
+import { createCard } from "@/app/actions/cards/create_cards";
+import { updateCard } from "@/app/actions/cards/update_cards";
+import { useActionState, useState } from "react";
 import { toast } from "sonner";
 
 export default function UtilitiesCartao() {
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [statusPagamento, setStatusPagamento] = useState(false);
+  const [state, formAction, loading] = useActionState(createCard, null);
+  const [updateState, updateFormAction, updateLoading] = useActionState(
+    updateCard,
+    null,
+  );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.target);
-
-    const limiteFormatado = formData
-      .get("limite")
-      .replace(/[R$\.\s]/g, "")
-      .replace(",", ".");
-    formData.set("limite", limiteFormatado);
-
+  const handleSubmit = async (formData: FormData) => {
     try {
-      await addCards(formData);
+      await formAction(formData);
+      await new Promise((r) => setTimeout(r, 1000));
       toast.success("Cartão adicionado com sucesso!");
       setIsOpen(false);
-    } catch (error) {
+    } catch {
       toast.error("Erro ao adicionar Cartão.");
-    } finally {
-      setLoading(false);
     }
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.target);
-
-    const limiteFormatado = formData
-      .get("limite")
-      .replace(/[R$\.\s]/g, "")
-      .replace(",", ".");
-    formData.set("limite", limiteFormatado);
-
+  const handleUpdate = async (formData: FormData) => {
     try {
-      await updateCards(formData);
+      await updateFormAction(formData);
+      await new Promise((r) => setTimeout(r, 1000));
       toast.info("Cartão atualizado com sucesso!");
       setIsOpen(false);
-    } catch (error) {
+    } catch {
       toast.error("Erro ao atualizar Cartão.");
-    } finally {
-      setLoading(false);
     }
   };
 
   return {
     isOpen,
     setIsOpen,
-    loading,
     handleSubmit,
     handleUpdate,
-    statusPagamento,
-    setStatusPagamento,
+    loading,
+    updateLoading,
   };
 }
