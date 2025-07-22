@@ -1,58 +1,82 @@
 "use client";
 
+import { ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+type Props = {
+  handleDelete: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  loading?: boolean;
+  trigger?: ReactNode;
+  isOpen?: boolean;
+  setIsOpen?: (open: boolean) => void;
+};
 
 export default function DeleteButton({
   handleDelete,
+  loading = false,
+  trigger,
   isOpen,
   setIsOpen,
-  loading,
-}) {
+}: Props) {
+  const [open, setOpen] = useState(false);
+  const dialogOpen = isOpen ?? open;
+  const handleOpenChange = setIsOpen ?? setOpen;
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger
-        onClick={(e) => e.stopPropagation()}
-        className="cursor-pointer text-red-500"
-      >
-        Remover
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Tem certeza que deseja excluir ?</DialogTitle>
-          <DialogDescription>
+    <AlertDialog open={dialogOpen} onOpenChange={handleOpenChange}>
+      {trigger ? (
+        <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger
+          onClick={(e) => e.stopPropagation()}
+          className="cursor-pointer text-red-500"
+        >
+          Remover
+        </AlertDialogTrigger>
+      )}
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Tem certeza que deseja remover ?</AlertDialogTitle>
+          <AlertDialogDescription>
             Isso não pode ser desfeito. Isso removerá
             <strong> permanentemente</strong> seu conteúdo e removerá seus dados
             de nossos servidores.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="flex w-full gap-2">
-          <DialogClose className="w-1/2" asChild>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex w-full gap-2">
+          <AlertDialogCancel asChild className="w-1/2">
             <Button type="button" variant="secondary">
               Cancelar
             </Button>
-          </DialogClose>
+          </AlertDialogCancel>
           <form className="w-1/2" onSubmit={handleDelete}>
-            <Button
-              variant="destructive"
-              className="w-full"
-              type="submit"
-              disabled={loading}
+            <AlertDialogAction
+              className="bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white shadow-xs"
+              asChild
             >
-              {loading ? "Removendo..." : " Sim, quero excluir"}
-            </Button>
+              <Button
+                variant="destructive"
+                className="w-full"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Removendo..." : " Sim, quero excluir"}
+              </Button>
+            </AlertDialogAction>
           </form>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

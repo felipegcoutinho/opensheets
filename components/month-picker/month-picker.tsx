@@ -1,11 +1,10 @@
 "use client";
-
 import { useMemo } from "react";
-import { Card } from "../ui/card";
 import Helper from "./helper";
 import LoadingSpinner from "./loading-spinner";
 import NavigationButton from "./nav-button";
 import ReturnButton from "./return-button";
+import Banner from "../banner-card";
 
 export default function MonthPicker() {
   const {
@@ -36,7 +35,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Card className="bg-contrast/10 mt-4 flex-row p-5">
+    <Banner className="bg-contrast/10 flex-row p-5">
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -59,6 +58,6 @@ export default function MonthPicker() {
       {isDifferentFromCurrent && (
         <ReturnButton onClick={goToCurrentMonthYear} disabled={isChanging} />
       )}
-    </Card>
+    </Banner>
   );
 }

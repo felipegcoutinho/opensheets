@@ -1,5 +1,5 @@
 "use client";
-import DeleteButtonCategoria from "@/components/delete-button-categoria";
+import DeleteButton from "@/components/delete-button";
 import { useActionState, useEffect, startTransition } from "react";
 import { toast } from "sonner";
 import { deleteBudget } from "@/app/actions/orcamentos/delete_budget";
@@ -26,11 +26,9 @@ export default function DeleteBudget({ itemId }: Props) {
   };
 
   return (
-    <DeleteButtonCategoria
-      id={itemId}
-      descricao="orçamento"
-      handleDelete={handleDelete}
-      isPending={isPending}
+    <DeleteButton
+      handleDelete={() => handleDelete(itemId)}
+      loading={isPending}
     />
   );
 }
