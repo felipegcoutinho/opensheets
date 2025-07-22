@@ -1,4 +1,3 @@
-import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import {
   getSumAccountExpense,
   getSumAccountIncome,
@@ -9,9 +8,13 @@ import { PaymentMethodLogo } from "@/components/payment-method-logo";
 import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
-export default async function AccountWidget({ month }: { month?: string }) {
-  const data = await getAccount();
-
+export default async function AccountWidget({
+  month,
+  data,
+}: {
+  month: string;
+  data: any;
+}) {
   if (!data || data.length === 0) return <EmptyCard />;
 
   const sortedData = [...data].sort((a, b) => b.saldo - a.saldo);
