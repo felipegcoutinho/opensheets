@@ -1,6 +1,6 @@
 "use client";
 import DeleteButtonCategoria from "@/components/delete-button-categoria";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, startTransition } from "react";
 import { toast } from "sonner";
 import { deleteBudget } from "@/app/actions/orcamentos/delete_budget";
 import type { ActionResponse } from "./form-schema";
@@ -17,10 +17,12 @@ export default function DeleteBudget({ itemId }: Props) {
     state.success ? toast.success(state.message) : toast.error(state.message);
   }, [state]);
 
-  const handleDelete = async (id: number) => {
-    const formData = new FormData();
-    formData.append("excluir", id.toString());
-    await action(formData);
+  const handleDelete = (id: number) => {
+    startTransition(() => {
+      const formData = new FormData();
+      formData.append("excluir", id.toString());
+      action(formData);
+    });
   };
 
   return (
