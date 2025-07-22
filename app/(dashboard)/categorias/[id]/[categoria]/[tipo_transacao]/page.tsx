@@ -1,7 +1,7 @@
 import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
 import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
-import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getCategoria } from "@/app/actions/transactions/fetch_transactions";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +16,7 @@ export default async function page(props: {
 
   const cartoes = await getCards();
   const contas = await getAccount();
-  const categorias = await getNewCategorias();
+  const categorias = await getCategorias();
 
   const categoriaId = decodeURIComponent(params.id);
   const categoria = decodeURIComponent(params.categoria);

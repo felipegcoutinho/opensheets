@@ -1,7 +1,7 @@
 import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
 import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCardDetails, getCards } from "@/app/actions/cards/fetch_cards";
-import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getFaturas } from "@/app/actions/invoices/fetch_invoices";
 import {
   getCardInvoice,
@@ -16,7 +16,7 @@ export default async function page({ searchParams, params }) {
   const month = await getMonth({ searchParams });
 
   const contas = await getAccount();
-  const categorias = await getNewCategorias();
+  const categorias = await getCategorias();
 
   const [cardDetails, cardInvoice, cardSum, cards, faturaStatus] =
     await Promise.all([
