@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getNewCategorias() {
+export async function getCategories() {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -9,7 +9,10 @@ export async function getNewCategorias() {
     .order("tipo_categoria", { ascending: true })
     .order("nome", { ascending: true });
 
-  if (error) throw error;
+  if (error) {
+    console.error("Erro ao buscar categorias:", error);
+    return null;
+  }
 
   return data;
 }

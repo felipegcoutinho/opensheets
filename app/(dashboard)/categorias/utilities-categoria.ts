@@ -1,6 +1,6 @@
-import { addCategories } from "@/app/actions/categories/create_categories";
-import { deleteCategories } from "@/app/actions/categories/delete_categories";
-import { updateCategories } from "@/app/actions/categories/update_categories";
+import { createCategory } from "@/app/actions/categories/create_categories";
+import { deleteCategory } from "@/app/actions/categories/delete_categories";
+import { updateCategory } from "@/app/actions/categories/update_categories";
 import { useActionState, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -8,9 +8,9 @@ export default function UtilitiesCategoria() {
   const [isOpen, setIsOpen] = useState(false);
   const [isUsedForCalculations, setIsUsedForCalculations] = useState(true);
   const [isPending, startTransition] = useTransition();
-  const [state, formAction, loading] = useActionState(addCategories, null);
+  const [state, formAction, loading] = useActionState(createCategory, null);
   const [updateState, updateFormAction, updateLoading] = useActionState(
-    updateCategories,
+    updateCategory,
     null,
   );
 
@@ -57,7 +57,7 @@ export default function UtilitiesCategoria() {
   const handleDelete = async (id) => {
     startTransition(async () => {
       try {
-        await deleteCategories(id);
+        await deleteCategory(id);
         await new Promise((resolve) => setTimeout(resolve, 1000));
         toast.success("Categoria removida com sucesso!");
         setIsOpen(false);

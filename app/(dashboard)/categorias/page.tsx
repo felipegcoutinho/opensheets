@@ -1,9 +1,9 @@
-import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getCategories } from "@/app/actions/categories/fetch_categorias";
 import CreateCategory from "./modal/create-category";
 import TableCategories from "./table-categories";
 
 async function page() {
-  const categorias = await getNewCategorias();
+  const categorias = await getCategories();
 
   return (
     <div className="my-4">

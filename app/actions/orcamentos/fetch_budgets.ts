@@ -11,7 +11,7 @@ export async function getBudgets(month: string) {
 
   if (error) {
     console.error("Erro ao buscar orçamentos:", error);
-    return [];
+    return null;
   }
 
   return data;
