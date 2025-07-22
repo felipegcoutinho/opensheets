@@ -23,16 +23,29 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
+import { useActionState, useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle2 } from "lucide-react";
+import { updateCard } from "@/app/actions/cards/update_cards";
+import type { ActionResponse } from "./form-schema";
 
 type Props = {
   getAccountMap: Array<string>;
   item: unknown;
 };
 
+const initialState: ActionResponse = { success: false, message: "" };
+
 export default function UpdateCard({ getAccountMap, item }: Props) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesCartao();
+  const [isOpen, setIsOpen] = useState(false);
   const { logos, bandeiras } = UseOptions();
+  const [state, action, isPending] = useActionState(updateCard, initialState);
+
+  useEffect(() => {
+    if (state.success) {
+      setIsOpen(false);
+    }
+  }, [state.success]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +58,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form action={action} className="space-y-2">
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
@@ -232,6 +245,13 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
             />
           </div>
 
+          {state.message && (
+            <Alert variant={state.success ? "default" : "destructive"}>
+              {state.success && <CheckCircle2 className="h-4 w-4" />}
+              <AlertDescription>{state.message}</AlertDescription>
+            </Alert>
+          )}
+
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button
@@ -246,9 +266,9 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Atualizando..." : "Atualizar"}
+              {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

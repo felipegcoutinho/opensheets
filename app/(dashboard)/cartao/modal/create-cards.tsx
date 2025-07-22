@@ -24,19 +24,24 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
+import { useActionState, useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle2 } from "lucide-react";
+import { createCard } from "@/app/actions/cards/create_cards";
+import type { ActionResponse } from "./form-schema";
+
+const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreateCard({ getAccountMap }) {
-  const {
-    isOpen,
-    setIsOpen,
-    handleSubmit,
-    loading,
-    statusPagamento,
-    setStatusPagamento,
-  } = UtilitiesCartao();
-
+  const [isOpen, setIsOpen] = useState(false);
   const { logos, bandeiras } = UseOptions();
+  const [state, action, isPending] = useActionState(createCard, initialState);
+
+  useEffect(() => {
+    if (state.success) {
+      setIsOpen(false);
+    }
+  }, [state.success]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -50,7 +55,7 @@ export default function CreateCard({ getAccountMap }) {
           <DialogTitle>Novo Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-2">
+        <form action={action} className="space-y-2">
           <div className="w-full">
             <Label>
               Escolha o Logo
@@ -220,6 +225,13 @@ export default function CreateCard({ getAccountMap }) {
             <Textarea name="anotacao" placeholder="Anotação" />
           </div>
 
+          {state.message && (
+            <Alert variant={state.success ? "default" : "destructive"}>
+              {state.success && <CheckCircle2 className="h-4 w-4" />} 
+              <AlertDescription>{state.message}</AlertDescription>
+            </Alert>
+          )}
+
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button
@@ -234,9 +246,9 @@ export default function CreateCard({ getAccountMap }) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Salvando..." : "Salvar"}
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>
