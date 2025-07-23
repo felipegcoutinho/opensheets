@@ -4,13 +4,13 @@ import { type NextRequest, NextResponse } from "next/server";
 export const updateSession = async (request: NextRequest) => {
   const protectedRoutes = [
     "/dashboard",
-    "/transacao",
+    "/lancamentos",
+    "/orcamentos",
     "/cartao",
     "/boleto",
     "/responsaveis",
     "/anotacoes",
     "/contas",
-    "/investimentos",
     "/ajustes",
     "/reset-password",
     "/insights",

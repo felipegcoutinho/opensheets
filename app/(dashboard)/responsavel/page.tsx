@@ -49,6 +49,7 @@ async function page(props: { params: { month: string } }) {
       acc[item.responsavel].cartoes[descricaoCartao] = {
         valor: 0,
         logo_image: item.cartoes?.logo_image,
+        dt_vencimento: item.cartoes?.dt_vencimento,
       };
     }
     acc[item.responsavel].cartoes[descricaoCartao].valor += item.valor;
@@ -68,9 +69,13 @@ async function page(props: { params: { month: string } }) {
     }
 
     const descricaoBoleto = item.descricao;
-    groupedData[item.responsavel].boletos[descricaoBoleto] =
-      (groupedData[item.responsavel].boletos[descricaoBoleto] || 0) +
-      item.valor;
+    if (!groupedData[item.responsavel].boletos[descricaoBoleto]) {
+      groupedData[item.responsavel].boletos[descricaoBoleto] = {
+        valor: 0,
+        data_vencimento: item.data_vencimento,
+      };
+    }
+    groupedData[item.responsavel].boletos[descricaoBoleto].valor += item.valor;
     groupedData[item.responsavel].totalBoleto += item.valor;
   });
 
