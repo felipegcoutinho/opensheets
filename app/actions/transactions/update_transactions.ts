@@ -30,7 +30,6 @@ export async function updateTransaction(
     conta_id: (formData.get("conta_id") as string) || "",
     cartao_id: (formData.get("cartao_id") as string) || "",
     anotacao: (formData.get("anotacao") as string) || "",
-    segundo_responsavel: (formData.get("segundo_responsavel") as string) || "",
     dividir_lancamento: (formData.get("dividir_lancamento") as string) || "",
     realizado: (formData.get("realizado") as string) || "",
   };
@@ -81,7 +80,6 @@ export async function updateTransaction(
         cartao_id: validated.data.cartao_id || null,
         categoria_id: validated.data.categoria_id,
         conta_id: validated.data.conta_id || null,
-        segundo_responsavel: validated.data.segundo_responsavel || null,
         dividir_lancamento: validated.data.dividir_lancamento === "on",
       })
       .eq("id", validated.data.id);
