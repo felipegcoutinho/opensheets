@@ -14,7 +14,7 @@ import {
   RiBarcodeLine,
   RiGroupLine,
   RiUserLine,
-  RiVerifiedBadgeLine,
+  RiVerifiedBadgeFill,
 } from "@remixicon/react";
 import Image from "next/image";
 
@@ -42,6 +42,12 @@ export default function UsersCard({
 
   const isCurrentUser = responsavel === "você";
 
+  const bgCurrentUser =
+    "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20";
+
+  const bgOtherUser =
+    "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20";
+
   const getUserIcon = () => {
     return isCurrentUser ? (
       <RiUserLine
@@ -60,9 +66,7 @@ export default function UsersCard({
   return (
     <Card
       className={`relative cursor-pointer overflow-hidden border-none transition-all duration-300 hover:scale-105 ${
-        isCurrentUser
-          ? "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20"
-          : "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20"
+        isCurrentUser ? bgCurrentUser : bgOtherUser
       }`}
     >
       <Dialog>
@@ -76,7 +80,7 @@ export default function UsersCard({
               </CardTitle>
 
               {isCurrentUser && (
-                <RiVerifiedBadgeLine
+                <RiVerifiedBadgeFill
                   className="text-blue-500"
                   size={16}
                   aria-label="Usuário verificado"
@@ -90,29 +94,27 @@ export default function UsersCard({
           <DialogHead>
             <DialogHeading
               className={`rounded p-5 text-center capitalize ${
-                isCurrentUser
-                  ? "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20"
-                  : "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20"
+                isCurrentUser ? bgCurrentUser : bgOtherUser
               }`}
             >
               {responsavel}
             </DialogHeading>
           </DialogHead>
 
-          <section className="grid">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <RiBankCardFill size={14} />
-                <p className="font-bold">Cartões</p>
+          {hasCartoesData && (
+            <section className="grid">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <RiBankCardFill size={14} />
+                  <span className="font-bold">Cartões</span>
+                </div>
+                <span className="text-lg">
+                  <MoneyValues value={totalCartao} />
+                </span>
               </div>
-              <span className="text-lg">
-                <MoneyValues value={totalCartao} />
-              </span>
-            </div>
 
-            <ul className="mt-4 grid gap-2">
-              {hasCartoesData ? (
-                Object.entries(cartoes).map(([descricao, data]) => (
+              <ul className="mt-4 grid gap-2">
+                {Object.entries(cartoes).map(([descricao, data]) => (
                   <li
                     className="text-muted-foreground flex items-center justify-between"
                     key={descricao}
@@ -146,31 +148,29 @@ export default function UsersCard({
                       <MoneyValues value={data.valor} />
                     </p>
                   </li>
-                ))
-              ) : (
-                <li className="text-muted-foreground">
-                  Sem Lançamentos registrados
-                </li>
-              )}
-            </ul>
-          </section>
+                ))}
+              </ul>
+            </section>
+          )}
 
-          <div className="border-muted my-1 w-full border border-dashed dark:border-neutral-700"></div>
+          {hasCartoesData && (
+            <div className="border-muted my-1 w-full border border-dashed dark:border-neutral-700"></div>
+          )}
 
-          <section className="grid">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <RiBarcodeLine size={14} />
-                <p className="font-bold">Boletos</p>
+          {hasBoletosData && (
+            <section className="grid">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <RiBarcodeLine size={14} />
+                  <span className="font-bold">Boletos</span>
+                </div>
+                <span className="text-lg">
+                  <MoneyValues value={totalBoleto} />
+                </span>
               </div>
-              <span className="text-lg">
-                <MoneyValues value={totalBoleto} />
-              </span>
-            </div>
 
-            <ul className="mt-4 grid gap-2">
-              {hasBoletosData ? (
-                Object.entries(boletos).map(([descricao, data]) => (
+              <ul className="mt-4 grid gap-2">
+                {Object.entries(boletos).map(([descricao, data]) => (
                   <li
                     className="text-muted-foreground flex items-center justify-between"
                     key={descricao}
@@ -196,24 +196,22 @@ export default function UsersCard({
                       <MoneyValues value={data.valor} />
                     </span>
                   </li>
-                ))
-              ) : (
-                <li className="text-muted-foreground">
-                  Sem boletos registrados
-                </li>
-              )}
-            </ul>
-          </section>
+                ))}
+              </ul>
+            </section>
+          )}
 
-          <div className="border-muted w-full border dark:border-neutral-700"></div>
+          {hasBoletosData && (
+            <div className="border-muted w-full border border-dashed dark:border-neutral-700"></div>
+          )}
 
-          <div className="py-4">
-            <li className="flex items-center justify-between">
+          <div className="py-2">
+            <span className="flex items-center justify-between">
               <span className="text-muted-foreground text-lg">Total</span>
               <span className="text-xl">
                 <MoneyValues value={totalCartao + totalBoleto} />
               </span>
-            </li>
+            </span>
           </div>
         </DialogContent>
       </Dialog>
