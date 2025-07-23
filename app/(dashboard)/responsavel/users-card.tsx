@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { UseDates } from "@/hooks/use-dates";
 import {
-  RiBankCardLine,
+  RiBankCardFill,
   RiBarcodeLine,
   RiGroupLine,
   RiUserLine,
@@ -59,7 +59,7 @@ export default function UsersCard({
   };
   return (
     <Card
-      className={`relative cursor-pointer overflow-hidden border-none transition-all duration-300 hover:scale-[1.02] ${
+      className={`relative cursor-pointer overflow-hidden border-none transition-all duration-300 hover:scale-105 ${
         isCurrentUser
           ? "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20"
           : "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20"
@@ -68,16 +68,17 @@ export default function UsersCard({
       <Dialog>
         <DialogTrigger asChild>
           <CardHeader className="cursor-pointer">
-            <div className="flex items-center gap-2">
-              <div className="relative p-4">{getUserIcon()}</div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="py-10">{getUserIcon()}</div>
 
-              <CardTitle className="text-center text-xl capitalize">
+              <CardTitle className="text-xl capitalize">
                 {responsavel}
               </CardTitle>
+
               {isCurrentUser && (
                 <RiVerifiedBadgeLine
                   className="text-blue-500"
-                  size={18}
+                  size={16}
                   aria-label="Usuário verificado"
                 />
               )}
@@ -85,27 +86,35 @@ export default function UsersCard({
           </CardHeader>
         </DialogTrigger>
 
-        <DialogContent className="text-sm">
+        <DialogContent className="p-8 text-sm">
           <DialogHead>
-            <DialogHeading className="capitalize">{responsavel}</DialogHeading>
+            <DialogHeading
+              className={`rounded p-5 text-center capitalize ${
+                isCurrentUser
+                  ? "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20"
+                  : "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20"
+              }`}
+            >
+              {responsavel}
+            </DialogHeading>
           </DialogHead>
 
-          <div className="grid">
-            <li className="flex items-center justify-between">
+          <section className="grid">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <RiBankCardLine size={14} />
-                <p>Cartões</p>
+                <RiBankCardFill size={14} />
+                <p className="font-bold">Cartões</p>
               </div>
-              <p className="text-lg">
+              <span className="text-lg">
                 <MoneyValues value={totalCartao} />
-              </p>
-            </li>
+              </span>
+            </div>
 
-            <ul className="grid gap-2 p-2">
+            <ul className="mt-4 grid gap-2">
               {hasCartoesData ? (
                 Object.entries(cartoes).map(([descricao, data]) => (
                   <li
-                    className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
+                    className="text-muted-foreground flex items-center justify-between"
                     key={descricao}
                   >
                     <div className="flex items-center gap-1">
@@ -113,22 +122,23 @@ export default function UsersCard({
                         <PaymentMethodLogo
                           url_name={`/logos/${data.logo_image}`}
                           descricao={descricao}
-                          width={24}
-                          height={24}
+                          width={28}
+                          height={28}
                         />
                       ) : (
                         descricao === "Pix/Dinheiro/Débito" && (
                           <PaymentMethodLogo
                             url_name={`/logos/pix.png`}
                             descricao={descricao}
-                            width={24}
-                            height={24}
+                            width={28}
+                            height={28}
                           />
                         )
                       )}
+
                       {data.dt_vencimento && (
-                        <span className="text-xs">
-                          dia {data.dt_vencimento}
+                        <span className="text-xs font-bold">
+                          vence dia {data.dt_vencimento}
                         </span>
                       )}
                     </div>
@@ -143,26 +153,26 @@ export default function UsersCard({
                 </li>
               )}
             </ul>
-          </div>
+          </section>
 
-          <div className="border-muted my-3 w-full border border-dashed dark:border-neutral-700"></div>
+          <div className="border-muted my-1 w-full border border-dashed dark:border-neutral-700"></div>
 
-          <div className="grid">
-            <li className="flex items-center justify-between">
+          <section className="grid">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
                 <RiBarcodeLine size={14} />
-                <p>Boletos</p>
+                <p className="font-bold">Boletos</p>
               </div>
-              <p className="text-lg">
+              <span className="text-lg">
                 <MoneyValues value={totalBoleto} />
-              </p>
-            </li>
+              </span>
+            </div>
 
-            <ul className="grid gap-2 p-2">
+            <ul className="mt-4 grid gap-2">
               {hasBoletosData ? (
                 Object.entries(boletos).map(([descricao, data]) => (
                   <li
-                    className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
+                    className="text-muted-foreground flex items-center justify-between"
                     key={descricao}
                   >
                     <span className="flex items-center gap-1">
@@ -170,14 +180,15 @@ export default function UsersCard({
                         quality={100}
                         src="/logos/boleto.svg"
                         className="dark:invert dark:filter"
-                        width={20}
-                        height={20}
+                        width={28}
+                        height={28}
                         alt="Logo do Boleto"
                       />
                       {descricao}
+
                       {data.data_vencimento && (
-                        <span className="text-xs">
-                          {DateFormat(data.data_vencimento)}
+                        <span className="text-xs font-bold">
+                          vence {DateFormat(data.data_vencimento)}
                         </span>
                       )}
                     </span>
@@ -192,11 +203,11 @@ export default function UsersCard({
                 </li>
               )}
             </ul>
-          </div>
+          </section>
 
-          <div className="border-muted my-2 w-full border dark:border-neutral-700"></div>
+          <div className="border-muted w-full border dark:border-neutral-700"></div>
 
-          <div className="mt-4">
+          <div className="py-4">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground text-lg">Total</span>
               <span className="text-xl">
