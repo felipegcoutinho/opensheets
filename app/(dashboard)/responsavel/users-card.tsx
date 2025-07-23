@@ -51,26 +51,29 @@ export default function UsersCard({
     );
   };
   return (
-    <Card className="overflow-hidden">
+    <Card
+      className={`relative cursor-pointer overflow-hidden border-none transition-all duration-300 hover:scale-[1.02] ${
+        isCurrentUser
+          ? "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20"
+          : "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20"
+      }`}
+    >
       <Dialog>
         <DialogTrigger asChild>
           <CardHeader className="cursor-pointer">
-            <div
-              className={`${isCurrentUser ? "bg-blue-50 dark:bg-blue-900/30" : "bg-orange-50 dark:bg-orange-900/30"} flex justify-between rounded-lg p-4`}
-            >
-              <div className="flex items-center gap-1">
-                <CardTitle className="text-center capitalize">
-                  {responsavel}
-                </CardTitle>
-                {isCurrentUser && (
-                  <RiVerifiedBadgeLine
-                    className="text-blue-500"
-                    size={18}
-                    aria-label="Usuário verificado"
-                  />
-                )}
-              </div>
-              <div className="relative">{getUserIcon()}</div>
+            <div className="flex items-center gap-2">
+              <div className="relative p-4">{getUserIcon()}</div>
+
+              <CardTitle className="text-center text-xl capitalize">
+                {responsavel}
+              </CardTitle>
+              {isCurrentUser && (
+                <RiVerifiedBadgeLine
+                  className="text-blue-500"
+                  size={18}
+                  aria-label="Usuário verificado"
+                />
+              )}
             </div>
           </CardHeader>
         </DialogTrigger>

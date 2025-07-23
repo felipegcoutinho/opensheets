@@ -4,7 +4,7 @@ import Helper from "./helper";
 import LoadingSpinner from "./loading-spinner";
 import NavigationButton from "./nav-button";
 import ReturnButton from "./return-button";
-import Banner from "../banner-card";
+import { Card } from "../ui/card";
 
 export default function MonthPicker() {
   const {
@@ -19,14 +19,7 @@ export default function MonthPicker() {
   } = Helper();
 
   const shouldShowMonthFilter = useMemo(() => {
-    const notShowPaths = [
-      "/cartao",
-      "/conta",
-      "/categorias",
-      "/login",
-      "/",
-      "/pagador",
-    ];
+    const notShowPaths = ["/cartao", "/conta", "/categorias", "/login", "/"];
     return !notShowPaths.includes(pathname);
   }, [pathname]);
 
@@ -35,7 +28,7 @@ export default function MonthPicker() {
   }
 
   return (
-    <Banner className="bg-contrast/10 flex-row p-5">
+    <Card className={`bg-contrast/10 my-4 flex-row border-none p-6`}>
       <div className="flex items-center">
         <NavigationButton
           onClick={goToPreviousMonth}
@@ -58,6 +51,6 @@ export default function MonthPicker() {
       {isDifferentFromCurrent && (
         <ReturnButton onClick={goToCurrentMonthYear} disabled={isChanging} />
       )}
-    </Banner>
+    </Card>
   );
 }
