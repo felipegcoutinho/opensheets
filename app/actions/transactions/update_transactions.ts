@@ -1,101 +1,97 @@
 "use server";
-
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
-import {
-  ActionResponse,
-  TransactionFormData,
-  transactionSchema,
-} from "../../(dashboard)/lancamentos/modal/form-schema";
-import { uploadImagem } from "./uploadImagem";
+import { ActionResponse } from "../../(dashboard)/lancamentos/modal/form-schema";
 
 export async function updateTransaction(
   _prev: ActionResponse | null,
   formData: FormData,
 ): Promise<ActionResponse> {
-  const rawData: TransactionFormData = {
-    id: String(formData.get("id")),
-    descricao: String(formData.get("descricao")),
-    valor: String(formData.get("valor")),
-    periodo: String(formData.get("periodo")),
-    data_compra: (formData.get("data_compra") as string) || "",
-    data_vencimento: (formData.get("data_vencimento") as string) || "",
-    tipo_transacao: (formData.get("tipo_transacao") as string) || "",
-    categoria_id: String(formData.get("categoria_id") as string) || "",
-    forma_pagamento: String(formData.get("forma_pagamento") as string) || "",
-    responsavel: String(formData.get("responsavel") as string) || "",
-    condicao: String(formData.get("condicao") as string) || "",
-    qtde_parcela: (formData.get("qtde_parcela") as string) || "",
-    qtde_recorrencia: (formData.get("qtde_recorrencia") as string) || "",
-    conta_id: (formData.get("conta_id") as string) || "",
-    cartao_id: (formData.get("cartao_id") as string) || "",
-    anotacao: (formData.get("anotacao") as string) || "",
-    dividir_lancamento: (formData.get("dividir_lancamento") as string) || "",
-    realizado: (formData.get("realizado") as string) || "",
-  };
-
-  const validated = transactionSchema.safeParse(rawData);
-
-  if (!validated.success) {
-    return {
-      success: false,
-      message: "Corrija os erros do formulário",
-      errors: validated.error.flatten().fieldErrors,
-    };
-  }
-
   const supabase = createClient();
+  const {
+    id,
+    data_compra,
+    data_vencimento,
+    descricao,
+    tipo_transacao,
+    periodo,
+    realizado,
+    condicao,
+    forma_pagamento,
+    anotacao,
+    responsavel,
+    valor,
+    qtde_parcela,
+    parcela_atual,
+    qtde_recorrencia,
+    cartao_id,
+    categoria_id,
+    conta_id,
+    segundo_responsavel,
+    dividir_lancamento,
+    imagem_url_atual, // URL da imagem existente
+  } = Object.fromEntries(formData.entries());
 
-  let imageUrl = String(formData.get("imagem_url_atual") || "");
-  const newImage = formData.get("imagem_url");
-  if (newImage && newImage instanceof File && newImage.size > 0) {
-    const uploaded = await uploadImagem(newImage, supabase);
-    if (uploaded) imageUrl = uploaded;
+  let imageUrl = imagem_url_atual; // Use o URL existente como padrão
+  const imageFile = formData.get("imagem_url"); // Novo arquivo enviado
+
+  // Verificar se há um novo arquivo de imagem
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    const fileName = `${Date.now()}_${imageFile.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("comprovantes")
+      .upload(fileName, imageFile);
+
+    if (uploadError) {
+      console.error("Erro ao fazer upload da imagem:", uploadError);
+      throw new Error("Erro ao fazer upload da imagem");
+    } else {
+      // Gerar URL assinada para a nova imagem
+      const { data: signedUrlData, error: signedUrlError } =
+        await supabase.storage
+          .from("comprovantes")
+          .createSignedUrl(fileName, 31536000);
+
+      if (signedUrlError) {
+        console.error("Erro ao gerar Signed URL:", signedUrlError);
+        throw new Error("Erro ao gerar URL assinada");
+      }
+
+      imageUrl = signedUrlData.signedUrl;
+    }
   }
 
+  // Atualizar a transação no banco de dados
   try {
-    const { error } = await supabase
+    await supabase
       .from("transacoes")
       .update({
-        data_compra: validated.data.data_compra || null,
-        data_vencimento: validated.data.data_vencimento || null,
-        descricao: validated.data.descricao,
-        tipo_transacao: validated.data.tipo_transacao,
-        periodo: validated.data.periodo,
-        imagem_url: imageUrl || null,
-        realizado: validated.data.realizado === "true",
-        condicao: validated.data.condicao,
-        forma_pagamento: validated.data.forma_pagamento,
-        anotacao: validated.data.anotacao,
-        responsavel: validated.data.responsavel,
-        valor: parseFloat(
-          validated.data.valor
-            .replace(/R\$\s?/, "")
-            .replace(/\./g, "")
-            .replace(/,/, "."),
-        ),
-        qtde_parcela: validated.data.qtde_parcela || null,
-        parcela_atual: formData.get("parcela_atual") || null,
-        qtde_recorrencia: validated.data.qtde_recorrencia || null,
-        cartao_id: validated.data.cartao_id || null,
-        categoria_id: validated.data.categoria_id,
-        conta_id: validated.data.conta_id || null,
-        dividir_lancamento: validated.data.dividir_lancamento === "on",
+        data_compra,
+        data_vencimento,
+        descricao,
+        tipo_transacao,
+        periodo,
+        imagem_url: imageUrl,
+        realizado,
+        condicao,
+        forma_pagamento,
+        anotacao,
+        responsavel,
+        valor,
+        qtde_parcela,
+        parcela_atual,
+        qtde_recorrencia,
+        cartao_id,
+        categoria_id,
+        conta_id,
+        segundo_responsavel,
+        dividir_lancamento,
       })
-      .eq("id", validated.data.id);
+      .eq("id", id);
 
-    revalidatePath("/lancamentos");
-    revalidatePath("/dashboard");
-
-    if (error) {
-      console.error("Erro ao atualizar transação:", error);
-      return { success: false, message: "Erro ao atualizar Lançamento" };
-    }
-
-    return { success: true, message: "Lançamento atualizado com sucesso!" };
-  } catch (err) {
-    console.error("Erro ao atualizar transação:", err);
-    return { success: false, message: "Erro ao atualizar Lançamento" };
+    console.log("Transação atualizada com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar a transação:", error);
+    throw error;
   }
 }
 
