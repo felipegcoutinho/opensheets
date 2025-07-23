@@ -75,7 +75,7 @@ export default async function page(props: { params: { month: string } }) {
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
           }
         >
-          <AccountWidget data={account} month={month} />
+          <AccountWidget month={month} data={account} />
         </Widget>
 
         <Widget
