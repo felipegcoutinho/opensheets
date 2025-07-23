@@ -249,7 +249,7 @@ export default function UpdateTransactions({
                 defaultValue={itemContaId.toString()}
                 required
               >
-                <SelectTrigger id="conta_id" className="w-full">
+                <SelectTrigger id="conta_id" className="w-full py-6">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
@@ -276,7 +276,7 @@ export default function UpdateTransactions({
                 defaultValue={itemCartaoId.toString()}
                 required
               >
-                <SelectTrigger id="cartao_id" className="w-full">
+                <SelectTrigger id="cartao_id" className="w-full py-6">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>

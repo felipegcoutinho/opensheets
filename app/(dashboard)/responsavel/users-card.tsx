@@ -71,7 +71,7 @@ export default function UsersCard({
     >
       <Dialog>
         <DialogTrigger asChild>
-          <CardHeader className="cursor-pointer">
+          <CardHeader className="cursor-pointer text-center">
             <div className="flex items-center justify-center gap-2">
               <div className="py-10">{getUserIcon()}</div>
 
@@ -87,6 +87,8 @@ export default function UsersCard({
                 />
               )}
             </div>
+
+            <span className="text-sm">ver</span>
           </CardHeader>
         </DialogTrigger>
 

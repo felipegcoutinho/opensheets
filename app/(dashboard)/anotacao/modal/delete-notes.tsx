@@ -1,6 +1,6 @@
 "use client";
 import DeleteButton from "@/components/delete-button";
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { deleteNote } from "@/app/actions/notes/delete_notes";
 import type { ActionResponse } from "./form-schema";
@@ -21,10 +21,12 @@ export default function DeleteNotes({ item }) {
     }
   }, [state]);
 
-  const handleDelete = async () => {
-    const formData = new FormData();
-    formData.append("excluir", item.id);
-    await action(formData);
+  const handleDelete = () => {
+    startTransition(() => {
+      const formData = new FormData();
+      formData.append("excluir", item.id.toString());
+      action(formData);
+    });
   };
 
   return (

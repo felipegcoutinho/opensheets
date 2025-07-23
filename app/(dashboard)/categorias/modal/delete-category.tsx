@@ -39,7 +39,7 @@ export default function DeleteCategory({ itemNome, itemId }) {
           className="p-0 text-red-600"
           disabled={itemNome === "pagamentos"}
         >
-          Remover 2
+          Remover
         </Button>
       }
     />

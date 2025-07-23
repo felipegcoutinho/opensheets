@@ -40,11 +40,12 @@ type Props = {
 const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreateNotes({ children }: Props) {
-  const { getMonthOptions } = UseDates();
+  const { getMonthOptions, formatted_current_month } = UseDates();
   const [mode, setMode] = useState<"nota" | "tarefas">("nota");
   const [note, setNote] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [state, action, isPending] = useActionState(createNote, initialState);
+  const month = formatted_current_month;
 
   useEffect(() => {
     if (!state.message) return;
@@ -83,7 +84,7 @@ export default function CreateNotes({ children }: Props) {
                 Período
                 <Required />
               </Label>
-              <Select name="periodo" required>
+              <Select name="periodo" defaultValue={month} required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -135,11 +136,19 @@ export default function CreateNotes({ children }: Props) {
           {mode === "tarefas" && <TasksInput />}
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
-              <Button className="w-full sm:w-1/2" type="button" variant="secondary">
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
                 Cancelar
               </Button>
             </DialogClose>
-            <Button className="w-full sm:w-1/2" type="submit" disabled={isPending}>
+            <Button
+              className="w-full sm:w-1/2"
+              type="submit"
+              disabled={isPending}
+            >
               {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
