@@ -18,9 +18,16 @@ import {
 } from "@remixicon/react";
 import Image from "next/image";
 
-interface UserCardHeaderProps {
+type UsersCardProps = {
   responsavel: string;
-}
+  cartoes: Record<
+    string,
+    { valor: number; logo_image?: string; dt_vencimento?: string }
+  >;
+  totalCartao: number;
+  boletos: Record<string, { valor: number; data_vencimento?: string }>;
+  totalBoleto: number;
+};
 
 export default function UsersCard({
   responsavel,
@@ -28,7 +35,7 @@ export default function UsersCard({
   totalCartao,
   boletos,
   totalBoleto,
-}) {
+}: UsersCardProps) {
   const hasCartoesData = Object.keys(cartoes).length > 0;
   const hasBoletosData = Object.keys(boletos).length > 0;
   const { DateFormat } = UseDates();

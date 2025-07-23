@@ -70,7 +70,10 @@ export async function updateTransaction(
         anotacao: validated.data.anotacao,
         responsavel: validated.data.responsavel,
         valor: parseFloat(
-          validated.data.valor.replace(/R\$\s?/, "").replace(/\./g, "").replace(/,/, "."),
+          validated.data.valor
+            .replace(/R\$\s?/, "")
+            .replace(/\./g, "")
+            .replace(/,/, "."),
         ),
         qtde_parcela: validated.data.qtde_parcela || null,
         parcela_atual: formData.get("parcela_atual") || null,
