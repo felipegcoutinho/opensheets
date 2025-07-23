@@ -9,7 +9,6 @@ export interface CardFormData {
   limite: string;
   bandeira: string;
   logo_image: string;
-  tipo: string;
   status: string;
   conta_id: string;
 }
@@ -29,7 +28,6 @@ export const cardSchema = z.object({
   limite: z.string().min(1, "Limite é obrigatório"),
   bandeira: z.string().min(1, "Bandeira é obrigatória"),
   logo_image: z.string().min(1, "Logo é obrigatório"),
-  tipo: z.string().min(1, "Tipo é obrigatório"),
   status: z.string().min(1, "Status é obrigatório"),
   conta_id: z.string().min(1, "Conta é obrigatória"),
 });
