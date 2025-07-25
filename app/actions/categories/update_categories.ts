@@ -6,7 +6,7 @@ import {
   ActionResponse,
   CategoryFormData,
   categorySchema,
-} from "../../(dashboard)/categorias/modal/form-schema";
+} from "../../(dashboard)/categoria/modal/form-schema";
 
 export async function updateCategory(
   _prev: ActionResponse | null,

@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
-import { ActionResponse } from "../../(dashboard)/lancamentos/modal/form-schema";
+import { ActionResponse } from "../../(dashboard)/lancamento/modal/form-schema";
 
 export async function updateTransaction(
   _prev: ActionResponse | null,

@@ -1,4 +1,4 @@
-import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
+import { TableTransaction } from "@/app/(dashboard)/lancamento/table/table-transaction";
 import {
   getAccount,
   getAccountDetails,

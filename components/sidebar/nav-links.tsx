@@ -28,7 +28,7 @@ export function NavLinks(month: string) {
         items: [
           {
             name: "lançamentos",
-            url: `/lancamentos?periodo=${month}`,
+            url: `/lancamento?periodo=${month}`,
             icon: RiArrowUpDownFill,
           },
           {
@@ -43,7 +43,7 @@ export function NavLinks(month: string) {
           },
           {
             name: "orçamentos",
-            url: `/orcamentos?periodo=${month}`,
+            url: `/orcamento?periodo=${month}`,
             icon: RiMoneyDollarCircleFill,
           },
         ],
@@ -58,7 +58,7 @@ export function NavLinks(month: string) {
           },
           {
             name: "categorias",
-            url: `/categorias`,
+            url: `/categoria`,
             icon: RiFileList2Fill,
           },
         ],
@@ -73,7 +73,7 @@ export function NavLinks(month: string) {
           },
           {
             name: "insights",
-            url: `/insights?periodo=${month}`,
+            url: `/insight?periodo=${month}`,
             icon: RiSparkling2Fill,
           },
         ],

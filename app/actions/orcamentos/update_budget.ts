@@ -6,7 +6,7 @@ import {
   ActionResponse,
   BudgetFormData,
   budgetSchema,
-} from "../../(dashboard)/orcamentos/modal/form-schema";
+} from "../../(dashboard)/orcamento/modal/form-schema";
 
 function parseMoney(value: FormDataEntryValue | null) {
   if (!value) return 0;
