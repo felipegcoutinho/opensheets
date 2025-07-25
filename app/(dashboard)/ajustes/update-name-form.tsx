@@ -13,9 +13,11 @@ import {
 const initialState: ActionResponse = { success: false, message: "" };
 
 export default function UpdateNameForm({
-  defaultName,
+  defaultFirstName,
+  defaultLastName,
 }: {
-  defaultName: string;
+  defaultFirstName: string;
+  defaultLastName: string;
 }) {
   const [state, action, isPending] = useActionState(
     updateUserName,
@@ -34,7 +36,16 @@ export default function UpdateNameForm({
         <Input
           id="first_name"
           name="first_name"
-          defaultValue={defaultName}
+          defaultValue={defaultFirstName}
+          required
+        />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="last_name">Sobrenome</Label>
+        <Input
+          id="last_name"
+          name="last_name"
+          defaultValue={defaultLastName}
           required
         />
       </div>

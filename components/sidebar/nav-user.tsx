@@ -91,8 +91,8 @@ export function NavUser({
               </div>
 
               <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
-                <Link href="/profile" className="w-full">
-                  Meu Perfil
+                <Link href="/ajustes" className="w-full">
+                  Ajustes
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>

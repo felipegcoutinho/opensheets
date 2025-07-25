@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { headers } from "next/headers";
 
 export type ActionResponse = {
   success: boolean;
@@ -11,8 +12,9 @@ export async function updateUserName(
   _prev: ActionResponse | null,
   formData: FormData,
 ): Promise<ActionResponse> {
-  const name = formData.get("first_name")?.toString().trim();
-  if (!name) {
+  const firstName = formData.get("first_name")?.toString().trim();
+  const lastName = formData.get("last_name")?.toString().trim();
+  if (!firstName || !lastName) {
     return { success: false, message: "Nome inválido" };
   }
 
@@ -28,7 +30,7 @@ export async function updateUserName(
 
   const { error } = await supabase
     .from("profiles")
-    .update({ first_name: name })
+    .update({ first_name: firstName, last_name: lastName })
     .eq("id", user.id);
 
   if (error) {
@@ -37,7 +39,7 @@ export async function updateUserName(
   }
 
   const { error: authError } = await supabase.auth.updateUser({
-    data: { first_name: name },
+    data: { first_name: firstName, last_name: lastName },
   });
 
   if (authError) {
@@ -58,7 +60,7 @@ export async function sendPasswordReset(
   }
 
   const supabase = createClient();
-  const origin = (await import("next/headers")).headers().get("origin");
+  const origin = (await headers()).get("origin");
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${origin}/auth/callback?redirect_to=/dashboard/reset-password`,

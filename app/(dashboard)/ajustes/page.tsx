@@ -1,12 +1,20 @@
-import { getUserName, getEmail } from "@/app/actions/users/fetch_users";
+import {
+  getFirstName,
+  getLastName,
+  getEmail,
+} from "@/app/actions/users/fetch_users";
 import UpdateNameForm from "./update-name-form";
 import ResetPasswordForm from "./reset-password-form";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-export const metadata = { title: "Perfil | OpenSheets" };
+export const metadata = { title: "Ajustes | OpenSheets" };
 
-export default async function ProfilePage() {
-  const [name, email] = await Promise.all([getUserName(), getEmail()]);
+export default async function AjustesPage() {
+  const [firstName, lastName, email] = await Promise.all([
+    getFirstName(),
+    getLastName(),
+    getEmail(),
+  ]);
 
   return (
     <Tabs defaultValue="name" className="mt-4">
@@ -15,7 +23,10 @@ export default async function ProfilePage() {
         <TabsTrigger value="password">Senha</TabsTrigger>
       </TabsList>
       <TabsContent value="name">
-        <UpdateNameForm defaultName={name ?? ""} />
+        <UpdateNameForm
+          defaultFirstName={firstName ?? ""}
+          defaultLastName={lastName ?? ""}
+        />
       </TabsContent>
       <TabsContent value="password">
         <ResetPasswordForm email={email ?? ""} />
