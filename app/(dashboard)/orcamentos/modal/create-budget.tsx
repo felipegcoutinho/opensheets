@@ -19,16 +19,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
-import UtilitiesOrcamento from "../utilities-orcamento";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { createBudget } from "@/app/actions/orcamentos/create_budget";
+import type { ActionResponse } from "./form-schema";
 
 type Props = {
   categorias: any[];
 };
 
+const initialState: ActionResponse = { success: false, message: "" };
+
 export default function CreateBudget({ categorias }: Props) {
-  const { handleSubmit, loading, isOpen, setIsOpen } = UtilitiesOrcamento();
+  const [isOpen, setIsOpen] = useState(false);
+  const [state, action, isPending] = useActionState(createBudget, initialState);
   const { getMonthOptions, formatted_current_month } = UseDates();
   const month = formatted_current_month;
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -41,7 +57,7 @@ export default function CreateBudget({ categorias }: Props) {
         <DialogHeader>
           <DialogTitle>Novo Orçamento</DialogTitle>
         </DialogHeader>
-        <form action={handleSubmit} className="space-y-4">
+        <form action={action} className="space-y-4">
           <div>
             <Label htmlFor="categoria_id">Categoria</Label>
             <Select name="categoria_id" required>
@@ -96,9 +112,9 @@ export default function CreateBudget({ categorias }: Props) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Salvando..." : "Salvar"}
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>

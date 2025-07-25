@@ -1,18 +1,33 @@
 import MoneyValues from "@/components/money-values";
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  RiBankCardLine,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader as DialogHead,
+  DialogTitle as DialogHeading,
+} from "@/components/ui/dialog";
+import { UseDates } from "@/hooks/use-dates";
+import {
+  RiBankCardFill,
   RiBarcodeLine,
   RiGroupLine,
   RiUserLine,
-  RiVerifiedBadgeLine,
+  RiVerifiedBadgeFill,
 } from "@remixicon/react";
 import Image from "next/image";
 
-interface UserCardHeaderProps {
+type UsersCardProps = {
   responsavel: string;
-}
+  cartoes: Record<
+    string,
+    { valor: number; logo_image?: string; dt_vencimento?: string }
+  >;
+  totalCartao: number;
+  boletos: Record<string, { valor: number; data_vencimento?: string }>;
+  totalBoleto: number;
+};
 
 export default function UsersCard({
   responsavel,
@@ -20,11 +35,18 @@ export default function UsersCard({
   totalCartao,
   boletos,
   totalBoleto,
-}) {
+}: UsersCardProps) {
   const hasCartoesData = Object.keys(cartoes).length > 0;
   const hasBoletosData = Object.keys(boletos).length > 0;
+  const { DateFormat } = UseDates();
 
   const isCurrentUser = responsavel === "você";
+
+  const bgCurrentUser =
+    "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20";
+
+  const bgOtherUser =
+    "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20";
 
   const getUserIcon = () => {
     return isCurrentUser ? (
@@ -42,134 +64,159 @@ export default function UsersCard({
     );
   };
   return (
-    <Card className="gap-4 overflow-hidden">
-      <CardHeader>
-        <div
-          className={`${isCurrentUser ? "bg-blue-50 dark:bg-blue-900/30" : "bg-orange-50 dark:bg-orange-900/30"} flex justify-between rounded-lg p-4`}
-        >
-          {/* User Name and Badge */}
-          <div className="flex items-center gap-1">
-            <CardTitle className="text-center capitalize">
+    <Card
+      className={`relative cursor-pointer overflow-hidden border-none transition-all duration-300 hover:scale-105 ${
+        isCurrentUser ? bgCurrentUser : bgOtherUser
+      }`}
+    >
+      <Dialog>
+        <DialogTrigger asChild>
+          <CardHeader className="cursor-pointer text-center">
+            <div className="flex items-center justify-center gap-2">
+              <div className="py-10">{getUserIcon()}</div>
+
+              <CardTitle className="text-xl capitalize">
+                {responsavel}
+              </CardTitle>
+
+              {isCurrentUser && (
+                <RiVerifiedBadgeFill
+                  className="text-blue-500"
+                  size={16}
+                  aria-label="Usuário verificado"
+                />
+              )}
+            </div>
+
+            <span className="text-sm">ver</span>
+          </CardHeader>
+        </DialogTrigger>
+
+        <DialogContent className="p-8 text-sm">
+          <DialogHead>
+            <DialogHeading
+              className={`rounded p-5 text-center capitalize ${
+                isCurrentUser ? bgCurrentUser : bgOtherUser
+              }`}
+            >
               {responsavel}
-            </CardTitle>
-            {isCurrentUser && (
-              <RiVerifiedBadgeLine
-                className="text-blue-500"
-                size={18}
-                aria-label="Usuário verificado"
-              />
-            )}
-          </div>
+            </DialogHeading>
+          </DialogHead>
 
-          {/* Avatar Circle */}
-          <div className="relative">{getUserIcon()}</div>
-        </div>
-      </CardHeader>
+          {hasCartoesData && (
+            <section className="grid">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <RiBankCardFill size={14} />
+                  <span className="font-bold">Cartões</span>
+                </div>
+                <span className="text-lg">
+                  <MoneyValues value={totalCartao} />
+                </span>
+              </div>
 
-      <CardContent className="text-sm">
-        <div className="grid">
-          <li className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <RiBankCardLine size={14} />
-              <p>Cartões</p>
-            </div>
-            <p className="text-lg">
-              <MoneyValues value={totalCartao} />
-            </p>
-          </li>
-
-          <ul className="grid gap-2 p-2">
-            {hasCartoesData ? (
-              Object.entries(cartoes).map(([descricao, data]) => (
-                <li
-                  className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
-                  key={descricao}
-                >
-                  <div className="flex items-center">
-                    {data.logo_image ? (
-                      <PaymentMethodLogo
-                        url_name={`/logos/${data.logo_image}`}
-                        descricao={descricao}
-                        width={24}
-                        height={24}
-                      />
-                    ) : (
-                      descricao === "Pix/Dinheiro/Débito" && (
+              <ul className="mt-4 grid gap-2">
+                {Object.entries(cartoes).map(([descricao, data]) => (
+                  <li
+                    className="text-muted-foreground flex items-center justify-between"
+                    key={descricao}
+                  >
+                    <div className="flex items-center gap-1">
+                      {data.logo_image ? (
                         <PaymentMethodLogo
-                          url_name={`/logos/pix.png`}
+                          url_name={`/logos/${data.logo_image}`}
                           descricao={descricao}
-                          width={24}
-                          height={24}
+                          width={28}
+                          height={28}
                         />
-                      )
-                    )}
-                  </div>
-                  <p>
-                    <MoneyValues value={data.valor} />
-                  </p>
-                </li>
-              ))
-            ) : (
-              <li className="text-muted-foreground">
-                Sem Lançamentos registrados
-              </li>
-            )}
-          </ul>
-        </div>
+                      ) : (
+                        descricao === "Pix/Dinheiro/Débito" && (
+                          <PaymentMethodLogo
+                            url_name={`/logos/pix.png`}
+                            descricao={descricao}
+                            width={28}
+                            height={28}
+                          />
+                        )
+                      )}
 
-        <div className="border-muted my-3 w-full border border-dashed dark:border-neutral-700"></div>
+                      {data.dt_vencimento && (
+                        <span className="text-xs font-bold">
+                          vence dia {data.dt_vencimento}
+                        </span>
+                      )}
+                    </div>
+                    <p>
+                      <MoneyValues value={data.valor} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
-        <div className="grid">
-          <li className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <RiBarcodeLine size={14} />
-              <p>Boletos</p>
-            </div>
-            <p className="text-lg">
-              <MoneyValues value={totalBoleto} />
-            </p>
-          </li>
+          {hasCartoesData && (
+            <div className="border-muted my-1 w-full border border-dashed dark:border-neutral-700"></div>
+          )}
 
-          <ul className="grid gap-2 p-2">
-            {hasBoletosData ? (
-              Object.entries(boletos).map(([descricao, valor]) => (
-                <li
-                  className="text-muted-foreground flex items-center justify-between space-y-1 leading-relaxed"
-                  key={descricao}
-                >
-                  <span className="flex items-center gap-1">
-                    <Image
-                      quality={100}
-                      src="/logos/boleto.svg"
-                      className="dark:invert dark:filter"
-                      width={20}
-                      height={20}
-                      alt="Logo do Boleto"
-                    />
-                    {descricao}
-                  </span>
-                  <span>
-                    <MoneyValues value={valor} />
-                  </span>
-                </li>
-              ))
-            ) : (
-              <li className="text-muted-foreground">Sem boletos registrados</li>
-            )}
-          </ul>
-        </div>
+          {hasBoletosData && (
+            <section className="grid">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <RiBarcodeLine size={14} />
+                  <span className="font-bold">Boletos</span>
+                </div>
+                <span className="text-lg">
+                  <MoneyValues value={totalBoleto} />
+                </span>
+              </div>
 
-        <div className="border-muted my-2 w-full border dark:border-neutral-700"></div>
+              <ul className="mt-4 grid gap-2">
+                {Object.entries(boletos).map(([descricao, data]) => (
+                  <li
+                    className="text-muted-foreground flex items-center justify-between"
+                    key={descricao}
+                  >
+                    <span className="flex items-center gap-1">
+                      <Image
+                        quality={100}
+                        src="/logos/boleto.svg"
+                        className="dark:invert dark:filter"
+                        width={28}
+                        height={28}
+                        alt="Logo do Boleto"
+                      />
+                      {descricao}
 
-        <div className="mt-4">
-          <li className="flex items-center justify-between">
-            <span className="text-muted-foreground text-lg">Total</span>
-            <span className="text-xl">
-              <MoneyValues value={totalCartao + totalBoleto} />
+                      {data.data_vencimento && (
+                        <span className="text-xs font-bold">
+                          vence {DateFormat(data.data_vencimento)}
+                        </span>
+                      )}
+                    </span>
+                    <span>
+                      <MoneyValues value={data.valor} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {hasBoletosData && (
+            <div className="border-muted w-full border border-dashed dark:border-neutral-700"></div>
+          )}
+
+          <div className="py-2">
+            <span className="flex items-center justify-between">
+              <span className="text-muted-foreground text-lg">Total</span>
+              <span className="text-xl">
+                <MoneyValues value={totalCartao + totalBoleto} />
+              </span>
             </span>
-          </li>
-        </div>
-      </CardContent>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

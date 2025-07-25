@@ -14,6 +14,8 @@ import {
   getSumPaidIncome,
   getTransactionsByCategory,
 } from "@/app/actions/transactions/fetch_transactions";
+import { getAccount } from "@/app/actions/accounts/fetch_accounts";
+import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
 
 type FetchAllDataReturn = {
   incomes: number | null;
@@ -32,6 +34,8 @@ type FetchAllDataReturn = {
   sixmonth: any;
   financialResumeByMonth: any;
   financialResumeByPreviousMonth: any;
+  account: any;
+  budgets: any;
 };
 
 export async function fetchAllData(month: string): Promise<FetchAllDataReturn> {
@@ -59,6 +63,8 @@ export async function fetchAllData(month: string): Promise<FetchAllDataReturn> {
       userId.id,
       previousMonth,
     ),
+    account: getAccount(),
+    budgets: getBudgets(month),
   };
 
   const results = await Promise.allSettled(Object.values(fetchMap));

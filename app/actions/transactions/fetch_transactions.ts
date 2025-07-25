@@ -441,7 +441,9 @@ export async function getTransactionsByResponsible(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("responsavel, cartoes (descricao, logo_image), valor")
+    .select(
+      "responsavel, data_vencimento, cartoes (descricao, logo_image, dt_vencimento), valor",
+    )
     .order("responsavel", { ascending: true })
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
@@ -461,7 +463,7 @@ export async function getBillsByResponsible(month: string) {
 
   const { data, error } = await supabase
     .from("transacoes")
-    .select("responsavel, descricao, valor")
+    .select("responsavel, descricao, valor, data_vencimento")
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
     .eq("forma_pagamento", "boleto")

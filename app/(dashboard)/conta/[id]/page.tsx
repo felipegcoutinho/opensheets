@@ -4,7 +4,7 @@ import {
   getAccountDetails,
 } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
-import { getNewCategorias } from "@/app/actions/categories/fetch_categorias";
+import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import {
   getAccountInvoice,
   getSumAccountExpense,
@@ -18,7 +18,7 @@ export default async function page({ searchParams, params }) {
   const month = await getMonth({ searchParams });
 
   const cards = await getCards(month);
-  const categorias = await getNewCategorias();
+  const categorias = await getCategorias();
   const contas = await getAccount();
 
   const [accountDetails, accountInvoice, sumIncome, sumExpense] =

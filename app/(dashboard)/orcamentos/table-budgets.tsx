@@ -3,6 +3,13 @@
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -13,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import DeleteBudget from "./modal/delete-budget";
 import UpdateBudget from "./modal/update-budget";
+import { RiMoreLine } from "@remixicon/react";
 
 export default function TableBudgets({ budgets, categorias }) {
   return (
@@ -34,9 +42,26 @@ export default function TableBudgets({ budgets, categorias }) {
                   <TableCell>
                     <MoneyValues value={item.valor_orcado} />
                   </TableCell>
-                  <TableCell className="flex gap-2">
-                    <UpdateBudget item={item} categorias={categorias} />
-                    <DeleteBudget itemId={item.id} />
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
+                        >
+                          <RiMoreLine size={16} />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-[160px]">
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                          <UpdateBudget item={item} categorias={categorias} />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                          <DeleteBudget itemId={item.id} />
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))

@@ -19,24 +19,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
-import { useEffect } from "react";
-import UtilitiesOrcamento from "../utilities-orcamento";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { updateBudget } from "@/app/actions/orcamentos/update_budget";
+import type { ActionResponse } from "./form-schema";
 
 type Props = {
   item: any;
   categorias: any[];
 };
 
+const initialState: ActionResponse = { success: false, message: "" };
+
 export default function UpdateBudget({ item, categorias }: Props) {
-  const { handleUpdate, updateLoading, isOpen, setIsOpen } =
-    UtilitiesOrcamento();
+  const [isOpen, setIsOpen] = useState(false);
+  const [state, action, isPending] = useActionState(updateBudget, initialState);
 
   const { getMonthOptions, formatted_current_month } = UseDates();
   const month = formatted_current_month;
 
   useEffect(() => {
-    if (!isOpen) return;
-  }, [isOpen]);
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +55,7 @@ export default function UpdateBudget({ item, categorias }: Props) {
         <DialogHeader>
           <DialogTitle>Atualizar Orçamento</DialogTitle>
         </DialogHeader>
-        <form action={handleUpdate} className="space-y-4">
+        <form action={action} className="space-y-4">
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
@@ -110,9 +120,9 @@ export default function UpdateBudget({ item, categorias }: Props) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={updateLoading}
+              disabled={isPending}
             >
-              {updateLoading ? "Atualizando..." : "Atualizar"}
+              {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

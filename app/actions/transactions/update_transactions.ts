@@ -1,8 +1,11 @@
 "use server";
-
 import { createClient } from "@/utils/supabase/server";
+import { ActionResponse } from "../../(dashboard)/lancamentos/modal/form-schema";
 
-export async function updateTransaction(formData: FormData) {
+export async function updateTransaction(
+  _prev: ActionResponse | null,
+  formData: FormData,
+): Promise<ActionResponse> {
   const supabase = createClient();
   const {
     id,
@@ -94,32 +97,26 @@ export async function updateTransaction(formData: FormData) {
 
 export async function togglePagamento(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
-
   const { data, error } = await supabase
     .from("transacoes")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
-
   if (error) {
-    console.error("Erro ao atualizar status de pagamento:", error.message);
+    console.error("Erro ao atualizar status de pagamento:", error);
     return { error };
   }
-
   return { data };
 }
 
 export async function payBills(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
-
   const { error, data } = await supabase
     .from("transacoes")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
-
   if (error) {
     console.error("Erro ao pagar boletos:", error);
     return null;
   }
-
   return data;
 }

@@ -23,16 +23,34 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import Image from "next/image";
-import UtilitiesCartao from "../utilities-cartao";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { updateCard } from "@/app/actions/cards/update_cards";
+import type { ActionResponse } from "./form-schema";
+import Ping from "@/components/ping-icon";
 
 type Props = {
   getAccountMap: Array<string>;
   item: unknown;
 };
 
+const initialState: ActionResponse = { success: false, message: "" };
+
 export default function UpdateCard({ getAccountMap, item }: Props) {
-  const { isOpen, setIsOpen, handleUpdate, loading } = UtilitiesCartao();
+  const [isOpen, setIsOpen] = useState(false);
   const { logos, bandeiras } = UseOptions();
+  const [state, action, isPending] = useActionState(updateCard, initialState);
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +63,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form action={action} className="space-y-2">
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
@@ -120,51 +138,33 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
             </div>
           </div>
 
-          <div className="flex w-full gap-2">
-            <div className="w-1/2">
-              <Label>
-                Bandeira
-                <Required />
-              </Label>
-              <Select defaultValue={item.bandeira} name="bandeira" required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {bandeiras.map((item) => (
-                    <SelectItem key={item.name} value={item.file}>
-                      <div className="flex items-center gap-2">
-                        <Image
-                          quality={100}
-                          src={`/bandeiras/${item.file}`}
-                          className="rounded-full"
-                          width={32}
-                          height={32}
-                          alt="Logo do cartão"
-                        />
-                        <span>{item.name}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="w-1/2">
-              <Label>
-                Tipo do Cartão
-                <Required />
-              </Label>
-              <Select defaultValue={item.tipo} name="tipo" required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="virtual">Virtual</SelectItem>
-                  <SelectItem value="físico">Físico</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="w-full">
+            <Label>
+              Bandeira
+              <Required />
+            </Label>
+            <Select defaultValue={item.bandeira} name="bandeira" required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {bandeiras.map((item) => (
+                  <SelectItem key={item.name} value={item.file}>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        quality={100}
+                        src={`/bandeiras/${item.file}`}
+                        className="rounded-full"
+                        width={32}
+                        height={32}
+                        alt="Logo do cartão"
+                      />
+                      <span>{item.name}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
@@ -177,8 +177,16 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ativo">Ativo</SelectItem>
-                <SelectItem value="inativo">Inativo</SelectItem>
+                <SelectItem value="ativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-green-500" /> Ativo
+                  </div>
+                </SelectItem>
+                <SelectItem value="inativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-zinc-400" /> Inativo
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -246,9 +254,9 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Atualizando..." : "Atualizar"}
+              {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>

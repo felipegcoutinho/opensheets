@@ -7,7 +7,28 @@ export async function getAccount() {
     .from("contas")
     .select(
       `id, descricao, status, tipo_conta, logo_image, is_ignored, anotacao`,
-    );
+    )
+    .order("descricao", { ascending: true })
+    .eq("status", "ativo");
+
+  if (error) {
+    console.error("Erro ao buscar contas:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getAccountDisabled() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("contas")
+    .select(
+      `id, descricao, status, tipo_conta, logo_image, is_ignored, anotacao`,
+    )
+    .order("descricao", { ascending: true })
+    .eq("status", "inativo");
 
   if (error) {
     console.error("Erro ao buscar contas:", error);

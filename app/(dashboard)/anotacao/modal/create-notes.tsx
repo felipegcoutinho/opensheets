@@ -23,8 +23,10 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
-import { useState } from "react";
-import UtilitiesAnotacao from "../utilities-anotacao";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { createNote } from "@/app/actions/notes/create_notes";
+import type { ActionResponse } from "./form-schema";
 
 type MonthOption = {
   value: string;
@@ -35,11 +37,25 @@ type Props = {
   children: React.ReactNode;
 };
 
+const initialState: ActionResponse = { success: false, message: "" };
+
 export default function CreateNotes({ children }: Props) {
-  const { loading, handleSubmit, isOpen, setIsOpen } = UtilitiesAnotacao();
-  const { getMonthOptions } = UseDates();
+  const { getMonthOptions, formatted_current_month } = UseDates();
   const [mode, setMode] = useState<"nota" | "tarefas">("nota");
   const [note, setNote] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [state, action, isPending] = useActionState(createNote, initialState);
+  const month = formatted_current_month;
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -48,8 +64,7 @@ export default function CreateNotes({ children }: Props) {
         <DialogHeader>
           <DialogTitle>Nova Anotação</DialogTitle>
         </DialogHeader>
-
-        <form action={handleSubmit} className="space-y-2">
+        <form action={action} className="space-y-2">
           <div className="flex w-full gap-2">
             <div className="w-1/2">
               <Label>
@@ -64,14 +79,12 @@ export default function CreateNotes({ children }: Props) {
                 required
               />
             </div>
-
             <div className="w-1/2">
               <Label>
                 Período
                 <Required />
               </Label>
-
-              <Select name="periodo" required>
+              <Select name="periodo" defaultValue={month} required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -85,7 +98,6 @@ export default function CreateNotes({ children }: Props) {
               </Select>
             </div>
           </div>
-
           <div className="my-4 flex w-full gap-2">
             <div className="w-full">
               <Label>Tipo</Label>
@@ -105,7 +117,6 @@ export default function CreateNotes({ children }: Props) {
               </RadioGroup>
             </div>
           </div>
-
           {mode === "nota" && (
             <div className="flex w-full gap-2">
               <div className="w-full">
@@ -122,9 +133,7 @@ export default function CreateNotes({ children }: Props) {
               </div>
             </div>
           )}
-
           {mode === "tarefas" && <TasksInput />}
-
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button
@@ -135,13 +144,12 @@ export default function CreateNotes({ children }: Props) {
                 Cancelar
               </Button>
             </DialogClose>
-
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Salvando..." : "Salvar"}
+              {isPending ? "Salvando..." : "Salvar"}
             </Button>
           </DialogFooter>
         </form>

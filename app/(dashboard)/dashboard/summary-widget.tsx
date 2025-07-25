@@ -41,7 +41,7 @@ export default function SummaryWidget({
   const isPositive = diffPercent >= 0;
 
   return (
-    <Card className="from-primary/2 gap-2 from-10% to-transparent dark:bg-gradient-to-br">
+    <Card className="gap-3">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">

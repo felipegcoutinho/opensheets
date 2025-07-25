@@ -1,22 +1,21 @@
 "use server";
-
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { ActionResponse } from "../../(dashboard)/anotacao/modal/form-schema";
 
-export async function deleteNotes(prevState: unknown, formData: FormData) {
+export async function deleteNote(
+  _prev: ActionResponse | null,
+  formData: FormData,
+): Promise<ActionResponse> {
+  const excluir = formData.get("excluir");
   const supabase = createClient();
 
-  const excluir = formData.get("excluir");
-  const { error } = await supabase.from("anotacoes").delete().eq("id", excluir);
-
-  if (error) {
+  try {
+    await supabase.from("anotacoes").delete().eq("id", excluir);
+    revalidatePath("/anotacao");
+    return { success: true, message: "Anotação excluída com sucesso!" };
+  } catch (error) {
     console.error("Erro ao excluir anotação:", error);
-    return { message: "Erro ao excluir anotação!" };
+    return { success: false, message: "Erro ao excluir anotação!" };
   }
-
-  if (error) throw error;
-
-  revalidatePath("/anotacao");
-
-  return { message: "Anotação excluída com sucesso!" };
 }

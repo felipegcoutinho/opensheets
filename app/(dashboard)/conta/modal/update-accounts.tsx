@@ -22,14 +22,31 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import Ping from "@/components/ping-icon";
 import UseOptions from "@/hooks/use-options";
-import UtilitiesConta from "../utilities-conta";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { updateAccount } from "@/app/actions/accounts/update_account";
+import type { ActionResponse } from "./form-schema";
 
 export default function UpdateAccount({ item }) {
-  const { isOpen, setIsOpen, handleUpdate, loading, isIgnored, setIsIgnored } =
-    UtilitiesConta(item.is_ignored);
-
   const { logos } = UseOptions();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isIgnored, setIsIgnored] = useState(item.is_ignored);
+  const [state, action, isPending] = useActionState(updateAccount, {
+    success: false,
+    message: "",
+  } as ActionResponse);
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      setIsOpen(false);
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -40,10 +57,9 @@ export default function UpdateAccount({ item }) {
         <DialogHeader>
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
-
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form action={action} className="space-y-2">
           <input type="hidden" name="id" value={item.id} />
-
+          <input type="hidden" name="is_ignored" value={String(isIgnored)} />
           <div className="w-full">
             <Label>
               Escolha o Logo
@@ -54,11 +70,11 @@ export default function UpdateAccount({ item }) {
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
               <SelectContent>
-                {logos.map((item) => (
-                  <SelectItem key={item.name} value={item.file}>
+                {logos.map((logo) => (
+                  <SelectItem key={logo.name} value={logo.file}>
                     <PaymentMethodLogo
-                      url_name={`/logos/${item.file}`}
-                      descricao={item.name}
+                      url_name={`/logos/${logo.file}`}
+                      descricao={logo.name}
                       width={32}
                       height={32}
                     />
@@ -67,7 +83,6 @@ export default function UpdateAccount({ item }) {
               </SelectContent>
             </Select>
           </div>
-
           <div className="w-full">
             <Label>
               Descrição
@@ -81,7 +96,6 @@ export default function UpdateAccount({ item }) {
               required
             />
           </div>
-
           <div className="w-full">
             <Label>
               Tipo da Conta
@@ -98,14 +112,35 @@ export default function UpdateAccount({ item }) {
               </SelectContent>
             </Select>
           </div>
-
+          <div className="w-full">
+            <Label>
+              Status da Conta
+              <Required />
+            </Label>
+            <Select name="status" defaultValue={item.status} required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-green-500" /> Ativo
+                  </div>
+                </SelectItem>
+                <SelectItem value="inativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-zinc-400" /> Inativo
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center justify-between rounded-md border p-4">
             <Label className="text-sm">
               Desconsiderar essa conta nos cálculos mensais
             </Label>
             <Switch checked={isIgnored} onCheckedChange={setIsIgnored} />
           </div>
-
           <div className="w-full">
             <Label>Anotação</Label>
             <Textarea
@@ -114,7 +149,6 @@ export default function UpdateAccount({ item }) {
               placeholder="Anotação"
             />
           </div>
-
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button
@@ -125,13 +159,12 @@ export default function UpdateAccount({ item }) {
                 Cancelar
               </Button>
             </DialogClose>
-
             <Button
               className="w-full sm:w-1/2"
               type="submit"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? "Atualizando..." : "Atualizar"}
+              {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>
         </form>
