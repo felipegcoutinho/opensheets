@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,7 +21,6 @@ import {
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateCategory } from "@/app/actions/categories/update_categories";
-import type { ActionResponse } from "./form-schema";
 
 type Props = {
   itemId: number;
@@ -38,10 +36,10 @@ export default function UpdateCategory({
   itemUsadoParaCalculos,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [state, action, isPending] = useActionState(
-    updateCategory,
-    { success: false, message: "" },
-  );
+  const [state, action, isPending] = useActionState(updateCategory, {
+    success: false,
+    message: "",
+  });
 
   useEffect(() => {
     if (!state.message) return;
@@ -55,7 +53,7 @@ export default function UpdateCategory({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>Editar</DialogTrigger>
+      <DialogTrigger>editar</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Atualizar Categoria</DialogTitle>

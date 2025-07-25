@@ -25,6 +25,7 @@ export default function MonthPicker() {
       "/categoria",
       "/login",
       "/ajustes",
+      "/anotacao",
       "/",
     ];
     return !notShowPaths.includes(pathname);

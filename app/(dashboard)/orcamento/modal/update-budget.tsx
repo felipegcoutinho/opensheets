@@ -50,7 +50,7 @@ export default function UpdateBudget({ item, categorias }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>Editar</DialogTrigger>
+      <DialogTrigger>editar</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Atualizar Orçamento</DialogTitle>
