@@ -84,7 +84,7 @@ export function NavUser({
               </div>
 
               <div className="flex items-center justify-between p-2">
-                <p className="text-sm">Valores Visíveis</p>
+                <p className="text-sm">Privacidade</p>
                 <div className="flex items-center justify-center">
                   <PrivacyButton />
                 </div>
