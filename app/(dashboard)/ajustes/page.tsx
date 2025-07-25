@@ -19,8 +19,8 @@ export default async function AjustesPage() {
   return (
     <Tabs defaultValue="name" className="mt-4">
       <TabsList>
-        <TabsTrigger value="name">Nome</TabsTrigger>
-        <TabsTrigger value="password">Senha</TabsTrigger>
+        <TabsTrigger value="name">Altere seu nome</TabsTrigger>
+        <TabsTrigger value="password">Altere sua senha</TabsTrigger>
       </TabsList>
       <TabsContent value="name">
         <UpdateNameForm
