@@ -7,11 +7,9 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  useSidebar,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
-import { useTheme } from "next-themes";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
 import { NavLinks } from "./nav-links";
@@ -24,20 +22,12 @@ export function AppSidebar({
   categorias,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {}) {
-  const { open } = useSidebar();
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { formatted_current_month } = UseDates();
 
   let month = searchParams.get("periodo") || formatted_current_month;
 
   const data = NavLinks(month);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <Sidebar
