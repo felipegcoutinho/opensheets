@@ -24,6 +24,36 @@ export async function getUserName() {
   return fullName;
 }
 
+export async function getFirstName() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    return null;
+  }
+
+  return user.user_metadata?.first_name ?? null;
+}
+
+export async function getLastName() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    return null;
+  }
+
+  return user.user_metadata?.last_name ?? null;
+}
+
 export async function getEmail() {
   const supabase = createClient();
 
@@ -34,8 +64,7 @@ export async function getEmail() {
     return null;
   }
 
-  const email_data = data.user?.user_metadata?.email;
-  return email_data ?? null;
+  return data.user.email ?? null;
 }
 
 export async function getSession() {

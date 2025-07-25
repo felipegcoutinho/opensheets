@@ -19,7 +19,14 @@ export default function MonthPicker() {
   } = Helper();
 
   const shouldShowMonthFilter = useMemo(() => {
-    const notShowPaths = ["/cartao", "/conta", "/categorias", "/login", "/"];
+    const notShowPaths = [
+      "/cartao",
+      "/conta",
+      "/categoria",
+      "/login",
+      "/ajustes",
+      "/",
+    ];
     return !notShowPaths.includes(pathname);
   }, [pathname]);
 

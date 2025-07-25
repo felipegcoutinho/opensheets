@@ -3,10 +3,12 @@
 import { RiLogoutBoxLine, RiMoreLine } from "@remixicon/react";
 
 import { signOut } from "@/app/actions/auth/auth";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -87,6 +89,12 @@ export function NavUser({
                   <PrivacyButton />
                 </div>
               </div>
+
+              <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
+                <Link href="/ajustes" className="w-full">
+                  Ajustes
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
