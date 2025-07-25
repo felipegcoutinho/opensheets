@@ -36,7 +36,7 @@ export default async function UpcomingPaymentsBanner() {
   return (
     <Banner
       className={
-        "bg-orange-100 text-yellow-900 dark:bg-orange-800 dark:text-yellow-200"
+        "bg-orange-100 p-5 text-yellow-900 dark:bg-orange-900/50 dark:text-yellow-200"
       }
     >
       <div className="flex items-center gap-1 text-left text-sm">
