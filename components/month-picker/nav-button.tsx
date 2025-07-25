@@ -1,5 +1,3 @@
-// Componente de botão para navegação entre os meses (anterior/próximo)
-
 "use client";
 
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";

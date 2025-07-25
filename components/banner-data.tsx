@@ -4,17 +4,17 @@ import Banner from "./banner-card";
 
 export default async function BannerData() {
   const { currentDate, friendlyDate } = UseDates();
+
   const userName = await getUserName();
+  const shortUserName = userName?.split(" ")[0];
 
   return (
-    <Banner className="bg-contrast-foreground/10">
-      <div className="flex items-center justify-between py-6">
-        <div>
-          <p className="text-xl font-bold">Olá, {userName.split(" ")[0]}! 👋</p>
-          <p className="text-muted-foreground">
-            <span>{friendlyDate(currentDate)}.</span>
-          </p>
-        </div>
+    <Banner className="bg-contrast-foreground/20 py-12">
+      <div className="flex flex-col">
+        <span className="text-xl font-bold">Olá, {shortUserName}! 👋</span>
+        <span className="text-muted-foreground">
+          {friendlyDate(currentDate)}
+        </span>
       </div>
     </Banner>
   );
