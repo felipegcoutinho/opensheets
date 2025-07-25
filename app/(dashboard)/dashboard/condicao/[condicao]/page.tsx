@@ -1,4 +1,4 @@
-import { TableTransaction } from "@/app/(dashboard)/lancamentos/table/table-transaction";
+import { TableTransaction } from "@/app/(dashboard)/lancamento/table/table-transaction";
 import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
@@ -40,7 +40,7 @@ export default async function page({ params, searchParams }) {
         getAccount={contas}
         getCards={cartoes}
         getCategorias={categorias}
-        hidden={true}
+        hidden={false}
       />
     </div>
   );

@@ -1,7 +1,11 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { ActionResponse, NoteFormData, noteSchema } from "../../(dashboard)/anotacao/modal/form-schema";
+import {
+  ActionResponse,
+  NoteFormData,
+  noteSchema,
+} from "../../(dashboard)/anotacao/modal/form-schema";
 
 export async function createNote(
   _prev: ActionResponse | null,
@@ -9,7 +13,6 @@ export async function createNote(
 ): Promise<ActionResponse> {
   const rawData: NoteFormData = {
     descricao: String(formData.get("descricao")),
-    periodo: String(formData.get("periodo")),
     anotacao: String(formData.get("anotacao")),
   };
 

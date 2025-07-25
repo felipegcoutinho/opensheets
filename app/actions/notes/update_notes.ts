@@ -1,7 +1,11 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { ActionResponse, NoteFormData, noteSchema } from "../../(dashboard)/anotacao/modal/form-schema";
+import {
+  ActionResponse,
+  NoteFormData,
+  noteSchema,
+} from "../../(dashboard)/anotacao/modal/form-schema";
 
 export async function updateNote(
   _prev: ActionResponse | null,
@@ -10,7 +14,6 @@ export async function updateNote(
   const rawData: NoteFormData = {
     id: String(formData.get("id")),
     descricao: String(formData.get("descricao")),
-    periodo: String(formData.get("periodo")),
     anotacao: String(formData.get("anotacao")),
   };
 

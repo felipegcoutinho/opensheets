@@ -1,4 +1,4 @@
-import { getSession } from "@/app/actions/users/fetch_users";
+import { getUserSession } from "@/app/actions/users/fetch_users";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import Logo from "./logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default async function Header() {
-  const session = await getSession();
+  const session = await getUserSession();
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full">

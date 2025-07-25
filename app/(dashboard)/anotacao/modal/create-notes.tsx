@@ -14,13 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
 import { useActionState, useEffect, useState } from "react";
@@ -65,39 +58,20 @@ export default function CreateNotes({ children }: Props) {
           <DialogTitle>Nova Anotação</DialogTitle>
         </DialogHeader>
         <form action={action} className="space-y-2">
-          <div className="flex w-full gap-2">
-            <div className="w-1/2">
-              <Label>
-                Título
-                <Required />
-              </Label>
-              <Input
-                maxLength={24}
-                name="descricao"
-                placeholder="Descrição"
-                type="text"
-                required
-              />
-            </div>
-            <div className="w-1/2">
-              <Label>
-                Período
-                <Required />
-              </Label>
-              <Select name="periodo" defaultValue={month} required>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {getMonthOptions().map((option: MonthOption) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="w-full">
+            <Label>
+              Título
+              <Required />
+            </Label>
+            <Input
+              maxLength={24}
+              name="descricao"
+              placeholder="Descrição"
+              type="text"
+              required
+            />
           </div>
+
           <div className="my-4 flex w-full gap-2">
             <div className="w-full">
               <Label>Tipo</Label>
@@ -117,6 +91,7 @@ export default function CreateNotes({ children }: Props) {
               </RadioGroup>
             </div>
           </div>
+
           {mode === "nota" && (
             <div className="flex w-full gap-2">
               <div className="w-full">

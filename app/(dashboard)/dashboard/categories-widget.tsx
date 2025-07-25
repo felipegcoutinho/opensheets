@@ -69,7 +69,7 @@ export default function CategoryProgress({
             ? (item.spent / item.limit) * 100
             : null;
 
-          const url = `/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
+          const url = `/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
 
           return (
             <div key={item.id} className="mb-2 w-full">

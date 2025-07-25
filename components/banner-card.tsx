@@ -12,7 +12,7 @@ function Banner({ children, className }) {
   }
 
   return (
-    <Card className={`my-4 border-none p-6 ${className}`}>{children}</Card>
+    <Card className={`mb-2 border-none p-6 ${className}`}>{children}</Card>
   );
 }
 

@@ -42,7 +42,7 @@ function MoneyValues({ value, animated = true }: Props) {
   return (
     <span
       className={`${itau.className} font-bold ${
-        !estado && "blur-sm transition-all duration-300 hover:blur-none"
+        estado && "blur-sm transition-all duration-300 hover:blur-none"
       }`}
     >
       {displayValue.toLocaleString("pt-BR", {

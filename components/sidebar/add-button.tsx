@@ -1,5 +1,5 @@
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
-import CreateTransactions from "@/app/(dashboard)/lancamentos/modal/create-transactions";
+import CreateTransactions from "@/app/(dashboard)/lancamento/modal/create-transactions";
 import { RiAddCircleLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 

@@ -1,4 +1,5 @@
 "use client";
+
 import Required from "@/components/required-on-forms";
 import TasksInput from "@/components/tasks-input";
 import { Button } from "@/components/ui/button";
@@ -14,13 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
 import { useActionState, useEffect, useState } from "react";
@@ -43,7 +37,7 @@ export default function UpdateNotes({ item }: { item: any }) {
   );
   const [note, setNote] = useState(
     parsed && parsed.mode === "nota"
-      ? parsed.content ?? ""
+      ? (parsed.content ?? "")
       : parsed
         ? ""
         : item.anotacao,
@@ -77,38 +71,20 @@ export default function UpdateNotes({ item }: { item: any }) {
         </DialogHeader>
         <form action={action} className="space-y-2">
           <input type="hidden" name="id" value={item.id} />
-          <div className="flex w-full gap-2">
-            <div className="w-1/2">
-              <Label>
-                Descrição
-                <Required />
-              </Label>
-              <Input
-                defaultValue={item.descricao}
-                name="descricao"
-                placeholder="Descrição"
-                type="text"
-              />
-            </div>
-            <div className="w-1/2">
-              <Label>
-                Período
-                <Required />
-              </Label>
-              <Select defaultValue={item.periodo} name="periodo">
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {getMonthOptions().map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+
+          <div className="w-full">
+            <Label>
+              Descrição
+              <Required />
+            </Label>
+            <Input
+              defaultValue={item.descricao}
+              name="descricao"
+              placeholder="Descrição"
+              type="text"
+            />
           </div>
+
           <div className="my-4 flex w-full gap-2">
             <div className="w-full">
               <Label>Tipo</Label>
@@ -146,11 +122,19 @@ export default function UpdateNotes({ item }: { item: any }) {
           {mode === "tarefas" && <TasksInput value={initialTasks} />}
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
-              <Button className="w-full sm:w-1/2" type="button" variant="secondary">
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
                 Cancelar
               </Button>
             </DialogClose>
-            <Button className="w-full sm:w-1/2" type="submit" disabled={isPending}>
+            <Button
+              className="w-full sm:w-1/2"
+              type="submit"
+              disabled={isPending}
+            >
               {isPending ? "Atualizando..." : "Atualizar"}
             </Button>
           </DialogFooter>

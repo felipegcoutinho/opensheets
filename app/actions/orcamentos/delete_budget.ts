@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import type { ActionResponse } from "../../(dashboard)/orcamentos/modal/form-schema";
+import type { ActionResponse } from "../../(dashboard)/orcamento/modal/form-schema";
 
 export async function deleteBudget(
   _prev: ActionResponse | null,
@@ -11,7 +11,10 @@ export async function deleteBudget(
   const excluir = formData.get("excluir");
   const supabase = createClient();
 
-  const { error } = await supabase.from("orcamentos").delete().eq("id", excluir);
+  const { error } = await supabase
+    .from("orcamentos")
+    .delete()
+    .eq("id", excluir);
 
   revalidatePath("/orcamentos");
 

@@ -13,6 +13,7 @@ import { RiCheckboxCircleFill } from "@remixicon/react";
 import CreateNotes from "./modal/create-notes";
 import DeleteNotes from "./modal/delete-notes";
 import UpdateNotes from "./modal/update-notes";
+import ViewNoteModal from "./modal/view-note";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -32,15 +33,19 @@ export default async function page(props: { params: { month: string } }) {
         </Card>
       )}
 
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 mb-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {notes.map((item) => (
-          <Card className="flex flex-col justify-between" key={item.id}>
-            <CardHeader>
+          <Card
+            className="flex h-[350px] flex-col justify-between"
+            key={item.id}
+          >
+            <CardHeader className="shrink-0">
               <CardTitle className="flex items-center gap-2">
                 {item.descricao}
               </CardTitle>
             </CardHeader>
-            <CardContent className="break-all">
+
+            <CardContent className="mx-4 flex-1 overflow-auto rounded bg-neutral-50 p-4 break-all dark:bg-transparent">
               {(() => {
                 try {
                   const content = JSON.parse(item.anotacao);
@@ -55,7 +60,6 @@ export default async function page(props: { params: { month: string } }) {
                             key={idx}
                             className="flex items-center gap-2 border-b border-dashed pb-2 last:border-b-0"
                           >
-                            {/* <Checkbox checked={task.done} disabled /> */}
                             <span className={task.done ? "line-through" : ""}>
                               {task.text}
                             </span>
@@ -74,9 +78,11 @@ export default async function page(props: { params: { month: string } }) {
                 return item.anotacao;
               })()}
             </CardContent>
-            <CardFooter>
+
+            <CardFooter className="shrink-0">
               <div className="flex gap-4 text-sm">
                 <UpdateNotes item={item} />
+                <ViewNoteModal item={item} />
                 <DeleteNotes item={item} />
               </div>
             </CardFooter>

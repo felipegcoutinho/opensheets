@@ -6,7 +6,7 @@ import {
   ActionResponse,
   CategoryFormData,
   categorySchema,
-} from "../../(dashboard)/categorias/modal/form-schema";
+} from "../../(dashboard)/categoria/modal/form-schema";
 
 export async function createCategory(
   _prev: ActionResponse | null,
@@ -29,9 +29,7 @@ export async function createCategory(
 
   const supabase = createClient();
 
-  const { error } = await supabase
-    .from("categorias")
-    .insert(validated.data);
+  const { error } = await supabase.from("categorias").insert(validated.data);
 
   revalidatePath("/categorias");
 

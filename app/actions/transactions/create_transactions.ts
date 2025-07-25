@@ -9,7 +9,7 @@ import {
   ActionResponse,
   TransactionFormData,
   transactionSchema,
-} from "../../(dashboard)/lancamentos/modal/form-schema";
+} from "../../(dashboard)/lancamento/modal/form-schema";
 
 export async function createTransaction(
   _prev: ActionResponse | null,

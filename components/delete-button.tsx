@@ -42,7 +42,7 @@ export default function DeleteButton({
           onClick={(e) => e.stopPropagation()}
           className="cursor-pointer text-red-500"
         >
-          Remover
+          remover
         </AlertDialogTrigger>
       )}
       <AlertDialogContent>

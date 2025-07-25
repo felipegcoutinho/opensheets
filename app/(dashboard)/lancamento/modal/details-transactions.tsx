@@ -64,7 +64,7 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger className="cursor-pointer">Detalhes</DialogTrigger>
+      <DialogTrigger className="cursor-pointer">detalhes</DialogTrigger>
 
       <DialogContent className="p-0 sm:max-w-xl">
         <Card className="gap-2 space-y-4">

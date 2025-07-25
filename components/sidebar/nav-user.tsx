@@ -1,12 +1,14 @@
 "use client";
 
-import { RiLogoutBoxLine, RiMoreLine } from "@remixicon/react";
+import { RiLogoutBoxLine, RiMoreLine, RiSettings2Fill } from "@remixicon/react";
 
 import { signOut } from "@/app/actions/auth/auth";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -74,6 +76,13 @@ export function NavUser({
                 </span>
               </div>
 
+              <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
+                <Link href="/ajustes" className="w-full cursor-pointer">
+                  <RiSettings2Fill />
+                  Ajustes
+                </Link>
+              </DropdownMenuItem>
+
               <div className="flex items-center justify-between p-2">
                 <p className="text-sm">Modo Escuro</p>
                 <div className="flex items-center justify-center">
@@ -82,7 +91,7 @@ export function NavUser({
               </div>
 
               <div className="flex items-center justify-between p-2">
-                <p className="text-sm">Valores Visíveis</p>
+                <p className="text-sm">Privacidade</p>
                 <div className="flex items-center justify-center">
                   <PrivacyButton />
                 </div>
