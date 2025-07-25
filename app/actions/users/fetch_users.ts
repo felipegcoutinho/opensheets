@@ -67,7 +67,7 @@ export async function getEmail() {
   return data.user.email ?? null;
 }
 
-export async function getSession() {
+export async function getUserSession() {
   const supabase = createClient();
 
   const {

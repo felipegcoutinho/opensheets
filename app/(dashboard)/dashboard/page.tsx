@@ -51,7 +51,7 @@ export default async function page(props: { params: { month: string } }) {
 
   return (
     <section>
-      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {summary.map((item, index) => (
           <SummaryWidget
             previousValue={item.previousValue}
