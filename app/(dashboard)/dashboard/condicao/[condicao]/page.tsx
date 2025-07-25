@@ -40,7 +40,7 @@ export default async function page({ params, searchParams }) {
         getAccount={contas}
         getCards={cartoes}
         getCategorias={categorias}
-        hidden={true}
+        hidden={false}
       />
     </div>
   );

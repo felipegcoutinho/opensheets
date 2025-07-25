@@ -65,7 +65,7 @@ export default function TableCategories({ categorias }) {
                   <TableRow key={item.id}>
                     <TableCell className="font-bold capitalize">
                       <Link
-                        href={`/categorias/${encodeURIComponent(item.id)}/${encodeURIComponent(
+                        href={`/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(
                           item.nome,
                         )}/${encodeURIComponent(item.tipo_categoria)}`}
                         className="ml-2 flex items-center gap-1 text-sm hover:underline"

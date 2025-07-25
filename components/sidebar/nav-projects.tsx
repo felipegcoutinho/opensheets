@@ -49,7 +49,7 @@ export const NavProjects = memo(function NavProjects({
                     className={`${isActive && "bg-muted-foreground/5"}`}
                     asChild
                   >
-                    <div className="flex w-full items-center justify-between px-3 py-4.5">
+                    <div className="flex w-full items-center justify-between px-3 py-4">
                       <Link
                         href={item.url}
                         className={`flex items-center gap-2 transition-all ${
