@@ -5,6 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 
+interface Analysis {
+  comportamentos_observados: string[];
+  gatilhos_de_consumo: string[];
+  recomendações_práticas: string[];
+  melhorias_sugeridas: string[];
+}
+
 function Home({
   lancamentos,
   cartoes,
@@ -85,14 +92,18 @@ function Home({
       {analysis && (
         <Card className="my-2 w-full">
           <CardHeader>
-            <CardTitle>💼 Análise Comportamental de Consumo</CardTitle>
+            <CardTitle>Relatório de Comportamento de Consumo</CardTitle>
+            <p className="text-muted-foreground mt-2 text-sm">
+              Os tópicos abaixo apresentam nossa análise detalhada do período
+              selecionado.
+            </p>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* Comportamentos Observados */}
               <Card className="p-4">
                 <h3 className="mb-4 text-xl font-semibold">
-                  🔍 Comportamentos Observados
+                  1. Comportamentos Observados
                 </h3>
                 <ul className="space-y-2">
                   {analysis.comportamentos_observados.map((item, idx) => (
@@ -104,7 +115,7 @@ function Home({
               {/* Gatilhos de Consumo */}
               <Card className="p-4">
                 <h3 className="mb-4 text-xl font-semibold">
-                  ⚠️ Gatilhos de Consumo
+                  2. Gatilhos de Consumo
                 </h3>
                 <ul className="space-y-2">
                   {analysis.gatilhos_de_consumo.map((item, idx) => (
@@ -116,7 +127,7 @@ function Home({
               {/* Recomendações Práticas */}
               <Card className="col-span-1 p-4 md:col-span-2">
                 <h3 className="mb-4 text-xl font-semibold">
-                  ✅ Recomendações Práticas
+                  3. Recomendações Práticas
                 </h3>
                 <ul className="space-y-2">
                   {analysis.recomendações_práticas.map((item, idx) => (
@@ -128,7 +139,7 @@ function Home({
               {/* Melhorias Sugeridas */}
               <Card className="col-span-1 p-4 md:col-span-2">
                 <h3 className="mb-4 text-xl font-semibold">
-                  🚀 Melhorias Sugeridas
+                  4. Melhorias Sugeridas
                 </h3>
                 <ul className="space-y-2">
                   {analysis.melhorias_sugeridas.map((item, idx) => (
