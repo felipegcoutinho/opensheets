@@ -60,7 +60,13 @@ export default function DeleteButton({
               Cancelar
             </Button>
           </AlertDialogCancel>
-          <form className="w-1/2" onSubmit={handleDelete}>
+          <form
+            className="w-1/2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleDelete(e);
+            }}
+          >
             <AlertDialogAction
               className="bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white shadow-xs"
               asChild
