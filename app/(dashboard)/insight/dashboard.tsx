@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
-import { useState } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 
 function Home({
   lancamentos,
@@ -17,45 +17,55 @@ function Home({
 }) {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
+  const cacheRef = useRef<Analysis | null>(null);
 
-  const handleAnalyze = async () => {
+  const messages = useMemo(
+    () => [
+      { role: "user", content: JSON.stringify(lancamentos) },
+      { role: "user", content: JSON.stringify(cartoes) },
+      { role: "user", content: JSON.stringify(categorias) },
+    ],
+    [lancamentos, cartoes, categorias],
+  );
+
+  useEffect(() => {
+    cacheRef.current = null;
+  }, [messages]);
+
+  const handleAnalyze = useCallback(async () => {
+    if (cacheRef.current) {
+      setAnalysis(cacheRef.current);
+      return;
+    }
+
     setLoading(true);
     setAnalysis(null);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/api/chat`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: [
-              { role: "user", content: JSON.stringify(lancamentos) },
-              { role: "user", content: JSON.stringify(cartoes) },
-              { role: "user", content: JSON.stringify(categorias) },
-            ],
-          }),
-        },
-      );
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages }),
+      });
 
       const { analysis } = await response.json();
-      setAnalysis(JSON.parse(analysis));
+      const parsed = JSON.parse(analysis);
+      cacheRef.current = parsed;
+      setAnalysis(parsed);
     } catch (error) {
       console.error("Erro ao buscar análise:", error);
       setAnalysis(null);
     } finally {
       setLoading(false);
     }
-  };
+  }, [messages]);
 
   return (
     <>
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="from-primary dark:to-chart-1 to-contrast-foreground my-2 w-72 bg-gradient-to-tr transition-all hover:scale-110"
+        className="bg-primary my-2 w-72 text-white transition hover:opacity-90"
       >
         <div className="flex items-center justify-center gap-2">
           {loading ? (
@@ -81,7 +91,7 @@ function Home({
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* Comportamentos Observados */}
               <Card className="p-4">
-                <h3 className="mb-4 text-2xl font-bold">
+                <h3 className="mb-4 text-xl font-semibold">
                   🔍 Comportamentos Observados
                 </h3>
                 <ul className="space-y-2">
@@ -93,7 +103,7 @@ function Home({
 
               {/* Gatilhos de Consumo */}
               <Card className="p-4">
-                <h3 className="mb-4 text-2xl font-bold">
+                <h3 className="mb-4 text-xl font-semibold">
                   ⚠️ Gatilhos de Consumo
                 </h3>
                 <ul className="space-y-2">
@@ -105,7 +115,7 @@ function Home({
 
               {/* Recomendações Práticas */}
               <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="mb-4 text-2xl font-bold">
+                <h3 className="mb-4 text-xl font-semibold">
                   ✅ Recomendações Práticas
                 </h3>
                 <ul className="space-y-2">
@@ -117,7 +127,7 @@ function Home({
 
               {/* Melhorias Sugeridas */}
               <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="mb-4 text-2xl font-bold">
+                <h3 className="mb-4 text-xl font-semibold">
                   🚀 Melhorias Sugeridas
                 </h3>
                 <ul className="space-y-2">
