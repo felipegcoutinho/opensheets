@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
+import { categoryIconsMap } from "@/utils/category-icons";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { createBudget } from "@/app/actions/orcamentos/create_budget";
@@ -65,11 +66,21 @@ export default function CreateBudget({ categorias }: Props) {
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
-                {categorias.map((cat) => (
-                  <SelectItem key={cat.id} value={String(cat.id)}>
-                    {cat.nome}
-                  </SelectItem>
-                ))}
+                {categorias.map((cat) => {
+                  const Icon = categoryIconsMap[cat.icone];
+                  return (
+                    <SelectItem
+                      key={cat.id}
+                      value={String(cat.id)}
+                      className="capitalize"
+                    >
+                      <span className="flex items-center gap-2">
+                        {Icon && <Icon className="h-4 w-4" />}
+                        {cat.nome}
+                      </span>
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>

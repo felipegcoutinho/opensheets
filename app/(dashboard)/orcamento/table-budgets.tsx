@@ -21,6 +21,7 @@ import {
 import DeleteBudget from "./modal/delete-budget";
 import UpdateBudget from "./modal/update-budget";
 import { RiMoreLine } from "@remixicon/react";
+import { categoryIconsMap } from "@/utils/category-icons";
 
 export default function TableBudgets({ budgets, categorias }) {
   return (
@@ -38,7 +39,15 @@ export default function TableBudgets({ budgets, categorias }) {
             {budgets && budgets.length ? (
               budgets.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.categorias?.nome}</TableCell>
+                  <TableCell className="capitalize">
+                    <span className="flex items-center gap-2">
+                      {(() => {
+                        const Icon = categoryIconsMap[item.categorias?.icone];
+                        return Icon ? <Icon className="h-4 w-4" /> : null;
+                      })()}
+                      {item.categorias?.nome}
+                    </span>
+                  </TableCell>
                   <TableCell>
                     <MoneyValues value={item.valor_orcado} />
                   </TableCell>

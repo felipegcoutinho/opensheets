@@ -9,6 +9,16 @@ import {
   RiGamepadLine,
   RiHeart2Line,
   RiGiftLine,
+  RiPlaneLine,
+  RiTShirt2Line,
+  RiComputerLine,
+  RiSmartphoneLine,
+  RiFootballLine,
+  RiCoinsLine,
+  RiCameraLine,
+  RiMedicineBottleLine,
+  RiBrushLine,
+  RiFlowerLine,
 } from "@remixicon/react";
 
 type IconOption = {
@@ -28,6 +38,16 @@ export const categoryIconOptions: IconOption[] = [
   { value: "games", label: "Jogos", icon: RiGamepadLine },
   { value: "health", label: "Saúde", icon: RiHeart2Line },
   { value: "gift", label: "Presentes", icon: RiGiftLine },
+  { value: "travel", label: "Viagem", icon: RiPlaneLine },
+  { value: "clothes", label: "Roupas", icon: RiTShirt2Line },
+  { value: "electronics", label: "Eletrônicos", icon: RiComputerLine },
+  { value: "mobile", label: "Celular", icon: RiSmartphoneLine },
+  { value: "sports", label: "Esportes", icon: RiFootballLine },
+  { value: "savings", label: "Poupança", icon: RiCoinsLine },
+  { value: "camera", label: "Fotografia", icon: RiCameraLine },
+  { value: "medicine", label: "Remédios", icon: RiMedicineBottleLine },
+  { value: "art", label: "Arte", icon: RiBrushLine },
+  { value: "garden", label: "Jardinagem", icon: RiFlowerLine },
 ];
 
 export const categoryIconsMap = Object.fromEntries(

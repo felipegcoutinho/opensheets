@@ -17,6 +17,7 @@ type CombinedData = {
   categoria: string;
   total: number;
   id: string;
+  icone?: string;
 };
 
 type BudgetData = {
@@ -53,6 +54,7 @@ export default function CategoryProgress({
         limit: budget?.valor_orcado,
         color: tipo === "despesa" ? "bg-red-500" : "bg-green-500",
         tipo: item.tipo_transacao,
+        icone: item.icone,
       };
     });
 
@@ -69,6 +71,9 @@ export default function CategoryProgress({
           const limitPercentage = item.limit
             ? (item.spent / item.limit) * 100
             : null;
+          const IconComp = item.icone
+            ? categoryIconsMap[item.icone]
+            : undefined;
 
           const url = `/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
 
@@ -80,7 +85,11 @@ export default function CategoryProgress({
                     href={url}
                     className="flex items-center gap-2 capitalize hover:underline"
                   >
-                    <Ping color={item.color} />
+                    {IconComp ? (
+                      <IconComp className="h-4 w-4" />
+                    ) : (
+                      <Ping color={item.color} />
+                    )}
                     <span className="text-base font-medium">{item.name}</span>
                     <RiArrowRightSFill className="text-muted-foreground -ml-1 h-4 w-4" />
                   </Link>

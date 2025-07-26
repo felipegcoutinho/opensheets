@@ -65,24 +65,33 @@ export default async function UtilitiesDashboard(month: string) {
   ];
 
   function getTotalsCategory(month: string) {
-    const totals = new Map<string, number>();
+    const totals = new Map<string, { total: number; icon?: string }>();
 
     // Primeiro somar transacoes
     transactionsByCategory.forEach((item) => {
       const categoriaNome = item.categoria?.nome || "Sem Categoria";
       const id = item.categoria?.id || "sem_categoria";
+      const icone = item.categoria?.icone;
       const valor = parseFloat(item.valor) || 0;
       const tipo = item.tipo_transacao || "despesa";
 
       const chave = `${tipo}:${categoriaNome}:${id}`;
-
-      totals.set(chave, (totals.get(chave) || 0) + valor);
+      const entry = totals.get(chave) || { total: 0, icon: icone };
+      entry.total += valor;
+      entry.icon = icone;
+      totals.set(chave, entry);
     });
 
     // Transformar o Map em array para exibir
-    return Array.from(totals.entries()).map(([key, total]) => {
+    return Array.from(totals.entries()).map(([key, data]) => {
       const [tipo_transacao, categoria, id] = key.split(":");
-      return { tipo_transacao, categoria, id, total };
+      return {
+        tipo_transacao,
+        categoria,
+        id,
+        total: data.total,
+        icone: data.icon,
+      };
     });
   }
 
