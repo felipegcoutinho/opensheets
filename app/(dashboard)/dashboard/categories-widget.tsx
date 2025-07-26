@@ -10,6 +10,7 @@ import {
   RiSkull2Fill,
 } from "@remixicon/react";
 import Link from "next/link";
+import { categoryIconsMap } from "@/utils/category-icons";
 
 type CombinedData = {
   tipo_transacao: string;

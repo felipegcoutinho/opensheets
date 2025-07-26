@@ -4,6 +4,7 @@ export interface CategoryFormData {
   id?: string;
   nome: string;
   tipo_categoria: string;
+  icone: string;
 }
 
 export interface ActionResponse<T = CategoryFormData> {
@@ -16,4 +17,5 @@ export const categorySchema = z.object({
   id: z.string().optional(),
   nome: z.string().min(1, "Nome é obrigatório"),
   tipo_categoria: z.string().min(1, "Tipo é obrigatório"),
+  icone: z.string().min(1, "Ícone é obrigatório"),
 });

@@ -23,6 +23,7 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { createCategory } from "@/app/actions/categories/create_categories";
 import type { ActionResponse } from "./form-schema";
+import { categoryIconOptions } from "@/utils/category-icons";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
@@ -71,6 +72,29 @@ export default function CreateCategory() {
               <SelectContent>
                 <SelectItem value="receita">Receita</SelectItem>
                 <SelectItem value="despesa">Despesa</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="icone">Ícone</Label>
+            <Select name="icone" required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione o ícone" />
+              </SelectTrigger>
+              <SelectContent>
+                {categoryIconOptions.map((opt) => (
+                  <SelectItem
+                    key={opt.value}
+                    value={opt.value}
+                    className="capitalize"
+                  >
+                    <span className="flex items-center gap-2">
+                      <opt.icon className="h-4 w-4" />
+                      {opt.label}
+                    </span>
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

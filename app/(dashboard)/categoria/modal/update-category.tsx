@@ -21,12 +21,14 @@ import {
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateCategory } from "@/app/actions/categories/update_categories";
+import { categoryIconOptions } from "@/utils/category-icons";
 
 type Props = {
   itemId: number;
   itemNome: string;
   itemTipoCategoria: string;
   itemUsadoParaCalculos: boolean;
+  itemIcone?: string;
 };
 
 export default function UpdateCategory({
@@ -34,6 +36,7 @@ export default function UpdateCategory({
   itemNome,
   itemTipoCategoria,
   itemUsadoParaCalculos,
+  itemIcone,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [state, action, isPending] = useActionState(updateCategory, {
@@ -89,6 +92,29 @@ export default function UpdateCategory({
               <SelectContent>
                 <SelectItem value="receita">Receita</SelectItem>
                 <SelectItem value="despesa">Despesa</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="icone">Ícone</Label>
+            <Select name="icone" defaultValue={itemIcone} required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione o ícone" />
+              </SelectTrigger>
+              <SelectContent>
+                {categoryIconOptions.map((opt) => (
+                  <SelectItem
+                    key={opt.value}
+                    value={opt.value}
+                    className="capitalize"
+                  >
+                    <span className="flex items-center gap-2">
+                      <opt.icon className="h-4 w-4" />
+                      {opt.label}
+                    </span>
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
