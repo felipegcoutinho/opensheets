@@ -82,19 +82,19 @@ export default function CreateCategory() {
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione o ícone" />
               </SelectTrigger>
-              <SelectContent>
-                {categoryIconOptions.map((opt) => (
-                  <SelectItem
-                    key={opt.value}
-                    value={opt.value}
-                    className="capitalize"
-                  >
-                    <span className="flex items-center gap-2">
-                      <opt.icon className="h-4 w-4" />
+              <SelectContent className="w-60">
+                <div className="grid grid-cols-5 gap-2 p-1">
+                  {categoryIconOptions.map((opt) => (
+                    <SelectItem
+                      key={opt.value}
+                      value={opt.value}
+                      className="flex h-12 flex-col items-center justify-center gap-1 capitalize"
+                    >
+                      <opt.icon className="h-5 w-5" />
                       {opt.label}
-                    </span>
-                  </SelectItem>
-                ))}
+                    </SelectItem>
+                  ))}
+                </div>
               </SelectContent>
             </Select>
           </div>
