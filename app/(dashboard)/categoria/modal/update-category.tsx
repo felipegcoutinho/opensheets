@@ -1,4 +1,6 @@
 "use client";
+
+import { updateCategory } from "@/app/actions/categories/update_categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,10 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categoryIconOptions } from "@/utils/category-icons";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { updateCategory } from "@/app/actions/categories/update_categories";
-import { categoryIconOptions } from "@/utils/category-icons";
 
 type Props = {
   itemId: number;
@@ -57,14 +58,12 @@ export default function UpdateCategory({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>editar</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Atualizar Categoria</DialogTitle>
         </DialogHeader>
-
         <form action={action} className="space-y-4">
           <input type="hidden" name="id" value={itemId} />
-
           <div>
             <Label htmlFor="nome">Nome da Categoria</Label>
             <Input
@@ -76,14 +75,11 @@ export default function UpdateCategory({
               defaultValue={itemNome}
             />
           </div>
-
           <div>
             <Label htmlFor="tipo_categoria">Tipo de Categoria</Label>
             <Select
               name="tipo_categoria"
               defaultValue={itemTipoCategoria}
-              type="text"
-              id="tipo_categoria"
               required
             >
               <SelectTrigger className="w-full">
@@ -95,59 +91,27 @@ export default function UpdateCategory({
               </SelectContent>
             </Select>
           </div>
-
           <div>
             <Label htmlFor="icone">Ícone</Label>
             <Select name="icone" defaultValue={itemIcone} required>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione o ícone" />
               </SelectTrigger>
-              <SelectContent className="w-60">
-                <div className="grid grid-cols-5 gap-2 p-1">
+              <SelectContent className="w-80">
+                <div className="grid grid-cols-6 gap-1 p-2">
                   {categoryIconOptions.map((opt) => (
                     <SelectItem
                       key={opt.value}
                       value={opt.value}
-                      className="flex h-12 flex-col items-center justify-center gap-1 capitalize"
+                      className="hover:border-primary hover:bg-accent focus:border-primary focus:bg-accent data-[state=checked]:border-primary data-[state=checked]:bg-accent flex h-12 w-12 cursor-pointer items-center justify-center rounded-md border-2 border-transparent p-2 transition-all"
                     >
-                      <opt.icon className="h-5 w-5" />
-                      {opt.label}
+                      <opt.icon className="h-6 w-6" />
                     </SelectItem>
                   ))}
                 </div>
               </SelectContent>
             </Select>
           </div>
-
-          {/* <Card className="p-4">
-            <div className="items-top flex space-x-2">
-              <Toggle
-                onPressedChange={() =>
-                  setIsUsedForCalculations(!itemUsadoParaCalculos)
-                }
-                defaultPressed={itemUsadoParaCalculos}
-                name="usado_para_calculos"
-                id="isUsedForCalculations"
-                className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
-              >
-                <CheckCircleIcon strokeWidth={2} className="h-6 w-6" />
-              </Toggle>
-
-              <div className="grid gap-1.5 leading-none">
-                <Label
-                  className="text-foreground"
-                  htmlFor="isUsedForCalculations"
-                >
-                  Considerar nos cálculos
-                </Label>
-                <p className="text-muted-foreground text-sm">
-                  Se você desmarcar essa opção, essa categoria NÃO será
-                  considerada nos cálculos de receitas e despesas.
-                </p>
-              </div>
-            </div>
-          </Card> */}
-
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>
               <Button
@@ -158,7 +122,6 @@ export default function UpdateCategory({
                 Cancelar
               </Button>
             </DialogClose>
-
             <Button
               className="w-full sm:w-1/2"
               type="submit"

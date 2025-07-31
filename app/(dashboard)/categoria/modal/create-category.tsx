@@ -1,5 +1,6 @@
 "use client";
 
+import { createCategory } from "@/app/actions/categories/create_categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,11 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categoryIconOptions } from "@/utils/category-icons";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { createCategory } from "@/app/actions/categories/create_categories";
 import type { ActionResponse } from "./form-schema";
-import { categoryIconOptions } from "@/utils/category-icons";
+import { IconPicker } from "./icon-picker";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
@@ -43,6 +44,8 @@ export default function CreateCategory() {
       toast.error(state.message);
     }
   }, [state]);
+
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -82,16 +85,26 @@ export default function CreateCategory() {
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione o ícone" />
               </SelectTrigger>
-              <SelectContent className="w-60">
-                {categoryIconOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    <opt.icon className="h-5 w-5" />
-                    {opt.label}
-                  </SelectItem>
-                ))}
+              <SelectContent className="w-80">
+                <div className="grid grid-cols-6 gap-1 p-2">
+                  {categoryIconOptions.map((opt) => (
+                    <SelectItem
+                      key={opt.value}
+                      value={opt.value}
+                      className="hover:border-primary hover:bg-accent focus:border-primary focus:bg-accent data-[state=checked]:border-primary data-[state=checked]:bg-accent flex h-12 w-12 cursor-pointer items-center justify-center rounded-md border-2 border-transparent p-2 transition-all"
+                    >
+                      <opt.icon className="h-6 w-6" />
+                    </SelectItem>
+                  ))}
+                </div>
               </SelectContent>
             </Select>
           </div>
+
+          <IconPicker
+            value={selectedIcon}
+            onChange={(value) => setSelectedIcon(value)}
+          />
 
           {/* <Card className="p-4">
             <div className="items-top flex space-x-2">
