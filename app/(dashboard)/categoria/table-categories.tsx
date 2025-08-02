@@ -24,7 +24,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";
 import UpdateCategory from "./modal/update-category";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function TableCategories({ categorias }) {
   const { getBadgeStyle } = UseStyles();

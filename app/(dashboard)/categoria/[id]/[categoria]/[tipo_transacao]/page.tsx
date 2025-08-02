@@ -7,7 +7,7 @@ import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default async function page(props: {
   params: { month: string; categoria: string; tipo_transacao: string };

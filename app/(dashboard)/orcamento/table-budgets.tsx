@@ -21,7 +21,7 @@ import {
 import DeleteBudget from "./modal/delete-budget";
 import UpdateBudget from "./modal/update-budget";
 import { RiMoreLine } from "@remixicon/react";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function TableBudgets({ budgets, categorias }) {
   return (

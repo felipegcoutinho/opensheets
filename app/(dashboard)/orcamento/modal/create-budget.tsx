@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseDates } from "@/hooks/use-dates";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { createBudget } from "@/app/actions/orcamentos/create_budget";

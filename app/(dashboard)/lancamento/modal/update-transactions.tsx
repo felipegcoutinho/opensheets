@@ -27,7 +27,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function UpdateTransactions({
   itemId,

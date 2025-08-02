@@ -30,7 +30,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { ResumoLancamentoCard } from "./resume";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 const fetcher = (url) =>
   fetch(url).then((res) => {

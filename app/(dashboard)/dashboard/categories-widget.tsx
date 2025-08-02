@@ -1,8 +1,6 @@
 "use client";
-
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
-import Ping from "@/components/ping-icon";
 import { Badge } from "@/components/ui/badge";
 import {
   RiArrowRightSFill,
@@ -10,7 +8,7 @@ import {
   RiSkull2Fill,
 } from "@remixicon/react";
 import Link from "next/link";
-import { categoryIconsMap } from "@/utils/category-icons";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 type CombinedData = {
   tipo_transacao: string;
@@ -52,7 +50,7 @@ export default function CategoryProgress({
         name: item.categoria,
         spent: item.total,
         limit: budget?.valor_orcado,
-        color: tipo === "despesa" ? "bg-red-500" : "bg-green-500",
+        color: tipo === "despesa" ? "text-red-500" : "text-green-500",
         tipo: item.tipo_transacao,
         icone: item.icone,
       };
@@ -85,11 +83,10 @@ export default function CategoryProgress({
                     href={url}
                     className="flex items-center gap-2 capitalize hover:underline"
                   >
-                    {IconComp ? (
-                      <IconComp className="h-4 w-4" />
-                    ) : (
-                      <Ping color={item.color} />
+                    {IconComp && (
+                      <IconComp className={`h-4 w-4 ${item.color}`} />
                     )}
+
                     <span className="text-base font-medium">{item.name}</span>
                     <RiArrowRightSFill className="text-muted-foreground -ml-1 h-4 w-4" />
                   </Link>
