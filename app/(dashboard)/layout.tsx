@@ -1,5 +1,5 @@
 import BannerData from "@/components/banner-data";
-import UpcomingPaymentsBanner from "@/components/upcoming-payments-banner";
+import UpcomingPaymentsBanner from "@/components/banner-upcoming-payments";
 import MonthPicker from "@/components/month-picker/month-picker";
 import NavPage from "@/components/sidebar/nav-page";
 import {
@@ -31,12 +31,12 @@ export default async function Layout({
             <SidebarTrigger size="icon" className="-ml-1" />
           </div>
         </header>
-        <div className="px-4">
+        <section className="px-4">
           <BannerData />
           <UpcomingPaymentsBanner />
           <MonthPicker />
           {children}
-        </div>
+        </section>
       </SidebarInset>
     </SidebarProvider>
   );

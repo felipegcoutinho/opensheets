@@ -368,7 +368,6 @@ export async function getSumAccountIncome(month: string, id: number) {
     .from("transacoes")
     .select(`valor, periodo`)
     .eq("conta_id", id)
-
     .eq("tipo_transacao", "receita")
     .or("responsavel.eq.você,responsavel.eq.sistema")
     .eq("realizado", true);
@@ -406,7 +405,6 @@ export async function getSumAccountExpense(month: string, id: number) {
     .from("transacoes")
     .select(`valor, periodo`)
     .eq("conta_id", id)
-
     .eq("tipo_transacao", "despesa")
     .or("responsavel.eq.você, responsavel.eq.sistema")
     .eq("realizado", true);
