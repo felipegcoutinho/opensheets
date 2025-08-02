@@ -5,8 +5,8 @@ import {
   RiCheckLine,
   RiBankCardLine,
   RiRefreshLine,
+  RiPixLine,
 } from "@remixicon/react";
-import Image from "next/image";
 
 function UseStyles() {
   function getBadgeStyle(tipoTransacao: string) {
@@ -43,15 +43,7 @@ function UseStyles() {
     const icons = {
       dinheiro: <RiMoneyDollarCircleLine size={15} />,
       "cartão de crédito": <RiBankCardLine size={15} />,
-      pix: (
-        <Image
-          src="/logos/pix_lucide.svg"
-          alt="Pix"
-          className="dark:invert"
-          width={15}
-          height={15}
-        />
-      ),
+      pix: <RiPixLine size={15} />,
       boleto: <RiBarcodeLine size={15} />,
       credito: <RiMoneyDollarCircleLine size={15} />,
       "cartão de débito": <RiBankCardLine size={15} />,

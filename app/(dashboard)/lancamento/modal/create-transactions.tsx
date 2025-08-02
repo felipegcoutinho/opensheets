@@ -30,6 +30,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { ResumoLancamentoCard } from "./resume";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 const fetcher = (url) =>
   fetch(url).then((res) => {
@@ -231,15 +232,21 @@ export default function CreateTransactions({
                         (categoria) =>
                           categoria.tipo_categoria === tipoTransacao,
                       )
-                      .map((item) => (
-                        <SelectItem
-                          className="capitalize"
-                          key={item.id}
-                          value={item.id.toString()}
-                        >
-                          {item.nome}
-                        </SelectItem>
-                      ))}
+                      .map((item) => {
+                        const Icon = categoryIconsMap[item.icone];
+                        return (
+                          <SelectItem
+                            className="capitalize"
+                            key={item.id}
+                            value={item.id.toString()}
+                          >
+                            <span className="flex items-center gap-2">
+                              {Icon && <Icon className="h-4 w-4" />}
+                              {item.nome}
+                            </span>
+                          </SelectItem>
+                        );
+                      })}
                   </SelectContent>
                 </Select>
               </div>

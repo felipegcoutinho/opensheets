@@ -7,6 +7,7 @@ import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default async function page(props: {
   params: { month: string; categoria: string; tipo_transacao: string };
@@ -22,6 +23,11 @@ export default async function page(props: {
   const categoria = decodeURIComponent(params.categoria);
   const tipoTransacao = decodeURIComponent(params.tipo_transacao);
 
+  const iconName = categorias.find(
+    (c) => c.id.toString() === categoriaId,
+  )?.icone;
+  const Icon = iconName ? categoryIconsMap[iconName] : undefined;
+
   const transacoes = await getCategoria(month, categoria, tipoTransacao);
 
   const totalTransacoes =
@@ -32,6 +38,7 @@ export default async function page(props: {
       <Card className="mt-4">
         <CardHeader>
           <div className="flex items-center gap-2">
+            {Icon && <Icon className="h-5 w-5" />}
             <CardTitle className="text-xl capitalize">{categoria}</CardTitle>
 
             <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
