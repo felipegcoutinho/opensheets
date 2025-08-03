@@ -1,5 +1,6 @@
 "use client";
-
+import EmptyCard from "@/components/empty-card";
+import InsightCard from "@/components/insight-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
@@ -72,7 +73,7 @@ function Home({
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="bg-primary my-2 w-72 text-white transition hover:opacity-90"
+        className="bg-primary mt-2 w-72 text-white transition hover:opacity-90"
       >
         <div className="flex items-center justify-center gap-2">
           {loading ? (
@@ -89,66 +90,60 @@ function Home({
         </div>
       </Button>
 
+      {!analysis && (
+        <Card className="mt-4 w-full">
+          <EmptyCard />
+        </Card>
+      )}
+
       {analysis && (
-        <Card className="my-2 w-full">
-          <CardHeader>
-            <CardTitle>Relatório de Comportamento de Consumo</CardTitle>
-            <p className="text-muted-foreground mt-2">
-              No período selecionado ({month}), identificamos os principais
-              comportamentos e gatilhos que impactaram seu padrão de consumo. A
-              seguir, apresentamos um overview das descobertas e recomendações
-              estratégicas.
-            </p>
+        <Card className="my-2 w-full border-none dark:bg-transparent">
+          <CardHeader className="p-0">
+            <CardTitle className="text-xl">
+              Relatório de Comportamento de Consumo
+            </CardTitle>
+
+            <div className="text-muted-foreground mt-2">
+              <p>
+                No período selecionado ({month}), identificamos os principais
+                comportamentos e gatilhos que impactaram seu padrão de consumo.
+              </p>
+              <p>
+                A seguir, apresentamos um overview das descobertas e
+                recomendações estratégicas.
+              </p>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+
+          <CardContent className="p-0">
+            <div className="space-y-2">
               {/* Comportamentos Observados */}
-              <Card className="p-4">
-                <h3 className="text-xl font-semibold">
-                  1. Comportamentos Observados
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.comportamentos_observados.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Comportamentos Observados"
+                analysis={analysis.comportamentos_observados}
+                color="bg-amber-200"
+              />
 
               {/* Gatilhos de Consumo */}
-              <Card className="p-4">
-                <h3 className="text-xl font-semibold">
-                  2. Gatilhos de Consumo
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.gatilhos_de_consumo.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Gatilhos de Consumo"
+                analysis={analysis.gatilhos_de_consumo}
+                color="bg-red-200"
+              />
 
               {/* Recomendações Práticas */}
-              <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="text-xl font-semibold">
-                  3. Recomendações Práticas
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.recomendações_práticas.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Recomendações Práticas"
+                analysis={analysis.recomendações_práticas}
+                color="bg-emerald-200"
+              />
 
               {/* Melhorias Sugeridas */}
-              <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="text-xl font-semibold">
-                  4. Melhorias Sugeridas
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.melhorias_sugeridas.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Melhorias Sugeridas"
+                analysis={analysis.melhorias_sugeridas}
+                color="bg-purple-200"
+              />
             </div>
           </CardContent>
         </Card>

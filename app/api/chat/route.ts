@@ -45,25 +45,24 @@ export async function POST(req: Request) {
   
       {
         "comportamentos_observados": [
-          "🔍 Hábito ou padrão identificado...",
+          "Hábito ou padrão identificado...",
           ...
         ],
         "gatilhos_de_consumo": [
-          "⚠️ Gatilho emocional ou padrão de comportamento...",
+          "Gatilho emocional ou padrão de comportamento...",
           ...
         ],
         "recomendações_práticas": [
-          "✅ Ação prática e direta...",
+          "Ação prática e direta...",
           ...
         ],
         "melhorias_sugeridas": [
-          "🚀 Mudança comportamental com impacto positivo...",
+          "Mudança comportamental com impacto positivo...",
           ...
         ]
       }
   
       Regras:
-      - Não inclua dados brutos ou valores em reais.
       - Sempre use linguagem clara, direta e interpretativa.
       - Emojis ajudam na leitura, use com moderação e coerência.
       - Não repetir dados, gerar análise baseada em comportamento.
