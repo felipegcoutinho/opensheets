@@ -9,7 +9,7 @@ export default async function BannerData() {
   const shortUserName = userName?.split(" ")[0];
 
   return (
-    <Banner className="bg-contrast-foreground/20 py-12">
+    <Banner className="bg-contrast-foreground/10 py-12">
       <div className="flex flex-col">
         <span className="text-xl font-bold">Olá, {shortUserName}! 👋</span>
         <span className="text-muted-foreground">

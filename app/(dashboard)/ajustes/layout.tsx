@@ -1,7 +1,7 @@
 import BannerDescription from "@/components/banner-description";
 
 export const metadata = {
-  title: "Cartões | opensheets",
+  title: "Ajustes | opensheets",
 };
 
 export default function RootLayout({
@@ -11,8 +11,8 @@ export default function RootLayout({
 }) {
   return (
     <BannerDescription
-      title="Cartões"
-      subtitle="Acompanhe todos os cartões criados, incluindo seus limites, faturas e transações."
+      title="Ajustes"
+      subtitle="Personalize suas preferências e configurações."
       showMonthPicker={false}
     >
       {children}

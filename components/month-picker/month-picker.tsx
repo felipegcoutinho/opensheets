@@ -1,10 +1,10 @@
 "use client";
-import { useMemo } from "react";
+
+import { Card } from "@/components/ui/card";
 import Helper from "./helper";
 import LoadingSpinner from "./loading-spinner";
 import NavigationButton from "./nav-button";
 import ReturnButton from "./return-button";
-import { Card } from "../ui/card";
 
 export default function MonthPicker() {
   const {
@@ -17,23 +17,6 @@ export default function MonthPicker() {
     isDifferentFromCurrent,
     pathname,
   } = Helper();
-
-  const shouldShowMonthFilter = useMemo(() => {
-    const notShowPaths = [
-      "/cartao",
-      "/conta",
-      "/categoria",
-      "/login",
-      "/ajustes",
-      "/anotacao",
-      "/",
-    ];
-    return !notShowPaths.includes(pathname);
-  }, [pathname]);
-
-  if (!shouldShowMonthFilter) {
-    return null;
-  }
 
   return (
     <Card className="bg-contrast/10 my-2 flex-row border-none p-5">
