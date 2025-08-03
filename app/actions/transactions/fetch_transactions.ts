@@ -2,10 +2,10 @@ import { createClient } from "@/utils/supabase/server";
 import { parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 
-const supabase = createClient();
+const supabase = () => createClient();
 
 const transactions = (month: string) =>
-  supabase.from("transacoes").eq("periodo", month);
+  supabase().from("transacoes").eq("periodo", month);
 
 const transactionsOfYou = (month: string) =>
   transactions(month).eq("responsavel", "você");
@@ -219,7 +219,7 @@ export async function getCategoria(
 
 // Função para obter o limite em uso
 export async function getLimiteEmUso(cartao_id: number) {
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from("transacoes")
     .select("valor")
     .eq("cartao_id", cartao_id)
@@ -273,7 +273,7 @@ async function getSumAccountByType(
   id: number,
   tipo: "receita" | "despesa",
 ) {
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from("transacoes")
     .select("valor, periodo")
     .eq("conta_id", id)
@@ -406,7 +406,7 @@ export async function getFinancialSummaryForPeriod(
   authId: string,
   periodo: string,
 ) {
-  const { data, error } = await supabase.rpc(
+  const { data, error } = await supabase().rpc(
     "buscar_resumo_financeiro_por_periodo",
     {
       p_auth_id: authId,
