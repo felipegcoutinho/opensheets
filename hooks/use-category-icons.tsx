@@ -60,6 +60,7 @@ import {
   RiSwapLine,
   RiCashLine,
   RiWallet3Line,
+  RiTShirt2Line,
 } from "@remixicon/react";
 
 type IconOption = {
@@ -157,6 +158,7 @@ export const categoryIconOptions: IconOption[] = [
 
   // Grupo: Estética / Beleza
   { value: "beauty", icon: RiScissors2Line },
+  { value: "clothing", icon: RiTShirt2Line },
 
   // Grupo: Seguros / Proteção
   { value: "insurance", icon: RiShieldCheckLine },
