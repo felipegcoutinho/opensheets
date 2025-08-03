@@ -15,7 +15,9 @@ const sumValues = (rows: ValorRow[] = []) =>
 
 function baseQuery(month: string, responsible?: string) {
   const supabase = createClient();
-  let query = supabase.from("transacoes").eq("periodo", month);
+  // `eq` filters are only available after calling `select`, so we start with a
+  // minimal selection that can be overridden by callers.
+  let query = supabase.from("transacoes").select("*").eq("periodo", month);
   if (responsible) query = query.eq("responsavel", responsible);
   return query;
 }
