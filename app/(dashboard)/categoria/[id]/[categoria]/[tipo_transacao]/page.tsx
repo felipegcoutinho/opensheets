@@ -38,7 +38,7 @@ export default async function page(props: {
     <>
       <MonthPicker />
       <div className="mb-4 space-y-6">
-        <Card className="mt-4">
+        <Card className="mt-2">
           <CardHeader>
             <div className="flex items-center gap-2">
               {Icon && <Icon className="h-5 w-5" />}

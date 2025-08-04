@@ -86,7 +86,7 @@ async function page(props: { params: { month: string } }) {
   return (
     <>
       <MonthPicker />
-      <div className="my-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="my-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(prioritizedData).map(([responsavel, data]) => (
           <UsersCard
             key={responsavel}

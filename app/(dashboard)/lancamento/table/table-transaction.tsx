@@ -74,7 +74,7 @@ export function TableTransaction({
   });
 
   return (
-    <div className="mt-4 w-full">
+    <div className="mt-2 w-full">
       <TransactionTableFilters
         table={table}
         globalFilter={globalFilter}

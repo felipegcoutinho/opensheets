@@ -73,7 +73,7 @@ function Home({
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="bg-primary mt-2 w-72 text-white transition hover:opacity-90"
+        className="bg-primary w-72 text-white transition hover:opacity-90"
       >
         <div className="flex items-center justify-center gap-2">
           {loading ? (

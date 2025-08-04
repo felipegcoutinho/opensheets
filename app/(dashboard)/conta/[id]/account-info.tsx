@@ -5,7 +5,7 @@ import BalanceItem from "./balance-item";
 
 function AccountInfo({ item, sumAccountIncome, accountExpense, saldo }) {
   return (
-    <Card className="mt-4 w-full p-6">
+    <Card className="mt-2 w-full p-6">
       <div className="mb-4 flex items-start justify-between">
         <div className="flex items-center">
           <PaymentMethodLogo

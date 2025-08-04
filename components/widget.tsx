@@ -35,7 +35,7 @@ export default function Widget({
   information,
 }: WidgetProps) {
   return (
-    <Card className="h-custom-height-1 from-primary/2 relative overflow-hidden from-10% to-transparent dark:bg-gradient-to-br">
+    <Card className="h-custom-height-1 from-primary/2 relative overflow-hidden from-20% to-transparent dark:bg-gradient-to-br">
       <CardHeader>
         <div className="flex w-full items-start justify-between">
           <div>

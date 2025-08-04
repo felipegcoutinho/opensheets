@@ -16,7 +16,7 @@ export default async function page(props: { params: { month: string } }) {
   return (
     <>
       <MonthPicker />
-      <div className="my-4">
+      <div className="my-2">
         <CreateBudget categorias={categorias} />
         <TableBudgets budgets={budgets} categorias={categorias} />
       </div>
