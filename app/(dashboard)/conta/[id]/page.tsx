@@ -10,6 +10,7 @@ import {
   getSumAccountExpense,
   getSumAccountIncome,
 } from "@/app/actions/transactions/fetch_transactions";
+import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import AccountInfo from "./account-info";
 
@@ -33,6 +34,7 @@ export default async function page({ searchParams, params }) {
 
   return (
     <div>
+      <MonthPicker />
       {accountDetails && (
         <AccountInfo
           key={accountDetails.id}

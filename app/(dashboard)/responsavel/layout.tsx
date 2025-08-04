@@ -14,7 +14,6 @@ export default function RootLayout({
       title="Responsáveis"
       subtitle="Visualize as despesas atribuídas a cada responsável. Acompanhe o desempenho financeiro de cada um e faça ajustes conforme necessário. Use o seletor
       abaixo para navegar pelos meses e visualizar as despesas correspondentes."
-      showMonthPicker={false}
     >
       {children}
     </BannerDescription>

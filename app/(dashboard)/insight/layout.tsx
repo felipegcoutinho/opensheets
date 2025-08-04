@@ -9,7 +9,6 @@ export default function RootLayout({ children }) {
     <BannerDescription
       title="Insights"
       subtitle="Obtenha insights valiosos sobre suas finanças e tome decisões informadas."
-      showMonthPicker={true}
     >
       {children}
     </BannerDescription>

@@ -3,6 +3,7 @@ import {
   getTransactionsByResponsible,
 } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
+import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import UsersCard from "./users-card";
 
@@ -83,19 +84,22 @@ async function page(props: { params: { month: string } }) {
   const prioritizedData = prioritizeResponsavel(groupedData, "você");
 
   return (
-    <div className="my-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-      {Object.entries(prioritizedData).map(([responsavel, data]) => (
-        <UsersCard
-          key={responsavel}
-          responsavel={responsavel}
-          cartoes={data.cartoes}
-          logo={data.logo_image}
-          totalCartao={data.totalCartao}
-          boletos={data.boletos}
-          totalBoleto={data.totalBoleto}
-        />
-      ))}
-    </div>
+    <>
+      <MonthPicker />
+      <div className="my-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        {Object.entries(prioritizedData).map(([responsavel, data]) => (
+          <UsersCard
+            key={responsavel}
+            responsavel={responsavel}
+            cartoes={data.cartoes}
+            logo={data.logo_image}
+            totalCartao={data.totalCartao}
+            boletos={data.boletos}
+            totalBoleto={data.totalBoleto}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

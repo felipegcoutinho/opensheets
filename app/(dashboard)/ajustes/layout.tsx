@@ -13,7 +13,6 @@ export default function RootLayout({
     <BannerDescription
       title="Ajustes"
       subtitle="Personalize suas preferências e configurações."
-      showMonthPicker={false}
     >
       {children}
     </BannerDescription>

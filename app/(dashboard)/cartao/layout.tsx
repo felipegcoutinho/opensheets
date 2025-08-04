@@ -13,7 +13,6 @@ export default function RootLayout({
     <BannerDescription
       title="Cartões"
       subtitle="Acompanhe todos os cartões criados, incluindo seus limites, faturas e transações."
-      showMonthPicker={false}
     >
       {children}
     </BannerDescription>

@@ -13,7 +13,6 @@ export default function RootLayout({
     <BannerDescription
       title="Anotações"
       subtitle="Gerencie suas anotações e mantenha o controle sobre suas ideias e tarefas."
-      showMonthPicker={false}
     >
       {children}
     </BannerDescription>

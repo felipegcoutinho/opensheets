@@ -13,7 +13,6 @@ export default function RootLayout({
     <BannerDescription
       title="Categorias"
       subtitle="Gerencie suas categorias de despesas e receitas. Acompanhe o desempenho financeiro por categoria e faça ajustes conforme necessário."
-      showMonthPicker={false}
     >
       {children}
     </BannerDescription>

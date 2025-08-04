@@ -13,7 +13,6 @@ export default function RootLayout({
     <BannerDescription
       title="Contas"
       subtitle="Acompanhe suas contas bancárias, incluindo contas ativas e inativas, saldos, transações e extratos."
-      showMonthPicker={false}
     >
       {children}
     </BannerDescription>
