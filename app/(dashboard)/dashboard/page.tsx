@@ -14,13 +14,13 @@ import AccountWidget from "./accounts-widget";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import CategoryPurchasesWidget from "./category-purchases-widget";
+import { ChartSummary } from "./chart-summary";
 import { ConditionWidget } from "./condition-widget";
 import InvoiceWidget from "./invoices-widget";
 import PaymentStatusWidget from "./payment-status-widget";
 import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
-import { ChartSummary } from "./chart-summary";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -137,7 +137,7 @@ export default async function page(props: { params: { month: string } }) {
         </Widget>
       </div>
 
-      <div className="my-2 mb-10 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
+      <div className="my-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
         <Widget
           title="Condições de Pagamento"
           subtitle={"Principais Condições de Pagamento"}
@@ -156,6 +156,16 @@ export default async function page(props: { params: { month: string } }) {
           <PaymentWidget month={month} />
         </Widget>
 
+        <Widget
+          title="Compras por Categoria"
+          subtitle="Selecione uma categoria"
+          information="Lista de compras por categoria, inclui apenas transações de Você"
+          icon={<RiFileList2Line className="text-primary mr-2 inline size-4" />}
+        >
+          <CategoryPurchasesWidget data={transactionsByCategory} />
+        </Widget>
+      </div>
+      <div className="my-2 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
         <Widget
           title="Receitas por Categoria"
           subtitle="Principais Categorias por Receita"
@@ -184,15 +194,6 @@ export default async function page(props: { params: { month: string } }) {
             month={month}
             budgets={budgets}
           />
-        </Widget>
-
-        <Widget
-          title="Compras por Categoria"
-          subtitle="Selecione uma categoria"
-          information="Lista de compras por categoria, inclui apenas transações de Você"
-          icon={<RiFileList2Line className="text-primary mr-2 inline size-4" />}
-        >
-          <CategoryPurchasesWidget data={transactionsByCategory} />
         </Widget>
       </div>
     </section>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
+import { useMemo, useState } from "react";
 
 interface TransactionByCategory {
   id: string;
@@ -48,7 +48,12 @@ export default function CategoryPurchasesWidget({
         id: string;
         nome: string;
         icone?: string;
-        items: { id: string; descricao: string; valor: number; data_compra: string }[];
+        items: {
+          id: string;
+          descricao: string;
+          valor: number;
+          data_compra: string;
+        }[];
       }
     >();
 
@@ -84,7 +89,7 @@ export default function CategoryPurchasesWidget({
   return (
     <div className="space-y-2">
       <Select value={selected} onValueChange={setSelected}>
-        <SelectTrigger className="w-full">
+        <SelectTrigger className="mb-4 w-full">
           <SelectValue placeholder="Selecione" />
         </SelectTrigger>
         <SelectContent>
@@ -106,11 +111,12 @@ export default function CategoryPurchasesWidget({
         {selectedCategory?.items.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between border-b border-dashed py-2 last:border-0"
+            className="flex items-center justify-between border-b border-dashed pb-2 last:border-0"
           >
-            <span className="text-sm">
-              {DateFormat(item.data_compra)} - {item.descricao}
-            </span>
+            <div className="flex flex-col">
+              <span>{item.descricao}</span>
+              <span className="text-xs">{DateFormat(item.data_compra)}</span>
+            </div>
             <MoneyValues value={item.valor} />
           </div>
         ))}

@@ -2,13 +2,13 @@
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import {
   RiArrowRightSFill,
   RiCheckboxCircleLine,
   RiSkull2Fill,
 } from "@remixicon/react";
 import Link from "next/link";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 type CombinedData = {
   tipo_transacao: string;
@@ -77,7 +77,7 @@ export default function CategoryProgress({
 
           return (
             <div key={item.id} className="mb-2 w-full">
-              <div className="flex items-start justify-between border-b border-dashed py-2">
+              <div className="flex items-start justify-between border-b border-dashed pb-2">
                 <div>
                   <Link
                     href={url}
@@ -120,7 +120,7 @@ export default function CategoryProgress({
                       )}
                     </div>
                   ) : (
-                    <div className="text-muted-foreground mt-1 text-sm">
+                    <div className="text-muted-foreground mt-1 text-xs italic">
                       sem limite configurado
                     </div>
                   )}
