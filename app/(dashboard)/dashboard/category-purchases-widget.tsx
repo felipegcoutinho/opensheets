@@ -10,15 +10,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
+import { UseDates } from "@/hooks/use-dates";
 
 interface TransactionByCategory {
   id: string;
   descricao: string;
   valor: number | string;
   tipo_transacao: string;
+  data_compra: string;
   categoria?: {
     id: string;
     nome: string;
+    icone?: string;
   };
 }
 
@@ -40,18 +44,29 @@ export default function CategoryPurchasesWidget({
   const categories = useMemo(() => {
     const map = new Map<
       string,
-      { id: string; nome: string; items: { id: string; descricao: string; valor: number }[] }
+      {
+        id: string;
+        nome: string;
+        icone?: string;
+        items: { id: string; descricao: string; valor: number; data_compra: string }[];
+      }
     >();
 
     despesas.forEach((item) => {
       const cat = item.categoria!;
       if (!map.has(cat.id)) {
-        map.set(cat.id, { id: cat.id, nome: cat.nome, items: [] });
+        map.set(cat.id, {
+          id: cat.id,
+          nome: cat.nome,
+          icone: cat.icone,
+          items: [],
+        });
       }
       map.get(cat.id)!.items.push({
         id: item.id,
         descricao: item.descricao,
         valor: Number(item.valor),
+        data_compra: item.data_compra,
       });
     });
 
@@ -62,6 +77,8 @@ export default function CategoryPurchasesWidget({
 
   const selectedCategory = categories.find((c) => c.id === selected);
 
+  const { DateFormat } = UseDates();
+
   if (!categories.length) return <EmptyCard />;
 
   return (
@@ -71,11 +88,17 @@ export default function CategoryPurchasesWidget({
           <SelectValue placeholder="Selecione" />
         </SelectTrigger>
         <SelectContent>
-          {categories.map((cat) => (
-            <SelectItem key={cat.id} value={cat.id} className="capitalize">
-              {cat.nome}
-            </SelectItem>
-          ))}
+          {categories.map((cat) => {
+            const Icon = cat.icone ? categoryIconsMap[cat.icone] : undefined;
+            return (
+              <SelectItem key={cat.id} value={cat.id}>
+                <div className="flex items-center gap-2 capitalize">
+                  {Icon && <Icon className="h-4 w-4" />}
+                  <span>{cat.nome}</span>
+                </div>
+              </SelectItem>
+            );
+          })}
         </SelectContent>
       </Select>
 
@@ -85,7 +108,9 @@ export default function CategoryPurchasesWidget({
             key={item.id}
             className="flex items-center justify-between border-b border-dashed py-2 last:border-0"
           >
-            <span className="text-sm">{item.descricao}</span>
+            <span className="text-sm">
+              {DateFormat(item.data_compra)} - {item.descricao}
+            </span>
             <MoneyValues value={item.valor} />
           </div>
         ))}
