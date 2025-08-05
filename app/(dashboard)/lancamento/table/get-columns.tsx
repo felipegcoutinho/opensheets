@@ -23,12 +23,12 @@ import UseStyles from "@/hooks/use-styles";
 import {
   RiAttachmentLine,
   RiBankCardLine,
-  RiCalendarCheckFill,
   RiCheckboxCircleFill,
   RiBankLine,
   RiGroupLine,
   RiMessage2Line,
   RiMoreLine,
+  RiBlazeLine,
 } from "@remixicon/react";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
@@ -136,7 +136,7 @@ export const getColumns = (
 
           {item.condicao === "parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
-              <RiCalendarCheckFill className="text-emerald-600" size={16} />
+              <RiBlazeLine className="text-yellow-600" size={16} />
             )}
         </div>
       );

@@ -15,6 +15,7 @@ export async function createCategory(
   const rawData: CategoryFormData = {
     nome: String(formData.get("nome")),
     tipo_categoria: String(formData.get("tipo_categoria")),
+    icone: String(formData.get("icone")),
   };
 
   const validated = categorySchema.omit({ id: true }).safeParse(rawData);

@@ -2,8 +2,30 @@ import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
 
+const sanitize = (str: string) => str.replace(/[<>]/g, "");
+
+function validateMessages(data: unknown) {
+  if (!Array.isArray(data)) return null;
+  return data.slice(0, 10).map((m) => ({
+    role: typeof m.role === "string" ? m.role : "user",
+    content: sanitize(String(m.content ?? "")),
+  }));
+}
+
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  if (req.headers.get("content-type") !== "application/json") {
+    return NextResponse.json({ error: "Invalid content" }, { status: 400 });
+  }
+  const body = await req.json().catch(() => null);
+  const messages = validateMessages(body?.messages);
+  if (!messages) {
+    return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+  }
+
+  const origin = req.headers.get("origin") || "";
+  if (origin && !origin.startsWith(process.env.NEXT_PUBLIC_SITE_URL!)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
 
   const result = await generateText({
     model: openai("gpt-4.1-mini"),
@@ -23,25 +45,24 @@ export async function POST(req: Request) {
   
       {
         "comportamentos_observados": [
-          "🔍 Hábito ou padrão identificado...",
+          "Hábito ou padrão identificado...",
           ...
         ],
         "gatilhos_de_consumo": [
-          "⚠️ Gatilho emocional ou padrão de comportamento...",
+          "Gatilho emocional ou padrão de comportamento...",
           ...
         ],
         "recomendações_práticas": [
-          "✅ Ação prática e direta...",
+          "Ação prática e direta...",
           ...
         ],
         "melhorias_sugeridas": [
-          "🚀 Mudança comportamental com impacto positivo...",
+          "Mudança comportamental com impacto positivo...",
           ...
         ]
       }
   
       Regras:
-      - Não inclua dados brutos ou valores em reais.
       - Sempre use linguagem clara, direta e interpretativa.
       - Emojis ajudam na leitura, use com moderação e coerência.
       - Não repetir dados, gerar análise baseada em comportamento.

@@ -1,5 +1,5 @@
 "use client";
-
+import { createCategory } from "@/app/actions/categories/create_categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,9 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categoryIconOptions } from "@/hooks/use-category-icons";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { createCategory } from "@/app/actions/categories/create_categories";
 import type { ActionResponse } from "./form-schema";
 
 const initialState: ActionResponse = { success: false, message: "" };
@@ -51,7 +51,7 @@ export default function CreateCategory() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Nova Categoria</DialogTitle>
         </DialogHeader>
@@ -75,35 +75,27 @@ export default function CreateCategory() {
             </Select>
           </div>
 
-          {/* <Card className="p-4">
-            <div className="items-top flex space-x-2">
-              <Toggle
-                onPressedChange={() =>
-                  setIsUsedForCalculations(!isUsedForCalculations)
-                }
-                id="isUsedForCalculations"
-                // defaultPressed={true}
-                pressed={isUsedForCalculations}
-                name="usado_para_calculos"
-                className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
-              >
-                <CheckCircleIcon strokeWidth={2} className="h-6 w-6" />
-              </Toggle>
-
-              <div className="grid gap-1.5 leading-none">
-                <Label
-                  className="text-foreground"
-                  htmlFor="isUsedForCalculations"
-                >
-                  Considerar nos cálculos
-                </Label>
-                <p className="text-muted-foreground text-sm">
-                  Se você desmarcar essa opção, essa categoria NÃO será
-                  considerada nos cálculos de receitas e despesas.
-                </p>
-              </div>
-            </div>
-          </Card> */}
+          <div>
+            <Label htmlFor="icone">Ícone</Label>
+            <Select name="icone" required>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione o ícone" />
+              </SelectTrigger>
+              <SelectContent>
+                <div className="grid grid-cols-5 p-1">
+                  {categoryIconOptions.map((opt) => (
+                    <SelectItem
+                      key={opt.value}
+                      value={opt.value}
+                      className="hover:border-primary hover:bg-accent focus:border-primary focus:bg-accent data-[state=checked]:border-primary data-[state=checked]:bg-accent flex cursor-pointer items-center justify-center rounded-md border-2 border-transparent p-2 transition-all"
+                    >
+                      <opt.icon className="h-8 w-8" />
+                    </SelectItem>
+                  ))}
+                </div>
+              </SelectContent>
+            </Select>
+          </div>
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>

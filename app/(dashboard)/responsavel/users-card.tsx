@@ -1,5 +1,6 @@
 import MoneyValues from "@/components/money-values";
 import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
@@ -142,7 +143,9 @@ export default function UsersCard({
 
                       {data.dt_vencimento && (
                         <span className="text-xs font-bold">
-                          vence dia {data.dt_vencimento}
+                          <Badge variant={"outline"}>
+                            vence dia {data.dt_vencimento}
+                          </Badge>
                         </span>
                       )}
                     </div>
@@ -189,9 +192,9 @@ export default function UsersCard({
                       {descricao}
 
                       {data.data_vencimento && (
-                        <span className="text-xs font-bold">
+                        <Badge variant={"outline"}>
                           vence {DateFormat(data.data_vencimento)}
-                        </span>
+                        </Badge>
                       )}
                     </span>
                     <span>

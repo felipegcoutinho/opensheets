@@ -24,6 +24,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";
 import UpdateCategory from "./modal/update-category";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function TableCategories({ categorias }) {
   const { getBadgeStyle } = UseStyles();
@@ -61,62 +62,70 @@ export default function TableCategories({ categorias }) {
             </TableHeader>
             <TableBody>
               {filteredCategorias?.length > 0 ? (
-                filteredCategorias.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-bold capitalize">
-                      <Link
-                        href={`/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(
-                          item.nome,
-                        )}/${encodeURIComponent(item.tipo_categoria)}`}
-                        className="ml-2 flex items-center gap-1 text-sm hover:underline"
-                      >
-                        {item.nome}
-                        <RiArrowRightSFill className="h-3 w-3" />
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={getBadgeStyle(item.tipo_categoria)}>
-                        {item.tipo_categoria}
-                      </Badge>
-                    </TableCell>
+                filteredCategorias.map((item) => {
+                  const IconComp = categoryIconsMap[item.icone];
+                  return (
+                    <TableRow key={item.id}>
+                      <TableCell className="capitalize">
+                        <Link
+                          href={`/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(
+                            item.nome,
+                          )}/${encodeURIComponent(item.tipo_categoria)}`}
+                          className="ml-2 flex items-center gap-1 text-sm hover:underline"
+                        >
+                          {IconComp && <IconComp className="h-4 w-4" />}
+                          <span className="font-bold">{item.nome}</span>
+                          <RiArrowRightSFill className="h-3 w-3" />
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={getBadgeStyle(item.tipo_categoria)}>
+                          {item.tipo_categoria}
+                        </Badge>
+                      </TableCell>
 
-                    <TableCell className="flex gap-2">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
-                          >
-                            <RiMoreLine size={16} />
-                            <span className="sr-only">Open menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
+                      <TableCell className="flex gap-2">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
+                            >
+                              <RiMoreLine size={16} />
+                              <span className="sr-only">Open menu</span>
+                            </Button>
+                          </DropdownMenuTrigger>
 
-                        <DropdownMenuContent align="end" className="w-[160px]">
-                          <DropdownMenuItem
-                            onSelect={(e) => e.preventDefault()}
+                          <DropdownMenuContent
+                            align="end"
+                            className="w-[160px]"
                           >
-                            <UpdateCategory
-                              itemId={item.id}
-                              itemNome={item.nome}
-                              itemTipoCategoria={item.tipo_categoria}
-                              itemUsadoParaCalculos={item.usado_para_calculos}
-                            />
-                          </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <UpdateCategory
+                                itemId={item.id}
+                                itemNome={item.nome}
+                                itemTipoCategoria={item.tipo_categoria}
+                                itemUsadoParaCalculos={item.usado_para_calculos}
+                                itemIcone={item.icone}
+                              />
+                            </DropdownMenuItem>
 
-                          <DropdownMenuItem
-                            onSelect={(e) => e.preventDefault()}
-                          >
-                            <DeleteCategory
-                              itemId={item.id}
-                              itemNome={item.nome}
-                            />
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))
+                            <DropdownMenuItem
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <DeleteCategory
+                                itemId={item.id}
+                                itemNome={item.nome}
+                              />
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               ) : (
                 <TableRow>
                   <TableCell colSpan={3} className="text-center">

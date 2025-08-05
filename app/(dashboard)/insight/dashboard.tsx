@@ -1,9 +1,17 @@
 "use client";
-
+import EmptyCard from "@/components/empty-card";
+import InsightCard from "@/components/insight-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
-import { useState } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+
+interface Analysis {
+  comportamentos_observados: string[];
+  gatilhos_de_consumo: string[];
+  recomendações_práticas: string[];
+  melhorias_sugeridas: string[];
+}
 
 function Home({
   lancamentos,
@@ -17,45 +25,55 @@ function Home({
 }) {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
+  const cacheRef = useRef<Analysis | null>(null);
 
-  const handleAnalyze = async () => {
+  const messages = useMemo(
+    () => [
+      { role: "user", content: JSON.stringify(lancamentos) },
+      { role: "user", content: JSON.stringify(cartoes) },
+      { role: "user", content: JSON.stringify(categorias) },
+    ],
+    [lancamentos, cartoes, categorias],
+  );
+
+  useEffect(() => {
+    cacheRef.current = null;
+  }, [messages]);
+
+  const handleAnalyze = useCallback(async () => {
+    if (cacheRef.current) {
+      setAnalysis(cacheRef.current);
+      return;
+    }
+
     setLoading(true);
     setAnalysis(null);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/api/chat`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: [
-              { role: "user", content: JSON.stringify(lancamentos) },
-              { role: "user", content: JSON.stringify(cartoes) },
-              { role: "user", content: JSON.stringify(categorias) },
-            ],
-          }),
-        },
-      );
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages }),
+      });
 
       const { analysis } = await response.json();
-      setAnalysis(JSON.parse(analysis));
+      const parsed = JSON.parse(analysis);
+      cacheRef.current = parsed;
+      setAnalysis(parsed);
     } catch (error) {
       console.error("Erro ao buscar análise:", error);
       setAnalysis(null);
     } finally {
       setLoading(false);
     }
-  };
+  }, [messages]);
 
   return (
     <>
       <Button
         onClick={handleAnalyze}
         disabled={loading}
-        className="from-primary dark:to-chart-1 to-contrast-foreground my-2 w-72 bg-gradient-to-tr transition-all hover:scale-110"
+        className="bg-primary w-72 text-white transition hover:opacity-90"
       >
         <div className="flex items-center justify-center gap-2">
           {loading ? (
@@ -72,60 +90,60 @@ function Home({
         </div>
       </Button>
 
+      {!analysis && (
+        <Card className="mt-4 w-full">
+          <EmptyCard />
+        </Card>
+      )}
+
       {analysis && (
-        <Card className="my-2 w-full">
-          <CardHeader>
-            <CardTitle>💼 Análise Comportamental de Consumo</CardTitle>
+        <Card className="my-2 w-full border-none dark:bg-transparent">
+          <CardHeader className="p-0">
+            <CardTitle className="text-xl">
+              Relatório de Comportamento de Consumo
+            </CardTitle>
+
+            <div className="text-muted-foreground mt-2">
+              <p>
+                No período selecionado ({month}), identificamos os principais
+                comportamentos e gatilhos que impactaram seu padrão de consumo.
+              </p>
+              <p>
+                A seguir, apresentamos um overview das descobertas e
+                recomendações estratégicas.
+              </p>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+
+          <CardContent className="p-0">
+            <div className="space-y-2">
               {/* Comportamentos Observados */}
-              <Card className="p-4">
-                <h3 className="mb-4 text-2xl font-bold">
-                  🔍 Comportamentos Observados
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.comportamentos_observados.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Comportamentos Observados"
+                analysis={analysis.comportamentos_observados}
+                color="bg-amber-200"
+              />
 
               {/* Gatilhos de Consumo */}
-              <Card className="p-4">
-                <h3 className="mb-4 text-2xl font-bold">
-                  ⚠️ Gatilhos de Consumo
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.gatilhos_de_consumo.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Gatilhos de Consumo"
+                analysis={analysis.gatilhos_de_consumo}
+                color="bg-red-200"
+              />
 
               {/* Recomendações Práticas */}
-              <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="mb-4 text-2xl font-bold">
-                  ✅ Recomendações Práticas
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.recomendações_práticas.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Recomendações Práticas"
+                analysis={analysis.recomendações_práticas}
+                color="bg-emerald-200"
+              />
 
               {/* Melhorias Sugeridas */}
-              <Card className="col-span-1 p-4 md:col-span-2">
-                <h3 className="mb-4 text-2xl font-bold">
-                  🚀 Melhorias Sugeridas
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.melhorias_sugeridas.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
+              <InsightCard
+                title="Melhorias Sugeridas"
+                analysis={analysis.melhorias_sugeridas}
+                color="bg-purple-200"
+              />
             </div>
           </CardContent>
         </Card>

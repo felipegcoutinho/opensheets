@@ -16,6 +16,7 @@ export async function updateCategory(
     id: String(formData.get("id")),
     nome: String(formData.get("nome")),
     tipo_categoria: String(formData.get("tipo_categoria")),
+    icone: String(formData.get("icone")),
   };
 
   const validated = categorySchema.safeParse(rawData);

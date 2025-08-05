@@ -1,7 +1,7 @@
 import BannerDescription from "@/components/banner-description";
 
 export const metadata = {
-  title: "Contas | opensheets",
+  title: "Ajustes | opensheets",
 };
 
 export default function RootLayout({
@@ -11,8 +11,8 @@ export default function RootLayout({
 }) {
   return (
     <BannerDescription
-      title="Contas"
-      subtitle="Acompanhe suas contas bancárias, incluindo contas ativas e inativas, saldos, transações e extratos."
+      title="Ajustes"
+      subtitle="Personalize suas preferências e configurações."
     >
       {children}
     </BannerDescription>

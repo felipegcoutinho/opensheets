@@ -7,6 +7,7 @@ import {
   getCardInvoice,
   getCardSum,
 } from "@/app/actions/transactions/fetch_transactions";
+import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import CardInfo from "./card-info";
 import CardStatusIndicator from "./card-status-Indicator";
@@ -29,6 +30,7 @@ export default async function page({ searchParams, params }) {
 
   return (
     <section>
+      <MonthPicker />
       <CardStatusIndicator fatura_status={faturaStatus} />
 
       {cardDetails && (

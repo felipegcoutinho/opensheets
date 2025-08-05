@@ -4,9 +4,11 @@ import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getCategoria } from "@/app/actions/transactions/fetch_transactions";
 import MoneyValues from "@/components/money-values";
+import MonthPicker from "@/components/month-picker/month-picker";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default async function page(props: {
   params: { month: string; categoria: string; tipo_transacao: string };
@@ -22,45 +24,54 @@ export default async function page(props: {
   const categoria = decodeURIComponent(params.categoria);
   const tipoTransacao = decodeURIComponent(params.tipo_transacao);
 
+  const iconName = categorias.find(
+    (c) => c.id.toString() === categoriaId,
+  )?.icone;
+  const Icon = iconName ? categoryIconsMap[iconName] : undefined;
+
   const transacoes = await getCategoria(month, categoria, tipoTransacao);
 
   const totalTransacoes =
     transacoes?.reduce((acc, item) => acc + item.valor, 0) || 0;
 
   return (
-    <div className="mb-4 space-y-6">
-      <Card className="mt-4">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CardTitle className="text-xl capitalize">{categoria}</CardTitle>
+    <>
+      <MonthPicker />
+      <div className="mb-4 space-y-6">
+        <Card className="mt-2">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              {Icon && <Icon className="h-5 w-5" />}
+              <CardTitle className="text-xl capitalize">{categoria}</CardTitle>
 
-            <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
-              <Badge
-                variant={tipoTransacao === "receita" ? "receita" : "despesa"}
-              >
-                {tipoTransacao}
-              </Badge>
+              <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
+                <Badge
+                  variant={tipoTransacao === "receita" ? "receita" : "despesa"}
+                >
+                  {tipoTransacao}
+                </Badge>
+              </div>
             </div>
-          </div>
-        </CardHeader>
+          </CardHeader>
 
-        <CardContent>
-          <div className="text-3xl font-bold">
-            <MoneyValues value={totalTransacoes} />
-          </div>
-          <div className="text-muted-foreground mt-2 text-sm">
-            Valor total somando os lançamentos por categoria
-          </div>
-        </CardContent>
-      </Card>
+          <CardContent>
+            <div className="text-3xl font-bold">
+              <MoneyValues value={totalTransacoes} />
+            </div>
+            <div className="text-muted-foreground mt-2 text-sm">
+              Valor total somando os lançamentos por categoria
+            </div>
+          </CardContent>
+        </Card>
 
-      <TableTransaction
-        data={transacoes}
-        getAccount={contas}
-        getCards={cartoes}
-        getCategorias={categorias}
-        hidden={false}
-      />
-    </div>
+        <TableTransaction
+          data={transacoes}
+          getAccount={contas}
+          getCards={cartoes}
+          getCategorias={categorias}
+          hidden={false}
+        />
+      </div>
+    </>
   );
 }

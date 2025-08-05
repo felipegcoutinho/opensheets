@@ -27,6 +27,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function UpdateTransactions({
   itemId,
@@ -204,15 +205,21 @@ export default function UpdateTransactions({
                     (categoria) =>
                       categoria.tipo_categoria === itemTipoTransacao,
                   )
-                  .map((item) => (
-                    <SelectItem
-                      className="capitalize"
-                      key={item.id}
-                      value={item.id.toString()}
-                    >
-                      {item.nome}
-                    </SelectItem>
-                  ))}
+                  .map((item) => {
+                    const Icon = categoryIconsMap[item.icone];
+                    return (
+                      <SelectItem
+                        className="capitalize"
+                        key={item.id}
+                        value={item.id.toString()}
+                      >
+                        <span className="flex items-center gap-2">
+                          {Icon && <Icon className="h-4 w-4" />}
+                          {item.nome}
+                        </span>
+                      </SelectItem>
+                    );
+                  })}
               </SelectContent>
             </Select>
           </div>
