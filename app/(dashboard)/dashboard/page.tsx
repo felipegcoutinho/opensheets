@@ -13,6 +13,7 @@ import {
 import AccountWidget from "./accounts-widget";
 import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
+import CategoryPurchasesWidget from "./category-purchases-widget";
 import { ConditionWidget } from "./condition-widget";
 import InvoiceWidget from "./invoices-widget";
 import PaymentStatusWidget from "./payment-status-widget";
@@ -33,6 +34,7 @@ export default async function page(props: { params: { month: string } }) {
     sixmonth,
     account,
     budgets,
+    transactionsByCategory,
   } = await fetchAllData(month);
 
   const { incomes, expenses, summary, categoryData, saldo } =
@@ -182,6 +184,15 @@ export default async function page(props: { params: { month: string } }) {
             month={month}
             budgets={budgets}
           />
+        </Widget>
+
+        <Widget
+          title="Compras por Categoria"
+          subtitle="Selecione uma categoria"
+          information="Lista de compras por categoria, inclui apenas transações de Você"
+          icon={<RiFileList2Line className="text-primary mr-2 inline size-4" />}
+        >
+          <CategoryPurchasesWidget data={transactionsByCategory} />
         </Widget>
       </div>
     </section>
