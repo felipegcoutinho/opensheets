@@ -1,29 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { isProtectedRoute } from "@/lib/auth";
 
 export const updateSession = async (request: NextRequest) => {
-  const protectedRoutes = [
-    "/dashboard",
-    "/lancamento",
-    "/orcamento",
-    "/cartao",
-    "/boleto",
-    "/responsavel",
-    "/anotacao",
-    "/conta",
-    "/ajuste",
-    "/reset-password",
-    "/insight",
-    "/categoria",
-    "/api/descriptions",
-    "/api/responsaveis",
-    "/api/chat",
-  ];
-
   try {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
       {
         cookies: {
           getAll() {
@@ -51,13 +34,7 @@ export const updateSession = async (request: NextRequest) => {
     }
 
     // Verifica se a rota atual é uma das protegidas
-    const isProtectedRoute = protectedRoutes.some(
-      (route) =>
-        currentPath.startsWith(route) ||
-        currentPath.match(/^\/cartao\/\d+\/[a-zA-Z0-9]+$/),
-    );
-
-    if (isProtectedRoute && !session) {
+    if (isProtectedRoute(currentPath) && !session) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
