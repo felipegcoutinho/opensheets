@@ -20,7 +20,7 @@ const itau = localFont({
     },
     {
       path: "../fonts/ItauTextPro_Bd.woff2",
-      weight: "500",
+      weight: "700",
       style: "normal",
     },
   ],
