@@ -50,6 +50,7 @@ export default async function Login(props) {
               </SubmitButton>
               <FormMessage message={searchParams} />
               <Button
+                type="submit"
                 formAction={signInWithGoogle}
                 variant="outline"
                 className="w-full"

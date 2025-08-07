@@ -35,7 +35,8 @@ export const signInWithGoogle = async () => {
   "use server";
 
   const supabase = createClient();
-  const origin = (await headers()).get("origin");
+  const headersList = headers();
+  const origin = headersList.get("origin") || process.env.NEXT_PUBLIC_SITE_URL;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
