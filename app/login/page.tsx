@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn } from "../actions/auth/auth";
+import { Button } from "@/components/ui/button";
+import { signIn, signInWithGoogle } from "../actions/auth/auth";
 
 export default async function Login(props) {
   const searchParams = await props.searchParams;
@@ -47,8 +48,14 @@ export default async function Login(props) {
               <SubmitButton formAction={signIn} pendingText="Fazendo Login...">
                 Login
               </SubmitButton>
-
               <FormMessage message={searchParams} />
+              <Button
+                formAction={signInWithGoogle}
+                variant="outline"
+                className="w-full"
+              >
+                Login com Google
+              </Button>
             </div>
 
             {/* <div>

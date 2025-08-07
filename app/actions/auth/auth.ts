@@ -31,6 +31,30 @@ export const signIn = async (formData) => {
   return redirect("/dashboard");
 };
 
+export const signInWithGoogle = async () => {
+  "use server";
+
+  const supabase = createClient();
+  const origin = (await headers()).get("origin");
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    return redirect("/login?message=Could not authenticate user");
+  }
+
+  if (data?.url) {
+    return redirect(data.url);
+  }
+
+  return redirect("/login?message=Could not authenticate user");
+};
+
 export async function signup(formData: FormData) {
   "use server";
 
