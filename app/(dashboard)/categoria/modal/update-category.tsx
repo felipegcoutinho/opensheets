@@ -63,7 +63,15 @@ export default function UpdateCategory({
           <DialogTitle>Atualizar Categoria</DialogTitle>
         </DialogHeader>
 
-        <form action={action} className="space-y-4">
+                <form
+          action={action}
+          className="space-y-4"
+          onKeyDown={(e) => {
+            if (e.key === " " && e.target instanceof HTMLInputElement) {
+              e.stopPropagation();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={itemId} />
           <div>
             <Label htmlFor="nome">Nome da Categoria</Label>

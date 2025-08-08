@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function UpdateTransactions({
   itemId,
@@ -122,7 +122,19 @@ export default function UpdateTransactions({
           <DialogTitle>Atualizar lançamento</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form
+          onSubmit={handleUpdate}
+          className="space-y-2"
+          onKeyDown={(e) => {
+            if (
+              e.key === " " &&
+              (e.target instanceof HTMLInputElement ||
+                e.target instanceof HTMLTextAreaElement)
+            ) {
+              e.stopPropagation();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={item.id} />
 
           <div className="mb-1 flex w-full gap-2">

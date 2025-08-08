@@ -63,7 +63,15 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-        <form action={action} className="space-y-2">
+                <form
+          action={action}
+          className="space-y-2"
+          onKeyDown={(e) => {
+            if (e.key === " " && e.target instanceof HTMLInputElement) {
+              e.stopPropagation();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">
