@@ -24,13 +24,11 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
-import { useState } from "react";
 import useSWR from "swr";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { ResumoLancamentoCard } from "./resume";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 const fetcher = (url) =>
   fetch(url).then((res) => {
@@ -95,15 +93,6 @@ export default function CreateTransactions({
     (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
   );
 
-  // Resumos para o card de pré-visualização
-  const [valorResumo, setValorResumo] = useState(0);
-  const [dataResumo, setDataResumo] = useState("");
-  const [formaResumo, setFormaResumo] = useState("");
-  const [condicaoResumo, setCondicaoResumo] = useState("vista");
-  const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
-  const [periodoResumo, setPeriodoResumo] = useState(month);
-  const [responsavelResumo, setResponsavelResumo] = useState("você");
-
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -135,19 +124,13 @@ export default function CreateTransactions({
                   name="data_compra"
                   type="date"
                   required={!eBoletoSelecionado}
-                  onChange={(e) => setDataResumo(e.target.value)}
                 />
               </div>
               <div className="w-1/2">
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select
-                  name="periodo"
-                  defaultValue={month}
-                  required
-                  onValueChange={(val) => setPeriodoResumo(val)}
-                >
+                <Select name="periodo" defaultValue={month} required>
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -191,7 +174,6 @@ export default function CreateTransactions({
                   name="valor"
                   placeholder="R$ 0,00"
                   required
-                  onValueChange={(val) => setValorResumo(val.floatValue || 0)}
                 />
               </div>
             </div>
@@ -309,7 +291,6 @@ export default function CreateTransactions({
                   type="text"
                   className="capitalize"
                   defaultValue="você"
-                  onChange={(e) => setResponsavelResumo(e.target.value)}
                 />
                 <datalist id="responsavel-list">
                   {mainResponsavelOptions.map((opt) => (
@@ -350,7 +331,6 @@ export default function CreateTransactions({
                     name="forma_pagamento"
                     onValueChange={(val) => {
                       handleFormaPagamentoChange(val);
-                      setFormaResumo(val);
                     }}
                   >
                     <SelectTrigger id="forma_pagamento" className="w-full">
@@ -451,7 +431,6 @@ export default function CreateTransactions({
                   name="condicao"
                   onValueChange={(val) => {
                     handleCondicaoChange(val);
-                    setCondicaoResumo(val);
                   }}
                   defaultValue="vista"
                   required
@@ -490,10 +469,7 @@ export default function CreateTransactions({
               {showRecorrencia && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
-                  <Select
-                    name="qtde_recorrencia"
-                    onValueChange={(val) => setRecorrenciaResumo(val)}
-                  >
+                  <Select name="qtde_recorrencia">
                     <SelectTrigger id="qtde_recorrencia" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
@@ -525,17 +501,6 @@ export default function CreateTransactions({
               <Label htmlFor="anotacao">Anotação</Label>
               <Textarea id="anotacao" name="anotacao" placeholder="Anotação" />
             </div>
-
-            <ResumoLancamentoCard
-              condicaoResumo={condicaoResumo}
-              valorResumo={valorResumo}
-              dataResumo={dataResumo}
-              formaResumo={formaResumo}
-              quantidadeParcelas={quantidadeParcelas}
-              recorrenciaResumo={recorrenciaResumo}
-              periodoResumo={periodoResumo}
-              responsavelResumo={responsavelResumo}
-            />
           </form>
         </div>
 
