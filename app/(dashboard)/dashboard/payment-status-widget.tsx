@@ -56,11 +56,13 @@ export default function PaymentStatusWidget({
 
   return (
     <>
-      <PaymentSection {...receiveData} />
+      {incomes > 0 && <PaymentSection {...receiveData} />}
 
-      <div className="my-6 border-b border-dashed"></div>
+      {incomes > 0 && expenses > 0 && (
+        <div className="my-6 border-b border-dashed"></div>
+      )}
 
-      <PaymentSection {...payData} />
+      {expenses > 0 && <PaymentSection {...payData} />}
     </>
   );
 }

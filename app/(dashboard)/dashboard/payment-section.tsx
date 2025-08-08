@@ -14,6 +14,9 @@ interface PaymentSectionProps {
 
 export function PaymentSection({ title, total, values }: PaymentSectionProps) {
   const calculatePercentage = (value: number) => {
+    if (total === 0) {
+      return 0;
+    }
     return (value / total) * 100;
   };
 
@@ -28,13 +31,17 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
 
       {/* Barra de progresso */}
       <div className="mb-4 flex h-4 w-full overflow-hidden rounded">
-        {values.map((value, index) => (
-          <div
-            key={index}
-            className={`h-full ${value.color}`}
-            style={{ width: `${calculatePercentage(value.amount)}%` }}
-          />
-        ))}
+        {total > 0 ? (
+          values.map((value, index) => (
+            <div
+              key={index}
+              className={`h-full ${value.color}`}
+              style={{ width: `${calculatePercentage(value.amount)}%` }}
+            />
+          ))
+        ) : (
+          <div className="h-full w-full bg-zinc-200 dark:bg-zinc-200" />
+        )}
       </div>
 
       <div className="flex justify-between">
