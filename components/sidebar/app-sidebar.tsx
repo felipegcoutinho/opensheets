@@ -6,7 +6,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
 import { useSearchParams } from "next/navigation";
@@ -30,11 +29,7 @@ export function AppSidebar({
   const data = NavLinks(month);
 
   return (
-    <Sidebar
-      collapsible="sidebar"
-      {...props}
-      className="dark:border-border/30 border-border border-r dark:border-r"
-    >
+    <Sidebar collapsible="sidebar" {...props} className="">
       <SidebarHeader>
         <div className="mt-4 flex items-center justify-center gap-2 py-2">
           <Logo />
@@ -53,7 +48,6 @@ export function AppSidebar({
       <SidebarFooter className="border-border border-t">
         <NavUser username={username} usermail={usermail} user={data.user} />
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }
