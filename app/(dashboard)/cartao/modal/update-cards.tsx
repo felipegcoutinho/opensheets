@@ -27,8 +27,8 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { updateCard } from "@/app/actions/cards/update_cards";
-import type { ActionResponse } from "./form-schema";
 import Ping from "@/components/ping-icon";
+import type { ActionResponse } from "./form-schema";
 
 type Props = {
   getAccountMap: Array<string>;
@@ -63,11 +63,15 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
 
-                <form
+        <form
           action={action}
           className="space-y-2"
           onKeyDown={(e) => {
-            if (e.key === " " && e.target instanceof HTMLInputElement) {
+            if (
+              e.key === " " &&
+              (e.target instanceof HTMLInputElement ||
+                e.target instanceof HTMLTextAreaElement)
+            ) {
               e.stopPropagation();
             }
           }}

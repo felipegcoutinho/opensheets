@@ -63,7 +63,7 @@ export default function UpdateCategory({
           <DialogTitle>Atualizar Categoria</DialogTitle>
         </DialogHeader>
 
-                <form
+        <form
           action={action}
           className="space-y-4"
           onKeyDown={(e) => {
