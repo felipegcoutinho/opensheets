@@ -31,5 +31,4 @@
 // npm install -g @supabase/mcp-server-supabase
 // This file is typically used in a development environment to facilitate interaction with Supabase services.
 
-
 // The MCP server allows for efficient data management and querying within Supabase projects.
