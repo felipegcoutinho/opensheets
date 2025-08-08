@@ -5,12 +5,17 @@ import ptBR from "date-fns/locale/pt-BR";
 export async function getIncome(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor, categoria_id!inner(id, nome)")
+    .select("valor, categoria_id!inner(id, nome), pagador_id!inner(id)")
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
-    .eq("responsavel", "você")
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal")
     .neq("categoria_id.nome", "saldo anterior");
 
   if (error) throw error;
@@ -21,12 +26,17 @@ export async function getIncome(month: string) {
 export async function getExpense(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, pagador_id!inner(id)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal");
 
   if (error) throw error;
 
@@ -52,12 +62,17 @@ export async function getPaidExpense(month: string) {
 export async function getConditions(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("transacoes")
-    .select("condicao, valor.sum()")
+    .select("condicao, valor.sum(), pagador_id!inner(id)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você")
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal")
     .order("condicao", { ascending: true });
 
   if (error) throw error;
@@ -67,12 +82,17 @@ export async function getConditions(month: string) {
 export async function getPayment(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("transacoes")
-    .select("forma_pagamento, valor.sum()")
+    .select("forma_pagamento, valor.sum(), pagador_id!inner(id)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal");
 
   if (error) throw error;
 
@@ -82,13 +102,18 @@ export async function getPayment(month: string) {
 export async function getTransactionsByCategory(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      `id, data_compra, descricao, valor, tipo_transacao, categoria:categoria_id (id, nome, icone )`,
+      `id, data_compra, descricao, valor, tipo_transacao, categoria:categoria_id (id, nome, icone ), pagador_id!inner(id)`,
     )
     .eq("periodo", month)
-    .eq("responsavel", "você");
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal");
 
   if (error) throw error;
 
@@ -98,13 +123,18 @@ export async function getTransactionsByCategory(month: string) {
 export async function getRecentTransactions(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("transacoes")
     .select(
-      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image)",
+      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagador_id!inner(id)",
     )
     .order("created_at", { ascending: false })
-    .eq("responsavel", "você")
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal")
     .eq("periodo", month)
     .limit(5);
 
@@ -116,14 +146,19 @@ export async function getRecentTransactions(month: string) {
 export async function getSumPaidExpense(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { error, data } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, pagador_id!inner(id, role, auth_id)")
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
     .eq("realizado", true)
-    .eq("responsavel", "você")
-    .neq("responsavel", "sistema");
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal")
+    .neq("pagador_id.role", "sistema");
 
   if (error) throw error;
 
@@ -138,14 +173,19 @@ export async function getSumPaidExpense(month: string) {
 export async function getSumPaidIncome(month: string) {
   const supabase = createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { error, data } = await supabase
     .from("transacoes")
-    .select("valor")
+    .select("valor, pagador_id!inner(id, role, auth_id)")
     .eq("periodo", month)
     .eq("tipo_transacao", "receita")
     .eq("realizado", true)
-    .eq("responsavel", "você")
-    .neq("responsavel", "sistema");
+    .eq("pagador_id.auth_id", user?.id)
+    .eq("pagador_id.role", "principal")
+    .neq("pagador_id.role", "sistema");
 
   if (error) throw error;
 
