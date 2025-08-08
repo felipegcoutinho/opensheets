@@ -17,7 +17,7 @@ export async function getUserName() {
 
   // Se não houver nome, retorna null
   if (!firstName && !lastName) {
-    return null;
+    return user?.user_metadata?.name;
   }
 
   const fullName = `${firstName} ${lastName}`.trim();

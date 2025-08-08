@@ -1,5 +1,6 @@
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,9 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RiGoogleFill } from "@remixicon/react";
 import { signIn, signInWithGoogle } from "../actions/auth/auth";
 
 export default async function Login(props) {
@@ -62,8 +63,8 @@ export default async function Login(props) {
           </form>
 
           <form action={signInWithGoogle}>
-            <Button variant="outline" className="mt-4 w-full">
-              Entrar com Google
+            <Button variant="outline" className="w-full">
+              <RiGoogleFill /> Entrar com Google
             </Button>
           </form>
         </CardContent>
