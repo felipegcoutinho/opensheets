@@ -7,9 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn } from "../actions/auth/auth";
+import { signIn, signInWithGoogle } from "../actions/auth/auth";
 
 export default async function Login(props) {
   const searchParams = await props.searchParams;
@@ -58,6 +59,12 @@ export default async function Login(props) {
                 </Link>
               </Button>
             </div> */}
+          </form>
+
+          <form action={signInWithGoogle}>
+            <Button variant="outline" className="mt-4 w-full">
+              Entrar com Google
+            </Button>
           </form>
         </CardContent>
       </Card>
