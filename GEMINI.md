@@ -1,5 +1,5 @@
-Responda sempre em português. Não traduza o conteúdo do código, apenas o contexto e a descrição.
-Use as instruções a seguir para guiar suas respostas:
+- Responda sempre em português do brasil. Não traduza o conteúdo do código, apenas o contexto e a descrição.
+- Use as instruções a seguir para guiar suas respostas:
 
 TITLE: React Form Component with Server-Side Error Display
 DESCRIPTION: This React functional component renders a sign-up form with email and password fields. It conditionally displays validation errors for each field, which are expected to be present in a `state.errors` object, typically returned from a server action. The form also disables the submit button based on a `pending` state, likely from `useFormStatus`.
