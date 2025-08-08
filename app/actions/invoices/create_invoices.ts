@@ -17,7 +17,9 @@ export async function addFaturas(formData: FormData) {
 
   if (error) {
     console.error(error);
+    return { success: false, message: "Erro ao adicionar fatura." };
   }
 
   revalidatePath("/cartao");
+  return { success: true, message: "Fatura adicionada com sucesso." };
 }

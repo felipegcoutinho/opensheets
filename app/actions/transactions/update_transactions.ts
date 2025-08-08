@@ -116,7 +116,7 @@ export async function payBills(id: number, realizadoAtual: boolean) {
     .eq("id", id);
   if (error) {
     console.error("Erro ao pagar boletos:", error);
-    return null;
+    return { success: false, message: "Erro ao pagar boleto." };
   }
-  return data;
+  return { success: true, message: "Boleto pago com sucesso." };
 }

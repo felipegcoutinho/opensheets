@@ -11,9 +11,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { RiBankCardLine } from "@remixicon/react";
+import {
+  RiBankCardLine,
+  RiCheckboxCircleLine,
+  RiErrorWarningLine,
+} from "@remixicon/react";
+import { useState } from "react";
 import { PaymentMethodLogo } from "./payment-method-logo";
-import Utils from "./utils";
+import UtilitiesComponents from "./utilities-components";
+
+type InvoicePaymentDialogProps = {
+  fatura_status: { status_pagamento: string }[];
+  month: string;
+  cartao_id: string;
+  descricao: string;
+  valor: number;
+  logo_imagem: string;
+};
 
 export default function InvoicePaymentDialog({
   fatura_status,
@@ -22,8 +36,25 @@ export default function InvoicePaymentDialog({
   descricao,
   valor,
   logo_imagem,
-}) {
-  const { handlePaymentInvoices, isPending } = Utils();
+}: InvoicePaymentDialogProps) {
+  const { handlePaymentInvoices, isPending } = UtilitiesComponents();
+  const [paymentStatus, setPaymentStatus] = useState<
+    "success" | "error" | null
+  >(null);
+
+  const handlePayment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await handlePaymentInvoices(e);
+    if (response.success) {
+      setPaymentStatus("success");
+    } else {
+      setPaymentStatus("error");
+    }
+  };
+
+  const resetState = () => {
+    setPaymentStatus(null);
+  };
 
   const isPaid = fatura_status?.some(
     (item) => item.status_pagamento === "pago",
@@ -34,7 +65,7 @@ export default function InvoicePaymentDialog({
   }
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
         <span className="cursor-pointer text-orange-400 hover:underline">
           pagar
@@ -72,34 +103,61 @@ export default function InvoicePaymentDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="flex flex-col gap-2 sm:flex-row">
-          <DialogClose asChild>
+        {paymentStatus === "success" ? (
+          <div className="flex flex-col items-center gap-4 text-center">
+            <RiCheckboxCircleLine className="h-12 w-12 text-green-500" />
+            <p>Pagamento realizado com sucesso!</p>
+            <DialogClose asChild>
+              <Button className="w-full bg-green-500 hover:bg-green-600">
+                Concluído
+              </Button>
+            </DialogClose>
+          </div>
+        ) : paymentStatus === "error" ? (
+          <div className="flex flex-col items-center gap-4 text-center">
+            <RiErrorWarningLine className="h-12 w-12 text-red-500" />
+            <p>Ocorreu um erro ao processar o pagamento.</p>
             <Button
-              className="w-full sm:w-1/2"
-              type="button"
-              variant="secondary"
+              className="w-full bg-red-500 hover:bg-red-600"
+              onClick={() => setPaymentStatus(null)}
             >
-              Cancelar
+              Tentar Novamente
             </Button>
-          </DialogClose>
+          </div>
+        ) : (
+          <DialogFooter className="flex flex-col gap-2 sm:flex-row">
+            <DialogClose asChild>
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
+                Cancelar
+              </Button>
+            </DialogClose>
 
-          <form className="w-full sm:w-1/2" onSubmit={handlePaymentInvoices}>
-            <input type="hidden" name="status_pagamento" defaultValue="pago" />
-            <input type="hidden" name="periodo" defaultValue={month} />
-            <input type="hidden" name="cartao_id" defaultValue={cartao_id} />
+            <form className="w-full sm:w-1/2" onSubmit={handlePayment}>
+              <input
+                type="hidden"
+                name="status_pagamento"
+                defaultValue="pago"
+              />
+              <input type="hidden" name="periodo" defaultValue={month} />
+              <input type="hidden" name="cartao_id" defaultValue={cartao_id} />
 
-            <Button className="w-full" type="submit" disabled={isPending}>
-              {isPending ? (
-                <>
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  <span className="ml-2">Processando...</span>
-                </>
-              ) : (
-                <span>Pagar</span>
-              )}
-            </Button>
-          </form>
-        </DialogFooter>
+              <Button className="w-full" type="submit" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    <span className="ml-2">Processando...</span>
+                  </>
+                ) : (
+                  <span>Pagar</span>
+                )}
+              </Button>
+            </form>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

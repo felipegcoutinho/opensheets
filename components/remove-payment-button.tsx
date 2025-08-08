@@ -12,10 +12,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Utils from "./utils";
+import UtilitiesComponents from "./utilities-components";
 
 export default function RemovePaymentButton({ fatura_status }) {
-  const { handleAdd, isPending, startTransition } = Utils();
+  const { isPending, startTransition } = UtilitiesComponents();
 
   const handleDeleteInvoice = (e, id) => {
     e.preventDefault();
