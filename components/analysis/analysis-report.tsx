@@ -3,21 +3,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import InsightCard from "@/components/insight-card";
 import type { Analysis } from "@/types/analysis";
 
-export function AnalysisReport({ analysis, month }: { analysis: Analysis; month: string }) {
+export function AnalysisReport({
+  analysis,
+  month,
+}: {
+  analysis: Analysis;
+  month: string;
+}) {
   return (
-    <Card className="w-full border-none bg-gradient-to-b from-background to-muted/30 dark:from-transparent dark:to-muted/10">
+    <Card className="w-full border-none">
       <CardHeader className="p-0">
-        <CardTitle className="text-xl">Relatório de Comportamento de Consumo</CardTitle>
-        <div className="mt-2 text-muted-foreground">
+        <CardTitle className="text-xl">
+          Relatório de Comportamento de Consumo
+        </CardTitle>
+        <div className="text-muted-foreground mt-2">
           <p>
-            No período selecionado (<span className="font-medium">{month}</span>), identificamos os principais
-            comportamentos e gatilhos que impactaram seu padrão de consumo.
+            No período selecionado (<span className="font-medium">{month}</span>
+            ), identificamos os principais comportamentos e gatilhos que
+            impactaram seu padrão de consumo.
           </p>
           <p>Segue um panorama prático com recomendações acionáveis.</p>
         </div>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="grid gap-4 sm:gap-5 md:gap-6">
+        <div className="grid gap-4 sm:gap-2">
           <section className="py-1 sm:py-2">
             <InsightCard
               title="Comportamentos Observados"

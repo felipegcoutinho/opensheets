@@ -8,26 +8,28 @@ import { useConsumptionAnalysis } from "@/hooks/use-consumption-analysis";
 import type { AnalysisInputPayload } from "@/types/analysis";
 
 export default function Dashboard(props: AnalysisInputPayload) {
-  const { analysis, loading, error, lastRunAt, analyze } = useConsumptionAnalysis(props);
+  const { analysis, loading, error, lastRunAt, analyze } =
+    useConsumptionAnalysis(props);
 
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
-      <header className="sticky top-0 z-10 -mx-4 mb-2 bg-background/60 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/40 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
-          <h1 className="text-lg font-semibold tracking-tight sm:text-xl">Análise de Consumo</h1>
-          <div className="flex items-center gap-3">
-            <AnalyzeButton onClick={analyze} loading={loading} />
-            {lastRunAt && (
-              <span className="text-sm text-muted-foreground">Última análise: {lastRunAt.toLocaleString()}</span>
-            )}
-          </div>
+    <main className="w-full max-w-4xl px-4 sm:px-6 lg:px-2">
+      <header className="bg-background/60 supports-[backdrop-filter]:bg-background/40 sticky top-0 z-10 -mx-4 mb-2 p-2 backdrop-blur">
+        <div className="flex items-center justify-between">
+          <AnalyzeButton onClick={analyze} loading={loading} />
+          {lastRunAt && (
+            <span className="text-muted-foreground ml-2 text-xs">
+              Última análise: {lastRunAt.toLocaleString()}
+            </span>
+          )}
         </div>
       </header>
 
-      <section className="space-y-4">
+      <section className="space-y-2">
         {error && (
           <Card className="border-destructive/30 bg-destructive/5">
-            <CardContent className="p-4 text-sm text-destructive">{error}</CardContent>
+            <CardContent className="text-destructive p-4 text-sm">
+              {error}
+            </CardContent>
           </Card>
         )}
 
