@@ -6,6 +6,7 @@ import {
   RiDashboardFill,
   RiFileList2Fill,
   RiGroupFill,
+  RiUser2Fill,
   RiMoneyDollarCircleFill,
   RiSparkling2Fill,
 } from "@remixicon/react";
@@ -55,6 +56,11 @@ export function NavLinks(month: string) {
             name: "responsáveis",
             url: `/responsavel?periodo=${month}`,
             icon: RiGroupFill,
+          },
+          {
+            name: "pagador",
+            url: `/pagador`,
+            icon: RiUser2Fill,
           },
           {
             name: "categorias",
