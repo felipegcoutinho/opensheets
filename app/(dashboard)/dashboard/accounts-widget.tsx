@@ -23,6 +23,7 @@ export default async function AccountWidget({
     data.map(async (item) => {
       const sumAccountIncome = await getSumAccountIncome(month!, item.id);
       const accountExpense = await getSumAccountExpense(month!, item.id);
+
       return {
         ...item,
         saldo: sumAccountIncome - accountExpense,

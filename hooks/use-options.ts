@@ -14,6 +14,7 @@ export default function UseOptions() {
     { file: "caixa.png", name: "Caixa" },
     { file: "citibank.png", name: "Citibank" },
     { file: "cooperativa-cresol.png", name: "Cooperativa Cresol" },
+    { file: "padrao_os.png", name: "Conta Padrão" },
     { file: "credicard-on.png", name: "Credicard On" },
     { file: "credicard-zero.png", name: "Credicard Zero" },
     { file: "credicard.png", name: "Credicard" },

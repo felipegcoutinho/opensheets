@@ -226,7 +226,7 @@ export async function getTransactionsByConditions(
 }
 
 // Busca a lista de Lançamentos para tabela de faturas
-export async function getCardInvoice(month: string, cartao_id: number) {
+export async function getCardInvoice(month: string, cartao_id: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -249,7 +249,7 @@ export async function getCardInvoice(month: string, cartao_id: number) {
 }
 
 // Busca o valor total das despesas do cartão
-export async function getCardSum(month: string, cartao_id: number) {
+export async function getCardSum(month: string, cartao_id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -302,7 +302,7 @@ export async function getCategoria(
 }
 
 // Função para obter o limite em uso
-export async function getLimiteEmUso(cartao_id: number) {
+export async function getLimiteEmUso(cartao_id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -327,7 +327,7 @@ export async function getLimiteEmUso(cartao_id: number) {
 
 // Função para calcular o limite disponível
 export async function getLimitesCartao(
-  cartao_id: number,
+  cartao_id: string,
   limite_total: number,
 ) {
   const limiteEmUso = await getLimiteEmUso(cartao_id);
@@ -363,7 +363,7 @@ export async function getAccountInvoice(month: string, conta_id: number) {
 }
 
 // Busca as receitas de uma conta bancária específica e soma os valores
-export async function getSumAccountIncome(month: string, id: number) {
+export async function getSumAccountIncome(month: string, id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
@@ -400,7 +400,7 @@ export async function getSumAccountIncome(month: string, id: number) {
 }
 
 // Busca as despesas de uma conta bancária específica e soma os valores
-export async function getSumAccountExpense(month: string, id: number) {
+export async function getSumAccountExpense(month: string, id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase

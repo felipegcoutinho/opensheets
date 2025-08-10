@@ -1,4 +1,7 @@
-import { getAccount, getAccountDisabled } from "@/app/actions/accounts/fetch_accounts";
+import {
+  getAccount,
+  getAccountDisabled,
+} from "@/app/actions/accounts/fetch_accounts";
 import {
   getSumAccountExpense,
   getSumAccountIncome,
@@ -17,14 +20,13 @@ import UpdateCard from "./modal/update-accounts";
 
 async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
+
   const [contasAtivas, contasInativas] = await Promise.all([
     getAccount(),
     getAccountDisabled(),
   ]);
 
-  const activeAccounts = contasAtivas.filter(
-    (item) => item.status === "ativo",
-  );
+  const activeAccounts = contasAtivas.filter((item) => item.status === "ativo");
 
   const accountData = await Promise.all(
     activeAccounts.map(async (item) => {
