@@ -236,9 +236,11 @@ export async function getCardInvoice(month: string, cartao_id: string) {
       forma_pagamento, anotacao, responsavel, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome)`,
     )
-    .order("data_compra", { ascending: false })
+    .eq("cartao_id", cartao_id)
     .eq("periodo", month)
-    .eq("cartao_id", cartao_id);
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Erro ao buscar faturas:", error);
