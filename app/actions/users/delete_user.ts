@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { createAdminClient } from "@/utils/supabase/admin";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
 export async function deleteUser() {
@@ -15,7 +15,12 @@ export async function deleteUser() {
     return redirect("/login");
   }
 
-  const admin = createAdminClient();
+  // A remoção de usuários exige a chave de serviço do Supabase
+  // por isso criamos um client administrativo usando a `service_role`.
+  const admin = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  );
   const { error: deleteError } = await admin.auth.admin.deleteUser(user.id);
 
   if (deleteError) {
