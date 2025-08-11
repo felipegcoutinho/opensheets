@@ -11,9 +11,9 @@ export function AnalysisReport({
   month: string;
 }) {
   return (
-    <Card className="w-full border-none">
+    <Card className="w-full border-none bg-transparent">
       <CardHeader className="p-0">
-        <CardTitle className="text-xl">
+        <CardTitle className="text-2xl">
           Relatório de Comportamento de Consumo
         </CardTitle>
         <div className="text-muted-foreground mt-2">
