@@ -374,7 +374,8 @@ export async function getSumAccountIncome(month: string, id: string) {
     .eq("conta_id", id)
     .eq("tipo_transacao", "receita")
     .or("responsavel.eq.você,responsavel.eq.sistema")
-    .eq("realizado", true);
+    .eq("realizado", true)
+    .eq("periodo", month);
 
   if (error) {
     console.error("Erro ao buscar receitas:", error);
@@ -411,7 +412,8 @@ export async function getSumAccountExpense(month: string, id: string) {
     .eq("conta_id", id)
     .eq("tipo_transacao", "despesa")
     .or("responsavel.eq.você, responsavel.eq.sistema")
-    .eq("realizado", true);
+    .eq("realizado", true)
+    .eq("periodo", month);
 
   if (error) {
     console.error("Erro ao buscar despesas:", error);

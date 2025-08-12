@@ -22,10 +22,6 @@ function AccountInfo({ item, sumAccountIncome, accountExpense, saldo }) {
         </div>
       </div>
 
-      <Card className="flex flex-col items-start justify-center p-4">
-        <BalanceItem label="Saldo" value={saldo} />
-      </Card>
-
       {/* Dados principais */}
       <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
         <Card className="p-4">
