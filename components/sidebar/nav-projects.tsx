@@ -36,7 +36,7 @@ export const NavProjects = memo(function NavProjects({
     <>
       {groups.map((group) => (
         <SidebarGroup key={group.title}>
-          <SidebarGroupLabel className="text-muted-foreground/50 text-xs">
+          <SidebarGroupLabel className="text-muted-foreground/70 text-xs">
             {group.title}
           </SidebarGroupLabel>
           <SidebarMenu>
@@ -46,7 +46,7 @@ export const NavProjects = memo(function NavProjects({
               return (
                 <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton
-                    className={`${isActive && "bg-muted-foreground/5"}`}
+                    className={`${isActive && "bg-muted-foreground/10"}`}
                     asChild
                   >
                     <div className="flex w-full items-center justify-between px-4 py-4">
@@ -59,7 +59,7 @@ export const NavProjects = memo(function NavProjects({
                         }`}
                       >
                         <item.icon
-                          className={`h-4 w-4 ${
+                          className={`h-4.5 w-4.5 ${
                             isActive ? "text-primary" : "text-muted-foreground"
                           }`}
                         />

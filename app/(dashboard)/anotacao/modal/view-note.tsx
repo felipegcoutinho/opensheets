@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { RiCheckboxCircleFill } from "@remixicon/react";
 import { useState } from "react";
 
 export default function ViewNoteModal({ item }: { item: any }) {
@@ -23,7 +25,7 @@ export default function ViewNoteModal({ item }: { item: any }) {
                 <span className={task.done ? "line-through" : ""}>
                   {task.text}
                 </span>
-                {task.done && <span className="text-green-600">✔</span>}
+                {task.done && <RiCheckboxCircleFill color="green" size={16} />}
               </li>
             ))}
           </ul>
