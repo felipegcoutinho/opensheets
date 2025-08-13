@@ -1,6 +1,6 @@
 "use client";
 import { updateAccount } from "@/app/actions/accounts/update_account";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import Ping from "@/components/ping-icon";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";

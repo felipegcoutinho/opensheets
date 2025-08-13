@@ -1,5 +1,5 @@
 "use client";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import {

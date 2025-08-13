@@ -17,7 +17,7 @@ import {
   RiErrorWarningLine,
 } from "@remixicon/react";
 import { useState } from "react";
-import { PaymentMethodLogo } from "./payment-method-logo";
+import PaymentMethodLogo from "./payment-method-logo";
 import UtilitiesComponents from "./utilities-components";
 
 type InvoicePaymentDialogProps = {

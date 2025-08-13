@@ -1,4 +1,4 @@
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import BalanceItem from "./balance-item";

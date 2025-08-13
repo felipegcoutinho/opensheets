@@ -16,7 +16,23 @@ import { RiThumbDownLine, RiThumbUpLine } from "@remixicon/react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TogglePaymentDialog({ onStatusChanged, item }) {
+type TogglePaymentDialogProps = {
+  onStatusChanged: (status: boolean) => void;
+  item: {
+    id: string;
+    realizado: boolean;
+    periodo: string;
+    forma_pagamento: string;
+    cartoes?: {
+      id: string;
+    };
+  };
+};
+
+export default function TogglePaymentDialog({
+  onStatusChanged,
+  item,
+}: TogglePaymentDialogProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 

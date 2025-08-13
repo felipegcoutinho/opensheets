@@ -4,7 +4,7 @@ import {
 } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 

@@ -3,7 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
 
-export function SubmitButton({ children, pendingText, ...props }) {
+type SubmitButtonProps = {
+  children: React.ReactNode;
+  pendingText: string;
+  formAction: string;
+};
+
+export function SubmitButton({
+  children,
+  pendingText,
+  ...props
+}: SubmitButtonProps) {
   const { pending, action } = useFormStatus();
 
   const isPending = pending && action === props.formAction;

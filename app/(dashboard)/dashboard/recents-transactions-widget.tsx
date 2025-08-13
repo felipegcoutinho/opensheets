@@ -1,6 +1,6 @@
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { UseDates } from "@/hooks/use-dates";
 
 function RecentesTransactions({ transactions }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

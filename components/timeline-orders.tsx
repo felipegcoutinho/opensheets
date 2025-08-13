@@ -1,14 +1,20 @@
 import { UseDates } from "@/hooks/use-dates";
-import { RiCheckboxCircleFill } from "@remixicon/react";
+import { RiCheckboxCircleFill, RiRecordCircleFill } from "@remixicon/react";
 import { Separator } from "./ui/separator";
-import { RiRecordCircleFill } from "@remixicon/react";
+
+type TimelineProps = {
+  DataCompra: string;
+  ParcelaAtual: number;
+  DataFim: string;
+  QtdeParcela: number;
+};
 
 export default function Timeline({
   DataCompra,
   ParcelaAtual,
   DataFim,
   QtdeParcela,
-}) {
+}: TimelineProps) {
   const { DateFormat } = UseDates();
 
   return (

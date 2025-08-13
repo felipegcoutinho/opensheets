@@ -1,13 +1,13 @@
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader as DialogHead,
   DialogTitle as DialogHeading,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { UseDates } from "@/hooks/use-dates";
 import {

@@ -1,6 +1,18 @@
 import Image from "next/image";
 
-export function PaymentMethodLogo({ descricao, url_name, width, height }) {
+type PaymentMethodLogoProps = {
+  descricao: string;
+  url_name: string;
+  width: number;
+  height: number;
+};
+
+export default function PaymentMethodLogo({
+  descricao,
+  url_name,
+  width,
+  height,
+}: PaymentMethodLogoProps) {
   return (
     <div className="flex items-center gap-2">
       <Image
