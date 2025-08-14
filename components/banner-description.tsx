@@ -13,7 +13,7 @@ export default function BannerDescription({
 }: BannerDescriptionProps) {
   return (
     <div>
-      <header className="bg-contrast-foreground/10 mb-2 rounded p-8">
+      <header className="bg-secondary mb-2 rounded p-8">
         <p className="max-w-2xl text-sm">{subtitle}</p>
       </header>
 
