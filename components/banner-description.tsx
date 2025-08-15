@@ -14,7 +14,7 @@ export default function BannerDescription({
 }: BannerDescriptionProps) {
   return (
     <div>
-      <Card className="bg-secondary mb-2 p-8">
+      <Card className="bg-accent mb-2 p-8">
         <p className="max-w-2xl text-sm">{subtitle}</p>
       </Card>
 

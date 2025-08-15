@@ -165,6 +165,7 @@ export default async function page(props: { params: { month: string } }) {
           <CategoryPurchasesWidget data={transactionsByCategory} />
         </Widget>
       </div>
+
       <div className="my-2 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
         <Widget
           title="Receitas por Categoria"
