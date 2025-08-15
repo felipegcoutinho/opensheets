@@ -1,3 +1,4 @@
+import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 
 // const ibmPlex = IBM_Plex_Sans({
@@ -5,10 +6,10 @@ import localFont from "next/font/local";
 //   subsets: ["latin"],
 // });
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   weight: ["400", "500", "600", "700"],
-// });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const itau = localFont({
   src: [
@@ -25,5 +26,4 @@ const itau = localFont({
   ],
 });
 
-export { itau };
-
+export { inter, itau };

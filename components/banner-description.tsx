@@ -1,4 +1,5 @@
 import React from "react";
+import { Card } from "./ui/card";
 
 type BannerDescriptionProps = {
   title: string;
@@ -13,9 +14,9 @@ export default function BannerDescription({
 }: BannerDescriptionProps) {
   return (
     <div>
-      <header className="bg-secondary mb-2 rounded p-8">
+      <Card className="bg-secondary mb-2 p-8">
         <p className="max-w-2xl text-sm">{subtitle}</p>
-      </header>
+      </Card>
 
       <main>{children}</main>
     </div>

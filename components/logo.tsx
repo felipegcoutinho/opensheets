@@ -9,7 +9,8 @@ export default function Logo() {
       alt="OpenSheets Logo"
       width={180}
       height={50}
-      className="dark:brightness-0 dark:invert"
+      // className="dark:brightness-0 dark:invert"
+      className="brightness-0 invert"
     />
   );
 }

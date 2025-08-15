@@ -34,7 +34,7 @@ export default async function UpcomingPaymentsBanner() {
   if (totalDue === 0) return null;
 
   return (
-    <Banner className="bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200">
+    <Banner className="bg-orange-300">
       <div className="flex items-center gap-1 text-left">
         <RiAlarmWarningFill size={16} />
         <p className="text-sm">

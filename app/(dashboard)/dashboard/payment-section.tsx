@@ -1,6 +1,5 @@
 import MoneyValues from "@/components/money-values";
-import { RiCheckboxCircleFill } from "@remixicon/react";
-import { RiHourglass2Fill } from "@remixicon/react";
+import { RiCheckboxCircleFill, RiHourglass2Fill } from "@remixicon/react";
 
 interface PaymentSectionProps {
   title: string;
@@ -50,7 +49,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
             <div key={index} className="flex items-center text-sm">
               {value.label === "confirmados" ? (
                 <RiCheckboxCircleFill
-                  className={`${title === "A Receber" ? "text-primary" : "text-orange-400"} mr-1 h-3 w-3`}
+                  className={`${title === "A Receber" ? "text-primary" : "text-chart-2"} mr-1 h-3 w-3`}
                 />
               ) : (
                 <RiHourglass2Fill className="mr-1 h-3 w-3 text-zinc-400" />

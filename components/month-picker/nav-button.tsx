@@ -15,7 +15,7 @@ const NavigationButton = React.memo(
     return (
       <button
         onClick={onClick}
-        className="text-primary cursor-pointer focus:outline-hidden disabled:opacity-50"
+        className="text-primary-foreground cursor-pointer focus:outline-hidden disabled:opacity-50"
         disabled={disabled}
       >
         <Icon size={16} />
