@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 // const ibmPlex = IBM_Plex_Sans({
@@ -6,9 +6,14 @@ import localFont from "next/font/local";
 //   subsets: ["latin"],
 // });
 
-const inter = Inter({
+const default_font = Geist({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const money_values = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 const itau = localFont({
@@ -26,4 +31,4 @@ const itau = localFont({
   ],
 });
 
-export { inter, itau };
+export { default_font, money_values };

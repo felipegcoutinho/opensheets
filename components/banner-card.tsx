@@ -16,7 +16,5 @@ export default function Banner({ children, className }: BannerProps) {
     return null;
   }
 
-  return (
-    <Card className={`bg-secondary mb-2 p-6 ${className}`}>{children}</Card>
-  );
+  return <Card className={`mb-2 p-6 ${className}`}>{children}</Card>;
 }

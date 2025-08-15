@@ -8,13 +8,13 @@
 }
 
 :root {
-  --background: oklch(0.9695 0.0149 94.1976);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.1221 0 0);
-  --card: oklch(0.9850 0.0082 91.4812);
+  --card: oklch(100% 0.00011 271.152);
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.7832 0.2315 142.5774);
+  --primary: oklch(79.093% 0.22157 147.853);
   --primary-foreground: oklch(0.9911 0 0);
   --secondary: oklch(86.026% 0.12781 91.29);
   --secondary-foreground: oklch(0.9911 0 0);

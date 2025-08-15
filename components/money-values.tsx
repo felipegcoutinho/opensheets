@@ -1,6 +1,6 @@
 "use client";
 
-import { inter } from "@/app/fonts/font";
+import { money_values } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${inter.className} font-bold ${
+      className={`${money_values.className} font-bold tracking-tight ${
         estado &&
         "blur-[6px] brightness-200 transition-all duration-200 hover:blur-none"
       }`}
