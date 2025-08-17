@@ -66,23 +66,23 @@ export default function UpdateTransactions({
 
   const [selectedMonth, setSelectedMonth] = useState(itemPeriodo);
   const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+  const [payersOptions, setPayersOptions] = useState<
+    { nome: string; role?: string | null }[]
+  >([]);
 
   useEffect(() => {
     async function fetchOptions() {
       const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
-      const respJson = await respRes.json();
-      setResponsavelOptions(respJson.data || []);
+      const payRes = await fetch(`/api/pagadores`);
+      const payJson = await payRes.json();
+      setPayersOptions(payJson.data || []);
     }
     if (selectedMonth) fetchOptions();
   }, [selectedMonth]);
 
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você",
-  );
+  // sem segundo pagador aqui; apenas alteração do pagador principal
 
   useEffect(() => {
     setIsPaid(itemPaid);
@@ -316,22 +316,25 @@ export default function UpdateTransactions({
 
           <div className="w-full">
             <Label>
-              Responsável
+              Pagador
               <Required />
             </Label>
-            <Input
-              defaultValue={itemResponsavel}
-              name="responsavel"
-              placeholder="Responsável"
-              type="text"
-              className="capitalize"
-              list="responsavel-update-list"
-            />
-            <datalist id="responsavel-update-list">
-              {responsavelOptions.map((opt) => (
-                <option key={opt} value={opt} />
-              ))}
-            </datalist>
+            <Select name="pagador_id" defaultValue={itemResponsavel}>
+              <SelectTrigger className="w-full capitalize">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {payersOptions.map((p) => (
+                  <SelectItem
+                    key={p.nome}
+                    value={p.nome}
+                    className="capitalize"
+                  >
+                    {p.nome}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>

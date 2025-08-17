@@ -155,7 +155,7 @@ export function TransactionTableFilters<TData>({
                 : ""
             }`}
           >
-            <SelectValue placeholder="Responsável" />
+            <SelectValue placeholder="Pagador" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Todos</SelectItem>

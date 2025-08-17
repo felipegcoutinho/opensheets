@@ -8,7 +8,7 @@ export const updateSession = async (request: NextRequest) => {
     "/orcamento",
     "/cartao",
     "/boleto",
-    "/responsavel",
+    
     "/pagador",
     "/anotacao",
     "/conta",
@@ -17,8 +17,9 @@ export const updateSession = async (request: NextRequest) => {
     "/insight",
     "/categoria",
     "/api/descriptions",
-    "/api/responsaveis",
+    
     "/api/pagadores",
+    
     "/api/chat",
   ];
 

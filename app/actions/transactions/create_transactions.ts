@@ -24,14 +24,13 @@ export async function createTransaction(
     tipo_transacao: String(formData.get("tipo_transacao")),
     categoria_id: String(formData.get("categoria_id")),
     forma_pagamento: String(formData.get("forma_pagamento")),
-    responsavel: String(formData.get("responsavel")),
+    pagador_id: String(formData.get("pagador_id")),
     condicao: String(formData.get("condicao")),
     qtde_parcela: (formData.get("qtde_parcela") as string) || "",
     qtde_recorrencia: (formData.get("qtde_recorrencia") as string) || "",
     conta_id: (formData.get("conta_id") as string) || "",
     cartao_id: (formData.get("cartao_id") as string) || "",
     anotacao: (formData.get("anotacao") as string) || "",
-    segundo_responsavel: (formData.get("segundo_responsavel") as string) || "",
     dividir_lancamento: (formData.get("dividir_lancamento") as string) || "",
     realizado: (formData.get("realizado") as string) || "",
   };
@@ -50,6 +49,40 @@ export async function createTransaction(
 
   try {
     const dados = await parseFormData(formData);
+    // Resolver o campo 'pagador_id' do formulário (que contém o NOME) para o UUID real
+    const pagadorNome = String(formData.get("pagador_id") || "").trim();
+    if (!pagadorNome) {
+      return { success: false, message: "Selecione um pagador." };
+    }
+
+    const { data: payerRow, error: payerError } = await supabase
+      .from("pagadores")
+      .select("id, nome")
+      .eq("nome", pagadorNome)
+      .single();
+
+    if (payerError || !payerRow) {
+      console.error("Pagador não encontrado:", payerError);
+      return { success: false, message: "Pagador inválido." };
+    }
+
+    dados.pagador_id = payerRow.id as unknown as string;
+
+    // Se for dividido e tiver um segundo pagador (nome), resolver UUID
+    const segundoNome = String(formData.get("segundo_pagador_id") || "").trim();
+    const dividirMarcado = String(formData.get("dividir_lancamento") || "");
+    if (dividirMarcado && segundoNome) {
+      const { data: secondRow, error: secondError } = await supabase
+        .from("pagadores")
+        .select("id, nome")
+        .eq("nome", segundoNome)
+        .single();
+      if (secondError || !secondRow) {
+        console.error("Segundo Pagador não encontrado:", secondError);
+        return { success: false, message: "Segundo pagador inválido." };
+      }
+      (dados as any).segundo_pagador_id = secondRow.id as unknown as string;
+    }
     const imagem_url = await uploadImagem(formData.get("imagem_url"), supabase);
     const transacoes = gerarTransacoes(dados, imagem_url);
 
@@ -57,7 +90,9 @@ export async function createTransaction(
       return { success: false, message: "Nenhuma transação gerada." };
     }
 
-    const { error } = await supabase.from("transacoes").insert(transacoes);
+    const { error } = await supabase
+      .from("lancamentos_teste")
+      .insert(transacoes);
     revalidatePath("/dashboard");
     revalidatePath("/lancamentos");
 

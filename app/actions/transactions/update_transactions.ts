@@ -18,7 +18,6 @@ export async function updateTransaction(
     condicao,
     forma_pagamento,
     anotacao,
-    responsavel,
     valor,
     qtde_parcela,
     parcela_atual,
@@ -26,7 +25,6 @@ export async function updateTransaction(
     cartao_id,
     categoria_id,
     conta_id,
-    segundo_responsavel,
     dividir_lancamento,
     imagem_url_atual, // URL da imagem existente
   } = Object.fromEntries(formData.entries());
@@ -62,8 +60,22 @@ export async function updateTransaction(
 
   // Atualizar a transação no banco de dados
   try {
+    // Mapear nome do pagador (enviado no campo 'pagador_id' do form) para UUID real
+    let pagador_id: string | null = null;
+    const pagadorNomeForm = formData.get("pagador_id");
+    if (typeof pagadorNomeForm === "string" && pagadorNomeForm.trim()) {
+      const { data: payerRow, error: payerError } = await supabase
+        .from("pagadores")
+        .select("id, nome")
+        .eq("nome", pagadorNomeForm.trim())
+        .single();
+      if (!payerError && payerRow) {
+        pagador_id = (payerRow.id as unknown as string) || null;
+      }
+    }
+
     await supabase
-      .from("transacoes")
+      .from("lancamentos_teste")
       .update({
         data_compra,
         data_vencimento,
@@ -75,7 +87,7 @@ export async function updateTransaction(
         condicao,
         forma_pagamento,
         anotacao,
-        responsavel,
+        pagador_id,
         valor,
         qtde_parcela,
         parcela_atual,
@@ -83,7 +95,6 @@ export async function updateTransaction(
         cartao_id,
         categoria_id,
         conta_id,
-        segundo_responsavel,
         dividir_lancamento,
       })
       .eq("id", id);
@@ -98,7 +109,7 @@ export async function updateTransaction(
 export async function togglePagamento(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
   const { data, error } = await supabase
-    .from("transacoes")
+    .from("lancamentos_teste")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
   if (error) {
@@ -111,7 +122,7 @@ export async function togglePagamento(id: number, realizadoAtual: boolean) {
 export async function payBills(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
   const { error, data } = await supabase
-    .from("transacoes")
+    .from("lancamentos_teste")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
   if (error) {

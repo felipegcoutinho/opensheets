@@ -11,8 +11,12 @@ import {
 } from "@/components/ui/table";
 import UpdatePayer from "./modal/update-payer";
 import DeletePayer from "./modal/delete-payer";
+import Link from "next/link";
+import { UseDates } from "@/hooks/use-dates";
 
 export default function TablePayers({ pagadores }) {
+  const { formatted_current_month } = UseDates();
+  const month = formatted_current_month;
   return (
     <Card>
       <CardContent>
@@ -22,7 +26,7 @@ export default function TablePayers({ pagadores }) {
               <TableHead>Nome</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Ações</TableHead>
+              <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -32,7 +36,13 @@ export default function TablePayers({ pagadores }) {
                   <TableCell className="capitalize">{item.nome}</TableCell>
                   <TableCell>{item.email}</TableCell>
                   <TableCell>{item.status}</TableCell>
-                  <TableCell className="flex gap-2">
+                  <TableCell className="flex justify-end gap-2">
+                    <Link
+                      href={`/pagador/${item.id}?periodo=${month}`}
+                      className="inline-flex rounded-md bg-secondary px-3 py-1 text-xs font-medium hover:brightness-95"
+                    >
+                      Detalhes
+                    </Link>
                     <UpdatePayer item={item} />
                     <DeletePayer itemId={item.id} itemNome={item.nome} />
                   </TableCell>

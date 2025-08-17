@@ -11,14 +11,14 @@ export interface DadosFormulario {
   condicao?: string;
   forma_pagamento?: string;
   anotacao?: string;
-  responsavel?: string;
+  pagador_id?: string;
+  segundo_pagador_id?: string;
   valorNumerico: number;
   parcelas: number;
   recorrencias: number;
   cartao_id?: string;
   categoria_id?: string;
   conta_id?: string;
-  segundo_responsavel?: string;
   dividir_lancamento: boolean;
   dataInicial: Date;
 }

@@ -22,13 +22,13 @@
   --popover: var(--card);
   --popover-foreground: var(--foreground);
   --muted: oklch(0.9002 0.0097 93.5778);
-  --muted-foreground: oklch(0.4190 0.0199 262.6455);
+  --muted-foreground: oklch(0.419 0.0199 262.6455);
   --border: oklch(0 0 0);
 
   /* =========================
    * MARCA (BRAND)
    * =======================*/
-  --primary: oklch(79.093% 0.22157 147.853);
+  --primary: oklch(70.146% 0.18506 149.367);
   --primary-foreground: oklch(0.9911 0 0);
   --secondary: oklch(86.026% 0.12781 91.29);
   --secondary-foreground: oklch(0.9911 0 0);
@@ -51,9 +51,9 @@
    * GRÁFICOS
    * =======================*/
   --chart-1: oklch(0.6999 0.1796 150.1066);
-  --chart-2: oklch(0.5730 0.1725 24.3832);
+  --chart-2: oklch(0.573 0.1725 24.3832);
   --chart-3: oklch(0.8498 0.1737 86.5332);
-  --chart-4: oklch(0.6794 0.2000 350.0799);
+  --chart-4: oklch(0.6794 0.2 350.0799);
   --chart-5: oklch(0.7802 0.1005 210.1406);
 
   /* =========================
@@ -67,19 +67,24 @@
   --sidebar-accent-foreground: oklch(0.1221 0 0);
   --sidebar-border: oklch(0 0 0);
   --sidebar-ring: var(--primary);
-  --radius: 0.500rem;
+  --radius: 0.5rem;
 
   /* =========================
    * SOMBRAS (NEOBRUTALISM)
    * =======================*/
-  --shadow-2xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.50);
-  --shadow-xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.50);
-  --shadow-sm: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 1px 2px -9px hsl(0 0% 0% / 1.00);
-  --shadow: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 1px 2px -9px hsl(0 0% 0% / 1.00);
-  --shadow-md: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 2px 4px -9px hsl(0 0% 0% / 1.00);
-  --shadow-lg: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 4px 6px -9px hsl(0 0% 0% / 1.00);
-  --shadow-xl: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 8px 10px -9px hsl(0 0% 0% / 1.00);
-  --shadow-2xl: 3px 4px 0px -8px hsl(0 0% 0% / 2.50);
+  --shadow-2xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.5);
+  --shadow-xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.5);
+  --shadow-sm:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 1px 2px -9px hsl(0 0% 0% / 1);
+  --shadow:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 1px 2px -9px hsl(0 0% 0% / 1);
+  --shadow-md:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 2px 4px -9px hsl(0 0% 0% / 1);
+  --shadow-lg:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 4px 6px -9px hsl(0 0% 0% / 1);
+  --shadow-xl:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 8px 10px -9px hsl(0 0% 0% / 1);
+  --shadow-2xl: 3px 4px 0px -8px hsl(0 0% 0% / 2.5);
 
   /* =========================
    * ESPAÇAMENTO / TRACKING
@@ -131,10 +136,10 @@
   /* =========================
    * GRÁFICOS
    * =======================*/
-  --chart-1: oklch(0.6598 0.1709 260.1660);
+  --chart-1: oklch(0.6598 0.1709 260.166);
   --chart-2: oklch(0.6999 0.1796 150.1066);
-  --chart-3: oklch(0.7103 0.1960 47.1612);
-  --chart-4: oklch(0.6794 0.2000 350.0799);
+  --chart-3: oklch(0.7103 0.196 47.1612);
+  --chart-4: oklch(0.6794 0.2 350.0799);
   --chart-5: oklch(0.7802 0.1005 210.1406);
 
   /* =========================
@@ -148,19 +153,24 @@
   --sidebar-accent-foreground: oklch(0.1221 0 0);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--primary);
-  --radius: 0.500rem;
+  --radius: 0.5rem;
 
   /* =========================
    * SOMBRAS
    * =======================*/
-  --shadow-2xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.50);
-  --shadow-xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.50);
-  --shadow-sm: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 1px 2px -9px hsl(0 0% 0% / 1.00);
-  --shadow: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 1px 2px -9px hsl(0 0% 0% / 1.00);
-  --shadow-md: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 2px 4px -9px hsl(0 0% 0% / 1.00);
-  --shadow-lg: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 4px 6px -9px hsl(0 0% 0% / 1.00);
-  --shadow-xl: 3px 4px 0px -8px hsl(0 0% 0% / 1.00), 3px 8px 10px -9px hsl(0 0% 0% / 1.00);
-  --shadow-2xl: 3px 4px 0px -8px hsl(0 0% 0% / 2.50);
+  --shadow-2xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.5);
+  --shadow-xs: 3px 4px 0px -8px hsl(0 0% 0% / 0.5);
+  --shadow-sm:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 1px 2px -9px hsl(0 0% 0% / 1);
+  --shadow:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 1px 2px -9px hsl(0 0% 0% / 1);
+  --shadow-md:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 2px 4px -9px hsl(0 0% 0% / 1);
+  --shadow-lg:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 4px 6px -9px hsl(0 0% 0% / 1);
+  --shadow-xl:
+    3px 4px 0px -8px hsl(0 0% 0% / 1), 3px 8px 10px -9px hsl(0 0% 0% / 1);
+  --shadow-2xl: 3px 4px 0px -8px hsl(0 0% 0% / 2.5);
 }
 
 /* Mapeamento Tailwind v4 */
@@ -229,7 +239,6 @@
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
-
 
 body {
   letter-spacing: var(--tracking-normal);
