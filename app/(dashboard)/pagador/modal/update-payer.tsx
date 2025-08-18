@@ -30,18 +30,19 @@ interface UpdatePayerProps {
     nome: string;
     email: string;
     status: string;
+    role?: string;
     anotacao?: string;
+    foto?: string | null;
   };
+  avatars?: string[];
 }
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function UpdatePayer({ item }: UpdatePayerProps) {
+export default function UpdatePayer({ item, avatars = [] }: UpdatePayerProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [state, action, isPending] = useActionState(
-    updatePayer,
-    initialState,
-  );
+  const [state, action, isPending] = useActionState(updatePayer, initialState);
+  const [selectedAvatar, setSelectedAvatar] = useState<string>(item.foto || "");
 
   useEffect(() => {
     if (!state.message) return;
@@ -70,12 +71,7 @@ export default function UpdatePayer({ item }: UpdatePayerProps) {
           <input type="hidden" name="id" value={item.id} />
           <div>
             <Label htmlFor="nome">Nome</Label>
-            <Input
-              id="nome"
-              name="nome"
-              defaultValue={item.nome}
-              required
-            />
+            <Input id="nome" name="nome" defaultValue={item.nome} required />
           </div>
 
           <div>
@@ -84,8 +80,61 @@ export default function UpdatePayer({ item }: UpdatePayerProps) {
               id="email"
               name="email"
               type="email"
+              placeholder="Digite o email"
               defaultValue={item.email}
             />
+          </div>
+
+          <div>
+            <Label htmlFor="foto">Foto (Avatar)</Label>
+            <div className="mb-2 flex items-center gap-3">
+              {selectedAvatar ? (
+                <img
+                  src={`/avatars/${selectedAvatar}`}
+                  alt="Pré-visualização do avatar selecionado"
+                  width={56}
+                  height={56}
+                  className="size-14 rounded-full border"
+                />
+              ) : (
+                <div className="text-muted-foreground size-14 rounded-full border bg-muted/30 flex items-center justify-center text-xs">
+                  Sem avatar
+                </div>
+              )}
+            </div>
+            <Select
+              name="foto"
+              defaultValue={item.foto || "__none__"}
+              onValueChange={(v) => setSelectedAvatar(v === "__none__" ? "" : v)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione um avatar" />
+              </SelectTrigger>
+              <SelectContent>
+                <div className="grid grid-cols-3 gap-2 p-2">
+                  <SelectItem value="__none__" className="p-1">
+                    <span className="flex items-center gap-2">
+                      <div className="size-8 rounded-full border bg-muted/30" />
+                      <span className="text-xs">Sem avatar</span>
+                    </span>
+                  </SelectItem>
+                  {avatars.map((file) => (
+                    <SelectItem key={file} value={file} className="p-1">
+                      <span className="flex items-center gap-2">
+                        <img
+                          src={`/avatars/${file}`}
+                          alt={file}
+                          width={32}
+                          height={32}
+                          className="rounded-full"
+                        />
+                        <span className="text-xs">{file.replace(/\..+$/, "")}</span>
+                      </span>
+                    </SelectItem>
+                  ))}
+                </div>
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
@@ -96,9 +145,16 @@ export default function UpdatePayer({ item }: UpdatePayerProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ativo">Ativo</SelectItem>
-                <SelectItem value="inativo">Inativo</SelectItem>
+                <SelectItem value="inativo" disabled={item.role === "principal"}>
+                  Inativo
+                </SelectItem>
               </SelectContent>
             </Select>
+            {item.role === "principal" && (
+              <p className="text-muted-foreground mt-1 text-xs">
+                O pagador principal não pode ser inativado.
+              </p>
+            )}
           </div>
 
           <div>

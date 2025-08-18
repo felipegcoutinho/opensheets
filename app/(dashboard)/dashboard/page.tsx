@@ -37,7 +37,7 @@ export default async function page(props: { params: { month: string } }) {
     transactionsByCategory,
   } = await fetchAllData(month);
 
-  const { incomes, expenses, summary, categoryData, saldo } =
+  const { incomes, expenses, summary, categoryData, saldo, previstoAnterior } =
     await UtilitiesDashboard(month);
 
   const allData = await Promise.all(
@@ -77,7 +77,11 @@ export default async function page(props: { params: { month: string } }) {
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
           }
         >
-          <AccountWidget month={month} data={account} />
+          <AccountWidget
+            month={month}
+            data={account}
+            previstoAnterior={previstoAnterior}
+          />
         </Widget>
 
         <Widget

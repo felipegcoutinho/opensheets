@@ -26,9 +26,10 @@ import type { ActionResponse } from "./form-schema";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function CreatePayer() {
+export default function CreatePayer({ avatars = [] as string[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [state, action, isPending] = useActionState(createPayer, initialState);
+  const [selectedAvatar, setSelectedAvatar] = useState<string>("");
 
   useEffect(() => {
     if (!state.message) return;
@@ -67,6 +68,57 @@ export default function CreatePayer() {
               type="email"
               placeholder="Digite o email"
             />
+          </div>
+
+          <div>
+            <Label htmlFor="foto">Foto (Avatar)</Label>
+            <div className="mb-2 flex items-center gap-3">
+              {selectedAvatar ? (
+                <img
+                  src={`/avatars/${selectedAvatar}`}
+                  alt="Pré-visualização do avatar selecionado"
+                  width={56}
+                  height={56}
+                  className="size-14 rounded-full border"
+                />
+              ) : (
+                <div className="text-muted-foreground size-14 rounded-full border bg-muted/30 flex items-center justify-center text-xs">
+                  Sem avatar
+                </div>
+              )}
+            </div>
+            <Select
+              name="foto"
+              onValueChange={(v) => setSelectedAvatar(v === "__none__" ? "" : v)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione um avatar" />
+              </SelectTrigger>
+              <SelectContent>
+                <div className="grid grid-cols-3 gap-2 p-2">
+                  <SelectItem value="__none__" className="p-1">
+                    <span className="flex items-center gap-2">
+                      <div className="size-8 rounded-full border bg-muted/30" />
+                      <span className="text-xs">Sem avatar</span>
+                    </span>
+                  </SelectItem>
+                  {avatars.map((file) => (
+                    <SelectItem key={file} value={file} className="p-1">
+                      <span className="flex items-center gap-2">
+                        <img
+                          src={`/avatars/${file}`}
+                          alt={file}
+                          width={32}
+                          height={32}
+                          className="rounded-full"
+                        />
+                        <span className="text-xs">{file.replace(/\..+$/, "")}</span>
+                      </span>
+                    </SelectItem>
+                  ))}
+                </div>
+              </SelectContent>
+            </Select>
           </div>
 
           <div>

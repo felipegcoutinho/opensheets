@@ -207,15 +207,16 @@ export async function getTransactionsByConditions(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome)`,
     )
-    .order("tipo_transacao", { ascending: true })
-    .order("data_compra", { ascending: false })
-    .order("created_at", { ascending: false })
+    
     .eq("periodo", month)
     .eq("pagadores.role", "principal")
     .eq("condicao", condicao)
-    .eq("tipo_transacao", "despesa");
+    .eq("tipo_transacao", "despesa")
+    .order("tipo_transacao", { ascending: true })
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
@@ -524,6 +525,7 @@ export async function getTransactionsByPayer(month: string, id: string) {
     )
     .eq("periodo", month)
     .eq("pagador_id", id)
+    .eq("tipo_transacao", "despesa")
     .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false });
 

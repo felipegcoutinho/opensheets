@@ -11,9 +11,11 @@ import Link from "next/link";
 export default async function AccountWidget({
   month,
   data,
+  previstoAnterior,
 }: {
   month: string;
   data: any;
+  previstoAnterior: number;
 }) {
   if (!data || data.length === 0) return <EmptyCard />;
 
@@ -26,7 +28,7 @@ export default async function AccountWidget({
 
       return {
         ...item,
-        saldo: sumAccountIncome - accountExpense,
+        saldo: sumAccountIncome - accountExpense + previstoAnterior,
       };
     }),
   );

@@ -23,7 +23,7 @@
   --popover-foreground: var(--foreground);
   --muted: oklch(0.9002 0.0097 93.5778);
   --muted-foreground: oklch(0.419 0.0199 262.6455);
-  --border: oklch(0 0 0);
+  --border: oklch(0% 0 0);
 
   /* =========================
    * MARCA (BRAND)
@@ -32,7 +32,7 @@
   --primary-foreground: oklch(0.9911 0 0);
   --secondary: oklch(86.026% 0.12781 91.29);
   --secondary-foreground: oklch(0.9911 0 0);
-  --accent: oklch(66.538% 0.16112 259.385);
+  --accent: oklch(65.582% 0.18781 289.313);
   --accent-foreground: oklch(0.9911 0 0);
 
   /* =========================
@@ -44,7 +44,7 @@
   /* =========================
    * CONTROLES (INPUT/RING)
    * =======================*/
-  --input: oklch(0 0 0);
+  --input: oklch(0% 0 0);
   --ring: var(--primary);
 
   /* =========================

@@ -58,6 +58,10 @@ export default function DeletePayer({ itemId, itemNome }: DeletePayerProps) {
           <p>
             Tem certeza que deseja excluir <strong>{itemNome}</strong>?
           </p>
+          <p className="text-destructive text-sm">
+            Atenção: todos os lançamentos vinculados a este pagador serão removidos
+            permanentemente.
+          </p>
 
           <DialogFooter className="mt-4 flex w-full flex-col gap-2 sm:flex-row">
             <DialogClose asChild>

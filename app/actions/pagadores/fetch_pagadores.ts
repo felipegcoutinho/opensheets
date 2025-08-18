@@ -7,7 +7,7 @@ export async function getPayers() {
     .from("pagadores")
     .select("id, nome, email, status, anotacao, foto, is_hidden, role")
     .eq("is_hidden", false)
-    .order("nome", { ascending: true });
+    .order("role", { ascending: true });
 
   if (error) throw error;
 

@@ -5,9 +5,9 @@ import {
   RiBook2Line,
   RiDashboardLine,
   RiFileList2Line,
+  RiGroupLine,
   RiMoneyDollarCircleLine,
   RiSparkling2Line,
-  RiUser2Line,
 } from "@remixicon/react";
 
 export function NavLinks(month: string) {
@@ -54,7 +54,7 @@ export function NavLinks(month: string) {
           {
             name: "pagadores",
             url: `/pagador`,
-            icon: RiUser2Line,
+            icon: RiGroupLine,
           },
           {
             name: "categorias",

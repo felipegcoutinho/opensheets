@@ -17,6 +17,12 @@ export async function createPayer(
     email: String(formData.get("email")),
     status: String(formData.get("status")),
     anotacao: String(formData.get("anotacao")),
+    foto: (() => {
+      const raw = formData.get("foto");
+      const v = typeof raw === "string" ? raw : "";
+      if (!v || v === "__none__") return null;
+      return v;
+    })(),
   };
 
   const validated = payerSchema.omit({ id: true }).safeParse(rawData);
@@ -34,6 +40,7 @@ export async function createPayer(
   // Garante padrões: role = 'secundario' e is_hidden = false
   const payload = {
     ...validated.data,
+    foto: validated.data.foto ?? null,
     role: "secundario",
     is_hidden: false,
   } as any;

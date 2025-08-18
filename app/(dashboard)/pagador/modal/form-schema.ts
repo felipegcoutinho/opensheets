@@ -6,6 +6,7 @@ export interface PayerFormData {
   email?: string;
   status: string;
   anotacao?: string;
+  foto?: string | null;
 }
 
 export interface ActionResponse<T = PayerFormData> {
@@ -20,4 +21,5 @@ export const payerSchema = z.object({
   email: z.string().email("Email inválido").optional().or(z.literal("")),
   status: z.string().min(1, "Status é obrigatório"),
   anotacao: z.string().optional(),
+  foto: z.string().nullable().optional().or(z.literal("")),
 });

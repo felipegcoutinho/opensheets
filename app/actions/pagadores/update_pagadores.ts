@@ -18,6 +18,12 @@ export async function updatePayer(
     email: String(formData.get("email")),
     status: String(formData.get("status")),
     anotacao: String(formData.get("anotacao")),
+    foto: (() => {
+      const raw = formData.get("foto");
+      const v = typeof raw === "string" ? raw : "";
+      if (!v || v === "__none__") return null;
+      return v;
+    })(),
   };
 
   const validated = payerSchema.safeParse(rawData);
@@ -31,6 +37,30 @@ export async function updatePayer(
   }
 
   const supabase = createClient();
+
+  // Trava: não permitir que o pagador com role 'principal' fique inativo
+  try {
+    const { data: current, error: fetchErr } = await supabase
+      .from("pagadores")
+      .select("role")
+      .eq("id", validated.data.id)
+      .single();
+
+    if (fetchErr) throw fetchErr;
+
+    if (
+      (current?.role || "").toLowerCase() === "principal" &&
+      (validated.data.status || "").toLowerCase() === "inativo"
+    ) {
+      return {
+        success: false,
+        message: "O pagador principal não pode ser definido como inativo.",
+      };
+    }
+  } catch (e) {
+    console.error("Erro ao verificar role do pagador:", e);
+    return { success: false, message: "Falha ao validar dados do pagador" };
+  }
   const { error } = await supabase
     .from("pagadores")
     .update({
@@ -38,6 +68,7 @@ export async function updatePayer(
       email: validated.data.email,
       status: validated.data.status,
       anotacao: validated.data.anotacao,
+      foto: validated.data.foto ?? null,
     })
     .eq("id", validated.data.id);
 

@@ -23,11 +23,11 @@ const badgeVariants = cva(
           "border border-green-600 bg-green-50 text-green-600 dark:text-green-100 dark:bg-green-600/20",
         despesa:
           "border border-red-600 bg-red-50 text-red-600 dark:text-red-100 dark:bg-red-600/20",
-        voce: "bg-blue-50 text-blue-600 dark:text-blue-100 dark:bg-blue-600/20",
+        voce: "border border-blue-600 bg-blue-50 text-blue-600 dark:text-blue-100 dark:bg-blue-600/20",
         sistema:
-          " bg-neutral-50 text-neutral-600 dark:text-neutral-400 dark:bg-neutral-600/20",
+          "border border-neutral-600 bg-neutral-50 text-neutral-600 dark:text-neutral-400 dark:bg-neutral-600/20",
         outros:
-          " bg-orange-50 text-orange-600 dark:text-orange-100 dark:bg-orange-600/20",
+          "border border-orange-600 bg-orange-50 text-orange-600 dark:text-orange-100 dark:bg-orange-600/20",
       },
     },
     defaultVariants: {
