@@ -2,14 +2,14 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { parseFormData } from "./parseFormData";
-import { gerarTransacoes } from "./gerarTransacoes";
-import { uploadImagem } from "./uploadImagem";
 import {
   ActionResponse,
   TransactionFormData,
   transactionSchema,
 } from "../../(dashboard)/lancamento/modal/form-schema";
+import { gerarTransacoes } from "./gerarTransacoes";
+import { parseFormData } from "./parseFormData";
+import { uploadImagem } from "./uploadImagem";
 
 export async function createTransaction(
   _prev: ActionResponse | null,
@@ -90,9 +90,7 @@ export async function createTransaction(
       return { success: false, message: "Nenhuma transação gerada." };
     }
 
-    const { error } = await supabase
-      .from("lancamentos_teste")
-      .insert(transacoes);
+    const { error } = await supabase.from("lancamentos").insert(transacoes);
     revalidatePath("/dashboard");
     revalidatePath("/lancamentos");
 

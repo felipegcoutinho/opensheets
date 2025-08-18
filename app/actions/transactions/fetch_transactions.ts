@@ -6,7 +6,7 @@ export async function getIncome(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("valor, categoria_id!inner(id, nome), pagadores!inner(role)")
     .eq("tipo_transacao", "receita")
     .eq("periodo", month)
@@ -22,7 +22,7 @@ export async function getExpense(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("valor, pagadores!inner(role)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
@@ -37,7 +37,7 @@ export async function getPaidExpense(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("valor")
     .eq("tipo_transacao", "despesa")
     .neq("forma_pagamento", "cartão de crédito")
@@ -53,7 +53,7 @@ export async function getConditions(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("condicao, valor.sum(), pagadores!inner(role)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
@@ -68,7 +68,7 @@ export async function getPayment(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("forma_pagamento, valor.sum(), pagadores!inner(role)")
     .eq("tipo_transacao", "despesa")
     .eq("periodo", month)
@@ -83,7 +83,7 @@ export async function getTransactionsByCategory(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, descricao, valor, tipo_transacao, categoria:categoria_id (id, nome, icone ), pagadores!inner(role)`,
     )
@@ -99,7 +99,7 @@ export async function getRecentTransactions(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
     )
@@ -117,7 +117,7 @@ export async function getSumPaidExpense(month: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("valor, pagadores!inner(role)")
     .eq("periodo", month)
     .eq("tipo_transacao", "despesa")
@@ -138,7 +138,7 @@ export async function getSumPaidIncome(month: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("valor, pagadores!inner(role)")
     .eq("periodo", month)
     .eq("tipo_transacao", "receita")
@@ -159,7 +159,7 @@ export async function getTransactions(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
@@ -182,7 +182,7 @@ export async function getBills(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       "id, valor, descricao, data_vencimento, realizado, pagadores!inner(role)",
     )
@@ -203,7 +203,7 @@ export async function getTransactionsByConditions(
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
@@ -230,7 +230,7 @@ export async function getCardInvoice(month: string, cartao_id: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
@@ -255,7 +255,7 @@ export async function getCardSum(month: string, cartao_id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(`valor`)
     .eq("cartao_id", cartao_id)
     .eq("periodo", month)
@@ -283,7 +283,7 @@ export async function getCategoria(
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
@@ -308,7 +308,7 @@ export async function getLimiteEmUso(cartao_id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(`valor`)
     .eq("cartao_id", cartao_id)
     .eq("tipo_transacao", "despesa")
@@ -347,7 +347,7 @@ export async function getAccountInvoice(month: string, conta_id: number) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role)",
     )
@@ -369,7 +369,7 @@ export async function getSumAccountIncome(month: string, id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(`valor, periodo, pagadores!inner(role)`)
     .eq("conta_id", id)
     .eq("tipo_transacao", "receita")
@@ -407,7 +407,7 @@ export async function getSumAccountExpense(month: string, id: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(`valor, periodo, pagadores!inner(role)`)
     .eq("conta_id", id)
     .eq("tipo_transacao", "despesa")
@@ -446,7 +446,7 @@ export async function getTransactionsByResponsableVoce(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
@@ -471,7 +471,7 @@ export async function getDescriptionsList(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select("descricao")
     .eq("periodo", month);
 
@@ -516,7 +516,7 @@ export async function getTransactionsByPayer(month: string, id: string) {
   const supabase = createClient();
 
   const { data: transactions, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,

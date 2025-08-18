@@ -75,7 +75,7 @@ export async function updateTransaction(
     }
 
     await supabase
-      .from("lancamentos_teste")
+      .from("lancamentos")
       .update({
         data_compra,
         data_vencimento,
@@ -109,7 +109,7 @@ export async function updateTransaction(
 export async function togglePagamento(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
   const { data, error } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
   if (error) {
@@ -122,7 +122,7 @@ export async function togglePagamento(id: number, realizadoAtual: boolean) {
 export async function payBills(id: number, realizadoAtual: boolean) {
   const supabase = createClient();
   const { error, data } = await supabase
-    .from("lancamentos_teste")
+    .from("lancamentos")
     .update({ realizado: !realizadoAtual })
     .eq("id", id);
   if (error) {
