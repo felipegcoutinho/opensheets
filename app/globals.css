@@ -32,7 +32,7 @@
   --primary-foreground: oklch(0.9911 0 0);
   --secondary: oklch(86.026% 0.12781 91.29);
   --secondary-foreground: oklch(0.9911 0 0);
-  --accent: oklch(65.582% 0.18781 289.313);
+  --accent: oklch(66.728% 0.17573 264.51);
   --accent-foreground: oklch(0.9911 0 0);
 
   /* =========================
@@ -67,7 +67,7 @@
   --sidebar-accent-foreground: oklch(0.1221 0 0);
   --sidebar-border: oklch(0 0 0);
   --sidebar-ring: var(--primary);
-  --radius: 0.5rem;
+  --radius: 0.3rem;
 
   /* =========================
    * SOMBRAS (NEOBRUTALISM)
