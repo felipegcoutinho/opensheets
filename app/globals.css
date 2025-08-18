@@ -23,7 +23,7 @@
   --popover-foreground: var(--foreground);
   --muted: oklch(0.9002 0.0097 93.5778);
   --muted-foreground: oklch(0.419 0.0199 262.6455);
-  --border: oklch(0% 0 0);
+  --border: oklch(85.452% 0.0001 271.152);
 
   /* =========================
    * MARCA (BRAND)
@@ -44,7 +44,7 @@
   /* =========================
    * CONTROLES (INPUT/RING)
    * =======================*/
-  --input: oklch(0% 0 0);
+  --input: oklch(85.452% 0.0001 271.152);
   --ring: var(--primary);
 
   /* =========================

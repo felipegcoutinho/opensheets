@@ -1,7 +1,5 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,6 +11,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { ReactNode, useState } from "react";
 
 type Props = {
   handleDelete: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
@@ -56,7 +56,7 @@ export default function DeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter className="flex w-full gap-2">
           <AlertDialogCancel asChild className="w-1/2">
-            <Button type="button" variant="secondary">
+            <Button type="button" variant={"outline"}>
               Cancelar
             </Button>
           </AlertDialogCancel>
@@ -68,7 +68,7 @@ export default function DeleteButton({
             }}
           >
             <AlertDialogAction
-              className="bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white shadow-xs"
+              className="bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 shadow-xs"
               asChild
             >
               <Button
