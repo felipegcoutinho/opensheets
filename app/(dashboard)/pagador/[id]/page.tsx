@@ -229,7 +229,6 @@ export default async function Page({ searchParams, params }) {
                         height={24}
                       />
                     ) : null}
-                    {o.forma}
                   </span>
                   <span>
                     <MoneyValues value={o.total} />

@@ -122,7 +122,7 @@ export const getColumns = (
             </span>
           )}
 
-          {item.anotacao != "" && item.pagadores?.role != "Sistema" && (
+          {item.anotacao != "" && item.pagadores?.role != "sistema" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
@@ -293,7 +293,7 @@ export const getColumns = (
                 />
               </DropdownMenuItem>
 
-              {item.pagadores?.role != "Sistema" && (
+              {item.pagadores?.role != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <UpdateTransactions
                     item={item}
@@ -319,7 +319,7 @@ export const getColumns = (
                 </DropdownMenuItem>
               )}
 
-              {item.pagadores?.role != "Sistema" && (
+              {item.pagadores?.role != "sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -333,7 +333,7 @@ export const getColumns = (
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {item.pagadores?.role === "Sistema" ? (
+          {item.pagadores?.role === "sistema" ? (
             <RiCheckboxCircleFill className="text-muted" size={16} />
           ) : (
             <TooltipProvider delayDuration={300}>

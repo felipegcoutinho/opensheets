@@ -163,7 +163,7 @@ export async function getTransactions(month: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
