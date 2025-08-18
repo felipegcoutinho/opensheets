@@ -36,7 +36,7 @@ const itau = localFont({
   ],
 });
 
-const default_font = geist;
+const default_font = itau;
 const money_values = gabarito;
 
 export { default_font, money_values };
