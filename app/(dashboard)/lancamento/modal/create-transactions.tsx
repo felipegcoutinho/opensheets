@@ -286,12 +286,16 @@ export default function CreateTransactions({
                   Pagador <Required />
                 </Label>
                 <Select name="pagador_id" required>
-                  <SelectTrigger id="pagador_id" className="w-full">
+                  <SelectTrigger id="pagador_id" className="w-full capitalize">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
                     {pagadoresOptions.map((item) => (
-                      <SelectItem key={item.nome} value={item.nome}>
+                      <SelectItem
+                        className="capitalize"
+                        key={item.nome}
+                        value={item.nome}
+                      >
                         {item.nome}
                       </SelectItem>
                     ))}
@@ -311,7 +315,11 @@ export default function CreateTransactions({
                     </SelectTrigger>
                     <SelectContent>
                       {secondPayers.map((item) => (
-                        <SelectItem key={item.nome} value={item.nome}>
+                        <SelectItem
+                          key={item.nome}
+                          value={item.nome}
+                          className="capitalize"
+                        >
                           {item.nome}
                         </SelectItem>
                       ))}
