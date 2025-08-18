@@ -16,6 +16,7 @@ import { getMonth } from "@/hooks/get-month";
 import { TableTransaction } from "@/app/(dashboard)/lancamento/table/table-transaction";
 import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transactions";
 import { getPayersName } from "@/app/actions/pagadores/fetch_pagadores";
+import SendEmailButton from "./send-email-button";
 
 export default async function Page({ searchParams, params }) {
   const { id } = await params;
@@ -114,8 +115,30 @@ export default async function Page({ searchParams, params }) {
               <RiUser2Line /> Pagador
             </span>
           </div>
-          <div className="mt-2 text-lg font-semibold capitalize">
-            {payer?.nome || list[0]?.pagadores?.nome || "—"}
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-2">
+            <span className="text-lg font-semibold capitalize">
+              {payer?.nome || list[0]?.pagadores?.nome || "—"}
+            </span>
+            {payer?.email ? (
+              <span className="text-muted-foreground text-sm break-all">
+                {payer.email}
+              </span>
+            ) : null}
+          </div>
+          {/* Botão de envio de e-mail */}
+          <div className="mt-3">
+            <SendEmailButton
+              payerId={id}
+              month={month}
+              payerName={payer?.nome || list[0]?.pagadores?.nome || ""}
+              payerEmail={payer?.email || list[0]?.pagadores?.email || ""}
+              total={totalGeral}
+              preview={(list || []).slice(0, 5).map((t) => ({
+                descricao: t.descricao,
+                valor: t.valor,
+                data_compra: t.data_compra,
+              }))}
+            />
           </div>
         </Card>
         <Card className="col-span-4 p-4 sm:col-span-3">

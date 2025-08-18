@@ -34,7 +34,7 @@ export async function getPayersName(id: string) {
 
   const { data, error } = await supabase
     .from("pagadores")
-    .select("id, nome, role, foto, is_hidden, status")
+    .select("id, nome, email, role, foto, is_hidden, status")
     .eq("is_hidden", false)
     .eq("id", id)
     .single();
