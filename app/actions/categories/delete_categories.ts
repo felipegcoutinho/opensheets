@@ -13,7 +13,7 @@ export async function deleteCategory(
 
   try {
     const { count: transCount, error: transError } = await supabase
-      .from("transacoes")
+      .from("lancamentos")
       .select("id", { count: "exact", head: true })
       .eq("categoria_id", excluir);
 

@@ -27,7 +27,7 @@ export default function PaymentStatusWidget({
       {
         amount: sumPaidIncome,
         label: "confirmados",
-        color: "bg-primary ",
+        color: "bg-chart-1 ",
       },
       {
         amount: pendingIncome,
@@ -44,7 +44,7 @@ export default function PaymentStatusWidget({
       {
         amount: sumPaidExpense,
         label: "confirmados",
-        color: "bg-orange-400 dark:bg-orange-600",
+        color: "bg-chart-2",
       },
       {
         amount: pendingExpense,

@@ -31,7 +31,14 @@ export async function createPayer(
 
   const supabase = createClient();
 
-  const { error } = await supabase.from("pagadores").insert(validated.data);
+  // Garante padrões: role = 'secundario' e is_hidden = false
+  const payload = {
+    ...validated.data,
+    role: "secundario",
+    is_hidden: false,
+  } as any;
+
+  const { error } = await supabase.from("pagadores").insert(payload);
 
   revalidatePath("/pagador");
 

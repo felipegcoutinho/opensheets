@@ -1,14 +1,25 @@
+import { Gabarito, Geist, Geist_Mono, IBM_Plex_Sans } from "next/font/google";
 import localFont from "next/font/local";
 
-// const ibmPlex = IBM_Plex_Sans({
-//   weight: ["500", "700"],
-//   subsets: ["latin"],
-// });
+const ibm_plex = IBM_Plex_Sans({
+  weight: ["500", "700"],
+  subsets: ["latin"],
+});
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   weight: ["400", "500", "600", "700"],
-// });
+const gabarito = Gabarito({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+const geist = Geist({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const geist_mono = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 const itau = localFont({
   src: [
@@ -25,5 +36,7 @@ const itau = localFont({
   ],
 });
 
-export { itau };
+const default_font = geist;
+const money_values = gabarito;
 
+export { default_font, money_values };

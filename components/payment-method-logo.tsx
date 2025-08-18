@@ -17,7 +17,7 @@ export default function PaymentMethodLogo({
     <div className="flex items-center gap-2">
       <Image
         src={`${url_name}`}
-        className="rounded-xl shadow-sm transition-transform hover:scale-105"
+        className="rounded-lg shadow-sm transition-transform hover:scale-105"
         width={width}
         height={height}
         quality={100}

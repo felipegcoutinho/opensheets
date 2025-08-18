@@ -5,7 +5,6 @@ import {
   RiBook2Line,
   RiDashboardLine,
   RiFileList2Line,
-  RiGroupLine,
   RiMoneyDollarCircleLine,
   RiSparkling2Line,
   RiUser2Line,
@@ -53,12 +52,7 @@ export function NavLinks(month: string) {
         title: "Organização",
         items: [
           {
-            name: "responsáveis",
-            url: `/responsavel?periodo=${month}`,
-            icon: RiGroupLine,
-          },
-          {
-            name: "pagador",
+            name: "pagadores",
             url: `/pagador`,
             icon: RiUser2Line,
           },

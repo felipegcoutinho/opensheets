@@ -28,10 +28,7 @@ const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreatePayer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [state, action, isPending] = useActionState(
-    createPayer,
-    initialState,
-  );
+  const [state, action, isPending] = useActionState(createPayer, initialState);
 
   useEffect(() => {
     if (!state.message) return;

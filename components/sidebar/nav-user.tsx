@@ -3,7 +3,6 @@
 import { RiLogoutBoxLine, RiMoreLine, RiSettings2Fill } from "@remixicon/react";
 
 import { signOut } from "@/app/actions/auth/auth";
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +18,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { ModeToggle } from "../darkmode-button";
+import Link from "next/link";
 import PrivacyButton from "../privacy-button";
 
 export function NavUser({
@@ -83,12 +82,12 @@ export function NavUser({
                 </Link>
               </DropdownMenuItem>
 
-              <div className="flex items-center justify-between p-2">
+              {/* <div className="flex items-center justify-between p-2">
                 <p className="text-sm">Modo Escuro</p>
                 <div className="flex items-center justify-center">
                   <ModeToggle />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex items-center justify-between p-2">
                 <p className="text-sm">Privacidade</p>

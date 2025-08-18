@@ -3,7 +3,7 @@ import { PrivacyProviderApp } from "@/hooks/privacy-context";
 import { ThemeProvider } from "@/hooks/use-dark-mode";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
-import { itau } from "./fonts/font";
+import { default_font } from "./fonts/font";
 import "./globals.css";
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${itau.className} antialiased`}
+      className={`${default_font.className} antialiased`}
       suppressHydrationWarning
     >
       <body>

@@ -69,7 +69,7 @@ export default function CreateTransactions({
   const { getMonthOptions, formatted_current_month } = UseDates();
   const month = formatted_current_month;
 
-  // 2. Hooks SWR para descrições e responsáveis
+  // 2. Hooks SWR para descrições e pagadores
   const {
     data: descData,
     error: descError,
@@ -77,20 +77,22 @@ export default function CreateTransactions({
   } = useSWR(`/api/descriptions?month=${month}`, fetcher);
 
   const {
-    data: respData,
-    error: respError,
-    isLoading: isLoadingResp,
-  } = useSWR(`/api/responsaveis?month=${month}`, fetcher);
+    data: payersData,
+    error: payersError,
+    isLoading: isLoadingPayers,
+  } = useSWR(`/api/pagadores`, fetcher);
 
   const descricaoOptions = descData?.data || [];
-  const responsavelOptions = respData?.data || [];
+  const pagadoresOptions: { nome: string; role?: string | null }[] =
+    payersData?.data || [];
 
-  // 4. Filtragens auxiliares
-  const mainResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "sistema",
-  );
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
+  const normalize = (s: string) =>
+    (s || "")
+      .toLocaleLowerCase("pt-BR")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+  const secondPayers = pagadoresOptions.filter(
+    (p) => normalize(p.role || "") !== "principal",
   );
 
   return (
@@ -101,10 +103,11 @@ export default function CreateTransactions({
           <DialogTitle>Novo lançamento</DialogTitle>
         </DialogHeader>
 
-        {(isLoadingDesc || isLoadingResp) && <p>Carregando opções...</p>}
-        {(descError || respError) && (
+        {(isLoadingDesc || isLoadingPayers) && <p>Carregando opções...</p>}
+        {(descError || payersError) && (
           <p className="text-red-600">
-            Erro ao carregar opções: {descError?.message || respError?.message}
+            Erro ao carregar opções:{" "}
+            {descError?.message || payersError?.message}
           </p>
         )}
 
@@ -243,7 +246,7 @@ export default function CreateTransactions({
                 <div className="flex-col">
                   <Label>Dividir Lançamento</Label>
                   <p className="text-muted-foreground text-xs leading-snug">
-                    Dividir o lançamento para um responsável diferente.
+                    Dividir o lançamento para outro pagador.
                   </p>
                 </div>
                 <div>
@@ -278,44 +281,50 @@ export default function CreateTransactions({
             </div>
 
             <div className="flex w-full gap-2">
-              <div className="w-full">
-                <Label htmlFor="responsavel">
-                  Responsável <Required />
+              <div className={isDividedChecked ? "w-1/2" : "w-full"}>
+                <Label htmlFor="pagador_id">
+                  Pagador <Required />
                 </Label>
-                <Input
-                  required
-                  list="responsavel-list"
-                  id="responsavel"
-                  name="responsavel"
-                  placeholder="Responsável"
-                  type="text"
-                  className="capitalize"
-                  defaultValue="você"
-                />
-                <datalist id="responsavel-list">
-                  {mainResponsavelOptions.map((opt) => (
-                    <option key={opt} value={opt} />
-                  ))}
-                </datalist>
+                <Select name="pagador_id" required>
+                  <SelectTrigger id="pagador_id" className="w-full capitalize">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {pagadoresOptions.map((item) => (
+                      <SelectItem
+                        className="capitalize"
+                        key={item.nome}
+                        value={item.nome}
+                      >
+                        {item.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {isDividedChecked && (
-                <div className="w-full">
-                  <Label htmlFor="segundo_responsavel">
-                    Segundo Responsável
-                  </Label>
-                  <Input
-                    id="segundo_responsavel"
-                    name="segundo_responsavel"
-                    placeholder="Segundo Responsável"
-                    type="text"
-                    list="segundo-responsavel-list"
-                  />
-                  <datalist id="segundo-responsavel-list">
-                    {secondResponsavelOptions.map((opt) => (
-                      <option key={opt} value={opt} />
-                    ))}
-                  </datalist>
+                <div className="w-1/2">
+                  <Label htmlFor="segundo_pagador_id">Segundo Pagador</Label>
+                  <Select name="segundo_pagador_id">
+                    <SelectTrigger
+                      id="segundo_pagador_id"
+                      className="w-full capitalize"
+                    >
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {secondPayers.map((item) => (
+                        <SelectItem
+                          key={item.nome}
+                          value={item.nome}
+                          className="capitalize"
+                        >
+                          {item.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             </div>

@@ -45,10 +45,7 @@ export function TransactionTableCore<
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
-              className={`whitespace-nowrap ${
-                row.original.categorias?.nome === "saldo anterior" && // Acesso seguro
-                "bg-linear-to-r from-lime-300/10 to-transparent"
-              }`}
+              className="whitespace-nowrap"
               key={row.id}
               data-state={row.getIsSelected() && "selected"}
             >
