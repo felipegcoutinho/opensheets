@@ -287,7 +287,7 @@ export async function getCategoria(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome), pagadores!inner(role)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome), pagadores!inner(role, nome)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
