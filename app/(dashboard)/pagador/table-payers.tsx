@@ -59,7 +59,7 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
                 <div className="flex items-center justify-center gap-1 text-base leading-tight font-bold capitalize">
                   {item.nome}
                   {item.role === "principal" && (
-                    <RiVerifiedBadgeFill size={16} />
+                    <RiVerifiedBadgeFill className="text-blue-500" size={16} />
                   )}
                   {item.is_auto_send && (
                     <RiMailSendLine

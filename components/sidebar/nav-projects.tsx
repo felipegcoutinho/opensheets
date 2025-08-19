@@ -63,6 +63,7 @@ export const NavProjects = memo(function NavProjects({
                         />
                         <p>{item.name}</p>
                       </Link>
+
                       <AddButton
                         cartoes={cartoes}
                         contas={contas}

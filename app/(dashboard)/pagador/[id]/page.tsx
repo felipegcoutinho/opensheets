@@ -11,6 +11,7 @@ import {
   RiBarcodeLine,
   RiPixLine,
   RiUser2Line,
+  RiVerifiedBadgeFill,
 } from "@remixicon/react";
 import { RiMailSendLine } from "@remixicon/react";
 import { getMonth } from "@/hooks/get-month";
@@ -100,10 +101,13 @@ export default async function Page({ searchParams, params }: PageProps) {
           </div>
 
           <div className="mt-2 flex flex-col gap-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <span className="text-lg font-semibold capitalize">
                 {payerName}
               </span>
+              {payer?.role === "principal" && (
+                <RiVerifiedBadgeFill className="text-blue-500" size={16} />
+              )}
               {payer?.is_auto_send && (
                 <RiMailSendLine
                   size={16}
@@ -117,7 +121,7 @@ export default async function Page({ searchParams, params }: PageProps) {
               <div className="text-muted-foreground text-sm break-all">
                 <span>{payerEmail}</span>
                 {lastMailLabel && (
-                  <span className="ml-2 inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[11px]">
+                  <span className="bg-muted ml-2 inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px]">
                     Último e-mail: {lastMailLabel}
                   </span>
                 )}
