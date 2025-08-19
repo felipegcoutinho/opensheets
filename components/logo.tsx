@@ -7,10 +7,9 @@ export default function Logo() {
     <Image
       src={"/new_logo.svg"}
       alt="OpenSheets Logo"
-      width={180}
-      height={50}
+      width={140}
+      height={30}
       className="dark:brightness-0 dark:invert"
-      // className="brightness-0 invert"
     />
   );
 }
