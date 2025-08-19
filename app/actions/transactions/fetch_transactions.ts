@@ -1,22 +1,9 @@
+import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
 import { parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 
-// Utilitário robusto para comparar periodos no formato "mes-ano" (pt-BR)
-const MESES_PT = [
-  "janeiro",
-  "fevereiro",
-  "março",
-  "abril",
-  "maio",
-  "junho",
-  "julho",
-  "agosto",
-  "setembro",
-  "outubro",
-  "novembro",
-  "dezembro",
-];
+const { optionsMeses } = UseDates();
 
 function periodoToDate(periodo: string): Date | null {
   if (!periodo) return null;
@@ -24,7 +11,7 @@ function periodoToDate(periodo: string): Date | null {
   if (!mesRaw || !anoRaw) return null;
   const mes = mesRaw.trim().toLowerCase();
   const ano = Number(String(anoRaw).trim());
-  const monthIndex = MESES_PT.indexOf(mes);
+  const monthIndex = optionsMeses.indexOf(mes);
   if (isNaN(ano) || monthIndex < 0) return null;
   return new Date(ano, monthIndex, 1);
 }
@@ -377,7 +364,7 @@ export async function getAccountInvoice(month: string, conta_id: number) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role)",
+      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome)",
     )
     .eq("periodo", month)
     .eq("realizado", true)
@@ -536,7 +523,7 @@ export async function getSumAccountExpenseToDate(month: string, id: string) {
 
 // Funções específicas da página "responsáveis" foram removidas.
 
-export async function getTransactionsByResponsableVoce(month: string) {
+export async function getTransactionsRoleOwner(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -550,8 +537,7 @@ export async function getTransactionsByResponsableVoce(month: string) {
     .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false })
     .eq("pagadores.role", "principal")
-    .eq("periodo", month)
-    .or(FILTER_NOT_IGNORED_ACCOUNT);
+    .eq("periodo", month);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
