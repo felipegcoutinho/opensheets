@@ -39,7 +39,7 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
     }
 
     return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         {items.map((item) => {
           const fotoSrc = resolveFotoSrc(item.foto);
           const initials = (item?.nome?.[0] || "P").toUpperCase();
