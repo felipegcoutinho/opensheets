@@ -2,6 +2,33 @@ import { createClient } from "@/utils/supabase/server";
 import { parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 
+// Utilitário robusto para comparar periodos no formato "mes-ano" (pt-BR)
+const MESES_PT = [
+  "janeiro",
+  "fevereiro",
+  "março",
+  "abril",
+  "maio",
+  "junho",
+  "julho",
+  "agosto",
+  "setembro",
+  "outubro",
+  "novembro",
+  "dezembro",
+];
+
+function periodoToDate(periodo: string): Date | null {
+  if (!periodo) return null;
+  const [mesRaw, anoRaw] = String(periodo).split("-");
+  if (!mesRaw || !anoRaw) return null;
+  const mes = mesRaw.trim().toLowerCase();
+  const ano = Number(String(anoRaw).trim());
+  const monthIndex = MESES_PT.indexOf(mes);
+  if (isNaN(ano) || monthIndex < 0) return null;
+  return new Date(ano, monthIndex, 1);
+}
+
 export async function getIncome(month: string) {
   const supabase = createClient();
 
@@ -376,6 +403,7 @@ export async function getSumAccountIncome(month: string, id: string) {
     .eq("tipo_transacao", "receita")
     .in("pagadores.role", ["principal", "sistema"])
     .eq("realizado", true)
+    // Somatório apenas do mês selecionado (exibido como "Receitas" do mês)
     .eq("periodo", month);
 
   if (error) {
@@ -403,6 +431,38 @@ export async function getSumAccountIncome(month: string, id: string) {
   return sumAccountIncome;
 }
 
+// Soma acumulada de receitas da conta até o mês selecionado (inclui meses anteriores)
+export async function getSumAccountIncomeToDate(month: string, id: string) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("lancamentos")
+    .select(`valor, periodo, pagadores!inner(role)`)
+    .eq("conta_id", id)
+    .eq("tipo_transacao", "receita")
+    .in("pagadores.role", ["principal", "sistema"])
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar receitas acumuladas:", error);
+    return 0;
+  }
+
+  const limitDate = periodoToDate(month);
+
+  const sumAccountIncome = data.reduce((sum, item) => {
+    const itemDate = periodoToDate(item.periodo);
+    if (itemDate && limitDate && itemDate <= limitDate) {
+      const valor = parseFloat(item.valor);
+      return sum + (isNaN(valor) ? 0 : valor);
+    }
+
+    return sum;
+  }, 0);
+
+  return sumAccountIncome;
+}
+
 // Busca as despesas de uma conta bancária específica e soma os valores
 export async function getSumAccountExpense(month: string, id: string) {
   const supabase = createClient();
@@ -414,6 +474,7 @@ export async function getSumAccountExpense(month: string, id: string) {
     .eq("tipo_transacao", "despesa")
     .in("pagadores.role", ["principal", "sistema"])
     .eq("realizado", true)
+    // Somatório apenas do mês selecionado (exibido como "Despesas" do mês)
     .eq("periodo", month);
 
   if (error) {
@@ -441,6 +502,38 @@ export async function getSumAccountExpense(month: string, id: string) {
   return sumAccountExpense;
 }
 
+// Soma acumulada de despesas da conta até o mês selecionado (inclui meses anteriores)
+export async function getSumAccountExpenseToDate(month: string, id: string) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("lancamentos")
+    .select(`valor, periodo, pagadores!inner(role)`)
+    .eq("conta_id", id)
+    .eq("tipo_transacao", "despesa")
+    .in("pagadores.role", ["principal", "sistema"])
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar despesas acumuladas:", error);
+    return 0;
+  }
+
+  const limitDate = periodoToDate(month);
+
+  const sumAccountExpense = data.reduce((sum, item) => {
+    const itemDate = periodoToDate(item.periodo);
+    if (itemDate && limitDate && itemDate <= limitDate) {
+      const valor = parseFloat(item.valor);
+      return sum + (isNaN(valor) ? 0 : valor);
+    }
+
+    return sum;
+  }, 0);
+
+  return sumAccountExpense;
+}
+
 // Funções específicas da página "responsáveis" foram removidas.
 
 export async function getTransactionsByResponsableVoce(month: string) {
@@ -457,7 +550,8 @@ export async function getTransactionsByResponsableVoce(month: string) {
     .order("data_compra", { ascending: false })
     .order("created_at", { ascending: false })
     .eq("pagadores.role", "principal")
-    .eq("periodo", month);
+    .eq("periodo", month)
+    .or(FILTER_NOT_IGNORED_ACCOUNT);
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);

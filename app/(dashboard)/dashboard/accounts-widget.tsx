@@ -1,6 +1,8 @@
 import {
   getSumAccountExpense,
   getSumAccountIncome,
+  getSumAccountExpenseToDate,
+  getSumAccountIncomeToDate,
 } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
@@ -23,12 +25,14 @@ export default async function AccountWidget({
 
   const accountData = await Promise.all(
     data.map(async (item) => {
-      const sumAccountIncome = await getSumAccountIncome(month!, item.id);
-      const accountExpense = await getSumAccountExpense(month!, item.id);
+      const [incomeToDate, expenseToDate] = await Promise.all([
+        getSumAccountIncomeToDate(month!, item.id),
+        getSumAccountExpenseToDate(month!, item.id),
+      ]);
 
       return {
         ...item,
-        saldo: sumAccountIncome - accountExpense + previstoAnterior,
+        saldo: incomeToDate - expenseToDate,
       };
     }),
   );

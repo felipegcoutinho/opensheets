@@ -61,7 +61,7 @@ const sofascore_mono = localFont({
   ],
 });
 
-const default_font = sofascore;
+const default_font = ibm_plex;
 const money_values = sofascore;
 
 export { default_font, money_values };
