@@ -25,10 +25,17 @@ function Submit() {
   );
 }
 
-type PreviewTx = { descricao?: string | null; valor?: number | string; data_compra?: string | null };
+type PreviewTx = {
+  descricao?: string | null;
+  valor?: number | string;
+  data_compra?: string | null;
+};
 
 function formatBRL(value: number) {
-  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value || 0);
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value || 0);
 }
 
 function formatDate(iso?: string | null) {
@@ -53,7 +60,10 @@ export default function SendEmailButton({
   total: number;
   preview?: PreviewTx[];
 }) {
-  const [state, action] = useActionState(sendPayerMonthlySummary as any, initial as any);
+  const [state, action] = useActionState(
+    sendPayerMonthlySummary as any,
+    initial as any,
+  );
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -64,43 +74,69 @@ export default function SendEmailButton({
     <div className="flex items-center gap-2">
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button type="button" variant="outline">Enviar e-mail</Button>
+          <Button type="button" variant="default">
+            Enviar e-mail
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirmar envio</DialogTitle>
             <DialogDescription>
-              Será enviado um resumo de {month} para {payerName || "—"} {payerEmail ? `(<${payerEmail}>)` : ""}.
+              Será enviado um resumo de {month} para {payerName || "—"}{" "}
+              {payerEmail ? `<${payerEmail}>` : ""}.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-2">
             <div className="text-sm">
-              <div><span className="text-muted-foreground">Pagador:</span> {payerName || "—"}</div>
-              <div><span className="text-muted-foreground">E-mail:</span> {payerEmail || "—"}</div>
-              <div><span className="text-muted-foreground">Mês:</span> {month}</div>
-              <div><span className="text-muted-foreground">Total:</span> {formatBRL(total)}</div>
+              <div>
+                <span className="text-muted-foreground">Pagador:</span>{" "}
+                {payerName || "—"}
+              </div>
+
+              <div>
+                <span className="text-muted-foreground">E-mail:</span>{" "}
+                {payerEmail || "—"}
+              </div>
+
+              <div>
+                <span className="text-muted-foreground">Mês:</span> {month}
+              </div>
+
+              <div>
+                <span className="text-muted-foreground">Total:</span>{" "}
+                {formatBRL(total)}
+              </div>
             </div>
+
             {preview.length > 0 ? (
-              <div className="border rounded-md p-2">
-                <div className="text-sm font-medium mb-1">Exemplo de lançamentos (até 5)</div>
-                <ul className="text-sm space-y-1 max-h-48 overflow-auto">
+              <div className="rounded-md border p-2">
+                <ul className="max-h-48 space-y-1 overflow-auto text-sm">
                   {preview.slice(0, 5).map((t, idx) => (
-                    <li key={idx} className="flex items-center justify-between gap-2">
+                    <li
+                      key={idx}
+                      className="flex items-center justify-between gap-2"
+                    >
                       <span className="truncate">
                         {formatDate(t.data_compra)} — {t.descricao || "—"}
                       </span>
-                      <span className="shrink-0">{formatBRL(parseFloat(String(t.valor || 0)) || 0)}</span>
+                      <span className="shrink-0">
+                        {formatBRL(parseFloat(String(t.valor || 0)) || 0)}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </div>
             ) : (
-              <div className="text-sm text-muted-foreground">Sem lançamentos para este mês.</div>
+              <div className="text-muted-foreground text-sm">
+                Sem lançamentos para este mês.
+              </div>
             )}
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">Cancelar</Button>
+              <Button type="button" variant="outline">
+                Cancelar
+              </Button>
             </DialogClose>
             <form action={action} className="contents">
               <input type="hidden" name="payerId" value={payerId} />
@@ -111,7 +147,11 @@ export default function SendEmailButton({
         </DialogContent>
       </Dialog>
       {state?.message ? (
-        <span className={`text-xs ${state.ok ? "text-emerald-600" : "text-red-600"}`}>{state.message}</span>
+        <span
+          className={`text-xs ${state.ok ? "text-emerald-600" : "text-red-600"}`}
+        >
+          {state.message}
+        </span>
       ) : null}
     </div>
   );

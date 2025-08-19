@@ -17,6 +17,10 @@ export async function createPayer(
     email: String(formData.get("email")),
     status: String(formData.get("status")),
     anotacao: String(formData.get("anotacao")),
+    is_auto_send: (() => {
+      const v = String(formData.get("is_auto_send") ?? "");
+      return v === "on" || v === "true";
+    })(),
     foto: (() => {
       const raw = formData.get("foto");
       const v = typeof raw === "string" ? raw : "";
@@ -43,6 +47,7 @@ export async function createPayer(
     foto: validated.data.foto ?? null,
     role: "secundario",
     is_hidden: false,
+    is_auto_send: Boolean(validated.data.is_auto_send) || false,
   } as any;
 
   const { error } = await supabase.from("pagadores").insert(payload);

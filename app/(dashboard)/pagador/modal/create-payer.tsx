@@ -23,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { ActionResponse } from "./form-schema";
+import Ping from "@/components/ping-icon";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
@@ -71,54 +72,46 @@ export default function CreatePayer({ avatars = [] as string[] }) {
           </div>
 
           <div>
-            <Label htmlFor="foto">Foto (Avatar)</Label>
-            <div className="mb-2 flex items-center gap-3">
-              {selectedAvatar ? (
-                <img
-                  src={`/avatars/${selectedAvatar}`}
-                  alt="Pré-visualização do avatar selecionado"
-                  width={56}
-                  height={56}
-                  className="size-14 rounded-full border"
-                />
-              ) : (
-                <div className="text-muted-foreground size-14 rounded-full border bg-muted/30 flex items-center justify-center text-xs">
+            <Label htmlFor="foto">Avatar</Label>
+
+            <input
+              type="hidden"
+              name="foto"
+              value={selectedAvatar || "__none__"}
+            />
+
+            <div className="grid grid-cols-6 gap-3">
+              <button
+                type="button"
+                aria-pressed={!selectedAvatar}
+                onClick={() => setSelectedAvatar("")}
+                className={`rounded-full border ${!selectedAvatar ? "ring-primary ring-2" : ""}`}
+                title="Sem avatar"
+              >
+                <div className="bg-muted/30 flex size-16 items-center justify-center rounded-full text-xs">
                   Sem avatar
                 </div>
-              )}
+              </button>
+
+              {avatars.map((file) => (
+                <button
+                  key={file}
+                  type="button"
+                  aria-pressed={selectedAvatar === file}
+                  onClick={() => setSelectedAvatar(file)}
+                  className={`rounded-full border ${selectedAvatar === file ? "ring-primary ring-2" : ""}`}
+                  title="Selecionar avatar"
+                >
+                  <img
+                    src={`/avatars/${file}`}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="size-16 rounded-full object-cover"
+                  />
+                </button>
+              ))}
             </div>
-            <Select
-              name="foto"
-              onValueChange={(v) => setSelectedAvatar(v === "__none__" ? "" : v)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Selecione um avatar" />
-              </SelectTrigger>
-              <SelectContent>
-                <div className="grid grid-cols-3 gap-2 p-2">
-                  <SelectItem value="__none__" className="p-1">
-                    <span className="flex items-center gap-2">
-                      <div className="size-8 rounded-full border bg-muted/30" />
-                      <span className="text-xs">Sem avatar</span>
-                    </span>
-                  </SelectItem>
-                  {avatars.map((file) => (
-                    <SelectItem key={file} value={file} className="p-1">
-                      <span className="flex items-center gap-2">
-                        <img
-                          src={`/avatars/${file}`}
-                          alt={file}
-                          width={32}
-                          height={32}
-                          className="rounded-full"
-                        />
-                        <span className="text-xs">{file.replace(/\..+$/, "")}</span>
-                      </span>
-                    </SelectItem>
-                  ))}
-                </div>
-              </SelectContent>
-            </Select>
           </div>
 
           <div>
@@ -128,10 +121,25 @@ export default function CreatePayer({ avatars = [] as string[] }) {
                 <SelectValue placeholder="Selecione o status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ativo">Ativo</SelectItem>
-                <SelectItem value="inativo">Inativo</SelectItem>
+                <SelectItem value="ativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-green-500" /> Ativo
+                  </div>
+                </SelectItem>
+                <SelectItem value="inativo">
+                  <div className="flex items-center gap-2">
+                    <Ping color="bg-zinc-400" /> Inativo
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input id="is_auto_send" name="is_auto_send" type="checkbox" />
+            <Label htmlFor="is_auto_send">
+              Enviar e-mails automaticamente ao criar lançamentos
+            </Label>
           </div>
 
           <div>

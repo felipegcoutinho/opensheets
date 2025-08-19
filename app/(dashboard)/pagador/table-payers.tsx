@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UseDates } from "@/hooks/use-dates";
-import { RiVerifiedBadgeFill } from "@remixicon/react";
+import { RiMailSendLine, RiVerifiedBadgeFill } from "@remixicon/react";
 import Link from "next/link";
 import UpdatePayer from "./modal/update-payer";
 import DeletePayer from "./modal/delete-payer";
@@ -60,6 +60,13 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
                   {item.nome}
                   {item.role === "principal" && (
                     <RiVerifiedBadgeFill size={16} />
+                  )}
+                  {item.is_auto_send && (
+                    <RiMailSendLine
+                      size={16}
+                      className="text-primary"
+                      title="Envio automático ativo"
+                    />
                   )}
                 </div>
               </div>

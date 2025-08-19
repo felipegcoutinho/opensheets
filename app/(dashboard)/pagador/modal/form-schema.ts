@@ -6,6 +6,7 @@ export interface PayerFormData {
   email?: string;
   status: string;
   anotacao?: string;
+  is_auto_send?: boolean;
   foto?: string | null;
 }
 
@@ -21,5 +22,6 @@ export const payerSchema = z.object({
   email: z.string().email("Email inválido").optional().or(z.literal("")),
   status: z.string().min(1, "Status é obrigatório"),
   anotacao: z.string().optional(),
+  is_auto_send: z.boolean().optional(),
   foto: z.string().nullable().optional().or(z.literal("")),
 });

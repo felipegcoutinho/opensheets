@@ -36,7 +36,32 @@ const itau = localFont({
   ],
 });
 
-const default_font = itau;
-const money_values = gabarito;
+const sofascore = localFont({
+  src: [
+    {
+      path: "../fonts/SofaSans-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/SofaSans-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+});
+
+const sofascore_mono = localFont({
+  src: [
+    {
+      path: "../fonts/SofascoreMono-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+});
+
+const default_font = sofascore;
+const money_values = sofascore;
 
 export { default_font, money_values };

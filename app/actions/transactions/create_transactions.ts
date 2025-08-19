@@ -10,6 +10,10 @@ import {
 import { gerarTransacoes } from "./gerarTransacoes";
 import { parseFormData } from "./parseFormData";
 import { uploadImagem } from "./uploadImagem";
+import {
+  fetchPayersByIds,
+  sendNewTransactionsEmail,
+} from "@/app/actions/emails/send_new_transactions";
 
 export async function createTransaction(
   _prev: ActionResponse | null,
@@ -97,6 +101,37 @@ export async function createTransaction(
     if (error) {
       console.error("Erro ao adicionar transações:", error);
       return { success: false, message: "Erro ao adicionar Lançamento" };
+    }
+
+    // Envio de e-mail automático por pagador, se habilitado
+    try {
+      const groups = new Map<string, any[]>();
+      for (const t of transacoes) {
+        const pid = t?.pagador_id as unknown as string | undefined;
+        if (!pid) continue;
+        if (!groups.has(pid)) groups.set(pid, []);
+        groups.get(pid)!.push(t);
+      }
+
+      const ids = Array.from(groups.keys());
+      if (ids.length > 0) {
+        const payers = await fetchPayersByIds(ids);
+        await Promise.all(
+          payers.map(async (payer) => {
+            if (!payer?.is_auto_send) return;
+            const txs = groups.get(payer.id) || [];
+            if (!txs.length) return;
+            try {
+              await sendNewTransactionsEmail(payer, txs as any[]);
+            } catch (e) {
+              console.error("Falha ao enviar e-mail automático:", e);
+            }
+          }),
+        );
+      }
+    } catch (e) {
+      console.error("Erro no fluxo de e-mail automático:", e);
+      // não bloqueia o fluxo principal
     }
 
     return { success: true, message: "Lançamento adicionado com sucesso!" };
