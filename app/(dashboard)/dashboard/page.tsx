@@ -15,7 +15,6 @@ import BillsWidget from "./bills-widget";
 import CategoryWidget from "./categories-widget";
 import CategoryPurchasesWidget from "./category-purchases-widget";
 import { ChartSummary } from "./chart-summary";
-
 import { ConditionWidget } from "./condition-widget";
 import InvoiceWidget from "./invoices-widget";
 import PaymentStatusWidget from "./payment-status-widget";
@@ -47,6 +46,7 @@ export default async function page(props: { params: { month: string } }) {
   const allData = await Promise.all(sixmonth.map((m) => UtilitiesDashboard(m)));
 
   const current = allData[allData.length - 1];
+
   const { incomes, expenses, summary, categoryData, saldo, previstoAnterior } =
     current;
 
