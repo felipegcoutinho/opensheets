@@ -1,9 +1,9 @@
-import { getBills } from "@/app/actions/transactions/fetch_transactions";
 import { getInvoiceList } from "@/app/actions/invoices/fetch_invoices";
+import { getBills } from "@/app/actions/transactions/fetch_transactions";
 import { UseDates } from "@/hooks/use-dates";
+import { RiAlarmWarningFill } from "@remixicon/react";
 import { differenceInCalendarDays } from "date-fns";
 import Banner from "./banner-card";
-import { RiAlarmWarningFill } from "@remixicon/react";
 
 export default async function UpcomingPaymentsBanner() {
   const { formatted_current_month } = UseDates();
@@ -34,7 +34,7 @@ export default async function UpcomingPaymentsBanner() {
   if (totalDue === 0) return null;
 
   return (
-    <Banner className="bg-orange-100 text-yellow-800 dark:bg-orange-900/50 dark:text-yellow-200">
+    <Banner className="bg-orange-300">
       <div className="flex items-center gap-1 text-left">
         <RiAlarmWarningFill size={16} />
         <p className="text-sm">

@@ -103,6 +103,7 @@ export function TableTransaction({
             rowSelection={rowSelection}
           />
         </CardHeader>
+
         <CardContent className="px-4">
           <TransactionTableCore table={table} columns={table.options.columns} />
         </CardContent>

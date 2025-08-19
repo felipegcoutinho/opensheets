@@ -1,5 +1,5 @@
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import Ping from "@/components/ping-icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,13 @@ import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
 
-export default function UiCard({ item, getAccountMap, mostrarLimites }) {
+type Props = {
+  item: any;
+  getAccountMap: any;
+  mostrarLimites: boolean;
+};
+
+export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
   return (
     <Card key={item.id} className="gap-2">
       <CardContent className="space-y-2">

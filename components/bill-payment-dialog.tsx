@@ -1,6 +1,5 @@
 "use client";
 
-import { payBills } from "@/app/actions/transactions/update_transactions";
 import MoneyValues from "@/components/money-values";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,17 +12,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { RiBankCardLine } from "@remixicon/react";
-import confetti from "canvas-confetti";
+import {
+  RiBankCardLine,
+  RiCheckboxCircleLine,
+  RiErrorWarningLine,
+} from "@remixicon/react";
 import Image from "next/image";
-import { useTransition } from "react";
+import { useState } from "react";
+import UtilitiesComponents from "./utilities-components";
 
-interface BillPaymentDialogProps {
-  id: number;
+type BillPaymentDialogProps = {
+  id: string;
   descricao: string;
   valor: number;
   status_pagamento: boolean;
-}
+};
 
 export default function BillPaymentDialog({
   id,
@@ -31,15 +34,23 @@ export default function BillPaymentDialog({
   valor,
   status_pagamento,
 }: BillPaymentDialogProps) {
-  const [isPending, startTransition] = useTransition();
+  const { handlePaymentBills, isPending } = UtilitiesComponents();
+  const [paymentStatus, setPaymentStatus] = useState<
+    "success" | "error" | null
+  >(null);
 
-  const handlePaymentBills = (e) => {
+  const handlePayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    startTransition(() => {
-      payBills(id, status_pagamento).then(() => {
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      });
-    });
+    const response = await handlePaymentBills(id, status_pagamento);
+    if (response.success) {
+      setPaymentStatus("success");
+    } else {
+      setPaymentStatus("error");
+    }
+  };
+
+  const resetState = () => {
+    setPaymentStatus(null);
   };
 
   const isPaid = status_pagamento === true;
@@ -49,7 +60,7 @@ export default function BillPaymentDialog({
   }
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
         <span className="cursor-pointer text-orange-400 hover:underline">
           pagar
@@ -90,30 +101,53 @@ export default function BillPaymentDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="flex flex-col gap-2 sm:flex-row">
-          <DialogClose asChild>
+        {paymentStatus === "success" ? (
+          <div className="flex flex-col items-center gap-4 text-center">
+            <RiCheckboxCircleLine className="h-12 w-12 text-green-500" />
+            <p>Pagamento realizado com sucesso!</p>
+            <DialogClose asChild>
+              <Button className="w-full bg-green-500 hover:bg-green-600">
+                Concluído
+              </Button>
+            </DialogClose>
+          </div>
+        ) : paymentStatus === "error" ? (
+          <div className="flex flex-col items-center gap-4 text-center">
+            <RiErrorWarningLine className="h-12 w-12 text-red-500" />
+            <p>Ocorreu um erro ao processar o pagamento.</p>
             <Button
-              className="w-full sm:w-1/2"
-              type="button"
-              variant="secondary"
+              className="w-full bg-red-500 hover:bg-red-600"
+              onClick={() => setPaymentStatus(null)}
             >
-              Cancelar
+              Tentar Novamente
             </Button>
-          </DialogClose>
+          </div>
+        ) : (
+          <DialogFooter className="flex flex-col gap-2 sm:flex-row">
+            <DialogClose asChild>
+              <Button
+                className="w-full sm:w-1/2"
+                type="button"
+                variant="secondary"
+              >
+                Cancelar
+              </Button>
+            </DialogClose>
 
-          <form className="w-full sm:w-1/2" onSubmit={handlePaymentBills}>
-            <Button className="w-full" type="submit" disabled={isPending}>
-              {isPending ? (
-                <>
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  <span className="ml-2">Processando...</span>
-                </>
-              ) : (
-                <span>Pagar</span>
-              )}
-            </Button>
-          </form>
-        </DialogFooter>
+            <form className="w-full sm:w-1/2" onSubmit={handlePayment}>
+              <Button className="w-full" type="submit" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    <span className="ml-2">Processando...</span>
+                  </>
+                ) : (
+                  <span>Pagar</span>
+                )}
+              </Button>
+            </form>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

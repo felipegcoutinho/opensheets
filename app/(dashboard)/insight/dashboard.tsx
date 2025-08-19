@@ -1,155 +1,50 @@
 "use client";
+import { AnalyzeButton } from "@/components/analysis/analyze-button";
+import { AnalysisReport } from "@/components/analysis/analysis-report";
+import { AnalysisSkeleton } from "@/components/analysis/analysis-skeleton";
 import EmptyCard from "@/components/empty-card";
-import InsightCard from "@/components/insight-card";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
-import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { useConsumptionAnalysis } from "@/hooks/use-consumption-analysis";
+import type { AnalysisInputPayload } from "@/types/analysis";
 
-interface Analysis {
-  comportamentos_observados: string[];
-  gatilhos_de_consumo: string[];
-  recomendações_práticas: string[];
-  melhorias_sugeridas: string[];
-}
-
-function Home({
-  lancamentos,
-  cartoes,
-  categorias,
-  month,
-}: {
-  lancamentos: any[];
-  cartoes: any[];
-  month: string;
-}) {
-  const [analysis, setAnalysis] = useState<Analysis | null>(null);
-  const [loading, setLoading] = useState(false);
-  const cacheRef = useRef<Analysis | null>(null);
-
-  const messages = useMemo(
-    () => [
-      { role: "user", content: JSON.stringify(lancamentos) },
-      { role: "user", content: JSON.stringify(cartoes) },
-      { role: "user", content: JSON.stringify(categorias) },
-    ],
-    [lancamentos, cartoes, categorias],
-  );
-
-  useEffect(() => {
-    cacheRef.current = null;
-  }, [messages]);
-
-  const handleAnalyze = useCallback(async () => {
-    if (cacheRef.current) {
-      setAnalysis(cacheRef.current);
-      return;
-    }
-
-    setLoading(true);
-    setAnalysis(null);
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages }),
-      });
-
-      const { analysis } = await response.json();
-      const parsed = JSON.parse(analysis);
-      cacheRef.current = parsed;
-      setAnalysis(parsed);
-    } catch (error) {
-      console.error("Erro ao buscar análise:", error);
-      setAnalysis(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [messages]);
+export default function Dashboard(props: AnalysisInputPayload) {
+  const { analysis, loading, error, lastRunAt, analyze } =
+    useConsumptionAnalysis(props);
 
   return (
-    <>
-      <Button
-        onClick={handleAnalyze}
-        disabled={loading}
-        className="bg-primary w-72 text-white transition hover:opacity-90"
-      >
-        <div className="flex items-center justify-center gap-2">
-          {loading ? (
-            <>
-              <RiLoader2Line className="h-4 w-4 animate-spin" />
-              <span>Aguarde, analisando...</span>
-            </>
-          ) : (
-            <>
-              <RiMagicLine className="h-4 w-4" />
-              <span>Analisar minhas finanças com IA</span>
-            </>
+    <main className="w-full max-w-4xl px-4 sm:px-6 lg:px-2">
+      <header className="bg-background/60 supports-[backdrop-filter]:bg-background/40 sticky top-0 z-10 -mx-4 mb-2 p-2 backdrop-blur">
+        <div className="flex items-center justify-between">
+          <AnalyzeButton onClick={analyze} loading={loading} />
+          {lastRunAt && (
+            <span className="text-muted-foreground ml-2 text-xs">
+              Última análise: {lastRunAt.toLocaleString()}
+            </span>
           )}
         </div>
-      </Button>
+      </header>
 
-      {!analysis && (
-        <Card className="mt-4 w-full">
-          <EmptyCard />
-        </Card>
-      )}
+      <section className="space-y-2">
+        {error && (
+          <Card className="border-destructive/30 bg-destructive/5">
+            <CardContent className="text-destructive p-4 text-sm">
+              {error}
+            </CardContent>
+          </Card>
+        )}
 
-      {analysis && (
-        <Card className="my-2 w-full border-none dark:bg-transparent">
-          <CardHeader className="p-0">
-            <CardTitle className="text-xl">
-              Relatório de Comportamento de Consumo
-            </CardTitle>
+        {!loading && !analysis && !error && (
+          <Card>
+            <EmptyCard />
+          </Card>
+        )}
 
-            <div className="text-muted-foreground mt-2">
-              <p>
-                No período selecionado ({month}), identificamos os principais
-                comportamentos e gatilhos que impactaram seu padrão de consumo.
-              </p>
-              <p>
-                A seguir, apresentamos um overview das descobertas e
-                recomendações estratégicas.
-              </p>
-            </div>
-          </CardHeader>
+        {loading && <AnalysisSkeleton month={props.month} />}
 
-          <CardContent className="p-0">
-            <div className="space-y-2">
-              {/* Comportamentos Observados */}
-              <InsightCard
-                title="Comportamentos Observados"
-                analysis={analysis.comportamentos_observados}
-                color="bg-amber-200"
-              />
+        {analysis && <AnalysisReport analysis={analysis} month={props.month} />}
+      </section>
 
-              {/* Gatilhos de Consumo */}
-              <InsightCard
-                title="Gatilhos de Consumo"
-                analysis={analysis.gatilhos_de_consumo}
-                color="bg-red-200"
-              />
-
-              {/* Recomendações Práticas */}
-              <InsightCard
-                title="Recomendações Práticas"
-                analysis={analysis.recomendações_práticas}
-                color="bg-emerald-200"
-              />
-
-              {/* Melhorias Sugeridas */}
-              <InsightCard
-                title="Melhorias Sugeridas"
-                analysis={analysis.melhorias_sugeridas}
-                color="bg-purple-200"
-              />
-            </div>
-          </CardContent>
-        </Card>
-      )}
-    </>
+      <footer className="h-8" />
+    </main>
   );
 }
-
-export default Home;

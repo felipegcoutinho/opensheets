@@ -1,5 +1,5 @@
 "use client";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -24,13 +24,11 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
-import { useState } from "react";
 import useSWR from "swr";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { ResumoLancamentoCard } from "./resume";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 const fetcher = (url) =>
   fetch(url).then((res) => {
@@ -71,7 +69,7 @@ export default function CreateTransactions({
   const { getMonthOptions, formatted_current_month } = UseDates();
   const month = formatted_current_month;
 
-  // 2. Hooks SWR para descrições e responsáveis
+  // 2. Hooks SWR para descrições e pagadores
   const {
     data: descData,
     error: descError,
@@ -79,30 +77,23 @@ export default function CreateTransactions({
   } = useSWR(`/api/descriptions?month=${month}`, fetcher);
 
   const {
-    data: respData,
-    error: respError,
-    isLoading: isLoadingResp,
-  } = useSWR(`/api/responsaveis?month=${month}`, fetcher);
+    data: payersData,
+    error: payersError,
+    isLoading: isLoadingPayers,
+  } = useSWR(`/api/pagadores`, fetcher);
 
   const descricaoOptions = descData?.data || [];
-  const responsavelOptions = respData?.data || [];
+  const pagadoresOptions: { nome: string; role?: string | null }[] =
+    payersData?.data || [];
 
-  // 4. Filtragens auxiliares
-  const mainResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "sistema",
+  const normalize = (s: string) =>
+    (s || "")
+      .toLocaleLowerCase("pt-BR")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+  const secondPayers = pagadoresOptions.filter(
+    (p) => normalize(p.role || "") !== "principal",
   );
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você" && r.toLowerCase() !== "sistema",
-  );
-
-  // Resumos para o card de pré-visualização
-  const [valorResumo, setValorResumo] = useState(0);
-  const [dataResumo, setDataResumo] = useState("");
-  const [formaResumo, setFormaResumo] = useState("");
-  const [condicaoResumo, setCondicaoResumo] = useState("vista");
-  const [recorrenciaResumo, setRecorrenciaResumo] = useState("");
-  const [periodoResumo, setPeriodoResumo] = useState(month);
-  const [responsavelResumo, setResponsavelResumo] = useState("você");
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -112,10 +103,11 @@ export default function CreateTransactions({
           <DialogTitle>Novo lançamento</DialogTitle>
         </DialogHeader>
 
-        {(isLoadingDesc || isLoadingResp) && <p>Carregando opções...</p>}
-        {(descError || respError) && (
+        {(isLoadingDesc || isLoadingPayers) && <p>Carregando opções...</p>}
+        {(descError || payersError) && (
           <p className="text-red-600">
-            Erro ao carregar opções: {descError?.message || respError?.message}
+            Erro ao carregar opções:{" "}
+            {descError?.message || payersError?.message}
           </p>
         )}
 
@@ -135,19 +127,13 @@ export default function CreateTransactions({
                   name="data_compra"
                   type="date"
                   required={!eBoletoSelecionado}
-                  onChange={(e) => setDataResumo(e.target.value)}
                 />
               </div>
               <div className="w-1/2">
                 <Label htmlFor="periodo">
                   Período <Required />
                 </Label>
-                <Select
-                  name="periodo"
-                  defaultValue={month}
-                  required
-                  onValueChange={(val) => setPeriodoResumo(val)}
-                >
+                <Select name="periodo" defaultValue={month} required>
                   <SelectTrigger id="periodo" className="w-full">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -191,7 +177,6 @@ export default function CreateTransactions({
                   name="valor"
                   placeholder="R$ 0,00"
                   required
-                  onValueChange={(val) => setValorResumo(val.floatValue || 0)}
                 />
               </div>
             </div>
@@ -261,7 +246,7 @@ export default function CreateTransactions({
                 <div className="flex-col">
                   <Label>Dividir Lançamento</Label>
                   <p className="text-muted-foreground text-xs leading-snug">
-                    Dividir o lançamento para um responsável diferente.
+                    Dividir o lançamento para outro pagador.
                   </p>
                 </div>
                 <div>
@@ -296,45 +281,50 @@ export default function CreateTransactions({
             </div>
 
             <div className="flex w-full gap-2">
-              <div className="w-full">
-                <Label htmlFor="responsavel">
-                  Responsável <Required />
+              <div className={isDividedChecked ? "w-1/2" : "w-full"}>
+                <Label htmlFor="pagador_id">
+                  Pagador <Required />
                 </Label>
-                <Input
-                  required
-                  list="responsavel-list"
-                  id="responsavel"
-                  name="responsavel"
-                  placeholder="Responsável"
-                  type="text"
-                  className="capitalize"
-                  defaultValue="você"
-                  onChange={(e) => setResponsavelResumo(e.target.value)}
-                />
-                <datalist id="responsavel-list">
-                  {mainResponsavelOptions.map((opt) => (
-                    <option key={opt} value={opt} />
-                  ))}
-                </datalist>
+                <Select name="pagador_id" required>
+                  <SelectTrigger id="pagador_id" className="w-full capitalize">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {pagadoresOptions.map((item) => (
+                      <SelectItem
+                        className="capitalize"
+                        key={item.nome}
+                        value={item.nome}
+                      >
+                        {item.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {isDividedChecked && (
-                <div className="w-full">
-                  <Label htmlFor="segundo_responsavel">
-                    Segundo Responsável
-                  </Label>
-                  <Input
-                    id="segundo_responsavel"
-                    name="segundo_responsavel"
-                    placeholder="Segundo Responsável"
-                    type="text"
-                    list="segundo-responsavel-list"
-                  />
-                  <datalist id="segundo-responsavel-list">
-                    {secondResponsavelOptions.map((opt) => (
-                      <option key={opt} value={opt} />
-                    ))}
-                  </datalist>
+                <div className="w-1/2">
+                  <Label htmlFor="segundo_pagador_id">Segundo Pagador</Label>
+                  <Select name="segundo_pagador_id">
+                    <SelectTrigger
+                      id="segundo_pagador_id"
+                      className="w-full capitalize"
+                    >
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {secondPayers.map((item) => (
+                        <SelectItem
+                          key={item.nome}
+                          value={item.nome}
+                          className="capitalize"
+                        >
+                          {item.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             </div>
@@ -350,7 +340,6 @@ export default function CreateTransactions({
                     name="forma_pagamento"
                     onValueChange={(val) => {
                       handleFormaPagamentoChange(val);
-                      setFormaResumo(val);
                     }}
                   >
                     <SelectTrigger id="forma_pagamento" className="w-full">
@@ -451,7 +440,6 @@ export default function CreateTransactions({
                   name="condicao"
                   onValueChange={(val) => {
                     handleCondicaoChange(val);
-                    setCondicaoResumo(val);
                   }}
                   defaultValue="vista"
                   required
@@ -490,10 +478,7 @@ export default function CreateTransactions({
               {showRecorrencia && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
-                  <Select
-                    name="qtde_recorrencia"
-                    onValueChange={(val) => setRecorrenciaResumo(val)}
-                  >
+                  <Select name="qtde_recorrencia">
                     <SelectTrigger id="qtde_recorrencia" className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
@@ -525,17 +510,6 @@ export default function CreateTransactions({
               <Label htmlFor="anotacao">Anotação</Label>
               <Textarea id="anotacao" name="anotacao" placeholder="Anotação" />
             </div>
-
-            <ResumoLancamentoCard
-              condicaoResumo={condicaoResumo}
-              valorResumo={valorResumo}
-              dataResumo={dataResumo}
-              formaResumo={formaResumo}
-              quantidadeParcelas={quantidadeParcelas}
-              recorrenciaResumo={recorrenciaResumo}
-              periodoResumo={periodoResumo}
-              responsavelResumo={responsavelResumo}
-            />
           </form>
         </div>
 

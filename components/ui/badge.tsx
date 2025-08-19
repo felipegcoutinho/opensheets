@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md  px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center rounded-2xl  px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
   {
     variants: {
       variant: {
@@ -20,13 +20,14 @@ const badgeVariants = cva(
         outline:
           "border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         receita:
-          " bg-green-50  text-green-600 dark:text-green-100 dark:bg-green-600/20",
-        despesa: " bg-red-50 text-red-600 dark:text-red-100 dark:bg-red-600/20",
-        voce: " bg-blue-50 text-blue-600 dark:text-blue-100 dark:bg-blue-600/20",
+          "border border-green-400 bg-green-50 text-green-600 dark:text-green-100 dark:bg-green-600/20",
+        despesa:
+          "border border-red-400 bg-red-50 text-red-600 dark:text-red-100 dark:bg-red-600/20",
+        voce: "border border-blue-400 bg-blue-50 text-blue-600 dark:text-blue-100 dark:bg-blue-600/20",
         sistema:
-          " bg-neutral-50 text-neutral-600 dark:text-neutral-400 dark:bg-neutral-600/20",
+          "border border-neutral-400 bg-neutral-50 text-neutral-600 dark:text-neutral-400 dark:bg-neutral-600/20",
         outros:
-          " bg-orange-50 text-orange-600 dark:text-orange-100 dark:bg-orange-600/20",
+          "border border-orange-400 bg-orange-50 text-orange-600 dark:text-orange-100 dark:bg-orange-600/20",
       },
     },
     defaultVariants: {

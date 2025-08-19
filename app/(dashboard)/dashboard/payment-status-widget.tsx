@@ -27,7 +27,7 @@ export default function PaymentStatusWidget({
       {
         amount: sumPaidIncome,
         label: "confirmados",
-        color: "bg-primary ",
+        color: "bg-chart-1 ",
       },
       {
         amount: pendingIncome,
@@ -44,7 +44,7 @@ export default function PaymentStatusWidget({
       {
         amount: sumPaidExpense,
         label: "confirmados",
-        color: "bg-orange-400 dark:bg-orange-600",
+        color: "bg-chart-2",
       },
       {
         amount: pendingExpense,
@@ -56,11 +56,13 @@ export default function PaymentStatusWidget({
 
   return (
     <>
-      <PaymentSection {...receiveData} />
+      {incomes > 0 && <PaymentSection {...receiveData} />}
 
-      <div className="my-6 border-b border-dashed"></div>
+      {incomes > 0 && expenses > 0 && (
+        <div className="my-6 border-b border-dashed"></div>
+      )}
 
-      <PaymentSection {...payData} />
+      {expenses > 0 && <PaymentSection {...payData} />}
     </>
   );
 }

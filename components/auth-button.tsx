@@ -4,7 +4,11 @@ import { RiDashboardLine, RiLogoutBoxLine } from "@remixicon/react"; // Adiciona
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-export default async function AuthButton({ session }) {
+type AuthButtonProps = {
+  session: boolean;
+};
+
+export default async function AuthButton({ session }: AuthButtonProps) {
   const user = await getUserName();
   const email = await getEmail();
 

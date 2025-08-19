@@ -1,5 +1,5 @@
 "use client";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 
 export default function UpdateTransactions({
   itemId,
@@ -66,23 +66,23 @@ export default function UpdateTransactions({
 
   const [selectedMonth, setSelectedMonth] = useState(itemPeriodo);
   const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [responsavelOptions, setResponsavelOptions] = useState<string[]>([]);
+  const [payersOptions, setPayersOptions] = useState<
+    { nome: string; role?: string | null }[]
+  >([]);
 
   useEffect(() => {
     async function fetchOptions() {
       const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
       const descJson = await descRes.json();
       setDescricaoOptions(descJson.data || []);
-      const respRes = await fetch(`/api/responsaveis?month=${selectedMonth}`);
-      const respJson = await respRes.json();
-      setResponsavelOptions(respJson.data || []);
+      const payRes = await fetch(`/api/pagadores`);
+      const payJson = await payRes.json();
+      setPayersOptions(payJson.data || []);
     }
     if (selectedMonth) fetchOptions();
   }, [selectedMonth]);
 
-  const secondResponsavelOptions = responsavelOptions.filter(
-    (r) => r.toLowerCase() !== "você",
-  );
+  // sem segundo pagador aqui; apenas alteração do pagador principal
 
   useEffect(() => {
     setIsPaid(itemPaid);
@@ -122,7 +122,19 @@ export default function UpdateTransactions({
           <DialogTitle>Atualizar lançamento</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleUpdate} className="space-y-2">
+        <form
+          onSubmit={handleUpdate}
+          className="space-y-2"
+          onKeyDown={(e) => {
+            if (
+              e.key === " " &&
+              (e.target instanceof HTMLInputElement ||
+                e.target instanceof HTMLTextAreaElement)
+            ) {
+              e.stopPropagation();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={item.id} />
 
           <div className="mb-1 flex w-full gap-2">
@@ -304,22 +316,25 @@ export default function UpdateTransactions({
 
           <div className="w-full">
             <Label>
-              Responsável
+              Pagador
               <Required />
             </Label>
-            <Input
-              defaultValue={itemResponsavel}
-              name="responsavel"
-              placeholder="Responsável"
-              type="text"
-              className="capitalize"
-              list="responsavel-update-list"
-            />
-            <datalist id="responsavel-update-list">
-              {responsavelOptions.map((opt) => (
-                <option key={opt} value={opt} />
-              ))}
-            </datalist>
+            <Select name="pagador_id" defaultValue={itemResponsavel}>
+              <SelectTrigger className="w-full capitalize">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                {payersOptions.map((p) => (
+                  <SelectItem
+                    key={p.nome}
+                    value={p.nome}
+                    className="capitalize"
+                  >
+                    {p.nome}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>

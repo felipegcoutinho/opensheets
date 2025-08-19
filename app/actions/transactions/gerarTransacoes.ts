@@ -13,7 +13,8 @@ interface Transacao {
   condicao?: string;
   forma_pagamento?: string;
   anotacao?: string;
-  responsavel?: string;
+  pagador_id?: string | null;
+  // quando dividido, geramos duas transações separadas, cada uma com seu pagador_id
   valor: number;
   qtde_parcela: number | null;
   parcela_atual: number | null;
@@ -57,7 +58,7 @@ export function gerarTransacoes(
 
   function adicionar(
     valor: number,
-    responsavel?: string,
+    pagador_id?: string | null,
     periodo?: string,
     vencimento?: string | null,
     parcela?: number | null,
@@ -73,7 +74,7 @@ export function gerarTransacoes(
       condicao: dados.condicao,
       forma_pagamento: dados.forma_pagamento,
       anotacao: dados.anotacao,
-      responsavel,
+      pagador_id: pagador_id || null,
       valor,
       qtde_parcela: dados.parcelas > 1 ? dados.parcelas : null,
       parcela_atual: parcela,
@@ -95,18 +96,25 @@ export function gerarTransacoes(
     vencimento: string | null,
   ) {
     const arredondado = parseFloat(valor.toFixed(2));
-    if (dados.dividir_lancamento && dados.segundo_responsavel) {
+    if (dados.dividir_lancamento && dados.segundo_pagador_id) {
       const metade = parseFloat((arredondado / 2).toFixed(2));
-      adicionar(metade, dados.responsavel, periodo, vencimento, parcela);
+      const outraMetade = parseFloat((arredondado - metade).toFixed(2));
+      adicionar(metade, dados.pagador_id || null, periodo, vencimento, parcela);
       adicionar(
-        arredondado - metade,
-        dados.segundo_responsavel,
+        outraMetade,
+        dados.segundo_pagador_id || null,
         periodo,
         vencimento,
         parcela,
       );
     } else {
-      adicionar(arredondado, dados.responsavel, periodo, vencimento, parcela);
+      adicionar(
+        arredondado,
+        dados.pagador_id || null,
+        periodo,
+        vencimento,
+        parcela,
+      );
     }
   }
 

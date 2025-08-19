@@ -33,7 +33,6 @@ export default async function Layout({
         <section className="px-4">
           <BannerData />
           <UpcomingPaymentsBanner />
-          {/* <MonthPicker /> */}
           {children}
         </section>
       </SidebarInset>

@@ -31,6 +31,7 @@ export default function DetailsTransactions({
   itemNotas,
   itemDate,
   itemResponsavel,
+  itemResponsavelRole,
   itemTipoTransacao,
   itemValor,
   itemFormaPagamento,
@@ -49,12 +50,8 @@ export default function DetailsTransactions({
 
   const { DateFormat } = UseDates();
 
-  const {
-    getResponsableStyle,
-    getConditionIcon,
-    getPaymentIcon,
-    getBadgeStyle,
-  } = UseStyles();
+  const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
+    UseStyles();
 
   const handleDialogClose = (val) => {
     setIsOpen(val);
@@ -133,7 +130,7 @@ export default function DetailsTransactions({
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
                   <span className="capitalize">
-                    <Badge variant={getResponsableStyle(itemResponsavel)}>
+                    <Badge variant={getResponsableStyle(itemResponsavelRole)}>
                       {itemResponsavel}
                     </Badge>
                   </span>

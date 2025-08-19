@@ -1,3 +1,4 @@
+import MoneyValues from "@/components/money-values";
 import {
   Card,
   CardDescription,
@@ -6,16 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  RiArrowDownSFill,
-  RiArrowUpSFill,
-  RiInformation2Fill,
-} from "@remixicon/react";
-import MoneyValues from "../../../components/money-values";
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  RiArrowDownCircleFill,
+  RiArrowUpCircleFill,
+  RiInformation2Fill,
+} from "@remixicon/react";
 
 type Props = {
   title: string;
@@ -63,12 +63,12 @@ export default function SummaryWidget({
           <span className="flex items-center">
             {isReceitaOuDespesa && (
               <div
-                className={`flex ${isPositive ? "text-green-600" : "text-red-600"}`}
+                className={`flex gap-1 ${isPositive ? "text-green-600" : "text-red-600"}`}
               >
                 {isPositive ? (
-                  <RiArrowUpSFill size={18} />
+                  <RiArrowUpCircleFill size={16} />
                 ) : (
-                  <RiArrowDownSFill size={18} />
+                  <RiArrowDownCircleFill size={16} />
                 )}
                 {isPositive ? "+" : ""}
                 <span className="text-xs">{diffPercent.toFixed(0)}%</span>

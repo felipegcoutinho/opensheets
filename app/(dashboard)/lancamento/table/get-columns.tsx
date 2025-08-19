@@ -1,7 +1,6 @@
 "use client";
-
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,12 +22,12 @@ import UseStyles from "@/hooks/use-styles";
 import {
   RiAttachmentLine,
   RiBankCardLine,
-  RiCheckboxCircleFill,
   RiBankLine,
+  RiCalendarCheckFill,
+  RiCheckboxCircleFill,
   RiGroupLine,
   RiMessage2Line,
   RiMoreLine,
-  RiBlazeLine,
 } from "@remixicon/react";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
@@ -106,7 +105,7 @@ export const getColumns = (
             </Badge>
           )}
 
-          {item.responsavel === "sistema" && (
+          {item.pagadores?.role === "sistema" && (
             <RiCheckboxCircleFill color="green" size={16} />
           )}
 
@@ -123,7 +122,7 @@ export const getColumns = (
             </span>
           )}
 
-          {item.anotacao != "" && item.responsavel != "sistema" && (
+          {item.anotacao != "" && item.pagadores?.role != "sistema" && (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
@@ -136,7 +135,7 @@ export const getColumns = (
 
           {item.condicao === "parcelado" &&
             item.parcela_atual === item.qtde_parcela && (
-              <RiBlazeLine className="text-yellow-600" size={16} />
+              <RiCalendarCheckFill color="green" size={16} />
             )}
         </div>
       );
@@ -204,16 +203,13 @@ export const getColumns = (
 
   {
     accessorKey: "responsavel",
-    header: ({ column }) => {
-      return <span>Responsável</span>;
-    },
+    accessorFn: (row) => row.pagadores?.nome,
+    header: () => <span>Pagador</span>,
     cell: ({ row }) => {
       const item = row.original;
-      return (
-        <Badge variant={getResponsableStyle(item.responsavel)}>
-          {item.responsavel}
-        </Badge>
-      );
+      const nome = item.pagadores?.nome ?? "";
+      const role = item.pagadores?.role ?? "";
+      return <Badge variant={getResponsableStyle(role)}>{nome}</Badge>;
     },
   },
 
@@ -280,7 +276,8 @@ export const getColumns = (
                   itemDate={item.data_compra}
                   itemDescricao={item.descricao}
                   itemCondicao={item.condicao}
-                  itemResponsavel={item.responsavel}
+                  itemResponsavel={item.pagadores?.nome}
+                  itemResponsavelRole={item.pagadores?.role}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}
@@ -296,7 +293,7 @@ export const getColumns = (
                 />
               </DropdownMenuItem>
 
-              {item.responsavel != "sistema" && (
+              {item.pagadores?.role != "sistema" && (
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <UpdateTransactions
                     item={item}
@@ -306,7 +303,6 @@ export const getColumns = (
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
                     itemCondicao={item.condicao}
-                    itemResponsavel={item.responsavel}
                     itemTipoTransacao={item.tipo_transacao}
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
@@ -316,18 +312,19 @@ export const getColumns = (
                     getCategorias={getCategorias}
                     itemCartaoId={item.cartoes?.id}
                     itemContaId={item.contas?.id}
+                    itemResponsavel={item.pagadores?.nome}
                     getCards={getCardsMap}
                     getAccount={getAccountMap}
                   />
                 </DropdownMenuItem>
               )}
 
-              {item.responsavel != "sistema" && (
+              {item.pagadores?.role != "sistema" && (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     <DeleteTransactions
-                      itemResponsavel={item.responsavel}
+                      itemResponsavel={item.pagadores?.nome}
                       itemId={item.id}
                     />
                   </DropdownMenuItem>
@@ -336,7 +333,7 @@ export const getColumns = (
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {item.responsavel === "sistema" ? (
+          {item.pagadores?.role === "sistema" ? (
             <RiCheckboxCircleFill className="text-muted" size={16} />
           ) : (
             <TooltipProvider delayDuration={300}>

@@ -1,5 +1,6 @@
 "use client";
 
+import { updateNote } from "@/app/actions/notes/update_notes";
 import Required from "@/components/required-on-forms";
 import TasksInput from "@/components/tasks-input";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { updateNote } from "@/app/actions/notes/update_notes";
 import type { ActionResponse } from "./form-schema";
 
 export default function UpdateNotes({ item }: { item: any }) {
@@ -69,7 +69,19 @@ export default function UpdateNotes({ item }: { item: any }) {
         <DialogHeader>
           <DialogTitle>Editar Anotação</DialogTitle>
         </DialogHeader>
-        <form action={action} className="space-y-2">
+        <form
+          action={action}
+          className="space-y-2"
+          onKeyDown={(e) => {
+            if (
+              e.key === " " &&
+              (e.target instanceof HTMLInputElement ||
+                e.target instanceof HTMLTextAreaElement)
+            ) {
+              e.stopPropagation();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={item.id} />
 
           <div className="w-full">

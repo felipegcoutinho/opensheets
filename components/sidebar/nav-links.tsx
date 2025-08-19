@@ -1,13 +1,13 @@
 import {
-  RiArrowUpDownFill,
-  RiBankCardFill,
-  RiBankFill,
-  RiBook2Fill,
-  RiDashboardFill,
-  RiFileList2Fill,
-  RiGroupFill,
-  RiMoneyDollarCircleFill,
-  RiSparkling2Fill,
+  RiArrowUpDownLine,
+  RiBankCardLine,
+  RiBankLine,
+  RiBook2Line,
+  RiDashboardLine,
+  RiFileList2Line,
+  RiGroupLine,
+  RiMoneyDollarCircleLine,
+  RiSparkling2Line,
 } from "@remixicon/react";
 
 export function NavLinks(month: string) {
@@ -19,7 +19,7 @@ export function NavLinks(month: string) {
           {
             name: "dashboard",
             url: `/dashboard?periodo=${month}`,
-            icon: RiDashboardFill,
+            icon: RiDashboardLine,
           },
         ],
       },
@@ -29,22 +29,22 @@ export function NavLinks(month: string) {
           {
             name: "lançamentos",
             url: `/lancamento?periodo=${month}`,
-            icon: RiArrowUpDownFill,
+            icon: RiArrowUpDownLine,
           },
           {
             name: "cartões",
             url: "/cartao",
-            icon: RiBankCardFill,
+            icon: RiBankCardLine,
           },
           {
             name: "contas",
             url: "/conta",
-            icon: RiBankFill,
+            icon: RiBankLine,
           },
           {
             name: "orçamentos",
             url: `/orcamento?periodo=${month}`,
-            icon: RiMoneyDollarCircleFill,
+            icon: RiMoneyDollarCircleLine,
           },
         ],
       },
@@ -52,14 +52,14 @@ export function NavLinks(month: string) {
         title: "Organização",
         items: [
           {
-            name: "responsáveis",
-            url: `/responsavel?periodo=${month}`,
-            icon: RiGroupFill,
+            name: "pagadores",
+            url: `/pagador`,
+            icon: RiGroupLine,
           },
           {
             name: "categorias",
             url: `/categoria`,
-            icon: RiFileList2Fill,
+            icon: RiFileList2Line,
           },
         ],
       },
@@ -69,12 +69,12 @@ export function NavLinks(month: string) {
           {
             name: "anotações",
             url: `/anotacao?periodo=${month}`,
-            icon: RiBook2Fill,
+            icon: RiBook2Line,
           },
           {
             name: "insights",
             url: `/insight?periodo=${month}`,
-            icon: RiSparkling2Fill,
+            icon: RiSparkling2Line,
           },
         ],
       },

@@ -1,11 +1,23 @@
 import Image from "next/image";
 
-export function PaymentMethodLogo({ descricao, url_name, width, height }) {
+type PaymentMethodLogoProps = {
+  descricao: string;
+  url_name: string;
+  width: number;
+  height: number;
+};
+
+export default function PaymentMethodLogo({
+  descricao,
+  url_name,
+  width,
+  height,
+}: PaymentMethodLogoProps) {
   return (
     <div className="flex items-center gap-2">
       <Image
         src={`${url_name}`}
-        className="rounded-xl shadow-sm transition-transform hover:scale-105"
+        className="rounded-lg shadow-sm transition-transform hover:scale-105"
         width={width}
         height={height}
         quality={100}

@@ -3,7 +3,12 @@
 import { usePathname } from "next/navigation";
 import { Card } from "./ui/card";
 
-function Banner({ children, className }) {
+type BannerProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+export default function Banner({ children, className }: BannerProps) {
   const pathname = usePathname();
   const isDashboard = pathname === "/dashboard";
 
@@ -12,8 +17,6 @@ function Banner({ children, className }) {
   }
 
   return (
-    <Card className={`mb-2 border-none p-6 ${className}`}>{children}</Card>
+    <Card className={`mb-3 border-none p-6 ${className}`}>{children}</Card>
   );
 }
-
-export default Banner;

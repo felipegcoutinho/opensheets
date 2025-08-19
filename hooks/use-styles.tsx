@@ -18,8 +18,9 @@ function UseStyles() {
     }
   }
 
-  function getResponsableStyle(responsavel: string) {
-    switch (responsavel) {
+  function getResponsableStyle(roleOrName?: string) {
+    switch (roleOrName) {
+      case "principal":
       case "você":
         return "voce";
       case "sistema":

@@ -37,7 +37,7 @@ export default async function page(props: { params: { month: string } }) {
     transactionsByCategory,
   } = await fetchAllData(month);
 
-  const { incomes, expenses, summary, categoryData, saldo } =
+  const { incomes, expenses, summary, categoryData, saldo, previstoAnterior } =
     await UtilitiesDashboard(month);
 
   const allData = await Promise.all(
@@ -53,7 +53,7 @@ export default async function page(props: { params: { month: string } }) {
 
   return (
     <section>
-      <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="my-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {summary.map((item, index) => (
           <SummaryWidget
             previousValue={item.previousValue}
@@ -66,7 +66,7 @@ export default async function page(props: { params: { month: string } }) {
         ))}
       </div>
 
-      <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
+      <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
         <Widget
           title="Minhas Contas"
           subtitle="Contas e Saldos"
@@ -77,7 +77,11 @@ export default async function page(props: { params: { month: string } }) {
             <RiBarChartBoxLine className="text-primary mr-2 inline size-4" />
           }
         >
-          <AccountWidget month={month} data={account} />
+          <AccountWidget
+            month={month}
+            data={account}
+            previstoAnterior={previstoAnterior}
+          />
         </Widget>
 
         <Widget
@@ -99,7 +103,7 @@ export default async function page(props: { params: { month: string } }) {
         </Widget>
       </div>
 
-      <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
+      <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
         <Widget
           title="Lançamentos Recentes"
           subtitle="Últimos 5 Lançamentos"
@@ -137,7 +141,7 @@ export default async function page(props: { params: { month: string } }) {
         </Widget>
       </div>
 
-      <div className="my-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         <Widget
           title="Condições de Pagamento"
           subtitle={"Principais Condições de Pagamento"}
@@ -165,7 +169,8 @@ export default async function page(props: { params: { month: string } }) {
           <CategoryPurchasesWidget data={transactionsByCategory} />
         </Widget>
       </div>
-      <div className="my-2 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
+
+      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
         <Widget
           title="Receitas por Categoria"
           subtitle="Principais Categorias por Receita"

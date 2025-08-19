@@ -11,7 +11,7 @@ export async function deleteTransaction(
   const excluir = formData.get("excluir");
   const supabase = createClient();
   try {
-    await supabase.from("transacoes").delete().eq("id", excluir);
+    await supabase.from("lancamentos").delete().eq("id", excluir);
     revalidatePath("/lancamentos");
     revalidatePath("/dashboard");
     return { success: true, message: "Lançamento removido com sucesso!" };
@@ -34,7 +34,7 @@ export async function removeImage(transactionId: number, imageUrl: string) {
     throw new Error("Erro ao excluir imagem do armazenamento");
   }
   const { error: updateError } = await supabase
-    .from("transacoes")
+    .from("lancamentos")
     .update({ imagem_url: null })
     .eq("id", transactionId);
   if (updateError) {

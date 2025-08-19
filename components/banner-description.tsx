@@ -1,23 +1,24 @@
 import React from "react";
+import { Card } from "./ui/card";
 
-function BannerDescription({
-  title,
-  subtitle,
-  children,
-}: {
+type BannerDescriptionProps = {
   title: string;
   subtitle: string;
   children: React.ReactNode;
-}) {
+};
+
+export default function BannerDescription({
+  title,
+  subtitle,
+  children,
+}: BannerDescriptionProps) {
   return (
     <div>
-      <header className="bg-contrast-foreground/10 mb-2 rounded p-8">
+      <Card className="bg-accent mb-2 border-none p-8">
         <p className="max-w-2xl text-sm">{subtitle}</p>
-      </header>
+      </Card>
 
       <main>{children}</main>
     </div>
   );
 }
-
-export default BannerDescription;

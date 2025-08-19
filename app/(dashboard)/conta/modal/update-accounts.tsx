@@ -1,5 +1,7 @@
 "use client";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import { updateAccount } from "@/app/actions/accounts/update_account";
+import PaymentMethodLogo from "@/components/payment-method-logo";
+import Ping from "@/components/ping-icon";
 import Required from "@/components/required-on-forms";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,11 +24,9 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import Ping from "@/components/ping-icon";
 import UseOptions from "@/hooks/use-options";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { updateAccount } from "@/app/actions/accounts/update_account";
 import type { ActionResponse } from "./form-schema";
 
 export default function UpdateAccount({ item }) {
@@ -57,7 +57,19 @@ export default function UpdateAccount({ item }) {
         <DialogHeader>
           <DialogTitle>Editar Cartão</DialogTitle>
         </DialogHeader>
-        <form action={action} className="space-y-2">
+        <form
+          action={action}
+          className="space-y-2"
+          onKeyDown={(e) => {
+            if (
+              e.key === " " &&
+              (e.target instanceof HTMLInputElement ||
+                e.target instanceof HTMLTextAreaElement)
+            ) {
+              e.stopPropagation();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={item.id} />
           <input type="hidden" name="is_ignored" value={String(isIgnored)} />
           <div className="w-full">

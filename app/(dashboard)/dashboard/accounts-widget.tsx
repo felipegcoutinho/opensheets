@@ -4,16 +4,18 @@ import {
 } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
-import { PaymentMethodLogo } from "@/components/payment-method-logo";
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
 export default async function AccountWidget({
   month,
   data,
+  previstoAnterior,
 }: {
   month: string;
   data: any;
+  previstoAnterior: number;
 }) {
   if (!data || data.length === 0) return <EmptyCard />;
 
@@ -23,9 +25,10 @@ export default async function AccountWidget({
     data.map(async (item) => {
       const sumAccountIncome = await getSumAccountIncome(month!, item.id);
       const accountExpense = await getSumAccountExpense(month!, item.id);
+
       return {
         ...item,
-        saldo: sumAccountIncome - accountExpense,
+        saldo: sumAccountIncome - accountExpense + previstoAnterior,
       };
     }),
   );

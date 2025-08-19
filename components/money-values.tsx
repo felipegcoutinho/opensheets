@@ -1,6 +1,6 @@
 "use client";
 
-import { itau } from "@/app/fonts/font";
+import { money_values } from "@/app/fonts/font";
 import { usePrivacy } from "@/hooks/privacy-context";
 import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -41,8 +41,9 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${itau.className} font-bold ${
-        estado && "blur-sm transition-all duration-300 hover:blur-none"
+      className={`${money_values.className} font-bold ${
+        estado &&
+        "blur-[6px] brightness-200 transition-all duration-200 hover:blur-none"
       }`}
     >
       {displayValue.toLocaleString("pt-BR", {

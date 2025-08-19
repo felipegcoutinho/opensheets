@@ -49,7 +49,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
       item.descricao?.toLowerCase().includes(searchValue) ||
       item.condicao?.toLowerCase().includes(searchValue) ||
       item.forma_pagamento?.toLowerCase().includes(searchValue) ||
-      item.responsavel?.toLowerCase().includes(searchValue) ||
+      (item.pagadores?.nome || "").toLowerCase().includes(searchValue) ||
       item.tipo_transacao?.toLowerCase().includes(searchValue) ||
       item.valor?.toString().toLowerCase().includes(searchValue) ||
       item.categorias?.nome?.toLowerCase().includes(searchValue) ||
@@ -123,7 +123,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
 
   const responsavelOptions = useMemo(() => {
     const values = new Set(
-      data.map((item) => item.responsavel).filter(Boolean),
+      data.map((item) => item.pagadores?.nome).filter(Boolean),
     );
     return Array.from(values as string[]);
   }, [data]);
