@@ -4,6 +4,7 @@ import {
   RiBankLine,
   RiBook2Line,
   RiDashboardLine,
+  RiCalendarLine,
   RiFileList2Line,
   RiGroupLine,
   RiMoneyDollarCircleLine,
@@ -30,6 +31,11 @@ export function NavLinks(month: string) {
             name: "lançamentos",
             url: `/lancamento?periodo=${month}`,
             icon: RiArrowUpDownLine,
+          },
+          {
+            name: "calendário",
+            url: `/calendario?periodo=${month}`,
+            icon: RiCalendarLine,
           },
           {
             name: "cartões",
