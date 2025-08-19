@@ -209,7 +209,7 @@ export async function getTransactionsByConditions(
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome)`,
     )
-    
+
     .eq("periodo", month)
     .eq("pagadores.role", "principal")
     .eq("condicao", condicao)
@@ -500,13 +500,10 @@ export async function getFinancialSummaryForPeriod(
 ) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.rpc(
-    "buscar_resumo_financeiro_por_periodo",
-    {
-      p_auth_id: authId,
-      p_periodo: periodo,
-    },
-  );
+  const { data, error } = await supabase.rpc("resumo_por_periodo", {
+    p_auth_id: authId,
+    p_periodo: periodo,
+  });
 
   if (error)
     throw new Error(`Erro ao buscar resumo financeiro: ${error.message}`);

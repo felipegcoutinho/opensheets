@@ -62,6 +62,27 @@ export default async function Page({ searchParams, params }: PageProps) {
 
   const payerName = payer?.nome || list[0]?.pagadores?.nome || "—";
   const payerEmail = payer?.email || list[0]?.pagadores?.email || "";
+  const lastMailISO: string | null = (payer as any)?.last_mail ?? null;
+  const lastMailLabel = (() => {
+    if (!lastMailISO) return null;
+    try {
+      const d = new Date(String(lastMailISO));
+      if (Number.isNaN(d.getTime())) return String(lastMailISO);
+      // Força formatação no fuso de São Paulo
+      const fmt = new Intl.DateTimeFormat("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+      return fmt.format(d);
+    } catch {
+      return String(lastMailISO);
+    }
+  })();
 
   return (
     <section className="space-y-4">
@@ -93,9 +114,14 @@ export default async function Page({ searchParams, params }: PageProps) {
               )}
             </div>
             {payerEmail ? (
-              <span className="text-muted-foreground text-sm break-all">
-                {payerEmail}
-              </span>
+              <div className="text-muted-foreground text-sm break-all">
+                <span>{payerEmail}</span>
+                {lastMailLabel && (
+                  <span className="ml-2 inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[11px]">
+                    Último e-mail: {lastMailLabel}
+                  </span>
+                )}
+              </div>
             ) : null}
           </div>
 
