@@ -6,8 +6,8 @@ import UseStyles from "@/hooks/use-styles";
 import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
-export async function ConditionWidget({ month }) {
-  const condicoes = await getConditions(month);
+export async function ConditionWidget({ month, data }: { month: string; data?: any[] }) {
+  const condicoes = data ?? (await getConditions(month));
 
   const condicoesSorted = condicoes.sort((a, b) => b.sum - a.sum);
 

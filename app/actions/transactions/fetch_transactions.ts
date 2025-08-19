@@ -521,6 +521,45 @@ export async function getSumAccountExpenseToDate(month: string, id: string) {
   return sumAccountExpense;
 }
 
+// Busca saldos acumulados até o mês selecionado para múltiplas contas (reduz N+1)
+export async function getAccountsBalancesToDate(
+  month: string,
+  accountIds: (string | number)[],
+) {
+  const supabase = createClient();
+
+  if (!accountIds || accountIds.length === 0) return {} as Record<string, number>;
+
+  const { error, data } = await supabase
+    .from("lancamentos")
+    .select(`valor, periodo, conta_id, tipo_transacao, pagadores!inner(role)`)
+    .in("conta_id", accountIds)
+    .in("pagadores.role", ["principal", "sistema"])
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar saldos de contas:", error);
+    return {} as Record<string, number>;
+  }
+
+  const limitDate = periodoToDate(month);
+
+  const balances = new Map<string | number, number>();
+
+  for (const item of data) {
+    const itemDate = periodoToDate(item.periodo);
+    if (!itemDate || !limitDate || itemDate > limitDate) continue;
+    const raw = parseFloat(item.valor);
+    const valor = Number.isFinite(raw) ? raw : 0;
+    const curr = balances.get(item.conta_id) ?? 0;
+    const delta = item.tipo_transacao === "receita" ? valor : -valor;
+    balances.set(item.conta_id, curr + delta);
+  }
+
+  // Converte para objeto simples
+  return Object.fromEntries(balances.entries()) as Record<string, number>;
+}
+
 // Funções específicas da página "responsáveis" foram removidas.
 
 export async function getTransactionsRoleOwner(month: string) {
