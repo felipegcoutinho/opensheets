@@ -297,6 +297,17 @@ export async function sendPayerMonthlySummary(
       const err = await res.text();
       return { ok: false, message: `Falha ao enviar e-mail: ${err}` };
     }
+    // Atualiza o campo last_mail após envio bem-sucedido
+    try {
+      // Armazena em UTC (ISO) para consistência com timestamptz
+      // A formatação local é feita na camada de UI com timeZone: 'America/Sao_Paulo'
+      await supabase
+        .from("pagadores")
+        .update({ last_mail: new Date().toISOString() })
+        .eq("id", id);
+    } catch (e) {
+      console.error("Falha ao atualizar last_mail:", e);
+    }
   } catch (e: any) {
     return {
       ok: false,

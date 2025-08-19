@@ -44,6 +44,28 @@ export default function DetailsTransactions({
   itemPaid,
   itemImagemURL,
   itemCategoriaId,
+  children,
+}: {
+  itemId: any
+  itemCondicao: any
+  itemDescricao: any
+  itemNotas: any
+  itemDate: any
+  itemResponsavel: any
+  itemResponsavelRole: any
+  itemTipoTransacao: any
+  itemValor: any
+  itemFormaPagamento: any
+  itemCartao: any
+  itemConta: any
+  itemQtdeParcelas: any
+  itemParcelaAtual: any
+  itemPeriodo: any
+  itemQtdeRecorrencia: any
+  itemPaid: any
+  itemImagemURL: any
+  itemCategoriaId: any
+  children?: React.ReactNode
 }) {
   const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } =
     UtilitiesLancamento();
@@ -61,7 +83,11 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger className="cursor-pointer">detalhes</DialogTrigger>
+      <DialogTrigger asChild>
+        {children ?? (
+          <span className="cursor-pointer">detalhes</span>
+        )}
+      </DialogTrigger>
 
       <DialogContent className="p-0 sm:max-w-xl">
         <Card className="gap-2 space-y-4">
