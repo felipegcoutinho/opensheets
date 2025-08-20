@@ -10,12 +10,15 @@ import AuthButton from "./auth-button";
 import Logo from "./logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
+import HeaderBlur from "./header-blur";
+
 export default async function Header() {
   const session = await getUserSession();
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full">
-      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4">
+      <div className="relative mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4">
+        <HeaderBlur />
         {/* Logo sempre visível */}
         <div className="shrink-0">
           <Link href="/">
