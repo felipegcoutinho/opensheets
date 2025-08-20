@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UseOptions from "@/hooks/use-options";
 import { useActionState, useEffect, useState } from "react";
@@ -147,12 +146,12 @@ export default function UpdateAccount({ item }) {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex items-center justify-between rounded-md border p-4">
+          {/* <div className="flex items-center justify-between rounded-md border p-4">
             <Label className="text-sm">
               Desconsiderar essa conta nos cálculos mensais
             </Label>
             <Switch checked={isIgnored} onCheckedChange={setIsIgnored} />
-          </div>
+          </div> */}
           <div className="w-full">
             <Label>Anotação</Label>
             <Textarea

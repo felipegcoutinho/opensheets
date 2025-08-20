@@ -1,7 +1,7 @@
 import BannerDescription from "@/components/banner-description";
 
 export const metadata = {
-  title: "Lançamentos | Opensheets",
+  title: "Lançamentos | opensheets",
 };
 
 export default function RootLayout({

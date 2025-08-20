@@ -9,6 +9,8 @@ import {
   getAccountInvoice,
   getSumAccountExpense,
   getSumAccountIncome,
+  getSumAccountExpenseToDate,
+  getSumAccountIncomeToDate,
 } from "@/app/actions/transactions/fetch_transactions";
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
@@ -22,15 +24,24 @@ export default async function page({ searchParams, params }) {
   const categorias = await getCategorias();
   const contas = await getAccount();
 
-  const [accountDetails, accountInvoice, sumIncome, sumExpense] =
+  const [
+    accountDetails,
+    accountInvoice,
+    sumIncome,
+    sumExpense,
+    sumIncomeToDate,
+    sumExpenseToDate,
+  ] =
     await Promise.all([
       getAccountDetails(id),
       getAccountInvoice(month, id),
       getSumAccountIncome(month, id),
       getSumAccountExpense(month, id),
+      getSumAccountIncomeToDate(month, id),
+      getSumAccountExpenseToDate(month, id),
     ]);
 
-  const saldo = sumIncome - sumExpense;
+  const saldo = sumIncomeToDate - sumExpenseToDate;
 
   return (
     <div>

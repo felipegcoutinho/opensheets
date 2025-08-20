@@ -1,6 +1,20 @@
+import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
 import { parse } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+
+const { optionsMeses } = UseDates();
+
+function periodoToDate(periodo: string): Date | null {
+  if (!periodo) return null;
+  const [mesRaw, anoRaw] = String(periodo).split("-");
+  if (!mesRaw || !anoRaw) return null;
+  const mes = mesRaw.trim().toLowerCase();
+  const ano = Number(String(anoRaw).trim());
+  const monthIndex = optionsMeses.indexOf(mes);
+  if (isNaN(ano) || monthIndex < 0) return null;
+  return new Date(ano, monthIndex, 1);
+}
 
 export async function getIncome(month: string) {
   const supabase = createClient();
@@ -163,7 +177,7 @@ export async function getTransactions(month: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -172,6 +186,51 @@ export async function getTransactions(month: string) {
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
+    return [];
+  }
+
+  return data;
+}
+
+// Busca lançamentos para o calendário por faixa de datas (data_compra OU data_vencimento no mês)
+export async function getTransactionsForCalendar(month: string) {
+  const supabase = createClient();
+
+  // Calcula início e fim do mês a partir do texto "mês-ano" (ex.: "agosto-2025")
+  const base = parse(`01-${month}`, "dd-MMMM-yyyy", new Date(), {
+    locale: ptBR,
+  });
+  const start = new Date(base.getFullYear(), base.getMonth(), 1);
+  const end = new Date(base.getFullYear(), base.getMonth() + 1, 0);
+
+  const toYMD = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+
+  const startStr = toYMD(start);
+  const endStr = toYMD(end);
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao,
+      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role)`,
+    )
+    // Apenas pagador principal
+    .eq("pagadores.role", "principal")
+    // data_compra OU data_vencimento dentro do mês selecionado
+    .or(
+      `and(data_compra.gte.${startStr},data_compra.lte.${endStr}),and(data_vencimento.gte.${startStr},data_vencimento.lte.${endStr})`,
+    )
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao buscar Lançamentos (calendário):", error);
     return [];
   }
 
@@ -209,7 +268,7 @@ export async function getTransactionsByConditions(
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome)`,
     )
-    
+
     .eq("periodo", month)
     .eq("pagadores.role", "principal")
     .eq("condicao", condicao)
@@ -350,7 +409,7 @@ export async function getAccountInvoice(month: string, conta_id: number) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role)",
+      "id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome)",
     )
     .eq("periodo", month)
     .eq("realizado", true)
@@ -376,6 +435,7 @@ export async function getSumAccountIncome(month: string, id: string) {
     .eq("tipo_transacao", "receita")
     .in("pagadores.role", ["principal", "sistema"])
     .eq("realizado", true)
+    // Somatório apenas do mês selecionado (exibido como "Receitas" do mês)
     .eq("periodo", month);
 
   if (error) {
@@ -403,6 +463,38 @@ export async function getSumAccountIncome(month: string, id: string) {
   return sumAccountIncome;
 }
 
+// Soma acumulada de receitas da conta até o mês selecionado (inclui meses anteriores)
+export async function getSumAccountIncomeToDate(month: string, id: string) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("lancamentos")
+    .select(`valor, periodo, pagadores!inner(role)`)
+    .eq("conta_id", id)
+    .eq("tipo_transacao", "receita")
+    .in("pagadores.role", ["principal", "sistema"])
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar receitas acumuladas:", error);
+    return 0;
+  }
+
+  const limitDate = periodoToDate(month);
+
+  const sumAccountIncome = data.reduce((sum, item) => {
+    const itemDate = periodoToDate(item.periodo);
+    if (itemDate && limitDate && itemDate <= limitDate) {
+      const valor = parseFloat(item.valor);
+      return sum + (isNaN(valor) ? 0 : valor);
+    }
+
+    return sum;
+  }, 0);
+
+  return sumAccountIncome;
+}
+
 // Busca as despesas de uma conta bancária específica e soma os valores
 export async function getSumAccountExpense(month: string, id: string) {
   const supabase = createClient();
@@ -414,6 +506,7 @@ export async function getSumAccountExpense(month: string, id: string) {
     .eq("tipo_transacao", "despesa")
     .in("pagadores.role", ["principal", "sistema"])
     .eq("realizado", true)
+    // Somatório apenas do mês selecionado (exibido como "Despesas" do mês)
     .eq("periodo", month);
 
   if (error) {
@@ -441,9 +534,81 @@ export async function getSumAccountExpense(month: string, id: string) {
   return sumAccountExpense;
 }
 
+// Soma acumulada de despesas da conta até o mês selecionado (inclui meses anteriores)
+export async function getSumAccountExpenseToDate(month: string, id: string) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from("lancamentos")
+    .select(`valor, periodo, pagadores!inner(role)`)
+    .eq("conta_id", id)
+    .eq("tipo_transacao", "despesa")
+    .in("pagadores.role", ["principal", "sistema"])
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar despesas acumuladas:", error);
+    return 0;
+  }
+
+  const limitDate = periodoToDate(month);
+
+  const sumAccountExpense = data.reduce((sum, item) => {
+    const itemDate = periodoToDate(item.periodo);
+    if (itemDate && limitDate && itemDate <= limitDate) {
+      const valor = parseFloat(item.valor);
+      return sum + (isNaN(valor) ? 0 : valor);
+    }
+
+    return sum;
+  }, 0);
+
+  return sumAccountExpense;
+}
+
+// Busca saldos acumulados até o mês selecionado para múltiplas contas (reduz N+1)
+export async function getAccountsBalancesToDate(
+  month: string,
+  accountIds: (string | number)[],
+) {
+  const supabase = createClient();
+
+  if (!accountIds || accountIds.length === 0)
+    return {} as Record<string, number>;
+
+  const { error, data } = await supabase
+    .from("lancamentos")
+    .select(`valor, periodo, conta_id, tipo_transacao, pagadores!inner(role)`)
+    .in("conta_id", accountIds)
+    .in("pagadores.role", ["principal", "sistema"])
+    .eq("realizado", true);
+
+  if (error) {
+    console.error("Erro ao buscar saldos de contas:", error);
+    return {} as Record<string, number>;
+  }
+
+  const limitDate = periodoToDate(month);
+
+  const balances = new Map<string | number, number>();
+
+  for (const item of data) {
+    const itemDate = periodoToDate(item.periodo);
+    if (!itemDate || !limitDate || itemDate > limitDate) continue;
+    const raw = parseFloat(item.valor);
+    const valor = Number.isFinite(raw) ? raw : 0;
+    const curr = balances.get(item.conta_id) ?? 0;
+    const delta = item.tipo_transacao === "receita" ? valor : -valor;
+    balances.set(item.conta_id, curr + delta);
+  }
+
+  // Converte para objeto simples
+  return Object.fromEntries(balances.entries()) as Record<string, number>;
+}
+
 // Funções específicas da página "responsáveis" foram removidas.
 
-export async function getTransactionsByResponsableVoce(month: string) {
+export async function getTransactionsRoleOwner(month: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -500,13 +665,10 @@ export async function getFinancialSummaryForPeriod(
 ) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.rpc(
-    "buscar_resumo_financeiro_por_periodo",
-    {
-      p_auth_id: authId,
-      p_periodo: periodo,
-    },
-  );
+  const { data, error } = await supabase.rpc("resumo_por_periodo", {
+    p_auth_id: authId,
+    p_periodo: periodo,
+  });
 
   if (error)
     throw new Error(`Erro ao buscar resumo financeiro: ${error.message}`);

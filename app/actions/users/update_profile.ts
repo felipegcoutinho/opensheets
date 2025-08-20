@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { getClaims } from "@/utils/supabase/claims";
 import { headers } from "next/headers";
 
 export type ActionResponse = {
@@ -19,19 +20,16 @@ export async function updateUserName(
   }
 
   const supabase = createClient();
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  const claims = await getClaims();
 
-  if (userError || !user) {
+  if (!claims) {
     return { success: false, message: "Usuário não autenticado" };
   }
 
   const { error } = await supabase
     .from("profiles")
     .update({ first_name: firstName, last_name: lastName })
-    .eq("id", user.id);
+    .eq("id", claims.id);
 
   if (error) {
     console.error(error);

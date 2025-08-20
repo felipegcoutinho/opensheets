@@ -1,6 +1,7 @@
 "use client";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -25,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
+import { useQuery } from "@tanstack/react-query";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -65,22 +67,49 @@ export default function UpdateTransactions({
   const { getMonthOptions } = UseDates();
 
   const [selectedMonth, setSelectedMonth] = useState(itemPeriodo);
-  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [payersOptions, setPayersOptions] = useState<
-    { nome: string; role?: string | null }[]
-  >([]);
+  // Opções via React Query
+  const {
+    data: descData,
+    isLoading: isLoadingDesc,
+    error: descError,
+  } = useQuery({
+    queryKey: ["descriptions", selectedMonth],
+    queryFn: async () => {
+      const res = await fetch(`/api/descriptions?month=${selectedMonth}`)
+      if (!res.ok) throw new Error("Falha ao carregar descrições")
+      return res.json()
+    },
+    staleTime: 60_000,
+  })
 
-  useEffect(() => {
-    async function fetchOptions() {
-      const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
-      const descJson = await descRes.json();
-      setDescricaoOptions(descJson.data || []);
-      const payRes = await fetch(`/api/pagadores`);
-      const payJson = await payRes.json();
-      setPayersOptions(payJson.data || []);
-    }
-    if (selectedMonth) fetchOptions();
-  }, [selectedMonth]);
+  const {
+    data: payersData,
+    isLoading: isLoadingPayers,
+    error: payersError,
+  } = useQuery({
+    queryKey: ["payers"],
+    queryFn: async () => {
+      const res = await fetch(`/api/pagadores`)
+      if (!res.ok) throw new Error("Falha ao carregar pagadores")
+      return res.json()
+    },
+    staleTime: 60_000,
+  })
+
+  const descricaoOptions: string[] = descData?.data || []
+  const payersOptions: { nome: string; role?: string | null; foto?: string | null }[] =
+    payersData?.data || []
+
+  const resolveFotoSrc = (foto?: string | null) => {
+    if (!foto) return undefined;
+    if (foto.startsWith("http")) return foto;
+    if (foto.startsWith("/")) return foto;
+    return `/avatars/${foto}`;
+  };
+
+  // Sem preview fora do select; estado não é necessário
+
+  // Dados agora vêm do React Query acima
 
   // sem segundo pagador aqui; apenas alteração do pagador principal
 
@@ -330,7 +359,20 @@ export default function UpdateTransactions({
                     value={p.nome}
                     className="capitalize"
                   >
-                    {p.nome}
+                    <span className="flex items-center gap-2">
+                      <Avatar className="size-8">
+                        {resolveFotoSrc(p.foto) ? (
+                          <AvatarImage
+                            src={resolveFotoSrc(p.foto)}
+                            alt={p.nome}
+                          />
+                        ) : null}
+                        <AvatarFallback>
+                          {(p?.nome?.[0] || "P").toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      {p.nome}
+                    </span>
                   </SelectItem>
                 ))}
               </SelectContent>

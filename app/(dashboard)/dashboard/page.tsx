@@ -22,6 +22,8 @@ import { PaymentWidget } from "./payment-widget";
 import RecentesTransactions from "./recents-transactions-widget";
 import UtilitiesDashboard from "./utilities-dashboard";
 
+// ChartSummary é um Client Component; importação direta cria o boundary sem SSR manual
+
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
@@ -35,14 +37,18 @@ export default async function page(props: { params: { month: string } }) {
     account,
     budgets,
     transactionsByCategory,
+    conditions,
+    payment,
   } = await fetchAllData(month);
 
-  const { incomes, expenses, summary, categoryData, saldo, previstoAnterior } =
-    await UtilitiesDashboard(month);
+  // Evita chamada duplicada de UtilitiesDashboard para o mês atual;
+  // usa a lista de 6 meses (que inclui o mês atual como o último elemento)
+  const allData = await Promise.all(sixmonth.map((m) => UtilitiesDashboard(m)));
 
-  const allData = await Promise.all(
-    sixmonth.map((month) => UtilitiesDashboard(month)),
-  );
+  const current = allData[allData.length - 1];
+
+  const { incomes, expenses, summary, categoryData, saldo, previstoAnterior } =
+    current;
 
   const chartData = sixmonth.map((month, index) => ({
     month: month.split("-")[0].slice(0, 3),
@@ -54,12 +60,12 @@ export default async function page(props: { params: { month: string } }) {
   return (
     <section>
       <div className="my-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {summary.map((item, index) => (
+        {summary.map((item) => (
           <SummaryWidget
             previousValue={item.previousValue}
             title={item.title}
             value={item.value}
-            key={index}
+            key={item.title}
             color={item.color}
             information={item.information}
           />
@@ -148,7 +154,7 @@ export default async function page(props: { params: { month: string } }) {
           information="Resumo das condições de pagamento, inclui apenas transações de Você"
           icon={<RiWalletLine className="text-primary mr-2 inline size-4" />}
         >
-          <ConditionWidget month={month} />
+          <ConditionWidget month={month} data={conditions} />
         </Widget>
 
         <Widget
@@ -157,7 +163,7 @@ export default async function page(props: { params: { month: string } }) {
           information="Resumo das formas de pagamento, inclui apenas transações de Você"
           icon={<RiWalletLine className="text-primary mr-2 inline size-4" />}
         >
-          <PaymentWidget month={month} />
+          <PaymentWidget month={month} data={payment} />
         </Widget>
 
         <Widget

@@ -6,10 +6,11 @@ export async function getPayers() {
   const { data, error } = await supabase
     .from("pagadores")
     .select(
-      "id, nome, email, status, anotacao, is_auto_send, foto, is_hidden, role",
+      "id, nome, email, status, anotacao, is_auto_send, foto, is_hidden, role, last_mail",
     )
     .eq("is_hidden", false)
-    .order("role", { ascending: true });
+    .order("role", { ascending: true })
+    .order("nome", { ascending: true });
 
   if (error) throw error;
 
@@ -22,7 +23,7 @@ export async function getActivePayers() {
   const { data, error } = await supabase
     .from("pagadores")
     .select(
-      "id, nome, email, status, anotacao, is_auto_send, foto, is_hidden, role",
+      "id, nome, email, status, anotacao, is_auto_send, foto, is_hidden, role, last_mail",
     )
     .eq("status", "ativo")
     .eq("is_hidden", false)
@@ -38,7 +39,9 @@ export async function getPayersName(id: string) {
 
   const { data, error } = await supabase
     .from("pagadores")
-    .select("id, nome, email, role, foto, is_hidden, status, is_auto_send")
+    .select(
+      "id, nome, email, role, foto, is_hidden, status, is_auto_send, last_mail",
+    )
     .eq("is_hidden", false)
     .eq("id", id)
     .single();

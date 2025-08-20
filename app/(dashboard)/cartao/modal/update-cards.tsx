@@ -164,7 +164,6 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
                   <SelectItem key={item.name} value={item.file}>
                     <div className="flex items-center gap-2">
                       <Image
-                        quality={100}
                         src={`/bandeiras/${item.file}`}
                         className="rounded-full"
                         width={32}

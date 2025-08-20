@@ -3,8 +3,8 @@ import {
   getAccountDisabled,
 } from "@/app/actions/accounts/fetch_accounts";
 import {
-  getSumAccountExpense,
-  getSumAccountIncome,
+  getSumAccountExpenseToDate,
+  getSumAccountIncomeToDate,
 } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
@@ -30,11 +30,13 @@ async function page(props: { params: { month: string } }) {
 
   const accountData = await Promise.all(
     activeAccounts.map(async (item) => {
-      const accountExpense = await getSumAccountExpense(month, item.id);
-      const sumAccountIncome = await getSumAccountIncome(month, item.id);
+      const [expenseToDate, incomeToDate] = await Promise.all([
+        getSumAccountExpenseToDate(month, item.id),
+        getSumAccountIncomeToDate(month, item.id),
+      ]);
       return {
         ...item,
-        saldo: sumAccountIncome - accountExpense,
+        saldo: incomeToDate - expenseToDate,
       };
     }),
   );

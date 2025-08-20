@@ -1,7 +1,4 @@
-import {
-  getSumAccountExpense,
-  getSumAccountIncome,
-} from "@/app/actions/transactions/fetch_transactions";
+import { getAccountsBalancesToDate } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import PaymentMethodLogo from "@/components/payment-method-logo";
@@ -19,19 +16,16 @@ export default async function AccountWidget({
 }) {
   if (!data || data.length === 0) return <EmptyCard />;
 
-  const sortedData = [...data].sort((a, b) => b.saldo - a.saldo);
+  // Busca agregada única para evitar N+1
+  const ids = data.map((d: any) => d.id);
+  const balances = await getAccountsBalancesToDate(month!, ids);
 
-  const accountData = await Promise.all(
-    data.map(async (item) => {
-      const sumAccountIncome = await getSumAccountIncome(month!, item.id);
-      const accountExpense = await getSumAccountExpense(month!, item.id);
-
-      return {
-        ...item,
-        saldo: sumAccountIncome - accountExpense + previstoAnterior,
-      };
-    }),
-  );
+  const accountData = data
+    .map((item: any) => ({
+      ...item,
+      saldo: balances?.[item.id] ?? 0,
+    }))
+    .sort((a: any, b: any) => b.saldo - a.saldo);
 
   return (
     <>

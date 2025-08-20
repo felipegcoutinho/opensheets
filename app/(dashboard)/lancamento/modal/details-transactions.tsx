@@ -44,14 +44,40 @@ export default function DetailsTransactions({
   itemPaid,
   itemImagemURL,
   itemCategoriaId,
+  children,
+}: {
+  itemId: any;
+  itemCondicao: any;
+  itemDescricao: any;
+  itemNotas: any;
+  itemDate: any;
+  itemResponsavel: any;
+  itemResponsavelRole: any;
+  itemTipoTransacao: any;
+  itemValor: any;
+  itemFormaPagamento: any;
+  itemCartao: any;
+  itemConta: any;
+  itemQtdeParcelas: any;
+  itemParcelaAtual: any;
+  itemPeriodo: any;
+  itemQtdeRecorrencia: any;
+  itemPaid: any;
+  itemImagemURL: any;
+  itemCategoriaId: any;
+  children?: React.ReactNode;
 }) {
   const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } =
     UtilitiesLancamento();
 
   const { DateFormat } = UseDates();
 
-  const { getResponsableStyle, getConditionIcon, getPaymentIcon, getBadgeStyle } =
-    UseStyles();
+  const {
+    getResponsableStyle,
+    getConditionIcon,
+    getPaymentIcon,
+    getBadgeStyle,
+  } = UseStyles();
 
   const handleDialogClose = (val) => {
     setIsOpen(val);
@@ -61,7 +87,9 @@ export default function DetailsTransactions({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
-      <DialogTrigger className="cursor-pointer">detalhes</DialogTrigger>
+      <DialogTrigger asChild>
+        {children ?? <span className="cursor-pointer">detalhes</span>}
+      </DialogTrigger>
 
       <DialogContent className="p-0 sm:max-w-xl">
         <Card className="gap-2 space-y-4">
@@ -124,7 +152,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Condição</span>
-                  <span className="capitalize">{itemCondicao}</span>
+                  {itemCondicao === "vista" ? "à vista" : itemCondicao}
                 </li>
 
                 <li className="flex items-center justify-between">

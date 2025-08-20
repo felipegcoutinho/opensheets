@@ -24,7 +24,6 @@ export default async function BillsWidget({ month, data }) {
           width={30}
           height={30}
           alt="Logo do cartão"
-          quality={100}
         />
 
         <div>

@@ -3,7 +3,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  transpilePackages: ['import-in-the-middle'],
+  images: {
+    qualities: [75, 100],
+  },
+  transpilePackages: ["import-in-the-middle"],
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",

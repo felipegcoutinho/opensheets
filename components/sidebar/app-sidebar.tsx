@@ -29,7 +29,7 @@ export function AppSidebar({
   const data = NavLinks(month);
 
   return (
-    <Sidebar collapsible="sidebar" {...props} className="">
+    <Sidebar collapsible="sidebar" {...props}>
       <SidebarHeader>
         <div className="mt-4 flex items-center justify-center gap-2 py-2">
           <Logo />

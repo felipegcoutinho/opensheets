@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import { default_font } from "./fonts/font";
 import "./globals.css";
+import Providers from "./providers";
 
 export const metadata = {
   title: "opensheets",
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="light">
           <PrivacyProviderApp>
-            <main>{children}</main>
+            <Providers>
+              <main>{children}</main>
+            </Providers>
           </PrivacyProviderApp>
 
           <Analytics />
