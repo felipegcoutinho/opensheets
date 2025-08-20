@@ -46,7 +46,7 @@ export const NavProjects = memo(function NavProjects({
               return (
                 <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton
-                    className={`${isActive && "bg-primary hover:bg-primary/90"}`}
+                    className={`${isActive && "bg-primary hover:bg-primary/90 active:bg-primary"}`}
                     asChild
                   >
                     <div className="flex w-full items-center justify-between px-4 py-4.5">

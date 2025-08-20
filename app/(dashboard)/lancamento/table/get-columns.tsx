@@ -179,7 +179,7 @@ export const getColumns = (
       return (
         <span className="flex items-center gap-1">
           {getConditionIcon(item.condicao)}
-          <span className="lowercase">{row.getValue("condicao")}</span>
+          {item.condicao === "vista" ? "à vista" : row.getValue("condicao")}
         </span>
       );
     },

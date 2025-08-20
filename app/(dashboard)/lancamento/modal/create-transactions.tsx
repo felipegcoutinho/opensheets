@@ -1,6 +1,7 @@
 "use client";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -29,6 +30,7 @@ import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import useSWR from "swr";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { useEffect, useState } from "react";
 
 const fetcher = (url) =>
   fetch(url).then((res) => {
@@ -83,8 +85,31 @@ export default function CreateTransactions({
   } = useSWR(`/api/pagadores`, fetcher);
 
   const descricaoOptions = descData?.data || [];
-  const pagadoresOptions: { nome: string; role?: string | null }[] =
-    payersData?.data || [];
+  const pagadoresOptions: {
+    nome: string;
+    role?: string | null;
+    foto?: string | null;
+  }[] = payersData?.data || [];
+
+  // Estado do pagador selecionado e default para role "principal"
+  const [selectedPayer, setSelectedPayer] = useState<string | undefined>();
+  useEffect(() => {
+    if (!selectedPayer && pagadoresOptions.length > 0) {
+      const principal = pagadoresOptions.find(
+        (p) => (p.role || "").toLowerCase() === "principal",
+      );
+      setSelectedPayer(principal?.nome || pagadoresOptions[0]?.nome);
+    }
+  }, [pagadoresOptions, selectedPayer]);
+
+  const resolveFotoSrc = (foto?: string | null) => {
+    if (!foto) return undefined;
+    if (foto.startsWith("http")) return foto;
+    if (foto.startsWith("/")) return foto;
+    return `/avatars/${foto}`;
+  };
+
+  // Sem preview fora do select; estados de seleção não são necessários aqui
 
   const normalize = (s: string) =>
     (s || "")
@@ -285,7 +310,12 @@ export default function CreateTransactions({
                 <Label htmlFor="pagador_id">
                   Pagador <Required />
                 </Label>
-                <Select name="pagador_id" required>
+                <Select
+                  name="pagador_id"
+                  required
+                  value={selectedPayer}
+                  onValueChange={setSelectedPayer}
+                >
                   <SelectTrigger id="pagador_id" className="w-full capitalize">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
@@ -296,7 +326,20 @@ export default function CreateTransactions({
                         key={item.nome}
                         value={item.nome}
                       >
-                        {item.nome}
+                        <span className="flex items-center gap-2">
+                          <Avatar className="size-8">
+                            {resolveFotoSrc(item.foto) ? (
+                              <AvatarImage
+                                src={resolveFotoSrc(item.foto)}
+                                alt={item.nome}
+                              />
+                            ) : null}
+                            <AvatarFallback>
+                              {(item?.nome?.[0] || "P").toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          {item.nome}
+                        </span>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -320,7 +363,20 @@ export default function CreateTransactions({
                           value={item.nome}
                           className="capitalize"
                         >
-                          {item.nome}
+                          <span className="flex items-center gap-2">
+                            <Avatar className="size-5">
+                              {resolveFotoSrc((item as any).foto) ? (
+                                <AvatarImage
+                                  src={resolveFotoSrc((item as any).foto)}
+                                  alt={item.nome}
+                                />
+                              ) : null}
+                              <AvatarFallback>
+                                {(item?.nome?.[0] || "P").toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            {item.nome}
+                          </span>
                         </SelectItem>
                       ))}
                     </SelectContent>

@@ -86,20 +86,29 @@ export default function MonthCalendar({
   const byDay = useMemo(() => {
     const map = new Map<number, AnyRecord[]>();
     for (const t of lancamentos ?? []) {
-      // Filtra apenas lançamentos do pagador com role "principal"
-      if ((t?.pagadores?.role ?? null) !== "principal") continue;
-      const d = toLocalDate(
-        t?.data_compra || t?.data_vencimento || meta.start,
-        meta.start,
-      );
-      if (d.getMonth() !== meta.m || d.getFullYear() !== meta.year) continue;
-      const day = d.getDate();
+      // Apenas pagador principal
+      const role = t?.pagadores?.role ?? null;
+      if (role !== "principal") continue;
+
+      // Escolha da data para posicionar:
+      // Sempre prioriza a data de compra; se ausente, usa a de vencimento.
+      // Isso evita deslocar compras para o mês da fatura.
+      const prefer = t?.data_compra;
+      const fallback = t?.data_vencimento;
+      const chosen = toLocalDate(prefer || fallback || meta.start, meta.start);
+
+      // Exibir somente se a data cair dentro do mês/ano do calendário
+      if (chosen.getMonth() !== meta.m || chosen.getFullYear() !== meta.year) {
+        continue;
+      }
+
+      const day = chosen.getDate();
       const list = map.get(day) ?? [];
       list.push(t);
       map.set(day, list);
     }
     return map;
-  }, [lancamentos, meta.m, meta.start, meta.year]);
+  }, [lancamentos, meta.m, meta.year, meta.start]);
 
   const grid: DayData[] = useMemo(() => {
     const items: DayData[] = [];
@@ -157,6 +166,27 @@ export default function MonthCalendar({
     return map;
   }, [getCards, meta.totalDays]);
 
+  // Mapa de boletos (despesas com forma_pagamento = 'boleto') por data de vencimento do mês atual
+  const billsByDay = useMemo(() => {
+    const map = new Map<number, AnyRecord[]>();
+    for (const t of lancamentos ?? []) {
+      if (t?.forma_pagamento !== "boleto") continue;
+      if ((t?.pagadores?.role ?? null) !== "principal") continue;
+      const dv = toLocalDate(t?.data_vencimento, meta.start);
+      if (
+        Number.isNaN(dv.getTime()) ||
+        dv.getMonth() !== meta.m ||
+        dv.getFullYear() !== meta.year
+      )
+        continue;
+      const day = dv.getDate();
+      const list = map.get(day) ?? [];
+      list.push(t);
+      map.set(day, list);
+    }
+    return map;
+  }, [lancamentos, meta.m, meta.year, meta.start]);
+
   return (
     <Card className="w-full border-none p-2">
       <div className="text-muted-foreground grid grid-cols-7 gap-2 border-b pb-1 text-center text-xs font-bold">
@@ -202,7 +232,14 @@ export default function MonthCalendar({
               >
                 {cell.day}
               </span>
-              {cell.items.length > 1 && (
+              {(() => {
+                const itemsCount = cell.items.length;
+                const hasCardDue = (cardsByDay.get(cell.day)?.length ?? 0) > 0;
+                // Ativa "Ver mais" quando:
+                // - houver mais de 3 lançamentos; ou
+                // - houver vencimento de cartão e pelo menos 3 lançamentos no dia
+                return itemsCount > 3 || (hasCardDue && itemsCount >= 3);
+              })() && (
                 <button
                   type="button"
                   onClick={(e) => {
@@ -210,34 +247,53 @@ export default function MonthCalendar({
                     setSelected({ date: cell.date, items: cell.items });
                     setOpen(true);
                   }}
-                  className="text-primary text-[10px] hover:underline"
+                  className="text-primary cursor-pointer text-[10px] hover:underline"
                   aria-label={`Ver todos os lançamentos do dia ${cell.day}`}
                 >
                   Ver mais
                 </button>
               )}
             </div>
-            {/* Vencimentos de cartões */}
+            {/* Badges de vencimentos (cartões e boletos) */}
             {cell.isCurrentMonth &&
-              (cardsByDay.get(cell.day)?.length ?? 0) > 0 && (
+              ((cardsByDay.get(cell.day)?.length ?? 0) > 0 ||
+                (billsByDay.get(cell.day)?.length ?? 0) > 0) && (
                 <ul className="mb-1 flex flex-wrap gap-1">
+                  {/* Cartões */}
                   {(cardsByDay.get(cell.day) ?? []).slice(0, 2).map((c) => (
                     <li
-                      key={c.id}
-                      className="flex items-center rounded bg-neutral-200 px-1.5 py-0.5 text-xs"
+                      key={`card-${c.id}`}
+                      className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
                       title={`Vencimento do cartão ${c?.descricao ?? ""}`}
                     >
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-500" />
                       <PaymentMethodLogo
                         url_name={`/logos/${c.logo_image}`}
-                        width={16}
-                        height={16}
+                        width={14}
+                        height={14}
                       />
-                      Fatura {c?.descricao ?? "Cartão"}
+                      {c?.descricao ?? "Cartão"}
                     </li>
                   ))}
                   {(cardsByDay.get(cell.day) ?? []).length > 2 && (
-                    <li className="text-xs text-blue-800">
+                    <li className="text-[10px] text-neutral-600">
                       +{(cardsByDay.get(cell.day) ?? []).length - 2}
+                    </li>
+                  )}
+                  {/* Boletos */}
+                  {(billsByDay.get(cell.day) ?? []).slice(0, 2).map((b, i) => (
+                    <li
+                      key={`bill-${b.id ?? i}`}
+                      className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
+                      title={`Vencimento do boleto: ${b?.descricao ?? "Boleto"}`}
+                    >
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
+                      {b?.descricao}
+                    </li>
+                  ))}
+                  {(billsByDay.get(cell.day) ?? []).length > 2 && (
+                    <li className="text-[10px] text-neutral-600">
+                      +{(billsByDay.get(cell.day) ?? []).length - 2}
                     </li>
                   )}
                 </ul>
@@ -301,7 +357,10 @@ export default function MonthCalendar({
                 getAccount={getAccount}
                 getCategorias={getCategorias}
               >
-                <button type="button" className="hover:underline">
+                <button
+                  type="button"
+                  className="cursor-pointer hover:underline"
+                >
                   Novo lançamento
                 </button>
               </CreateTransactions>
@@ -322,6 +381,48 @@ export default function MonthCalendar({
             </DialogTitle>
           </DialogHeader>
           <div className="max-h-[60vh] overflow-y-auto">
+            {/* Vencimentos do dia (cartões e boletos) */}
+            {selected &&
+              (() => {
+                const day = selected.date.getDate();
+                const cards = cardsByDay.get(day) ?? [];
+                const bills = billsByDay.get(day) ?? [];
+                if (cards.length === 0 && bills.length === 0) return null;
+                return (
+                  <div className="mb-3">
+                    <div className="text-muted-foreground mb-1 text-xs font-medium">
+                      Vencimentos
+                    </div>
+                    <ul className="flex flex-wrap gap-1">
+                      {cards.map((c: AnyRecord) => (
+                        <li
+                          key={`modal-card-${c.id}`}
+                          className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
+                          title={`Vencimento do cartão ${c?.descricao ?? ""}`}
+                        >
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-500" />
+                          <PaymentMethodLogo
+                            url_name={`/logos/${c.logo_image}`}
+                            width={14}
+                            height={14}
+                          />
+                          {c?.descricao ?? "Cartão"}
+                        </li>
+                      ))}
+                      {bills.map((b: AnyRecord, i: number) => (
+                        <li
+                          key={`modal-bill-${b.id ?? i}`}
+                          className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
+                          title={`Vencimento do boleto: ${b?.descricao ?? "Boleto"}`}
+                        >
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
+                          Boleto
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })()}
             <ul className="divide-y">
               {selected?.items.map((t, i) => (
                 <li

@@ -1,7 +1,9 @@
 import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
-import { getTransactions } from "@/app/actions/transactions/fetch_transactions";
+import {
+  getTransactionsForCalendar,
+} from "@/app/actions/transactions/fetch_transactions";
 import MonthCalendar from "@/components/calendar/month-calendar";
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
@@ -11,7 +13,7 @@ export default async function Page(props: {
 }) {
   const month = await getMonth(props);
   const [lancamentos, cartoes, contas, categorias] = await Promise.all([
-    getTransactions(month),
+    getTransactionsForCalendar(month),
     getCards(),
     getAccount(),
     getCategorias(),

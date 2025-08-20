@@ -177,7 +177,7 @@ export async function getTransactions(month: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role)`,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -186,6 +186,51 @@ export async function getTransactions(month: string) {
 
   if (error) {
     console.error("Erro ao buscar Lançamentos:", error);
+    return [];
+  }
+
+  return data;
+}
+
+// Busca lançamentos para o calendário por faixa de datas (data_compra OU data_vencimento no mês)
+export async function getTransactionsForCalendar(month: string) {
+  const supabase = createClient();
+
+  // Calcula início e fim do mês a partir do texto "mês-ano" (ex.: "agosto-2025")
+  const base = parse(`01-${month}`, "dd-MMMM-yyyy", new Date(), {
+    locale: ptBR,
+  });
+  const start = new Date(base.getFullYear(), base.getMonth(), 1);
+  const end = new Date(base.getFullYear(), base.getMonth() + 1, 0);
+
+  const toYMD = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+
+  const startStr = toYMD(start);
+  const endStr = toYMD(end);
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao,
+      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
+      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role)`,
+    )
+    // Apenas pagador principal
+    .eq("pagadores.role", "principal")
+    // data_compra OU data_vencimento dentro do mês selecionado
+    .or(
+      `and(data_compra.gte.${startStr},data_compra.lte.${endStr}),and(data_vencimento.gte.${startStr},data_vencimento.lte.${endStr})`,
+    )
+    .order("data_compra", { ascending: false })
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao buscar Lançamentos (calendário):", error);
     return [];
   }
 
@@ -528,7 +573,8 @@ export async function getAccountsBalancesToDate(
 ) {
   const supabase = createClient();
 
-  if (!accountIds || accountIds.length === 0) return {} as Record<string, number>;
+  if (!accountIds || accountIds.length === 0)
+    return {} as Record<string, number>;
 
   const { error, data } = await supabase
     .from("lancamentos")
