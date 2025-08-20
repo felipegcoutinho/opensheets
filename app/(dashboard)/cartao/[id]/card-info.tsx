@@ -8,8 +8,6 @@ import RemovePaymentButton from "@/components/remove-payment-button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 
-
-
 export default function CardInfo({ item, cardSum, fatura_status, month }) {
   const isPaga = Array.isArray(fatura_status) && fatura_status.length > 0;
 
@@ -32,7 +30,6 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
           </div>
         </div>
         <Image
-          quality={100}
           src={`/bandeiras/${item.bandeira}`}
           width={60}
           height={60}

@@ -29,7 +29,6 @@ function ViewImage({ itemImagemURL }) {
               height={500}
               src={itemImagemURL}
               alt="Comprovante"
-              quality={100}
               className="h-screen w-full"
             />
           </DialogDescription>

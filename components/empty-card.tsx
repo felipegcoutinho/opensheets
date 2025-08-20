@@ -19,7 +19,6 @@ export default function EmptyCard({
         alt="Imagem de ilustração"
         width={width}
         height={height}
-        quality={100}
         priority
         className="mb-4"
       />

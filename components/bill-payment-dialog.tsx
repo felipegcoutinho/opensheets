@@ -84,7 +84,6 @@ export default function BillPaymentDialog({
                   width={40}
                   height={40}
                   alt="Logo do boleto"
-                  quality={100}
                 />
                 <span className="font-bold">{descricao}</span>
               </div>

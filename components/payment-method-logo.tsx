@@ -20,7 +20,6 @@ export default function PaymentMethodLogo({
         className="rounded-lg transition-transform hover:scale-105"
         width={width}
         height={height}
-        quality={100}
         alt="Logo do cartão ou conta"
       />
       <p>{descricao}</p>
