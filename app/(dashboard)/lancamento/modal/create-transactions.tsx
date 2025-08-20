@@ -28,15 +28,15 @@ import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { useEffect, useState } from "react";
 
-const fetcher = (url) =>
-  fetch(url).then((res) => {
-    if (!res.ok) throw new Error("Falha ao carregar dados");
-    return res.json();
-  });
+const fetchJSON = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Falha ao carregar dados");
+  return res.json();
+};
 
 export default function CreateTransactions({
   getCards,
@@ -71,18 +71,26 @@ export default function CreateTransactions({
   const { getMonthOptions, formatted_current_month } = UseDates();
   const month = formatted_current_month;
 
-  // 2. Hooks SWR para descrições e pagadores
+  // React Query: descrições e pagadores
   const {
     data: descData,
     error: descError,
     isLoading: isLoadingDesc,
-  } = useSWR(`/api/descriptions?month=${month}`, fetcher);
+  } = useQuery({
+    queryKey: ["descriptions", month],
+    queryFn: () => fetchJSON(`/api/descriptions?month=${month}`),
+    staleTime: 1000 * 60, // 1 min
+  });
 
   const {
     data: payersData,
     error: payersError,
     isLoading: isLoadingPayers,
-  } = useSWR(`/api/pagadores`, fetcher);
+  } = useQuery({
+    queryKey: ["payers"],
+    queryFn: () => fetchJSON(`/api/pagadores`),
+    staleTime: 1000 * 60,
+  });
 
   const descricaoOptions = descData?.data || [];
   const pagadoresOptions: {

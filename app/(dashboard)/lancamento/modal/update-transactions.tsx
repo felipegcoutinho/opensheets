@@ -26,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
+import { useQuery } from "@tanstack/react-query";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -66,10 +67,38 @@ export default function UpdateTransactions({
   const { getMonthOptions } = UseDates();
 
   const [selectedMonth, setSelectedMonth] = useState(itemPeriodo);
-  const [descricaoOptions, setDescricaoOptions] = useState<string[]>([]);
-  const [payersOptions, setPayersOptions] = useState<
-    { nome: string; role?: string | null; foto?: string | null }[]
-  >([]);
+  // Opções via React Query
+  const {
+    data: descData,
+    isLoading: isLoadingDesc,
+    error: descError,
+  } = useQuery({
+    queryKey: ["descriptions", selectedMonth],
+    queryFn: async () => {
+      const res = await fetch(`/api/descriptions?month=${selectedMonth}`)
+      if (!res.ok) throw new Error("Falha ao carregar descrições")
+      return res.json()
+    },
+    staleTime: 60_000,
+  })
+
+  const {
+    data: payersData,
+    isLoading: isLoadingPayers,
+    error: payersError,
+  } = useQuery({
+    queryKey: ["payers"],
+    queryFn: async () => {
+      const res = await fetch(`/api/pagadores`)
+      if (!res.ok) throw new Error("Falha ao carregar pagadores")
+      return res.json()
+    },
+    staleTime: 60_000,
+  })
+
+  const descricaoOptions: string[] = descData?.data || []
+  const payersOptions: { nome: string; role?: string | null; foto?: string | null }[] =
+    payersData?.data || []
 
   const resolveFotoSrc = (foto?: string | null) => {
     if (!foto) return undefined;
@@ -80,17 +109,7 @@ export default function UpdateTransactions({
 
   // Sem preview fora do select; estado não é necessário
 
-  useEffect(() => {
-    async function fetchOptions() {
-      const descRes = await fetch(`/api/descriptions?month=${selectedMonth}`);
-      const descJson = await descRes.json();
-      setDescricaoOptions(descJson.data || []);
-      const payRes = await fetch(`/api/pagadores`);
-      const payJson = await payRes.json();
-      setPayersOptions(payJson.data || []);
-    }
-    if (selectedMonth) fetchOptions();
-  }, [selectedMonth]);
+  // Dados agora vêm do React Query acima
 
   // sem segundo pagador aqui; apenas alteração do pagador principal
 

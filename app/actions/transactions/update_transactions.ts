@@ -1,5 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/lancamento/modal/form-schema";
 
 export async function updateTransaction(
@@ -100,6 +101,7 @@ export async function updateTransaction(
       .eq("id", id);
 
     console.log("Transação atualizada com sucesso!");
+    revalidatePath("/lancamentos");
   } catch (error) {
     console.error("Erro ao atualizar a transação:", error);
     throw error;
