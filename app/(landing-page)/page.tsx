@@ -102,11 +102,6 @@ export default function Index() {
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(1200px_600px_at_10%_-20%,hsl(var(--primary)/.15),transparent),radial-gradient(1000px_500px_at_110%_10%,#22d3ee20,transparent)] dark:bg-[radial-gradient(1200px_600px_at_10%_-20%,hsl(var(--primary)/.12),transparent),radial-gradient(1000px_500px_at_110%_10%,#22d3ee15,transparent)]"
         />
-        {/* Pattern sutil em pontos */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 [background-image:radial-gradient(hsl(var(--primary)/0.10)_1px,transparent_1px)] [background-size:18px_18px]"
-        />
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-4 py-16 md:grid-cols-2">
           {/* Texto */}

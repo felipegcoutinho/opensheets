@@ -10,7 +10,7 @@ export default async function BannerData() {
   const shortUserName = userName?.split(" ")[0];
 
   return (
-    <Banner className="bg-accent py-12">
+    <Banner className="from-primary/[0.06] bg-gradient-to-r via-purple-50 to-sky-400/[0.06] py-12">
       <div className="flex flex-col">
         <span className={`${money_values.className} text-xl font-bold`}>
           Olá, {shortUserName}! 👋
