@@ -1,23 +1,23 @@
+import { TableTransaction } from "@/app/(dashboard)/lancamento/table/table-transaction";
 import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
-import { createClient } from "@/utils/supabase/server";
-import MonthPicker from "@/components/month-picker/month-picker";
-import { Card } from "@/components/ui/card";
+import { getPayersName } from "@/app/actions/pagadores/fetch_pagadores";
+import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transactions";
 import MoneyValues from "@/components/money-values";
+import MonthPicker from "@/components/month-picker/month-picker";
 import PaymentMethodLogo from "@/components/payment-method-logo";
+import { Card } from "@/components/ui/card";
+import { getMonth } from "@/hooks/get-month";
+import { createClient } from "@/utils/supabase/server";
 import {
   RiBankCardLine,
   RiBarcodeLine,
+  RiMailSendLine,
   RiPixLine,
   RiUser2Line,
   RiVerifiedBadgeFill,
 } from "@remixicon/react";
-import { RiMailSendLine } from "@remixicon/react";
-import { getMonth } from "@/hooks/get-month";
-import { TableTransaction } from "@/app/(dashboard)/lancamento/table/table-transaction";
-import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transactions";
-import { getPayersName } from "@/app/actions/pagadores/fetch_pagadores";
 import SendEmailButton from "./send-email-button";
 
 // Tipagens auxiliares
@@ -283,7 +283,6 @@ export default async function Page({ searchParams, params }: PageProps) {
                         aria-hidden
                       />
                     )}
-                    <span className="truncate">{o.label}</span>
                   </span>
                 }
                 right={<MoneyValues value={o.total} />}
