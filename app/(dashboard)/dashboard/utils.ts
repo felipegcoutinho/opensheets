@@ -1,5 +1,5 @@
 import { fetchAllData } from "@/app/actions/fetch-all-data";
-import { getExpense, getIncome } from "@/app/actions/transactions/fetch_transactions";
+import { getIncomeExpenseByPeriods } from "@/app/actions/transactions/fetch_transactions";
 import { cache } from "react";
 
 type ChartPoint = { month: string; incomes: number; expenses: number; balanco: number };
@@ -63,20 +63,18 @@ export const buildPainelData = cache(async (month: string): Promise<PainelData> 
   const previstoAnterior = previous.saldo_previsto || 0;
   const saldo = (sumPaidIncome || 0) - (sumPaidExpense || 0) + previstoAnterior;
 
-  // Gráfico dos últimos 6 meses (otimizado): busca somente receitas e despesas por mês
-  const chart: ChartPoint[] = await Promise.all(
-    sixmonth.map(async (m: string) => {
-      const [inc, exp] = await Promise.all([getIncome(m), getExpense(m)]);
-      const incomesV = inc || 0;
-      const expensesV = exp || 0;
-      return {
-        month: m.split("-")[0].slice(0, 3),
-        incomes: incomesV,
-        expenses: expensesV,
-        balanco: incomesV - expensesV,
-      } satisfies ChartPoint;
-    }),
-  );
+  // Gráfico dos últimos 6 meses (consulta agregada única)
+  const grouped = await getIncomeExpenseByPeriods(sixmonth);
+  const chart: ChartPoint[] = grouped.map((g) => {
+    const incomesV = g.incomes || 0;
+    const expensesV = g.expenses || 0;
+    return {
+      month: g.periodo.split("-")[0].slice(0, 3),
+      incomes: incomesV,
+      expenses: expensesV,
+      balanco: incomesV - expensesV,
+    };
+  });
 
   // KPI cards
   const summary = [

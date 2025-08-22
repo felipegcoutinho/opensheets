@@ -1,6 +1,6 @@
 import { UseDates } from "@/hooks/use-dates";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { useCallback, useMemo, useTransition } from "react";
 
 function Helper() {
   const { optionsMeses } = UseDates();
@@ -8,9 +8,7 @@ function Helper() {
   const pathname = usePathname();
   const { replace } = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const isChanging = isPending || isLoading;
+  const isChanging = isPending;
 
   const defaultValues = useMemo(
     () => ({
@@ -39,10 +37,8 @@ function Helper() {
 
   const navigateToMonth = useCallback(
     (newMonth: string, newYear: string | number) => {
-      setIsLoading(true);
       startTransition(() => {
         replace(`${pathname}?periodo=${newMonth}-${newYear}`);
-        setTimeout(() => setIsLoading(false), 300);
       });
     },
     [pathname, replace],
