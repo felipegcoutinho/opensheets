@@ -1,5 +1,5 @@
 import { fetchAllData } from "@/app/actions/fetch-all-data";
-import { getIncomeExpenseByPeriods } from "@/app/actions/transactions/fetch_transactions";
+import { getIncomeExpenseByPeriods, getCategoryTotals } from "@/app/actions/transactions/fetch_transactions";
 import { cache } from "react";
 
 type ChartPoint = { month: string; incomes: number; expenses: number; balanco: number };
@@ -104,32 +104,8 @@ export const buildPainelData = cache(async (month: string): Promise<PainelData> 
     },
   ];
 
-  // Agregação por categoria no formato esperado pelo CategoryWidget
-  const totals = new Map<string, { total: number; icon?: string }>();
-  transactionsByCategory.forEach((item: any) => {
-    const categoriaNome = item.categoria?.nome || "Sem Categoria";
-    const id = item.categoria?.id || "sem_categoria";
-    const icone = item.categoria?.icone;
-    const valor = parseFloat(item.valor) || 0;
-    const tipo = item.tipo_transacao || "despesa";
-
-    const chave = `${tipo}:${categoriaNome}:${id}`;
-    const entry = totals.get(chave) || { total: 0, icon: icone };
-    entry.total += valor;
-    entry.icon = icone;
-    totals.set(chave, entry);
-  });
-
-  const categoryData = Array.from(totals.entries()).map(([key, data]) => {
-    const [tipo_transacao, categoria, id] = key.split(":");
-    return {
-      tipo_transacao,
-      categoria,
-      id,
-      total: data.total,
-      icone: data.icon,
-    };
-  });
+  // Totais por categoria via consulta agregada (reduz carga e latência)
+  const categoryData = await getCategoryTotals(month);
 
   return {
     month,

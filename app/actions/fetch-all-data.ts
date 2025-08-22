@@ -12,6 +12,8 @@ import {
   getSumPaidExpense,
   getSumPaidIncome,
   getTransactionsByCategory,
+  getIncomeExpenseByPeriods,
+  getSumPaidByType,
 } from "@/app/actions/transactions/fetch_transactions";
 import { UseDates } from "@/hooks/use-dates";
 import { cache } from "react";
@@ -46,19 +48,22 @@ export const fetchAllData = cache(
 
     const aggPromise = getExpenseAggregations(month);
 
+    const incExpAgg = getIncomeExpenseByPeriods([month, previousMonth])
+    const paidAgg = getSumPaidByType(month)
+
     const fetchMap: Record<keyof FetchAllDataReturn, Promise<any>> = {
-      incomes: getIncome(month),
-      incomesAnterior: getIncome(previousMonth),
-      expenses: getExpense(month),
-      expensesAnterior: getExpense(previousMonth),
+      incomes: incExpAgg.then((r) => r.find((x) => x.periodo === month)?.incomes ?? 0),
+      incomesAnterior: incExpAgg.then((r) => r.find((x) => x.periodo === previousMonth)?.incomes ?? 0),
+      expenses: incExpAgg.then((r) => r.find((x) => x.periodo === month)?.expenses ?? 0),
+      expensesAnterior: incExpAgg.then((r) => r.find((x) => x.periodo === previousMonth)?.expenses ?? 0),
       bills: getBills(month),
       expensePaid: getPaidExpense(month),
       conditions: aggPromise.then((r) => r.conditions),
       payment: aggPromise.then((r) => r.payments),
       transactionsByCategory: getTransactionsByCategory(month),
       recentTransactions: getRecentTransactions(month),
-      sumPaidExpense: getSumPaidExpense(month),
-      sumPaidIncome: getSumPaidIncome(month),
+      sumPaidExpense: paidAgg.then((r) => r.expense),
+      sumPaidIncome: paidAgg.then((r) => r.income),
       invoiceList: getInvoiceList(month),
       sixmonth: getLastSixMonths(month),
       financialResumeByMonth: getFinancialSummaryForPeriod(userId.id, month),

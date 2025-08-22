@@ -769,3 +769,55 @@ export async function getTransactionsByPayer(month: string, id: string) {
 
   return transactions || [];
 }
+
+// Totais por categoria (receita/despesa) em uma única consulta
+export async function getCategoryTotals(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      `tipo_transacao, valor.sum(), categoria:categoria_id (id, nome, icone), pagadores!inner(role)`,
+    )
+    .eq("periodo", month)
+    .eq("pagadores.role", "principal");
+
+  if (error) throw error;
+
+  // Converte para o formato esperado pelo CategoryWidget
+  // Nota: PostgREST retorna o agregado em 'sum'
+  return (data || [])
+    .filter((row: any) => row?.categoria?.id)
+    .map((row: any) => ({
+      tipo_transacao: row.tipo_transacao as string,
+      categoria: String(row.categoria?.nome ?? "Sem Categoria"),
+      id: String(row.categoria?.id ?? "sem_categoria"),
+      icone: row.categoria?.icone as string | undefined,
+      total: Number((row as any).sum ?? 0),
+    }));
+}
+
+// Somatórios pagos (realizado=true) por tipo (receita/despesa) em uma chamada
+export async function getSumPaidByType(month: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select("tipo_transacao, valor.sum(), pagadores!inner(role)")
+    .eq("periodo", month)
+    .eq("realizado", true)
+    .in("tipo_transacao", ["receita", "despesa"])
+    .eq("pagadores.role", "principal");
+
+  if (error) throw error;
+
+  let income = 0;
+  let expense = 0;
+  (data || []).forEach((row: any) => {
+    const sum = Number((row as any).sum ?? (row as any).valor) || 0;
+    if (row.tipo_transacao === "receita") income += sum;
+    else if (row.tipo_transacao === "despesa") expense += sum;
+  });
+
+  return { income, expense };
+}
