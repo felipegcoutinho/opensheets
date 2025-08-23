@@ -80,7 +80,7 @@ export async function signup(formData: FormData) {
   }
 
   return redirect(
-    "/login/signup?message=Check email to continue sign in process",
+    "/login/signup?message=Verifique seu email para continuar o processo de cadastro.",
   );
 }
 
@@ -129,7 +129,11 @@ export const resetPasswordAction = async (formData: FormData) => {
   const confirmPassword = formData.get("confirmPassword") as string;
 
   if (!password || !confirmPassword) {
-    encodedRedirect("error", "/reset-password", "Password and confirm password are required");
+    encodedRedirect(
+      "error",
+      "/reset-password",
+      "Password and confirm password are required",
+    );
   }
 
   if (password !== confirmPassword) {
