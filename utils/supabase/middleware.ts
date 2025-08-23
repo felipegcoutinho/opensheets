@@ -1,76 +1,78 @@
 import { createServerClient } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  });
+export const updateSession = async (request: NextRequest) => {
+  // Apenas estas rotas são públicas; todo o resto requer sessão
+  // Inclui também rotas necessárias para o fluxo de auth do Supabase
+  const publicPaths = new Set<string>([
+    "/", // landing
+    "/login", // login
+    "/login/signup", // signup agrupado
+    "/signup", // atalho direto
+    "/login/forgot-password", // solicitar reset
+    "/reset-password", // página de reset
+    "/auth/callback", // callback do provedor
+  ]);
 
-  // With Fluid compute, don't put this client in a global environment
-  // variable. Always create a new one on each request.
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value),
-          );
-          supabaseResponse = NextResponse.next({
-            request,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options),
-          );
+  try {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) =>
+              request.cookies.set(name, value),
+            );
+          },
         },
       },
-    },
-  );
+    );
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
+    // Obtém a sessão do usuário
+    const { data } = await supabase.auth.getClaims();
+    const session = data?.claims;
 
-  // IMPORTANT: If you remove getClaims() and you use server-side rendering
-  // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims();
-  const user = data?.claims;
+    const currentPath = request.nextUrl.pathname;
+    const isPublic = publicPaths.has(currentPath);
 
-  // Se o usuário já estiver autenticado e tentar acessar /login/*,
-  // redireciona para o dashboard
-  if (user && request.nextUrl.pathname.startsWith("/login")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+    // Usuário já autenticado tentando acessar páginas públicas de auth → redireciona
+    if (
+      session &&
+      (currentPath === "/login" ||
+        currentPath === "/signup" ||
+        currentPath === "/login/signup")
+    ) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
+    // Qualquer rota não pública sem sessão → redireciona para /login
+    if (!isPublic && !session) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    // Se a sessão existir ou a rota não estiver protegida, continua a execução normal
+    let response = NextResponse.next({
+      request: {
+        headers: request.headers,
+      },
+    });
+
+    // Atualiza os cookies no response
+    const cookiesToSet = request.cookies.getAll();
+    cookiesToSet.forEach(({ name, value }) =>
+      response.cookies.set(name, value),
+    );
+
+    return response;
+  } catch (e) {
+    return NextResponse.next({
+      request: {
+        headers: request.headers,
+      },
+    });
   }
-
-  if (
-    request.nextUrl.pathname !== "/" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
-
-  // IMPORTANT: You *must* return the supabaseResponse object as it is.
-  // If you're creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
-
-  return supabaseResponse;
-}
+};

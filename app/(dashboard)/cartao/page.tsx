@@ -38,4 +38,4 @@ export default async function page() {
       </Tabs>
     </div>
   );
-
+}

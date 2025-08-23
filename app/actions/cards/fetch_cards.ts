@@ -41,7 +41,7 @@ export async function getCardsDisabled() {
 }
 
 // Busca os detalhes do cartão para a página de fatura
-export async function getCardDetails(id: number) {
+export async function getCardDetails(id: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase

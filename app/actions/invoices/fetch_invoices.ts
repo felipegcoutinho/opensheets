@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getFaturas(month: string, cartao_id: number) {
+export async function getFaturas(month: string, cartao_id: string) {
   const supabase = createClient();
 
   const { data } = await supabase

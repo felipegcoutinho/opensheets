@@ -2,6 +2,7 @@ import { resetPasswordAction } from "@/app/actions/auth/auth";
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 
 export default async function ResetPassword(props) {
@@ -14,19 +15,9 @@ export default async function ResetPassword(props) {
         Please enter your new password below.
       </p>
       <Label htmlFor="password">New password</Label>
-      <Input
-        type="password"
-        name="password"
-        placeholder="New password"
-        required
-      />
+      <PasswordInput name="password" placeholder="New password" required />
       <Label htmlFor="confirmPassword">Confirm password</Label>
-      <Input
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm password"
-        required
-      />
+      <PasswordInput name="confirmPassword" placeholder="Confirm password" required />
       <SubmitButton formAction={resetPasswordAction}>
         Reset password
       </SubmitButton>

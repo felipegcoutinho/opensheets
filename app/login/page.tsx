@@ -9,8 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { RiGoogleFill } from "@remixicon/react";
+import Link from "next/link";
 import { signIn, signInWithGoogle } from "../actions/auth/auth";
 
 export default async function Login(props) {
@@ -35,12 +37,11 @@ export default async function Login(props) {
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  {/* <Link className="text-sm" href="/login/forgot-password">
+                  <Link className="text-sm" href="/login/forgot-password">
                     Esqueceu a senha?
-                  </Link> */}
+                  </Link>
                 </div>
-                <Input
-                  type="password"
+                <PasswordInput
                   name="password"
                   placeholder="Digite sua senha"
                   required
@@ -53,13 +54,13 @@ export default async function Login(props) {
               <FormMessage message={searchParams} />
             </div>
 
-            {/* <div>
+            <div>
               <Button variant={"link"} className="w-full" asChild>
                 <Link href="/login/signup">
                   Não possui conta? Faça o cadastro
                 </Link>
               </Button>
-            </div> */}
+            </div>
           </form>
 
           <form action={signInWithGoogle}>
