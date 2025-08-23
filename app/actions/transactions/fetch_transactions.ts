@@ -123,10 +123,12 @@ export async function getExpenseAggregations(month: string) {
     sum,
   }));
 
-  const payments = Array.from(payMap.entries()).map(([forma_pagamento, sum]) => ({
-    forma_pagamento,
-    sum,
-  }));
+  const payments = Array.from(payMap.entries()).map(
+    ([forma_pagamento, sum]) => ({
+      forma_pagamento,
+      sum,
+    }),
+  );
 
   return { conditions, payments };
 }
@@ -169,7 +171,8 @@ export async function getRecentTransactions(month: string) {
 export async function getIncomeExpenseByPeriods(periods: string[]) {
   const supabase = createClient();
 
-  if (!periods?.length) return [] as { periodo: string; incomes: number; expenses: number }[];
+  if (!periods?.length)
+    return [] as { periodo: string; incomes: number; expenses: number }[];
 
   const { data, error } = await supabase
     .from("lancamentos")

@@ -16,15 +16,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-type Props = {
-  firstName: string | null;
-  lastName: string | null;
-};
+type Props = { name: string | null };
 
 const initialState: ActionResponse | null = null;
 
-export default function AskNameModal({ firstName, lastName }: Props) {
-  const needsName = useMemo(() => !firstName || !lastName, [firstName, lastName]);
+export default function AskNameModal({ name }: Props) {
+  const needsName = useMemo(() => !name || name.trim().length === 0, [name]);
   const [open, setOpen] = useState(needsName);
   const [state, formAction, pending] = useActionState(updateUserName, initialState);
   const router = useRouter();
@@ -57,18 +54,14 @@ export default function AskNameModal({ firstName, lastName }: Props) {
         <DialogHeader>
           <DialogTitle>Complete seu nome</DialogTitle>
           <DialogDescription>
-            Para personalizar sua experiência, informe seu nome e sobrenome.
+            Para personalizar sua experiência, informe seu nome completo.
           </DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="space-y-3">
           <div>
-            <Label htmlFor="first_name">Nome</Label>
-            <Input id="first_name" name="first_name" placeholder="Ex.: Felipe" required />
-          </div>
-          <div>
-            <Label htmlFor="last_name">Sobrenome</Label>
-            <Input id="last_name" name="last_name" placeholder="Ex.: Coutinho" required />
+            <Label htmlFor="name">Nome completo</Label>
+            <Input id="name" name="name" placeholder="Ex.: Felipe Coutinho" required />
           </div>
 
           <DialogFooter className="mt-2">

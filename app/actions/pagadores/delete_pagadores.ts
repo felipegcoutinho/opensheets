@@ -11,10 +11,7 @@ export async function deletePayer(
   const excluir = formData.get("excluir");
   const supabase = createClient();
 
-  const { error } = await supabase
-    .from("pagadores")
-    .delete()
-    .eq("id", excluir);
+  const { error } = await supabase.from("pagadores").delete().eq("id", excluir);
 
   revalidatePath("/pagador");
 

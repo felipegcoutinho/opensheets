@@ -1,15 +1,14 @@
-import { getFirstName, getLastName } from "@/app/actions/users/fetch_users";
+import { getUserName } from "@/app/actions/users/fetch_users";
 import UpdateNameForm from "./update-name-form";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import DeleteUserForm from "./delete-user-form";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { RiErrorWarningLine } from "@remixicon/react";
 
 export const metadata = { title: "Ajustes | OpenSheets" };
 
 export default async function AjustesPage() {
-  const [firstName, lastName] = await Promise.all([
-    getFirstName(),
-    getLastName(),
-  ]);
+  const name = await getUserName();
 
   return (
     <Tabs defaultValue="name" className="mt-4">
@@ -18,13 +17,32 @@ export default async function AjustesPage() {
         <TabsTrigger value="delete">Deletar conta</TabsTrigger>
       </TabsList>
       <TabsContent value="name">
-        <UpdateNameForm
-          defaultFirstName={firstName ?? ""}
-          defaultLastName={lastName ?? ""}
-        />
+        <UpdateNameForm defaultName={name ?? ""} />
       </TabsContent>
       <TabsContent value="delete">
-        <DeleteUserForm />
+        <div className="max-w-xl space-y-4">
+          <Alert variant="destructive">
+            <RiErrorWarningLine aria-hidden />
+            <AlertTitle>Remoção definitiva de conta</AlertTitle>
+            <AlertDescription>
+              <div className="space-y-2">
+                <p>
+                  Ao prosseguir, sua conta e todos os dados associados serão
+                  excluídos de forma <strong>irreversível</strong>.
+                </p>
+                <ul className="list-inside list-disc space-y-1">
+                  <li>Lançamentos, anexos e notas</li>
+                  <li>Contas, cartões, orçamentos e categorias</li>
+                  <li>Pagadores (incluindo o pagador principal)</li>
+                  <li>Preferências e configurações</li>
+                </ul>
+                
+              </div>
+            </AlertDescription>
+          </Alert>
+
+          <DeleteUserForm />
+        </div>
       </TabsContent>
     </Tabs>
   );

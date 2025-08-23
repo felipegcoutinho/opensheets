@@ -41,8 +41,12 @@ function escapeHtml(input: string) {
 
 function normalizeFormaPagamento(s?: string | null) {
   const v = (s || "").trim().toLowerCase();
-  if (["cartão de crédito", "cartao de credito", "crédito", "credito"].includes(v)) return "cartão de crédito";
-  if (["cartão de débito", "cartao de debito", "débito", "debito"].includes(v)) return "cartão de débito";
+  if (
+    ["cartão de crédito", "cartao de credito", "crédito", "credito"].includes(v)
+  )
+    return "cartão de crédito";
+  if (["cartão de débito", "cartao de debito", "débito", "debito"].includes(v))
+    return "cartão de débito";
   if (v === "boleto") return "boleto";
   if (v === "pix") return "pix";
   if (["dinheiro", "cash"].includes(v)) return "dinheiro";
@@ -65,7 +69,10 @@ export async function sendNewTransactionsEmail(
     return { ok: false, message: "Pagador não possui e-mail cadastrado." };
   }
 
-  const total = (transactions || []).reduce((sum, t) => sum + (Number(t.valor) || 0), 0);
+  const total = (transactions || []).reduce(
+    (sum, t) => sum + (Number(t.valor) || 0),
+    0,
+  );
 
   // Quebra por forma de pagamento (cores iguais ao app)
   let cardsTotal = 0;
@@ -76,9 +83,11 @@ export async function sendNewTransactionsEmail(
     const val = Number(t.valor) || 0;
     if (fp === "cartão de crédito") cardsTotal += val;
     else if (fp === "boleto") boletosTotal += val;
-    else if (["pix", "dinheiro", "cartão de débito"].includes(fp)) outrosTotal += val;
+    else if (["pix", "dinheiro", "cartão de débito"].includes(fp))
+      outrosTotal += val;
   }
-  const pct = (n: number) => (total > 0 ? Math.max(0, Math.min(100, (n / total) * 100)) : 0);
+  const pct = (n: number) =>
+    total > 0 ? Math.max(0, Math.min(100, (n / total) * 100)) : 0;
 
   const rows = (transactions || [])
     .map((t) => {
@@ -88,7 +97,10 @@ export async function sendNewTransactionsEmail(
       const via = t?.forma_pagamento || "—";
       const descricao = t?.descricao || "—";
       const valor = formatBRL(Number(t?.valor) || 0);
-      const parcela = t?.qtde_parcela && t.parcela_atual ? `${t.parcela_atual}/${t.qtde_parcela}` : "—";
+      const parcela =
+        t?.qtde_parcela && t.parcela_atual
+          ? `${t.parcela_atual}/${t.qtde_parcela}`
+          : "—";
       return `
         <tr>
           <td style=\"border-bottom:1px solid #e5e7eb;padding:8px 6px;\">${dateBr}</td>
