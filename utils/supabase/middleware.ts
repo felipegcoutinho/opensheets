@@ -6,11 +6,7 @@ export const updateSession = async (request: NextRequest) => {
   // Inclui também rotas necessárias para o fluxo de auth do Supabase
   const publicPaths = new Set<string>([
     "/", // landing
-    "/login", // login
-    "/login/signup", // signup agrupado
-    "/signup", // atalho direto
-    "/login/forgot-password", // solicitar reset
-    "/reset-password", // página de reset
+    "/login", // login (magic link)
     "/auth/callback", // callback do provedor
   ]);
 
@@ -40,12 +36,7 @@ export const updateSession = async (request: NextRequest) => {
     const isPublic = publicPaths.has(currentPath);
 
     // Usuário já autenticado tentando acessar páginas públicas de auth → redireciona
-    if (
-      session &&
-      (currentPath === "/login" ||
-        currentPath === "/signup" ||
-        currentPath === "/login/signup")
-    ) {
+    if (session && currentPath === "/login") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 

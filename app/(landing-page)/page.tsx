@@ -118,7 +118,7 @@ export default function Index() {
             </p>
             <div className="mt-8 flex items-center justify-center gap-3 md:justify-start">
               <Button asChild size="lg">
-                <Link href="/login/signup">Começar agora</Link>
+                <Link href="/login">Começar agora</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link href="/login">Fazer login</Link>
@@ -298,7 +298,7 @@ export default function Index() {
             </div>
             <div className="flex gap-3">
               <Button asChild>
-                <Link href="/login/signup">Criar conta</Link>
+                <Link href="/login">Criar conta</Link>
               </Button>
               <Button asChild variant="outline">
                 <Link href="/login">Entrar</Link>
