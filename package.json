@@ -71,6 +71,9 @@
   "pnpm": {
     "overrides": {
       "@types/react": "19.1.10"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@tailwindcss/oxide"
+    ]
   }
 }
