@@ -1,30 +1,18 @@
-import { getAccount } from "@/app/actions/accounts/fetch_accounts";
-import { getCards } from "@/app/actions/cards/fetch_cards";
-import { getCategorias } from "@/app/actions/categories/fetch_categorias";
-import { getTransactions } from "@/app/actions/transactions/fetch_transactions";
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
-import { TableTransaction } from "./table/table-transaction";
+import { Suspense } from "react";
+import TableSkeleton from "@/components/skeletons/table-skeleton";
+import TransactionsTableSection from "./sections/table";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
 
-  const [cartoes, contas, lancamentos, categorias] = await Promise.all([
-    getCards(),
-    getAccount(),
-    getTransactions(month),
-    getCategorias(),
-  ]);
-
   return (
     <>
       <MonthPicker />
-      <TableTransaction
-        data={lancamentos}
-        getAccount={contas}
-        getCards={cartoes}
-        getCategorias={categorias}
-      />
+      <Suspense fallback={<TableSkeleton rows={10} />}>
+        <TransactionsTableSection month={month} />
+      </Suspense>
     </>
   );
 }

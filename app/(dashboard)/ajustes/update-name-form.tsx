@@ -13,11 +13,9 @@ import {
 const initialState: ActionResponse = { success: false, message: "" };
 
 export default function UpdateNameForm({
-  defaultFirstName,
-  defaultLastName,
+  defaultName,
 }: {
-  defaultFirstName: string;
-  defaultLastName: string;
+  defaultName: string;
 }) {
   const [state, action, isPending] = useActionState(
     updateUserName,
@@ -32,22 +30,8 @@ export default function UpdateNameForm({
   return (
     <form action={action} className="max-w-sm space-y-4">
       <div className="grid gap-2">
-        <Label htmlFor="first_name">Nome</Label>
-        <Input
-          id="first_name"
-          name="first_name"
-          defaultValue={defaultFirstName}
-          required
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="last_name">Sobrenome</Label>
-        <Input
-          id="last_name"
-          name="last_name"
-          defaultValue={defaultLastName}
-          required
-        />
+        <Label htmlFor="name">Nome completo</Label>
+        <Input id="name" name="name" defaultValue={defaultName} required />
       </div>
       <Button type="submit" disabled={isPending}>
         {isPending ? "Salvando..." : "Salvar"}

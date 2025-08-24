@@ -1,29 +1,18 @@
-import { getAccount } from "@/app/actions/accounts/fetch_accounts";
-import { getCards, getCardsDisabled } from "@/app/actions/cards/fetch_cards";
-import { getLimitesCartao } from "@/app/actions/transactions/fetch_transactions";
-import EmptyCard from "@/components/empty-card";
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CreateCard from "./modal/create-cards";
-import UiCard from "./ui-card";
+import { Suspense } from "react";
+import CardGridSkeleton from "@/components/skeletons/card-grid-skeleton";
+import CreateCardSection from "./sections/create-card";
+import ActiveCardsSection from "./sections/active-cards";
+import InactiveCardsSection from "./sections/inactive-cards";
 
-export default async function page(props) {
-  const [cartoesAtivosData, cartoesInativos, getAccountMap] = await Promise.all(
-    [getCards(), getCardsDisabled(), getAccount()],
-  );
-
-  let cardsWithLimits = [];
-  if (cartoesAtivosData && cartoesAtivosData.length > 0) {
-    const cardsWithLimitsPromises = cartoesAtivosData.map(async (card) => {
-      const limites = await getLimitesCartao(card.id, card.limite);
-      return { ...card, limites };
-    });
-    cardsWithLimits = await Promise.all(cardsWithLimitsPromises);
-  }
-
+export default async function page() {
+  const fallback = <CardGridSkeleton count={6} />;
   return (
     <div className="mb-4 w-full">
-      <CreateCard getAccountMap={getAccountMap} />
+      <Suspense fallback={<div className="h-10 w-64 animate-pulse rounded bg-accent" /> }>
+        <CreateCardSection />
+      </Suspense>
 
       <Tabs defaultValue="ativos">
         <TabsList className="mb-2">
@@ -36,37 +25,15 @@ export default async function page(props) {
         </TabsList>
 
         <TabsContent value="ativos">
-          <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
-            {cardsWithLimits?.length > 0 ? (
-              cardsWithLimits.map((item) => (
-                <UiCard
-                  key={item.id}
-                  item={item}
-                  getAccountMap={getAccountMap}
-                  mostrarLimites={true}
-                />
-              ))
-            ) : (
-              <EmptyCard />
-            )}
-          </div>
+          <Suspense fallback={fallback}>
+            <ActiveCardsSection />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="inativos">
-          <div className="grid gap-4 saturate-0 sm:grid-cols-1 lg:grid-cols-3">
-            {cartoesInativos?.length > 0 ? ( // Verificação ajustada para > 0 para clareza
-              cartoesInativos.map((item) => (
-                <UiCard
-                  key={item.id}
-                  item={item}
-                  getAccountMap={getAccountMap}
-                  mostrarLimites={false}
-                />
-              ))
-            ) : (
-              <EmptyCard />
-            )}
-          </div>
+          <Suspense fallback={fallback}>
+            <InactiveCardsSection />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </div>

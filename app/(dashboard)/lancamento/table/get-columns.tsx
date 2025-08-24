@@ -2,6 +2,7 @@
 import MoneyValues from "@/components/money-values";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -236,8 +237,28 @@ export const getColumns = (
           ? RiBankCardLine
           : null;
 
+      const href = item.contas?.id
+        ? `/conta/${item.contas.id}`
+        : item.cartoes?.id
+          ? `/cartao/${item.cartoes.id}`
+          : null;
+
+      if (!href) {
+        return (
+          <div className="flex items-center gap-2">
+            <PaymentMethodLogo
+              url_name={`/logos/${logo}`}
+              descricao={descricao}
+              height={36}
+              width={36}
+            />
+            {Icon && <Icon size={18} className="size-3.5" />}
+          </div>
+        );
+      }
+
       return (
-        <div className="flex items-center gap-2">
+        <Link href={href} className="flex items-center gap-2 hover:underline">
           <PaymentMethodLogo
             url_name={`/logos/${logo}`}
             descricao={descricao}
@@ -245,7 +266,7 @@ export const getColumns = (
             width={36}
           />
           {Icon && <Icon size={18} className="size-3.5" />}
-        </div>
+        </Link>
       );
     },
   },
