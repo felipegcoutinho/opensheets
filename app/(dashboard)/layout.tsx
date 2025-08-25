@@ -1,3 +1,5 @@
+import { getAuthProviders, getUserName } from "@/app/actions/users/fetch_users";
+import AskNameModal from "@/components/auth/ask-name-modal";
 import BannerData from "@/components/banner-data";
 import UpcomingPaymentsBanner from "@/components/banner-upcoming-payments";
 import NavPage from "@/components/sidebar/nav-page";
@@ -7,8 +9,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
-import AskNameModal from "@/components/auth/ask-name-modal";
-import { getAuthProviders, getUserName } from "@/app/actions/users/fetch_users";
 
 export const metadata = {
   title: "dashboard | opensheets",
