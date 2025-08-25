@@ -33,11 +33,19 @@ const initialState: ActionResponse = { success: false, message: "" };
 export default function CreateAccount() {
   const { logos } = UseOptions();
   const [isOpen, setIsOpen] = useState(false);
+  const [descricao, setDescricao] = useState("");
   const [isIgnored, setIsIgnored] = useState(false);
   const [state, action, isPending] = useActionState(
     createAccount,
     initialState,
   );
+
+  const handleLogoChange = (logoFile: string) => {
+    const selectedLogo = logos.find((logo) => logo.file === logoFile);
+    if (selectedLogo) {
+      setDescricao(selectedLogo.name);
+    }
+  };
 
   useEffect(() => {
     if (!state.message) return;
@@ -67,7 +75,7 @@ export default function CreateAccount() {
               Escolha o Logo
               <Required />
             </Label>
-            <Select name="logo_image" required>
+            <Select name="logo_image" required onValueChange={handleLogoChange}>
               <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione a imagem para a conta" />
               </SelectTrigger>
@@ -95,6 +103,8 @@ export default function CreateAccount() {
               placeholder="Descrição"
               type="text"
               required
+              value={descricao}
+              onChange={(e) => setDescricao(e.target.value)}
             />
           </div>
           <div className="w-full">

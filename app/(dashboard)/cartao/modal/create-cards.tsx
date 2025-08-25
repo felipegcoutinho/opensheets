@@ -33,8 +33,16 @@ const initialState: ActionResponse = { success: false, message: "" };
 
 export default function CreateCard({ getAccountMap }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [descricao, setDescricao] = useState("");
   const { logos, bandeiras } = UseOptions();
   const [state, action, isPending] = useActionState(createCard, initialState);
+
+  const handleLogoChange = (logoFile: string) => {
+    const selectedLogo = logos.find((logo) => logo.file === logoFile);
+    if (selectedLogo) {
+      setDescricao(selectedLogo.name);
+    }
+  };
 
   useEffect(() => {
     if (!state.message) return;
@@ -64,7 +72,7 @@ export default function CreateCard({ getAccountMap }) {
               Escolha o Logo
               <Required />
             </Label>
-            <Select name="logo_image" required>
+            <Select name="logo_image" required onValueChange={handleLogoChange}>
               <SelectTrigger className="w-full py-6">
                 <SelectValue placeholder="Selecione a imagem para o cartão" />
               </SelectTrigger>
@@ -93,6 +101,8 @@ export default function CreateCard({ getAccountMap }) {
               placeholder="Descrição"
               type="text"
               required
+              value={descricao}
+              onChange={(e) => setDescricao(e.target.value)}
             />
           </div>
 
