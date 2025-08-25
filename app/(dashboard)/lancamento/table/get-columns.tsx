@@ -209,9 +209,15 @@ export const getColumns = (
     header: () => <span>Pagador</span>,
     cell: ({ row }) => {
       const item = row.original;
-      const nome = item.pagadores?.nome ?? "";
-      const role = item.pagadores?.role ?? "";
-      const foto = item.pagadores?.foto as string | undefined;
+      const pagador = item.pagadores;
+
+      if (!pagador) {
+        return null;
+      }
+
+      const nome = pagador.nome ?? "";
+      const role = pagador.role ?? "";
+      const foto = pagador.foto as string | undefined;
 
       const resolveFotoSrc = (f?: string) => {
         if (!f) return undefined;
@@ -222,7 +228,7 @@ export const getColumns = (
 
       const src = resolveFotoSrc(foto);
 
-      return (
+      const content = (
         <span className="flex items-center gap-2">
           <Avatar className="size-6">
             {src ? <AvatarImage src={src} alt={nome || "Pagador"} /> : null}
@@ -230,6 +236,16 @@ export const getColumns = (
           </Avatar>
           <Badge variant={getResponsableStyle(role)}>{nome}</Badge>
         </span>
+      );
+
+      if (role === "sistema" || !pagador.id) {
+        return content;
+      }
+
+      return (
+        <Link href={`/pagador/${pagador.id}`} className="hover:underline">
+          {content}
+        </Link>
       );
     },
   },
