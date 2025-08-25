@@ -98,7 +98,7 @@ export async function POST(req: Request) {
   try {
     // 🔒 Saída estruturada e validada no próprio provider
     const result = await generateObject({
-      model: openai("gpt-5-nano"),
+      model: openai("gpt-5"),
       schema: AnalysisSchema,
       system: `
         Você é um analista financeiro pessoal especializado em comportamento de consumo.
