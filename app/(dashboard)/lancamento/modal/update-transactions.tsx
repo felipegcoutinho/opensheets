@@ -26,8 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { useQuery } from "@tanstack/react-query";
 import { RiThumbUpLine } from "@remixicon/react";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 
@@ -75,12 +75,12 @@ export default function UpdateTransactions({
   } = useQuery({
     queryKey: ["descriptions", selectedMonth],
     queryFn: async () => {
-      const res = await fetch(`/api/descriptions?month=${selectedMonth}`)
-      if (!res.ok) throw new Error("Falha ao carregar descrições")
-      return res.json()
+      const res = await fetch(`/api/descriptions?month=${selectedMonth}`);
+      if (!res.ok) throw new Error("Falha ao carregar descrições");
+      return res.json();
     },
     staleTime: 60_000,
-  })
+  });
 
   const {
     data: payersData,
@@ -89,16 +89,19 @@ export default function UpdateTransactions({
   } = useQuery({
     queryKey: ["payers"],
     queryFn: async () => {
-      const res = await fetch(`/api/pagadores`)
-      if (!res.ok) throw new Error("Falha ao carregar pagadores")
-      return res.json()
+      const res = await fetch(`/api/pagadores`);
+      if (!res.ok) throw new Error("Falha ao carregar pagadores");
+      return res.json();
     },
     staleTime: 60_000,
-  })
+  });
 
-  const descricaoOptions: string[] = descData?.data || []
-  const payersOptions: { nome: string; role?: string | null; foto?: string | null }[] =
-    payersData?.data || []
+  const descricaoOptions: string[] = descData?.data || [];
+  const payersOptions: {
+    nome: string;
+    role?: string | null;
+    foto?: string | null;
+  }[] = payersData?.data || [];
 
   const resolveFotoSrc = (foto?: string | null) => {
     if (!foto) return undefined;
@@ -106,12 +109,6 @@ export default function UpdateTransactions({
     if (foto.startsWith("/")) return foto;
     return `/avatars/${foto}`;
   };
-
-  // Sem preview fora do select; estado não é necessário
-
-  // Dados agora vêm do React Query acima
-
-  // sem segundo pagador aqui; apenas alteração do pagador principal
 
   useEffect(() => {
     setIsPaid(itemPaid);

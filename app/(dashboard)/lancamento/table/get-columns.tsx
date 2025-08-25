@@ -20,6 +20,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   RiAttachmentLine,
   RiBankCardLine,
@@ -208,9 +209,44 @@ export const getColumns = (
     header: () => <span>Pagador</span>,
     cell: ({ row }) => {
       const item = row.original;
-      const nome = item.pagadores?.nome ?? "";
-      const role = item.pagadores?.role ?? "";
-      return <Badge variant={getResponsableStyle(role)}>{nome}</Badge>;
+      const pagador = item.pagadores;
+
+      if (!pagador) {
+        return null;
+      }
+
+      const nome = pagador.nome ?? "";
+      const role = pagador.role ?? "";
+      const foto = pagador.foto as string | undefined;
+
+      const resolveFotoSrc = (f?: string) => {
+        if (!f) return undefined;
+        if (f.startsWith("http")) return f;
+        if (f.startsWith("/")) return f;
+        return `/avatars/${f}`;
+      };
+
+      const src = resolveFotoSrc(foto);
+
+      const content = (
+        <span className="flex items-center gap-2">
+          <Avatar className="size-6">
+            {src ? <AvatarImage src={src} alt={nome || "Pagador"} /> : null}
+            <AvatarFallback>{(nome?.[0] || "P").toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <Badge variant={getResponsableStyle(role)}>{nome}</Badge>
+        </span>
+      );
+
+      if (role === "sistema" || !pagador.id) {
+        return content;
+      }
+
+      return (
+        <Link href={`/pagador/${pagador.id}`} className="hover:underline">
+          {content}
+        </Link>
+      );
     },
   },
 
@@ -299,6 +335,7 @@ export const getColumns = (
                   itemCondicao={item.condicao}
                   itemResponsavel={item.pagadores?.nome}
                   itemResponsavelRole={item.pagadores?.role}
+                  itemResponsavelFoto={item.pagadores?.foto}
                   itemTipoTransacao={item.tipo_transacao}
                   itemValor={item.valor}
                   itemFormaPagamento={item.forma_pagamento}

@@ -1,9 +1,10 @@
 import { getUserName } from "@/app/actions/users/fetch_users";
-import UpdateNameForm from "./update-name-form";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import DeleteUserForm from "./delete-user-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RiErrorWarningLine } from "@remixicon/react";
+import DeleteUserForm from "./delete-user-form";
+import FeedbackForm from "./feedback-form";
+import UpdateNameForm from "./update-name-form";
 
 export const metadata = { title: "Ajustes | OpenSheets" };
 
@@ -14,10 +15,26 @@ export default async function AjustesPage() {
     <Tabs defaultValue="name" className="mt-4">
       <TabsList>
         <TabsTrigger value="name">Altere seu nome</TabsTrigger>
+        <TabsTrigger value="feedback">Feedback</TabsTrigger>
         <TabsTrigger value="delete">Deletar conta</TabsTrigger>
       </TabsList>
       <TabsContent value="name">
         <UpdateNameForm defaultName={name ?? ""} />
+      </TabsContent>
+      <TabsContent value="feedback">
+        <div className="max-w-xl space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold">Envie seu feedback</h3>
+            <p className="text-muted-foreground text-sm">
+              Conte como podemos melhorar o OpenSheets. Seja específico:
+              descreva o que aconteceu, quais passos você realizou, o que
+              esperava que acontecesse e o que aconteceu de fato. Se for
+              sugestão, explique o problema que deseja resolver e como imagina a
+              solução.
+            </p>
+          </div>
+          <FeedbackForm />
+        </div>
       </TabsContent>
       <TabsContent value="delete">
         <div className="max-w-xl space-y-4">
@@ -36,7 +53,6 @@ export default async function AjustesPage() {
                   <li>Pagadores (incluindo o pagador principal)</li>
                   <li>Preferências e configurações</li>
                 </ul>
-                
               </div>
             </AlertDescription>
           </Alert>

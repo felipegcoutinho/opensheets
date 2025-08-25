@@ -309,6 +309,7 @@ export default function MonthCalendar({
                     itemCondicao={t.condicao}
                     itemResponsavel={t.pagadores?.nome}
                     itemResponsavelRole={t.pagadores?.role}
+                    itemResponsavelFoto={t.pagadores?.foto}
                     itemTipoTransacao={t.tipo_transacao}
                     itemValor={parseFloat(t.valor)}
                     itemFormaPagamento={t.forma_pagamento}

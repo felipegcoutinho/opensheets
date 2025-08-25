@@ -23,6 +23,7 @@ import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
 import UtilitiesLancamento from "../utilities-lancamento";
 import ViewImage from "./view-image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function DetailsTransactions({
   itemId,
@@ -32,6 +33,7 @@ export default function DetailsTransactions({
   itemDate,
   itemResponsavel,
   itemResponsavelRole,
+  itemResponsavelFoto,
   itemTipoTransacao,
   itemValor,
   itemFormaPagamento,
@@ -53,6 +55,7 @@ export default function DetailsTransactions({
   itemDate: any;
   itemResponsavel: any;
   itemResponsavelRole: any;
+  itemResponsavelFoto?: string | null;
   itemTipoTransacao: any;
   itemValor: any;
   itemFormaPagamento: any;
@@ -84,6 +87,13 @@ export default function DetailsTransactions({
   };
 
   const parcelaRestante = itemValor * (itemQtdeParcelas - itemParcelaAtual);
+
+  const resolveFotoSrc = (f?: string | null) => {
+    if (!f) return undefined;
+    if (f.startsWith("http")) return f;
+    if (f.startsWith("/")) return f;
+    return `/avatars/${f}`;
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
@@ -157,7 +167,18 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
-                  <span className="capitalize">
+                  <span className="capitalize flex items-center gap-2">
+                    <Avatar className="size-6">
+                      {resolveFotoSrc(itemResponsavelFoto) ? (
+                        <AvatarImage
+                          src={resolveFotoSrc(itemResponsavelFoto)}
+                          alt={itemResponsavel || "Pagador"}
+                        />
+                      ) : null}
+                      <AvatarFallback>
+                        {(itemResponsavel?.[0] || "P").toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
                     <Badge variant={getResponsableStyle(itemResponsavelRole)}>
                       {itemResponsavel}
                     </Badge>

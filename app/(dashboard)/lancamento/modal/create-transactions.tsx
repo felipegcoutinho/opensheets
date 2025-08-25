@@ -29,8 +29,8 @@ import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpLine } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import UtilitiesLancamento from "../utilities-lancamento";
 import { useEffect, useState } from "react";
+import UtilitiesLancamento from "../utilities-lancamento";
 
 const fetchJSON = async (url: string) => {
   const res = await fetch(url);
@@ -125,7 +125,7 @@ export default function CreateTransactions({
       .normalize("NFD")
       .replace(/\p{Diacritic}/gu, "");
   const secondPayers = pagadoresOptions.filter(
-    (p) => normalize(p.role || "") !== "principal",
+    (p) => normalize(p.role || "") === "secundario",
   );
 
   return (
@@ -372,7 +372,7 @@ export default function CreateTransactions({
                           className="capitalize"
                         >
                           <span className="flex items-center gap-2">
-                            <Avatar className="size-5">
+                            <Avatar className="size-8">
                               {resolveFotoSrc((item as any).foto) ? (
                                 <AvatarImage
                                   src={resolveFotoSrc((item as any).foto)}

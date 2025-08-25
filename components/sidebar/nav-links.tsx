@@ -3,11 +3,12 @@ import {
   RiBankCardLine,
   RiBankLine,
   RiBook2Line,
-  RiDashboardLine,
   RiCalendarLine,
+  RiDashboardLine,
   RiFileList2Line,
   RiGroupLine,
   RiMoneyDollarCircleLine,
+  RiSettings2Line,
   RiSparkling2Line,
 } from "@remixicon/react";
 
@@ -81,6 +82,16 @@ export function NavLinks(month: string) {
             name: "insights",
             url: `/insight?periodo=${month}`,
             icon: RiSparkling2Line,
+          },
+        ],
+      },
+      {
+        title: "Configurações",
+        items: [
+          {
+            name: "ajustes",
+            url: `/ajustes`,
+            icon: RiSettings2Line,
           },
         ],
       },
