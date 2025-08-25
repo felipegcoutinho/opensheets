@@ -1,11 +1,11 @@
 import {
-  RiMoneyDollarCircleLine,
-  RiBarcodeLine,
-  RiTimeLine,
-  RiCheckLine,
   RiBankCardLine,
-  RiRefreshLine,
+  RiBarcodeLine,
+  RiCheckLine,
+  RiMoneyDollarCircleLine,
   RiPixLine,
+  RiRefreshLine,
+  RiTimeLine,
 } from "@remixicon/react";
 
 function UseStyles() {
@@ -21,8 +21,7 @@ function UseStyles() {
   function getResponsableStyle(roleOrName?: string) {
     switch (roleOrName) {
       case "principal":
-      case "você":
-        return "voce";
+        return "principal";
       case "sistema":
         return "sistema";
       default:
