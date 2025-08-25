@@ -86,7 +86,7 @@ export function NavLinks(month: string) {
         ],
       },
       {
-        title: "Configurações",
+        title: null,
         items: [
           {
             name: "ajustes",
