@@ -49,7 +49,7 @@ export const NavProjects = memo(function NavProjects({
                     className={`${isActive && "bg-primary hover:bg-primary/90 active:bg-primary"}`}
                     asChild
                   >
-                    <div className="flex w-full items-center justify-between px-4 py-4.5">
+                    <div className="flex w-full items-center justify-between">
                       <Link
                         href={item.url}
                         className={`flex items-center gap-2 transition-all ${
@@ -57,7 +57,7 @@ export const NavProjects = memo(function NavProjects({
                         }`}
                       >
                         <item.icon
-                          className={`h-4.5 w-4.5 ${
+                          className={`h-4 w-4 ${
                             isActive ? "text-background" : "text-foreground"
                           }`}
                         />
