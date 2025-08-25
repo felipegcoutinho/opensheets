@@ -74,6 +74,11 @@
     },
     "ignoredBuiltDependencies": [
       "@tailwindcss/oxide"
+    ],
+    "onlyBuiltDependencies": [
+      "@sentry/cli",
+      "@tailwindcss/oxide",
+      "sharp"
     ]
   }
 }
