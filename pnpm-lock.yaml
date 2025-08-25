@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@ai-sdk/openai':
-        specifier: 2.0.15
-        version: 2.0.15(zod@4.0.17)
+        specifier: 2.0.20
+        version: 2.0.20(zod@4.1.1)
       '@hookform/resolvers':
         specifier: 5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.1))
@@ -102,13 +102,13 @@ importers:
         specifier: 10.5.0
         version: 10.5.0(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(next@15.5.0(@babel/core@7.28.0)(@opentelemetry/api@1.9.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(webpack@5.101.1)
       '@supabase/ssr':
-        specifier: 0.6.1
-        version: 0.6.1(@supabase/supabase-js@2.55.0)
+        specifier: 0.7.0
+        version: 0.7.0(@supabase/supabase-js@2.55.0)
       '@tailwindcss/postcss':
         specifier: 4.1.12
         version: 4.1.12
       '@tanstack/react-query':
-        specifier: ^5.85.5
+        specifier: 5.85.5
         version: 5.85.5(react@19.1.1)
       '@tanstack/react-table':
         specifier: 8.21.3
@@ -117,8 +117,8 @@ importers:
         specifier: 1.5.0
         version: 1.5.0(next@15.5.0(@babel/core@7.28.0)(@opentelemetry/api@1.9.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       ai:
-        specifier: 5.0.15
-        version: 5.0.15(zod@4.0.17)
+        specifier: 5.0.23
+        version: 5.0.23(zod@4.1.1)
       canvas-confetti:
         specifier: 1.9.3
         version: 1.9.3
@@ -177,8 +177,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       zod:
-        specifier: 4.0.17
-        version: 4.0.17
+        specifier: 4.1.1
+        version: 4.1.1
     devDependencies:
       '@types/react':
         specifier: 19.1.10
@@ -192,20 +192,20 @@ importers:
 
 packages:
 
-  '@ai-sdk/gateway@1.0.7':
-    resolution: {integrity: sha512-Athrq7OARuNc0iHZJP6InhSQ53tImCc990vMWyR1UHaZgPZJbXjKhIMiOj54F0I0Nlemx48V4fHYUTfLkJotnQ==}
+  '@ai-sdk/gateway@1.0.12':
+    resolution: {integrity: sha512-IH7bBrirbzUDUhPzl5fsXLaMKxbezXnoTTZEAtbRrL6AiYycH//B9U1u+FHuteISndbDArp0b5ujpW2mhHWceA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4
 
-  '@ai-sdk/openai@2.0.15':
-    resolution: {integrity: sha512-/IUyQ9ck4uUTtGojvQamcUWpNWkwpL/P1F6LYRxpQGj07H00oJEBH/VUizrIq0ZvW/vkuK6c6X4UJS9PrdYyxA==}
+  '@ai-sdk/openai@2.0.20':
+    resolution: {integrity: sha512-6cBQpb6Sh5pCthSb/rGhIAsVq3EfHYKtFmeYapsBpILMkWI2DiIOajpEVe9DWCQaqTjXglZdbQsxSFJoaWlNQQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4
 
-  '@ai-sdk/provider-utils@3.0.3':
-    resolution: {integrity: sha512-kAxIw1nYmFW1g5TvE54ZB3eNtgZna0RnLjPUp1ltz1+t9xkXJIuDT4atrwfau9IbS0BOef38wqrI8CjFfQrxhw==}
+  '@ai-sdk/provider-utils@3.0.5':
+    resolution: {integrity: sha512-HliwB/yzufw3iwczbFVE2Fiwf1XqROB/I6ng8EKUsPM5+2wnIa8f4VbljZcDx+grhFrPV+PnRZH7zBqi8WZM7Q==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4
@@ -1607,8 +1607,8 @@ packages:
   '@supabase/realtime-js@2.15.1':
     resolution: {integrity: sha512-edRFa2IrQw50kNntvUyS38hsL7t2d/psah6om6aNTLLcWem0R6bOUq7sk7DsGeSlNfuwEwWn57FdYSva6VddYw==}
 
-  '@supabase/ssr@0.6.1':
-    resolution: {integrity: sha512-QtQgEMvaDzr77Mk3vZ3jWg2/y+D8tExYF7vcJT+wQ8ysuvOeGGjYbZlvj5bHYsj/SpC0bihcisnwPrM4Gp5G4g==}
+  '@supabase/ssr@0.7.0':
+    resolution: {integrity: sha512-G65t5EhLSJ5c8hTCcXifSL9Q/ZRXvqgXeNo+d3P56f4U1IxwTqjB64UfmfixvmMcjuxnq2yGqEWVJqUcO+AzAg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.43.4
 
@@ -1897,8 +1897,8 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
 
-  ai@5.0.15:
-    resolution: {integrity: sha512-EX5hF+NVFm6R11mvdZRbg6eJEjyMlniI4/xOnyTh4VtDQ457lhIgi3kDGrHW3/qw9ELon9m2e7AK3g5z5sLwsQ==}
+  ai@5.0.23:
+    resolution: {integrity: sha512-1zUF0o1zRI7UmSd8u5CKc2iHNhv21tM95Oka81c0CF77GnTbq5RvrAqVuLI+gMyKcIgs99yxA+xc5hJXvh6V+w==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4
@@ -2979,30 +2979,30 @@ packages:
     peerDependencies:
       zod: ^3.24.1
 
-  zod@4.0.17:
-    resolution: {integrity: sha512-1PHjlYRevNxxdy2JZ8JcNAw7rX8V9P1AKkP+x/xZfxB0K5FYfuV+Ug6P/6NVSR2jHQ+FzDDoDHS04nYUsOIyLQ==}
+  zod@4.1.1:
+    resolution: {integrity: sha512-SgMZK/h8Tigt9nnKkfJMvB/mKjiJXaX26xegP4sa+0wHIFVFWVlsQGdhklDmuargBD3Hsi3rsQRIzwJIhTPJHA==}
 
 snapshots:
 
-  '@ai-sdk/gateway@1.0.7(zod@4.0.17)':
+  '@ai-sdk/gateway@1.0.12(zod@4.1.1)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.3(zod@4.0.17)
-      zod: 4.0.17
+      '@ai-sdk/provider-utils': 3.0.5(zod@4.1.1)
+      zod: 4.1.1
 
-  '@ai-sdk/openai@2.0.15(zod@4.0.17)':
+  '@ai-sdk/openai@2.0.20(zod@4.1.1)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.3(zod@4.0.17)
-      zod: 4.0.17
+      '@ai-sdk/provider-utils': 3.0.5(zod@4.1.1)
+      zod: 4.1.1
 
-  '@ai-sdk/provider-utils@3.0.3(zod@4.0.17)':
+  '@ai-sdk/provider-utils@3.0.5(zod@4.1.1)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.3
-      zod: 4.0.17
-      zod-to-json-schema: 3.24.6(zod@4.0.17)
+      zod: 4.1.1
+      zod-to-json-schema: 3.24.6(zod@4.1.1)
 
   '@ai-sdk/provider@2.0.0':
     dependencies:
@@ -4483,7 +4483,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@supabase/ssr@0.6.1(@supabase/supabase-js@2.55.0)':
+  '@supabase/ssr@0.7.0(@supabase/supabase-js@2.55.0)':
     dependencies:
       '@supabase/supabase-js': 2.55.0
       cookie: 1.0.2
@@ -4774,13 +4774,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ai@5.0.15(zod@4.0.17):
+  ai@5.0.23(zod@4.1.1):
     dependencies:
-      '@ai-sdk/gateway': 1.0.7(zod@4.0.17)
+      '@ai-sdk/gateway': 1.0.12(zod@4.1.1)
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.3(zod@4.0.17)
+      '@ai-sdk/provider-utils': 3.0.5(zod@4.1.1)
       '@opentelemetry/api': 1.9.0
-      zod: 4.0.17
+      zod: 4.1.1
 
   ajv-formats@2.1.1(ajv@8.17.1):
     optionalDependencies:
@@ -5720,8 +5720,8 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-to-json-schema@3.24.6(zod@4.0.17):
+  zod-to-json-schema@3.24.6(zod@4.1.1):
     dependencies:
-      zod: 4.0.17
+      zod: 4.1.1
 
-  zod@4.0.17: {}
+  zod@4.1.1: {}
