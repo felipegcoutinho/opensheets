@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
-import { generateObject } from "ai"; // <- trocado de generateText p/ generateObject
+import { generateObject } from "ai";
 
 // ---- Schemas ----------------------------------------------------------------
 

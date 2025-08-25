@@ -2,14 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
 
-export function AnalyzeButton({ onClick, loading }: { onClick: () => void; loading: boolean }) {
+export function AnalyzeButton({
+  onClick,
+  loading,
+}: {
+  onClick: () => void;
+  loading: boolean;
+}) {
   return (
     <Button
       onClick={onClick}
       disabled={loading}
-      className="w-full sm:w-72 bg-primary text-white transition hover:opacity-90"
+      className="mt-2 mb-4 transition-all hover:scale-110"
       aria-busy={loading}
-      aria-live="polite"
     >
       <div className="flex items-center justify-center gap-2">
         {loading ? (
