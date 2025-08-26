@@ -1,7 +1,7 @@
+import { getTransactionsByConditions } from "@/app/actions/transactions/fetch_transactions";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Progress } from "@/components/ui/progress";
-import { getTransactionsByConditions } from "@/app/actions/transactions/fetch_transactions";
 import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -36,51 +36,54 @@ export default async function InstallmentsWidget({ month }: Props) {
           return ra - rb; // menor parcelas restantes primeiro
         })
         .map((t: any) => {
-        const qtde = Number(t.qtde_parcela) || 0;
-        const atual = Number(t.parcela_atual) || 0;
-        const perc =
-          qtde > 0 ? Math.min(100, Math.max(0, (atual / qtde) * 100)) : 0;
-        const terminaEm = calcularMesFinal(t.periodo, qtde, atual);
-        const valorParcela = Number(t.valor) || 0;
-        const totalCompra = valorParcela * qtde;
-        const restantes = Math.max(qtde - atual, 0);
-        const valorRestante = restantes * valorParcela;
+          const qtde = Number(t.qtde_parcela) || 0;
+          const atual = Number(t.parcela_atual) || 0;
+          const perc =
+            qtde > 0 ? Math.min(100, Math.max(0, (atual / qtde) * 100)) : 0;
+          const terminaEm = calcularMesFinal(t.periodo, qtde, atual);
+          const valorParcela = Number(t.valor) || 0;
+          const totalCompra = valorParcela * qtde;
+          const restantes = Math.max(qtde - atual, 0);
+          const valorRestante = restantes * valorParcela;
 
-        return (
-          <div key={t.id} className="border-b border-dashed py-2 last:border-0">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">{t.descricao}</p>
-                <p className="text-muted-foreground mt-0.5 text-xs">
-                  Parcela {atual}/{qtde} • Restantes {restantes} • Termina em{" "}
-                  {terminaEm}
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="text-muted-foreground text-xs">Parcela</div>
-                <div className="text-sm leading-none">
-                  <MoneyValues value={valorParcela} />
+          return (
+            <div
+              key={t.id}
+              className="border-b border-dashed py-2 last:border-0"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{t.descricao}</p>
+                  <p className="text-muted-foreground mt-0.5 text-xs">
+                    Parcela {atual}/{qtde} • Restantes {restantes} • Termina em{" "}
+                    {terminaEm}
+                  </p>
                 </div>
-                {qtde > 1 ? (
-                  <div className="text-muted-foreground mt-0.5 text-xs">
-                    Restante <MoneyValues value={valorRestante} />
+                <div className="text-right">
+                  <div className="text-muted-foreground text-xs">Parcela</div>
+                  <div className="text-sm leading-none">
+                    <MoneyValues value={valorParcela} />
                   </div>
-                ) : null}
+                  {qtde > 1 ? (
+                    <div className="text-muted-foreground mt-0.5 text-xs">
+                      Restante <MoneyValues value={valorRestante} />
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className="mt-1">
+                <Progress
+                  value={perc}
+                  primary_color="bg-chart-2"
+                  secondary_color="bg-secondary"
+                  className="h-2 rounded"
+                  aria-label={`Progresso: ${atual} de ${qtde}`}
+                />
               </div>
             </div>
-
-            <div className="mt-1">
-              <Progress
-                value={perc}
-                primary_color="bg-primary"
-                secondary_color="bg-secondary"
-                className="h-3 rounded"
-                aria-label={`Progresso: ${atual} de ${qtde}`}
-              />
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 }
