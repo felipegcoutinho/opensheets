@@ -1,0 +1,89 @@
+import { getTransactionsByConditions } from "@/app/actions/transactions/fetch_transactions";
+import EmptyCard from "@/components/empty-card";
+import MoneyValues from "@/components/money-values";
+import { Progress } from "@/components/ui/progress";
+import { addMonths, format, parse } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
+type Props = {
+  month: string;
+};
+
+function calcularMesFinal(periodo: string, qtde: number, atual: number) {
+  if (!periodo) return "";
+  const dataInicial = parse(periodo, "MMMM-yyyy", new Date(), { locale: ptBR });
+  const parcelasRestantes = (Number(qtde) || 0) - (Number(atual) || 0) + 1;
+  const dataFinal = addMonths(dataInicial, Math.max(parcelasRestantes - 1, 0));
+  let mesFinal = format(dataFinal, "MMMM 'de' yyyy", { locale: ptBR });
+  return mesFinal.charAt(0).toUpperCase() + mesFinal.slice(1);
+}
+
+export default async function InstallmentsWidget({ month }: Props) {
+  const transactions = await getTransactionsByConditions("parcelado", month);
+
+  if (!transactions?.length) return <EmptyCard />;
+
+  return (
+    <div className="space-y-2">
+      {[...transactions]
+        .sort((a: any, b: any) => {
+          const qa = Number(a.qtde_parcela) || 0;
+          const aa = Number(a.parcela_atual) || 0;
+          const qb = Number(b.qtde_parcela) || 0;
+          const ab = Number(b.parcela_atual) || 0;
+          const ra = Math.max(qa - aa, 0);
+          const rb = Math.max(qb - ab, 0);
+          return ra - rb; // menor parcelas restantes primeiro
+        })
+        .map((t: any) => {
+          const qtde = Number(t.qtde_parcela) || 0;
+          const atual = Number(t.parcela_atual) || 0;
+          const perc =
+            qtde > 0 ? Math.min(100, Math.max(0, (atual / qtde) * 100)) : 0;
+          const terminaEm = calcularMesFinal(t.periodo, qtde, atual);
+          const valorParcela = Number(t.valor) || 0;
+          const totalCompra = valorParcela * qtde;
+          const restantes = Math.max(qtde - atual, 0);
+          const valorRestante = restantes * valorParcela;
+
+          return (
+            <div
+              key={t.id}
+              className="border-b border-dashed py-2 last:border-0"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{t.descricao}</p>
+                  <p className="text-muted-foreground mt-0.5 text-xs">
+                    Parcela {atual}/{qtde} • Restantes {restantes} • Termina em{" "}
+                    {terminaEm}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="text-muted-foreground text-xs">Parcela</div>
+                  <div className="text-sm leading-none">
+                    <MoneyValues value={valorParcela} />
+                  </div>
+                  {qtde > 1 ? (
+                    <div className="text-muted-foreground mt-0.5 text-xs">
+                      Restante <MoneyValues value={valorRestante} />
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className="mt-1">
+                <Progress
+                  value={perc}
+                  primary_color="bg-chart-2"
+                  secondary_color="bg-secondary"
+                  className="h-2 rounded"
+                  aria-label={`Progresso: ${atual} de ${qtde}`}
+                />
+              </div>
+            </div>
+          );
+        })}
+    </div>
+  );
+}

@@ -13,6 +13,7 @@ import KpisSection from "./sections/kpis";
 import PaymentFormsSection from "./sections/payment-forms";
 import RecentSection from "./sections/recent";
 import StatusSection from "./sections/status";
+import InstallmentsSection from "./sections/installments";
 
 export default async function Page(props: {
   searchParams?: { periodo?: string };
@@ -52,12 +53,15 @@ export default async function Page(props: {
         </Suspense>
       </div>
 
-      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
         <Suspense fallback={widgetFallback}>
           <ConditionsSection month={month} />
         </Suspense>
         <Suspense fallback={widgetFallback}>
           <PaymentFormsSection month={month} />
+        </Suspense>
+        <Suspense fallback={widgetFallback}>
+          <InstallmentsSection month={month} />
         </Suspense>
         <Suspense fallback={widgetFallback}>
           <CategoryPurchasesSection month={month} />

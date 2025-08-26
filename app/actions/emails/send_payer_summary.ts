@@ -60,6 +60,15 @@ export async function sendPayerMonthlySummary(
     0,
   );
 
+  // Filtra somente compras com condição parcelada
+  const installments = list.filter(
+    (t: any) => (t?.condicao || "").toLowerCase() === "parcelado",
+  );
+  const installmentTotal = installments.reduce(
+    (sum: number, t: any) => sum + (parseFloat(t.valor) || 0),
+    0,
+  );
+
   // Agregações (molde da página)
   const cardMap = new Map<
     string,
@@ -129,29 +138,90 @@ export async function sendPayerMonthlySummary(
       const valor = formatBRL(parseFloat(t?.valor) || 0);
       return `
         <tr>
-          <td style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;\">${dateBr}</td>
-          <td style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;\">${escapeHtml(descricao)}</td>
-          <td style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;\">${escapeHtml(categoria)}</td>
-          <td style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;\">${escapeHtml(via)}</td>
-          <td style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:right;\">${valor}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${dateBr}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${escapeHtml(descricao)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${escapeHtml(categoria)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${escapeHtml(via)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;\">${valor}</td>
         </tr>`;
     })
     .join("");
 
+  // Linhas da tabela somente para compras parceladas
+  const installmentRows = installments
+    .map((t: any) => {
+      const data = t?.data_compra || "";
+      const [y, m, d] = String(data).split("-");
+      const dateBr = y && m && d ? `${d}/${m}/${y}` : "—";
+      const via =
+        (t?.cartoes?.descricao && `Cartão: ${t.cartoes.descricao}`) ||
+        (t?.contas?.descricao && `Conta: ${t.contas.descricao}`) ||
+        t?.forma_pagamento ||
+        "—";
+      const categoria = t?.categorias?.nome || "—";
+      const descricao = t?.descricao || "—";
+      const parcela =
+        t?.qtde_parcela && t?.parcela_atual
+          ? `${t.parcela_atual}/${t.qtde_parcela}`
+          : "—";
+      const valor = formatBRL(parseFloat(t?.valor) || 0);
+      return `
+        <tr>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${dateBr}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${escapeHtml(descricao)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${escapeHtml(categoria)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:center;\">${escapeHtml(parcela)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;\">${escapeHtml(via)}</td>
+          <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;\">${valor}</td>
+        </tr>`;
+    })
+    .join("");
+
+  const installmentsSection = `
+        <!-- Tabela somente de compras parceladas -->
+        <div style="padding:0 24px 24px;">
+          <div style="font-size:16px;font-weight:600;">Compras parceladas</div>
+          ${
+            installmentRows
+              ? `
+          <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+            <thead>
+              <tr>
+                <th style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;">Data</th>
+                <th style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;">Descrição</th>
+                <th style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;">Categoria</th>
+                <th style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:center;">Parcela</th>
+                <th style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;">Pagamento</th>
+                <th style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${installmentRows}
+              <tr>
+                <td colspan="5" style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;font-weight:700;">Total das parcelas</td>
+                <td style="border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;font-weight:700;">${formatBRL(installmentTotal)}</td>
+              </tr>
+            </tbody>
+          </table>
+          `
+              : `<p style=\"color:#6b7280;margin-top:8px;\">Sem compras parceladas no período.</p>`
+          }
+        </div>`;
+
   const html = `
   <html>
     <body style="font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;font-size:14px;color:#111827;background:#f8fafc;margin:0;padding:0;">
-      <div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.05);max-width:760px;margin:24px auto;">
-        <div style="padding:16px 20px;border-bottom:1px solid #e5e7eb;background:#111827;color:#fff;">
-          <h2 style="margin:0;">Resumo do mês — ${escapeHtml(month)}</h2>
-          <div style="opacity:.9;">Pagador: ${escapeHtml(payer?.nome || "—")}</div>
+      <div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.06);max-width:800px;margin:28px auto;">
+        <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#eef1ee;color:#000;">
+          <h2 style="margin:0;font-size:20px;line-height:28px;">Resumo do mês — ${escapeHtml(month)}</h2>
+          <div style="opacity:.9;margin-top:2px;font-size:13px;">Pagador: ${escapeHtml(payer?.nome || "—")}</div>
         </div>
 
-        <div style="padding:16px 20px;">
-          <div style="font-size:16px;font-weight:600;margin-bottom:6px;">Total no mês</div>
-          <div style="font-size:26px;font-weight:700;">${formatBRL(total)}</div>
+        <div style="padding:20px 24px;">
+          <div style="font-size:16px;font-weight:600;margin-bottom:8px;">Total no mês</div>
+          <div style="font-size:28px;font-weight:700;">${formatBRL(total)}</div>
 
-          <div style="margin-top:12px;border-radius:6px;background:#f1f5f9;height:8px;overflow:hidden;">
+          <div style="margin-top:12px;border-radius:8px;background:#f1f5f9;height:10px;overflow:hidden;">
             <div style="display:flex;height:100%;width:100%;">
               <div style="height:100%;width:${pct(cardsTotal)}%;background:#6366f1;" title="Cartão"></div>
               <div style="height:100%;width:${pct(boletosTotal)}%;background:#f59e0b;" title="Boleto"></div>
@@ -159,20 +229,20 @@ export async function sendPayerMonthlySummary(
             </div>
           </div>
           
-          <div style="color:#6b7280;display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:12px;">
+          <div style="color:#6b7280;display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;">
             <span>Cartão: <strong style="color:#111827;">${formatBRL(cardsTotal)}</strong></span>
             <span>Boleto: <strong style="color:#111827;">${formatBRL(boletosTotal)}</strong></span>
             <span>Pix/Dinheiro/Débito: <strong style="color:#111827;">${formatBRL(outrosTotal)}</strong></span>
           </div>
         </div>
 
-        <div style="padding:4px 16px 16px;display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:12px;">
-          <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;">
+        <div style="padding:8px 20px 20px;display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px;">
+          <div style="border:1px solid #e5e7eb;border-radius:10px;padding:14px;">
             <div style="display:flex;align-items:center;justify-content:space-between;color:#6b7280;font-size:12px;">
               <span style="display:flex;align-items:center;gap:6px;">Cartão</span>
               <span style="font-weight:600;color:#111827;">${formatBRL(cardsTotal)}</span>
             </div>
-            <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;">
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
               ${
                 cardsSummary.length
                   ? cardsSummary
@@ -180,8 +250,8 @@ export async function sendPayerMonthlySummary(
                         (c) => `
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:14px;">
                   <span style="display:flex;align-items:center;gap:8px;">
-                    <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:${c.logo_image ? "#6366f1" : "#e5e7eb"};"></span>
-                    <span style="text-transform:capitalize;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(c.descricao)}</span>
+                    <span style="display:inline-block;margin-right:2px;width:16px;height:16px;border-radius:4px;background:${c.logo_image ? "#6366f1" : "#e5e7eb"};"></span>
+                    <span style="text-transform:capitalize;max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(c.descricao)}</span>
                   </span>
                   <span style="font-weight:500;">${formatBRL(c.total)}</span>
                 </div>`,
@@ -192,12 +262,12 @@ export async function sendPayerMonthlySummary(
             </div>
           </div>
 
-          <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;">
+          <div style="border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-top:5px;">
             <div style="display:flex;align-items:center;justify-content:space-between;color:#6b7280;font-size:12px;">
               <span style="display:flex;align-items:center;gap:6px;">Boleto</span>
               <span style="font-weight:600;color:#111827;">${formatBRL(boletosTotal)}</span>
             </div>
-            <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;">
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
               ${
                 boletosSummary.length
                   ? boletosSummary
@@ -205,7 +275,7 @@ export async function sendPayerMonthlySummary(
                         (b) => `
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:14px;">
                   <span style="display:flex;align-items:center;gap:8px;">
-                    <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:#f59e0b;"></span>
+                    <span style="display:inline-block;margin-right:2px;width:16px;height:16px;border-radius:4px;background:#f59e0b;"></span>
                     <span style="text-transform:capitalize;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(b.descricao)}</span>
                   </span>
                   <span style="font-weight:500;">${formatBRL(b.total)}</span>
@@ -217,12 +287,12 @@ export async function sendPayerMonthlySummary(
             </div>
           </div>
 
-          <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;">
+          <div style="border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-top:5px;">
             <div style="display:flex;align-items:center;justify-content:space-between;color:#6b7280;font-size:12px;">
               <span style="display:flex;align-items:center;gap:6px;">Pix/Dinheiro/Débito</span>
               <span style="font-weight:600;color:#111827;">${formatBRL(outrosTotal)}</span>
             </div>
-            <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;">
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
               ${
                 outrosSummary.length
                   ? outrosSummary
@@ -230,7 +300,7 @@ export async function sendPayerMonthlySummary(
                         (o) => `
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:14px;">
                   <span style="display:flex;align-items:center;gap:8px;">
-                    <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:${o.forma === "pix" ? "#10b981" : "#e5e7eb"};"></span>
+                    <span style="display:inline-block;margin-right:2px;width:16px;height:16px;border-radius:4px;background:${o.forma === "pix" ? "#10b981" : "#e5e7eb"};"></span>
                     <span style="text-transform:capitalize;">${escapeHtml(o.forma)}</span>
                   </span>
                   <span style="font-weight:500;">${formatBRL(o.total)}</span>
@@ -244,26 +314,26 @@ export async function sendPayerMonthlySummary(
         </div>
 
         <!-- Tabela completa de lançamentos -->
-        <div style=\"padding:16px 20px;\">
+        <div style=\"padding:20px 24px;\">
           <div style=\"font-size:16px;font-weight:600;\">Lançamentos</div>
           ${
             detailRows
               ? `
-          <table style=\"width:100%;border-collapse:collapse;margin-top:8px;\">
+          <table style=\"width:100%;border-collapse:collapse;margin-top:10px;\">
             <thead>
               <tr>
-                <th style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:left;\">Data</th>
-                <th style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:left;\">Descrição</th>
-                <th style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:left;\">Categoria</th>
-                <th style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:left;\">Pagamento</th>
-                <th style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:right;\">Valor</th>
+                <th style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;\">Data</th>
+                <th style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;\">Descrição</th>
+                <th style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;\">Categoria</th>
+                <th style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:left;\">Pagamento</th>
+                <th style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;\">Valor</th>
               </tr>
             </thead>
             <tbody>
               ${detailRows}
               <tr>
-                <td colspan=\"4\" style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:right;font-weight:700;\">Total</td>
-                <td style=\"border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:right;font-weight:700;\">${formatBRL(total)}</td>
+                <td colspan=\"4\" style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;font-weight:700;\">Total</td>
+                <td style=\"border-bottom:1px solid #e5e7eb;padding:12px 10px;text-align:right;font-weight:700;\">${formatBRL(total)}</td>
               </tr>
             </tbody>
           </table>
@@ -272,9 +342,8 @@ export async function sendPayerMonthlySummary(
           }
         </div>
 
-        <div style="padding:14px 18px;border-top:1px solid #e5e7eb;color:#6b7280;font-size:12px;">
-          Este é um resumo automático. Por favor, revise os valores antes de efetuar pagamentos.
-        </div>
+        ${installmentsSection}
+
       </div>
     </body>
   </html>`;

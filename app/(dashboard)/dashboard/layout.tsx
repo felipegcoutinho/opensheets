@@ -1,7 +1,7 @@
 import MonthPicker from "@/components/month-picker/month-picker";
 
 export const metadata = {
-  title: "dashboard | opensheets",
+  title: "Dashboard | opensheets",
 };
 
 export default function RootLayout({ children }) {

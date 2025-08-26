@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { RiInformation2Fill } from "@remixicon/react";
+import ProgressiveBlur from "./magicui/progressive-blur";
 import MoneyValues from "./money-values";
 
 type WidgetProps = {
@@ -84,6 +85,7 @@ export default function Widget({
       </CardHeader>
       <CardContent className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto">
         {children}
+        <ProgressiveBlur height="12%" position="bottom" />
       </CardContent>
     </Card>
   );
