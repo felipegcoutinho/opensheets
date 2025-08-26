@@ -3,6 +3,7 @@ import { money_values } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 import { AnimatedShinyText } from "./magicui/animated-shiny-text";
+import { HyperText } from "./magicui/hyper-text";
 
 export default async function BannerData() {
   const { currentDate, friendlyDate } = UseDates();
@@ -16,9 +17,9 @@ export default async function BannerData() {
         <span className={`${money_values.className} text-xl font-bold`}>
           <AnimatedShinyText>Olá, {shortUserName}! 👋</AnimatedShinyText>
         </span>
-        <span className="text-muted-foreground">
+        <HyperText className="text-muted-foreground text-sm capitalize">
           {friendlyDate(currentDate)}
-        </span>
+        </HyperText>
       </div>
     </Banner>
   );

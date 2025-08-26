@@ -25,7 +25,17 @@ export default async function InstallmentsWidget({ month }: Props) {
 
   return (
     <div className="space-y-2">
-      {transactions.map((t: any) => {
+      {[...transactions]
+        .sort((a: any, b: any) => {
+          const qa = Number(a.qtde_parcela) || 0;
+          const aa = Number(a.parcela_atual) || 0;
+          const qb = Number(b.qtde_parcela) || 0;
+          const ab = Number(b.parcela_atual) || 0;
+          const ra = Math.max(qa - aa, 0);
+          const rb = Math.max(qb - ab, 0);
+          return ra - rb; // menor parcelas restantes primeiro
+        })
+        .map((t: any) => {
         const qtde = Number(t.qtde_parcela) || 0;
         const atual = Number(t.parcela_atual) || 0;
         const perc =
