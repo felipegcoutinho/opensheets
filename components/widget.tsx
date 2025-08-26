@@ -13,7 +13,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { RiInformation2Fill } from "@remixicon/react";
-import { BlurFade } from "./magicui/blur-fade";
 import ProgressiveBlur from "./magicui/progressive-blur";
 import MoneyValues from "./money-values";
 
@@ -37,59 +36,57 @@ export default function Widget({
   information,
 }: WidgetProps) {
   return (
-    <BlurFade delay={0.2} inView>
-      <Card className="h-custom-height-1 relative overflow-hidden">
-        <CardHeader>
-          <div className="flex w-full items-start justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-1">
-                {icon}
-                {title}
-                {information && (
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <RiInformation2Fill
-                        size={16}
-                        className="text-muted-foreground/40"
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p className="ml-1">{information}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-              </CardTitle>
-              <CardDescription className="text-muted-foreground mt-1 text-sm capitalize">
-                {subtitle}
-              </CardDescription>
-            </div>
-
-            {saldo !== undefined && (
-              <div className="flex items-center gap-1 text-sm">
-                <span>Saldo Geral</span>
-                <MoneyValues value={saldo} />
-                {saldo_information && (
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <RiInformation2Fill
-                        size={16}
-                        className="text-muted-foreground/40"
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p className="ml-1">{saldo_information}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-              </div>
-            )}
+    <Card className="h-custom-height-1 relative overflow-hidden">
+      <CardHeader>
+        <div className="flex w-full items-start justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-1">
+              {icon}
+              {title}
+              {information && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <RiInformation2Fill
+                      size={16}
+                      className="text-muted-foreground/40"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="ml-1">{information}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </CardTitle>
+            <CardDescription className="text-muted-foreground mt-1 text-sm capitalize">
+              {subtitle}
+            </CardDescription>
           </div>
-        </CardHeader>
-        <CardContent className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto">
-          {children}
-          <ProgressiveBlur height="12%" position="bottom" />
-        </CardContent>
-      </Card>
-    </BlurFade>
+
+          {saldo !== undefined && (
+            <div className="flex items-center gap-1 text-sm">
+              <span>Saldo Geral</span>
+              <MoneyValues value={saldo} />
+              {saldo_information && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <RiInformation2Fill
+                      size={16}
+                      className="text-muted-foreground/40"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="ml-1">{saldo_information}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </div>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto">
+        {children}
+        <ProgressiveBlur height="12%" position="bottom" />
+      </CardContent>
+    </Card>
   );
 }
