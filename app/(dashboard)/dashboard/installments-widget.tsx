@@ -24,35 +24,42 @@ export default async function InstallmentsWidget({ month }: Props) {
   if (!transactions?.length) return <EmptyCard />;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       {transactions.map((t: any) => {
         const qtde = Number(t.qtde_parcela) || 0;
         const atual = Number(t.parcela_atual) || 0;
-        const perc = qtde > 0 ? Math.min(100, Math.max(0, (atual / qtde) * 100)) : 0;
+        const perc =
+          qtde > 0 ? Math.min(100, Math.max(0, (atual / qtde) * 100)) : 0;
         const terminaEm = calcularMesFinal(t.periodo, qtde, atual);
-        const totalCompra = (Number(t.valor) || 0) * qtde;
+        const valorParcela = Number(t.valor) || 0;
+        const totalCompra = valorParcela * qtde;
+        const restantes = Math.max(qtde - atual, 0);
+        const valorRestante = restantes * valorParcela;
 
         return (
-          <div key={t.id} className="border-b border-dashed pb-3 last:border-0">
-            <div className="flex items-start justify-between gap-4">
+          <div key={t.id} className="border-b border-dashed py-2 last:border-0">
+            <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium">{t.descricao}</p>
+                <p className="truncate text-sm font-medium">{t.descricao}</p>
                 <p className="text-muted-foreground mt-0.5 text-xs">
-                  Parcela {atual} de {qtde} • Termina em {terminaEm}
+                  Parcela {atual}/{qtde} • Restantes {restantes} • Termina em{" "}
+                  {terminaEm}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-sm">Parcela</p>
-                <MoneyValues value={t.valor} />
+                <div className="text-muted-foreground text-xs">Parcela</div>
+                <div className="text-sm leading-none">
+                  <MoneyValues value={valorParcela} />
+                </div>
                 {qtde > 1 ? (
-                  <p className="text-muted-foreground mt-0.5 text-xs">
-                    Total <MoneyValues value={totalCompra} />
-                  </p>
+                  <div className="text-muted-foreground mt-0.5 text-xs">
+                    Restante <MoneyValues value={valorRestante} />
+                  </div>
                 ) : null}
               </div>
             </div>
 
-            <div className="mt-2">
+            <div className="mt-1">
               <Progress
                 value={perc}
                 primary_color="bg-primary"
@@ -67,4 +74,3 @@ export default async function InstallmentsWidget({ month }: Props) {
     </div>
   );
 }
-

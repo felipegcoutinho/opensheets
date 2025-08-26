@@ -53,7 +53,7 @@ export default async function Page(props: {
         </Suspense>
       </div>
 
-      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
         <Suspense fallback={widgetFallback}>
           <ConditionsSection month={month} />
         </Suspense>
@@ -61,13 +61,10 @@ export default async function Page(props: {
           <PaymentFormsSection month={month} />
         </Suspense>
         <Suspense fallback={widgetFallback}>
-          <CategoryPurchasesSection month={month} />
-        </Suspense>
-      </div>
-
-      <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-1">
-        <Suspense fallback={widgetFallback}>
           <InstallmentsSection month={month} />
+        </Suspense>
+        <Suspense fallback={widgetFallback}>
+          <CategoryPurchasesSection month={month} />
         </Suspense>
       </div>
 
