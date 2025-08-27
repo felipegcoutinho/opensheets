@@ -6,8 +6,7 @@ export const updateSession = async (request: NextRequest) => {
   // Inclui também rotas necessárias para o fluxo de auth do Supabase
   const publicPaths = new Set<string>([
     "/", // landing
-    "/login", // login (magic link)
-    "/auth/callback", // callback do provedor
+    "/login", // login (email/senha)
   ]);
 
   try {
