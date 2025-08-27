@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { signInWithPassword, signUpWithPassword } from "../actions/auth/auth";
+import SignupFields from "@/components/auth/signup-fields";
 
 export default async function Login(props) {
   const searchParams = await props.searchParams;
@@ -42,7 +43,7 @@ export default async function Login(props) {
                   <Label htmlFor="password">Senha</Label>
                   <PasswordInput id="password" name="password" placeholder="Sua senha" required />
                 </div>
-                <SubmitButton pendingText="Entrando..." className="mt-2">
+                <SubmitButton pendingText="Entrando..." className="mt-2" formAction={signInWithPassword}>
                   Entrar
                 </SubmitButton>
               </form>
@@ -50,25 +51,7 @@ export default async function Login(props) {
 
             <TabsContent value="signup" className="mt-2">
               <form action={signUpWithPassword as any} className="flex flex-col gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Nome</Label>
-                  <Input id="name" name="name" placeholder="Seu nome" required />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" type="email" placeholder="seu@email.com" required />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">Senha</Label>
-                  <PasswordInput id="password" name="password" placeholder="Mínimo 6 caracteres" required />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="confirm">Confirmar senha</Label>
-                  <PasswordInput id="confirm" name="confirm" placeholder="Repita a senha" required />
-                </div>
-                <SubmitButton pendingText="Criando conta..." className="mt-2">
-                  Criar conta
-                </SubmitButton>
+                <SignupFields pendingText="Criando conta..." formAction={signUpWithPassword} />
               </form>
             </TabsContent>
           </Tabs>
