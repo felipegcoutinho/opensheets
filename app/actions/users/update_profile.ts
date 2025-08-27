@@ -12,8 +12,13 @@ export async function updateUserName(
   _prev: ActionResponse | null,
   formData: FormData,
 ): Promise<ActionResponse> {
-  const name = formData.get("name")?.toString().trim();
-  if (!name) return { success: false, message: "Nome inválido" };
+  const first_name = formData.get("first_name")?.toString().trim();
+  const last_name = formData.get("last_name")?.toString().trim();
+
+  if (!first_name) return { success: false, message: "Primeiro nome é obrigatório" };
+  if (!last_name) return { success: false, message: "Sobrenome é obrigatório" };
+
+  const name = `${first_name} ${last_name}`.trim();
 
   const supabase = createClient();
   const claims = await getClaims();
@@ -22,10 +27,10 @@ export async function updateUserName(
     return { success: false, message: "Usuário não autenticado" };
   }
 
-  // Garante persistência no banco; cria ou atualiza registro (campo único "name")
+  // Garante persistência no banco; cria ou atualiza registro (first_name/last_name)
   const { error } = await supabase
     .from("profiles")
-    .upsert({ id: claims.id, name }, { onConflict: "id" });
+    .upsert({ id: claims.id, first_name, last_name }, { onConflict: "id" });
 
   if (error) {
     // Se houver trigger referenciando coluna inexistente (ex.: updated_at), não bloqueia o fluxo
@@ -36,7 +41,7 @@ export async function updateUserName(
   }
 
   const { error: authError } = await supabase.auth.updateUser({
-    data: { name },
+    data: { first_name, last_name, name },
   });
 
   if (authError) {

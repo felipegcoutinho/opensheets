@@ -5,21 +5,34 @@ export async function getUserName() {
   const claims = await getClaims();
   if (!claims) return null;
 
-  // 1) fonte primária: profiles.name (consistente após update)
+  // 1) fonte primária: profiles.first_name/last_name
   const supabase = createClient();
   const { data } = await supabase
     .from("profiles")
-    .select("name")
+    .select("first_name,last_name")
     .eq("id", claims.id)
     .maybeSingle();
-  if (data?.name) return String(data.name);
+  if (data?.first_name || data?.last_name) {
+    const full = [data?.first_name, data?.last_name]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+    if (full) return full;
+  }
 
-  // 2) fallback: token user_metadata.name
-  const metaName = (claims?.user_metadata as any)?.name as string | undefined;
-  if (metaName) return metaName;
+  // 2) fallback: token user_metadata.first_name/last_name
+  const um = (claims?.user_metadata as any) ?? {};
+  const metaFull = [um?.first_name, um?.last_name]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+  if (metaFull) return metaFull;
+  // 3) fallback: token user_metadata.name
+  const metaName = um?.name as string | undefined;
+  if (metaName) return String(metaName);
 
-  // 3) fallback final: nome bruto do provedor (se existir)
-  return metaName ?? null;
+  // Fallback final
+  return null;
 }
 
 // getFirstName/getLastName removidos após unificar em profiles.name
