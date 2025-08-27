@@ -1,6 +1,5 @@
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,8 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { sendMagicLink, signInWithGoogle } from "../actions/auth/auth";
-import { RiGoogleFill, RiMailSendLine } from "@remixicon/react";
+import { PasswordInput } from "@/components/ui/password-input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { signInWithPassword, signUpWithPassword } from "../actions/auth/auth";
 
 export default async function Login(props) {
   const searchParams = await props.searchParams;
@@ -19,64 +19,63 @@ export default async function Login(props) {
   return (
     <div className="flex flex-col gap-6">
       <Card>
-          <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-3xl font-bold">Acesso por Magic Link</CardTitle>
+        <CardHeader className="space-y-2 text-center">
+          <CardTitle className="text-3xl font-bold">Acesse sua conta</CardTitle>
           <CardDescription className="text-muted-foreground normal-case">
-            Informe seu email e enviaremos um link seguro de acesso.
+          Entre ou crie sua conta usando e-mail e senha.
           </CardDescription>
         </CardHeader>
-
         <CardContent>
-          <form className="flex flex-col gap-4">
-            <div className="space-y-4">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input name="email" type="email" placeholder="Digite seu email" required />
-              </div>
-            </div>
+          <Tabs defaultValue="signin">
+            <TabsList>
+              <TabsTrigger value="signin">Entrar</TabsTrigger>
+              <TabsTrigger value="signup">Criar conta</TabsTrigger>
+            </TabsList>
 
-            <SubmitButton
-              formAction={sendMagicLink as any}
-              pendingText="Enviando link..."
-              className="mt-2"
-            >
-              Enviar magic link
-            </SubmitButton>
-
-            <FormMessage message={searchParams} />
-
-            {searchParams?.success && (
-              <div className="bg-muted/40 text-muted-foreground mt-2 rounded-md border p-4">
-                <div className="mb-1 flex items-center gap-2 font-medium text-foreground">
-                  <RiMailSendLine aria-hidden /> Verifique sua caixa de entrada
+            <TabsContent value="signin" className="mt-2">
+              <form action={signInWithPassword as any} className="flex flex-col gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" name="email" type="email" placeholder="seu@email.com" required />
                 </div>
-                <ul className="list-inside list-disc space-y-1 text-sm">
-                  <li>Abra o e-mail que acabamos de enviar para você.</li>
-                  <li>
-                    Se não encontrar na caixa de entrada, verifique as pastas
-                    de <span className="font-medium">spam</span>,
-                    <span className="font-medium"> lixo eletrônico</span> ou
-                    <span className="font-medium"> promoções</span>.
-                  </li>
-                  <li>
-                    Clique no link do e-mail para acessar com segurança. O link
-                    expira após algum tempo.
-                  </li>
-                  <li>
-                    Digitou o e-mail errado? Basta reenviar o magic link com o
-                    endereço correto.
-                  </li>
-                </ul>
-              </div>
-            )}
-          </form>
+                <div className="grid gap-2">
+                  <Label htmlFor="password">Senha</Label>
+                  <PasswordInput id="password" name="password" placeholder="Sua senha" required />
+                </div>
+                <SubmitButton pendingText="Entrando..." className="mt-2">
+                  Entrar
+                </SubmitButton>
+              </form>
+            </TabsContent>
 
-          <form action={signInWithGoogle} className="mt-4">
-            <Button variant="outline" className="flex w-full items-center gap-2">
-              <RiGoogleFill className="text-orange-600" size={16} aria-hidden />
-              Entrar com Google
-            </Button>
-          </form>
+            <TabsContent value="signup" className="mt-2">
+              <form action={signUpWithPassword as any} className="flex flex-col gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="name">Nome</Label>
+                  <Input id="name" name="name" placeholder="Seu nome" required />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" name="email" type="email" placeholder="seu@email.com" required />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="password">Senha</Label>
+                  <PasswordInput id="password" name="password" placeholder="Mínimo 6 caracteres" required />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="confirm">Confirmar senha</Label>
+                  <PasswordInput id="confirm" name="confirm" placeholder="Repita a senha" required />
+                </div>
+                <SubmitButton pendingText="Criando conta..." className="mt-2">
+                  Criar conta
+                </SubmitButton>
+              </form>
+            </TabsContent>
+          </Tabs>
+
+          <div className="mt-4">
+            <FormMessage message={searchParams} />
+          </div>
         </CardContent>
       </Card>
     </div>
