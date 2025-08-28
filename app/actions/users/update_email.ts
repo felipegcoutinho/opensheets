@@ -30,7 +30,6 @@ export async function updateUserEmail(
   return {
     success: true,
     message:
-      "Se necessário, enviamos um link de confirmação para o novo e-mail.",
+      "Enviamos os links de confirmação. Confirme no novo e também no e-mail atual (quando aplicável) para concluir a alteração.",
   };
 }
-

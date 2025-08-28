@@ -30,7 +30,7 @@ export default function UpdateEmailForm({ defaultEmail = "" }: { defaultEmail?: 
         <Input id="confirm" name="confirm" type="email" placeholder="repita o e-mail" required />
       </div>
 
-      <Button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending} className="w-full">
         {isPending ? "Salvando..." : "Atualizar e-mail"}
       </Button>
     </form>

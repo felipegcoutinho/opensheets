@@ -1,13 +1,12 @@
-import { getUserName } from "@/app/actions/users/fetch_users";
+import { getEmail, getUserName } from "@/app/actions/users/fetch_users";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RiErrorWarningLine } from "@remixicon/react";
 import DeleteUserForm from "./delete-user-form";
 import FeedbackForm from "./feedback-form";
+import UpdateEmailForm from "./update-email-form";
 import UpdateNameForm from "./update-name-form";
 import UpdatePasswordForm from "./update-password-form";
-import UpdateEmailForm from "./update-email-form";
-import { getEmail } from "@/app/actions/users/fetch_users";
 
 export default async function AjustesPage() {
   const [name, email] = await Promise.all([getUserName(), getEmail()]);
@@ -19,10 +18,18 @@ export default async function AjustesPage() {
         <TabsTrigger value="password">Alterar senha</TabsTrigger>
         <TabsTrigger value="email">Alterar e-mail</TabsTrigger>
         <TabsTrigger value="feedback">Feedback</TabsTrigger>
-        <TabsTrigger value="delete">Deletar conta</TabsTrigger>
+        <TabsTrigger value="delete"><span  className="text-red-500">Deletar conta</span></TabsTrigger>
       </TabsList>
       <TabsContent value="name">
-        <UpdateNameForm defaultName={name ?? ""} />
+        <div className="max-w-xl space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold">Alterar nome</h3>
+            <p className="text-muted-foreground text-sm">
+              Atualize como seu nome aparece no OpenSheets. Esse nome pode ser exibido em diferentes seções do app e em comunicações.
+            </p>
+          </div>
+          <UpdateNameForm defaultName={name ?? ""} />
+        </div>
       </TabsContent>
       <TabsContent value="password">
         <div className="max-w-xl space-y-4">
@@ -41,7 +48,7 @@ export default async function AjustesPage() {
           <div className="space-y-2">
             <h3 className="text-lg font-semibold">Alterar e-mail</h3>
             <p className="text-muted-foreground text-sm">
-              Atualize o e-mail associado à sua conta. Podemos enviar um link de confirmação para validar a alteração.
+              Atualize o e-mail associado à sua conta. Você precisará confirmar os links enviados para o novo e também para o e-mail atual (quando aplicável) para concluir a alteração.
             </p>
           </div>
           <UpdateEmailForm defaultEmail={email ?? ""} />
