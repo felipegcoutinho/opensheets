@@ -6,8 +6,6 @@ import DeleteUserForm from "./delete-user-form";
 import FeedbackForm from "./feedback-form";
 import UpdateNameForm from "./update-name-form";
 
-export const metadata = { title: "Ajustes | OpenSheets" };
-
 export default async function AjustesPage() {
   const name = await getUserName();
 
