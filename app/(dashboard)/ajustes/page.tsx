@@ -5,19 +5,47 @@ import { RiErrorWarningLine } from "@remixicon/react";
 import DeleteUserForm from "./delete-user-form";
 import FeedbackForm from "./feedback-form";
 import UpdateNameForm from "./update-name-form";
+import UpdatePasswordForm from "./update-password-form";
+import UpdateEmailForm from "./update-email-form";
+import { getEmail } from "@/app/actions/users/fetch_users";
 
 export default async function AjustesPage() {
-  const name = await getUserName();
+  const [name, email] = await Promise.all([getUserName(), getEmail()]);
 
   return (
     <Tabs defaultValue="name" className="mt-4">
       <TabsList>
         <TabsTrigger value="name">Altere seu nome</TabsTrigger>
+        <TabsTrigger value="password">Alterar senha</TabsTrigger>
+        <TabsTrigger value="email">Alterar e-mail</TabsTrigger>
         <TabsTrigger value="feedback">Feedback</TabsTrigger>
         <TabsTrigger value="delete">Deletar conta</TabsTrigger>
       </TabsList>
       <TabsContent value="name">
         <UpdateNameForm defaultName={name ?? ""} />
+      </TabsContent>
+      <TabsContent value="password">
+        <div className="max-w-xl space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold">Alterar senha</h3>
+            <p className="text-muted-foreground text-sm">
+              Defina uma nova senha para sua conta. Guarde-a em local seguro.
+            </p>
+          </div>
+          <UpdatePasswordForm defaultEmail={email ?? ""} />
+        </div>
+      </TabsContent>
+
+      <TabsContent value="email">
+        <div className="max-w-xl space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold">Alterar e-mail</h3>
+            <p className="text-muted-foreground text-sm">
+              Atualize o e-mail associado à sua conta. Podemos enviar um link de confirmação para validar a alteração.
+            </p>
+          </div>
+          <UpdateEmailForm defaultEmail={email ?? ""} />
+        </div>
       </TabsContent>
       <TabsContent value="feedback">
         <div className="max-w-xl space-y-4">
