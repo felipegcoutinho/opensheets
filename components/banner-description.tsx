@@ -1,6 +1,6 @@
+import { RiInformation2Line } from "@remixicon/react";
 import React from "react";
 import { Card } from "./ui/card";
-import { RiInformation2Line } from "@remixicon/react";
 
 type BannerDescriptionProps = {
   title: string;

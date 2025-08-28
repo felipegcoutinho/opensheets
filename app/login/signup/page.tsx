@@ -9,14 +9,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import Header from "@/components/header";
+// Header removido nesta tela para seguir o novo layout de autenticação
 
 export default async function SignupPage(props) {
   const searchParams = await props.searchParams;
 
   return (
     <div className="flex flex-col gap-6">
-      <Header />
       <Card>
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-3xl font-bold">Criar conta</CardTitle>

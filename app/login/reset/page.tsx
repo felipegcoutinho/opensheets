@@ -11,14 +11,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import Header from "@/components/header";
+// Header removido nesta tela para seguir o novo layout de autenticação
 
 export default async function ResetPasswordPage(props) {
   const searchParams = await props.searchParams;
 
   return (
     <div className="flex flex-col gap-6">
-      <Header />
       <Card>
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-3xl font-bold">Redefinir senha</CardTitle>
@@ -33,7 +32,7 @@ export default async function ResetPasswordPage(props) {
               <Input id="email" name="email" type="email" placeholder="seu@email.com" required />
             </div>
 
-            <SubmitButton pendingText="Enviando..." className="mt-2" formAction={sendPasswordResetEmailFromReset}>
+            <SubmitButton pendingText="Enviando..." className="mt-2 w-full" formAction={sendPasswordResetEmailFromReset}>
               Enviar link de redefinição
             </SubmitButton>
           </form>

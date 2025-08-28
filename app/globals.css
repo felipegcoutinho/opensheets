@@ -175,6 +175,10 @@ body {
 }
 
 @layer base {
+  html {
+    /* Rolagem suave para âncoras */
+    scroll-behavior: smooth;
+  }
   * {
     @apply border-border outline-ring/50;
   }
@@ -188,11 +192,30 @@ body {
   }
 }
 
+/* Garante que âncoras não fiquem escondidas sob o header fixo */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Padrão pixelado leve para o layout de autenticação */
+@layer utilities {
+  .pixelated-bg {
+    /* Cor base do painel usando o sistema */
+    background-color: var(--sidebar);
+    /* Dois grids de pontos deslocados para dar sensação pixelada sutil */
+    background-image:
+      radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 1px),
+      radial-gradient(circle at 1px 1px, var(--accent) 1px, transparent 1px);
+    background-size: 12px 12px, 12px 12px;
+    background-position: 0 0, 6px 6px;
   }
 }

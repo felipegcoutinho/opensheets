@@ -12,14 +12,14 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { signInWithPassword } from "../actions/auth/auth";
 import Link from "next/link";
-import Header from "@/components/header";
+// Header removido nesta tela para seguir o novo layout de autenticação
 
 export default async function Login(props) {
   const searchParams = await props.searchParams;
 
   return (
     <div className="flex flex-col gap-6">
-      <Header />
+      {/* Header removido nesta tela em favor do layout de autenticação */}
       <Card>
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-3xl font-bold">Acesse sua conta</CardTitle>
@@ -37,17 +37,17 @@ export default async function Login(props) {
               <Label htmlFor="password">Senha</Label>
               <PasswordInput id="password" name="password" placeholder="Sua senha" required />
             </div>
-            <div className="flex items-center justify-between">
-              <Link href="/login/reset" className="text-muted-foreground hover:text-foreground text-xs underline underline-offset-2">
-                Esqueci a senha
-              </Link>
-              <Link href="/login/signup" className="text-muted-foreground hover:text-foreground text-xs underline underline-offset-2">
-                Não tem conta? Criar conta
-              </Link>
-            </div>
-            <SubmitButton pendingText="Entrando..." className="mt-1" formAction={signInWithPassword}>
+            <SubmitButton pendingText="Entrando..." className="mt-1 w-full" formAction={signInWithPassword}>
               Entrar
             </SubmitButton>
+            <div className="mt-2 flex items-center justify-between text-xs">
+              <Link href="/login/reset" className="text-muted-foreground hover:text-foreground underline underline-offset-2">
+                Esqueci a senha
+              </Link>
+              <Link href="/login/signup" className="text-muted-foreground hover:text-foreground underline underline-offset-2">
+                Criar conta
+              </Link>
+            </div>
           </form>
 
           <div className="mt-4">

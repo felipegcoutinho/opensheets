@@ -91,7 +91,7 @@ export default function SignupFields({ pendingText = "Criando conta...", formAct
 
       <SubmitButton
         pendingText={pendingText}
-        className="mt-2"
+        className="mt-2 w-full"
         disabled={!requirements.isValid}
         formAction={formAction}
       >

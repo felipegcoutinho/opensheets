@@ -1,5 +1,4 @@
-"use client";
-
+import { getUserSession } from "@/app/actions/users/fetch_users";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -9,14 +8,19 @@ import {
   RiBookmark3Line,
   RiCalendarLine,
   RiCheckboxCircleLine,
+  RiFlashlightLine,
+  RiMailLine,
   RiPieChartLine,
+  RiShieldCheckLine,
   RiUserSmileLine,
   RiWalletLine,
 } from "@remixicon/react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Index() {
+export default async function Index() {
+  const session = await getUserSession();
+  const isLoggedIn = Boolean((session as any)?.id);
   const features = [
     {
       title: "Contas e Saldos",
@@ -119,12 +123,20 @@ export default function Index() {
               em um dashboard claro, rápido e seguro.
             </p>
             <div className="mt-8 flex items-center justify-center gap-3 md:justify-start">
-              <Button asChild size="lg">
-                <Link href="/login">Começar agora</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/login">Fazer login</Link>
-              </Button>
+              {isLoggedIn ? (
+                <Button asChild size="lg">
+                  <Link href="/dashboard">Ir para o dashboard</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild size="lg">
+                    <Link href="/login">Começar agora</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link href="/login">Fazer login</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -146,11 +158,82 @@ export default function Index() {
           </div>
         </div>
 
-        {/* (removido) seção de logos */}
       </section>
 
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-4 pb-4">
+      {/* Sobre */}
+      <section id="sobre" className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mb-8 text-center md:text-left">
+          <h2 className="text-3xl font-semibold tracking-tight">Sobre</h2>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Por que o opensheets é diferente e como te ajuda no dia a dia.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-5">
+          <div className="md:col-span-3 leading-relaxed text-pretty">
+            <div className="rounded-2xl border bg-card p-6 shadow-sm">
+              <p className="text-foreground/90">
+                O opensheets centraliza contas, boletos, cartões, lançamentos e orçamentos em um único lugar.
+                Com painéis claros, alertas e automações, você acompanha o que importa e ganha tempo para agir.
+              </p>
+              <ul className="text-foreground/80 mt-4 grid gap-2 text-sm">
+                <li className="flex items-center gap-2"><span className="inline-flex size-5 items-center justify-center rounded bg-primary/10 text-primary">✓</span> Visão 360º do seu dinheiro</li>
+                <li className="flex items-center gap-2"><span className="inline-flex size-5 items-center justify-center rounded bg-primary/10 text-primary">✓</span> Alertas e lembretes sem complicação</li>
+                <li className="flex items-center gap-2"><span className="inline-flex size-5 items-center justify-center rounded bg-primary/10 text-primary">✓</span> Simples de começar, poderoso no uso</li>
+              </ul>
+            </div>
+          </div>
+          <div className="md:col-span-2 grid grid-cols-3 gap-3">
+            <div className="rounded-lg border p-4 text-center">
+              <div className="text-2xl font-semibold">1 min</div>
+              <div className="text-muted-foreground text-xs">para começar</div>
+            </div>
+            <div className="rounded-lg border p-4 text-center">
+              <div className="text-2xl font-semibold">0 atritos</div>
+              <div className="text-muted-foreground text-xs">UX direto ao ponto</div>
+            </div>
+            <div className="rounded-lg border p-4 text-center">
+              <div className="text-2xl font-semibold">+produtivo</div>
+              <div className="text-muted-foreground text-xs">menos tempo em planilhas</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Soluções */}
+      <section id="solucoes" className="mx-auto max-w-6xl px-4 pb-4">
+        <div className="mb-6">
+          <h2 className="text-3xl font-semibold tracking-tight">Soluções</h2>
+          <p className="text-muted-foreground mt-2 text-sm">Recursos que simplificam a organização e dão clareza.</p>
+        </div>
+        <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <Card>
+            <CardContent className="flex items-start gap-3 p-6">
+              <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiFlashlightLine className="size-5" /></span>
+              <div>
+                <h3 className="text-sm font-semibold">Automação</h3>
+                <p className="text-muted-foreground mt-1 text-xs">Fluxos simples para alertas e follow‑ups automáticos.</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="flex items-start gap-3 p-6">
+              <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiShieldCheckLine className="size-5" /></span>
+              <div>
+                <h3 className="text-sm font-semibold">Segurança</h3>
+                <p className="text-muted-foreground mt-1 text-xs">Sessões seguras e dados protegidos por padrão.</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="flex items-start gap-3 p-6">
+              <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiArrowUpLine className="size-5" /></span>
+              <div>
+                <h3 className="text-sm font-semibold">Desempenho</h3>
+                <p className="text-muted-foreground mt-1 text-xs">Interface rápida, com foco no que importa.</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, idx) => (
             <Card key={idx} className="transition-all hover:shadow-md">
@@ -287,6 +370,40 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Contato */}
+      <section id="contato" className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mb-8 text-center md:text-left">
+          <h2 className="text-3xl font-semibold tracking-tight">Contato</h2>
+          <p className="text-muted-foreground mt-2 text-sm">Fale com a gente para dúvidas, sugestões ou parcerias.</p>
+        </div>
+        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
+          <Card className="md:col-span-2">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3">
+                <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiMailLine className="size-5" /></span>
+                <div>
+                  <h3 className="text-sm font-semibold">E-mail</h3>
+                  <p className="text-muted-foreground mt-1 text-sm">Estamos disponíveis para responder rapidamente.</p>
+                  <div className="mt-3">
+                    <a className="text-primary underline underline-offset-4" href="mailto:contato@opensheets.app">
+                      contato@opensheets.app
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <div className="rounded-2xl border bg-card p-6">
+            <h4 className="text-sm font-semibold">Preferências de contato</h4>
+            <ul className="text-muted-foreground mt-2 grid gap-2 text-sm">
+              <li>• Atendimento em horário comercial (BR)</li>
+              <li>• Resposta média em poucas horas</li>
+              <li>• Dúvidas técnicas, sugestões e parcerias</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* CTA final */}
       <section className="mx-auto max-w-6xl px-4 pb-16">
         <Card className="from-primary/[0.06] border-dashed bg-gradient-to-r via-transparent to-sky-400/[0.06]">
@@ -299,12 +416,20 @@ export default function Index() {
               </p>
             </div>
             <div className="flex gap-3">
-              <Button asChild>
-                <Link href="/login">Criar conta</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/login">Entrar</Link>
-              </Button>
+              {isLoggedIn ? (
+                <Button asChild>
+                  <Link href="/dashboard">Ir para o dashboard</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild>
+                    <Link href="/login">Criar conta</Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/login">Entrar</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </CardContent>
         </Card>

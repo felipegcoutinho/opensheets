@@ -21,8 +21,19 @@ export default async function Header() {
           </Link>
         </div>
 
-        {/* Área de login/usuário ocupando o espaço à direita */}
-        <div className="flex flex-1 justify-end">
+        {/* Menu e ação à direita */}
+        <div className="flex flex-1 items-center justify-end gap-4">
+          <nav className="hidden items-center gap-6 md:flex">
+            <Link href="/#sobre" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              Sobre
+            </Link>
+            <Link href="/#solucoes" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              Soluções
+            </Link>
+            <Link href="/#contato" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              Contato
+            </Link>
+          </nav>
           {session ? (
             <Link href="/dashboard">
               <Button size="sm" className="gap-2 shadow-sm">
@@ -30,11 +41,7 @@ export default async function Header() {
                 Ir para Dashboard
               </Button>
             </Link>
-          ) : (
-            <Link href="/login">
-              <Button>Login</Button>
-            </Link>
-          )}
+          ) : null}
         </div>
       </div>
     </header>
