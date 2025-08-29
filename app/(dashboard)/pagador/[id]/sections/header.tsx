@@ -1,25 +1,35 @@
-import MoneyValues from "@/components/money-values";
-import PaymentMethodLogo from "@/components/payment-method-logo";
-import { Card } from "@/components/ui/card";
+import { getPayersName } from "@/app/actions/pagadores/fetch_pagadores";
 import {
-  RiBankCardLine,
-  RiBarcodeLine,
+  getPayerExpenseTotalsByPeriods,
+  getTransactionsByPayer,
+} from "@/app/actions/transactions/fetch_transactions";
+import MoneyValues from "@/components/money-values";
+import { Card } from "@/components/ui/card";
+import { UseDates } from "@/hooks/use-dates";
+import {
   RiMailSendLine,
-  RiPixLine,
   RiUser2Line,
   RiVerifiedBadgeFill,
 } from "@remixicon/react";
-import SendEmailButton from "../send-email-button";
-import { getPayersName } from "@/app/actions/pagadores/fetch_pagadores";
-import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transactions";
+import { promises as fs } from "fs";
+import path from "path";
+import UpdatePayer from "../../modal/update-payer";
 import {
   Transaction,
   aggregateByBoleto,
   aggregateByCard,
   aggregateByOtherMethods,
 } from "../aggregations";
+import SendEmailButton from "../send-email-button";
+import LastSixChart from "./last-six-chart";
 
-export default async function PayerHeaderSection({ id, month }: { id: string; month: string }) {
+export default async function PayerHeaderSection({
+  id,
+  month,
+}: {
+  id: string;
+  month: string;
+}) {
   const [transactions, payer] = await Promise.all([
     getTransactionsByPayer(month, id),
     getPayersName(id),
@@ -28,8 +38,10 @@ export default async function PayerHeaderSection({ id, month }: { id: string; mo
   const list: Transaction[] = Array.isArray(transactions) ? transactions : [];
 
   const { items: cardsSummary, total: cardsTotal } = aggregateByCard(list);
-  const { items: boletosSummary, total: boletosTotal } = aggregateByBoleto(list);
-  const { items: outrosSummary, total: outrosTotal } = aggregateByOtherMethods(list);
+  const { items: boletosSummary, total: boletosTotal } =
+    aggregateByBoleto(list);
+  const { items: outrosSummary, total: outrosTotal } =
+    aggregateByOtherMethods(list);
   const totalGeral = cardsTotal + boletosTotal + outrosTotal;
 
   const payerName = payer?.nome || list[0]?.pagadores?.nome || "—";
@@ -55,18 +67,46 @@ export default async function PayerHeaderSection({ id, month }: { id: string; mo
     }
   })();
 
+  // Carrega avatares para o modal de edição
+  const avatars = await (async () => {
+    try {
+      const dir = path.join(process.cwd(), "public", "avatars");
+      const files = await fs.readdir(dir);
+      return files.filter((f) => /\.(png|jpg|jpeg|svg|webp)$/i.test(f));
+    } catch {
+      return [] as string[];
+    }
+  })();
+
   return (
-    <div className="grid gap-3 sm:grid-cols-4">
-      <Card className="col-span-4 p-4 sm:col-span-2 lg:col-span-1">
+    <div className="grid gap-3 sm:grid-cols-6">
+      <Card className="col-span-4 p-4 sm:col-span-2 lg:col-span-2">
         <div className="text-muted-foreground flex items-center justify-between text-xs">
           <span className="flex items-center gap-1">
             <RiUser2Line aria-hidden /> <span>Pagador</span>
           </span>
+          {payer?.id ? (
+            <UpdatePayer
+              item={{
+                id: payer.id,
+                nome: payerName,
+                email: payerEmail,
+                status: payer?.status || "ativo",
+                role: payer?.role,
+                anotacao: (payer as any)?.anotacao,
+                foto: payer?.foto,
+                is_auto_send: payer?.is_auto_send,
+              }}
+              avatars={avatars}
+            />
+          ) : null}
         </div>
 
         <div className="mt-2 flex flex-col gap-1">
           <div className="flex items-center gap-1">
-            <span className="text-lg font-semibold capitalize">{payerName}</span>
+            <span className="text-lg font-semibold capitalize">
+              {payerName}
+            </span>
             {payer?.role === "principal" && (
               <RiVerifiedBadgeFill className="text-blue-500" size={16} />
             )}
@@ -84,7 +124,7 @@ export default async function PayerHeaderSection({ id, month }: { id: string; mo
               <span>{payerEmail}</span>
               {lastMailLabel && (
                 <span className="bg-muted ml-2 inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px]">
-                  Último e-mail: {lastMailLabel}
+                  Último resumo enviado: {lastMailLabel}
                 </span>
               )}
             </div>
@@ -107,7 +147,7 @@ export default async function PayerHeaderSection({ id, month }: { id: string; mo
         </div>
       </Card>
 
-      <Card className="col-span-4 p-4 sm:col-span-2 lg:col-span-3">
+      <Card className="col-span-4 p-4 sm:col-span-2 lg:col-span-2">
         <div className="text-muted-foreground text-xs">Total no mês</div>
         <div className="mt-2 text-3xl leading-tight font-bold">
           <MoneyValues value={totalGeral} />
@@ -151,7 +191,48 @@ export default async function PayerHeaderSection({ id, month }: { id: string; mo
           </div>
         </div>
       </Card>
+
+      {/* Card: Últimos 6 meses (total por mês) */}
+      <LastSixMonthsCard id={id} currentMonth={month} />
     </div>
   );
 }
 
+async function LastSixMonthsCard({
+  id,
+  currentMonth,
+}: {
+  id: string;
+  currentMonth: string;
+}) {
+  const { getLastSixMonths } = UseDates();
+  const periods = getLastSixMonths(currentMonth);
+
+  // Busca agregada: totais de despesas por período em única consulta
+  const monthlyTotals = await getPayerExpenseTotalsByPeriods(periods, id);
+
+  const formatMonth = (periodo: string) => {
+    const [mes] = String(periodo).split("-");
+    return mes.slice(0, 3);
+  };
+
+  const formatCurrency = (n: number) =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(n);
+
+  return (
+    <Card className="col-span-4 p-4 sm:col-span-2 lg:col-span-2">
+      <div className="text-muted-foreground text-xs">Últimos 6 meses</div>
+      <div className="mt-1">
+        <LastSixChart
+          data={monthlyTotals.map((m) => ({
+            month: formatMonth(m.periodo),
+            total: m.total,
+          }))}
+        />
+      </div>
+    </Card>
+  );
+}

@@ -1,18 +1,18 @@
 "use client";
-import { useActionState, useEffect, useState } from "react";
-import { useFormStatus } from "react-dom";
+import { sendPayerMonthlySummary } from "@/app/actions/emails/send_payer_summary";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
-import { sendPayerMonthlySummary } from "@/app/actions/emails/send_payer_summary";
+import { useActionState, useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
 
 const initial = { ok: false, message: "" };
 
@@ -20,7 +20,7 @@ function Submit() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" disabled={pending}>
-      {pending ? "Enviando..." : "Enviar e-mail"}
+      {pending ? "Enviando..." : "Enviar resumo"}
     </Button>
   );
 }
@@ -75,7 +75,7 @@ export default function SendEmailButton({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button type="button" variant="default">
-            Enviar e-mail
+            Enviar resumo
           </Button>
         </DialogTrigger>
         <DialogContent>

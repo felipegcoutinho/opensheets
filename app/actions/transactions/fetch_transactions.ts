@@ -202,6 +202,36 @@ export async function getIncomeExpenseByPeriods(periods: string[]) {
   return periods.map((periodo) => ({ periodo, ...map.get(periodo)! }));
 }
 
+// Totais de despesas por período para um pagador específico (uma única consulta)
+export async function getPayerExpenseTotalsByPeriods(
+  periods: string[],
+  payerId: string,
+) {
+  const supabase = createClient();
+
+  if (!periods?.length || !payerId) return [] as { periodo: string; total: number }[];
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select("periodo, valor.sum()")
+    .in("periodo", periods)
+    .eq("pagador_id", payerId)
+    .eq("tipo_transacao", "despesa");
+
+  if (error) throw error;
+
+  const map = new Map<string, number>();
+  for (const p of periods) map.set(p, 0);
+
+  (data || []).forEach((row: any) => {
+    const periodo = String(row.periodo);
+    const sum = Number((row as any).sum ?? (row as any).valor) || 0;
+    map.set(periodo, (map.get(periodo) || 0) + sum);
+  });
+
+  return periods.map((periodo) => ({ periodo, total: map.get(periodo)! }));
+}
+
 export async function getSumPaidExpense(month: string) {
   const supabase = createClient();
 
