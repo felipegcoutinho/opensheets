@@ -1,4 +1,6 @@
 import {
+  Barlow_Condensed,
+  Encode_Sans_Condensed,
   Gabarito,
   Geist,
   Geist_Mono,
@@ -13,7 +15,7 @@ const ibm_plex = IBM_Plex_Sans({
   subsets: ["latin"],
 });
 
-const roboto_condensed = Roboto_Condensed({
+const encode = Encode_Sans_Condensed({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
@@ -74,6 +76,6 @@ const sofascore_mono = localFont({
 });
 
 const default_font = itau;
-const money_values = roboto_condensed;
+const money_values = encode;
 
 export { default_font, money_values };

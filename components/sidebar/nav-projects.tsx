@@ -69,6 +69,7 @@ export const NavProjects = memo(function NavProjects({
                         contas={contas}
                         categorias={categorias}
                         item={item}
+                        isActive={isActive}
                       />
                     </div>
                   </SidebarMenuButton>
