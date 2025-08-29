@@ -1,8 +1,9 @@
 "use client";
 import MoneyValues from "@/components/money-values";
+import BadgeSystem from "@/components/payer-badge";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
-import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,7 +21,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   RiAttachmentLine,
   RiBankCardLine,
@@ -31,6 +31,7 @@ import {
   RiMessage2Line,
   RiMoreLine,
 } from "@remixicon/react";
+import Link from "next/link";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
@@ -42,6 +43,9 @@ const {
   getBadgeStyle,
   getDescricao,
   getLogo,
+  getTransactionBadgeColor,
+  getPayerRoleBadgeColor,
+  getSystemBadgeColor,
 } = UseStyles();
 
 export const getColumns = (
@@ -96,13 +100,14 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <Badge variant={"sistema"}>
-              {DateFormat(item.data_vencimento)}
-            </Badge>
+            <BadgeSystem
+              label={DateFormat(item.data_vencimento)}
+              color={getSystemBadgeColor()}
+            />
           )}
 
           {item.condicao === "parcelado" && (
-            <Badge variant={"sistema"}>
+            <Badge variant={"outline"}>
               {item.parcela_atual} de {item.qtde_parcela}
             </Badge>
           )}
@@ -152,9 +157,10 @@ export const getColumns = (
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Badge variant={getBadgeStyle(item.tipo_transacao)}>
-          {item.tipo_transacao}
-        </Badge>
+        <BadgeSystem
+          label={item.tipo_transacao}
+          color={getTransactionBadgeColor(item.tipo_transacao)}
+        />
       );
     },
   },
@@ -229,12 +235,12 @@ export const getColumns = (
       const src = resolveFotoSrc(foto);
 
       const content = (
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-1">
           <Avatar className="size-6">
             {src ? <AvatarImage src={src} alt={nome || "Pagador"} /> : null}
             <AvatarFallback>{(nome?.[0] || "P").toUpperCase()}</AvatarFallback>
           </Avatar>
-          <Badge variant={getResponsableStyle(role)}>{nome}</Badge>
+          <BadgeSystem label={nome} color={getPayerRoleBadgeColor(role)} />
         </span>
       );
 
@@ -298,8 +304,8 @@ export const getColumns = (
           <PaymentMethodLogo
             url_name={`/logos/${logo}`}
             descricao={descricao}
-            height={36}
-            width={36}
+            height={32}
+            width={32}
           />
           {Icon && <Icon size={18} className="size-3.5" />}
         </Link>

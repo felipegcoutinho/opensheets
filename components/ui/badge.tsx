@@ -13,22 +13,14 @@ const badgeVariants = cva(
           "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
         secondary:
           "border-transparent bg-secondary text-primary-foreground [a&]:hover:bg-secondary/90",
-        destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        destructive_lite:
-          "border-destructive bg-destructive/5 text-destructive dark:text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        receita:
-          "border border-green-400 bg-green-50 text-green-600 dark:text-green-50 dark:bg-green-600/20 dark:border-green-900",
-        despesa:
-          "border border-red-400 bg-red-50 text-red-600 dark:text-red-50 dark:bg-red-600/20 dark:border-red-900",
-        principal:
-          "border border-blue-400 bg-blue-50 text-blue-600 dark:text-blue-50 dark:bg-blue-600/20 dark:border-blue-900",
-        sistema:
-          "border border-neutral-400 bg-neutral-50 text-neutral-600 dark:text-neutral-50 dark:bg-neutral-600/20",
-        outros:
-          "border border-orange-400 bg-orange-50 text-orange-600 dark:text-orange-50 dark:bg-orange-600/20",
+        destructive:
+          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        receita_lite:
+          "border-chart-1 bg-chart-1/5 text-chart-1 dark:text-white [a&]:hover:bg-chart-1/90 focus-visible:ring-chart-1/20 dark:focus-visible:ring-chart-1/40 dark:bg-chart-1/60",
+        despesa_lite:
+          "border-chart-2 bg-chart-2/5 text-chart-2 dark:text-white [a&]:hover:bg-chart-2/90 focus-visible:ring-chart-2/20 dark:focus-visible:ring-chart-2/40 dark:bg-chart-2/60",
       },
     },
     defaultVariants: {

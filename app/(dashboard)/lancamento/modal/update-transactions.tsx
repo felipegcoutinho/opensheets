@@ -163,7 +163,7 @@ export default function UpdateTransactions({
         >
           <input type="hidden" name="id" value={item.id} />
 
-          <div className="mb-1 flex w-full gap-2">
+          <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
               <Label>
                 Data da Transação
@@ -196,7 +196,7 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          <div className="flex w-full gap-2">
+          <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
               <Label>
                 Descrição
@@ -218,50 +218,51 @@ export default function UpdateTransactions({
 
             <div className="w-1/2">
               <Label>
-                Valor
+                Categoria
                 <Required />
               </Label>
-              <MoneyInput defaultValue={itemValor} name="valor" />
+              <Select
+                defaultValue={itemCategoriaId.toString()}
+                name="categoria_id"
+              >
+                <SelectTrigger className="w-full capitalize">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getCategorias
+                    ?.filter(
+                      (categoria) =>
+                        categoria.tipo_categoria === itemTipoTransacao,
+                    )
+                    .map((item) => {
+                      const Icon = categoryIconsMap[item.icone];
+                      return (
+                        <SelectItem
+                          className="capitalize"
+                          key={item.id}
+                          value={item.id.toString()}
+                        >
+                          <span className="flex items-center gap-2">
+                            {Icon && <Icon className="h-4 w-4" />}
+                            {item.nome}
+                          </span>
+                        </SelectItem>
+                      );
+                    })}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <div className="w-full">
+          <div className="mb-2 w-full">
             <Label>
-              Categoria
+              Valor
               <Required />
             </Label>
-            <Select
-              defaultValue={itemCategoriaId.toString()}
-              name="categoria_id"
-            >
-              <SelectTrigger className="w-full capitalize">
-                <SelectValue placeholder="Selecione" />
-              </SelectTrigger>
-              <SelectContent>
-                {getCategorias
-                  ?.filter(
-                    (categoria) =>
-                      categoria.tipo_categoria === itemTipoTransacao,
-                  )
-                  .map((item) => {
-                    const Icon = categoryIconsMap[item.icone];
-                    return (
-                      <SelectItem
-                        className="capitalize"
-                        key={item.id}
-                        value={item.id.toString()}
-                      >
-                        <span className="flex items-center gap-2">
-                          {Icon && <Icon className="h-4 w-4" />}
-                          {item.nome}
-                        </span>
-                      </SelectItem>
-                    );
-                  })}
-              </SelectContent>
-            </Select>
+            <MoneyInput defaultValue={itemValor} name="valor" />
           </div>
 
+          <div className="w-1/2" />
           {itemFormaPagamento !== "cartão de crédito" && (
             <Card className="w-full flex-row justify-between p-4">
               <div className="flex flex-col">

@@ -1,5 +1,6 @@
 "use client";
 
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,11 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
+import { Table } from "@tanstack/react-table";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef } from "react";
 import CreateTransactions from "../modal/create-transactions"; // Ajuste o caminho conforme necessário
 import { ComboboxFilter } from "./combo-filter"; // Ajuste o caminho conforme necessário
-import { Table } from "@tanstack/react-table";
-import { useEffect, useMemo, useRef } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface TransactionTableFiltersProps<TData> {
   table: Table<TData>; // Adicionado para acesso a métodos/estados da tabela se necessário
@@ -206,10 +208,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Transação" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todos</span>
+            </SelectItem>
             {tipoTransacaoOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -230,10 +234,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Condição" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todos</span>
+            </SelectItem>
             {condicaoOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -256,10 +262,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Pagamento" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todas</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todas</span>
+            </SelectItem>
             {formaPagamentoOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -280,10 +288,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Pagador" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todos</span>
+            </SelectItem>
             {responsavelOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -296,6 +306,11 @@ export function TransactionTableFilters<TData>({
           onChange={(value) =>
             setColumnFilterValue("categoria", value as string)
           }
+          getIcon={(nome) => {
+            const cat = getCategorias?.find?.((c) => c.nome === nome);
+            const Icon = cat ? categoryIconsMap[cat.icone] : undefined;
+            return Icon ? <Icon className="mr-2 h-4 w-4" /> : null;
+          }}
         />
 
         <ComboboxFilter
@@ -305,6 +320,18 @@ export function TransactionTableFilters<TData>({
           onChange={(value) =>
             setColumnFilterValue("conta_cartao", value as string)
           }
+          getIcon={(desc) => {
+            const conta = getAccount?.find?.((a) => a.descricao === desc);
+            const cartao = getCards?.find?.((c) => c.descricao === desc);
+            const logo = conta?.logo_image || cartao?.logo_image;
+            return logo ? (
+              <PaymentMethodLogo
+                url_name={`/logos/${logo}`}
+                width={20}
+                height={20}
+              />
+            ) : null;
+          }}
         />
 
         <Input

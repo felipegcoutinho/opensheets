@@ -2,8 +2,7 @@ import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
-import { RiCheckLine } from "@remixicon/react";
-import Image from "next/image";
+import { RiBarcodeLine, RiCheckLine } from "@remixicon/react";
 
 export default async function BillsWidget({ month, data }) {
   const { DateFormat } = UseDates();
@@ -18,13 +17,7 @@ export default async function BillsWidget({ month, data }) {
       className="flex items-center justify-between border-b border-dashed py-0 last:border-0"
     >
       <div className="flex items-center gap-2">
-        <Image
-          src="/logos/boleto.svg"
-          className="transition-transform duration-300 hover:scale-110 dark:invert dark:filter"
-          width={30}
-          height={30}
-          alt="Logo do cartão"
-        />
+        <RiBarcodeLine size={28} />
 
         <div>
           <p className="font-medium capitalize">{item.descricao}</p>

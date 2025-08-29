@@ -3,11 +3,7 @@ import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
-import {
-  RiArrowRightSFill,
-  RiCheckboxCircleLine,
-  RiSkull2Fill,
-} from "@remixicon/react";
+import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
 type CombinedData = {
@@ -50,7 +46,7 @@ export default function CategoryProgress({
         name: item.categoria,
         spent: item.total,
         limit: budget?.valor_orcado,
-        color: tipo === "despesa" ? "text-red-500" : "text-green-500",
+        color: tipo === "despesa" ? "text-chart-2" : "text-chart-1",
         tipo: item.tipo_transacao,
         icone: item.icone,
       };
@@ -96,27 +92,23 @@ export default function CategoryProgress({
                       <Badge
                         variant={
                           item.spent > item.limit
-                            ? "destructive_lite"
-                            : "sistema"
+                            ? "despesa_lite"
+                            : "receita_lite"
                         }
                       >
                         {limitPercentage!.toFixed(1)}% do limite
                         <MoneyValues value={item.limit} className="ml-1" />
                       </Badge>
-
-                      {item.spent > item.limit ? (
+                      {item.spent > item.limit && (
                         <>
-                          <Badge variant="destructive_lite">
+                          <Badge variant="despesa_lite">
                             excedeu em
                             <MoneyValues
                               value={item.spent - item.limit}
                               className="ml-1"
                             />
                           </Badge>
-                          <RiSkull2Fill className="text-destructive ml-1 inline-block h-3 w-3" />
                         </>
-                      ) : (
-                        <RiCheckboxCircleLine className="ml-1 inline-block h-3 w-3 text-emerald-500" />
                       )}
                     </div>
                   ) : (

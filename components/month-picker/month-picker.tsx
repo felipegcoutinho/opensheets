@@ -1,6 +1,5 @@
 "use client";
 
-import { money_values } from "@/app/fonts/font";
 import { Card } from "@/components/ui/card";
 import Helper from "./helper";
 import LoadingSpinner from "./loading-spinner";
@@ -21,7 +20,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${money_values.className} bg-secondary my-3 flex-row border-none p-5`}
+      className={`bg-secondary my-3 flex-row border-none p-5`}
     >
       <div className="flex items-center">
         <NavigationButton
@@ -31,7 +30,7 @@ export default function MonthPicker() {
         />
 
         <div className="flex items-center">
-          <div className="mx-2 text-lg font-bold capitalize">
+          <div className="mx-2 font-bold capitalize">
             {currentMonth}{" "}
             <span className="text-foreground">{currentYear}</span>
           </div>

@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/dialog";
 import {
   RiBankCardLine,
+  RiBarcodeLine,
   RiCheckboxCircleLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
-import Image from "next/image";
 import { useState } from "react";
 import UtilitiesComponents from "./utilities-components";
 
@@ -78,13 +78,7 @@ export default function BillPaymentDialog({
             <div className="space-y-4 pt-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <span>Você está pagando o boleto de:</span>
-                <Image
-                  src="/logos/boleto.svg"
-                  className="transition-transform hover:scale-105 dark:invert dark:filter"
-                  width={40}
-                  height={40}
-                  alt="Logo do boleto"
-                />
+                <RiBarcodeLine size={32} />
                 <span className="font-bold">{descricao}</span>
               </div>
 

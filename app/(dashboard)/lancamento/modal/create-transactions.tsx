@@ -5,6 +5,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -15,6 +24,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -128,6 +142,11 @@ export default function CreateTransactions({
     (p) => normalize(p.role || "") === "secundario",
   );
 
+  // Estado para categoria (combobox com busca)
+  const [categoriaId, setCategoriaId] = useState<string | undefined>();
+  const [categoriaLabel, setCategoriaLabel] = useState<string | undefined>();
+  const [openCategoria, setOpenCategoria] = useState(false);
+
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogClose}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -202,15 +221,86 @@ export default function CreateTransactions({
               </div>
 
               <div className="w-1/2">
-                <Label htmlFor="valor">
-                  Valor <Required />
+                <Label htmlFor="categoria_id">
+                  Categoria <Required />
                 </Label>
-                <MoneyInput
-                  id="valor"
-                  name="valor"
-                  placeholder="R$ 0,00"
-                  required
+                <input
+                  type="hidden"
+                  name="categoria_id"
+                  value={categoriaId || ""}
                 />
+                <Popover open={openCategoria} onOpenChange={setOpenCategoria}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openCategoria}
+                      className="w-full justify-between capitalize"
+                    >
+                      {categoriaLabel || "Selecione"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                    <Command>
+                      <CommandInput placeholder="Buscar categoria..." />
+                      <CommandList
+                        className="max-h-96 overflow-y-auto overscroll-contain"
+                        onWheel={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <CommandEmpty>
+                          Nenhuma categoria encontrada.
+                        </CommandEmpty>
+                        <CommandGroup heading="Receitas">
+                          {getCategorias
+                            ?.filter((c) => c.tipo_categoria === "receita")
+                            .map((item) => {
+                              const Icon = categoryIconsMap[item.icone];
+                              return (
+                                <CommandItem
+                                  key={item.id}
+                                  value={item.nome}
+                                  onSelect={() => {
+                                    setCategoriaId(item.id.toString());
+                                    setCategoriaLabel(item.nome);
+                                    setOpenCategoria(false);
+                                  }}
+                                  className="cursor-pointer capitalize"
+                                >
+                                  {Icon && <Icon className="mr-2 h-4 w-4" />}
+                                  {item.nome}
+                                </CommandItem>
+                              );
+                            })}
+                        </CommandGroup>
+                        <CommandSeparator />
+                        <CommandGroup heading="Despesas">
+                          {getCategorias
+                            ?.filter((c) => c.tipo_categoria === "despesa")
+                            .map((item) => {
+                              const Icon = categoryIconsMap[item.icone];
+                              return (
+                                <CommandItem
+                                  key={item.id}
+                                  value={item.nome}
+                                  onSelect={() => {
+                                    setCategoriaId(item.id.toString());
+                                    setCategoriaLabel(item.nome);
+                                    setOpenCategoria(false);
+                                  }}
+                                  className="cursor-pointer capitalize"
+                                >
+                                  {Icon && <Icon className="mr-2 h-4 w-4" />}
+                                  {item.nome}
+                                </CommandItem>
+                              );
+                            })}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
 
@@ -234,39 +324,15 @@ export default function CreateTransactions({
               </div>
 
               <div className="w-1/2">
-                <Label htmlFor="categoria_id">
-                  Categoria <Required />
+                <Label htmlFor="valor">
+                  Valor <Required />
                 </Label>
-                <Select name="categoria_id" disabled={!tipoTransacao}>
-                  <SelectTrigger
-                    id="categoria_id"
-                    className="w-full capitalize"
-                  >
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {getCategorias
-                      ?.filter(
-                        (categoria) =>
-                          categoria.tipo_categoria === tipoTransacao,
-                      )
-                      .map((item) => {
-                        const Icon = categoryIconsMap[item.icone];
-                        return (
-                          <SelectItem
-                            className="capitalize"
-                            key={item.id}
-                            value={item.id.toString()}
-                          >
-                            <span className="flex items-center gap-2">
-                              {Icon && <Icon className="h-4 w-4" />}
-                              {item.nome}
-                            </span>
-                          </SelectItem>
-                        );
-                      })}
-                  </SelectContent>
-                </Select>
+                <MoneyInput
+                  id="valor"
+                  name="valor"
+                  placeholder="R$ 0,00"
+                  required
+                />
               </div>
             </div>
 
