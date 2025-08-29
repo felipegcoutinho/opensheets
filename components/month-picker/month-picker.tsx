@@ -31,7 +31,7 @@ export default function MonthPicker() {
         />
 
         <div className="flex items-center">
-          <div className="mx-2 font-bold capitalize">
+          <div className="mx-2 text-lg font-bold capitalize">
             {currentMonth}{" "}
             <span className="text-foreground">{currentYear}</span>
           </div>

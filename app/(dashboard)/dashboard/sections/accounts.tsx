@@ -13,13 +13,16 @@ export default async function AccountsSection({ month }: { month: string }) {
       saldo_information="Saldo geral é a soma de todas as contas"
       saldo={data.saldo}
       icon={
-        <span className="mr-2 inline-flex items-center justify-center rounded-md bg-primary/10 p-1 text-primary">
+        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
           <RiBarChartBoxLine className="size-4" />
         </span>
       }
     >
-      <AccountWidget month={data.month} data={data.account} previstoAnterior={data.previstoAnterior} />
+      <AccountWidget
+        month={data.month}
+        data={data.account}
+        previstoAnterior={data.previstoAnterior}
+      />
     </Widget>
   );
 }
-

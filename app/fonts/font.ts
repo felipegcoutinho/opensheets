@@ -4,6 +4,7 @@ import {
   Geist_Mono,
   IBM_Plex_Sans,
   Inter,
+  Roboto_Condensed,
 } from "next/font/google";
 import localFont from "next/font/local";
 
@@ -12,13 +13,13 @@ const ibm_plex = IBM_Plex_Sans({
   subsets: ["latin"],
 });
 
-const inter = Inter({
+const roboto_condensed = Roboto_Condensed({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
-const gabarito = Gabarito({
-  weight: ["400", "700"],
+const inter = Inter({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -72,7 +73,7 @@ const sofascore_mono = localFont({
   ],
 });
 
-const default_font = sofascore;
-const money_values = sofascore;
+const default_font = itau;
+const money_values = roboto_condensed;
 
 export { default_font, money_values };

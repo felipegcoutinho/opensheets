@@ -13,7 +13,7 @@ export default async function InstallmentsSection({
       subtitle="Progresso das parcelas e término"
       information="Baseado no período selecionado"
       icon={
-        <span className="mr-2 inline-flex items-center justify-center rounded-md bg-primary/10 p-1 text-primary">
+        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
           <RiTimeLine className="size-4" />
         </span>
       }
@@ -22,4 +22,3 @@ export default async function InstallmentsSection({
     </Widget>
   );
 }
-

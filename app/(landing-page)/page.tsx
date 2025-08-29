@@ -125,7 +125,7 @@ export default async function Index() {
             <div className="mt-8 flex items-center justify-center gap-3 md:justify-start">
               {isLoggedIn ? (
                 <Button asChild size="lg">
-                  <Link href="/dashboard">Ir para o dashboard</Link>
+                  <Link href="/dashboard">Acesse seu dashboard</Link>
                 </Button>
               ) : (
                 <>
@@ -157,7 +157,6 @@ export default async function Index() {
             </Card>
           </div>
         </div>
-
       </section>
 
       {/* Sobre */}
@@ -169,31 +168,52 @@ export default async function Index() {
           </p>
         </div>
         <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-5">
-          <div className="md:col-span-3 leading-relaxed text-pretty">
-            <div className="rounded-2xl border bg-card p-6 shadow-sm">
+          <div className="leading-relaxed text-pretty md:col-span-3">
+            <div className="bg-card rounded-2xl border p-6 shadow-sm">
               <p className="text-foreground/90">
-                O opensheets centraliza contas, boletos, cartões, lançamentos e orçamentos em um único lugar.
-                Com painéis claros, alertas e automações, você acompanha o que importa e ganha tempo para agir.
+                O opensheets centraliza contas, boletos, cartões, lançamentos e
+                orçamentos em um único lugar. Com painéis claros, alertas e
+                automações, você acompanha o que importa e ganha tempo para
+                agir.
               </p>
               <ul className="text-foreground/80 mt-4 grid gap-2 text-sm">
-                <li className="flex items-center gap-2"><span className="inline-flex size-5 items-center justify-center rounded bg-primary/10 text-primary">✓</span> Visão 360º do seu dinheiro</li>
-                <li className="flex items-center gap-2"><span className="inline-flex size-5 items-center justify-center rounded bg-primary/10 text-primary">✓</span> Alertas e lembretes sem complicação</li>
-                <li className="flex items-center gap-2"><span className="inline-flex size-5 items-center justify-center rounded bg-primary/10 text-primary">✓</span> Simples de começar, poderoso no uso</li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-secondary text-primary inline-flex size-5 items-center justify-center rounded">
+                    ✓
+                  </span>{" "}
+                  Visão 360º do seu dinheiro
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-secondary text-primary inline-flex size-5 items-center justify-center rounded">
+                    ✓
+                  </span>{" "}
+                  Alertas e lembretes sem complicação
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-secondary text-primary inline-flex size-5 items-center justify-center rounded">
+                    ✓
+                  </span>{" "}
+                  Simples de começar, poderoso no uso
+                </li>
               </ul>
             </div>
           </div>
-          <div className="md:col-span-2 grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-3 md:col-span-2">
             <div className="rounded-lg border p-4 text-center">
               <div className="text-2xl font-semibold">1 min</div>
               <div className="text-muted-foreground text-xs">para começar</div>
             </div>
             <div className="rounded-lg border p-4 text-center">
               <div className="text-2xl font-semibold">0 atritos</div>
-              <div className="text-muted-foreground text-xs">UX direto ao ponto</div>
+              <div className="text-muted-foreground text-xs">
+                UX direto ao ponto
+              </div>
             </div>
             <div className="rounded-lg border p-4 text-center">
               <div className="text-2xl font-semibold">+produtivo</div>
-              <div className="text-muted-foreground text-xs">menos tempo em planilhas</div>
+              <div className="text-muted-foreground text-xs">
+                menos tempo em planilhas
+              </div>
             </div>
           </div>
         </div>
@@ -203,33 +223,47 @@ export default async function Index() {
       <section id="solucoes" className="mx-auto max-w-6xl px-4 pb-4">
         <div className="mb-6">
           <h2 className="text-3xl font-semibold tracking-tight">Soluções</h2>
-          <p className="text-muted-foreground mt-2 text-sm">Recursos que simplificam a organização e dão clareza.</p>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Recursos que simplificam a organização e dão clareza.
+          </p>
         </div>
         <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
           <Card>
             <CardContent className="flex items-start gap-3 p-6">
-              <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiFlashlightLine className="size-5" /></span>
+              <span className="bg-secondary text-primary inline-flex size-9 items-center justify-center rounded-md">
+                <RiFlashlightLine className="size-5" />
+              </span>
               <div>
                 <h3 className="text-sm font-semibold">Automação</h3>
-                <p className="text-muted-foreground mt-1 text-xs">Fluxos simples para alertas e follow‑ups automáticos.</p>
+                <p className="text-muted-foreground mt-1 text-xs">
+                  Fluxos simples para alertas e follow‑ups automáticos.
+                </p>
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="flex items-start gap-3 p-6">
-              <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiShieldCheckLine className="size-5" /></span>
+              <span className="bg-secondary text-primary inline-flex size-9 items-center justify-center rounded-md">
+                <RiShieldCheckLine className="size-5" />
+              </span>
               <div>
                 <h3 className="text-sm font-semibold">Segurança</h3>
-                <p className="text-muted-foreground mt-1 text-xs">Sessões seguras e dados protegidos por padrão.</p>
+                <p className="text-muted-foreground mt-1 text-xs">
+                  Sessões seguras e dados protegidos por padrão.
+                </p>
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="flex items-start gap-3 p-6">
-              <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiArrowUpLine className="size-5" /></span>
+              <span className="bg-secondary text-primary inline-flex size-9 items-center justify-center rounded-md">
+                <RiArrowUpLine className="size-5" />
+              </span>
               <div>
                 <h3 className="text-sm font-semibold">Desempenho</h3>
-                <p className="text-muted-foreground mt-1 text-xs">Interface rápida, com foco no que importa.</p>
+                <p className="text-muted-foreground mt-1 text-xs">
+                  Interface rápida, com foco no que importa.
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -241,9 +275,9 @@ export default async function Index() {
                 <div
                   className={`mb-4 inline-flex items-center justify-center rounded-md p-2 ${
                     [
-                      "bg-primary/10 text-primary",
-                      "bg-sky-400/10 text-sky-500",
-                      "bg-fuchsia-400/10 text-fuchsia-500",
+                      "bg-secondary text-primary",
+                      "bg-secondary text-primary",
+                      "bg-secondary text-primary",
                     ][idx % 3]
                   }`}
                 >
@@ -314,9 +348,9 @@ export default async function Index() {
                 <div
                   className={`mb-4 inline-flex items-center justify-center rounded-md p-2 ${
                     [
-                      "bg-primary/10 text-primary",
-                      "bg-sky-400/10 text-sky-500",
-                      "bg-fuchsia-400/10 text-fuchsia-500",
+                      "bg-secondary text-primary",
+                      "bg-secondary text-primary",
+                      "bg-chart text-primary",
                     ][idx % 3]
                   }`}
                 >
@@ -374,18 +408,27 @@ export default async function Index() {
       <section id="contato" className="mx-auto max-w-6xl px-4 py-16">
         <div className="mb-8 text-center md:text-left">
           <h2 className="text-3xl font-semibold tracking-tight">Contato</h2>
-          <p className="text-muted-foreground mt-2 text-sm">Fale com a gente para dúvidas, sugestões ou parcerias.</p>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Fale com a gente para dúvidas, sugestões ou parcerias.
+          </p>
         </div>
         <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
           <Card className="md:col-span-2">
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
-                <span className="inline-flex size-9 items-center justify-center rounded-md bg-primary/10 text-primary"><RiMailLine className="size-5" /></span>
+                <span className="bg-secondary text-primary inline-flex size-9 items-center justify-center rounded-md">
+                  <RiMailLine className="size-5" />
+                </span>
                 <div>
                   <h3 className="text-sm font-semibold">E-mail</h3>
-                  <p className="text-muted-foreground mt-1 text-sm">Estamos disponíveis para responder rapidamente.</p>
+                  <p className="text-muted-foreground mt-1 text-sm">
+                    Estamos disponíveis para responder rapidamente.
+                  </p>
                   <div className="mt-3">
-                    <a className="text-primary underline underline-offset-4" href="mailto:contato@opensheets.app">
+                    <a
+                      className="text-primary underline underline-offset-4"
+                      href="mailto:contato@opensheets.app"
+                    >
                       contato@opensheets.app
                     </a>
                   </div>
@@ -393,7 +436,7 @@ export default async function Index() {
               </div>
             </CardContent>
           </Card>
-          <div className="rounded-2xl border bg-card p-6">
+          <div className="bg-card rounded-2xl border p-6">
             <h4 className="text-sm font-semibold">Preferências de contato</h4>
             <ul className="text-muted-foreground mt-2 grid gap-2 text-sm">
               <li>• Atendimento em horário comercial (BR)</li>
@@ -418,7 +461,7 @@ export default async function Index() {
             <div className="flex gap-3">
               {isLoggedIn ? (
                 <Button asChild>
-                  <Link href="/dashboard">Ir para o dashboard</Link>
+                  <Link href="/dashboard">Acesse seu dashboard</Link>
                 </Button>
               ) : (
                 <>

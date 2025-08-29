@@ -12,7 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 // Definindo um tipo genérico para os dados da transação para melhor tipagem
 interface TransactionData {
@@ -40,6 +41,11 @@ export function useTransactionTableLogic<TData extends TransactionData>({
   getDescricao,
   initialPageSize = 30,
 }: UseTransactionTableLogicProps<TData>) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialized = useRef(false);
+
   const customGlobalFilter: FilterFn<TData> = (row, columnId, filterValue) => {
     const searchValue = filterValue.toLowerCase();
     const item = row.original;
@@ -64,10 +70,19 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     categoria: false, // Exemplo, ajuste conforme necessário
   });
   const [rowSelection, setRowSelection] = useState({});
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: initialPageSize,
-  });
+  // Inicializa paginação a partir da URL (page 1-based na URL)
+  const initialPagination = useMemo(() => {
+    const p = Number(searchParams?.get("page") || "");
+    const s = Number(searchParams?.get("pageSize") || "");
+    const pageIndex = Number.isFinite(p) && p > 0 ? p - 1 : 0;
+    const pageSize = Number.isFinite(s) && s > 0 ? s : initialPageSize;
+    return { pageIndex, pageSize } as PaginationState;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [pagination, setPagination] = useState<PaginationState>(
+    initialPagination,
+  );
 
   const table = useReactTable({
     data,
@@ -91,6 +106,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
+    autoResetPageIndex: false,
   });
 
   const isAnyFilterActive =
@@ -164,6 +180,44 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     setColumnFilters([]);
   };
 
+  // Atualiza URL quando paginação muda
+  useEffect(() => {
+    // Evita rodar na renderização inicial duas vezes
+    if (!initialized.current) {
+      initialized.current = true;
+    }
+
+    const params = new URLSearchParams(searchParams?.toString());
+    const setOrDeleteNumber = (key: string, value?: number) => {
+      if (!value && value !== 0) params.delete(key);
+      else params.set(key, String(value));
+    };
+
+    // page é 1-based na URL
+    setOrDeleteNumber("page", pagination.pageIndex + 1);
+    setOrDeleteNumber("pageSize", pagination.pageSize);
+
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagination.pageIndex, pagination.pageSize, pathname]);
+
+  // Reage a mudanças externas na URL (back/forward) para paginação
+  useEffect(() => {
+    const p = Number(searchParams?.get("page") || "");
+    const s = Number(searchParams?.get("pageSize") || "");
+    const urlIndex = Number.isFinite(p) && p > 0 ? p - 1 : 0;
+    const urlSize = Number.isFinite(s) && s > 0 ? s : pagination.pageSize;
+
+    if (
+      urlIndex !== pagination.pageIndex ||
+      urlSize !== pagination.pageSize
+    ) {
+      setPagination({ pageIndex: urlIndex, pageSize: urlSize });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams?.toString()]);
+
   return {
     table,
     globalFilter,
@@ -181,5 +235,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     getColumnFilterValue,
     setColumnFilterValue,
     clearAllFilters,
+    pagination,
+    setPagination,
   };
 }

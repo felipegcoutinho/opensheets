@@ -12,6 +12,8 @@ import {
 import CreateTransactions from "../modal/create-transactions"; // Ajuste o caminho conforme necessário
 import { ComboboxFilter } from "./combo-filter"; // Ajuste o caminho conforme necessário
 import { Table } from "@tanstack/react-table";
+import { useEffect, useMemo, useRef } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface TransactionTableFiltersProps<TData> {
   table: Table<TData>; // Adicionado para acesso a métodos/estados da tabela se necessário
@@ -50,6 +52,126 @@ export function TransactionTableFilters<TData>({
   if (hidden) {
     return null;
   }
+
+  // URL <-> Filtros: sincronização
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialized = useRef(false);
+
+  // Mapeamento entre ids de coluna e nomes de params
+  const filterParamKeys = useMemo(
+    () => ({
+      tipo_transacao: "tipo_transacao",
+      condicao: "condicao",
+      forma_pagamento: "forma_pagamento",
+      responsavel: "responsavel",
+      categoria: "categoria",
+      conta_cartao: "conta_cartao",
+      q: "q", // busca global
+    }),
+    [],
+  );
+
+  // Inicializa filtros a partir da URL (executa uma vez)
+  useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+
+    const params = searchParams;
+
+    const maybeSet = (columnId: string, paramKey: string) => {
+      const v = params.get(paramKey);
+      if (v && v !== "all" && v !== "todas") {
+        setColumnFilterValue(columnId, v);
+      }
+    };
+
+    maybeSet("tipo_transacao", filterParamKeys.tipo_transacao);
+    maybeSet("condicao", filterParamKeys.condicao);
+    maybeSet("forma_pagamento", filterParamKeys.forma_pagamento);
+    maybeSet("responsavel", filterParamKeys.responsavel);
+    maybeSet("categoria", filterParamKeys.categoria);
+    maybeSet("conta_cartao", filterParamKeys.conta_cartao);
+
+    const q = params.get(filterParamKeys.q);
+    if (q) setGlobalFilter(q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Lê valores atuais dos filtros
+  const currentFilters = {
+    tipo_transacao: getColumnFilterValue("tipo_transacao"),
+    condicao: getColumnFilterValue("condicao"),
+    forma_pagamento: getColumnFilterValue("forma_pagamento"),
+    responsavel: getColumnFilterValue("responsavel"),
+    categoria: getColumnFilterValue("categoria"),
+    conta_cartao: getColumnFilterValue("conta_cartao"),
+    q: globalFilter,
+  };
+
+  // Atualiza a URL quando filtros mudarem
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams?.toString());
+
+    const setOrDelete = (key: string, value?: string) => {
+      const v = (value || "").trim();
+      if (!v || v === "all" || v === "todas") params.delete(key);
+      else params.set(key, v);
+    };
+
+    setOrDelete(filterParamKeys.tipo_transacao, currentFilters.tipo_transacao);
+    setOrDelete(filterParamKeys.condicao, currentFilters.condicao);
+    setOrDelete(
+      filterParamKeys.forma_pagamento,
+      currentFilters.forma_pagamento,
+    );
+    setOrDelete(filterParamKeys.responsavel, currentFilters.responsavel);
+    setOrDelete(filterParamKeys.categoria, currentFilters.categoria);
+    setOrDelete(filterParamKeys.conta_cartao, currentFilters.conta_cartao);
+    setOrDelete(filterParamKeys.q, currentFilters.q);
+
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    currentFilters.tipo_transacao,
+    currentFilters.condicao,
+    currentFilters.forma_pagamento,
+    currentFilters.responsavel,
+    currentFilters.categoria,
+    currentFilters.conta_cartao,
+    currentFilters.q,
+    pathname,
+  ]);
+
+  // Reage a mudanças externas na URL (ex.: botão voltar/avançar)
+  useEffect(() => {
+    if (!initialized.current) return;
+
+    const params = searchParams;
+
+    const setIfChanged = (columnId: string, paramKey: string) => {
+      const urlV = params.get(paramKey) || "";
+      const curV = getColumnFilterValue(columnId) || "";
+      if ((urlV || curV) && urlV !== curV) {
+        setColumnFilterValue(columnId, urlV);
+      }
+    };
+
+    setIfChanged("tipo_transacao", filterParamKeys.tipo_transacao);
+    setIfChanged("condicao", filterParamKeys.condicao);
+    setIfChanged("forma_pagamento", filterParamKeys.forma_pagamento);
+    setIfChanged("responsavel", filterParamKeys.responsavel);
+    setIfChanged("categoria", filterParamKeys.categoria);
+    setIfChanged("conta_cartao", filterParamKeys.conta_cartao);
+
+    const urlQ = params.get(filterParamKeys.q) || "";
+    if ((urlQ || globalFilter) && urlQ !== globalFilter) {
+      setGlobalFilter(urlQ);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams?.toString()]);
 
   return (
     <div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
