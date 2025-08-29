@@ -170,26 +170,17 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
   }
 
   ::selection {
-    @apply bg-amber-100 text-amber-600;
+    @apply bg-sky-50 text-sky-600;
   }
 }
 
 /* Garante que âncoras não fiquem escondidas sob o header fixo */
 section[id] {
   scroll-margin-top: 6rem;
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
 /* Padrão pixelado leve para o layout de autenticação */

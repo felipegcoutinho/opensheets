@@ -85,7 +85,7 @@ export default function Widget({
       </CardHeader>
       <CardContent className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto">
         {children}
-        <ProgressiveBlur height="12%" position="bottom" />
+        <ProgressiveBlur height="10%" position="bottom" />
       </CardContent>
     </Card>
   );

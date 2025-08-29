@@ -77,7 +77,6 @@ export default function CreateTransactions({
     isPaid,
     setIsPaid,
     setImage,
-    image,
     setQuantidadeParcelas,
     eBoletoSelecionado,
   } = UtilitiesLancamento();
