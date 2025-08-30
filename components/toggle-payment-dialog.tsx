@@ -93,7 +93,7 @@ export default function TogglePaymentDialog({
       <DialogTrigger asChild>
         <span
           className={`cursor-pointer hover:underline ${
-            isPago ? "text-green-500" : "text-orange-500"
+            isPago ? "text-emerald-600" : "text-orange-500"
           }`}
         >
           {labelStatus}

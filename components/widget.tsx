@@ -15,6 +15,7 @@ import {
 import { RiInformation2Fill } from "@remixicon/react";
 import ProgressiveBlur from "./magicui/progressive-blur";
 import MoneyValues from "./money-values";
+import { money_values, oswald } from "../app/fonts/font";
 
 type WidgetProps = {
   title: string;
@@ -40,9 +41,11 @@ export default function Widget({
       <CardHeader>
         <div className="flex w-full items-start justify-between">
           <div>
-            <CardTitle className="flex items-center gap-1">
+            <CardTitle
+              className={`${oswald.className} flex items-center gap-1`}
+            >
               {icon}
-              {title}
+              <span className="">{title}</span>
               {information && (
                 <Tooltip>
                   <TooltipTrigger>

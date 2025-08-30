@@ -6,6 +6,7 @@ import LoadingSpinner from "./loading-spinner";
 import NavigationButton from "./nav-button";
 import ReturnButton from "./return-button";
 import { useEffect, useState } from "react";
+import { oswald } from "../../app/fonts/font";
 
 export default function MonthPicker() {
   const {
@@ -39,7 +40,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`bg-secondary my-3 flex-row border-none p-5`}
+      className={`${oswald.className} bg-secondary my-3 flex-row border-none p-5`}
     >
       <div className="flex items-center">
         <NavigationButton
@@ -50,8 +51,8 @@ export default function MonthPicker() {
         />
 
         <div className="flex items-center">
-          <div className="mx-2 font-bold capitalize">
-            {currentMonth}{" "}
+          <div className="mx-2 space-x-1 uppercase">
+            <span>{currentMonth}</span>
             <span className="text-foreground">{currentYear}</span>
           </div>
 

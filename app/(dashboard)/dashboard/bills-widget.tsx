@@ -26,7 +26,7 @@ export default async function BillsWidget({ month, data }) {
               Vence {DateFormat(item.data_vencimento)}
             </p>
           ) : (
-            <RiCheckLine className="text-green-500" size={16} />
+            <RiCheckLine className="text-emerald-600" size={16} />
           )}
         </div>
       </div>

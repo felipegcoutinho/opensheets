@@ -15,7 +15,7 @@ function AccountInfo({ item, sumAccountIncome, accountExpense, saldo }) {
           />
           <div className="flex flex-col">
             <span className="text-lg font-bold">{item.descricao}</span>
-            <Badge className="mt-1 rounded-full uppercase" variant="secondary">
+            <Badge className="mt-1 rounded-full uppercase" variant="outline">
               Conta {item.tipo_conta}
             </Badge>
           </div>

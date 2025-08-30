@@ -1,7 +1,22 @@
 import MoneyValues from "@/components/money-values";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { RiArrowDownCircleFill, RiArrowUpCircleFill, RiInformation2Fill } from "@remixicon/react";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  RiArrowDownLine,
+  RiArrowUpLine,
+  RiInformation2Fill,
+} from "@remixicon/react";
+import { oswald } from "../../fonts/font";
 
 type KPI = {
   title: string;
@@ -22,7 +37,10 @@ export default function KpiCards({ items }: { items: KPI[] }) {
 
 function KpiCard({ item }: { item: KPI }) {
   const showDelta = ["receitas", "despesas"].includes(item.title.toLowerCase());
-  const diffPercent = item.previousValue !== 0 ? ((item.value - item.previousValue) / item.previousValue) * 100 : 0;
+  const diffPercent =
+    item.previousValue !== 0
+      ? ((item.value - item.previousValue) / item.previousValue) * 100
+      : 0;
   const isPositive = diffPercent >= 0;
 
   return (
@@ -30,36 +48,44 @@ function KpiCard({ item }: { item: KPI }) {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
-            <span className="capitalize">{item.title}</span>
+            <span className={`${oswald.className} capitalize`}>
+              {item.title}
+            </span>
             <Tooltip>
               <TooltipTrigger>
-                <RiInformation2Fill size={16} className="text-muted-foreground/40" />
+                <RiInformation2Fill
+                  size={16}
+                  className="text-muted-foreground/40"
+                />
               </TooltipTrigger>
               <TooltipContent>
-                <p>{item.information}</p>
+                <span>{item.information}</span>
               </TooltipContent>
             </Tooltip>
           </span>
-
+        </CardTitle>
+        <CardDescription className="flex items-center gap-2 text-2xl">
+          <MoneyValues value={item.value} />
           {showDelta && (
-            <span className={`flex items-center gap-1 ${isPositive ? "text-green-600" : "text-red-600"}`}>
-              {isPositive ? <RiArrowUpCircleFill size={16} /> : <RiArrowDownCircleFill size={16} />}
-              {isPositive ? "+" : ""}
-              <span className="text-xs">{diffPercent.toFixed(0)}%</span>
+            <span
+              className={`flex items-center ${isPositive ? "text-emerald-700" : "text-red-700"}`}
+            >
+              {isPositive ? (
+                <RiArrowUpLine size={12} />
+              ) : (
+                <RiArrowDownLine size={12} />
+              )}
+              <span className="text-xs font-bold">
+                {diffPercent.toFixed(0)}%
+              </span>
             </span>
           )}
-        </CardTitle>
-        <CardDescription className="text-2xl">
-          <MoneyValues value={item.value} />
         </CardDescription>
       </CardHeader>
       <CardFooter className="text-muted-foreground flex-col items-start gap-1 text-xs">
         <span>Último mês</span>
-        <span>
-          <MoneyValues value={item.previousValue} />
-        </span>
+        <MoneyValues value={item.previousValue} />
       </CardFooter>
     </Card>
   );
 }
-

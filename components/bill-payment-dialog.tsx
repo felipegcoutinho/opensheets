@@ -56,13 +56,13 @@ export default function BillPaymentDialog({
   const isPaid = status_pagamento === true;
 
   if (isPaid) {
-    return <span className="text-green-500">pago</span>;
+    return <span className="text-emerald-600">pago</span>;
   }
 
   return (
     <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
-        <span className="cursor-pointer text-orange-400 hover:underline">
+        <span className="cursor-pointer text-orange-600 hover:underline">
           pagar
         </span>
       </DialogTrigger>
@@ -96,7 +96,7 @@ export default function BillPaymentDialog({
 
         {paymentStatus === "success" ? (
           <div className="flex flex-col items-center gap-4 text-center">
-            <RiCheckboxCircleLine className="h-12 w-12 text-green-500" />
+            <RiCheckboxCircleLine className="h-12 w-12 text-emerald-600" />
             <p>Pagamento realizado com sucesso!</p>
             <DialogClose asChild>
               <Button className="w-full bg-green-500 hover:bg-green-600">

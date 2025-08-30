@@ -13,14 +13,24 @@ import * as React from "react";
 import Logo from "../logo";
 import { NavLinks } from "./nav-links";
 
+type PayerPrincipal = { id: string; nome: string; role: string; foto?: string | null } | null | undefined;
+
 export function AppSidebar({
   username,
   usermail,
+  payerPrincipal,
   cartoes,
   contas,
   categorias,
   ...props
-}: React.ComponentProps<typeof Sidebar> & {}) {
+}: React.ComponentProps<typeof Sidebar> & {
+  username: string;
+  usermail: string;
+  payerPrincipal?: PayerPrincipal;
+  cartoes: any;
+  contas: any;
+  categorias: any;
+}) {
   const searchParams = useSearchParams();
   const { formatted_current_month } = UseDates();
 
@@ -46,7 +56,7 @@ export function AppSidebar({
         </SidebarContent>
       </SidebarContent>
       <SidebarFooter className="border-border border-t">
-        <NavUser username={username} usermail={usermail} user={data.user} />
+        <NavUser username={username} usermail={usermail} user={data.user} payerPrincipal={payerPrincipal} />
       </SidebarFooter>
     </Sidebar>
   );

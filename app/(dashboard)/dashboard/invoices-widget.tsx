@@ -51,7 +51,7 @@ export default async function InvoiceWidget({ data, month }) {
 
                 {fatura_status.length > 0 &&
                 fatura_status[0]?.status_pagamento === "pago" ? (
-                  <RiCheckLine className="text-green-500" size={16} />
+                  <RiCheckLine className="text-emerald-600" size={16} />
                 ) : (
                   <p className="text-muted-foreground text-xs">
                     Vence dia {item.dt_vencimento}

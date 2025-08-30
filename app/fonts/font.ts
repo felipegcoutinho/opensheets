@@ -47,4 +47,4 @@ const sofascore = localFont({
 const default_font = itau;
 const money_values = itau_bold;
 
-export { default_font, money_values };
+export { default_font, money_values, oswald };
