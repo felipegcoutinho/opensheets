@@ -16,7 +16,7 @@ import {
   RiArrowUpLine,
   RiInformation2Fill,
 } from "@remixicon/react";
-import { oswald } from "../../fonts/font";
+import { title_font } from "../../fonts/font";
 
 type KPI = {
   title: string;
@@ -48,7 +48,7 @@ function KpiCard({ item }: { item: KPI }) {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
-            <span className={`${oswald.className} capitalize`}>
+            <span className={`${title_font.className} capitalize`}>
               {item.title}
             </span>
             <Tooltip>

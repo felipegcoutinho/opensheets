@@ -23,8 +23,8 @@ const itau = localFont({
 const itau_bold = localFont({
   src: [
     {
-      path: "../fonts/ItauTextPro_Bd.woff2",
-      weight: "400",
+      path: "../fonts/ItauText-XBold.woff2",
+      weight: "800",
     },
   ],
 });
@@ -46,5 +46,6 @@ const sofascore = localFont({
 
 const default_font = itau;
 const money_values = itau_bold;
+const title_font = oswald;
 
-export { default_font, money_values, oswald };
+export { default_font, money_values, title_font };
