@@ -328,8 +328,8 @@ export default function MonthCalendar({
                       className={cn(
                         "w-full truncate rounded-sm px-1 py-0.5 text-left text-xs",
                         t?.tipo_transacao === "receita"
-                          ? "bg-emerald-100 text-emerald-900"
-                          : "bg-rose-100 text-rose-900",
+                          ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-100"
+                          : "bg-red-100 text-red-900 dark:bg-red-900 dark:text-red-100",
                       )}
                       title={`${t?.descricao ?? ""}`}
                     >
@@ -439,8 +439,8 @@ export default function MonthCalendar({
                         className={cn(
                           "mr-2 inline-flex rounded px-1 py-0.5",
                           t?.tipo_transacao === "receita"
-                            ? "bg-emerald-100 text-emerald-900"
-                            : "bg-rose-100 text-rose-900",
+                            ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-100"
+                            : "bg-red-100 text-red-900 dark:bg-red-900 dark:text-red-100",
                         )}
                       >
                         {t?.tipo_transacao ?? "—"}
