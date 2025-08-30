@@ -12,7 +12,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { RiThumbDownLine, RiThumbUpLine } from "@remixicon/react";
+import {
+  RiThumbDownFill,
+  RiThumbDownLine,
+  RiThumbUpFill,
+  RiThumbUpLine,
+} from "@remixicon/react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -60,9 +65,9 @@ export default function TogglePaymentDialog({
   };
 
   const labelStatus = isPago ? (
-    <RiThumbUpLine size={16} />
+    <RiThumbUpFill size={16} />
   ) : (
-    <RiThumbDownLine className="text-muted-foreground" size={16} />
+    <RiThumbDownFill className="text-muted-foreground" size={16} />
   );
   const dialogTitle = isCartaoCredito
     ? "Pagamento via cartão"

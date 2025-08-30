@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
 import {
+  RiAttachment2,
   RiAttachmentLine,
   RiBankCardLine,
   RiBankLine,
@@ -427,7 +428,7 @@ export const getColumns = (
 
           {item.imagem_url && (
             <div className="flex text-center">
-              <RiAttachmentLine size={16} />
+              <RiAttachment2 size={16} />
             </div>
           )}
         </div>
