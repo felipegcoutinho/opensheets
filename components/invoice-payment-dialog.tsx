@@ -63,7 +63,7 @@ export default function InvoicePaymentDialog({
 
   if (isPaid) {
     return (
-      <div className="flex items-center justify-end gap-1 text-emerald-700">
+      <div className="flex items-center justify-end gap-1 text-emerald-700 dark:text-emerald-400">
         <RiCheckboxCircleFill size={12} />
         <span>Pago</span>
       </div>
@@ -73,7 +73,7 @@ export default function InvoicePaymentDialog({
   return (
     <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
-        <div className="cursor-pointer text-orange-600 hover:underline">
+        <div className="cursor-pointer text-orange-600 hover:underline dark:text-orange-500">
           Pagar
         </div>
       </DialogTrigger>

@@ -53,16 +53,19 @@ export default function ChartSixMonths({ data }: Props) {
             dataKey="incomes"
             fill={chartConfig.incomes.color}
             radius={[4, 4, 0, 0]}
+            isAnimationActive={false}
           />
           <Bar
             dataKey="expenses"
             fill={chartConfig.expenses.color}
             radius={[4, 4, 0, 0]}
+            isAnimationActive={false}
           />
           <Bar
             dataKey="balanco"
             fill={chartConfig.balanco.color}
             radius={[4, 4, 0, 0]}
+            isAnimationActive={false}
           />
         </BarChart>
       </ChartContainer>

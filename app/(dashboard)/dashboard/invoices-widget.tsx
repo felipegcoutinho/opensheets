@@ -68,7 +68,11 @@ export default async function InvoiceWidget({ data, month }) {
                     const texto = pago.created_at
                       ? `Pago em ${DateFormat(String(pago.created_at).slice(0, 10))}`
                       : `Pago até dia ${item.dt_vencimento}`;
-                    return <p className="text-xs text-emerald-700">{texto}</p>;
+                    return (
+                      <p className="text-xs text-emerald-700 dark:text-emerald-400">
+                        {texto}
+                      </p>
+                    );
                   }
                   return (
                     <p className="text-muted-foreground text-xs">

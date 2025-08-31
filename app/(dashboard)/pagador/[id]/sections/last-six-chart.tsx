@@ -46,6 +46,7 @@ export default function LastSixChart({ data }: { data: DataPoint[] }) {
             dataKey="total"
             fill={chartConfig.total.color}
             radius={[4, 4, 0, 0]}
+            isAnimationActive={false}
           >
             <LabelList
               dataKey="total"
