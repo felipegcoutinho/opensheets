@@ -18,7 +18,7 @@ export default async function BillsWidget({ month, data }) {
   return dataSorted.map((item, index) => (
     <div
       key={`${item.id}${index}`}
-      className="flex items-center justify-between border-b border-dashed py-0 last:border-0"
+      className="flex items-center justify-between border-b border-dashed py-0"
     >
       <div className="flex items-center gap-2">
         <RiBarcodeLine size={28} />

@@ -59,7 +59,7 @@ export default function TogglePaymentDialog({
       const res = await payBills(id, realizadoAtual);
       if (!res.success) error = res.message || true;
     } else if (!isCartaoCredito) {
-      const r = await togglePagamento(Number(id), realizadoAtual);
+      const r = await togglePagamento(id, realizadoAtual);
       error = r?.error || null;
     }
 

@@ -32,7 +32,7 @@ export default async function AccountWidget({
       {accountData.map((item) => (
         <div
           key={item.id}
-          className="flex items-center justify-between border-b border-dashed py-2 last:border-0"
+          className="flex items-center justify-between border-b border-dashed py-2"
         >
           <div className="flex items-center gap-1">
             <PaymentMethodLogo

@@ -131,7 +131,7 @@ export async function updateTransaction(
   }
 }
 
-export async function togglePagamento(id: number, realizadoAtual: boolean) {
+export async function togglePagamento(id: string, realizadoAtual: boolean) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("lancamentos")

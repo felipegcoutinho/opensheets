@@ -39,7 +39,7 @@ export default async function InvoiceWidget({ data, month }) {
         return (
           <div
             key={item.cartao_id}
-            className="flex items-center justify-between border-b border-dashed py-0 last:border-0"
+            className="flex items-center justify-between border-b border-dashed py-0"
           >
             <div className="flex items-center">
               <PaymentMethodLogo
