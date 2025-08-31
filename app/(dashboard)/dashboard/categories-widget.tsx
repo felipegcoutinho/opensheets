@@ -92,7 +92,7 @@ export default function CategoryProgress({
                       <Badge
                         variant={
                           item.spent > item.limit
-                            ? "destructive"
+                            ? "destructive_lite"
                             : "despesa_lite"
                         }
                       >
@@ -101,7 +101,7 @@ export default function CategoryProgress({
                       </Badge>
                       {item.spent > item.limit && (
                         <>
-                          <Badge variant="destructive">
+                          <Badge variant="destructive_lite">
                             excedeu em
                             <MoneyValues
                               value={item.spent - item.limit}
@@ -113,7 +113,7 @@ export default function CategoryProgress({
                     </div>
                   ) : (
                     <div className="text-muted-foreground mt-1 text-xs italic">
-                      sem limite configurado
+                      Sem limite definido
                     </div>
                   )}
                 </div>
@@ -132,12 +132,6 @@ export default function CategoryProgress({
           );
         })}
       </div>
-
-      {/* {categories.length === 0 && (
-        <div className="mt-4 text-center text-sm text-gray-500">
-          Nenhuma categoria encontrada para este mês.
-        </div>
-      )} */}
     </div>
   );
 }

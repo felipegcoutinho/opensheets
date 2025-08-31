@@ -5,7 +5,7 @@ import {
   RiMoneyDollarCircleLine,
   RiPixLine,
   RiRefreshLine,
-  RiTimeLine,
+  RiLoader2Fill,
 } from "@remixicon/react";
 
 function UseStyles() {
@@ -59,7 +59,7 @@ function UseStyles() {
 
   function getConditionIcon(condicao: string) {
     const icons = {
-      parcelado: <RiTimeLine size={15} />,
+      parcelado: <RiLoader2Fill size={15} />,
       recorrente: <RiRefreshLine size={15} />,
       vista: <RiCheckLine size={15} />,
     };

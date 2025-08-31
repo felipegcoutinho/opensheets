@@ -47,14 +47,14 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
 
         {mostrarLimites && item.limites && (
           <div className="border-y py-4">
-            <div className="mb-2 flex justify-between text-sm">
+            <div className="mb-2 flex justify-between text-base">
               <div className="text-left">
-                <p className="text-muted-foreground text-xs">Limite Total</p>
+                <p className="text-muted-foreground text-sm">Limite Total</p>
                 <MoneyValues value={item.limites.limiteTotal} />
               </div>
 
               <div className="text-center">
-                <p className="text-muted-foreground text-xs">Em Uso</p>
+                <p className="text-muted-foreground text-sm">Em Uso</p>
                 <span className="flex items-center gap-1">
                   <Ping color="bg-orange-400" />
                   <MoneyValues value={item.limites.limiteEmUso} />
@@ -62,7 +62,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
               </div>
 
               <div className="text-right">
-                <p className="text-muted-foreground text-xs">Disponível</p>
+                <p className="text-muted-foreground text-sm">Disponível</p>
                 <span className="flex items-center gap-1">
                   <Ping color="bg-secondary" />
                   <MoneyValues value={item.limites.limiteDisponivel} />

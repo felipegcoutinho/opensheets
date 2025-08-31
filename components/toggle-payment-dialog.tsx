@@ -1,6 +1,6 @@
 "use client";
 
-import { togglePagamento } from "@/app/actions/transactions/update_transactions";
+import { togglePagamento, payBills } from "@/app/actions/transactions/update_transactions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -54,7 +54,14 @@ export default function TogglePaymentDialog({
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await togglePagamento(id, realizadoAtual);
+    let error: any = null;
+    if (formaPagamento === "boleto") {
+      const res = await payBills(id, realizadoAtual);
+      if (!res.success) error = res.message || true;
+    } else if (!isCartaoCredito) {
+      const r = await togglePagamento(Number(id), realizadoAtual);
+      error = r?.error || null;
+    }
 
     if (!error) {
       onStatusChanged(!realizadoAtual);

@@ -101,19 +101,21 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <Badge variant={"outline"}>
-              {DateFormat(item.data_vencimento)}
+            <Badge variant={"outline"} className="italic">
+              Venc. {DateFormat(item.data_vencimento)}
             </Badge>
           )}
 
           {item.condicao === "parcelado" && (
-            <Badge variant={"outline"}>
+            <Badge variant={"outline"} className="italic">
               {item.parcela_atual} de {item.qtde_parcela}
             </Badge>
           )}
 
           {item.pagadores?.role === "sistema" && (
-            <RiCheckboxCircleFill color="green" size={16} />
+            <span className="text-emerald-700">
+              <RiCheckboxCircleFill size={14} />
+            </span>
           )}
 
           {item.dividir_lancamento === true && (

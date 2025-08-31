@@ -31,6 +31,20 @@ export async function updateTransaction(
     imagem_url_atual, // URL da imagem existente
   } = Object.fromEntries(formData.entries());
 
+  // Normaliza booleanos vindos do FormData
+  const hasRealizado = formData.has("realizado");
+  const realizadoBool = hasRealizado
+    ? (() => {
+        if (typeof realizado === "string") {
+          const val = realizado.toLowerCase();
+          return val === "true" || val === "on" || val === "1";
+        }
+        return Boolean(realizado);
+      })()
+    : undefined;
+
+  const hasDtPagamentoBoleto = formData.has("dt_pagamento_boleto");
+
   let imageUrl = imagem_url_atual; // Use o URL existente como padrão
   const imageFile = formData.get("imagem_url"); // Novo arquivo enviado
 
@@ -76,34 +90,38 @@ export async function updateTransaction(
       }
     }
 
-    await supabase
-      .from("lancamentos")
-      .update({
-        data_compra,
-        data_vencimento,
-        dt_pagamento_boleto:
-          typeof dt_pagamento_boleto === "string" && dt_pagamento_boleto.trim()
-            ? dt_pagamento_boleto
-            : null,
-        descricao,
-        tipo_transacao,
-        periodo,
-        imagem_url: imageUrl,
-        realizado,
-        condicao,
-        forma_pagamento,
-        anotacao,
-        pagador_id,
-        valor,
-        qtde_parcela,
-        parcela_atual,
-        qtde_recorrencia,
-        cartao_id,
-        categoria_id,
-        conta_id,
-        dividir_lancamento,
-      })
-      .eq("id", id);
+    const updatePayload: Record<string, any> = {
+      data_compra,
+      data_vencimento,
+      descricao,
+      tipo_transacao,
+      periodo,
+      imagem_url: imageUrl,
+      condicao,
+      forma_pagamento,
+      anotacao,
+      pagador_id,
+      valor,
+      qtde_parcela,
+      parcela_atual,
+      qtde_recorrencia,
+      cartao_id,
+      categoria_id,
+      conta_id,
+      dividir_lancamento,
+    };
+
+    if (hasRealizado) {
+      updatePayload.realizado = realizadoBool;
+    }
+    if (hasDtPagamentoBoleto) {
+      updatePayload.dt_pagamento_boleto =
+        typeof dt_pagamento_boleto === "string" && dt_pagamento_boleto.trim()
+          ? dt_pagamento_boleto
+          : null;
+    }
+
+    await supabase.from("lancamentos").update(updatePayload).eq("id", id);
 
     console.log("Transação atualizada com sucesso!");
     revalidatePath("/lancamentos");
@@ -129,8 +147,13 @@ export async function togglePagamento(id: number, realizadoAtual: boolean) {
 export async function payBills(id: string, realizadoAtual: boolean) {
   const supabase = createClient();
   const novoStatus = !realizadoAtual;
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, "0");
+  const d = String(today.getDate()).padStart(2, "0");
+  const todayStr = `${y}-${m}-${d}`;
   const payload = novoStatus
-    ? { realizado: true, dt_pagamento_boleto: new Date().toISOString() }
+    ? { realizado: true, dt_pagamento_boleto: todayStr }
     : { realizado: false, dt_pagamento_boleto: null };
 
   const { error } = await supabase

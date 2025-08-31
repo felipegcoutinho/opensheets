@@ -82,7 +82,7 @@ export default function UtilitiesLancamento() {
 
     // Garante que 'realizado' reflita o estado de 'isPaid'
     // Para boleto, isPaid é false, então 'realizado' será "false"
-    formData.append("realizado", String(isPaid));
+    formData.set("realizado", String(isPaid));
 
     await createTransaction(null, formData);
     toast.success("Transação adicionada com sucesso!");
@@ -95,6 +95,7 @@ export default function UtilitiesLancamento() {
     setLoading(true);
     const formData = new FormData(e.target);
     const condicao = formData.get("condicao");
+    const forma_pagamento = String(formData.get("forma_pagamento") || "");
 
     if (condicao !== "parcelado") {
       const valorFormatado = formData
@@ -104,10 +105,9 @@ export default function UtilitiesLancamento() {
       formData.set("valor", valorFormatado);
     }
 
-    if (eBoletoSelecionado) {
-      formData.set("data_compra", "");
-    }
-    formData.append("realizado", String(isPaid));
+    // Removida a gestão de pagamento no modal de edição; TogglePaymentDialog cuida disso.
+    // Não enviar/alterar o campo 'realizado' aqui para não sobrescrever o status.
+    formData.delete("realizado");
 
     await updateTransaction(null, formData);
     toast.success("Transação atualizada com sucesso!");

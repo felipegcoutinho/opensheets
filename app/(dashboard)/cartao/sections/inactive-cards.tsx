@@ -12,7 +12,7 @@ export default async function InactiveCardsSection() {
   if (!cards?.length) return <EmptyCard />;
 
   return (
-    <div className="grid grid-cols-1 gap-4 saturate-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 saturate-0 sm:grid-cols-1 lg:grid-cols-3">
       {cards.map((item) => (
         <UiCard
           key={item.id}

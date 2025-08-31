@@ -3,7 +3,6 @@ import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -23,10 +22,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Toggle } from "@/components/ui/toggle";
+// Toggle removido: gestão de pagamento migrou para TogglePaymentDialog
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpFill, RiThumbUpLine } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -55,7 +53,6 @@ export default function UpdateTransactions({
     isOpen,
     setIsOpen,
     handleUpdate,
-    setIsPaid,
     setImage,
     removingImage,
     handleRemoveImage,
@@ -111,14 +108,13 @@ export default function UpdateTransactions({
   };
 
   useEffect(() => {
-    setIsPaid(itemPaid);
-  }, [itemPaid, setIsPaid]);
+    // Removido controle de "realizado" do modal de edição
+  }, [itemPaid]);
 
   const handleDialogClose = (val) => {
     setIsOpen(val);
     if (!val) {
       setImagePreview(itemImagemURL);
-      setIsPaid(itemPaid);
     }
   };
 
@@ -162,6 +158,11 @@ export default function UpdateTransactions({
           }}
         >
           <input type="hidden" name="id" value={item.id} />
+          <input
+            type="hidden"
+            name="forma_pagamento"
+            value={itemFormaPagamento}
+          />
 
           <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
@@ -196,7 +197,7 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          {/* Campo de data de pagamento do boleto (abaixo do Status do Lançamento) */}
+          {/* Campos de datas do boleto */}
 
           <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
@@ -265,30 +266,22 @@ export default function UpdateTransactions({
           </div>
 
           <div className="w-1/2" />
-          {itemFormaPagamento !== "cartão de crédito" && (
-            <Card className="w-full flex-row justify-between p-4">
-              <div className="flex flex-col">
-                <Label>Status do Lançamento</Label>
-                <p className="text-muted-foreground text-xs leading-snug">
-                  Marcar o lançamento como realizado.
-                </p>
-              </div>
-              <div>
-                <Toggle
-                  defaultPressed={itemPaid}
-                  onPressedChange={() => setIsPaid(!itemPaid)}
-                  name="realizado"
-                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-700"
-                >
-                  <RiThumbUpFill strokeWidth={2} />
-                </Toggle>
-              </div>
-            </Card>
-          )}
 
           {itemFormaPagamento === "boleto" && (
             <div className="mt-2 mb-2 flex w-full gap-2">
-              <div className="w-full">
+              <div className="w-1/2">
+                <Label>Data de Vencimento do Boleto</Label>
+                <Input
+                  defaultValue={
+                    item?.data_vencimento
+                      ? String(item.data_vencimento).slice(0, 10)
+                      : ""
+                  }
+                  name="data_vencimento"
+                  type="date"
+                />
+              </div>
+              <div className="w-1/2">
                 <Label>Data do Pagamento do Boleto</Label>
                 <Input
                   defaultValue={
