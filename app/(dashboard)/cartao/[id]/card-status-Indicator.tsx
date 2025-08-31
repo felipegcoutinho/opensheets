@@ -19,7 +19,7 @@ export default function CardStatusIndicator({
   const pagamentoLabel = pago.created_at
     ? `Pago em ${DateFormat(String(pago.created_at).slice(0, 10))}`
     : vencimento
-      ? `Pago até dia ${vencimento}`
+      ? `Pago até ${vencimento}`
       : undefined;
 
   return (
