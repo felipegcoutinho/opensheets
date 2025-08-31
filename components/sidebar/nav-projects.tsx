@@ -45,23 +45,11 @@ export const NavProjects = memo(function NavProjects({
 
               return (
                 <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton
-                    className={`${isActive && "bg-primary hover:bg-primary/90 active:bg-primary"}`}
-                    asChild
-                  >
+                  <SidebarMenuButton asChild isActive={isActive}>
                     <div className="flex w-full items-center justify-between">
-                      <Link
-                        href={item.url}
-                        className={`flex items-center gap-2 transition-all ${
-                          isActive && "text-background"
-                        }`}
-                      >
-                        <item.icon
-                          className={`h-4 w-4 ${
-                            isActive ? "text-background" : "text-foreground"
-                          }`}
-                        />
-                        <p>{item.name}</p>
+                      <Link href={item.url} className="flex items-center gap-2">
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.name}</span>
                       </Link>
 
                       <AddButton

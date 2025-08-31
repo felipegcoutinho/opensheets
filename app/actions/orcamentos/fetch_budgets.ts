@@ -5,7 +5,7 @@ export async function getBudgets(month: string) {
 
   const { data, error } = await supabase
     .from("orcamentos")
-    .select("id, valor_orcado, periodo, categorias ( id, nome )")
+    .select("id, valor_orcado, periodo, categorias ( id, nome, icone )")
     .eq("periodo", month)
     .order("created_at", { ascending: false });
 

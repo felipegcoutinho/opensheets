@@ -146,7 +146,7 @@ export default async function Index() {
             <Card className="border-primary/20 overflow-hidden">
               <div className="bg-muted/40">
                 <Image
-                  src="/empty_image.svg"
+                  src="/landing/preview.png"
                   alt="Preview do opensheets"
                   width={1200}
                   height={800}
@@ -162,56 +162,82 @@ export default async function Index() {
       {/* Sobre */}
       <section id="sobre" className="mx-auto max-w-6xl px-4 py-16">
         <div className="mb-8 text-center md:text-left">
-          <h2 className="text-3xl font-semibold tracking-tight">Sobre</h2>
+          <span className="bg-background/60 text-foreground/70 inline-flex items-center rounded-full border px-3 py-1 text-xs backdrop-blur">
+            Sobre o produto
+          </span>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight">
+            O jeito moderno de cuidar do seu dinheiro
+          </h2>
           <p className="text-muted-foreground mt-2 text-sm">
-            Por que o opensheets é diferente e como te ajuda no dia a dia.
+            Centralize contas, cartões, faturas, lançamentos e orçamentos. Menos
+            atrito, mais clareza para agir com confiança.
           </p>
         </div>
-        <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-5">
-          <div className="leading-relaxed text-pretty md:col-span-3">
+        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
+          {/* Coluna: texto + destaques */}
+          <div className="leading-relaxed text-pretty">
             <div className="bg-card rounded-2xl border p-6 shadow-sm">
               <p className="text-foreground/90">
-                O opensheets centraliza contas, boletos, cartões, lançamentos e
-                orçamentos em um único lugar. Com painéis claros, alertas e
-                automações, você acompanha o que importa e ganha tempo para
-                agir.
+                O opensheets foi projetado para eliminar a bagunça financeira do
+                dia a dia. Em poucos cliques, você entende saldos, vencimentos e
+                prioridades — sem planilhas complexas ou telas cheias de
+                distrações.
               </p>
-              <ul className="text-foreground/80 mt-4 grid gap-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="bg-secondary text-primary inline-flex size-5 items-center justify-center rounded">
-                    ✓
-                  </span>{" "}
-                  Visão 360º do seu dinheiro
+              <ul className="mt-6 grid gap-3 text-sm">
+                <li className="flex items-start gap-3">
+                  <span className="bg-secondary text-primary inline-flex size-8 shrink-0 items-center justify-center rounded-md">
+                    <RiFlashlightLine className="size-4" />
+                  </span>
+                  <div>
+                    <div className="font-medium">Automação simples</div>
+                    <p className="text-muted-foreground mt-0.5">
+                      Alertas e lembretes acionáveis para não perder prazos.
+                    </p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="bg-secondary text-primary inline-flex size-5 items-center justify-center rounded">
-                    ✓
-                  </span>{" "}
-                  Alertas e lembretes sem complicação
+                <li className="flex items-start gap-3">
+                  <span className="bg-secondary text-primary inline-flex size-8 shrink-0 items-center justify-center rounded-md">
+                    <RiShieldCheckLine className="size-4" />
+                  </span>
+                  <div>
+                    <div className="font-medium">Segurança por padrão</div>
+                    <p className="text-muted-foreground mt-0.5">
+                      Sessões protegidas e dados tratados com cuidado.
+                    </p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="bg-secondary text-primary inline-flex size-5 items-center justify-center rounded">
-                    ✓
-                  </span>{" "}
-                  Simples de começar, poderoso no uso
+                <li className="flex items-start gap-3">
+                  <span className="bg-secondary text-primary inline-flex size-8 shrink-0 items-center justify-center rounded-md">
+                    <RiArrowUpLine className="size-4" />
+                  </span>
+                  <div>
+                    <div className="font-medium">Foco em resultado</div>
+                    <p className="text-muted-foreground mt-0.5">
+                      Interface leve que destaca o que importa.
+                    </p>
+                  </div>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3 md:col-span-2">
-            <div className="rounded-lg border p-4 text-center">
+
+          {/* Coluna: métricas rápidas */}
+          <div className="grid grid-cols-3 gap-3 md:grid-cols-3">
+            <div className="rounded-lg border p-5 text-center">
               <div className="text-2xl font-semibold">1 min</div>
-              <div className="text-muted-foreground text-xs">para começar</div>
+              <div className="text-muted-foreground mt-1 text-xs">
+                para começar
+              </div>
             </div>
-            <div className="rounded-lg border p-4 text-center">
+            <div className="rounded-lg border p-5 text-center">
               <div className="text-2xl font-semibold">0 atritos</div>
-              <div className="text-muted-foreground text-xs">
+              <div className="text-muted-foreground mt-1 text-xs">
                 UX direto ao ponto
               </div>
             </div>
-            <div className="rounded-lg border p-4 text-center">
+            <div className="rounded-lg border p-5 text-center">
               <div className="text-2xl font-semibold">+produtivo</div>
-              <div className="text-muted-foreground text-xs">
+              <div className="text-muted-foreground mt-1 text-xs">
                 menos tempo em planilhas
               </div>
             </div>
@@ -293,52 +319,6 @@ export default async function Index() {
         </div>
       </section>
 
-      {/* Preview do Dashboard (mock) */}
-      <section className="mx-auto max-w-6xl px-4 py-10">
-        <Card className="border-primary/20 from-primary/[0.06] overflow-hidden bg-gradient-to-br to-transparent">
-          <CardHeader>
-            <CardTitle className="text-xl">
-              Um preview do seu dashboard
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div className="rounded-md border p-4">
-                <div className="bg-muted mb-3 h-4 w-24 rounded" />
-                <div className="bg-muted mb-6 h-6 w-40 rounded" />
-                <div className="grid grid-cols-6 items-end gap-1">
-                  <div className="bg-primary/30 h-8" />
-                  <div className="h-14 bg-sky-400/50" />
-                  <div className="h-10 bg-fuchsia-400/40" />
-                  <div className="bg-primary/60 h-16" />
-                  <div className="h-9 bg-sky-400/40" />
-                  <div className="h-6 bg-fuchsia-400/30" />
-                </div>
-              </div>
-              <div className="rounded-md border p-4">
-                <div className="bg-muted mb-3 h-4 w-28 rounded" />
-                <ul className="space-y-2">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <li key={i} className="flex items-center justify-between">
-                      <div className="bg-muted h-3 w-32 rounded" />
-                      <div className="bg-primary/20 h-3 w-12 rounded" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-md border p-4">
-                <div className="bg-muted mb-3 h-4 w-32 rounded" />
-                <div className="space-y-2">
-                  <div className="h-10 rounded bg-sky-400/20" />
-                  <div className="h-10 rounded bg-fuchsia-400/20" />
-                  <div className="bg-primary/20 h-10 rounded" />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
       {/* Como funciona */}
       <section className="mx-auto max-w-6xl px-4 py-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -412,8 +392,8 @@ export default async function Index() {
             Fale com a gente para dúvidas, sugestões ou parcerias.
           </p>
         </div>
-        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
-          <Card className="md:col-span-2">
+        <div className="grid grid-cols-1 items-start gap-6">
+          <Card>
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
                 <span className="bg-secondary text-primary inline-flex size-9 items-center justify-center rounded-md">
@@ -436,14 +416,6 @@ export default async function Index() {
               </div>
             </CardContent>
           </Card>
-          <div className="bg-card rounded-2xl border p-6">
-            <h4 className="text-sm font-semibold">Preferências de contato</h4>
-            <ul className="text-muted-foreground mt-2 grid gap-2 text-sm">
-              <li>• Atendimento em horário comercial (BR)</li>
-              <li>• Resposta média em poucas horas</li>
-              <li>• Dúvidas técnicas, sugestões e parcerias</li>
-            </ul>
-          </div>
         </div>
       </section>
 

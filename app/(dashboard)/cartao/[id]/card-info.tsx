@@ -71,7 +71,7 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
           <p className="text-muted-foreground mt-2 text-xs uppercase">Status</p>
           <span className="flex items-center gap-1">
             <Ping
-              color={item.status === "ativo" ? "bg-green-500" : "bg-zinc-500"}
+              color={item.status === "ativo" ? "bg-emerald-500" : "bg-zinc-500"}
             />
             <span className="font-bold capitalize">{item.status}</span>
           </span>

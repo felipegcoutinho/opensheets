@@ -135,7 +135,7 @@ export default function UpdateAccount({ item }) {
               <SelectContent>
                 <SelectItem value="ativo">
                   <div className="flex items-center gap-2">
-                    <Ping color="bg-green-500" /> Ativo
+                    <Ping color="bg-emerald-500" /> Ativo
                   </div>
                 </SelectItem>
                 <SelectItem value="inativo">

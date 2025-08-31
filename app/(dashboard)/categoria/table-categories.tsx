@@ -25,6 +25,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";
 import UpdateCategory from "./modal/update-category";
+import { title_font } from "../../fonts/font";
 
 export default function TableCategories({ categorias }) {
   const { getTransactionBadgeColor } = UseStyles();
@@ -53,7 +54,7 @@ export default function TableCategories({ categorias }) {
       <Card>
         <CardContent>
           <Table>
-            <TableHeader>
+            <TableHeader className={`${title_font.className}`}>
               <TableRow>
                 <TableHead>Nome</TableHead>
                 <TableHead>Tipo da Categoria</TableHead>

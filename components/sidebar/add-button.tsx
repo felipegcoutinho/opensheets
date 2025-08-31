@@ -5,7 +5,19 @@ import CreateTransactions from "@/app/(dashboard)/lancamento/modal/create-transa
 import { RiAddCircleLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 
-function AddButton({ item, cartoes, contas, categorias, isActive }: { item: any; cartoes: any; contas: any; categorias: any; isActive?: boolean }) {
+function AddButton({
+  item,
+  cartoes,
+  contas,
+  categorias,
+  isActive,
+}: {
+  item: any;
+  cartoes: any;
+  contas: any;
+  categorias: any;
+  isActive?: boolean;
+}) {
   return (
     <>
       {item.name === "lançamentos" && (
@@ -19,7 +31,7 @@ function AddButton({ item, cartoes, contas, categorias, isActive }: { item: any;
             size="icon"
             variant="link"
           >
-            <RiAddCircleLine className={isActive ? "text-background" : "text-foreground"} size={18} />
+            <RiAddCircleLine size={18} />
           </Button>
         </CreateTransactions>
       )}
@@ -31,7 +43,7 @@ function AddButton({ item, cartoes, contas, categorias, isActive }: { item: any;
             size="icon"
             variant="link"
           >
-            <RiAddCircleLine className={isActive ? "text-background" : "text-muted-foreground"} size={18} />
+            <RiAddCircleLine size={18} />
           </Button>
         </CreateNotes>
       )}

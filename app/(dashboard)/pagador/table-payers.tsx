@@ -105,7 +105,7 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
     <Tabs defaultValue="ativo">
       <TabsList>
         <TabsTrigger value="ativo" className="flex items-center gap-2">
-          <Ping color="bg-green-500" /> Ativos
+          <Ping color="bg-emerald-500" /> Ativos
         </TabsTrigger>
         <TabsTrigger value="inativo" className="flex items-center gap-2">
           <Ping color="bg-zinc-400" /> Inativos

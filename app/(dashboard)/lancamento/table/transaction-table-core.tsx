@@ -14,6 +14,7 @@ import {
   flexRender,
   Table as TanstackTable,
 } from "@tanstack/react-table"; // Renomeado para evitar conflito
+import { title_font } from "../../../fonts/font";
 
 interface TransactionTableCoreProps<TData> {
   table: TanstackTable<TData>;
@@ -25,7 +26,7 @@ export function TransactionTableCore<
 >({ table, columns }: TransactionTableCoreProps<TData>) {
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className={`${title_font.className}`}>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (

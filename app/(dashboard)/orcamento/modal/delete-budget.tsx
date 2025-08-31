@@ -4,12 +4,13 @@ import { useActionState, useEffect, startTransition } from "react";
 import { toast } from "sonner";
 import { deleteBudget } from "@/app/actions/orcamentos/delete_budget";
 import type { ActionResponse } from "./form-schema";
+import type { ReactNode } from "react";
 
-type Props = { itemId: number };
+type Props = { itemId: number; trigger?: ReactNode };
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function DeleteBudget({ itemId }: Props) {
+export default function DeleteBudget({ itemId, trigger }: Props) {
   const [state, action, isPending] = useActionState(deleteBudget, initialState);
 
   useEffect(() => {
@@ -25,10 +26,5 @@ export default function DeleteBudget({ itemId }: Props) {
     });
   };
 
-  return (
-    <DeleteButton
-      handleDelete={() => handleDelete(itemId)}
-      loading={isPending}
-    />
-  );
+  return <DeleteButton handleDelete={() => handleDelete(itemId)} loading={isPending} trigger={trigger} />;
 }

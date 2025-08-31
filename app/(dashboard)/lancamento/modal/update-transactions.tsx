@@ -26,7 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpLine } from "@remixicon/react";
+import { RiThumbUpFill, RiThumbUpLine } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -276,9 +276,9 @@ export default function UpdateTransactions({
                   defaultPressed={itemPaid}
                   onPressedChange={() => setIsPaid(!itemPaid)}
                   name="realizado"
-                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-400"
+                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-600"
                 >
-                  <RiThumbUpLine strokeWidth={2} />
+                  <RiThumbUpFill strokeWidth={2} />
                 </Toggle>
               </div>
             </Card>

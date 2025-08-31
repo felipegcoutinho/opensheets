@@ -99,7 +99,7 @@ export default function BillPaymentDialog({
             <RiCheckboxCircleLine className="h-12 w-12 text-emerald-600" />
             <p>Pagamento realizado com sucesso!</p>
             <DialogClose asChild>
-              <Button className="w-full bg-green-500 hover:bg-green-600">
+              <Button className="w-full bg-emerald-500 hover:bg-emerald-600">
                 Concluído
               </Button>
             </DialogClose>

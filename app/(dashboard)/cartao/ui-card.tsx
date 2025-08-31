@@ -22,8 +22,8 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
           <PaymentMethodLogo
             url_name={`/logos/${item.logo_image}`}
             descricao={item.descricao}
-            width={50}
-            height={50}
+            width={42}
+            height={42}
           />
 
           <Image

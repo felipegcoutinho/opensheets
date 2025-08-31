@@ -6,14 +6,20 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarRail,
+  SidebarInput,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
 import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
 import { NavLinks } from "./nav-links";
+import { Separator } from "../ui/separator";
 
-type PayerPrincipal = { id: string; nome: string; role: string; foto?: string | null } | null | undefined;
+type PayerPrincipal =
+  | { id: string; nome: string; role: string; foto?: string | null }
+  | null
+  | undefined;
 
 export function AppSidebar({
   username,
@@ -40,12 +46,11 @@ export function AppSidebar({
 
   return (
     <Sidebar collapsible="sidebar" {...props} variant="sidebar">
-      <SidebarHeader>
-        <div className="mt-4 flex items-center justify-center gap-2 py-2">
-          <Logo />
-        </div>
+      <SidebarHeader className="pt-6 pb-5">
+        <Logo />
       </SidebarHeader>
-      <SidebarContent>
+      <Separator />
+      <SidebarContent className="px-2">
         <SidebarContent>
           <NavProjects
             groups={data.groups}
@@ -56,8 +61,14 @@ export function AppSidebar({
         </SidebarContent>
       </SidebarContent>
       <SidebarFooter className="border-border border-t">
-        <NavUser username={username} usermail={usermail} user={data.user} payerPrincipal={payerPrincipal} />
+        <NavUser
+          username={username}
+          usermail={usermail}
+          user={data.user}
+          payerPrincipal={payerPrincipal}
+        />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

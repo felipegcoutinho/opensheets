@@ -10,9 +10,9 @@ export default async function BannerData() {
   const shortUserName = userName?.split(" ")[0];
 
   return (
-    <Banner className="bg-chart-1/10 py-12">
+    <Banner className="bg-chart-3/20 py-12">
       <div className="flex flex-col">
-        <span className={`text-xl font-bold`}>Olá, {shortUserName}! 👋</span>
+        <span className="text-xl font-bold">Olá, {shortUserName}! 👋</span>
         <HyperText className="text-muted-foreground text-sm">
           {friendlyDate(currentDate)}
         </HyperText>

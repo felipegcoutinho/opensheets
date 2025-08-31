@@ -22,7 +22,7 @@ function UseStyles() {
   function getTransactionBadgeColor(tipoTransacao?: string) {
     switch (tipoTransacao) {
       case "receita":
-        return "bg-green-500";
+        return "bg-emerald-500";
       case "despesa":
         return "bg-red-500";
       default:
