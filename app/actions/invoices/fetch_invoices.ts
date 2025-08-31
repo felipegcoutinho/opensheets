@@ -5,7 +5,7 @@ export async function getFaturas(month: string, cartao_id: string) {
 
   const { data } = await supabase
     .from("faturas")
-    .select(`id, status_pagamento, periodo, cartao_id`)
+    .select(`id, status_pagamento, periodo, cartao_id, created_at`)
     .eq("periodo", month)
     .eq("cartao_id", cartao_id);
 

@@ -15,6 +15,7 @@ import {
 import {
   RiBankCardLine,
   RiBarcodeLine,
+  RiCheckboxCircleFill,
   RiCheckboxCircleLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
@@ -26,6 +27,7 @@ type BillPaymentDialogProps = {
   descricao: string;
   valor: number;
   status_pagamento: boolean;
+  data_vencimento?: string | null;
 };
 
 export default function BillPaymentDialog({
@@ -33,6 +35,7 @@ export default function BillPaymentDialog({
   descricao,
   valor,
   status_pagamento,
+  data_vencimento,
 }: BillPaymentDialogProps) {
   const { handlePaymentBills, isPending } = UtilitiesComponents();
   const [paymentStatus, setPaymentStatus] = useState<
@@ -56,15 +59,20 @@ export default function BillPaymentDialog({
   const isPaid = status_pagamento === true;
 
   if (isPaid) {
-    return <span className="text-emerald-600">pago</span>;
+    return (
+      <div className="flex items-center justify-end gap-1 text-emerald-700">
+        <RiCheckboxCircleFill size={12} />
+        <span>Pago</span>
+      </div>
+    );
   }
 
   return (
     <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
-        <span className="cursor-pointer text-orange-600 hover:underline">
-          pagar
-        </span>
+        <div className="cursor-pointer text-orange-600 hover:underline">
+          Pagar
+        </div>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
@@ -96,7 +104,7 @@ export default function BillPaymentDialog({
 
         {paymentStatus === "success" ? (
           <div className="flex flex-col items-center gap-4 text-center">
-            <RiCheckboxCircleLine className="h-12 w-12 text-emerald-600" />
+            <RiCheckboxCircleLine className="h-12 w-12 text-emerald-700" />
             <p>Pagamento realizado com sucesso!</p>
             <DialogClose asChild>
               <Button className="w-full bg-emerald-500 hover:bg-emerald-600">

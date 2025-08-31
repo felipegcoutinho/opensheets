@@ -12,6 +12,7 @@ export async function updateTransaction(
     id,
     data_compra,
     data_vencimento,
+    dt_pagamento_boleto,
     descricao,
     tipo_transacao,
     periodo,
@@ -80,6 +81,10 @@ export async function updateTransaction(
       .update({
         data_compra,
         data_vencimento,
+        dt_pagamento_boleto:
+          typeof dt_pagamento_boleto === "string" && dt_pagamento_boleto.trim()
+            ? dt_pagamento_boleto
+            : null,
         descricao,
         tipo_transacao,
         periodo,
@@ -121,15 +126,22 @@ export async function togglePagamento(id: number, realizadoAtual: boolean) {
   return { data };
 }
 
-export async function payBills(id: number, realizadoAtual: boolean) {
+export async function payBills(id: string, realizadoAtual: boolean) {
   const supabase = createClient();
-  const { error, data } = await supabase
+  const novoStatus = !realizadoAtual;
+  const payload = novoStatus
+    ? { realizado: true, dt_pagamento_boleto: new Date().toISOString() }
+    : { realizado: false, dt_pagamento_boleto: null };
+
+  const { error } = await supabase
     .from("lancamentos")
-    .update({ realizado: !realizadoAtual })
+    .update(payload)
     .eq("id", id);
   if (error) {
-    console.error("Erro ao pagar boletos:", error);
+    console.error("Erro ao atualizar boleto:", error);
     return { success: false, message: "Erro ao pagar boleto." };
   }
+
+  revalidatePath("/dashboard");
   return { success: true, message: "Boleto pago com sucesso." };
 }

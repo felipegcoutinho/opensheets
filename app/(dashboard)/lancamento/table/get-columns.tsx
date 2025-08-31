@@ -101,10 +101,9 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <BadgeSystem
-              label={DateFormat(item.data_vencimento)}
-              color={getSystemBadgeColor()}
-            />
+            <Badge variant={"outline"}>
+              {DateFormat(item.data_vencimento)}
+            </Badge>
           )}
 
           {item.condicao === "parcelado" && (
@@ -399,7 +398,10 @@ export const getColumns = (
           </DropdownMenu>
 
           {item.pagadores?.role === "sistema" ? (
-            <RiCheckboxCircleFill className="text-muted" size={16} />
+            <RiCheckboxCircleFill
+              className="text-muted-foreground opacity-40"
+              size={16}
+            />
           ) : (
             <TooltipProvider delayDuration={300}>
               <Tooltip>

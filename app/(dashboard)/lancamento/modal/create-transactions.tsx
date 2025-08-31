@@ -369,7 +369,7 @@ export default function CreateTransactions({
                       onPressedChange={setIsPaid}
                       pressed={isPaid}
                       name="realizado_toggle"
-                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-600"
+                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-700"
                     >
                       <RiThumbUpFill strokeWidth={2} />
                     </Toggle>

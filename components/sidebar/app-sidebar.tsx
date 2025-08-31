@@ -47,7 +47,9 @@ export function AppSidebar({
   return (
     <Sidebar collapsible="sidebar" {...props} variant="sidebar">
       <SidebarHeader className="pt-6 pb-5">
-        <Logo />
+        <div className="flex justify-center">
+          <Logo />
+        </div>
       </SidebarHeader>
       <Separator />
       <SidebarContent className="px-2">

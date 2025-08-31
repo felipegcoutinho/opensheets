@@ -148,7 +148,7 @@ export default function SendEmailButton({
       </Dialog>
       {state?.message ? (
         <span
-          className={`text-xs ${state.ok ? "text-emerald-600" : "text-red-600"}`}
+          className={`text-xs ${state.ok ? "text-emerald-700" : "text-red-600"}`}
         >
           {state.message}
         </span>

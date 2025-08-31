@@ -164,7 +164,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
-                  <span className="capitalize flex items-center gap-2">
+                  <span className="flex items-center gap-2 capitalize">
                     <Avatar className="size-6">
                       {resolveFotoSrc(itemResponsavelFoto) ? (
                         <AvatarImage
@@ -186,7 +186,7 @@ export default function DetailsTransactions({
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Status</span>
                   <span className="capitalize">
-                    {itemPaid ? "pago" : "pendente"}
+                    {itemPaid ? "Pago" : "Pendente"}
                   </span>
                 </li>
 

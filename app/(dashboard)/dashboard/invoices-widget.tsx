@@ -3,10 +3,17 @@ import EmptyCard from "@/components/empty-card";
 import InvoicePaymentDialog from "@/components/invoice-payment-dialog";
 import MoneyValues from "@/components/money-values";
 import PaymentMethodLogo from "@/components/payment-method-logo";
-import { RiArrowRightSFill, RiCheckLine } from "@remixicon/react";
+import {
+  RiArrowRightSFill,
+  RiCheckboxCircleFill,
+  RiCheckLine,
+} from "@remixicon/react";
 import Link from "next/link";
+import { UseDates } from "@/hooks/use-dates";
 
 export default async function InvoiceWidget({ data, month }) {
+  const { DateFormat } = UseDates();
+
   if (!data || data.length === 0) return <EmptyCard />;
 
   const dataSorted = [...data].sort((a, b) => b.total_valor - a.total_valor);
@@ -40,29 +47,40 @@ export default async function InvoiceWidget({ data, month }) {
                 width={40}
                 height={40}
               />
+
               <div>
                 <Link
-                  className="flex items-center font-medium hover:underline"
+                  className="flex items-center hover:underline"
                   href={`/cartao/${item.cartao_id}/?periodo=${month}`}
                 >
                   {item.descricao}
-                  <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
+                  <RiArrowRightSFill
+                    className="text-muted-foreground"
+                    size={12}
+                  />
                 </Link>
 
-                {fatura_status.length > 0 &&
-                fatura_status[0]?.status_pagamento === "pago" ? (
-                  <RiCheckLine className="text-emerald-600" size={16} />
-                ) : (
-                  <p className="text-muted-foreground text-xs">
-                    Vence dia {item.dt_vencimento}
-                  </p>
-                )}
+                {(() => {
+                  const pago = fatura_status?.find(
+                    (f) => f.status_pagamento === "pago",
+                  );
+                  if (pago) {
+                    const texto = pago.created_at
+                      ? `Pago em ${DateFormat(String(pago.created_at).slice(0, 10))}`
+                      : `Pago até dia ${item.dt_vencimento}`;
+                    return <p className="text-xs text-emerald-700">{texto}</p>;
+                  }
+                  return (
+                    <p className="text-muted-foreground text-xs">
+                      Vence dia {item.dt_vencimento}
+                    </p>
+                  );
+                })()}
               </div>
             </div>
             <div className="py-1 text-right">
-              <p>
-                <MoneyValues value={item.total_valor} />
-              </p>
+              <MoneyValues value={item.total_valor} />
+
               <InvoicePaymentDialog
                 fatura_status={fatura_status}
                 month={month}

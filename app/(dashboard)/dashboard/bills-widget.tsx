@@ -2,7 +2,11 @@ import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
-import { RiBarcodeLine, RiCheckLine } from "@remixicon/react";
+import {
+  RiBarcodeLine,
+  RiCheckboxCircleFill,
+  RiCheckLine,
+} from "@remixicon/react";
 
 export default async function BillsWidget({ month, data }) {
   const { DateFormat } = UseDates();
@@ -21,26 +25,33 @@ export default async function BillsWidget({ month, data }) {
 
         <div>
           <p className="font-medium capitalize">{item.descricao}</p>
-          {item.realizado === false ? (
-            <p className="text-muted-foreground text-xs">
-              Vence {DateFormat(item.data_vencimento)}
-            </p>
-          ) : (
-            <RiCheckLine className="text-emerald-600" size={16} />
-          )}
+          {(() => {
+            if (item.realizado) {
+              const dt = item.dt_pagamento_boleto as string | null;
+              const texto = dt
+                ? `Pago em ${DateFormat(String(dt).slice(0, 10))}`
+                : `Pago até dia ${DateFormat(item.data_vencimento)}`;
+              return <p className="text-xs text-emerald-700">{texto}</p>;
+            }
+            return (
+              <p className="text-muted-foreground text-xs">
+                Vence {DateFormat(item.data_vencimento)}
+              </p>
+            );
+          })()}
         </div>
       </div>
 
       <div className="py-1 text-right">
-        <p>
-          <MoneyValues value={item.valor} />
-        </p>
+        <MoneyValues value={item.valor} />
 
         <BillPaymentDialog
           descricao={item.descricao}
           valor={item.valor}
           id={item.id}
           status_pagamento={item.realizado}
+          dt_pagamento_boleto={item.dt_pagamento_boleto || null}
+          data_vencimento={item.data_vencimento}
         />
       </div>
     </div>

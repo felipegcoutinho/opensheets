@@ -196,6 +196,8 @@ export default function UpdateTransactions({
             </div>
           </div>
 
+          {/* Campo de data de pagamento do boleto (abaixo do Status do Lançamento) */}
+
           <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
               <Label>
@@ -276,12 +278,29 @@ export default function UpdateTransactions({
                   defaultPressed={itemPaid}
                   onPressedChange={() => setIsPaid(!itemPaid)}
                   name="realizado"
-                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-600"
+                  className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-700"
                 >
                   <RiThumbUpFill strokeWidth={2} />
                 </Toggle>
               </div>
             </Card>
+          )}
+
+          {itemFormaPagamento === "boleto" && (
+            <div className="mt-2 mb-2 flex w-full gap-2">
+              <div className="w-full">
+                <Label>Data do Pagamento do Boleto</Label>
+                <Input
+                  defaultValue={
+                    item?.dt_pagamento_boleto
+                      ? String(item.dt_pagamento_boleto).slice(0, 10)
+                      : ""
+                  }
+                  name="dt_pagamento_boleto"
+                  type="date"
+                />
+              </div>
+            </div>
           )}
 
           {itemFormaPagamento !== "cartão de crédito" ? (
