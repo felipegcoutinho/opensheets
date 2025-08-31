@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
+import { deleteCards } from "../../actions/cards/delete_cards";
 
 type Props = {
   item: any;
@@ -48,21 +49,22 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
           <div className="border-y py-4">
             <div className="mb-2 flex justify-between text-sm">
               <div className="text-left">
-                <p className="text-muted-foreground">Limite Total</p>
+                <p className="text-muted-foreground text-xs">Limite Total</p>
                 <MoneyValues value={item.limites.limiteTotal} />
               </div>
+
               <div className="text-center">
-                <p className="text-muted-foreground">Em Uso</p>
+                <p className="text-muted-foreground text-xs">Em Uso</p>
                 <span className="flex items-center gap-1">
-                  <Ping color={"bg-orange-400"} />
+                  <Ping color="bg-orange-400" />
                   <MoneyValues value={item.limites.limiteEmUso} />
                 </span>
               </div>
 
               <div className="text-right">
-                <p className="text-muted-foreground">Disponível</p>
+                <p className="text-muted-foreground text-xs">Disponível</p>
                 <span className="flex items-center gap-1">
-                  <Ping color={"bg-secondary"} />
+                  <Ping color="bg-secondary" />
                   <MoneyValues value={item.limites.limiteDisponivel} />
                 </span>
               </div>
@@ -74,24 +76,18 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }
-              className="h-4 rounded"
+              className="h-3 rounded"
             />
           </div>
         )}
       </CardContent>
 
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex gap-4">
+        <UpdateCard item={item} getAccountMap={getAccountMap} />
+
         <Button className="p-0" variant="link">
           <Link href={`/cartao/${item.id}`}>ver fatura</Link>
         </Button>
-
-        <UpdateCard item={item} getAccountMap={getAccountMap} />
-
-        {/* <form action={deleteCards}>
-          <Button className="p-0" variant="link" value={item.id} name="excluir">
-            excluir
-          </Button>
-        </form> */}
       </CardFooter>
     </Card>
   );

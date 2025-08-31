@@ -92,8 +92,8 @@ export default function CategoryProgress({
                       <Badge
                         variant={
                           item.spent > item.limit
-                            ? "despesa_lite"
-                            : "receita_lite"
+                            ? "destructive"
+                            : "despesa_lite"
                         }
                       >
                         {limitPercentage!.toFixed(1)}% do limite
@@ -101,7 +101,7 @@ export default function CategoryProgress({
                       </Badge>
                       {item.spent > item.limit && (
                         <>
-                          <Badge variant="despesa_lite">
+                          <Badge variant="destructive">
                             excedeu em
                             <MoneyValues
                               value={item.spent - item.limit}
