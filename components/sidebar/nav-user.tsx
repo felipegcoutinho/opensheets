@@ -24,6 +24,7 @@ export function NavUser({
   user,
   username,
   usermail,
+  payerPrincipal,
 }: {
   user: {
     name: string;
@@ -31,8 +32,29 @@ export function NavUser({
     avatar: string;
   };
   username: string;
+  payerPrincipal?: { id: string; nome: string; role: string; foto?: string | null } | null;
 }) {
   const { isMobile, open } = useSidebar();
+
+  const renderPayerAvatar = () => {
+    const foto = payerPrincipal?.foto || undefined;
+    if (!payerPrincipal || !foto) return null;
+    const resolveFotoSrc = (f?: string) => {
+      if (!f) return undefined;
+      if (f.startsWith("http")) return f;
+      if (f.startsWith("/")) return f;
+      return `/avatars/${f}`;
+    };
+    const src = resolveFotoSrc(foto);
+    if (!src) return null;
+    return (
+      <img
+        src={src}
+        alt={payerPrincipal?.nome || "Pagador principal"}
+        className="size-5 rounded-full object-cover"
+      />
+    );
+  };
 
   return (
     <SidebarMenu>
@@ -44,7 +66,10 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-bold">{username}</span>
+                <span className="truncate font-bold inline-flex items-center gap-2">
+                  {renderPayerAvatar()}
+                  {username}
+                </span>
                 <span className="truncate text-xs">{usermail}</span>
               </div>
               <RiMoreLine className="ml-auto size-4" />
@@ -58,6 +83,7 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-2 py-2 text-left text-sm">
+                {renderPayerAvatar()}
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{username}</span>
                   <span className="truncate text-xs">{usermail}</span>

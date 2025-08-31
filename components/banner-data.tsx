@@ -1,8 +1,6 @@
 import { getUserName } from "@/app/actions/users/fetch_users";
-import { money_values } from "@/app/fonts/font";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
-import { AnimatedShinyText } from "./magicui/animated-shiny-text";
 import { HyperText } from "./magicui/hyper-text";
 
 export default async function BannerData() {
@@ -12,12 +10,10 @@ export default async function BannerData() {
   const shortUserName = userName?.split(" ")[0];
 
   return (
-    <Banner className="bg-secondary py-12">
+    <Banner className="bg-chart-3/20 py-12">
       <div className="flex flex-col">
-        <span className={`${money_values.className} text-xl font-bold`}>
-          <AnimatedShinyText>Olá, {shortUserName}! 👋</AnimatedShinyText>
-        </span>
-        <HyperText className="text-muted-foreground text-sm capitalize">
+        <span className="text-xl font-bold">Olá, {shortUserName}! 👋</span>
+        <HyperText className="text-muted-foreground text-sm">
           {friendlyDate(currentDate)}
         </HyperText>
       </div>

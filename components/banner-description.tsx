@@ -1,6 +1,6 @@
+import { RiInformation2Line } from "@remixicon/react";
 import React from "react";
 import { Card } from "./ui/card";
-import { RiInformation2Line } from "@remixicon/react";
 
 type BannerDescriptionProps = {
   title: string;
@@ -15,7 +15,7 @@ export default function BannerDescription({
 }: BannerDescriptionProps) {
   return (
     <div>
-      <Card className="bg-accent mb-2 border-none p-8">
+      <Card className="bg-chart-3/20 mb-2 border-none p-8">
         <p className="max-w-2xl text-sm">
           <RiInformation2Line size={24} className="mr-2 inline-block" />
           {subtitle}

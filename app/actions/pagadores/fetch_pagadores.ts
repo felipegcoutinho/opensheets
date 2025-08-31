@@ -50,3 +50,20 @@ export async function getPayersName(id: string) {
 
   return data;
 }
+
+export async function getPrincipalPayer() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("pagadores")
+    .select("id, nome, email, role, foto, status, is_hidden")
+    .eq("is_hidden", false)
+    .eq("status", "ativo")
+    .eq("role", "principal")
+    .limit(1)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  return data;
+}

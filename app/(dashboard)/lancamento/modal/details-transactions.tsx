@@ -2,7 +2,7 @@
 
 import MoneyValues from "@/components/money-values";
 import Timeline from "@/components/timeline-orders";
-import { Badge } from "@/components/ui/badge";
+import BadgeSystem from "@/components/payer-badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -75,12 +75,8 @@ export default function DetailsTransactions({
 
   const { DateFormat } = UseDates();
 
-  const {
-    getResponsableStyle,
-    getConditionIcon,
-    getPaymentIcon,
-    getBadgeStyle,
-  } = UseStyles();
+  const { getPaymentIcon, getPayerRoleBadgeColor, getTransactionBadgeColor } =
+    UseStyles();
 
   const handleDialogClose = (val) => {
     setIsOpen(val);
@@ -154,9 +150,10 @@ export default function DetailsTransactions({
                     Tipo de Transação
                   </span>
                   <span className="capitalize">
-                    <Badge variant={getBadgeStyle(itemTipoTransacao)}>
-                      {itemTipoTransacao}
-                    </Badge>
+                    <BadgeSystem
+                      label={itemTipoTransacao}
+                      color={getTransactionBadgeColor(itemTipoTransacao)}
+                    />
                   </span>
                 </li>
 
@@ -167,7 +164,7 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Responsável</span>
-                  <span className="capitalize flex items-center gap-2">
+                  <span className="flex items-center gap-2 capitalize">
                     <Avatar className="size-6">
                       {resolveFotoSrc(itemResponsavelFoto) ? (
                         <AvatarImage
@@ -179,16 +176,17 @@ export default function DetailsTransactions({
                         {(itemResponsavel?.[0] || "P").toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <Badge variant={getResponsableStyle(itemResponsavelRole)}>
-                      {itemResponsavel}
-                    </Badge>
+                    <BadgeSystem
+                      label={itemResponsavel}
+                      color={getPayerRoleBadgeColor(itemResponsavelRole)}
+                    />
                   </span>
                 </li>
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Status</span>
                   <span className="capitalize">
-                    {itemPaid ? "pago" : "pendente"}
+                    {itemPaid ? "Pago" : "Pendente"}
                   </span>
                 </li>
 

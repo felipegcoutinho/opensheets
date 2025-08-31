@@ -21,20 +21,36 @@ export default async function Header() {
           </Link>
         </div>
 
-        {/* Área de login/usuário ocupando o espaço à direita */}
-        <div className="flex flex-1 justify-end">
+        {/* Menu e ação à direita */}
+        <div className="flex flex-1 items-center justify-end gap-4">
+          <nav className="hidden items-center gap-6 md:flex">
+            <Link
+              href="/#sobre"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              Sobre
+            </Link>
+            <Link
+              href="/#solucoes"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              Soluções
+            </Link>
+            <Link
+              href="/#contato"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              Contato
+            </Link>
+          </nav>
           {session ? (
             <Link href="/dashboard">
               <Button size="sm" className="gap-2 shadow-sm">
                 <RiDashboardLine className="size-4" />
-                Ir para Dashboard
+                Dashboard
               </Button>
             </Link>
-          ) : (
-            <Link href="/login">
-              <Button>Login</Button>
-            </Link>
-          )}
+          ) : null}
         </div>
       </div>
     </header>

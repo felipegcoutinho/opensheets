@@ -3,11 +3,7 @@ import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
-import {
-  RiArrowRightSFill,
-  RiCheckboxCircleLine,
-  RiSkull2Fill,
-} from "@remixicon/react";
+import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
 type CombinedData = {
@@ -50,7 +46,7 @@ export default function CategoryProgress({
         name: item.categoria,
         spent: item.total,
         limit: budget?.valor_orcado,
-        color: tipo === "despesa" ? "text-red-500" : "text-green-500",
+        color: tipo === "despesa" ? "text-chart-2" : "text-chart-1",
         tipo: item.tipo_transacao,
         icone: item.icone,
       };
@@ -97,14 +93,13 @@ export default function CategoryProgress({
                         variant={
                           item.spent > item.limit
                             ? "destructive_lite"
-                            : "sistema"
+                            : "despesa_lite"
                         }
                       >
                         {limitPercentage!.toFixed(1)}% do limite
                         <MoneyValues value={item.limit} className="ml-1" />
                       </Badge>
-
-                      {item.spent > item.limit ? (
+                      {item.spent > item.limit && (
                         <>
                           <Badge variant="destructive_lite">
                             excedeu em
@@ -113,15 +108,12 @@ export default function CategoryProgress({
                               className="ml-1"
                             />
                           </Badge>
-                          <RiSkull2Fill className="text-destructive ml-1 inline-block h-3 w-3" />
                         </>
-                      ) : (
-                        <RiCheckboxCircleLine className="ml-1 inline-block h-3 w-3 text-emerald-500" />
                       )}
                     </div>
                   ) : (
                     <div className="text-muted-foreground mt-1 text-xs italic">
-                      sem limite configurado
+                      Sem limite definido
                     </div>
                   )}
                 </div>
@@ -140,12 +132,6 @@ export default function CategoryProgress({
           );
         })}
       </div>
-
-      {/* {categories.length === 0 && (
-        <div className="mt-4 text-center text-sm text-gray-500">
-          Nenhuma categoria encontrada para este mês.
-        </div>
-      )} */}
     </div>
   );
 }

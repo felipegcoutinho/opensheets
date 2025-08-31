@@ -10,14 +10,16 @@ export default async function page() {
   const fallback = <CardGridSkeleton count={6} />;
   return (
     <div className="mb-4 w-full">
-      <Suspense fallback={<div className="h-10 w-64 animate-pulse rounded bg-accent" /> }>
+      <Suspense
+        fallback={<div className="bg-accent h-10 w-64 animate-pulse rounded" />}
+      >
         <CreateCardSection />
       </Suspense>
 
       <Tabs defaultValue="ativos">
         <TabsList className="mb-2">
           <TabsTrigger value="ativos" className="flex items-center gap-2">
-            <Ping color="bg-green-500" /> Ativos
+            <Ping color="bg-emerald-500" /> Ativos
           </TabsTrigger>
           <TabsTrigger value="inativos" className="flex items-center gap-2">
             <Ping color="bg-zinc-400" /> Inativos

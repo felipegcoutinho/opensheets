@@ -1,12 +1,12 @@
 import { UseDates } from "@/hooks/use-dates";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useTransition } from "react";
 
 function Helper() {
   const { optionsMeses } = UseDates();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const isChanging = isPending;
 
@@ -25,23 +25,33 @@ function Helper() {
     [searchParams, defaultValues.month, defaultValues.year],
   );
 
-  const [currentMonth, currentYear] = useMemo(
-    () => monthYearParam.split("-"),
-    [monthYearParam],
-  );
+  const [currentMonth, currentYear] = useMemo(() => {
+    const parts = monthYearParam.split("-")
+    const m = (parts[0] || "").toLowerCase()
+    const y = parts[1] || String(defaultValues.year)
+    return [m, y]
+  }, [monthYearParam, defaultValues.year]);
 
   const currentMonthIndex = useMemo(
-    () => optionsMeses.indexOf(currentMonth),
+    () => optionsMeses.indexOf((currentMonth || "").toLowerCase()),
     [optionsMeses, currentMonth],
   );
 
   const navigateToMonth = useCallback(
     (newMonth: string, newYear: string | number) => {
+      const target = `${pathname}?periodo=${newMonth}-${newYear}`;
+      // Evita navegação redundante
+      if (
+        `${currentMonth}-${currentYear}`.toLowerCase() ===
+        `${String(newMonth)}-${String(newYear)}`.toLowerCase()
+      )
+        return;
+
       startTransition(() => {
-        replace(`${pathname}?periodo=${newMonth}-${newYear}`);
+        router.replace(target, { scroll: false });
       });
     },
-    [pathname, replace],
+    [pathname, router, currentMonth, currentYear],
   );
 
   const goToPreviousMonth = useCallback(() => {
@@ -81,6 +91,42 @@ function Helper() {
     [currentMonth, currentYear, defaultValues.month, defaultValues.year],
   );
 
+  // Prefetch dos alvos anterior e próximo para reduzir espera
+  const prevTarget = useMemo(() => {
+    let idx = currentMonthIndex - 1;
+    let y = currentYear;
+    if (idx < 0) {
+      idx = optionsMeses.length - 1;
+      y = (parseInt(currentYear) - 1).toString();
+    }
+    return `${pathname}?periodo=${optionsMeses[idx]}-${y}`;
+  }, [currentMonthIndex, currentYear, optionsMeses, pathname]);
+
+  const nextTarget = useMemo(() => {
+    let idx = currentMonthIndex + 1;
+    let y = currentYear;
+    if (idx >= optionsMeses.length) {
+      idx = 0;
+      y = (parseInt(currentYear) + 1).toString();
+    }
+    return `${pathname}?periodo=${optionsMeses[idx]}-${y}`;
+  }, [currentMonthIndex, currentYear, optionsMeses, pathname]);
+
+  // Alvo para retornar ao mês/ano atual do sistema
+  const returnTarget = useMemo(() => {
+    return `${pathname}?periodo=${defaultValues.month}-${defaultValues.year}`
+  }, [pathname, defaultValues.month, defaultValues.year])
+
+  useEffect(() => {
+    const anyRouter: any = router as any;
+    try {
+      if (anyRouter?.prefetch) {
+        anyRouter.prefetch(prevTarget);
+        anyRouter.prefetch(nextTarget);
+      }
+    } catch {}
+  }, [router, prevTarget, nextTarget]);
+
   return {
     isChanging,
     currentMonth,
@@ -90,6 +136,9 @@ function Helper() {
     goToCurrentMonthYear,
     isDifferentFromCurrent,
     pathname,
+    prevTarget,
+    nextTarget,
+    returnTarget,
   };
 }
 

@@ -14,10 +14,11 @@ import {
 } from "@/components/ui/dialog";
 import {
   RiBankCardLine,
+  RiBarcodeLine,
+  RiCheckboxCircleFill,
   RiCheckboxCircleLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
-import Image from "next/image";
 import { useState } from "react";
 import UtilitiesComponents from "./utilities-components";
 
@@ -26,6 +27,7 @@ type BillPaymentDialogProps = {
   descricao: string;
   valor: number;
   status_pagamento: boolean;
+  data_vencimento?: string | null;
 };
 
 export default function BillPaymentDialog({
@@ -33,6 +35,7 @@ export default function BillPaymentDialog({
   descricao,
   valor,
   status_pagamento,
+  data_vencimento,
 }: BillPaymentDialogProps) {
   const { handlePaymentBills, isPending } = UtilitiesComponents();
   const [paymentStatus, setPaymentStatus] = useState<
@@ -56,15 +59,20 @@ export default function BillPaymentDialog({
   const isPaid = status_pagamento === true;
 
   if (isPaid) {
-    return <span className="text-green-500">pago</span>;
+    return (
+      <div className="flex items-center justify-end gap-1 text-emerald-700 dark:text-emerald-400">
+        <RiCheckboxCircleFill size={12} />
+        <span>Pago</span>
+      </div>
+    );
   }
 
   return (
     <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
-        <span className="cursor-pointer text-orange-400 hover:underline">
-          pagar
-        </span>
+        <div className="cursor-pointer text-orange-600 hover:underline dark:text-orange-500">
+          Pagar
+        </div>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
@@ -78,13 +86,7 @@ export default function BillPaymentDialog({
             <div className="space-y-4 pt-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <span>Você está pagando o boleto de:</span>
-                <Image
-                  src="/logos/boleto.svg"
-                  className="transition-transform hover:scale-105 dark:invert dark:filter"
-                  width={40}
-                  height={40}
-                  alt="Logo do boleto"
-                />
+                <RiBarcodeLine size={32} />
                 <span className="font-bold">{descricao}</span>
               </div>
 
@@ -102,10 +104,10 @@ export default function BillPaymentDialog({
 
         {paymentStatus === "success" ? (
           <div className="flex flex-col items-center gap-4 text-center">
-            <RiCheckboxCircleLine className="h-12 w-12 text-green-500" />
+            <RiCheckboxCircleLine className="h-12 w-12 text-emerald-700" />
             <p>Pagamento realizado com sucesso!</p>
             <DialogClose asChild>
-              <Button className="w-full bg-green-500 hover:bg-green-600">
+              <Button className="w-full bg-emerald-500 hover:bg-emerald-600">
                 Concluído
               </Button>
             </DialogClose>

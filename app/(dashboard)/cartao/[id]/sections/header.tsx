@@ -13,7 +13,7 @@ export default async function CardHeaderSection({ id, month }: { id: string; mon
 
   return (
     <>
-      <CardStatusIndicator fatura_status={faturaStatus} />
+      <CardStatusIndicator fatura_status={faturaStatus} vencimento={cardDetails?.dt_vencimento} />
       {cardDetails && (
         <CardInfo
           key={cardDetails.id}
@@ -26,4 +26,3 @@ export default async function CardHeaderSection({ id, month }: { id: string; mon
     </>
   );
 }
-

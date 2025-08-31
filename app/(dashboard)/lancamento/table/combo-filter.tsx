@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { RiCheckLine, RiArrowUpDownLine } from "@remixicon/react";
+import { RiArrowUpDownLine, RiCheckLine } from "@remixicon/react";
 import { useState } from "react";
 
 interface ComboboxFilterProps {
@@ -23,6 +23,7 @@ interface ComboboxFilterProps {
   options: string[];
   value: string;
   onChange: (value: string) => void;
+  getIcon?: (value: string) => React.ReactNode;
 }
 
 export function ComboboxFilter({
@@ -30,6 +31,7 @@ export function ComboboxFilter({
   options,
   value,
   onChange,
+  getIcon,
 }: ComboboxFilterProps) {
   const [open, setOpen] = useState(false);
 
@@ -95,6 +97,7 @@ export function ComboboxFilter({
                     value === option ? "opacity-100" : "opacity-0",
                   )}
                 />
+                {getIcon?.(option)}
                 {option}
               </CommandItem>
             ))}

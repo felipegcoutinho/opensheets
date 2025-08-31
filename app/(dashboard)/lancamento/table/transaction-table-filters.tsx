@@ -1,5 +1,6 @@
 "use client";
 
+import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,9 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
+import { Table } from "@tanstack/react-table";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef } from "react";
 import CreateTransactions from "../modal/create-transactions"; // Ajuste o caminho conforme necessário
 import { ComboboxFilter } from "./combo-filter"; // Ajuste o caminho conforme necessário
-import { Table } from "@tanstack/react-table";
 
 interface TransactionTableFiltersProps<TData> {
   table: Table<TData>; // Adicionado para acesso a métodos/estados da tabela se necessário
@@ -51,6 +55,126 @@ export function TransactionTableFilters<TData>({
     return null;
   }
 
+  // URL <-> Filtros: sincronização
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialized = useRef(false);
+
+  // Mapeamento entre ids de coluna e nomes de params
+  const filterParamKeys = useMemo(
+    () => ({
+      tipo_transacao: "tipo_transacao",
+      condicao: "condicao",
+      forma_pagamento: "forma_pagamento",
+      responsavel: "responsavel",
+      categoria: "categoria",
+      conta_cartao: "conta_cartao",
+      q: "q", // busca global
+    }),
+    [],
+  );
+
+  // Inicializa filtros a partir da URL (executa uma vez)
+  useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+
+    const params = searchParams;
+
+    const maybeSet = (columnId: string, paramKey: string) => {
+      const v = params.get(paramKey);
+      if (v && v !== "all" && v !== "todas") {
+        setColumnFilterValue(columnId, v);
+      }
+    };
+
+    maybeSet("tipo_transacao", filterParamKeys.tipo_transacao);
+    maybeSet("condicao", filterParamKeys.condicao);
+    maybeSet("forma_pagamento", filterParamKeys.forma_pagamento);
+    maybeSet("responsavel", filterParamKeys.responsavel);
+    maybeSet("categoria", filterParamKeys.categoria);
+    maybeSet("conta_cartao", filterParamKeys.conta_cartao);
+
+    const q = params.get(filterParamKeys.q);
+    if (q) setGlobalFilter(q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Lê valores atuais dos filtros
+  const currentFilters = {
+    tipo_transacao: getColumnFilterValue("tipo_transacao"),
+    condicao: getColumnFilterValue("condicao"),
+    forma_pagamento: getColumnFilterValue("forma_pagamento"),
+    responsavel: getColumnFilterValue("responsavel"),
+    categoria: getColumnFilterValue("categoria"),
+    conta_cartao: getColumnFilterValue("conta_cartao"),
+    q: globalFilter,
+  };
+
+  // Atualiza a URL quando filtros mudarem
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams?.toString());
+
+    const setOrDelete = (key: string, value?: string) => {
+      const v = (value || "").trim();
+      if (!v || v === "all" || v === "todas") params.delete(key);
+      else params.set(key, v);
+    };
+
+    setOrDelete(filterParamKeys.tipo_transacao, currentFilters.tipo_transacao);
+    setOrDelete(filterParamKeys.condicao, currentFilters.condicao);
+    setOrDelete(
+      filterParamKeys.forma_pagamento,
+      currentFilters.forma_pagamento,
+    );
+    setOrDelete(filterParamKeys.responsavel, currentFilters.responsavel);
+    setOrDelete(filterParamKeys.categoria, currentFilters.categoria);
+    setOrDelete(filterParamKeys.conta_cartao, currentFilters.conta_cartao);
+    setOrDelete(filterParamKeys.q, currentFilters.q);
+
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    currentFilters.tipo_transacao,
+    currentFilters.condicao,
+    currentFilters.forma_pagamento,
+    currentFilters.responsavel,
+    currentFilters.categoria,
+    currentFilters.conta_cartao,
+    currentFilters.q,
+    pathname,
+  ]);
+
+  // Reage a mudanças externas na URL (ex.: botão voltar/avançar)
+  useEffect(() => {
+    if (!initialized.current) return;
+
+    const params = searchParams;
+
+    const setIfChanged = (columnId: string, paramKey: string) => {
+      const urlV = params.get(paramKey) || "";
+      const curV = getColumnFilterValue(columnId) || "";
+      if ((urlV || curV) && urlV !== curV) {
+        setColumnFilterValue(columnId, urlV);
+      }
+    };
+
+    setIfChanged("tipo_transacao", filterParamKeys.tipo_transacao);
+    setIfChanged("condicao", filterParamKeys.condicao);
+    setIfChanged("forma_pagamento", filterParamKeys.forma_pagamento);
+    setIfChanged("responsavel", filterParamKeys.responsavel);
+    setIfChanged("categoria", filterParamKeys.categoria);
+    setIfChanged("conta_cartao", filterParamKeys.conta_cartao);
+
+    const urlQ = params.get(filterParamKeys.q) || "";
+    if ((urlQ || globalFilter) && urlQ !== globalFilter) {
+      setGlobalFilter(urlQ);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams?.toString()]);
+
   return (
     <div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
       <CreateTransactions
@@ -84,10 +208,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Transação" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todos</span>
+            </SelectItem>
             {tipoTransacaoOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -108,10 +234,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Condição" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todos</span>
+            </SelectItem>
             {condicaoOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -134,10 +262,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Pagamento" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todas</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todas</span>
+            </SelectItem>
             {formaPagamentoOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -158,10 +288,12 @@ export function TransactionTableFilters<TData>({
             <SelectValue placeholder="Pagador" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="all">
+              <span className="capitalize">Todos</span>
+            </SelectItem>
             {responsavelOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                <span className="capitalize">{option}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -174,6 +306,11 @@ export function TransactionTableFilters<TData>({
           onChange={(value) =>
             setColumnFilterValue("categoria", value as string)
           }
+          getIcon={(nome) => {
+            const cat = getCategorias?.find?.((c) => c.nome === nome);
+            const Icon = cat ? categoryIconsMap[cat.icone] : undefined;
+            return Icon ? <Icon className="mr-2 h-4 w-4" /> : null;
+          }}
         />
 
         <ComboboxFilter
@@ -183,6 +320,18 @@ export function TransactionTableFilters<TData>({
           onChange={(value) =>
             setColumnFilterValue("conta_cartao", value as string)
           }
+          getIcon={(desc) => {
+            const conta = getAccount?.find?.((a) => a.descricao === desc);
+            const cartao = getCards?.find?.((c) => c.descricao === desc);
+            const logo = conta?.logo_image || cartao?.logo_image;
+            return logo ? (
+              <PaymentMethodLogo
+                url_name={`/logos/${logo}`}
+                width={20}
+                height={20}
+              />
+            ) : null;
+          }}
         />
 
         <Input

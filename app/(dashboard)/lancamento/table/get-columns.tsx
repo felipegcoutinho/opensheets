@@ -1,8 +1,9 @@
 "use client";
 import MoneyValues from "@/components/money-values";
+import BadgeSystem from "@/components/payer-badge";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import TogglePaymentDialog from "@/components/toggle-payment-dialog";
-import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,8 +21,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
+  RiAttachment2,
   RiAttachmentLine,
   RiBankCardLine,
   RiBankLine,
@@ -31,6 +32,7 @@ import {
   RiMessage2Line,
   RiMoreLine,
 } from "@remixicon/react";
+import Link from "next/link";
 import DeleteTransactions from "../modal/delete-transactions";
 import DetailsTransactions from "../modal/details-transactions";
 import UpdateTransactions from "../modal/update-transactions";
@@ -42,6 +44,9 @@ const {
   getBadgeStyle,
   getDescricao,
   getLogo,
+  getTransactionBadgeColor,
+  getPayerRoleBadgeColor,
+  getSystemBadgeColor,
 } = UseStyles();
 
 export const getColumns = (
@@ -96,19 +101,21 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <Badge variant={"sistema"}>
-              {DateFormat(item.data_vencimento)}
+            <Badge variant={"outline"} className="italic">
+              Venc. {DateFormat(item.data_vencimento)}
             </Badge>
           )}
 
           {item.condicao === "parcelado" && (
-            <Badge variant={"sistema"}>
+            <Badge variant={"outline"} className="italic">
               {item.parcela_atual} de {item.qtde_parcela}
             </Badge>
           )}
 
           {item.pagadores?.role === "sistema" && (
-            <RiCheckboxCircleFill color="green" size={16} />
+            <span className="text-emerald-700">
+              <RiCheckboxCircleFill size={14} />
+            </span>
           )}
 
           {item.dividir_lancamento === true && (
@@ -152,9 +159,10 @@ export const getColumns = (
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <Badge variant={getBadgeStyle(item.tipo_transacao)}>
-          {item.tipo_transacao}
-        </Badge>
+        <BadgeSystem
+          label={item.tipo_transacao}
+          color={getTransactionBadgeColor(item.tipo_transacao)}
+        />
       );
     },
   },
@@ -229,12 +237,12 @@ export const getColumns = (
       const src = resolveFotoSrc(foto);
 
       const content = (
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-1">
           <Avatar className="size-6">
             {src ? <AvatarImage src={src} alt={nome || "Pagador"} /> : null}
             <AvatarFallback>{(nome?.[0] || "P").toUpperCase()}</AvatarFallback>
           </Avatar>
-          <Badge variant={getResponsableStyle(role)}>{nome}</Badge>
+          <BadgeSystem label={nome} color={getPayerRoleBadgeColor(role)} />
         </span>
       );
 
@@ -298,8 +306,8 @@ export const getColumns = (
           <PaymentMethodLogo
             url_name={`/logos/${logo}`}
             descricao={descricao}
-            height={36}
-            width={36}
+            height={32}
+            width={32}
           />
           {Icon && <Icon size={18} className="size-3.5" />}
         </Link>
@@ -392,7 +400,10 @@ export const getColumns = (
           </DropdownMenu>
 
           {item.pagadores?.role === "sistema" ? (
-            <RiCheckboxCircleFill className="text-muted" size={16} />
+            <RiCheckboxCircleFill
+              className="text-muted-foreground opacity-40"
+              size={16}
+            />
           ) : (
             <TooltipProvider delayDuration={300}>
               <Tooltip>
@@ -421,7 +432,7 @@ export const getColumns = (
 
           {item.imagem_url && (
             <div className="flex text-center">
-              <RiAttachmentLine size={16} />
+              <RiAttachment2 size={16} />
             </div>
           )}
         </div>

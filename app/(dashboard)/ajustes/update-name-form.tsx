@@ -27,12 +27,35 @@ export default function UpdateNameForm({
     state.success ? toast.success(state.message) : toast.error(state.message);
   }, [state]);
 
+  // Pré-preenche separando o primeiro nome do restante
+  const [first, ...rest] = (defaultName ?? "").trim().split(/\s+/).filter(Boolean);
+  const defaultFirst = first ?? "";
+  const defaultLast = rest.join(" ");
+
   return (
     <form action={action} className="max-w-sm space-y-4">
       <div className="grid gap-2">
-        <Label htmlFor="name">Nome completo</Label>
-        <Input id="name" name="name" defaultValue={defaultName} required />
+        <Label htmlFor="first_name">Primeiro nome</Label>
+        <Input
+          id="first_name"
+          name="first_name"
+          defaultValue={defaultFirst}
+          placeholder="Ex.: Felipe"
+          required
+        />
       </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="last_name">Sobrenome</Label>
+        <Input
+          id="last_name"
+          name="last_name"
+          defaultValue={defaultLast}
+          placeholder="Ex.: Coutinho"
+          required
+        />
+      </div>
+
       <Button type="submit" disabled={isPending}>
         {isPending ? "Salvando..." : "Salvar"}
       </Button>

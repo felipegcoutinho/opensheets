@@ -24,15 +24,17 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateBudget } from "@/app/actions/orcamentos/update_budget";
 import type { ActionResponse } from "./form-schema";
+import type { ReactNode } from "react";
 
 type Props = {
   item: any;
   categorias: any[];
+  trigger?: ReactNode;
 };
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function UpdateBudget({ item, categorias }: Props) {
+export default function UpdateBudget({ item, categorias, trigger }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [state, action, isPending] = useActionState(updateBudget, initialState);
 
@@ -51,7 +53,9 @@ export default function UpdateBudget({ item, categorias }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>editar</DialogTrigger>
+      <DialogTrigger asChild>
+        {trigger || <button className="underline-offset-4 hover:underline text-sm">editar</button>}
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Atualizar Orçamento</DialogTitle>

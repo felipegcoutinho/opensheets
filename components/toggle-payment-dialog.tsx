@@ -1,6 +1,6 @@
 "use client";
 
-import { togglePagamento } from "@/app/actions/transactions/update_transactions";
+import { togglePagamento, payBills } from "@/app/actions/transactions/update_transactions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +12,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { RiThumbDownLine, RiThumbUpLine } from "@remixicon/react";
+import {
+  RiThumbDownFill,
+  RiThumbDownLine,
+  RiThumbUpFill,
+  RiThumbUpLine,
+} from "@remixicon/react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -49,7 +54,14 @@ export default function TogglePaymentDialog({
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await togglePagamento(id, realizadoAtual);
+    let error: any = null;
+    if (formaPagamento === "boleto") {
+      const res = await payBills(id, realizadoAtual);
+      if (!res.success) error = res.message || true;
+    } else if (!isCartaoCredito) {
+      const r = await togglePagamento(id, realizadoAtual);
+      error = r?.error || null;
+    }
 
     if (!error) {
       onStatusChanged(!realizadoAtual);
@@ -60,9 +72,9 @@ export default function TogglePaymentDialog({
   };
 
   const labelStatus = isPago ? (
-    <RiThumbUpLine size={16} />
+    <RiThumbUpFill size={16} />
   ) : (
-    <RiThumbDownLine className="text-muted-foreground" size={16} />
+    <RiThumbDownFill className="text-muted-foreground" size={16} />
   );
   const dialogTitle = isCartaoCredito
     ? "Pagamento via cartão"
@@ -93,7 +105,7 @@ export default function TogglePaymentDialog({
       <DialogTrigger asChild>
         <span
           className={`cursor-pointer hover:underline ${
-            isPago ? "text-green-500" : "text-orange-500"
+            isPago ? "text-emerald-700" : "text-orange-500"
           }`}
         >
           {labelStatus}

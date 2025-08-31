@@ -17,7 +17,7 @@ async function page(props: { params: { month: string } }) {
       <Tabs defaultValue="ativas">
         <TabsList className="mb-2">
           <TabsTrigger value="ativas" className="flex items-center gap-2">
-            <Ping color="bg-green-500" /> Ativas
+            <Ping color="bg-emerald-500" /> Ativas
           </TabsTrigger>
           <TabsTrigger value="inativas" className="flex items-center gap-2">
             <Ping color="bg-zinc-400" /> Inativas
@@ -25,13 +25,13 @@ async function page(props: { params: { month: string } }) {
         </TabsList>
 
         <TabsContent value="ativas">
-          <Suspense fallback={<AccountCardGridSkeleton count={6} /> }>
+          <Suspense fallback={<AccountCardGridSkeleton count={6} />}>
             <ActiveAccountsSection month={month} />
           </Suspense>
         </TabsContent>
 
         <TabsContent value="inativas">
-          <Suspense fallback={<AccountCardGridSkeleton count={6} /> }>
+          <Suspense fallback={<AccountCardGridSkeleton count={6} />}>
             <InactiveAccountsSection />
           </Suspense>
         </TabsContent>

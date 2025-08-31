@@ -6,21 +6,37 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarRail,
+  SidebarInput,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
 import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
 import { NavLinks } from "./nav-links";
+import { Separator } from "../ui/separator";
+
+type PayerPrincipal =
+  | { id: string; nome: string; role: string; foto?: string | null }
+  | null
+  | undefined;
 
 export function AppSidebar({
   username,
   usermail,
+  payerPrincipal,
   cartoes,
   contas,
   categorias,
   ...props
-}: React.ComponentProps<typeof Sidebar> & {}) {
+}: React.ComponentProps<typeof Sidebar> & {
+  username: string;
+  usermail: string;
+  payerPrincipal?: PayerPrincipal;
+  cartoes: any;
+  contas: any;
+  categorias: any;
+}) {
   const searchParams = useSearchParams();
   const { formatted_current_month } = UseDates();
 
@@ -29,13 +45,14 @@ export function AppSidebar({
   const data = NavLinks(month);
 
   return (
-    <Sidebar collapsible="sidebar" {...props} variant="inset">
-      <SidebarHeader>
-        <div className="mt-4 flex items-center justify-center gap-2 py-2">
+    <Sidebar collapsible="sidebar" {...props} variant="sidebar">
+      <SidebarHeader className="pt-6 pb-5">
+        <div className="flex justify-center">
           <Logo />
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <Separator />
+      <SidebarContent className="px-2">
         <SidebarContent>
           <NavProjects
             groups={data.groups}
@@ -46,8 +63,14 @@ export function AppSidebar({
         </SidebarContent>
       </SidebarContent>
       <SidebarFooter className="border-border border-t">
-        <NavUser username={username} usermail={usermail} user={data.user} />
+        <NavUser
+          username={username}
+          usermail={usermail}
+          user={data.user}
+          payerPrincipal={payerPrincipal}
+        />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

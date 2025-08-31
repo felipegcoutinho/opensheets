@@ -128,7 +128,7 @@ export default function UpdatePayer({ item, avatars = [] }: UpdatePayerProps) {
             </div>
           </div>
 
-          <div>
+          <div hidden={item.role === "principal"}>
             <Label htmlFor="status">Status</Label>
             <Select name="status" defaultValue={item.status} required>
               <SelectTrigger className="w-full">
@@ -137,13 +137,10 @@ export default function UpdatePayer({ item, avatars = [] }: UpdatePayerProps) {
               <SelectContent>
                 <SelectItem value="ativo">
                   <div className="flex items-center gap-2">
-                    <Ping color="bg-green-500" /> Ativo
+                    <Ping color="bg-emerald-500" /> Ativo
                   </div>
                 </SelectItem>
-                <SelectItem
-                  value="inativo"
-                  disabled={item.role === "principal"}
-                >
+                <SelectItem value="inativo">
                   <div className="flex items-center gap-2">
                     <Ping color="bg-zinc-400" /> Inativo
                   </div>
@@ -157,7 +154,7 @@ export default function UpdatePayer({ item, avatars = [] }: UpdatePayerProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 py-2">
             <input
               id="is_auto_send"
               name="is_auto_send"

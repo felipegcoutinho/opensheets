@@ -1,6 +1,6 @@
 "use client";
 import EmptyCard from "@/components/empty-card";
-import { Badge } from "@/components/ui/badge";
+import BadgeSystem from "@/components/payer-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -18,16 +18,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { categoryIconsMap } from "@/hooks/use-category-icons";
 import UseStyles from "@/hooks/use-styles";
 import { RiArrowRightSFill, RiMoreLine } from "@remixicon/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import DeleteCategory from "./modal/delete-category";
 import UpdateCategory from "./modal/update-category";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
+import { title_font } from "../../fonts/font";
 
 export default function TableCategories({ categorias }) {
-  const { getBadgeStyle } = UseStyles();
+  const { getTransactionBadgeColor } = UseStyles();
   const [activeTab, setActiveTab] = useState("receita");
 
   const filteredCategorias = useMemo(() => {
@@ -53,7 +54,7 @@ export default function TableCategories({ categorias }) {
       <Card>
         <CardContent>
           <Table>
-            <TableHeader>
+            <TableHeader className={`${title_font.className}`}>
               <TableRow>
                 <TableHead>Nome</TableHead>
                 <TableHead>Tipo da Categoria</TableHead>
@@ -78,10 +79,12 @@ export default function TableCategories({ categorias }) {
                           <RiArrowRightSFill className="h-3 w-3" />
                         </Link>
                       </TableCell>
+
                       <TableCell>
-                        <Badge variant={getBadgeStyle(item.tipo_categoria)}>
-                          {item.tipo_categoria}
-                        </Badge>
+                        <BadgeSystem
+                          label={item.tipo_categoria}
+                          color={getTransactionBadgeColor(item.tipo_categoria)}
+                        />
                       </TableCell>
 
                       <TableCell className="flex gap-2">

@@ -11,7 +11,10 @@ export async function deleteFaturas(formData: FormData) {
 
   if (error) {
     console.error(error);
+    return { success: false, message: "Falha ao desfazer pagamento." };
   }
 
   revalidatePath("/cartao");
+  revalidatePath("/dashboard");
+  return { success: true, message: "Pagamento desfeito com sucesso." };
 }

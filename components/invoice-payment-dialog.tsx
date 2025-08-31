@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import {
   RiBankCardLine,
+  RiCheckboxCircleFill,
   RiCheckboxCircleLine,
   RiErrorWarningLine,
 } from "@remixicon/react";
@@ -61,15 +62,20 @@ export default function InvoicePaymentDialog({
   );
 
   if (isPaid) {
-    return <span className="text-green-500">pago</span>;
+    return (
+      <div className="flex items-center justify-end gap-1 text-emerald-700 dark:text-emerald-400">
+        <RiCheckboxCircleFill size={12} />
+        <span>Pago</span>
+      </div>
+    );
   }
 
   return (
     <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>
-        <span className="cursor-pointer text-orange-400 hover:underline">
-          pagar
-        </span>
+        <div className="cursor-pointer text-orange-600 hover:underline dark:text-orange-500">
+          Pagar
+        </div>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
@@ -105,10 +111,10 @@ export default function InvoicePaymentDialog({
 
         {paymentStatus === "success" ? (
           <div className="flex flex-col items-center gap-4 text-center">
-            <RiCheckboxCircleLine className="h-12 w-12 text-green-500" />
+            <RiCheckboxCircleLine className="h-12 w-12 text-emerald-700" />
             <p>Pagamento realizado com sucesso!</p>
             <DialogClose asChild>
-              <Button className="w-full bg-green-500 hover:bg-green-600">
+              <Button className="w-full bg-emerald-500 hover:bg-emerald-600">
                 Concluído
               </Button>
             </DialogClose>

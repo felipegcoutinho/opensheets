@@ -13,8 +13,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { RiInformation2Fill } from "@remixicon/react";
-import ProgressiveBlur from "./magicui/progressive-blur";
 import MoneyValues from "./money-values";
+import { money_values, title_font } from "../app/fonts/font";
 
 type WidgetProps = {
   title: string;
@@ -40,9 +40,11 @@ export default function Widget({
       <CardHeader>
         <div className="flex w-full items-start justify-between">
           <div>
-            <CardTitle className="flex items-center gap-1">
+            <CardTitle
+              className={`${title_font.className} flex items-center gap-1`}
+            >
               {icon}
-              {title}
+              <span className="">{title}</span>
               {information && (
                 <Tooltip>
                   <TooltipTrigger>
@@ -85,7 +87,6 @@ export default function Widget({
       </CardHeader>
       <CardContent className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto">
         {children}
-        <ProgressiveBlur height="12%" position="bottom" />
       </CardContent>
     </Card>
   );

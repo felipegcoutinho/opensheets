@@ -1,14 +1,8 @@
-import {
-  Gabarito,
-  Geist,
-  Geist_Mono,
-  IBM_Plex_Sans,
-  Inter,
-} from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 import localFont from "next/font/local";
 
-const ibm_plex = IBM_Plex_Sans({
-  weight: ["500", "700"],
+const oswald = Oswald({
+  weight: ["500"],
   subsets: ["latin"],
 });
 
@@ -17,32 +11,20 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const gabarito = Gabarito({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
-
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const geist_mono = Geist_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
-
 const itau = localFont({
   src: [
     {
       path: "../fonts/ItauTextPro_Rg.woff2",
       weight: "400",
-      style: "normal",
     },
+  ],
+});
+
+const itau_bold = localFont({
+  src: [
     {
-      path: "../fonts/ItauTextPro_Bd.woff2",
-      weight: "700",
-      style: "normal",
+      path: "../fonts/ItauText-XBold.woff2",
+      weight: "800",
     },
   ],
 });
@@ -62,17 +44,8 @@ const sofascore = localFont({
   ],
 });
 
-const sofascore_mono = localFont({
-  src: [
-    {
-      path: "../fonts/SofascoreMono-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-  ],
-});
+const default_font = itau;
+const money_values = itau_bold;
+const title_font = oswald;
 
-const default_font = sofascore;
-const money_values = sofascore;
-
-export { default_font, money_values };
+export { default_font, money_values, title_font };

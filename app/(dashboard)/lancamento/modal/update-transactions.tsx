@@ -3,7 +3,6 @@ import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -23,10 +22,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Toggle } from "@/components/ui/toggle";
+// Toggle removido: gestão de pagamento migrou para TogglePaymentDialog
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpLine } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -55,7 +53,6 @@ export default function UpdateTransactions({
     isOpen,
     setIsOpen,
     handleUpdate,
-    setIsPaid,
     setImage,
     removingImage,
     handleRemoveImage,
@@ -111,14 +108,13 @@ export default function UpdateTransactions({
   };
 
   useEffect(() => {
-    setIsPaid(itemPaid);
-  }, [itemPaid, setIsPaid]);
+    // Removido controle de "realizado" do modal de edição
+  }, [itemPaid]);
 
   const handleDialogClose = (val) => {
     setIsOpen(val);
     if (!val) {
       setImagePreview(itemImagemURL);
-      setIsPaid(itemPaid);
     }
   };
 
@@ -162,8 +158,13 @@ export default function UpdateTransactions({
           }}
         >
           <input type="hidden" name="id" value={item.id} />
+          <input
+            type="hidden"
+            name="forma_pagamento"
+            value={itemFormaPagamento}
+          />
 
-          <div className="mb-1 flex w-full gap-2">
+          <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
               <Label>
                 Data da Transação
@@ -196,7 +197,9 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          <div className="flex w-full gap-2">
+          {/* Campos de datas do boleto */}
+
+          <div className="mb-2 flex w-full gap-2">
             <div className="w-1/2">
               <Label>
                 Descrição
@@ -218,69 +221,79 @@ export default function UpdateTransactions({
 
             <div className="w-1/2">
               <Label>
-                Valor
+                Categoria
                 <Required />
               </Label>
-              <MoneyInput defaultValue={itemValor} name="valor" />
+              <Select
+                defaultValue={itemCategoriaId.toString()}
+                name="categoria_id"
+              >
+                <SelectTrigger className="w-full capitalize">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getCategorias
+                    ?.filter(
+                      (categoria) =>
+                        categoria.tipo_categoria === itemTipoTransacao,
+                    )
+                    .map((item) => {
+                      const Icon = categoryIconsMap[item.icone];
+                      return (
+                        <SelectItem
+                          className="capitalize"
+                          key={item.id}
+                          value={item.id.toString()}
+                        >
+                          <span className="flex items-center gap-2">
+                            {Icon && <Icon className="h-4 w-4" />}
+                            {item.nome}
+                          </span>
+                        </SelectItem>
+                      );
+                    })}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <div className="w-full">
+          <div className="mb-2 w-full">
             <Label>
-              Categoria
+              Valor
               <Required />
             </Label>
-            <Select
-              defaultValue={itemCategoriaId.toString()}
-              name="categoria_id"
-            >
-              <SelectTrigger className="w-full capitalize">
-                <SelectValue placeholder="Selecione" />
-              </SelectTrigger>
-              <SelectContent>
-                {getCategorias
-                  ?.filter(
-                    (categoria) =>
-                      categoria.tipo_categoria === itemTipoTransacao,
-                  )
-                  .map((item) => {
-                    const Icon = categoryIconsMap[item.icone];
-                    return (
-                      <SelectItem
-                        className="capitalize"
-                        key={item.id}
-                        value={item.id.toString()}
-                      >
-                        <span className="flex items-center gap-2">
-                          {Icon && <Icon className="h-4 w-4" />}
-                          {item.nome}
-                        </span>
-                      </SelectItem>
-                    );
-                  })}
-              </SelectContent>
-            </Select>
+            <MoneyInput defaultValue={itemValor} name="valor" />
           </div>
 
-          {itemFormaPagamento !== "cartão de crédito" && (
-            <Card className="w-full flex-row justify-between p-4">
-              <div className="flex flex-col">
-                <Label>Status do Lançamento</Label>
-                <p className="text-muted-foreground text-xs leading-snug">
-                  Marcar o lançamento como realizado.
-                </p>
+          <div className="w-1/2" />
+
+          {itemFormaPagamento === "boleto" && (
+            <div className="mt-2 mb-2 flex w-full gap-2">
+              <div className="w-1/2">
+                <Label>Data de Vencimento do Boleto</Label>
+                <Input
+                  defaultValue={
+                    item?.data_vencimento
+                      ? String(item.data_vencimento).slice(0, 10)
+                      : ""
+                  }
+                  name="data_vencimento"
+                  type="date"
+                />
               </div>
-              <div>
-                <Toggle
-                  defaultPressed={itemPaid}
-                  onPressedChange={() => setIsPaid(!itemPaid)}
-                  name="realizado"
-                  className="hover:bg-transparent data-[state=on]:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:text-green-400"
-                >
-                  <RiThumbUpLine strokeWidth={2} />
-                </Toggle>
+              <div className="w-1/2">
+                <Label>Data do Pagamento do Boleto</Label>
+                <Input
+                  defaultValue={
+                    item?.dt_pagamento_boleto
+                      ? String(item.dt_pagamento_boleto).slice(0, 10)
+                      : ""
+                  }
+                  name="dt_pagamento_boleto"
+                  type="date"
+                />
               </div>
-            </Card>
+            </div>
           )}
 
           {itemFormaPagamento !== "cartão de crédito" ? (
@@ -398,7 +411,7 @@ export default function UpdateTransactions({
                     className="h-full w-full object-cover"
                   />
 
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black opacity-0 transition-opacity group-hover:opacity-100">
                     <span className="font-semibold text-white">
                       {removingImage ? "Removendo..." : "Remover Imagem"}
                     </span>

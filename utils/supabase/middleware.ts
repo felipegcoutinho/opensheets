@@ -2,11 +2,16 @@ import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const updateSession = async (request: NextRequest) => {
-  // Apenas estas rotas são públicas; todo o resto requer sessão
-  // Inclui também rotas necessárias para o fluxo de auth do Supabase
+  // Normaliza removendo a barra final (exceto para a raiz '/')
+  const normalize = (p: string) => (p !== "/" && p.endsWith("/") ? p.slice(0, -1) : p);
+
+  // Rotas públicas; o restante requer sessão
   const publicPaths = new Set<string>([
     "/", // landing
-    "/login", // login (email/senha)
+    "/login",
+    "/login/signup",
+    "/login/reset",
+    "/login/reset/update",
   ]);
 
   try {
@@ -32,10 +37,10 @@ export const updateSession = async (request: NextRequest) => {
     const session = data?.claims;
 
     const currentPath = request.nextUrl.pathname;
-    const isPublic = publicPaths.has(currentPath);
+    const isPublic = publicPaths.has(normalize(currentPath));
 
     // Usuário já autenticado tentando acessar páginas públicas de auth → redireciona
-    if (session && currentPath === "/login") {
+    if (session && normalize(currentPath) === "/login") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 

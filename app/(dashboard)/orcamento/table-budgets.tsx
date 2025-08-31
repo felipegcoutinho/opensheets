@@ -22,13 +22,14 @@ import DeleteBudget from "./modal/delete-budget";
 import UpdateBudget from "./modal/update-budget";
 import { RiMoreLine } from "@remixicon/react";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
+import { title_font } from "../../fonts/font";
 
 export default function TableBudgets({ budgets, categorias }) {
   return (
     <Card>
       <CardContent>
         <Table>
-          <TableHeader>
+          <TableHeader className={`${title_font.className}`}>
             <TableRow>
               <TableHead>Categoria</TableHead>
               <TableHead>Valor Limite</TableHead>

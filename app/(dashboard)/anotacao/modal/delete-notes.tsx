@@ -1,13 +1,13 @@
 "use client";
 import DeleteButton from "@/components/delete-button";
-import { startTransition, useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { deleteNote } from "@/app/actions/notes/delete_notes";
 import type { ActionResponse } from "./form-schema";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function DeleteNotes({ item }) {
+export default function DeleteNotes({ item, trigger }: { item: any; trigger?: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [state, action, isPending] = useActionState(deleteNote, initialState);
 
@@ -35,6 +35,7 @@ export default function DeleteNotes({ item }) {
       setIsOpen={setIsOpen}
       handleDelete={handleDelete}
       loading={isPending}
+      trigger={trigger}
     />
   );
 }

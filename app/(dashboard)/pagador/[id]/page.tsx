@@ -3,14 +3,13 @@ import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transac
 import MoneyValues from "@/components/money-values";
 import MonthPicker from "@/components/month-picker/month-picker";
 import PaymentMethodLogo from "@/components/payment-method-logo";
-import { Card } from "@/components/ui/card";
+import PayerHeaderSkeleton from "@/components/skeletons/payer-header-skeleton";
+import TableSkeleton from "@/components/skeletons/table-skeleton";
 import { getMonth } from "@/hooks/get-month";
 import { RiBankCardLine, RiBarcodeLine, RiPixLine } from "@remixicon/react";
 import { Suspense } from "react";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
-import PayerTableSection from "./sections/table";
 import PayerHeaderSection from "./sections/header";
-import PayerHeaderSkeleton from "@/components/skeletons/payer-header-skeleton";
+import PayerTableSection from "./sections/table";
 
 // Tipagens auxiliares
 type PageProps = {
@@ -32,7 +31,6 @@ import { SectionCard, SummaryRow } from "./summary-ui";
 export default async function Page({ searchParams, params }: PageProps) {
   const { id } = await params;
   const month = await getMonth({ searchParams });
-  
 
   const [transactions, payer] = await Promise.all([
     getTransactionsByPayer(month, id),
@@ -80,7 +78,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
       <MonthPicker />
 
-      <Suspense fallback={<PayerHeaderSkeleton /> }>
+      <Suspense fallback={<PayerHeaderSkeleton />}>
         <PayerHeaderSection id={id} month={month} />
       </Suspense>
 
@@ -135,12 +133,8 @@ export default async function Page({ searchParams, params }: PageProps) {
                 key={`boleto-${b.key}`}
                 left={
                   <span className="flex min-w-0 items-center gap-2">
-                    <PaymentMethodLogo
-                      url_name={`/logos/boleto.svg`}
-                      descricao={b.label}
-                      width={24}
-                      height={24}
-                    />
+                    <RiBarcodeLine size={24} />
+                    <span className="capitalize">{b.label}</span>
                   </span>
                 }
                 right={<MoneyValues value={b.total} />}
@@ -186,7 +180,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
       {/* Tabela de transações */}
       <div>
-        <Suspense fallback={<TableSkeleton rows={10} /> }>
+        <Suspense fallback={<TableSkeleton rows={10} />}>
           <PayerTableSection id={id} month={month} />
         </Suspense>
       </div>

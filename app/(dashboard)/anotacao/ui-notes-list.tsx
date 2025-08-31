@@ -1,5 +1,11 @@
 import EmptyCard from "@/components/empty-card";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { RiCheckboxCircleFill } from "@remixicon/react";
 import DeleteNotes from "./modal/delete-notes";
 import UpdateNotes from "./modal/update-notes";
@@ -17,19 +23,31 @@ export default function NotesList({ notes }: { notes: any[] }) {
       {notes.map((item) => (
         <Card className="flex h-[350px] flex-col justify-between" key={item.id}>
           <CardHeader className="shrink-0">
-            <CardTitle className="flex items-center gap-2">{item.descricao}</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-xl">
+              {item.descricao}
+            </CardTitle>
           </CardHeader>
-          <CardContent className="mx-4 flex-1 overflow-auto rounded bg-neutral-50 p-4 break-all dark:bg-transparent">
+          <CardContent className="mx-4 flex-1 overflow-auto rounded bg-neutral-50 p-2 break-all dark:bg-transparent">
             {(() => {
               try {
                 const content = JSON.parse(item.anotacao);
-                if (content.mode === "tarefas" && Array.isArray(content.tasks)) {
+                if (
+                  content.mode === "tarefas" &&
+                  Array.isArray(content.tasks)
+                ) {
                   return (
                     <ul className="space-y-1">
                       {content.tasks.map((task: any, idx: number) => (
-                        <li key={idx} className="flex items-center gap-2 border-b border-dashed pb-2 last:border-b-0">
-                          <span className={task.done ? "line-through" : ""}>{task.text}</span>
-                          {task.done && <RiCheckboxCircleFill color="green" size={16} />}
+                        <li
+                          key={idx}
+                          className="flex items-center gap-2 border-b border-dashed pb-2 last:border-b-0"
+                        >
+                          <span className={task.done ? "line-through" : ""}>
+                            {task.text}
+                          </span>
+                          {task.done && (
+                            <RiCheckboxCircleFill color="green" size={16} />
+                          )}
                         </li>
                       ))}
                     </ul>

@@ -32,7 +32,7 @@ export default async function AccountWidget({
       {accountData.map((item) => (
         <div
           key={item.id}
-          className="flex items-center justify-between border-b border-dashed py-2 last:border-0"
+          className="flex items-center justify-between border-b border-dashed py-2"
         >
           <div className="flex items-center gap-1">
             <PaymentMethodLogo
@@ -48,7 +48,9 @@ export default async function AccountWidget({
                 {item.descricao}
                 <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
               </Link>
-              <p className="text-muted-foreground text-xs">{item.tipo_conta}</p>
+              <p className="text-muted-foreground text-xs capitalize">
+                conta {item.tipo_conta}
+              </p>
             </div>
           </div>
 
