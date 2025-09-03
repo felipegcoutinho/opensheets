@@ -8,20 +8,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { RiInformation2Fill } from "@remixicon/react";
-import MoneyValues from "./money-values";
-import { money_values, title_font } from "../app/fonts/font";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { RiExpandDiagonalLine, RiInformation2Fill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
+import { title_font } from "../app/fonts/font";
+import MoneyValues from "./money-values";
+import { Button } from "./ui/button";
 
 type WidgetProps = {
   title: string;
@@ -135,13 +136,13 @@ export default function Widget({
 
       {hasOverflow && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-[var(--card)] to-transparent pt-12 pb-6">
-          <button
-            type="button"
-            className="bg-background hover:bg-muted pointer-events-auto inline-flex items-center justify-center rounded-md border px-3 py-2 text-sm font-medium shadow-sm"
+          <Button
+            variant={"outline"}
+            className="pointer-events-auto text-xs"
             onClick={() => setIsOpen(true)}
           >
-            Mostrar mais
-          </button>
+            Mostrar mais <RiExpandDiagonalLine size={10} />
+          </Button>
         </div>
       )}
 
