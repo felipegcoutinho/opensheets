@@ -41,7 +41,7 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${money_values.className} tracking-tighter ${
+      className={`${money_values.className} font-bold tracking-tighter ${
         estado &&
         "blur-[6px] brightness-200 transition-all duration-200 hover:blur-none"
       }`}
