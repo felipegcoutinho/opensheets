@@ -12,9 +12,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { RiInformation2Fill } from "@remixicon/react";
 import MoneyValues from "./money-values";
 import { money_values, title_font } from "../app/fonts/font";
+import { useEffect, useRef, useState } from "react";
 
 type WidgetProps = {
   title: string;
@@ -35,6 +42,40 @@ export default function Widget({
   saldo,
   information,
 }: WidgetProps) {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
+    const THRESHOLD = 16; // px para evitar falsos positivos
+
+    const check = () => {
+      const has = el.scrollHeight - el.clientHeight > THRESHOLD;
+      setHasOverflow(has);
+    };
+
+    // checagem inicial e após layout
+    const raf = requestAnimationFrame(check);
+
+    // observa resize do container e mudanças no conteúdo
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    const mo = new MutationObserver(check);
+    mo.observe(el, { childList: true, subtree: true, characterData: true });
+
+    window.addEventListener("resize", check);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      mo.disconnect();
+      window.removeEventListener("resize", check);
+    };
+  }, []);
+
   return (
     <Card className="h-custom-height-1 relative overflow-hidden">
       <CardHeader>
@@ -85,9 +126,41 @@ export default function Widget({
           )}
         </div>
       </CardHeader>
-      <CardContent className="scrollbar-hide max-h-[calc(100%-5rem)] overflow-y-auto">
+      <CardContent
+        ref={contentRef}
+        className="max-h-[calc(100%-5rem)] overflow-hidden"
+      >
         {children}
       </CardContent>
+
+      {hasOverflow && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-[var(--card)] to-transparent pt-12 pb-6">
+          <button
+            type="button"
+            className="bg-background hover:bg-muted pointer-events-auto inline-flex items-center justify-center rounded-md border px-3 py-2 text-sm font-medium shadow-sm"
+            onClick={() => setIsOpen(true)}
+          >
+            Mostrar mais
+          </button>
+        </div>
+      )}
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="max-h-[85vh] w-full max-w-3xl overflow-hidden p-0">
+          <DialogHeader className="px-6 py-4">
+            <DialogTitle className="flex items-center gap-2">
+              {icon}
+              <span>{title}</span>
+            </DialogTitle>
+            {subtitle ? (
+              <p className="text-muted-foreground text-sm">{subtitle}</p>
+            ) : null}
+          </DialogHeader>
+          <div className="scrollbar-hide max-h-[calc(85vh-6rem)] overflow-y-auto px-6 pb-6">
+            {children}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
