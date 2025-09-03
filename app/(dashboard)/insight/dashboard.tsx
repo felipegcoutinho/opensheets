@@ -1,11 +1,11 @@
 "use client";
-import { AnalyzeButton } from "@/components/analysis/analyze-button";
+import type { AnalysisInputPayload } from "@/components/analysis/analysis";
 import { AnalysisReport } from "@/components/analysis/analysis-report";
 import { AnalysisSkeleton } from "@/components/analysis/analysis-skeleton";
+import { AnalyzeButton } from "@/components/analysis/analyze-button";
 import EmptyCard from "@/components/empty-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { useConsumptionAnalysis } from "@/hooks/use-consumption-analysis";
-import type { AnalysisInputPayload } from "@/types/analysis";
 
 export default function Dashboard(props: AnalysisInputPayload) {
   const { analysis, loading, error, lastRunAt, analyze } =

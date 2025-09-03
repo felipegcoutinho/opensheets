@@ -1,12 +1,18 @@
 "use client";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { Analysis, AnalysisInputPayload } from "@/types/analysis";
+import type {
+  Analysis,
+  AnalysisInputPayload,
+} from "@/components/analysis/analysis";
 import { hashPayload } from "@/lib/hash";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 function coerceAnalysis(json: unknown): Analysis {
   const safe = (arr: unknown): string[] =>
     Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : [];
-  const obj = (typeof json === "string" ? JSON.parse(json) : json) as Record<string, unknown>;
+  const obj = (typeof json === "string" ? JSON.parse(json) : json) as Record<
+    string,
+    unknown
+  >;
   return {
     comportamentos_observados: safe(obj?.comportamentos_observados),
     gatilhos_de_consumo: safe(obj?.gatilhos_de_consumo),
@@ -24,7 +30,10 @@ export function useConsumptionAnalysis(payload: AnalysisInputPayload) {
   const cacheRef = useRef<Map<string, Analysis>>(new Map());
   const abortRef = useRef<AbortController | null>(null);
 
-  const cacheKey = useMemo(() => `${payload.month}:${hashPayload(payload)}`, [payload]);
+  const cacheKey = useMemo(
+    () => `${payload.month}:${hashPayload(payload)}`,
+    [payload],
+  );
 
   useEffect(() => {
     setAnalysis(null);
@@ -77,7 +86,9 @@ export function useConsumptionAnalysis(payload: AnalysisInputPayload) {
     } catch (err: unknown) {
       if ((err as Error)?.name === "AbortError") return;
       console.error("Erro ao buscar análise:", err);
-      setError("Não foi possível gerar a análise agora. Tente novamente em alguns segundos.");
+      setError(
+        "Não foi possível gerar a análise agora. Tente novamente em alguns segundos.",
+      );
       setAnalysis(null);
     } finally {
       setLoading(false);

@@ -1,7 +1,7 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Analysis } from "@/components/analysis/analysis";
 import InsightCard from "@/components/insight-card";
-import type { Analysis } from "@/types/analysis";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function AnalysisReport({
   analysis,
