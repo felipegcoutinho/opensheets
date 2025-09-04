@@ -4,8 +4,8 @@ import Link from "next/link";
 // import AuthButton from "./auth-button";
 import Logo from "./logo";
 
-import HeaderBlur from "./header-blur";
 import { RiDashboardLine } from "@remixicon/react";
+import HeaderBlur from "./header-blur";
 
 export default async function Header() {
   const session = await getUserSession();
@@ -21,7 +21,7 @@ export default async function Header() {
           </Link>
         </div>
 
-        {/* Menu e ação à direita */}
+        {/* Menu e ações à direita */}
         <div className="flex flex-1 items-center justify-end gap-4">
           <nav className="hidden items-center gap-6 md:flex">
             <Link
@@ -31,10 +31,22 @@ export default async function Header() {
               Sobre
             </Link>
             <Link
-              href="/#solucoes"
+              href="/#recursos"
               className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
-              Soluções
+              Recursos
+            </Link>
+            <Link
+              href="/#preco"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              Preço
+            </Link>
+            <Link
+              href="/#faq"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              FAQ
             </Link>
             <Link
               href="/#contato"
@@ -50,7 +62,16 @@ export default async function Header() {
                 Dashboard
               </Button>
             </Link>
-          ) : null}
+          ) : (
+            <div className="hidden items-center gap-2 sm:flex">
+              <Link href="/login">
+                <Button variant="ghost" size="sm">Entrar</Button>
+              </Link>
+              <Link href="/login/signup">
+                <Button size="sm" className="shadow-sm">Criar conta</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </header>

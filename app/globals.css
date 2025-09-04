@@ -8,38 +8,52 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0 0 0);
-  --popover: oklch(0.99 0 0);
-  --popover-foreground: oklch(0 0 0);
-  --primary: oklch(0% 0 0);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.9528 0.0045 134.8501);
-  --secondary-foreground: oklch(0 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.44 0 0);
-  --accent: oklch(0.9528 0.0045 134.8501);
-  --accent-foreground: oklch(0 0 0);
-  --destructive: oklch(0.63 0.19 23.03);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.9528 0.0045 134.8501);
-  --input: oklch(0.9528 0.0045 134.8501);
-  --ring: oklch(0 0 0);
-  --chart-1: oklch(0.43 0.07 190.83);
-  --chart-2: oklch(0.65 0.09 70.57);
-  --chart-3: oklch(0.64 0.11 252.97);
-  --chart-4: oklch(0.92 0 0);
-  --chart-5: oklch(0.56 0 0);
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0 0 0);
-  --sidebar-primary: oklch(0 0 0);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.9528 0.0045 134.8501);
-  --sidebar-accent-foreground: oklch(0 0 0);
-  --sidebar-border: oklch(0.94 0 0);
-  --sidebar-ring: oklch(0 0 0);
+  /* Diretriz: paleta baseada na imagem (azul/indigo, verde, aquas e neutros claros) */
+  /* Neutros claros / superfícies */
+  --background: #ffffff; /* canvas branco */
+  --foreground: #0b0b0f; /* texto principal quase preto */
+  --card: #ffffff; /* cartões/brancos puros */
+  --card-foreground: #0b0b0f;
+  --popover: #ffffff;
+  --popover-foreground: #0b0b0f;
+
+  /* Marca e acentos (CTAs e destaques) */
+  --primary: #575ff2; /* indigo/azul da imagem */
+  --primary-foreground: #ffffff;
+  --secondary: #e5f2f2; /* neutro claro azulado da imagem */
+  --secondary-foreground: #0b0b0f;
+  --muted: #f1f5f9; /* sutil próximo dos neutros da paleta */
+  --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
+  --accent: #0aeb8c; /* verde vibrante da imagem */
+  --accent-foreground: #0b0b0f;
+  --destructive: #e5484d; /* erro (mantido) */
+  --destructive-foreground: #ffffff;
+
+  /* Bordas/inputs/ring */
+  --border: #dbe0e6; /* borda suave em tom frio */
+  --input: #dbe0e6;
+  --ring: #575ff2; /* foco em indigo */
+
+  /* Paleta para gráficos (a partir da imagem) */
+  --chart-1: #0aeb8c; /* receita: verde */
+  --chart-2: #fe4a23; /* despesa: laranja solicitado */
+  --chart-3: #40468e; /* indigo escuro */
+  --chart-4: #aaf7f9; /* aqua claro */
+  --chart-5: #c8ded9; /* teal claro */
+
+  /* Tokens semânticos auxiliares */
+  --income: #0aeb8c;
+  --expense: #fe4a23;
+
+  /* Sidebar (autenticação / painéis) */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0b0b0f;
+  --sidebar-primary: #575ff2; /* CTA com a cor primária */
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e5f2f2; /* blocos sutis no tom da paleta */
+  --sidebar-accent-foreground: #0b0b0f;
+  --sidebar-border: #dbe0e6;
+  --sidebar-ring: #575ff2;
   --radius: 0.4rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -59,38 +73,45 @@
 }
 
 .dark {
-  --background: oklch(0% 0 0);
-  --foreground: oklch(1 0 0);
-  --card: oklch(16.842% 0.00002 271.152);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.18 0 0);
-  --popover-foreground: oklch(1 0 0);
-  --primary: oklch(1 0 0);
-  --primary-foreground: oklch(0 0 0);
-  --secondary: oklch(0.25 0 0);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.23 0 0);
-  --muted-foreground: oklch(0.72 0 0);
-  --accent: oklch(0.32 0 0);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.69 0.2 23.91);
-  --destructive-foreground: oklch(0 0 0);
-  --border: oklch(22.213% 0.00003 271.152);
-  --input: oklch(0.32 0 0);
-  --ring: oklch(0.72 0 0);
-  --chart-1: oklch(50.981% 0.08399 191.646);
-  --chart-2: oklch(74.194% 0.10448 71.079);
-  --chart-3: oklch(70.396% 0.11756 253.306);
-  --chart-4: oklch(0.44 0 0);
-  --chart-5: oklch(0.92 0 0);
-  --sidebar: oklch(16.842% 0.00002 271.152);
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(1 0 0);
-  --sidebar-primary-foreground: oklch(0 0 0);
-  --sidebar-accent: oklch(0.32 0 0);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(0.32 0 0);
-  --sidebar-ring: oklch(0.72 0 0);
+  --background: #0b0b0f;
+  --foreground: #e5e7eb;
+  --card: #121212;
+  --card-foreground: #e5e7eb;
+  --popover: #121212;
+  --popover-foreground: #e5e7eb;
+
+  --primary: #575ff2; /* mantém a identidade da imagem */
+  --primary-foreground: #ffffff;
+  --secondary: #151923; /* neutro escuro, frio */
+  --secondary-foreground: #e5e7eb;
+  --muted: #141822;
+  --muted-foreground: #94a3b8;
+  --accent: #0aeb8c; /* verde vibrante contrastando no dark */
+  --accent-foreground: #0b0b0f;
+  --destructive: #e5484d;
+  --destructive-foreground: #0b0b0f;
+
+  --border: #232836;
+  --input: #232836;
+  --ring: #575ff2;
+
+  --chart-1: #0aeb8c; /* receita: verde */
+  --chart-2: #fe4a23; /* despesa: laranja */
+  --chart-3: #869cb6; /* azul-cinza médio para contraste no dark */
+  --chart-4: #40468e; /* indigo escuro */
+  --chart-5: #aaf7f9; /* aqua claro para destaque */
+
+  --income: #0aeb8c;
+  --expense: #fe4a23;
+
+  --sidebar: #121212;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-primary: #575ff2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #151923;
+  --sidebar-accent-foreground: #e5e7eb;
+  --sidebar-border: #232836;
+  --sidebar-ring: #575ff2;
   --radius: 0.4rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -132,6 +153,8 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-income: var(--income);
+  --color-expense: var(--expense);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -183,20 +206,188 @@ section[id] {
   scroll-margin-top: 6rem;
 }
 
-/* Padrão pixelado leve para o layout de autenticação */
+/* Hero/banner clean: branco com acentos sutis (sem lilás pesado) */
 @layer utilities {
+  /* Base de skeleton com melhor perfomance */
+  .skeleton {
+    background-color: var(--secondary);
+    position: relative;
+    overflow: hidden;
+    content-visibility: auto;
+    will-change: transform, opacity;
+  }
+  .skeleton[data-animate="true"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      color-mix(in oklab, var(--foreground) 6%, transparent) 20%,
+      transparent 40%
+    );
+    transform: translateX(-100%);
+    animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton[data-animate="true"]::after {
+      animation: none;
+      opacity: 0.15;
+    }
+  }
+  @keyframes skeleton-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
   .pixelated-bg {
-    /* Cor base do painel usando o sistema */
+    /* Fundo com micro-pixels (padrão sutil) + brilho leve */
+    --pixel-size: 12px;
+    --pixel-dot-1: color-mix(in oklab, var(--foreground) 6%, transparent);
+    --pixel-dot-2: color-mix(in oklab, var(--accent) 10%, transparent);
     background-color: var(--sidebar);
-    /* Dois grids de pontos deslocados para dar sensação pixelada sutil */
     background-image:
-      radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 1px),
-      radial-gradient(circle at 1px 1px, var(--accent) 1px, transparent 1px);
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-1) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-2) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        800px 400px at 100% 0%,
+        color-mix(in oklab, var(--primary) 10%, transparent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 450px at 0% 100%,
+        color-mix(in oklab, var(--accent) 12%, transparent) 0%,
+        transparent 60%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     background-size:
-      12px 12px,
-      12px 12px;
+      var(--pixel-size) var(--pixel-size),
+      var(--pixel-size) var(--pixel-size),
+      auto,
+      auto,
+      auto;
     background-position:
       0 0,
-      6px 6px;
+      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2),
+      center,
+      center,
+      center;
+  }
+
+  .dark .pixelated-bg {
+    background-color: var(--sidebar);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklab, var(--foreground) 8%, transparent) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        color-mix(in oklab, var(--accent) 14%, transparent) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        800px 400px at 100% 0%,
+        color-mix(in oklab, var(--primary) 18%, transparent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 450px at 0% 100%,
+        color-mix(in oklab, var(--accent) 18%, transparent) 0%,
+        transparent 60%
+      ),
+      linear-gradient(180deg, #0b0b0f 0%, #111215 100%);
+    background-size:
+      var(--pixel-size) var(--pixel-size),
+      var(--pixel-size) var(--pixel-size),
+      auto,
+      auto,
+      auto;
+    background-position:
+      0 0,
+      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2),
+      center,
+      center,
+      center;
+  }
+
+  /* Variações do pixelado para usar em qualquer container */
+  .bg-pixel-soft {
+    --pixel-size: 12px;
+    --pixel-dot-1: color-mix(in oklab, var(--foreground) 5%, transparent);
+    --pixel-dot-2: color-mix(in oklab, var(--primary) 6%, transparent);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-1) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-2) 1px,
+        transparent 1px
+      );
+    background-size:
+      var(--pixel-size) var(--pixel-size),
+      var(--pixel-size) var(--pixel-size);
+    background-position:
+      0 0,
+      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2);
+  }
+
+  .bg-pixel {
+    --pixel-size: 10px;
+    --pixel-dot-1: color-mix(in oklab, var(--foreground) 8%, transparent);
+    --pixel-dot-2: color-mix(in oklab, var(--accent) 10%, transparent);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-1) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-2) 1px,
+        transparent 1px
+      );
+    background-size:
+      var(--pixel-size) var(--pixel-size),
+      var(--pixel-size) var(--pixel-size);
+    background-position:
+      0 0,
+      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2);
+  }
+
+  .bg-pixel-contrast {
+    --pixel-size: 8px;
+    --pixel-dot-1: color-mix(in oklab, var(--foreground) 14%, transparent);
+    --pixel-dot-2: color-mix(in oklab, var(--primary) 16%, transparent);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-1) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        var(--pixel-dot-2) 1px,
+        transparent 1px
+      );
+    background-size:
+      var(--pixel-size) var(--pixel-size),
+      var(--pixel-size) var(--pixel-size);
+    background-position:
+      0 0,
+      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2);
   }
 }

@@ -4,7 +4,6 @@ import { UseDates } from "@/hooks/use-dates";
 import { RiAlarmWarningFill } from "@remixicon/react";
 import { differenceInCalendarDays } from "date-fns";
 import Banner from "./banner-card";
-import { HyperText } from "./magicui/hyper-text";
 
 export default async function UpcomingPaymentsBanner() {
   const { formatted_current_month, optionsMeses } = UseDates();
@@ -51,12 +50,15 @@ export default async function UpcomingPaymentsBanner() {
   if (totalDue === 0) return null;
 
   return (
-    <Banner className="bg-orange-50 text-red-700 dark:bg-red-950 dark:text-red-200">
-      <div className="flex items-center gap-1 text-left">
-        <RiAlarmWarningFill size={16} />
+    <Banner className="bg-expense/10 text-foreground dark:bg-expense/20">
+      <div className="flex items-center gap-2 text-left">
+        <span className="bg-expense/20 text-expense inline-flex items-center justify-center rounded-md p-1">
+          <RiAlarmWarningFill size={16} />
+        </span>
         <p className="text-sm">
-          <strong className="font-bold">Atenção!</strong> Você possui {totalDue}{" "}
-          pagamento{totalDue > 1 ? "s" : ""} com vencimento nos próximos 5 dias.
+          <strong className="text-expense font-semibold">Atenção:</strong> Você
+          possui {totalDue} pagamento{totalDue > 1 ? "s" : ""} com vencimento
+          nos próximos 5 dias.
         </p>
       </div>
     </Banner>

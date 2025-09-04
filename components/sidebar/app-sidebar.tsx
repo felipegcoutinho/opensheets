@@ -15,6 +15,7 @@ import * as React from "react";
 import Logo from "../logo";
 import { NavLinks } from "./nav-links";
 import { Separator } from "../ui/separator";
+import Link from "next/link";
 
 type PayerPrincipal =
   | { id: string; nome: string; role: string; foto?: string | null }
@@ -48,7 +49,9 @@ export function AppSidebar({
     <Sidebar collapsible="sidebar" {...props} variant="sidebar">
       <SidebarHeader className="pt-6 pb-5">
         <div className="flex justify-center">
-          <Logo />
+          <Link href="/">
+            <Logo />
+          </Link>
         </div>
       </SidebarHeader>
       <Separator />
