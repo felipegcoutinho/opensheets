@@ -26,7 +26,7 @@ export default async function Layout({
 
       <SidebarInset>
         <header>
-          <div className="bg-pixel-soft flex w-full items-center gap-1 rounded-b-xl px-4 py-2 lg:gap-2 lg:px-6">
+          <div className="flex w-full items-center gap-1 rounded-b-xl px-4 py-2 lg:gap-2 lg:px-6">
             <SidebarTrigger size="icon" className="-ml-1" />
           </div>
         </header>

@@ -9,32 +9,41 @@ export const metadata: Metadata = {
 
 export default function AuthenticationPage({ children }) {
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+    <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
       {/* Painel de marca/ilustração (esquerda) */}
-      <aside className="relative hidden lg:flex flex-col overflow-hidden pixelated-bg p-10 text-sidebar-foreground">
+      <aside className="text-sidebar-foreground relative hidden flex-col overflow-hidden p-10 lg:flex">
         <div className="relative z-10 flex h-full flex-col">
           <div className="flex items-center gap-3">
-          <Link href="/">
-            <Logo />
-          </Link>
+            <Link href="/">
+              <Logo />
+            </Link>
           </div>
 
           <div className="mt-auto">
-            <h1 className="text-3xl font-bold leading-tight text-primary">Organize seus pagamentos com clareza</h1>
-            <p className="mt-2 max-w-md text-sidebar-foreground/80">
-              Painéis, transações e lembretes em um único lugar. Simples, rápido e seguro.
+            <h1 className="text-primary text-3xl leading-tight font-bold">
+              Organize seus pagamentos com clareza
+            </h1>
+            <p className="text-sidebar-foreground/80 mt-2 max-w-md">
+              Painéis, transações e lembretes em um único lugar. Simples, rápido
+              e seguro.
             </p>
-            <div className="mt-6 grid gap-3 text-sm text-sidebar-foreground/90">
+            <div className="text-sidebar-foreground/90 mt-6 grid gap-3 text-sm">
               <div className="flex items-center gap-2">
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-xs">✓</span>
+                <span className="bg-primary/20 inline-flex h-5 w-5 items-center justify-center rounded-full text-xs">
+                  ✓
+                </span>
                 Controle de pagamentos e status em tempo real
               </div>
               <div className="flex items-center gap-2">
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-xs">✓</span>
+                <span className="bg-primary/20 inline-flex h-5 w-5 items-center justify-center rounded-full text-xs">
+                  ✓
+                </span>
                 Envio de e-mails automáticos para pagadores
               </div>
               <div className="flex items-center gap-2">
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-xs">✓</span>
+                <span className="bg-primary/20 inline-flex h-5 w-5 items-center justify-center rounded-full text-xs">
+                  ✓
+                </span>
                 Relatórios e insights organizados
               </div>
             </div>

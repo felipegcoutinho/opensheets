@@ -12,7 +12,7 @@ export default async function BannerData() {
   return (
     <Banner className="bg-secondary py-12">
       <div className="flex flex-col">
-        <span className="text-xl">Olá, {shortUserName}! 👋</span>
+        <span className="text-2xl">Olá, {shortUserName}! 👋</span>
         <HyperText className="text-sm">{friendlyDate(currentDate)}</HyperText>
       </div>
     </Banner>

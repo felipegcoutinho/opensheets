@@ -11,28 +11,28 @@
   /* Diretriz: paleta baseada na imagem (azul/indigo, verde, aquas e neutros claros) */
   /* Neutros claros / superfícies */
   --background: #ffffff; /* canvas branco */
-  --foreground: #0b0b0f; /* texto principal quase preto */
+  --foreground: #0b0f0d; /* texto principal quase preto */
   --card: #ffffff; /* cartões/brancos puros */
-  --card-foreground: #0b0b0f;
+  --card-foreground: #0b0f0d;
   --popover: #ffffff;
-  --popover-foreground: #0b0b0f;
+  --popover-foreground: #0b0f0d;
 
   /* Marca e acentos (CTAs e destaques) */
-  --primary: #575ff2; /* indigo/azul da imagem */
+  --primary: #00c670; /* indigo/azul da imagem */
   --primary-foreground: #ffffff;
-  --secondary: #e5f2f2; /* neutro claro azulado da imagem */
-  --secondary-foreground: #0b0b0f;
-  --muted: #f1f5f9; /* sutil próximo dos neutros da paleta */
+  --secondary: #e5f2e8; /* neutro claro azulado da imagem */
+  --secondary-foreground: #0b0f0d;
+  --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
   --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
-  --accent: #0aeb8c; /* verde vibrante da imagem */
-  --accent-foreground: #0b0b0f;
+  --accent: #fe4a23; /* verde vibrante da imagem */
+  --accent-foreground: #ffffff;
   --destructive: #e5484d; /* erro (mantido) */
   --destructive-foreground: #ffffff;
 
   /* Bordas/inputs/ring */
   --border: #dbe0e6; /* borda suave em tom frio */
   --input: #dbe0e6;
-  --ring: #575ff2; /* foco em indigo */
+  --ring: #00c670; /* foco em indigo */
 
   /* Paleta para gráficos (a partir da imagem) */
   --chart-1: #0aeb8c; /* receita: verde */
@@ -48,13 +48,13 @@
 
   /* Sidebar (autenticação / painéis) */
   --sidebar: #ffffff;
-  --sidebar-foreground: #0b0b0f;
-  --sidebar-primary: #575ff2; /* CTA com a cor primária */
+  --sidebar-foreground: #0b0f0d;
+  --sidebar-primary: #00c670; /* CTA com a cor primária */
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e5f2f2; /* blocos sutis no tom da paleta */
-  --sidebar-accent-foreground: #0b0b0f;
+  --sidebar-accent: #e5f2e8; /* blocos sutis no tom da paleta */
+  --sidebar-accent-foreground: #0b0f0d;
   --sidebar-border: #dbe0e6;
-  --sidebar-ring: #575ff2;
+  --sidebar-ring: #00c670;
   --radius: 0.4rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -74,27 +74,27 @@
 }
 
 .dark {
-  --background: #0b0b0f;
+  --background: #000000;
   --foreground: #e5e7eb;
   --card: #121212;
   --card-foreground: #e5e7eb;
   --popover: #121212;
   --popover-foreground: #e5e7eb;
 
-  --primary: #575ff2; /* mantém a identidade da imagem */
+  --primary: #00c670; /* mantém a identidade da imagem */
   --primary-foreground: #ffffff;
-  --secondary: #151923; /* neutro escuro, frio */
+  --secondary: #152316; /* neutro escuro, frio */
   --secondary-foreground: #e5e7eb;
   --muted: #141822;
   --muted-foreground: #94a3b8;
   --accent: #0aeb8c; /* verde vibrante contrastando no dark */
-  --accent-foreground: #0b0b0f;
+  --accent-foreground: #0b0f0d;
   --destructive: #e5484d;
-  --destructive-foreground: #0b0b0f;
+  --destructive-foreground: #0b0f0d;
 
   --border: #181b24;
   --input: #232836;
-  --ring: #575ff2;
+  --ring: #00c670;
 
   --chart-1: #0aeb8c; /* receita: verde */
   --chart-2: #fe4a23; /* despesa: laranja */
@@ -108,12 +108,12 @@
 
   --sidebar: #121212;
   --sidebar-foreground: #e5e7eb;
-  --sidebar-primary: #575ff2;
+  --sidebar-primary: #00c670;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #151923;
   --sidebar-accent-foreground: #e5e7eb;
   --sidebar-border: #232836;
-  --sidebar-ring: #575ff2;
+  --sidebar-ring: #00c670;
   --radius: 0.4rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -199,7 +199,7 @@ body {
   }
 
   ::selection {
-    @apply bg-sky-50 text-sky-600;
+    @apply bg-green-100 text-green-600;
   }
 }
 
@@ -241,155 +241,5 @@ section[id] {
     100% {
       transform: translateX(100%);
     }
-  }
-
-  .pixelated-bg {
-    /* Fundo com micro-pixels (padrão sutil) + brilho leve */
-    --pixel-size: 12px;
-    --pixel-dot-1: color-mix(in oklab, var(--foreground) 6%, transparent);
-    --pixel-dot-2: color-mix(in oklab, var(--accent) 10%, transparent);
-    background-color: var(--sidebar);
-    background-image:
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-1) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-2) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        800px 400px at 100% 0%,
-        color-mix(in oklab, var(--primary) 10%, transparent) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        900px 450px at 0% 100%,
-        color-mix(in oklab, var(--accent) 12%, transparent) 0%,
-        transparent 60%
-      ),
-      linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    background-size:
-      var(--pixel-size) var(--pixel-size),
-      var(--pixel-size) var(--pixel-size),
-      auto,
-      auto,
-      auto;
-    background-position:
-      0 0,
-      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2),
-      center,
-      center,
-      center;
-  }
-
-  .dark .pixelated-bg {
-    background-color: var(--sidebar);
-    background-image:
-      radial-gradient(
-        circle at 1px 1px,
-        color-mix(in oklab, var(--foreground) 8%, transparent) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        circle at 1px 1px,
-        color-mix(in oklab, var(--accent) 14%, transparent) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        800px 400px at 100% 0%,
-        color-mix(in oklab, var(--primary) 18%, transparent) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        900px 450px at 0% 100%,
-        color-mix(in oklab, var(--accent) 18%, transparent) 0%,
-        transparent 60%
-      ),
-      linear-gradient(180deg, #0b0b0f 0%, #111215 100%);
-    background-size:
-      var(--pixel-size) var(--pixel-size),
-      var(--pixel-size) var(--pixel-size),
-      auto,
-      auto,
-      auto;
-    background-position:
-      0 0,
-      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2),
-      center,
-      center,
-      center;
-  }
-
-  /* Variações do pixelado para usar em qualquer container */
-  .bg-pixel-soft {
-    --pixel-size: 12px;
-    --pixel-dot-1: color-mix(in oklab, var(--foreground) 5%, transparent);
-    --pixel-dot-2: color-mix(in oklab, var(--primary) 6%, transparent);
-    background-image:
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-1) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-2) 1px,
-        transparent 1px
-      );
-    background-size:
-      var(--pixel-size) var(--pixel-size),
-      var(--pixel-size) var(--pixel-size);
-    background-position:
-      0 0,
-      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2);
-  }
-
-  .bg-pixel {
-    --pixel-size: 10px;
-    --pixel-dot-1: color-mix(in oklab, var(--foreground) 8%, transparent);
-    --pixel-dot-2: color-mix(in oklab, var(--accent) 10%, transparent);
-    background-image:
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-1) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-2) 1px,
-        transparent 1px
-      );
-    background-size:
-      var(--pixel-size) var(--pixel-size),
-      var(--pixel-size) var(--pixel-size);
-    background-position:
-      0 0,
-      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2);
-  }
-
-  .bg-pixel-contrast {
-    --pixel-size: 8px;
-    --pixel-dot-1: color-mix(in oklab, var(--foreground) 14%, transparent);
-    --pixel-dot-2: color-mix(in oklab, var(--primary) 16%, transparent);
-    background-image:
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-1) 1px,
-        transparent 1px
-      ),
-      radial-gradient(
-        circle at 1px 1px,
-        var(--pixel-dot-2) 1px,
-        transparent 1px
-      );
-    background-size:
-      var(--pixel-size) var(--pixel-size),
-      var(--pixel-size) var(--pixel-size);
-    background-position:
-      0 0,
-      calc(var(--pixel-size) / 2) calc(var(--pixel-size) / 2);
   }
 }
