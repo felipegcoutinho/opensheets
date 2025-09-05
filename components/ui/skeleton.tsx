@@ -1,13 +1,20 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+type Props = React.ComponentProps<"div"> & {
+  animate?: boolean;
+};
+
+function Skeleton({ className, animate = true, ...props }: Props) {
   return (
     <div
+      role="presentation"
+      aria-hidden
       data-slot="skeleton"
-      className={cn("bg-accent animate-pulse rounded-md", className)}
+      data-animate={animate ? "true" : "false"}
+      className={cn("skeleton rounded-md", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Skeleton }
+export { Skeleton };

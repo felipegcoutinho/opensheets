@@ -7,7 +7,6 @@ import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
-import { deleteCards } from "../../actions/cards/delete_cards";
 
 type Props = {
   item: any;
@@ -56,7 +55,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
               <div className="text-center">
                 <p className="text-muted-foreground text-sm">Em Uso</p>
                 <span className="flex items-center gap-1">
-                  <Ping color="bg-orange-400" />
+                  <Ping color="bg-chart-2" />
                   <MoneyValues value={item.limites.limiteEmUso} />
                 </span>
               </div>
@@ -71,7 +70,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
             </div>
 
             <Progress
-              primary_color="bg-orange-400"
+              primary_color="bg-chart-2"
               secondary_color="bg-secondary"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100

@@ -17,9 +17,9 @@ type Props = {
 
 export default function ChartSixMonths({ data }: Props) {
   const chartConfig = {
-    incomes: { label: "Receita", color: "var(--chart-1)" },
-    expenses: { label: "Despesa", color: "var(--chart-2)" },
-    balanco: { label: "Balanço", color: "var(--chart-3)" },
+    incomes: { label: "Receita", color: "var(--chart-4)" },
+    expenses: { label: "Despesa", color: "var(--chart-5)" },
+    balanco: { label: "Balanço", color: "var(--chart-6)" },
   } as const;
 
   const formatCurrency = (value: number) =>

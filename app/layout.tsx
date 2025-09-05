@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${default_font.className} antialiased`}
+      className={`${default_font.className} subpixel-antialiased`}
       suppressHydrationWarning
     >
       <body>

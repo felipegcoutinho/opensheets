@@ -1,5 +1,6 @@
 "use client";
 import { createPayer } from "@/app/actions/pagadores/create_pagadores";
+import Ping from "@/components/ping-icon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,7 +24,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { ActionResponse } from "./form-schema";
-import Ping from "@/components/ping-icon";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
@@ -104,7 +104,6 @@ export default function CreatePayer({ avatars = [] as string[] }) {
                 >
                   <img
                     src={`/avatars/${file}`}
-                    alt=""
                     width={64}
                     height={64}
                     className="size-16 rounded-full object-cover"

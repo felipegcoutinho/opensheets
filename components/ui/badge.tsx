@@ -18,7 +18,7 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         destructive_lite:
-          "border-transparent bg-destructive/5 text-destructive [a&]:hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "border-transparent bg-destructive/5 text-destructive [a&]:hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/10",
         receita_lite:
           "border-chart-1 bg-chart-1/5 text-chart-1 dark:text-white [a&]:hover:bg-chart-1/90 focus-visible:ring-chart-1/20 dark:focus-visible:ring-chart-1/40 dark:bg-chart-1/60",
         despesa_lite:

@@ -328,8 +328,8 @@ export default function MonthCalendar({
                       className={cn(
                         "w-full truncate rounded-sm px-1 py-0.5 text-left text-xs",
                         t?.tipo_transacao === "receita"
-                          ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-100"
-                          : "bg-red-100 text-red-900 dark:bg-red-900 dark:text-red-100",
+                          ? "bg-chart-1/15 text-chart-1 dark:bg-chart-1/25 dark:text-white"
+                          : "bg-chart-2/15 text-chart-2 dark:bg-chart-2/25 dark:text-white",
                       )}
                       title={`${t?.descricao ?? ""}`}
                     >
@@ -357,6 +357,7 @@ export default function MonthCalendar({
                 getCards={getCards}
                 getAccount={getAccount}
                 getCategorias={getCategorias}
+                defaultDate={cell.date}
               >
                 <button
                   type="button"
@@ -439,8 +440,8 @@ export default function MonthCalendar({
                         className={cn(
                           "mr-2 inline-flex rounded px-1 py-0.5",
                           t?.tipo_transacao === "receita"
-                            ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-100"
-                            : "bg-red-100 text-red-900 dark:bg-red-900 dark:text-red-100",
+                            ? "bg-chart-1/15 text-chart-1 dark:bg-chart-1/25 dark:text-white"
+                            : "bg-chart-2/15 text-chart-2 dark:bg-chart-2/25 dark:text-white",
                         )}
                       >
                         {t?.tipo_transacao ?? "—"}

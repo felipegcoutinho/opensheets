@@ -359,7 +359,7 @@ export default function UpdateTransactions({
               <Required />
             </Label>
             <Select name="pagador_id" defaultValue={itemResponsavel}>
-              <SelectTrigger className="w-full capitalize">
+              <SelectTrigger className="w-full py-6 capitalize">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>

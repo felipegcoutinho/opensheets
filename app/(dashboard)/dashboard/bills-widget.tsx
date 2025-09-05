@@ -30,7 +30,7 @@ export default async function BillsWidget({ month, data }) {
               const dt = item.dt_pagamento_boleto as string | null;
               const texto = dt
                 ? `Pago em ${DateFormat(String(dt).slice(0, 10))}`
-                : `Pago até dia ${DateFormat(item.data_vencimento)}`;
+                : `Pago até ${DateFormat(item.data_vencimento)}`;
               return (
                 <p className="text-xs text-emerald-700 dark:text-emerald-400">
                   {texto}

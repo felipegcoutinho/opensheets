@@ -27,12 +27,12 @@ export default function PaymentStatusWidget({
       {
         amount: sumPaidIncome,
         label: "confirmados",
-        color: "bg-chart-1 ",
+        color: "bg-chart-1",
       },
       {
         amount: pendingIncome,
         label: "pendentes",
-        color: "bg-zinc-200 dark:bg-zinc-200",
+        color: "bg-chart-1/20 dark:bg-chart-1/20",
       },
     ],
   };
@@ -49,7 +49,7 @@ export default function PaymentStatusWidget({
       {
         amount: pendingExpense,
         label: "pendentes",
-        color: "bg-zinc-200 dark:bg-zinc-200",
+        color: "bg-chart-2/20 dark:bg-chart-2/20",
       },
     ],
   };

@@ -17,6 +17,8 @@ export default function Banner({ children, className }: BannerProps) {
   }
 
   return (
-    <Card className={`mb-3 border-none p-6 ${className}`}>{children}</Card>
+    <Card className={`mb-3 border-none p-6 ${className || ""}`}>
+      {children}
+    </Card>
   );
 }

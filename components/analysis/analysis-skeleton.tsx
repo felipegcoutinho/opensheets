@@ -1,9 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-function Skeleton({ className = "" }: { className?: string }) {
-  return <div className={`bg-muted animate-pulse rounded-md ${className}`} />;
-}
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function AnalysisSkeleton({ month }: { month: string }) {
   return (

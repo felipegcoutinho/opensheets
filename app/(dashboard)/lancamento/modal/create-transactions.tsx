@@ -41,7 +41,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpFill, RiThumbUpLine } from "@remixicon/react";
+import { RiThumbUpFill } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -52,12 +52,21 @@ const fetchJSON = async (url: string) => {
   return res.json();
 };
 
+type CreateTransactionsProps = {
+  getCards: any;
+  getAccount: any;
+  getCategorias: any;
+  children: React.ReactNode;
+  defaultDate?: Date | string;
+};
+
 export default function CreateTransactions({
   getCards,
   getAccount,
   getCategorias,
   children,
-}) {
+  defaultDate,
+}: CreateTransactionsProps) {
   const {
     isOpen,
     tipoTransacao,
@@ -81,8 +90,23 @@ export default function CreateTransactions({
     eBoletoSelecionado,
   } = UtilitiesLancamento();
 
-  const { getMonthOptions, formatted_current_month } = UseDates();
-  const month = formatted_current_month;
+  const { getMonthOptions, formatted_current_month, optionsMeses } = UseDates();
+  // Deriva mês/ano a partir da defaultDate (se fornecida) no formato "mês-ano" em pt-BR
+  let month = formatted_current_month;
+  let defaultDateStr: string | undefined;
+  let injectedLabel: string | undefined;
+  if (defaultDate) {
+    const d = defaultDate instanceof Date ? defaultDate : new Date(defaultDate);
+    if (!Number.isNaN(d.getTime())) {
+      const mName = optionsMeses[d.getMonth()];
+      month = `${mName}-${d.getFullYear()}`;
+      injectedLabel = `${mName.charAt(0).toUpperCase() + mName.slice(1)} de ${d.getFullYear()}`;
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      defaultDateStr = `${y}-${m}-${day}`;
+    }
+  }
 
   // React Query: descrições e pagadores
   const {
@@ -177,6 +201,7 @@ export default function CreateTransactions({
                   id="data_compra"
                   name="data_compra"
                   type="date"
+                  defaultValue={defaultDateStr}
                   required={!eBoletoSelecionado}
                 />
               </div>
@@ -189,7 +214,16 @@ export default function CreateTransactions({
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    {getMonthOptions().map((option) => (
+                    {/* injeta a opção do mês clicado se não estiver na janela de meses padrão */}
+                    {(() => {
+                      const opts = getMonthOptions();
+                      const has = opts.some((o) => o.value === month);
+                      const list =
+                        has || !injectedLabel
+                          ? opts
+                          : [{ value: month, label: injectedLabel }, ...opts];
+                      return list;
+                    })().map((option) => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.label}
                       </SelectItem>
@@ -389,7 +423,10 @@ export default function CreateTransactions({
                   value={selectedPayer}
                   onValueChange={setSelectedPayer}
                 >
-                  <SelectTrigger id="pagador_id" className="w-full capitalize">
+                  <SelectTrigger
+                    id="pagador_id"
+                    className="w-full py-6 capitalize"
+                  >
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
