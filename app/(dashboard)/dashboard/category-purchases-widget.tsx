@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface TransactionByCategory {
   id: string;
@@ -78,7 +78,37 @@ export default function CategoryPurchasesWidget({
     return Array.from(map.values());
   }, [despesas]);
 
-  const [selected, setSelected] = useState<string>(categories[0]?.id ?? "");
+  // Persistência da seleção para evitar reset ao abrir o modal (children re-mount)
+  const [selected, setSelected] = useState<string>("");
+
+  // Inicializa a seleção a partir do sessionStorage (se existir) ou primeira categoria
+  // Isso evita que, ao clicar em "Mostrar mais" (que re-renderiza children dentro do Dialog),
+  // a categoria selecionada volte para o default.
+  useEffect(() => {
+    if (!categories.length) return;
+    try {
+      const saved = typeof window !== "undefined"
+        ? window.sessionStorage.getItem("category-purchases-selected")
+        : null;
+      const validSaved = categories.some((c) => c.id === saved);
+      const initial = validSaved ? (saved as string) : categories[0].id;
+      setSelected(initial);
+    } catch {
+      setSelected(categories[0].id);
+    }
+  }, [categories]);
+
+  // Salva a seleção atual para ser reusada em futuros mounts
+  useEffect(() => {
+    if (!selected) return;
+    try {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("category-purchases-selected", selected);
+      }
+    } catch {
+      // ignore
+    }
+  }, [selected]);
 
   const selectedCategory = categories.find((c) => c.id === selected);
 

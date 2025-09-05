@@ -41,7 +41,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpFill, RiThumbUpLine } from "@remixicon/react";
+import { RiThumbUpFill } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -218,9 +218,10 @@ export default function CreateTransactions({
                     {(() => {
                       const opts = getMonthOptions();
                       const has = opts.some((o) => o.value === month);
-                      const list = has || !injectedLabel
-                        ? opts
-                        : [{ value: month, label: injectedLabel }, ...opts];
+                      const list =
+                        has || !injectedLabel
+                          ? opts
+                          : [{ value: month, label: injectedLabel }, ...opts];
                       return list;
                     })().map((option) => (
                       <SelectItem key={option.value} value={option.value}>
@@ -422,7 +423,10 @@ export default function CreateTransactions({
                   value={selectedPayer}
                   onValueChange={setSelectedPayer}
                 >
-                  <SelectTrigger id="pagador_id" className="w-full capitalize">
+                  <SelectTrigger
+                    id="pagador_id"
+                    className="w-full py-6 capitalize"
+                  >
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>

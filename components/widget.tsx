@@ -86,7 +86,7 @@ export default function Widget({
               className={`${title_font.className} flex items-center gap-1`}
             >
               {icon}
-              <span className="">{title}</span>
+              <span>{title}</span>
               {information && (
                 <Tooltip>
                   <TooltipTrigger>
@@ -148,7 +148,7 @@ export default function Widget({
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-h-[85vh] w-full max-w-3xl overflow-hidden p-0">
-          <DialogHeader className="px-6 py-4">
+          <DialogHeader className="px-6 pt-4">
             <DialogTitle className="flex items-center gap-2">
               {icon}
               <span>{title}</span>

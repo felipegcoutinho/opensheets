@@ -1,5 +1,6 @@
 "use client";
 import { updatePayer } from "@/app/actions/pagadores/update_pagadores";
+import Ping from "@/components/ping-icon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,7 +24,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { ActionResponse } from "./form-schema";
-import Ping from "@/components/ping-icon";
 
 interface UpdatePayerProps {
   item: {
@@ -118,7 +118,6 @@ export default function UpdatePayer({ item, avatars = [] }: UpdatePayerProps) {
                 >
                   <img
                     src={`/avatars/${file}`}
-                    alt=""
                     width={64}
                     height={64}
                     className="size-16 rounded-full object-cover"
