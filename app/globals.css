@@ -38,8 +38,9 @@
   --chart-1: #0aeb8c; /* receita: verde */
   --chart-2: #fe4a23; /* despesa: laranja solicitado */
   --chart-3: #40468e; /* indigo escuro */
-  --chart-4: #aaf7f9; /* aqua claro */
-  --chart-5: #c8ded9; /* teal claro */
+  --chart-4: #5b15a1;
+  --chart-5: #af66f7;
+  --chart-6: #e4caff;
 
   /* Tokens semânticos auxiliares */
   --income: #0aeb8c;
@@ -91,15 +92,16 @@
   --destructive: #e5484d;
   --destructive-foreground: #0b0b0f;
 
-  --border: #232836;
+  --border: #181b24;
   --input: #232836;
   --ring: #575ff2;
 
   --chart-1: #0aeb8c; /* receita: verde */
   --chart-2: #fe4a23; /* despesa: laranja */
   --chart-3: #869cb6; /* azul-cinza médio para contraste no dark */
-  --chart-4: #40468e; /* indigo escuro */
-  --chart-5: #aaf7f9; /* aqua claro para destaque */
+  --chart-4: #5b15a1;
+  --chart-5: #af66f7;
+  --chart-6: #e4caff;
 
   --income: #0aeb8c;
   --expense: #fe4a23;

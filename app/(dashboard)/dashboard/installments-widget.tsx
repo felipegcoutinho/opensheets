@@ -76,7 +76,7 @@ export default async function InstallmentsWidget({ month }: Props) {
                 <Progress
                   value={perc}
                   primary_color="bg-chart-2"
-                  secondary_color="bg-secondary"
+                  secondary_color="bg-chart-2/20"
                   className="h-2 rounded"
                   aria-label={`Progresso: ${atual} de ${qtde}`}
                 />

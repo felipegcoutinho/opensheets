@@ -23,7 +23,7 @@ export default async function Header() {
 
         {/* Menu e ações à direita */}
         <div className="flex flex-1 items-center justify-end gap-4">
-          <nav className="hidden items-center gap-6 md:flex">
+          {/* <nav className="hidden items-center gap-6 md:flex">
             <Link
               href="/#sobre"
               className="text-muted-foreground hover:text-foreground text-sm transition-colors"
@@ -54,7 +54,7 @@ export default async function Header() {
             >
               Contato
             </Link>
-          </nav>
+          </nav> */}
           {session ? (
             <Link href="/dashboard">
               <Button size="sm" className="gap-2 shadow-sm">
@@ -65,10 +65,14 @@ export default async function Header() {
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
               <Link href="/login">
-                <Button variant="ghost" size="sm">Entrar</Button>
+                <Button variant="ghost" size="sm">
+                  Entrar
+                </Button>
               </Link>
               <Link href="/login/signup">
-                <Button size="sm" className="shadow-sm">Criar conta</Button>
+                <Button size="sm" className="shadow-sm">
+                  Criar conta
+                </Button>
               </Link>
             </div>
           )}

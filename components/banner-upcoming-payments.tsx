@@ -50,15 +50,17 @@ export default async function UpcomingPaymentsBanner() {
   if (totalDue === 0) return null;
 
   return (
-    <Banner className="bg-expense/10 text-foreground dark:bg-expense/20">
+    <Banner className="text-foreground bg-amber-100 dark:bg-amber-800/30">
       <div className="flex items-center gap-2 text-left">
-        <span className="bg-expense/20 text-expense inline-flex items-center justify-center rounded-md p-1">
+        <span className="inline-flex items-center justify-center rounded-md p-1 text-amber-600">
           <RiAlarmWarningFill size={16} />
         </span>
         <p className="text-sm">
-          <strong className="text-expense font-semibold">Atenção:</strong> Você
-          possui {totalDue} pagamento{totalDue > 1 ? "s" : ""} com vencimento
-          nos próximos 5 dias.
+          <strong>Atenção:</strong> Você possui{" "}
+          <strong>
+            {totalDue} pagamento{totalDue > 1 ? "s" : ""}
+          </strong>{" "}
+          com vencimento nos próximos 5 dias.
         </p>
       </div>
     </Banner>
