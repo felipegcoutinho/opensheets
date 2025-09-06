@@ -81,12 +81,12 @@
   --popover: #121212;
   --popover-foreground: #e5e7eb;
 
-  --primary: #00c670; /* mantém a identidade da imagem */
+  --primary: #087c4a; /* mantém a identidade da imagem */
   --primary-foreground: #ffffff;
   --secondary: #152316; /* neutro escuro, frio */
-  --secondary-foreground: #e5e7eb;
-  --muted: #141822;
-  --muted-foreground: #94a3b8;
+  --secondary-foreground: #e5ebe8;
+  --muted: #14221a;
+  --muted-foreground: #919b95;
   --accent: #0aeb8c; /* verde vibrante contrastando no dark */
   --accent-foreground: #0b0f0d;
   --destructive: #e5484d;
@@ -107,10 +107,10 @@
   --expense: #fe4a23;
 
   --sidebar: #121212;
-  --sidebar-foreground: #e5e7eb;
+  --sidebar-foreground: #e5ebe8;
   --sidebar-primary: #00c670;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #151923;
+  --sidebar-accent: #15231c;
   --sidebar-accent-foreground: #e5e7eb;
   --sidebar-border: #232836;
   --sidebar-ring: #00c670;
