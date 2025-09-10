@@ -138,7 +138,7 @@ export default function Widget({
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-[var(--card)] to-transparent pt-12 pb-6">
           <Button
             variant="outline"
-            className="pointer-events-auto rounded-full text-xs"
+            className="pointer-events-auto rounded-full text-xs dark:text-white"
             onClick={() => setIsOpen(true)}
           >
             Mostrar mais <RiExpandDiagonalLine size={10} />
