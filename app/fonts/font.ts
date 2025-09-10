@@ -2,12 +2,7 @@ import { Inter, Oswald } from "next/font/google";
 import localFont from "next/font/local";
 
 const oswald = Oswald({
-  weight: ["500"],
-  subsets: ["latin"],
-});
-
-const inter = Inter({
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
   subsets: ["latin"],
 });
 
@@ -17,11 +12,6 @@ const itau = localFont({
       path: "../fonts/ItauTextPro_Rg.woff2",
       weight: "400",
     },
-  ],
-});
-
-const itau_bold = localFont({
-  src: [
     {
       path: "../fonts/ItauText-XBold.woff2",
       weight: "800",

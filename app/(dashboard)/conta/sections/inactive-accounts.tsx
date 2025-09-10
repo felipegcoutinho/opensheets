@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import UpdateCard from "../modal/update-accounts";
 import DeleteAccount from "../modal/delete-accounts";
+import PaymentMethodLogo from "../../../../components/payment-method-logo";
 
 export default async function InactiveAccountsSection() {
   const contasInativas = await getAccountDisabled();
@@ -17,14 +18,12 @@ export default async function InactiveAccountsSection() {
       {contasInativas.map((item) => (
         <Card key={item.id} className="group">
           <CardHeader className="pb-0">
-            <div className="flex items-center gap-3">
-              <div className="bg-secondary text-primary inline-flex size-9 items-center justify-center rounded-md overflow-hidden">
-                <Image
-                  src={`/logos/${item.logo_image}`}
-                  alt={item.descricao}
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 object-contain"
+            <div className="flex items-center gap-1">
+              <div className="inline-flex items-center justify-center">
+                <PaymentMethodLogo
+                  url_name={`/logos/${item.logo_image}`}
+                  width={42}
+                  height={42}
                 />
               </div>
               <CardTitle className="capitalize">

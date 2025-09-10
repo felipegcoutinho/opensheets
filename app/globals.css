@@ -55,7 +55,7 @@
   --sidebar-accent-foreground: #0b0f0d;
   --sidebar-border: #dbe0e6;
   --sidebar-ring: #00c670;
-  --radius: 0.4rem;
+  --radius: 0.7rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-sm:
@@ -114,7 +114,7 @@
   --sidebar-accent-foreground: #e5e7eb;
   --sidebar-border: #232836;
   --sidebar-ring: #00c670;
-  --radius: 0.4rem;
+  --radius: 0.7rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-sm:
@@ -212,13 +212,13 @@ section[id] {
 @layer utilities {
   /* Tokens de tamanho para skeletons */
   :root {
-    --sk-text-xs: 3rem;   /* 48px */
-    --sk-text-sm: 6rem;   /* 96px */
-    --sk-text-md: 8rem;   /* 128px */
-    --sk-text-lg: 12rem;  /* 192px */
-    --sk-number: 5rem;    /* 80px */
-    --sk-chip: 5rem;      /* 80px */
-    --sk-btn: 6rem;       /* 96px */
+    --sk-text-xs: 3rem; /* 48px */
+    --sk-text-sm: 6rem; /* 96px */
+    --sk-text-md: 8rem; /* 128px */
+    --sk-text-lg: 12rem; /* 192px */
+    --sk-number: 5rem; /* 80px */
+    --sk-chip: 5rem; /* 80px */
+    --sk-btn: 6rem; /* 96px */
     --sk-avatar-sm: 20px;
     --sk-avatar-md: 32px;
   }
