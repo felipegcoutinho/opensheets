@@ -9,7 +9,7 @@ export default async function AccountTableSection({ id, month }: { id: string; m
     getCards(),
     getCategorias(),
     getAccount(),
-    getAccountInvoice(month, Number(id)),
+    getAccountInvoice(month, id),
   ]);
 
   return (

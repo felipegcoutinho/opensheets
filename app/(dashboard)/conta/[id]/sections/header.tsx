@@ -10,7 +10,7 @@ import { getAccountDetails } from "@/app/actions/accounts/fetch_accounts";
 export default async function AccountHeaderSection({ id, month }: { id: string; month: string }) {
   const [accountDetails, sumIncome, sumExpense, sumIncomeToDate, sumExpenseToDate] =
     await Promise.all([
-      getAccountDetails(Number(id)),
+      getAccountDetails(id),
       getSumAccountIncome(month, id),
       getSumAccountExpense(month, id),
       getSumAccountIncomeToDate(month, id),

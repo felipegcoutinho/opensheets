@@ -507,7 +507,7 @@ export async function getLimitesCartao(
 }
 
 // Busca as Lançamentos de uma conta bancária específica na tabela transacoes
-export async function getAccountInvoice(month: string, conta_id: number) {
+export async function getAccountInvoice(month: string, conta_id: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -516,7 +516,6 @@ export async function getAccountInvoice(month: string, conta_id: number) {
       "id, data_compra, data_vencimento, dt_pagamento_boleto, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)",
     )
     .eq("periodo", month)
-    .eq("realizado", true)
     .eq("conta_id", conta_id)
     .in("pagadores.role", ["principal", "sistema"]);
 
