@@ -53,7 +53,7 @@ export default function MonthPicker() {
         <div className="flex items-center">
           <div className="mx-2 space-x-1 uppercase">
             <span>{currentMonth}</span>
-            <span className="text-foreground">{currentYear}</span>
+            <span className="font-bold">{currentYear}</span>
           </div>
 
           {(isChanging || isNavigating) && <LoadingSpinner />}
