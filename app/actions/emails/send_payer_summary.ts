@@ -79,12 +79,13 @@ export async function sendPayerMonthlySummary(
     if ((t?.tipo_transacao || "") !== "despesa") continue;
     if (normalizeFormaPagamento(t?.forma_pagamento) !== "cartão de crédito")
       continue;
-    const desc = t?.cartoes?.descricao || "Outros Cartões";
+    const cart = Array.isArray(t?.cartoes) ? t.cartoes[0] : t?.cartoes;
+    const desc = cart?.descricao || "Outros Cartões";
     const totalPrev = cardMap.get(desc)?.total || 0;
     const val = parseFloat(t?.valor) || 0;
     cardMap.set(desc, {
       descricao: desc,
-      logo_image: t?.cartoes?.logo_image || null,
+      logo_image: cart?.logo_image || null,
       total: totalPrev + val,
     });
     cardsTotal += val;

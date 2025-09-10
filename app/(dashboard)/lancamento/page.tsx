@@ -4,8 +4,8 @@ import { Suspense } from "react";
 import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 import TransactionsTableSection from "./sections/table";
 
-export default async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
+export default async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
+  const month = await getMonth({ searchParams });
 
   return (
     <>

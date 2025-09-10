@@ -6,19 +6,6 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const itau = localFont({
-  src: [
-    {
-      path: "../fonts/ItauTextPro_Rg.woff2",
-      weight: "400",
-    },
-    {
-      path: "../fonts/ItauText-XBold.woff2",
-      weight: "800",
-    },
-  ],
-});
-
 const sofascore = localFont({
   src: [
     {

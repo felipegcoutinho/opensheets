@@ -172,10 +172,12 @@ export const getColumns = (
     header: ({ column }) => {
       return <span>Valor</span>;
     },
-
     cell: ({ row }) => {
       const item = row.original;
-      return <MoneyValues value={item.valor} />;
+      const valor =
+        item.tipo_transacao === "despesa" ? -Math.abs(item.valor) : item.valor;
+
+      return <MoneyValues value={valor} />;
     },
   },
 
@@ -368,7 +370,6 @@ export const getColumns = (
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
-                    itemCondicao={item.condicao}
                     itemTipoTransacao={item.tipo_transacao}
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
@@ -389,10 +390,7 @@ export const getColumns = (
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <DeleteTransactions
-                      itemResponsavel={item.pagadores?.nome}
-                      itemId={item.id}
-                    />
+                    <DeleteTransactions itemId={item.id} />
                   </DropdownMenuItem>
                 </>
               )}

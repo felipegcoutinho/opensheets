@@ -30,9 +30,24 @@ import { updateCard } from "@/app/actions/cards/update_cards";
 import Ping from "@/components/ping-icon";
 import type { ActionResponse } from "./form-schema";
 
+type AccountOption = { id: string | number; descricao: string; logo_image?: string | null };
+
+type CardItem = {
+  id: string | number;
+  descricao: string;
+  dt_fechamento: number;
+  dt_vencimento: number;
+  status: string;
+  anotacao?: string | null;
+  limite: number;
+  bandeira: string;
+  logo_image: string;
+  contas?: { id: string | number; descricao?: string } | null;
+};
+
 type Props = {
-  getAccountMap: Array<string>;
-  item: unknown;
+  getAccountMap: AccountOption[];
+  item: CardItem;
 };
 
 const initialState: ActionResponse = { success: false, message: "" };
@@ -220,7 +235,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
               <Required />
             </Label>
             <Select
-              defaultValue={item.contas?.id.toString()}
+              defaultValue={String(item.contas?.id ?? "")}
               name="conta_id"
               required
             >
@@ -245,7 +260,7 @@ export default function UpdateCard({ getAccountMap, item }: Props) {
           <div className="w-full">
             <Label>Anotação</Label>
             <Textarea
-              defaultValue={item.anotacao}
+              defaultValue={item.anotacao ?? ""}
               name="anotacao"
               placeholder="Anotação"
             />

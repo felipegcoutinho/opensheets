@@ -5,8 +5,8 @@ import { Suspense } from "react";
 import NotesList from "./ui-notes-list";
 import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 
-export default async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
+export default async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
+  const month = await getMonth({ searchParams });
   return (
     <div className="mt-4">
       <CreateNotes>
@@ -25,6 +25,6 @@ export default async function page(props: { params: { month: string } }) {
 
 async function NotesContent({ month }: { month: string }) {
   const { getNotes } = await import("@/app/actions/notes/fetch_notes");
-  const notes = await getNotes(month);
+  const notes = await getNotes();
   return <NotesList notes={notes} />;
 }

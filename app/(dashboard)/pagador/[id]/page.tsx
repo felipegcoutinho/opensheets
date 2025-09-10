@@ -37,7 +37,12 @@ export default async function Page({ searchParams, params }: PageProps) {
     getPayersName(id),
   ]);
 
-  const list: Transaction[] = Array.isArray(transactions) ? transactions : [];
+  const rawList = Array.isArray(transactions) ? transactions : [];
+  const list: Transaction[] = rawList.map((t: any) => ({
+    ...t,
+    cartoes: Array.isArray(t?.cartoes) ? t.cartoes[0] : t.cartoes,
+    contas: Array.isArray(t?.contas) ? t.contas[0] : t.contas,
+  }));
 
   // Agregações
   const { items: cardsSummary, total: cardsTotal } = aggregateByCard(list);

@@ -121,7 +121,7 @@ export default function CategoryProgress({
                 <div className="text-right">
                   <MoneyValues value={item.spent} />
                   <div>
-                    <Badge variant="sistema" className="mt-1">
+                    <Badge variant="outline" className="mt-1">
                       {categoryProgressPercentage.toFixed(1)}%{" "}
                       {tipo === "despesa" ? "da despesa" : "da receita"} total
                     </Badge>

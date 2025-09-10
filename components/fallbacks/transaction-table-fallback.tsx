@@ -64,7 +64,7 @@ export default function TransactionTableFallback({ rows = 8 }: { rows?: number }
                 </TableCell>
                 {/* valor */}
                 <TableCell>
-                  <TextSkeleton style={{ width: "var(--sk-number)" }} />
+                  <TextSkeleton className="w-20" />
                 </TableCell>
                 {/* condição */}
                 <TableCell>
@@ -84,7 +84,7 @@ export default function TransactionTableFallback({ rows = 8 }: { rows?: number }
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <CircleSkeleton size={24} />
-                    <ChipSkeleton style={{ width: "var(--sk-chip)" }} />
+                    <ChipSkeleton className="w-24" />
                   </div>
                 </TableCell>
                 {/* categoria */}

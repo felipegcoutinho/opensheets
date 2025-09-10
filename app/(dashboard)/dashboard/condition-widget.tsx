@@ -6,7 +6,13 @@ import UseStyles from "@/hooks/use-styles";
 import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 
-export async function ConditionWidget({ month, data }: { month: string; data?: any[] }) {
+export async function ConditionWidget({
+  month,
+  data,
+}: {
+  month: string;
+  data?: any[];
+}) {
   const condicoes = data ?? (await getConditions(month));
 
   const condicoesSorted = condicoes.sort((a, b) => b.sum - a.sum);
@@ -33,12 +39,10 @@ export async function ConditionWidget({ month, data }: { month: string; data?: a
                   {item.condicao === "vista" ? "à vista" : item.condicao}
                 </span>
               </span>
-              <RiArrowRightSFill className="text-muted-foreground h-3 w-3" />
+              <RiArrowRightSFill className="text-muted-foreground" size={12} />
             </Link>
 
-            <p>
-              <MoneyValues value={item.sum} />
-            </p>
+            <MoneyValues value={-Math.abs(item.sum)} />
           </div>
         </CardContent>
       ))}

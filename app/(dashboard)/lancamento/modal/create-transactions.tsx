@@ -543,11 +543,7 @@ export default function CreateTransactions({
                     <Label htmlFor="conta_id">
                       Contas <Required />
                     </Label>
-                    <Select
-                      name="conta_id"
-                      placeholder="Selecione"
-                      required={showConta}
-                    >
+                    <Select name="conta_id" required={showConta}>
                       <SelectTrigger id="conta_id" className="w-full">
                         <SelectValue placeholder="Selecione" />
                       </SelectTrigger>
@@ -680,7 +676,7 @@ export default function CreateTransactions({
                 type="file"
                 name="imagem_url"
                 accept="image/*"
-                onChange={(e) => setImage(e.target.files[0])}
+                onChange={(e) => setImage(e.target.files?.[0] ?? null)}
               />
             </div>
 

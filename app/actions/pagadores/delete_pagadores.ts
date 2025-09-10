@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import type { ActionResponse } from "../../(dashboard)/pagador/modal/form-schema";
 
 export async function deletePayer(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");

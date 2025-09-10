@@ -6,20 +6,19 @@ import { getAccountInvoice } from "@/app/actions/transactions/fetch_transactions
 
 export default async function AccountTableSection({ id, month }: { id: string; month: string }) {
   const [cards, categorias, contas, accountInvoice] = await Promise.all([
-    getCards(month),
+    getCards(),
     getCategorias(),
     getAccount(),
-    getAccountInvoice(month, id),
+    getAccountInvoice(month, Number(id)),
   ]);
 
   return (
     <TableTransaction
-      data={accountInvoice}
-      getAccount={contas}
-      getCards={cards}
-      getCategorias={categorias}
+      data={accountInvoice ?? []}
+      getAccount={contas ?? []}
+      getCards={cards ?? []}
+      getCategorias={categorias ?? []}
       hidden={true}
     />
   );
 }
-

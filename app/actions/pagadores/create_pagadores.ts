@@ -9,7 +9,7 @@ import {
 } from "../../(dashboard)/pagador/modal/form-schema";
 
 export async function createPayer(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const rawData: PayerFormData = {

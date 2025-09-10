@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/lancamento/modal/form-schema";
 
 export async function updateTransaction(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const supabase = createClient();
@@ -121,13 +121,21 @@ export async function updateTransaction(
           : null;
     }
 
-    await supabase.from("lancamentos").update(updatePayload).eq("id", id);
+    const { error } = await supabase
+      .from("lancamentos")
+      .update(updatePayload)
+      .eq("id", id);
 
-    console.log("Transação atualizada com sucesso!");
+    if (error) {
+      console.error("Erro ao atualizar a transação:", error);
+      return { success: false, message: "Erro ao atualizar a transação" };
+    }
+
     revalidatePath("/lancamentos");
+    return { success: true, message: "Transação atualizada com sucesso" };
   } catch (error) {
     console.error("Erro ao atualizar a transação:", error);
-    throw error;
+    return { success: false, message: "Erro ao atualizar a transação" };
   }
 }
 

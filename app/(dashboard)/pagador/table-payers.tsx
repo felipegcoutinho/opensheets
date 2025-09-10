@@ -62,11 +62,7 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
                     <RiVerifiedBadgeFill className="text-blue-500" size={16} />
                   )}
                   {item.is_auto_send && (
-                    <RiMailSendLine
-                      size={16}
-                      className="text-primary"
-                      title="Envio automático ativo"
-                    />
+                    <RiMailSendLine size={16} className="text-primary" aria-hidden />
                   )}
                 </div>
               </div>

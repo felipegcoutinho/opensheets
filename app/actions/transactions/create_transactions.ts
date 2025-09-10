@@ -16,7 +16,7 @@ import {
 } from "@/app/actions/emails/send_new_transactions";
 
 export async function createTransaction(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const rawData: TransactionFormData = {

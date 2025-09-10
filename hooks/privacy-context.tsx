@@ -1,10 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
-export const PrivacyContext = createContext({});
+type PrivacyContextValue = {
+  estado: boolean;
+  setEstado: (value: boolean) => void;
+};
 
-export function PrivacyProviderApp({ children }) {
+export const PrivacyContext = createContext<PrivacyContextValue | null>(null);
+
+export function PrivacyProviderApp({ children }: { children: ReactNode }) {
   const [estado, setEstado] = useState(false);
 
   return (
@@ -14,6 +19,8 @@ export function PrivacyProviderApp({ children }) {
   );
 }
 
-export function usePrivacy() {
-  return useContext(PrivacyContext);
+export function usePrivacy(): PrivacyContextValue {
+  const ctx = useContext(PrivacyContext);
+  if (!ctx) throw new Error("usePrivacy deve ser usado dentro de PrivacyProviderApp");
+  return ctx;
 }

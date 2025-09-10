@@ -22,12 +22,11 @@ export default async function CategoryTableSection({
 
   return (
     <TableTransaction
-      data={transacoes}
-      getAccount={contas}
-      getCards={cartoes}
-      getCategorias={categorias}
+      data={transacoes ?? []}
+      getAccount={contas ?? []}
+      getCards={cartoes ?? []}
+      getCategorias={categorias ?? []}
       hidden={false}
     />
   );
 }
-

@@ -319,7 +319,6 @@ export default function UpdateTransactions({
               </Label>
               <Select
                 name="conta_id"
-                placeholder="Selecione"
                 defaultValue={itemContaId.toString()}
                 required
               >
@@ -419,7 +418,7 @@ export default function UpdateTransactions({
                 <div
                   className="relative mt-2 h-16 w-full cursor-pointer overflow-hidden rounded"
                   onClick={handleRemoveImageTeste}
-                  disabled={removingImage}
+                  aria-disabled={removingImage}
                 >
                   <img
                     src={imagePreview}

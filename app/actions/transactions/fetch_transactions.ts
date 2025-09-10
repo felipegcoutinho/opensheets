@@ -1,7 +1,7 @@
 import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
 import { parse } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale/pt-BR";
 
 const { optionsMeses } = UseDates();
 
@@ -98,20 +98,21 @@ export async function getExpenseAggregations(month: string) {
   const supabase = createClient();
 
   // Usa agregações no banco para reduzir payload e latência
-  const [{ data: cond, error: e1 }, { data: pay, error: e2 }] = await Promise.all([
-    supabase
-      .from("lancamentos")
-      .select("condicao, valor.sum(), pagadores!inner(role)")
-      .eq("tipo_transacao", "despesa")
-      .eq("periodo", month)
-      .eq("pagadores.role", "principal"),
-    supabase
-      .from("lancamentos")
-      .select("forma_pagamento, valor.sum(), pagadores!inner(role)")
-      .eq("tipo_transacao", "despesa")
-      .eq("periodo", month)
-      .eq("pagadores.role", "principal"),
-  ]);
+  const [{ data: cond, error: e1 }, { data: pay, error: e2 }] =
+    await Promise.all([
+      supabase
+        .from("lancamentos")
+        .select("condicao, valor.sum(), pagadores!inner(role)")
+        .eq("tipo_transacao", "despesa")
+        .eq("periodo", month)
+        .eq("pagadores.role", "principal"),
+      supabase
+        .from("lancamentos")
+        .select("forma_pagamento, valor.sum(), pagadores!inner(role)")
+        .eq("tipo_transacao", "despesa")
+        .eq("periodo", month)
+        .eq("pagadores.role", "principal"),
+    ]);
 
   if (e1) throw e1;
   if (e2) throw e2;
@@ -152,7 +153,7 @@ export async function getRecentTransactions(month: string) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
+      "id, data_compra, tipo_transacao, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
     )
     .order("created_at", { ascending: false })
     .eq("pagadores.role", "principal")
@@ -206,7 +207,8 @@ export async function getPayerExpenseTotalsByPeriods(
 ) {
   const supabase = createClient();
 
-  if (!periods?.length || !payerId) return [] as { periodo: string; total: number }[];
+  if (!periods?.length || !payerId)
+    return [] as { periodo: string; total: number }[];
 
   const { data, error } = await supabase
     .from("lancamentos")

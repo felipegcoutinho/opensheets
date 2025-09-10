@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { NumericFormat } from "react-number-format";
+import { NumericFormat, type NumericFormatProps } from "react-number-format";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
@@ -19,11 +19,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   );
 }
 
-function MoneyInput({
-  className,
-  type,
-  ...props
-}: React.ComponentProps<"input">) {
+function MoneyInput({ className, ...props }: NumericFormatProps) {
   return (
     <NumericFormat
       required={true}
@@ -39,7 +35,6 @@ function MoneyInput({
         "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
         className,
       )}
-      type="text"
       {...props}
     />
   );

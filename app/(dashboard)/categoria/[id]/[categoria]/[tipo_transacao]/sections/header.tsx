@@ -31,7 +31,7 @@ export default async function CategoryHeaderSection({
           <CardTitle className="text-xl capitalize">{categoria}</CardTitle>
 
           <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
-            <Badge variant={tipo_transacao === "receita" ? "receita" : "despesa"}>
+            <Badge variant={tipo_transacao === "receita" ? "receita_lite" : "despesa_lite"}>
               {tipo_transacao}
             </Badge>
           </div>
@@ -49,4 +49,3 @@ export default async function CategoryHeaderSection({
     </Card>
   );
 }
-

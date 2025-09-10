@@ -18,8 +18,8 @@ interface Transaction {
   responsavel?: string;
   tipo_transacao?: string;
   valor: number;
-  categorias?: { nome?: string };
-  data_transacao: string; // Exemplo, adicione todos os campos relevantes
+  categorias?: any;
+  data_transacao?: string; // Exemplo, adicione todos os campos relevantes
   conta_id?: string | number;
   cartao_id?: string | number;
   // Adicione outras propriedades conforme necessário

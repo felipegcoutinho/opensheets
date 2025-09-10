@@ -7,8 +7,8 @@ import AccountCardGridFallback from "@/components/fallbacks/account-card-grid-fa
 import ActiveAccountsSection from "./sections/active-accounts";
 import InactiveAccountsSection from "./sections/inactive-accounts";
 
-async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
+async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
+  const month = await getMonth({ searchParams });
 
   return (
     <div className="w-full">

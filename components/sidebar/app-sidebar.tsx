@@ -46,7 +46,7 @@ export function AppSidebar({
   const data = NavLinks(month);
 
   return (
-    <Sidebar collapsible="sidebar" {...props} variant="sidebar">
+    <Sidebar collapsible="icon" {...props} variant="sidebar">
       <SidebarHeader className="pt-6 pb-5">
         <div className="flex justify-center">
           <Link href="/">
@@ -66,12 +66,7 @@ export function AppSidebar({
         </SidebarContent>
       </SidebarContent>
       <SidebarFooter className="border-border border-t">
-        <NavUser
-          username={username}
-          usermail={usermail}
-          user={data.user}
-          payerPrincipal={payerPrincipal}
-        />
+        <NavUser username={username} usermail={usermail} payerPrincipal={payerPrincipal} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

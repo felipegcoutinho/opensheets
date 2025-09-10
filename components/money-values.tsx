@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 type Props = {
   value: number;
   animated?: boolean;
+  className?: string;
 };
 
-function MoneyValues({ value, animated = true }: Props) {
+function MoneyValues({ value, animated = true, className }: Props) {
   const { estado } = usePrivacy();
 
   const isValidNumber =
@@ -41,10 +42,10 @@ function MoneyValues({ value, animated = true }: Props) {
 
   return (
     <span
-      className={`${money_values.className} font-normal tracking-tighter ${
+      className={`${money_values.className} tracking-tighter ${
         estado &&
         "blur-[6px] brightness-200 transition-all duration-200 hover:blur-none"
-      }`}
+      } ${className ?? ""}`}
     >
       {displayValue.toLocaleString("pt-BR", {
         style: "currency",

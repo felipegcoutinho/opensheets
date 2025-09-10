@@ -6,20 +6,23 @@ import TransactionTableFallback from "@/components/fallbacks/transaction-table-f
 import CategoryHeaderSection from "./sections/header";
 import CategoryTableSection from "./sections/table";
 
-export default async function page(props: {
-  params: {
-    month: string;
+export default async function page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{
     categoria: string;
     tipo_transacao: string;
     id: string;
-  };
+  }>;
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  const params = await props.params;
-  const month = await getMonth(props);
+  const month = await getMonth({ searchParams });
 
-  const categoriaId = decodeURIComponent(params.id);
-  const categoria = decodeURIComponent(params.categoria);
-  const tipoTransacao = decodeURIComponent(params.tipo_transacao);
+  const { id, categoria: categoriaRaw, tipo_transacao: tipoRaw } = await params;
+  const categoriaId = decodeURIComponent(id);
+  const categoria = decodeURIComponent(categoriaRaw);
+  const tipoTransacao = decodeURIComponent(tipoRaw);
 
   return (
     <>

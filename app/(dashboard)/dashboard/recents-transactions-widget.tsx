@@ -2,15 +2,11 @@ import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import { UseDates } from "@/hooks/use-dates";
+import UseStyles from "@/hooks/use-styles";
 
 function RecentesTransactions({ transactions }) {
-  function getLogo(item) {
-    const contaLogo = item.contas?.logo_image;
-    const cartaoLogo = item.cartoes?.logo_image;
-    return contaLogo ?? cartaoLogo;
-  }
-
   const { DateFormat } = UseDates();
+  const { getLogo } = UseStyles();
 
   if (!transactions.length) return <EmptyCard />;
 
@@ -29,16 +25,20 @@ function RecentesTransactions({ transactions }) {
             />
 
             <div className="flex flex-col items-start py-2">
-              <p>{item.descricao}</p>
-              <p className="text-muted-foreground text-xs">
+              {item.descricao}
+              <span className="text-muted-foreground text-xs">
                 {DateFormat(item.data_compra)}
-              </p>
+              </span>
             </div>
           </div>
 
-          <p>
-            <MoneyValues value={item.valor} />
-          </p>
+          <MoneyValues
+            value={
+              item.tipo_transacao === "despesa"
+                ? -Math.abs(item.valor)
+                : item.valor
+            }
+          />
         </div>
       ))}
     </div>

@@ -5,8 +5,8 @@ import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import Dashboard from "./dashboard";
 
-export default async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
+export default async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
+  const month = await getMonth({ searchParams });
 
   const [lancamentos, cartoes, categorias] = await Promise.all([
     getTransactionsRoleOwner(month),
@@ -20,8 +20,8 @@ export default async function page(props: { params: { month: string } }) {
       <Dashboard
         month={month}
         lancamentos={lancamentos}
-        cartoes={cartoes}
-        categorias={categorias}
+        cartoes={cartoes ?? []}
+        categorias={categorias ?? []}
       />
     </>
   );

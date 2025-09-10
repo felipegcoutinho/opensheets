@@ -18,7 +18,7 @@ import InstallmentsSection from "./sections/installments";
 export default async function Page(props: {
   searchParams?: { periodo?: string };
 }) {
-  const month = await getMonth(props as any);
+  const month = await getMonth(props);
 
   const widgetFallback = <WidgetCardFallback />;
   const kpiFallback = <KpiFallback />;

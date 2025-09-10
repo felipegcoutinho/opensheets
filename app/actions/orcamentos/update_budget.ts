@@ -18,7 +18,7 @@ function parseMoney(value: FormDataEntryValue | null) {
 }
 
 export async function updateBudget(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const rawData: BudgetFormData = {

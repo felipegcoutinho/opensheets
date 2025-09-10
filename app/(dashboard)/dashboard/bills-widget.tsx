@@ -54,7 +54,6 @@ export default async function BillsWidget({ month, data }) {
           valor={item.valor}
           id={item.id}
           status_pagamento={item.realizado}
-          dt_pagamento_boleto={item.dt_pagamento_boleto || null}
           data_vencimento={item.data_vencimento}
         />
       </div>

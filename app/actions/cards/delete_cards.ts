@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/cartao/modal/form-schema";
 
 export async function deleteCards(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");

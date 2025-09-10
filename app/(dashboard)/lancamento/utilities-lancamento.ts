@@ -20,7 +20,7 @@ export default function UtilitiesLancamento() {
   const [loading, setLoading] = useState(false);
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<File | null>(null);
   const [removingImage, setRemovingImage] = useState(false);
   const [formaPagamentoAtual, setFormaPagamentoAtual] = useState("");
 
@@ -69,8 +69,8 @@ export default function UtilitiesLancamento() {
       formData.delete("imagem_url");
     }
 
-    const valorFormatado = formData
-      .get("valor")
+    const valorRaw = String(formData.get("valor") ?? "");
+    const valorFormatado = valorRaw
       .replace(/[R$\.\s]/g, "")
       .replace(",", ".");
     formData.set("valor", valorFormatado);
@@ -84,7 +84,7 @@ export default function UtilitiesLancamento() {
     // Para boleto, isPaid é false, então 'realizado' será "false"
     formData.set("realizado", String(isPaid));
 
-    await createTransaction(null, formData);
+    await createTransaction({ success: false, message: "" }, formData);
     toast.success("Transação adicionada com sucesso!");
     setIsOpen(false);
     setLoading(false);
@@ -94,12 +94,12 @@ export default function UtilitiesLancamento() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
-    const condicao = formData.get("condicao");
+    const condicao = String(formData.get("condicao") ?? "");
     const forma_pagamento = String(formData.get("forma_pagamento") || "");
 
     if (condicao !== "parcelado") {
-      const valorFormatado = formData
-        .get("valor")
+      const valorRaw = String(formData.get("valor") ?? "");
+      const valorFormatado = valorRaw
         .replace(/[R$\.\s]/g, "")
         .replace(",", ".");
       formData.set("valor", valorFormatado);
@@ -109,7 +109,7 @@ export default function UtilitiesLancamento() {
     // Não enviar/alterar o campo 'realizado' aqui para não sobrescrever o status.
     formData.delete("realizado");
 
-    await updateTransaction(null, formData);
+    await updateTransaction({ success: false, message: "" }, formData);
     toast.success("Transação atualizada com sucesso!");
     setIsOpen(false);
     setLoading(false);
@@ -118,8 +118,8 @@ export default function UtilitiesLancamento() {
   const handleDelete = (itemId) => async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("excluir", itemId);
-    await deleteTransaction(null, formData);
+    formData.append("excluir", String(itemId));
+    await deleteTransaction({ success: false, message: "" }, formData);
     toast.success("Transação removida com sucesso!");
     setIsOpen(false);
   };
