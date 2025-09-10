@@ -12,9 +12,12 @@ type Props = {
   item: any;
   getAccountMap: any;
   mostrarLimites: boolean;
+  showDelete?: boolean;
 };
 
-export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
+import DeleteCard from "./modal/delete-cards";
+
+export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete = false }: Props) {
   return (
     <Card key={item.id} className="gap-2">
       <CardContent className="space-y-2">
@@ -87,6 +90,12 @@ export default function UiCard({ item, getAccountMap, mostrarLimites }: Props) {
         <Button className="p-0" variant="link">
           <Link href={`/cartao/${item.id}`}>ver fatura</Link>
         </Button>
+
+        {showDelete && (
+          <div className="ml-auto">
+            <DeleteCard itemId={item.id} />
+          </div>
+        )}
       </CardFooter>
     </Card>
   );

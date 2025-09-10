@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import UpdateCard from "../modal/update-accounts";
+import DeleteAccount from "../modal/delete-accounts";
 
 export default async function InactiveAccountsSection() {
   const contasInativas = await getAccountDisabled();
@@ -39,6 +40,7 @@ export default async function InactiveAccountsSection() {
                 <Link href={`/conta/${item.id}`}>extrato</Link>
               </Button>
               <UpdateCard item={item} />
+              <DeleteAccount itemId={item.id} />
             </div>
           </CardContent>
         </Card>
