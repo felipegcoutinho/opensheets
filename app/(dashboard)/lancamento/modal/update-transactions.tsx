@@ -262,7 +262,23 @@ export default function UpdateTransactions({
               Valor
               <Required />
             </Label>
-            <MoneyInput defaultValue={itemValor} name="valor" />
+
+            <div className="*:not-first:mt-2">
+              <div className="relative">
+                <MoneyInput
+                  className="peer ps-8 pe-12"
+                  id="valor"
+                  name="valor"
+                  defaultValue={itemValor}
+                />
+                <span className="text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm peer-disabled:opacity-50">
+                  R$
+                </span>
+                <span className="text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm peer-disabled:opacity-50">
+                  BRL
+                </span>
+              </div>
+            </div>
           </div>
 
           <div className="w-1/2" />

@@ -3,8 +3,8 @@ import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transac
 import MoneyValues from "@/components/money-values";
 import MonthPicker from "@/components/month-picker/month-picker";
 import PaymentMethodLogo from "@/components/payment-method-logo";
-import PayerHeaderSkeleton from "@/components/skeletons/payer-header-skeleton";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
+import PayerHeaderFallback from "@/components/fallbacks/payer-header-fallback";
+import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 import { getMonth } from "@/hooks/get-month";
 import { RiBankCardLine, RiBarcodeLine, RiPixLine } from "@remixicon/react";
 import { Suspense } from "react";
@@ -78,7 +78,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
       <MonthPicker />
 
-      <Suspense fallback={<PayerHeaderSkeleton />}>
+      <Suspense fallback={<PayerHeaderFallback />}>
         <PayerHeaderSection id={id} month={month} />
       </Suspense>
 
@@ -180,7 +180,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
       {/* Tabela de transações */}
       <div>
-        <Suspense fallback={<TableSkeleton rows={10} />}>
+        <Suspense fallback={<TransactionTableFallback rows={10} />}>
           <PayerTableSection id={id} month={month} />
         </Suspense>
       </div>

@@ -1,34 +1,32 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { KpiFallback, WidgetCardFallback } from "@/components/fallbacks/widget-fallback";
 
 export default function Loading() {
   return (
     <>
-      {/* SummaryWidget Skeletons */}
-      <div className="mt-4 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-        {[...Array(4)].map((_, index) => (
-          <Skeleton key={index} className="h-24 w-full rounded-lg" />
-        ))}
+      {/* KPIs com micro-skeleton */}
+      <div className="mt-4">
+        <KpiFallback />
       </div>
 
-      {/* Chart + Faturas + Boletos */}
+      {/* Chart + Faturas + Boletos (cards) */}
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-3">
-        <Skeleton className="h-64 w-full rounded-lg" />
-        <Skeleton className="h-64 w-full rounded-lg" />
-        <Skeleton className="h-64 w-full rounded-lg" />
+        <WidgetCardFallback />
+        <WidgetCardFallback />
+        <WidgetCardFallback />
       </div>
 
       {/* Lançamentos Recentes + Resumo do Mês */}
       <div className="mt-2 grid gap-2 md:grid-cols-1 lg:grid-cols-2">
-        <Skeleton className="h-64 w-full rounded-lg" />
-        <Skeleton className="h-64 w-full rounded-lg" />
+        <WidgetCardFallback />
+        <WidgetCardFallback />
       </div>
 
       {/* ConditionList + PaymentList + Categorias */}
       <div className="my-2 mb-10 grid gap-2 md:grid-cols-2 lg:grid-cols-2">
-        <Skeleton className="h-48 w-full rounded-lg" />
-        <Skeleton className="h-48 w-full rounded-lg" />
-        <Skeleton className="h-64 w-full rounded-lg" />
-        <Skeleton className="h-64 w-full rounded-lg" />
+        <WidgetCardFallback />
+        <WidgetCardFallback />
+        <WidgetCardFallback />
+        <WidgetCardFallback />
       </div>
     </>
   );

@@ -25,21 +25,21 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <PrivacyProviderApp>
-            <Providers>
+        <Providers>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <PrivacyProviderApp>
               <main>{children}</main>
-            </Providers>
-          </PrivacyProviderApp>
+            </PrivacyProviderApp>
 
-          <Analytics />
-          <Toaster position="top-right" duration={2500} />
-          <Script
-            defer
-            src="https://umami.felipecoutinho.com/script.js"
-            data-website-id="3cba1a07-5733-4532-abcb-0e1bfc7a5b30"
-          />
-        </ThemeProvider>
+            <Analytics />
+            <Toaster position="top-right" duration={2500} />
+            <Script
+              defer
+              src="https://umami.felipecoutinho.com/script.js"
+              data-website-id="3cba1a07-5733-4532-abcb-0e1bfc7a5b30"
+            />
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

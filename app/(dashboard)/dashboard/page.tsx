@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { WidgetCardFallback, KpiFallback } from "@/components/fallbacks/widget-fallback";
 import { getMonth } from "@/hooks/get-month";
 import { Suspense } from "react";
 import AccountsSection from "./sections/accounts";
@@ -20,8 +20,8 @@ export default async function Page(props: {
 }) {
   const month = await getMonth(props as any);
 
-  const widgetFallback = <Skeleton className="h-64 w-full" />;
-  const kpiFallback = <Skeleton className="h-32 w-full" />;
+  const widgetFallback = <WidgetCardFallback />;
+  const kpiFallback = <KpiFallback />;
 
   return (
     <section>

@@ -210,6 +210,18 @@ section[id] {
 
 /* Hero/banner clean: branco com acentos sutis (sem lilás pesado) */
 @layer utilities {
+  /* Tokens de tamanho para skeletons */
+  :root {
+    --sk-text-xs: 3rem;   /* 48px */
+    --sk-text-sm: 6rem;   /* 96px */
+    --sk-text-md: 8rem;   /* 128px */
+    --sk-text-lg: 12rem;  /* 192px */
+    --sk-number: 5rem;    /* 80px */
+    --sk-chip: 5rem;      /* 80px */
+    --sk-btn: 6rem;       /* 96px */
+    --sk-avatar-sm: 20px;
+    --sk-avatar-md: 32px;
+  }
   /* Base de skeleton com melhor perfomance */
   .skeleton {
     background-color: var(--secondary);

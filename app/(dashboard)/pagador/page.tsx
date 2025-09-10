@@ -1,6 +1,6 @@
 import CreatePayer from "./modal/create-payer";
 import { Suspense } from "react";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
+import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 import PayersSection from "./sections/payers";
 import { promises as fs } from "fs";
 import path from "path";
@@ -20,7 +20,7 @@ async function page() {
   return (
     <div className="my-4">
       <CreatePayer avatars={avatars} />
-      <Suspense fallback={<TableSkeleton rows={10} /> } >
+      <Suspense fallback={<TransactionTableFallback rows={10} /> } >
         <PayersSection />
       </Suspense>
     </div>

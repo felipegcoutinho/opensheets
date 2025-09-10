@@ -1,20 +1,16 @@
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Suspense } from "react";
-import CardGridSkeleton from "@/components/skeletons/card-grid-skeleton";
+import AccountCardGridFallback from "@/components/fallbacks/account-card-grid-fallback";
 import CreateCardSection from "./sections/create-card";
 import ActiveCardsSection from "./sections/active-cards";
 import InactiveCardsSection from "./sections/inactive-cards";
 
 export default async function page() {
-  const fallback = <CardGridSkeleton count={6} />;
+  const fallback = <AccountCardGridFallback count={6} />;
   return (
     <div className="mb-4 w-full">
-      <Suspense
-        fallback={<div className="bg-accent h-10 w-64 animate-pulse rounded" />}
-      >
-        <CreateCardSection />
-      </Suspense>
+      <CreateCardSection />
 
       <Tabs defaultValue="ativos">
         <TabsList className="mb-2">

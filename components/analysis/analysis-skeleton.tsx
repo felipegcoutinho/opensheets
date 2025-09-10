@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { TextSkeleton, TitleSkeleton, RowItemSkeleton } from "@/components/ui/micro-skeletons";
 
 export function AnalysisSkeleton({ month }: { month: string }) {
   return (
@@ -14,15 +14,30 @@ export function AnalysisSkeleton({ month }: { month: string }) {
           {month}.
         </p>
       </CardHeader>
-      <CardContent className="space-y-3 p-0">
-        <Skeleton className="h-6 w-1/3" />
-        <Skeleton className="h-24 w-full" />
-        <Skeleton className="h-6 w-1/3" />
-        <Skeleton className="h-24 w-full" />
-        <Skeleton className="h-6 w-1/3" />
-        <Skeleton className="h-24 w-full" />
-        <Skeleton className="h-6 w-1/3" />
-        <Skeleton className="h-24 w-full" />
+      <CardContent className="space-y-4 p-0">
+        <div>
+          <TitleSkeleton className="w-40" />
+          <div className="mt-2 space-y-2">
+            <RowItemSkeleton />
+            <RowItemSkeleton />
+            <RowItemSkeleton />
+          </div>
+        </div>
+        <div>
+          <TitleSkeleton className="w-48" />
+          <div className="mt-2 space-y-2">
+            <TextSkeleton className="w-full" />
+            <TextSkeleton className="w-3/4" />
+            <TextSkeleton className="w-5/6" />
+          </div>
+        </div>
+        <div>
+          <TitleSkeleton className="w-44" />
+          <div className="mt-2 space-y-2">
+            <RowItemSkeleton />
+            <RowItemSkeleton />
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

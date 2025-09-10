@@ -3,14 +3,9 @@ import { getInvoiceList } from "@/app/actions/invoices/fetch_invoices";
 import { getBudgets } from "@/app/actions/orcamentos/fetch_budgets";
 import {
   getBills,
-  getExpense,
   getExpenseAggregations,
   getFinancialSummaryForPeriod,
-  getIncome,
-  getPaidExpense,
   getRecentTransactions,
-  getSumPaidExpense,
-  getSumPaidIncome,
   getTransactionsByCategory,
   getIncomeExpenseByPeriods,
   getSumPaidByType,
@@ -25,7 +20,6 @@ type FetchAllDataReturn = {
   expenses: number | null;
   expensesAnterior: number | null;
   bills: any;
-  expensePaid: any;
   conditions: any;
   payment: any;
   transactionsByCategory: any;
@@ -48,8 +42,8 @@ export const fetchAllData = cache(
 
     const aggPromise = getExpenseAggregations(month);
 
-    const incExpAgg = getIncomeExpenseByPeriods([month, previousMonth])
-    const paidAgg = getSumPaidByType(month)
+    const incExpAgg = getIncomeExpenseByPeriods([month, previousMonth]);
+    const paidAgg = getSumPaidByType(month);
 
     const fetchMap: Record<keyof FetchAllDataReturn, Promise<any>> = {
       incomes: incExpAgg.then((r) => r.find((x) => x.periodo === month)?.incomes ?? 0),
@@ -57,7 +51,6 @@ export const fetchAllData = cache(
       expenses: incExpAgg.then((r) => r.find((x) => x.periodo === month)?.expenses ?? 0),
       expensesAnterior: incExpAgg.then((r) => r.find((x) => x.periodo === previousMonth)?.expenses ?? 0),
       bills: getBills(month),
-      expensePaid: getPaidExpense(month),
       conditions: aggPromise.then((r) => r.conditions),
       payment: aggPromise.then((r) => r.payments),
       transactionsByCategory: getTransactionsByCategory(month),

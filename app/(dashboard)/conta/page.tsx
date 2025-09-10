@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getMonth } from "@/hooks/get-month";
 import CreateAccount from "./modal/create-accounts";
 import { Suspense } from "react";
-import AccountCardGridSkeleton from "@/components/skeletons/account-card-grid-skeleton";
+import AccountCardGridFallback from "@/components/fallbacks/account-card-grid-fallback";
 import ActiveAccountsSection from "./sections/active-accounts";
 import InactiveAccountsSection from "./sections/inactive-accounts";
 
@@ -25,13 +25,13 @@ async function page(props: { params: { month: string } }) {
         </TabsList>
 
         <TabsContent value="ativas">
-          <Suspense fallback={<AccountCardGridSkeleton count={6} />}>
+          <Suspense fallback={<AccountCardGridFallback count={6} />}>
             <ActiveAccountsSection month={month} />
           </Suspense>
         </TabsContent>
 
         <TabsContent value="inativas">
-          <Suspense fallback={<AccountCardGridSkeleton count={6} />}>
+          <Suspense fallback={<AccountCardGridFallback count={6} />}>
             <InactiveAccountsSection />
           </Suspense>
         </TabsContent>

@@ -1,8 +1,8 @@
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import { Suspense } from "react";
-import HeaderCardSkeleton from "@/components/skeletons/header-card-skeleton";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
+import CardHeaderFallback from "@/components/fallbacks/card-header-fallback";
+import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 import CategoryHeaderSection from "./sections/header";
 import CategoryTableSection from "./sections/table";
 
@@ -25,7 +25,7 @@ export default async function page(props: {
     <>
       <MonthPicker />
       <div className="mb-4 space-y-6">
-        <Suspense fallback={<HeaderCardSkeleton />}>
+        <Suspense fallback={<CardHeaderFallback />}>
           <CategoryHeaderSection
             id={categoriaId}
             categoria={categoria}
@@ -34,7 +34,7 @@ export default async function page(props: {
           />
         </Suspense>
 
-        <Suspense fallback={<TableSkeleton rows={10} />}>
+        <Suspense fallback={<TransactionTableFallback rows={10} />}>
           <CategoryTableSection
             month={month}
             categoria={categoria}

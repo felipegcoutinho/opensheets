@@ -43,7 +43,7 @@ import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpFill } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 
 const fetchJSON = async (url: string) => {
@@ -117,6 +117,7 @@ export default function CreateTransactions({
     queryKey: ["descriptions", month],
     queryFn: () => fetchJSON(`/api/descriptions?month=${month}`),
     staleTime: 1000 * 60, // 1 min
+    enabled: isOpen,
   });
 
   const {
@@ -127,6 +128,7 @@ export default function CreateTransactions({
     queryKey: ["payers"],
     queryFn: () => fetchJSON(`/api/pagadores`),
     staleTime: 1000 * 60,
+    enabled: isOpen,
   });
 
   const descricaoOptions = descData?.data || [];
@@ -360,12 +362,22 @@ export default function CreateTransactions({
                 <Label htmlFor="valor">
                   Valor <Required />
                 </Label>
-                <MoneyInput
-                  id="valor"
-                  name="valor"
-                  placeholder="R$ 0,00"
-                  required
-                />
+                <div className="*:not-first:mt-2">
+                  <div className="relative">
+                    <MoneyInput
+                      className="peer ps-8 pe-12"
+                      id="valor"
+                      name="valor"
+                      placeholder="0.00"
+                    />
+                    <span className="text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm peer-disabled:opacity-50">
+                      R$
+                    </span>
+                    <span className="text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm peer-disabled:opacity-50">
+                      BRL
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -462,7 +474,7 @@ export default function CreateTransactions({
                   <Select name="segundo_pagador_id">
                     <SelectTrigger
                       id="segundo_pagador_id"
-                      className="w-full capitalize"
+                      className="w-full py-6 capitalize"
                     >
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>

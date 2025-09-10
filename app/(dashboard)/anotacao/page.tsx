@@ -3,7 +3,7 @@ import { getMonth } from "@/hooks/get-month";
 import CreateNotes from "./modal/create-notes";
 import { Suspense } from "react";
 import NotesList from "./ui-notes-list";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
+import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 
 export default async function page(props: { params: { month: string } }) {
   const month = await getMonth(props);
@@ -15,7 +15,7 @@ export default async function page(props: { params: { month: string } }) {
         </Button>
       </CreateNotes>
 
-      <Suspense fallback={<TableSkeleton rows={8} /> } >
+      <Suspense fallback={<TransactionTableFallback rows={8} /> } >
         <NotesContent month={month} />
       </Suspense>
     </div>

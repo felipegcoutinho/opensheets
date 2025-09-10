@@ -1,7 +1,7 @@
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import { Suspense } from "react";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
+import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 import TransactionsTableSection from "./sections/table";
 
 export default async function page(props: { params: { month: string } }) {
@@ -10,7 +10,7 @@ export default async function page(props: { params: { month: string } }) {
   return (
     <>
       <MonthPicker />
-      <Suspense fallback={<TableSkeleton rows={10} />}>
+      <Suspense fallback={<TransactionTableFallback rows={10} />}>
         <TransactionsTableSection month={month} />
       </Suspense>
     </>
