@@ -46,7 +46,7 @@ export function AppSidebar({
   const data = NavLinks(month);
 
   return (
-    <Sidebar collapsible="icon" {...props} variant="sidebar">
+    <Sidebar collapsible="offcanvas" {...props} variant="sidebar">
       <SidebarHeader className="pt-6 pb-5">
         <div className="flex justify-center">
           <Link href="/">
