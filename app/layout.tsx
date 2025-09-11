@@ -21,8 +21,8 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
+      suppressHydrationWarning
       className={`${default_font.className} antialiased`}
-      
     >
       <body suppressHydrationWarning>
         <Providers>
