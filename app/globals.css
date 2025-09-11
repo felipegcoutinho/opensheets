@@ -20,7 +20,7 @@
   /* Marca e acentos (CTAs e destaques) */
   --primary: #00c670; /* indigo/azul da imagem */
   --primary-foreground: #ffffff;
-  --secondary: #e5f2e8; /* neutro claro azulado da imagem */
+  --secondary: #eaf4f2; /* neutro claro azulado da imagem */
   --secondary-foreground: #0b0f0d;
   --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
   --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
@@ -51,7 +51,7 @@
   --sidebar-foreground: #0b0f0d;
   --sidebar-primary: #00c670; /* CTA com a cor primária */
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e5f2e8; /* blocos sutis no tom da paleta */
+  --sidebar-accent: #eaf4f2; /* blocos sutis no tom da paleta */
   --sidebar-accent-foreground: #0b0f0d;
   --sidebar-border: #dbe0e6;
   --sidebar-ring: #00c670;

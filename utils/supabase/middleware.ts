@@ -12,6 +12,8 @@ export const updateSession = async (request: NextRequest) => {
     "/login/signup",
     "/login/reset",
     "/login/reset/update",
+    "/auth/confirm", // página pública para confirmar fluxos de e-mail/código
+    "/auth/confirm/complete",
   ]);
 
   try {

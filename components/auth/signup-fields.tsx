@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
-import { SubmitButton } from "@/components/submit-button";
+import { useMemo, useState } from "react";
 
 type Props = {
   pendingText?: string;
