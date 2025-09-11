@@ -122,40 +122,40 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     const values = new Set(
       data.map((item) => item.tipo_transacao).filter(Boolean),
     );
-    return Array.from(values as string[]);
+    return Array.from(values).filter(Boolean) as string[];
   }, [data]);
 
   const condicaoOptions = useMemo(() => {
     const values = new Set(data.map((item) => item.condicao).filter(Boolean));
-    return Array.from(values as string[]);
+    return Array.from(values).filter(Boolean) as string[];
   }, [data]);
 
   const formaPagamentoOptions = useMemo(() => {
     const values = new Set(
       data.map((item) => item.forma_pagamento).filter(Boolean),
     );
-    return Array.from(values as string[]);
+    return Array.from(values).filter(Boolean) as string[];
   }, [data]);
 
   const responsavelOptions = useMemo(() => {
     const values = new Set(
       data.map((item) => item.pagadores?.nome).filter(Boolean),
     );
-    return Array.from(values as string[]);
+    return Array.from(values).filter(Boolean) as string[];
   }, [data]);
 
   const categoriaOptions = useMemo(() => {
     const values = new Set(
       data.map((item) => item.categorias?.nome).filter(Boolean),
     );
-    return Array.from(values as string[]);
+    return Array.from(values).filter(Boolean) as string[];
   }, [data]);
 
   const contaCartaoOptions = useMemo(() => {
     const values = new Set(
       data.map((item) => getDescricao(item)).filter(Boolean),
     );
-    return Array.from(values as string[]);
+    return Array.from(values).filter(Boolean) as string[];
   }, [data, getDescricao]);
 
   const getColumnFilterValue = (columnId: string) => {

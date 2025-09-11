@@ -18,14 +18,17 @@ export default async function AjustesPage() {
         <TabsTrigger value="password">Alterar senha</TabsTrigger>
         <TabsTrigger value="email">Alterar e-mail</TabsTrigger>
         <TabsTrigger value="feedback">Feedback</TabsTrigger>
-        <TabsTrigger value="delete"><span  className="text-red-500">Deletar conta</span></TabsTrigger>
+        <TabsTrigger value="delete">
+          <span className="text-red-500">Deletar conta</span>
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="name">
         <div className="max-w-xl space-y-4">
           <div className="space-y-2">
             <h3 className="text-lg font-semibold">Alterar nome</h3>
             <p className="text-muted-foreground text-sm">
-              Atualize como seu nome aparece no OpenSheets. Esse nome pode ser exibido em diferentes seções do app e em comunicações.
+              Atualize como seu nome aparece no OpenSheets. Esse nome pode ser
+              exibido em diferentes seções do app e em comunicações.
             </p>
           </div>
           <UpdateNameForm defaultName={name ?? ""} />
@@ -48,7 +51,9 @@ export default async function AjustesPage() {
           <div className="space-y-2">
             <h3 className="text-lg font-semibold">Alterar e-mail</h3>
             <p className="text-muted-foreground text-sm">
-              Atualize o e-mail associado à sua conta. Você precisará confirmar os links enviados para o novo e também para o e-mail atual (quando aplicável) para concluir a alteração.
+              Atualize o e-mail associado à sua conta. Você precisará confirmar
+              os links enviados para o novo e também para o e-mail atual (quando
+              aplicável) para concluir a alteração.
             </p>
           </div>
           <UpdateEmailForm defaultEmail={email ?? ""} />

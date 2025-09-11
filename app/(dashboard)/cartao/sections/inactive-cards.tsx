@@ -19,6 +19,7 @@ export default async function InactiveCardsSection() {
           item={item}
           getAccountMap={getAccountMap}
           mostrarLimites={false}
+          showDelete
         />
       ))}
     </div>

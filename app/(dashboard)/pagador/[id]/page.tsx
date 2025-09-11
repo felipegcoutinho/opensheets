@@ -3,11 +3,8 @@ import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transac
 import MoneyValues from "@/components/money-values";
 import MonthPicker from "@/components/month-picker/month-picker";
 import PaymentMethodLogo from "@/components/payment-method-logo";
-import PayerHeaderSkeleton from "@/components/skeletons/payer-header-skeleton";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
 import { getMonth } from "@/hooks/get-month";
 import { RiBankCardLine, RiBarcodeLine, RiPixLine } from "@remixicon/react";
-import { Suspense } from "react";
 import PayerHeaderSection from "./sections/header";
 import PayerTableSection from "./sections/table";
 
@@ -37,7 +34,12 @@ export default async function Page({ searchParams, params }: PageProps) {
     getPayersName(id),
   ]);
 
-  const list: Transaction[] = Array.isArray(transactions) ? transactions : [];
+  const rawList = Array.isArray(transactions) ? transactions : [];
+  const list: Transaction[] = rawList.map((t: any) => ({
+    ...t,
+    cartoes: Array.isArray(t?.cartoes) ? t.cartoes[0] : t.cartoes,
+    contas: Array.isArray(t?.contas) ? t.contas[0] : t.contas,
+  }));
 
   // Agregações
   const { items: cardsSummary, total: cardsTotal } = aggregateByCard(list);
@@ -78,9 +80,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
       <MonthPicker />
 
-      <Suspense fallback={<PayerHeaderSkeleton />}>
-        <PayerHeaderSection id={id} month={month} />
-      </Suspense>
+      <PayerHeaderSection id={id} month={month} />
 
       {/* Resumos */}
       <div className="grid gap-3 md:grid-cols-3">
@@ -180,9 +180,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
       {/* Tabela de transações */}
       <div>
-        <Suspense fallback={<TableSkeleton rows={10} />}>
-          <PayerTableSection id={id} month={month} />
-        </Suspense>
+        <PayerTableSection id={id} month={month} />
       </div>
     </section>
   );

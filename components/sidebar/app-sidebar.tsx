@@ -7,15 +7,13 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  SidebarInput,
 } from "@/components/ui/sidebar";
 import { UseDates } from "@/hooks/use-dates";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import Logo from "../logo";
 import { NavLinks } from "./nav-links";
-import { Separator } from "../ui/separator";
-import Link from "next/link";
 
 type PayerPrincipal =
   | { id: string; nome: string; role: string; foto?: string | null }
@@ -46,7 +44,7 @@ export function AppSidebar({
   const data = NavLinks(month);
 
   return (
-    <Sidebar collapsible="sidebar" {...props} variant="sidebar">
+    <Sidebar collapsible="offcanvas" {...props} variant="sidebar">
       <SidebarHeader className="pt-6 pb-5">
         <div className="flex justify-center">
           <Link href="/">
@@ -54,7 +52,7 @@ export function AppSidebar({
           </Link>
         </div>
       </SidebarHeader>
-      <Separator />
+      {/* <Separator /> */}
       <SidebarContent className="px-2">
         <SidebarContent>
           <NavProjects
@@ -69,7 +67,6 @@ export function AppSidebar({
         <NavUser
           username={username}
           usermail={usermail}
-          user={data.user}
           payerPrincipal={payerPrincipal}
         />
       </SidebarFooter>

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/anotacao/modal/form-schema";
 
 export async function deleteNote(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");

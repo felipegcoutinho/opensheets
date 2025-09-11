@@ -1,9 +1,31 @@
 import { getUserSession } from "@/app/actions/users/fetch_users";
+import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default async function Index() {
+export default async function Index({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
+
+  // Se vier de links de confirmação (code/message), redireciona para a tela dedicada
+  if (sp?.code || sp?.message || sp?.error || sp?.error_description) {
+    const params = new URLSearchParams();
+    if (typeof sp.code === "string") params.set("code", sp.code);
+    if (typeof sp.message === "string") params.set("message", sp.message);
+    if (typeof sp.error === "string") params.set("error", sp.error);
+    if (typeof sp.error_description === "string") params.set("error_description", sp.error_description);
+    // Se houver code, envia direto ao Route Handler que pode modificar cookies
+    if (params.get("code")) {
+      redirect(`/auth/confirm/complete?${params.toString()}`);
+    } else {
+      redirect(`/auth/confirm?${params.toString()}`);
+    }
+  }
+
   const session = await getUserSession();
   const isLoggedIn = Boolean((session as any)?.id);
 

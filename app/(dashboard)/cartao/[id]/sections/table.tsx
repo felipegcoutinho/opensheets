@@ -20,10 +20,10 @@ export default async function CardTableSection({
 
   return (
     <TableTransaction
-      data={cardInvoice}
-      getAccount={contas}
-      getCards={cards}
-      getCategorias={categorias}
+      data={cardInvoice ?? []}
+      getAccount={contas ?? []}
+      getCards={cards ?? []}
+      getCategorias={categorias ?? []}
       hidden={false}
     />
   );

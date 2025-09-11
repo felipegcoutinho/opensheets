@@ -35,7 +35,12 @@ export default async function PayerHeaderSection({
     getPayersName(id),
   ]);
 
-  const list: Transaction[] = Array.isArray(transactions) ? transactions : [];
+  const rawList = Array.isArray(transactions) ? transactions : [];
+  const list: Transaction[] = rawList.map((t: any) => ({
+    ...t,
+    cartoes: Array.isArray(t?.cartoes) ? t.cartoes[0] : t.cartoes,
+    contas: Array.isArray(t?.contas) ? t.contas[0] : t.contas,
+  }));
 
   const { items: cardsSummary, total: cardsTotal } = aggregateByCard(list);
   const { items: boletosSummary, total: boletosTotal } =
@@ -114,8 +119,7 @@ export default async function PayerHeaderSection({
               <RiMailSendLine
                 size={16}
                 className="text-primary"
-                title="Envio automático ativo"
-                aria-label="Envio automático de e-mail ativo"
+                aria-hidden
               />
             )}
           </div>

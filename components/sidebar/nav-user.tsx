@@ -21,17 +21,12 @@ import { ModeToggle } from "../darkmode-button";
 import PrivacyButton from "../privacy-button";
 
 export function NavUser({
-  user,
   username,
   usermail,
   payerPrincipal,
 }: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
   username: string;
+  usermail: string;
   payerPrincipal?: { id: string; nome: string; role: string; foto?: string | null } | null;
 }) {
   const { isMobile, open } = useSidebar();

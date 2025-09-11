@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import type { ActionResponse } from "./update_profile";
 
 export async function updateUserEmail(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const email = formData.get("email")?.toString().trim();

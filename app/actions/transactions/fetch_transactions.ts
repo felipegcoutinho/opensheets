@@ -1,7 +1,7 @@
 import { UseDates } from "@/hooks/use-dates";
 import { createClient } from "@/utils/supabase/server";
 import { parse } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale/pt-BR";
 
 const { optionsMeses } = UseDates();
 
@@ -97,38 +97,35 @@ export async function getPayment(month: string) {
 export async function getExpenseAggregations(month: string) {
   const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from("lancamentos")
-    .select("condicao, forma_pagamento, valor, pagadores!inner(role)")
-    .eq("tipo_transacao", "despesa")
-    .eq("periodo", month)
-    .eq("pagadores.role", "principal");
+  // Usa agregações no banco para reduzir payload e latência
+  const [{ data: cond, error: e1 }, { data: pay, error: e2 }] =
+    await Promise.all([
+      supabase
+        .from("lancamentos")
+        .select("condicao, valor.sum(), pagadores!inner(role)")
+        .eq("tipo_transacao", "despesa")
+        .eq("periodo", month)
+        .eq("pagadores.role", "principal"),
+      supabase
+        .from("lancamentos")
+        .select("forma_pagamento, valor.sum(), pagadores!inner(role)")
+        .eq("tipo_transacao", "despesa")
+        .eq("periodo", month)
+        .eq("pagadores.role", "principal"),
+    ]);
 
-  if (error) throw error;
+  if (e1) throw e1;
+  if (e2) throw e2;
 
-  // Agrega condições
-  const condMap = new Map<string, number>();
-  const payMap = new Map<string, number>();
-
-  (data || []).forEach((row: any) => {
-    const v = Number(row.valor) || 0;
-    const cond = String(row.condicao || "");
-    const form = String(row.forma_pagamento || "");
-    if (cond) condMap.set(cond, (condMap.get(cond) || 0) + v);
-    if (form) payMap.set(form, (payMap.get(form) || 0) + v);
-  });
-
-  const conditions = Array.from(condMap.entries()).map(([condicao, sum]) => ({
-    condicao,
-    sum,
+  const conditions = (cond || []).map((row: any) => ({
+    condicao: String(row.condicao || ""),
+    sum: Number((row as any).sum ?? (row as any).valor) || 0,
   }));
 
-  const payments = Array.from(payMap.entries()).map(
-    ([forma_pagamento, sum]) => ({
-      forma_pagamento,
-      sum,
-    }),
-  );
+  const payments = (pay || []).map((row: any) => ({
+    forma_pagamento: String(row.forma_pagamento || ""),
+    sum: Number((row as any).sum ?? (row as any).valor) || 0,
+  }));
 
   return { conditions, payments };
 }
@@ -142,7 +139,8 @@ export async function getTransactionsByCategory(month: string) {
       `id, data_compra, descricao, valor, tipo_transacao, categoria:categoria_id (id, nome, icone ), pagadores!inner(role)`,
     )
     .eq("periodo", month)
-    .eq("pagadores.role", "principal");
+    .eq("pagadores.role", "principal")
+    .eq("tipo_transacao", "despesa");
 
   if (error) throw error;
 
@@ -155,7 +153,7 @@ export async function getRecentTransactions(month: string) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
+      "id, data_compra, tipo_transacao, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
     )
     .order("created_at", { ascending: false })
     .eq("pagadores.role", "principal")
@@ -209,7 +207,8 @@ export async function getPayerExpenseTotalsByPeriods(
 ) {
   const supabase = createClient();
 
-  if (!periods?.length || !payerId) return [] as { periodo: string; total: number }[];
+  if (!periods?.length || !payerId)
+    return [] as { periodo: string; total: number }[];
 
   const { data, error } = await supabase
     .from("lancamentos")
@@ -508,7 +507,7 @@ export async function getLimitesCartao(
 }
 
 // Busca as Lançamentos de uma conta bancária específica na tabela transacoes
-export async function getAccountInvoice(month: string, conta_id: number) {
+export async function getAccountInvoice(month: string, conta_id: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
@@ -517,7 +516,6 @@ export async function getAccountInvoice(month: string, conta_id: number) {
       "id, data_compra, data_vencimento, dt_pagamento_boleto, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)",
     )
     .eq("periodo", month)
-    .eq("realizado", true)
     .eq("conta_id", conta_id)
     .in("pagadores.role", ["principal", "sistema"]);
 

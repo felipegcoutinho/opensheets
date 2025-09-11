@@ -23,9 +23,9 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
     <div>
       <div className="mb-1 flex items-center justify-between">
         <h1 className="text-muted-foreground mb-1 text-sm">{title}</h1>
-        <p className="text-xl font-bold">
+        <span className="text-xl">
           <MoneyValues value={total} />
-        </p>
+        </span>
       </div>
 
       {/* Barra de progresso */}
@@ -55,9 +55,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
                 <RiHourglass2Fill className="mr-1 h-3 w-3 text-zinc-400" />
               )}
 
-              <span className="font-bold">
-                <MoneyValues value={value.amount} />
-              </span>
+              <MoneyValues value={value.amount} />
               <span className="text-muted-foreground ml-1">{value.label}</span>
             </div>
           );

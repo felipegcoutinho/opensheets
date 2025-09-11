@@ -7,7 +7,7 @@ export default function CardStatusIndicator({
   fatura_status,
   vencimento,
 }: {
-  fatura_status: any[];
+  fatura_status: any[] | null;
   vencimento?: number;
 }) {
   const pago = Array.isArray(fatura_status)

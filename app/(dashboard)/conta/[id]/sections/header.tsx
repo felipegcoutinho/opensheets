@@ -31,4 +31,3 @@ export default async function AccountHeaderSection({ id, month }: { id: string; 
     />
   );
 }
-

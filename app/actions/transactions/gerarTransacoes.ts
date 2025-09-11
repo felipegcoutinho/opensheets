@@ -1,5 +1,5 @@
 import { addMonths, format } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale/pt-BR";
 import { DadosFormulario } from "./parseFormData";
 
 interface Transacao {
@@ -65,7 +65,7 @@ export function gerarTransacoes(
   ) {
     transacoes.push({
       data_compra: dados.dataCompra,
-      data_vencimento: vencimento,
+      data_vencimento: vencimento ?? null,
       descricao: dados.descricao,
       tipo_transacao: dados.tipo_transacao,
       periodo: periodo || dados.periodo,
@@ -77,7 +77,7 @@ export function gerarTransacoes(
       pagador_id: pagador_id || null,
       valor,
       qtde_parcela: dados.parcelas > 1 ? dados.parcelas : null,
-      parcela_atual: parcela,
+      parcela_atual: parcela ?? null,
       qtde_recorrencia:
         dados.condicao === "recorrente" && dados.recorrencias > 1
           ? dados.recorrencias

@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import type { ActionResponse } from "./update_profile";
 
 export async function updateUserPassword(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const password = formData.get("password")?.toString();
@@ -33,4 +33,3 @@ export async function updateUserPassword(
 
   return { success: true, message: "Senha atualizada com sucesso!" };
 }
-

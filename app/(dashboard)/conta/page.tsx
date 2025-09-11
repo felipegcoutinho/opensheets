@@ -2,13 +2,11 @@ import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getMonth } from "@/hooks/get-month";
 import CreateAccount from "./modal/create-accounts";
-import { Suspense } from "react";
-import AccountCardGridSkeleton from "@/components/skeletons/account-card-grid-skeleton";
 import ActiveAccountsSection from "./sections/active-accounts";
 import InactiveAccountsSection from "./sections/inactive-accounts";
 
-async function page(props: { params: { month: string } }) {
-  const month = await getMonth(props);
+async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
+  const month = await getMonth({ searchParams });
 
   return (
     <div className="w-full">
@@ -25,15 +23,11 @@ async function page(props: { params: { month: string } }) {
         </TabsList>
 
         <TabsContent value="ativas">
-          <Suspense fallback={<AccountCardGridSkeleton count={6} />}>
-            <ActiveAccountsSection month={month} />
-          </Suspense>
+          <ActiveAccountsSection month={month} />
         </TabsContent>
 
         <TabsContent value="inativas">
-          <Suspense fallback={<AccountCardGridSkeleton count={6} />}>
-            <InactiveAccountsSection />
-          </Suspense>
+          <InactiveAccountsSection />
         </TabsContent>
       </Tabs>
     </div>

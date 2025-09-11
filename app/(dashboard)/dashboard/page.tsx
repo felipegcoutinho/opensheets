@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { getMonth } from "@/hooks/get-month";
 import { Suspense } from "react";
+import Loading from "./loading";
 import AccountsSection from "./sections/accounts";
 import BillsSection from "./sections/bills";
 import CategoriesDespesaSection from "./sections/categories-despesa";
@@ -18,64 +18,37 @@ import InstallmentsSection from "./sections/installments";
 export default async function Page(props: {
   searchParams?: { periodo?: string };
 }) {
-  const month = await getMonth(props as any);
-
-  const widgetFallback = <Skeleton className="h-64 w-full" />;
-  const kpiFallback = <Skeleton className="h-32 w-full" />;
+  const month = await getMonth(props);
 
   return (
-    <section>
-      <Suspense fallback={kpiFallback}>
+    <Suspense fallback={<Loading />}>
+      <section>
         <KpisSection month={month} />
-      </Suspense>
 
-      <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
-        <Suspense fallback={widgetFallback}>
+        <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
           <AccountsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <InvoicesSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <BillsSection month={month} />
-        </Suspense>
-      </div>
+        </div>
 
-      <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
-        <Suspense fallback={widgetFallback}>
+        <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
           <RecentSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <StatusSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <ChartSection month={month} />
-        </Suspense>
-      </div>
+        </div>
 
-      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
-        <Suspense fallback={widgetFallback}>
+        <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
           <ConditionsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <PaymentFormsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <InstallmentsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <CategoryPurchasesSection month={month} />
-        </Suspense>
-      </div>
+        </div>
 
-      <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
-        <Suspense fallback={widgetFallback}>
+        <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
           <CategoriesReceitaSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
           <CategoriesDespesaSection month={month} />
-        </Suspense>
-      </div>
-    </section>
+        </div>
+      </section>
+    </Suspense>
   );
 }

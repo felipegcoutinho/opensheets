@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/conta/modal/form-schema";
 
 export async function deleteAccount(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");

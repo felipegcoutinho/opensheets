@@ -55,9 +55,12 @@ export function UseDates() {
   // Formata o mês atual no formato "Mês-Ano"
   const formatted_current_month = `${currentMonthName}-${currentYear}`;
 
-  function DateFormat(dateString) {
+  function DateFormat(dateString: string) {
     const [year, month, day] = dateString.split("-");
-    const date = new Date(year, month - 1, day);
+    const y = parseInt(year, 10);
+    const m = parseInt(month, 10);
+    const d = parseInt(day, 10);
+    const date = new Date(y, m - 1, d);
     return new Intl.DateTimeFormat("pt-BR", {
       weekday: "short",
       day: "2-digit",
@@ -68,7 +71,7 @@ export function UseDates() {
       .replace(" de", "");
   }
 
-  function friendlyDate(date) {
+  function friendlyDate(date: Date) {
     const dayOfWeek = diasDaSemana[date.getDay()];
     const day = date.getDate();
     const month = optionsMeses[date.getMonth()];
@@ -87,14 +90,14 @@ export function UseDates() {
     return greeting;
   }
 
-  const getPreviousMonth = (currentMonth) => {
+  const getPreviousMonth = (currentMonth: string) => {
     const [monthName, year] = currentMonth.split("-");
     const monthIndex = optionsMeses.findIndex(
       (m) => m.toLowerCase() === monthName.toLowerCase(),
     );
 
     // Cria a data com o mês atual e ano fornecido
-    const date = new Date(year, monthIndex, 1);
+    const date = new Date(Number(year), monthIndex, 1);
 
     // Define a data para o mês anterior
     date.setMonth(date.getMonth() - 1);
@@ -111,7 +114,7 @@ export function UseDates() {
       (m) => m.toLowerCase() === monthName.toLowerCase(),
     );
 
-    const months = [];
+    const months: string[] = [];
 
     for (let i = 5; i >= 0; i--) {
       const date = new Date(Number(year), startIndex - i, 1);
@@ -124,7 +127,7 @@ export function UseDates() {
   };
 
   const getMonthOptions = () => {
-    const options = [];
+    const options: { value: string; label: string }[] = [];
     const currentDate = new Date();
 
     for (let i = -2; i <= 2; i++) {

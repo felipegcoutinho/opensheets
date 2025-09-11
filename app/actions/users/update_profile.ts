@@ -9,7 +9,7 @@ export type ActionResponse = {
 };
 
 export async function updateUserName(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const first_name = formData.get("first_name")?.toString().trim();

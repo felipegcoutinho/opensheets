@@ -17,8 +17,8 @@ async function page() {
 
   return (
     <AppSidebar
-      usermail={email}
-      username={name}
+      usermail={email ?? ""}
+      username={name ?? ""}
       payerPrincipal={principal}
       variant="sidebar"
       cartoes={cartoes}

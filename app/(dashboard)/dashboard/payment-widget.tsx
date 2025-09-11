@@ -4,7 +4,13 @@ import MoneyValues from "@/components/money-values";
 import { CardContent } from "@/components/ui/card";
 import UseStyles from "@/hooks/use-styles";
 
-export async function PaymentWidget({ month, data }: { month: string; data?: any[] }) {
+export async function PaymentWidget({
+  month,
+  data,
+}: {
+  month: string;
+  data?: any[];
+}) {
   const payment = data ?? (await getPayment(month));
 
   const dataSorted = payment?.sort((a, b) => {
@@ -30,7 +36,7 @@ export async function PaymentWidget({ month, data }: { month: string; data?: any
                   <span className="lowercase">{item.forma_pagamento}</span>
                 </span>
 
-                <MoneyValues value={item.sum} />
+                <MoneyValues value={-Math.abs(item.sum)} />
               </div>
             </div>
           </CardContent>

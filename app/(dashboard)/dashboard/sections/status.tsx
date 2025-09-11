@@ -8,7 +8,7 @@ export default async function StatusSection({ month }: { month: string }) {
   return (
     <Widget
       title="Status de Pagamento"
-      subtitle="Resumo de valores confirmados e pendentes"
+      subtitle="Valores confirmados e pendentes"
       information="Apenas transações do usuário"
       icon={
         <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">

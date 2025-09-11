@@ -17,7 +17,7 @@ export default async function ActiveAccountsSection({
 }: {
   month: string;
 }) {
-  const contasAtivas = (await getAccount()).filter(
+  const contasAtivas = (await getAccount() ?? []).filter(
     (item) => item.status === "ativo",
   );
 

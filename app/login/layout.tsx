@@ -11,7 +11,7 @@ export default function AuthenticationPage({ children }) {
   return (
     <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
       {/* Painel de marca/ilustração (esquerda) */}
-      <aside className="text-sidebar-foreground relative hidden flex-col overflow-hidden p-10 lg:flex">
+      <aside className="text-sidebar-foreground bg-secondary relative hidden flex-col overflow-hidden p-10 lg:flex">
         <div className="relative z-10 flex h-full flex-col">
           <div className="flex items-center gap-3">
             <Link href="/">

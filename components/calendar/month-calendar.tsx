@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { parse } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale/pt-BR";
 import { useMemo, useState } from "react";
 import PaymentMethodLogo from "../payment-method-logo";
 
@@ -271,8 +271,8 @@ export default function MonthCalendar({
                         url_name={`/logos/${c.logo_image}`}
                         width={14}
                         height={14}
+                        descricao={c?.descricao ?? "Cartão"}
                       />
-                      {c?.descricao ?? "Cartão"}
                     </li>
                   ))}
                   {(cardsByDay.get(cell.day) ?? []).length > 2 && (
@@ -328,8 +328,8 @@ export default function MonthCalendar({
                       className={cn(
                         "w-full truncate rounded-sm px-1 py-0.5 text-left text-xs",
                         t?.tipo_transacao === "receita"
-                          ? "bg-chart-1/15 text-chart-1 dark:bg-chart-1/25 dark:text-white"
-                          : "bg-chart-2/15 text-chart-2 dark:bg-chart-2/25 dark:text-white",
+                          ? "bg-income/15 text-income dark:bg-income/25 dark:text-white"
+                          : "bg-expense/15 text-expense dark:bg-expense/25 dark:text-white",
                       )}
                       title={`${t?.descricao ?? ""}`}
                     >
@@ -407,8 +407,8 @@ export default function MonthCalendar({
                             url_name={`/logos/${c.logo_image}`}
                             width={14}
                             height={14}
+                            descricao={c?.descricao ?? "Cartão"}
                           />
-                          {c?.descricao ?? "Cartão"}
                         </li>
                       ))}
                       {bills.map((b: AnyRecord, i: number) => (
@@ -440,8 +440,8 @@ export default function MonthCalendar({
                         className={cn(
                           "mr-2 inline-flex rounded px-1 py-0.5",
                           t?.tipo_transacao === "receita"
-                            ? "bg-chart-1/15 text-chart-1 dark:bg-chart-1/25 dark:text-white"
-                            : "bg-chart-2/15 text-chart-2 dark:bg-chart-2/25 dark:text-white",
+                            ? "bg-income/15 text-income dark:bg-income/25 dark:text-white"
+                            : "bg-expense/15 text-expense dark:bg-expense/25 dark:text-white",
                         )}
                       >
                         {t?.tipo_transacao ?? "—"}

@@ -9,7 +9,7 @@ import {
 } from "../../(dashboard)/categoria/modal/form-schema";
 
 export async function createCategory(
-  _prev: ActionResponse | null,
+  _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const rawData: CategoryFormData = {

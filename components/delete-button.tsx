@@ -47,11 +47,11 @@ export default function DeleteButton({
       )}
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Tem certeza que deseja remover ?</AlertDialogTitle>
+          <AlertDialogTitle>Remover definitivamente?</AlertDialogTitle>
           <AlertDialogDescription>
-            Isso não pode ser desfeito. Isso removerá
-            <strong> permanentemente</strong> seu conteúdo e removerá seus dados
-            de nossos servidores.
+            Atenção: ao remover, todos os dados relacionados a este item (conta,
+            cartão ou pagador) serão <strong>permanentemente</strong> excluídos
+            dos nossos servidores. Esta ação não pode ser desfeita.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex w-full gap-2">

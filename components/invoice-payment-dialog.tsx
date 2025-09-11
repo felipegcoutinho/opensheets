@@ -45,7 +45,7 @@ export default function InvoicePaymentDialog({
 
   const handlePayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await handlePaymentInvoices(e);
+    const response = (await handlePaymentInvoices(e)) as { success: boolean };
     if (response.success) {
       setPaymentStatus("success");
     } else {

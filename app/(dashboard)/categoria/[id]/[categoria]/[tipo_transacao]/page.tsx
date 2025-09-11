@@ -1,46 +1,42 @@
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
-import { Suspense } from "react";
-import HeaderCardSkeleton from "@/components/skeletons/header-card-skeleton";
-import TableSkeleton from "@/components/skeletons/table-skeleton";
 import CategoryHeaderSection from "./sections/header";
 import CategoryTableSection from "./sections/table";
 
-export default async function page(props: {
-  params: {
-    month: string;
+export default async function page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{
     categoria: string;
     tipo_transacao: string;
     id: string;
-  };
+  }>;
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  const params = await props.params;
-  const month = await getMonth(props);
+  const month = await getMonth({ searchParams });
 
-  const categoriaId = decodeURIComponent(params.id);
-  const categoria = decodeURIComponent(params.categoria);
-  const tipoTransacao = decodeURIComponent(params.tipo_transacao);
+  const { id, categoria: categoriaRaw, tipo_transacao: tipoRaw } = await params;
+  const categoriaId = decodeURIComponent(id);
+  const categoria = decodeURIComponent(categoriaRaw);
+  const tipoTransacao = decodeURIComponent(tipoRaw);
 
   return (
     <>
       <MonthPicker />
       <div className="mb-4 space-y-6">
-        <Suspense fallback={<HeaderCardSkeleton />}>
-          <CategoryHeaderSection
-            id={categoriaId}
-            categoria={categoria}
-            tipo_transacao={tipoTransacao}
-            month={month}
-          />
-        </Suspense>
+        <CategoryHeaderSection
+          id={categoriaId}
+          categoria={categoria}
+          tipo_transacao={tipoTransacao}
+          month={month}
+        />
 
-        <Suspense fallback={<TableSkeleton rows={10} />}>
-          <CategoryTableSection
-            month={month}
-            categoria={categoria}
-            tipo_transacao={tipoTransacao}
-          />
-        </Suspense>
+        <CategoryTableSection
+          month={month}
+          categoria={categoria}
+          tipo_transacao={tipoTransacao}
+        />
       </div>
     </>
   );

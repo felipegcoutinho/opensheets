@@ -146,7 +146,7 @@ export async function POST(req: Request) {
       messages: parsed.data.messages,
       // parâmetros opcionais para estabilidade
       temperature: 0.3,
-      maxTokens: 700,
+      maxOutputTokens: 700,
     });
 
     // Caminho feliz: objeto já validado

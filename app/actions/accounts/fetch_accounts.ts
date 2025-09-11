@@ -39,7 +39,7 @@ export async function getAccountDisabled() {
 }
 
 // Busca detalhes de uma conta bancária específica
-export async function getAccountDetails(id: number) {
+export async function getAccountDetails(id: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("contas")

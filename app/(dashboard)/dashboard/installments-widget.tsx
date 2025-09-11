@@ -64,8 +64,9 @@ export default async function InstallmentsWidget({ month }: Props) {
                     )}
                   </p>
                   <p className="text-muted-foreground mt-0.5 text-xs">
-                    Parcela {atual}/{qtde} • Restantes {restantes} • Termina em{" "}
-                    {terminaEm}
+                    Parcela {atual}/{qtde} •{" "}
+                    <span className="font-bold">Restantes {restantes}</span> •
+                    Termina em {terminaEm}
                   </p>
                 </div>
                 <div className="text-right">
