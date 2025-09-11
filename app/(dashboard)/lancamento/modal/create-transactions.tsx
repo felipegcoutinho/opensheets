@@ -43,7 +43,7 @@ import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiThumbUpFill } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 
 const fetchJSON = async (url: string) => {
@@ -172,8 +172,22 @@ export default function CreateTransactions({
   const [categoriaLabel, setCategoriaLabel] = useState<string | undefined>();
   const [openCategoria, setOpenCategoria] = useState(false);
 
+  // Ao fechar o modal, resetar categoria e pagador para o padrão
+  const onDialogOpenChange = (val: boolean) => {
+    handleDialogClose(val);
+    if (!val) {
+      // Reseta a categoria para o estado inicial (placeholder "Selecione")
+      setCategoriaId(undefined);
+      setCategoriaLabel(undefined);
+      setOpenCategoria(false);
+
+      // Reseta pagadores: volta para o padrão via useEffect (principal ou primeiro)
+      setSelectedPayer(undefined);
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={handleDialogClose}>
+    <Dialog open={isOpen} onOpenChange={onDialogOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
