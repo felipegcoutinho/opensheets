@@ -1,7 +1,6 @@
 "use client";
 import type { AnalysisInputPayload } from "@/components/analysis/analysis";
 import { AnalysisReport } from "@/components/analysis/analysis-report";
-import { AnalysisSkeleton } from "@/components/analysis/analysis-skeleton";
 import { AnalyzeButton } from "@/components/analysis/analyze-button";
 import EmptyCard from "@/components/empty-card";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,7 +38,11 @@ export default function Dashboard(props: AnalysisInputPayload) {
           </Card>
         )}
 
-        {loading && <AnalysisSkeleton month={props.month} />}
+        {loading && (
+          <Card>
+            <CardContent className="p-4 text-sm">Carregando análise…</CardContent>
+          </Card>
+        )}
 
         {analysis && <AnalysisReport analysis={analysis} month={props.month} />}
       </section>

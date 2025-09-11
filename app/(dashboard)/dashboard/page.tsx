@@ -1,6 +1,4 @@
-import { WidgetCardFallback, KpiFallback } from "@/components/fallbacks/widget-fallback";
 import { getMonth } from "@/hooks/get-month";
-import { Suspense } from "react";
 import AccountsSection from "./sections/accounts";
 import BillsSection from "./sections/bills";
 import CategoriesDespesaSection from "./sections/categories-despesa";
@@ -20,61 +18,32 @@ export default async function Page(props: {
 }) {
   const month = await getMonth(props);
 
-  const widgetFallback = <WidgetCardFallback />;
-  const kpiFallback = <KpiFallback />;
-
   return (
     <section>
-      <Suspense fallback={kpiFallback}>
-        <KpisSection month={month} />
-      </Suspense>
+      <KpisSection month={month} />
 
       <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
-        <Suspense fallback={widgetFallback}>
-          <AccountsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <InvoicesSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <BillsSection month={month} />
-        </Suspense>
+        <AccountsSection month={month} />
+        <InvoicesSection month={month} />
+        <BillsSection month={month} />
       </div>
 
       <div className="my-3 grid gap-3 md:grid-cols-1 lg:grid-cols-3">
-        <Suspense fallback={widgetFallback}>
-          <RecentSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <StatusSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <ChartSection month={month} />
-        </Suspense>
+        <RecentSection month={month} />
+        <StatusSection month={month} />
+        <ChartSection month={month} />
       </div>
 
       <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
-        <Suspense fallback={widgetFallback}>
-          <ConditionsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <PaymentFormsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <InstallmentsSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <CategoryPurchasesSection month={month} />
-        </Suspense>
+        <ConditionsSection month={month} />
+        <PaymentFormsSection month={month} />
+        <InstallmentsSection month={month} />
+        <CategoryPurchasesSection month={month} />
       </div>
 
       <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-2">
-        <Suspense fallback={widgetFallback}>
-          <CategoriesReceitaSection month={month} />
-        </Suspense>
-        <Suspense fallback={widgetFallback}>
-          <CategoriesDespesaSection month={month} />
-        </Suspense>
+        <CategoriesReceitaSection month={month} />
+        <CategoriesDespesaSection month={month} />
       </div>
     </section>
   );
