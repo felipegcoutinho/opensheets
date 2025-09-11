@@ -21,10 +21,10 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${default_font.className} subpixel-antialiased`}
-      suppressHydrationWarning
+      className={`${default_font.className} antialiased`}
+      
     >
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="light">
             <PrivacyProviderApp>
