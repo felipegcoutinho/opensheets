@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { getMonth } from "@/hooks/get-month";
 import CreateNotes from "./modal/create-notes";
-import { Suspense } from "react";
 import NotesList from "./ui-notes-list";
-import TransactionTableFallback from "@/components/fallbacks/transaction-table-fallback";
 
 export default async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
   const month = await getMonth({ searchParams });
@@ -15,9 +13,7 @@ export default async function page({ searchParams }: { searchParams?: { periodo?
         </Button>
       </CreateNotes>
 
-      <Suspense fallback={<TransactionTableFallback rows={8} /> } >
-        <NotesContent month={month} />
-      </Suspense>
+      <NotesContent month={month} />
     </div>
   );
 }
