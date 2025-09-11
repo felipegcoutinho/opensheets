@@ -7,7 +7,7 @@ export default function Loading() {
         {Array.from({ length: 35 }).map((_, i) => (
           <div key={i} className="border p-2">
             <div className="mb-2 flex justify-between">
-              <Skeleton className="h-3 w-4" />
+              <Skeleton className="h-8 w-8" />
               <Skeleton className="h-3 w-10" />
             </div>
             <div className="space-y-1">
