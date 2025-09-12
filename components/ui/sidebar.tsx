@@ -265,12 +265,11 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-7", className)}
+      className={cn("size-7 md:hidden", className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
-      hidden={!isMobile} // Hide if no aria-label is provided
       {...props}
     >
       <RiSidebarFoldLine />

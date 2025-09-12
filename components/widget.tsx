@@ -78,7 +78,7 @@ export default function Widget({
   }, []);
 
   return (
-    <Card className="h-custom-height-1 relative overflow-hidden">
+    <Card className="relative h-auto md:h-custom-height-1 md:overflow-hidden">
       <CardHeader>
         <div className="flex w-full items-start justify-between">
           <div>
@@ -129,7 +129,7 @@ export default function Widget({
       </CardHeader>
       <CardContent
         ref={contentRef}
-        className="max-h-[calc(100%-5rem)] overflow-hidden"
+        className="max-h-[calc(var(--spacing-custom-height-1)-5rem)] overflow-hidden md:max-h-[calc(100%-5rem)]"
       >
         {children}
       </CardContent>
