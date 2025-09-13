@@ -30,6 +30,27 @@ export async function updateCategory(
   }
 
   const supabase = createClient();
+  // Regra de proteção: impedir edição da categoria especial "pagamentos" de "despesa"
+  try {
+    const { data: current, error: fetchErr } = await supabase
+      .from("categorias")
+      .select("id, nome, tipo_categoria")
+      .eq("id", validated.data.id)
+      .single();
+
+    if (!fetchErr && current) {
+      const nomeAtual = String(current.nome || "").trim().toLowerCase();
+      const tipoAtual = String(current.tipo_categoria || "").trim().toLowerCase();
+      if (nomeAtual === "pagamentos" && tipoAtual === "despesa") {
+        return {
+          success: false,
+          message: "A categoria 'pagamentos' de despesa não pode ser editada.",
+        };
+      }
+    }
+  } catch (e) {
+    // Se falhar a verificação, mantém o fluxo normal; erros reais serão tratados no update
+  }
   const { error } = await supabase
     .from("categorias")
     .update(validated.data)

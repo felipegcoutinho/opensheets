@@ -9,8 +9,7 @@ type AuthButtonProps = {
 };
 
 export default async function AuthButton({ session }: AuthButtonProps) {
-  const user = await getUserName();
-  const email = await getEmail();
+  const [user, email] = await Promise.all([getUserName(), getEmail()]);
 
   return (
     <>

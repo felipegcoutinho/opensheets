@@ -205,7 +205,14 @@ export default function CreateTransactions({
         <div className="-mx-6 max-h-[530px] overflow-y-auto px-6">
           <form
             id="transaction-form"
-            onSubmit={handleSubmit}
+            onSubmit={async (e) => {
+              await handleSubmit(e);
+              // Após salvar e fechar o modal, reseta os estados locais
+              setCategoriaId(undefined);
+              setCategoriaLabel(undefined);
+              setOpenCategoria(false);
+              setSelectedPayer(undefined);
+            }}
             className="space-y-2"
           >
             <div className="flex gap-2">

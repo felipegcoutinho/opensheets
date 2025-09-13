@@ -18,9 +18,9 @@
   --popover-foreground: #0b0f0d;
 
   /* Marca e acentos (CTAs e destaques) */
-  --primary: #00c670; /* indigo/azul da imagem */
+  --primary: #0ab66b; /* indigo/azul da imagem */
   --primary-foreground: #ffffff;
-  --secondary: #eaf4f2; /* neutro claro azulado da imagem */
+  --secondary: #e8eee3; /* neutro claro azulado da imagem */
   --secondary-foreground: #0b0f0d;
   --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
   --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
@@ -51,8 +51,8 @@
   --sidebar-foreground: #0b0f0d;
   --sidebar-primary: #00c670; /* CTA com a cor primária */
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eaf4f2; /* blocos sutis no tom da paleta */
-  --sidebar-accent-foreground: #0b0f0d;
+  --sidebar-accent: #e8eee3; /* blocos sutis no tom da paleta */
+  --sidebar-accent-foreground: #000000;
   --sidebar-border: #dbe0e6;
   --sidebar-ring: #00c670;
   --radius: 0.6rem;

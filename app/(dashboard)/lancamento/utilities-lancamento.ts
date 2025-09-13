@@ -86,7 +86,8 @@ export default function UtilitiesLancamento() {
 
     await createTransaction({ success: false, message: "" }, formData);
     toast.success("Transação adicionada com sucesso!");
-    setIsOpen(false);
+    // Use o fechamento centralizado para garantir reset de estados internos
+    handleDialogClose(false);
     setLoading(false);
   };
 

@@ -43,10 +43,10 @@ export function ComboboxFilter({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "border-input w-full justify-between truncate border-dashed font-normal lg:w-[160px]",
+            "border-input text-muted-foreground w-full justify-between truncate border-2 border-dashed font-normal shadow-none lg:w-[160px]",
             value &&
               value !== "all" &&
-              "ring-primary bg-primary/20 font-bold ring-1",
+              "ring-primary bg-primary/10 font-bold ring-1",
           )}
         >
           {value && value !== "all" ? value : placeholder}
