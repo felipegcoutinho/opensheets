@@ -18,9 +18,9 @@
   --popover-foreground: #0b0f0d;
 
   /* Marca e acentos (CTAs e destaques) */
-  --primary: #0ab66b; /* indigo/azul da imagem */
+  --primary: #000000; /* indigo/azul da imagem */
   --primary-foreground: #ffffff;
-  --secondary: #e8eee3; /* neutro claro azulado da imagem */
+  --secondary: #d1dfcc; /* neutro claro azulado da imagem */
   --secondary-foreground: #0b0f0d;
   --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
   --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
@@ -48,10 +48,11 @@
 
   /* Sidebar (autenticação / painéis) */
   --sidebar: #ffffff;
-  --sidebar-foreground: #0b0f0d;
+  --sidebar-foreground: #636363;
   --sidebar-primary: #00c670; /* CTA com a cor primária */
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8eee3; /* blocos sutis no tom da paleta */
+  --sidebar-accent: #eff3a2;
+  --sidebar-accent-v2: #d8dde9;
   --sidebar-accent-foreground: #000000;
   --sidebar-border: #dbe0e6;
   --sidebar-ring: #00c670;
@@ -81,8 +82,8 @@
   --popover: #121212;
   --popover-foreground: #e5e7eb;
 
-  --primary: #087c4a; /* mantém a identidade da imagem */
-  --primary-foreground: #ffffff;
+  --primary: #ffffff; /* mantém a identidade da imagem */
+  --primary-foreground: #000000;
   --secondary: #152316; /* neutro escuro, frio */
   --secondary-foreground: #e5ebe8;
   --muted: #14221a;
@@ -111,6 +112,7 @@
   --sidebar-primary: #00c670;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #15231c;
+  --sidebar-accent-v2: #2c2d30;
   --sidebar-accent-foreground: #e5e7eb;
   --sidebar-border: #232836;
   --sidebar-ring: #00c670;
@@ -162,6 +164,7 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-v2: var(--sidebar-accent-v2);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);

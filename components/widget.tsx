@@ -78,7 +78,7 @@ export default function Widget({
   }, []);
 
   return (
-    <Card className="relative h-auto md:h-custom-height-1 md:overflow-hidden">
+    <Card className="md:h-custom-height-1 relative h-auto md:overflow-hidden">
       <CardHeader>
         <div className="flex w-full items-start justify-between">
           <div>
@@ -86,7 +86,7 @@ export default function Widget({
               className={`${title_font.className} flex items-center gap-1`}
             >
               {icon}
-              <span>{title}</span>
+              {title}
               {information && (
                 <Tooltip>
                   <TooltipTrigger>
@@ -108,7 +108,7 @@ export default function Widget({
 
           {saldo !== undefined && (
             <div className="flex items-center gap-1 text-sm">
-              <span>Saldo Geral</span>
+              <span>Saldo Atual</span>
               <MoneyValues value={saldo} />
               {saldo_information && (
                 <Tooltip>

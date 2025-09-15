@@ -7,6 +7,7 @@ import { getMonth } from "@/hooks/get-month";
 import { RiBankCardLine, RiBarcodeLine, RiPixLine } from "@remixicon/react";
 import PayerHeaderSection from "./sections/header";
 import PayerTableSection from "./sections/table";
+import EntityNameSetter from "@/components/entity-name-setter";
 
 // Tipagens auxiliares
 type PageProps = {
@@ -76,6 +77,7 @@ export default async function Page({ searchParams, params }: PageProps) {
 
   return (
     <section className="space-y-4">
+      <EntityNameSetter name={payer?.nome ?? null} />
       <h1 className="sr-only">Resumo do pagador</h1>
 
       <MonthPicker />

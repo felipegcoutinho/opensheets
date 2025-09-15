@@ -1,6 +1,6 @@
 import { signOut } from "@/app/actions/auth/auth";
 import { getEmail, getUserName } from "@/app/actions/users/fetch_users";
-import { RiDashboardLine, RiLogoutBoxLine } from "@remixicon/react"; // Adicionando ícone de configurações
+import { RiLayout5Line, RiLogoutBoxLine } from "@remixicon/react"; // Adicionando ícone de configurações
 import Link from "next/link";
 import { Button } from "./ui/button";
 
@@ -28,7 +28,7 @@ export default async function AuthButton({ session }: AuthButtonProps) {
                 variant="ghost"
                 className="flex w-full items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
               >
-                <RiDashboardLine className="h-4 w-4" />
+                <RiLayout5Line className="h-4 w-4" />
                 <span>Dashboard</span>
               </Button>
             </Link>

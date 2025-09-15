@@ -1,4 +1,4 @@
-import { Inter, Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import localFont from "next/font/local";
 
 const oswald = Oswald({

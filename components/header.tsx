@@ -4,7 +4,7 @@ import Link from "next/link";
 // import AuthButton from "./auth-button";
 import Logo from "./logo";
 
-import { RiDashboardLine } from "@remixicon/react";
+import { RiLayout5Line } from "@remixicon/react";
 import HeaderBlur from "./header-blur";
 
 export default async function Header() {
@@ -58,7 +58,7 @@ export default async function Header() {
           {session ? (
             <Link href="/dashboard">
               <Button size="sm" className="gap-2 shadow-sm">
-                <RiDashboardLine className="size-4" />
+                <RiLayout5Line className="size-4" />
                 Dashboard
               </Button>
             </Link>

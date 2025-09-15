@@ -198,7 +198,7 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`w-full border-2 border-dashed shadow-none sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[140px] ${
               getColumnFilterValue("tipo_transacao") &&
               getColumnFilterValue("tipo_transacao") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -224,7 +224,7 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("condicao", value)}
         >
           <SelectTrigger
-            className={`w-full border-2 border-dashed shadow-none sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[140px] ${
               getColumnFilterValue("condicao") &&
               getColumnFilterValue("condicao") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -252,7 +252,7 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`w-full border-2 border-dashed shadow-none sm:w-[140px] ${
+            className={`border- w-ful border-dashed shadow-none sm:w-[140px] ${
               getColumnFilterValue("forma_pagamento") &&
               getColumnFilterValue("forma_pagamento") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -278,7 +278,7 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("responsavel", value)}
         >
           <SelectTrigger
-            className={`w-full border-2 border-dashed shadow-none sm:w-[140px] ${
+            className={`border- w-ful border-dashed shadow-none sm:w-[140px] ${
               getColumnFilterValue("responsavel") &&
               getColumnFilterValue("responsavel") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -338,7 +338,7 @@ export function TransactionTableFilters<TData>({
           placeholder="Pesquisar"
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="bg-muted/40 w-full shadow-none sm:w-[160px]"
+          className="w-full shadow-none sm:w-[160px]"
         />
       </div>
     </div>
