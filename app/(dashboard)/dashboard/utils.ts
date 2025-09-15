@@ -30,6 +30,7 @@ export type PainelData = {
   bills: any;
   invoices: any;
   recentTransactions: any[];
+  topExpenses: any[];
   account: any[];
   budgets: any[];
   transactionsByCategory: any[];
@@ -50,6 +51,7 @@ export const buildPainelData = cache(
       bills,
       invoiceList,
       recentTransactions,
+      topExpenses,
       sumPaidExpense,
       sumPaidIncome,
       sixmonth,
@@ -137,6 +139,7 @@ export const buildPainelData = cache(
       bills,
       invoices: invoiceList,
       recentTransactions,
+      topExpenses,
       account,
       budgets,
       transactionsByCategory,

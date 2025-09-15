@@ -42,7 +42,7 @@ export async function ConditionWidget({
               <RiArrowRightSFill className="text-muted-foreground" size={12} />
             </Link>
 
-            <MoneyValues value={-Math.abs(item.sum)} />
+            <MoneyValues value={item.sum} />
           </div>
         </CardContent>
       ))}

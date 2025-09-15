@@ -36,7 +36,7 @@ export async function PaymentWidget({
                   <span className="lowercase">{item.forma_pagamento}</span>
                 </span>
 
-                <MoneyValues value={-Math.abs(item.sum)} />
+                <MoneyValues value={item.sum} />
               </div>
             </div>
           </CardContent>

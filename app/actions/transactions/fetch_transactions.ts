@@ -165,6 +165,26 @@ export async function getRecentTransactions(month: string) {
   return data;
 }
 
+// Maiores gastos do mês (top N despesas por valor)
+export async function getTopExpenses(month: string, limit = 10) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      "id, data_compra, tipo_transacao, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
+    )
+    .eq("tipo_transacao", "despesa")
+    .eq("pagadores.role", "principal")
+    .eq("periodo", month)
+    .order("valor", { ascending: false })
+    .limit(limit);
+
+  if (error) throw error;
+
+  return data;
+}
+
 // Retorna somatórios de receitas e despesas por período em uma única consulta
 export async function getIncomeExpenseByPeriods(periods: string[]) {
   const supabase = createClient();
