@@ -52,7 +52,6 @@ export function AppSidebar({
           </Link>
         </div>
       </SidebarHeader>
-      {/* <Separator /> */}
       <SidebarContent className="px-2">
         <SidebarContent>
           <NavProjects

@@ -23,7 +23,7 @@
   --secondary: #d1dfcc; /* neutro claro azulado da imagem */
   --secondary-foreground: #0b0f0d;
   --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
-  --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
+  --muted-foreground: #525252; /* cinza-azulado para texto secundário */
   --accent: #ee6243; /* verde vibrante da imagem */
   --accent-foreground: #ffffff;
   --destructive: #e5484d; /* erro (mantido) */
@@ -32,7 +32,7 @@
   /* Bordas/inputs/ring */
   --border: #dbe0e6; /* borda suave em tom frio */
   --input: #dbe0e6;
-  --ring: #00c670; /* foco em indigo */
+  --ring: #000000; /* foco em indigo */
 
   /* Paleta para gráficos (a partir da imagem) */
   --chart-1: #0aeb8c; /* receita: verde */

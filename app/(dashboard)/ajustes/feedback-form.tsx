@@ -7,21 +7,30 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 const initialState: ActionState = { ok: false, message: "" };
 
-export default function FeedbackForm() {
+export default function FeedbackForm({
+  onSubmitted,
+}: {
+  onSubmitted?: () => void;
+}) {
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [state, action, pending] = useActionState(sendFeedback, initialState);
 
   useEffect(() => {
     if (!state.message) return;
     state.ok ? toast.success(state.message) : toast.error(state.message);
-  }, [state]);
+    if (state.ok) {
+      formRef.current?.reset();
+      onSubmitted?.();
+    }
+  }, [state, onSubmitted]);
 
   return (
-    <form action={action} className="space-y-3">
+    <form ref={formRef} action={action} className="space-y-3">
       <div className="grid gap-2">
         <Label htmlFor="message">Seu feedback</Label>
         <Textarea

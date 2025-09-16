@@ -21,7 +21,7 @@ export default function PrivacySwitch() {
       {mounted ? (
         <Switch checked={estado} onCheckedChange={toggleEstado} />
       ) : (
-        <div className="h-4 w-8 rounded-full bg-muted-foreground/20" />
+        <div className="bg-muted-foreground/20 h-4 w-8 rounded-full" />
       )}
     </div>
   );
