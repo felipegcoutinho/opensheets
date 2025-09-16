@@ -172,7 +172,7 @@ export async function getTopExpenses(month: string, limit = 10) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, tipo_transacao, data_vencimento, descricao, valor, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
+      "id, data_compra, tipo_transacao, data_vencimento, descricao, valor, forma_pagamento, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
     )
     .eq("tipo_transacao", "despesa")
     .eq("pagadores.role", "principal")
@@ -183,6 +183,42 @@ export async function getTopExpenses(month: string, limit = 10) {
   if (error) throw error;
 
   return data;
+}
+
+// Top Estabelecimentos (agrupa por descricao) com contagem e soma
+export async function getTopEstablishments(month: string, limit = 10) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      // Inclui contas/cartoes para permitir resolução de logo no widget
+      "id, descricao, valor, contas (id, descricao, logo_image), cartoes (id, descricao, logo_image), pagadores!inner(role)"
+    )
+    .eq("tipo_transacao", "despesa")
+    .eq("pagadores.role", "principal")
+    .eq("periodo", month);
+
+  if (error) throw error;
+
+  // Agrupa em memória por descricao
+  const map = new Map<string, { descricao: string; count: number; total: number; sample: any }>();
+  for (const item of data || []) {
+    const key = String(item.descricao || "—");
+    const valor = Number(item.valor) || 0;
+    const agg = map.get(key) || { descricao: key, count: 0, total: 0, sample: null };
+    agg.count += 1;
+    agg.total += valor;
+    if (!agg.sample) agg.sample = item;
+    map.set(key, agg);
+  }
+
+  // Ordena por total (desc) e retorna top N
+  const result = Array.from(map.values())
+    .sort((a, b) => b.total - a.total)
+    .slice(0, limit);
+
+  return result;
 }
 
 // Retorna somatórios de receitas e despesas por período em uma única consulta

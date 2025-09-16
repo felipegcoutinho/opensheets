@@ -23,9 +23,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
     <div>
       <div className="mb-1 flex items-center justify-between">
         <h1 className="text-muted-foreground mb-1 text-sm">{title}</h1>
-        <span className="text-xl">
-          <MoneyValues value={total} />
-        </span>
+        <MoneyValues value={total} />
       </div>
 
       {/* Barra de progresso */}

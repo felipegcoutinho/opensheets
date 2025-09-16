@@ -10,6 +10,7 @@ interface EmptyCardProps {
 export default function EmptyCard({
   width = 160,
   height = 160,
+  message = "Sem dados para exibir no período selecionado.",
   illustrationSrc = "/empty_image.svg",
 }: EmptyCardProps) {
   return (
@@ -22,9 +23,7 @@ export default function EmptyCard({
         priority
         className="mb-4"
       />
-      <p className="text-muted-foreground px-4 text-center">
-        Sem dados para exibir no período selecionado.
-      </p>
+      <p className="text-muted-foreground px-4 text-center">{message}</p>
     </div>
   );
 }

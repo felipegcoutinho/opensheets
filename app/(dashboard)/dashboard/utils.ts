@@ -31,6 +31,7 @@ export type PainelData = {
   invoices: any;
   recentTransactions: any[];
   topExpenses: any[];
+  topEstablishments: { descricao: string; count: number; total: number; sample?: any }[];
   account: any[];
   budgets: any[];
   transactionsByCategory: any[];
@@ -52,6 +53,7 @@ export const buildPainelData = cache(
       invoiceList,
       recentTransactions,
       topExpenses,
+      topEstablishments,
       sumPaidExpense,
       sumPaidIncome,
       sixmonth,
@@ -140,6 +142,7 @@ export const buildPainelData = cache(
       invoices: invoiceList,
       recentTransactions,
       topExpenses,
+      topEstablishments,
       account,
       budgets,
       transactionsByCategory,
