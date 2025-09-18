@@ -1,4 +1,5 @@
 import MonthPicker from "@/components/month-picker/month-picker";
+import EntityNameSetter from "@/components/entity-name-setter";
 import { getMonth } from "@/hooks/get-month";
 import CategoryHeaderSection from "./sections/header";
 import CategoryTableSection from "./sections/table";
@@ -23,6 +24,7 @@ export default async function page({
 
   return (
     <>
+      <EntityNameSetter name={categoria} />
       <MonthPicker />
       <div className="mb-4 space-y-6">
         <CategoryHeaderSection

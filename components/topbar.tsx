@@ -95,15 +95,38 @@ export default function Topbar() {
     icon: ICON_MAP.dashboard,
   });
 
+  const rootSegment = dynamicParts[0] ?? null;
+  const decodeSegment = (value: string) => {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  };
+
+  const categoryNameFromUrl =
+    rootSegment === "categoria" && dynamicParts.length >= 3
+      ? decodeSegment(dynamicParts[2])
+      : null;
+
+  const segmentsToRender =
+    rootSegment === "categoria" && dynamicParts.length > 1
+      ? dynamicParts.slice(0, 2)
+      : dynamicParts;
+
+  const detailRoots = new Set(["conta", "pagador", "cartao", "categoria"]);
+
   // Constrói os demais breadcrumbs com base na URL atual (sem prefixar "/dashboard" nos links)
   let hrefAcc = "";
-  dynamicParts.forEach((seg, idx) => {
+  segmentsToRender.forEach((seg, idx) => {
     hrefAcc += `/${seg}`;
-    const isLast = idx === dynamicParts.length - 1;
-    const isDetailId =
-      idx === 1 && ["conta", "pagador", "cartao"].includes(dynamicParts[0]);
-    const label = isDetailId ? (entityName ?? "—") : (LABELS[seg] ?? seg);
-    const iconKey = isDetailId ? dynamicParts[0] : seg;
+    const isLast = idx === segmentsToRender.length - 1;
+    const isDetailId = idx === 1 && rootSegment && detailRoots.has(rootSegment);
+    const fallbackLabel = LABELS[seg] ?? decodeSegment(seg);
+    const label = isDetailId
+      ? entityName ?? categoryNameFromUrl ?? fallbackLabel
+      : fallbackLabel;
+    const iconKey = isDetailId ? rootSegment : seg;
     crumbs.push({
       href: hrefAcc,
       label,
