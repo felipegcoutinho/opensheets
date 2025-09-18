@@ -25,10 +25,9 @@ export async function GET(request: Request) {
       return NextResponse.redirect(url);
     }
 
-    // Sucesso: encerra a sessão e redireciona para login com aviso
     await supabase.auth.signOut();
     const loginUrl = new URL(request.url);
-    loginUrl.pathname = "/login";
+    loginUrl.pathname = "/";
     loginUrl.search = "";
     loginUrl.searchParams.set(
       "success",

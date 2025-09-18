@@ -8,54 +8,49 @@
 }
 
 :root {
-  /* Diretriz: paleta baseada na imagem (azul/indigo, verde, aquas e neutros claros) */
-  /* Neutros claros / superfícies */
-  --background: #ffffff; /* canvas branco */
-  --foreground: #0b0f0d; /* texto principal quase preto */
-  --card: #ffffff; /* cartões/brancos puros */
-  --card-foreground: #0b0f0d;
+  /* Paleta com mais saturação inspirada no layout: noite grafite, menta suave, azul acinzentado e amarelo neon. */
+  --background: #f6f7f6;
+  --foreground: #1b1c1f;
+  --card: #ffffff;
+  --card-foreground: #1b1c1f;
   --popover: #ffffff;
-  --popover-foreground: #0b0f0d;
+  --popover-foreground: #1b1c1f;
 
-  /* Marca e acentos (CTAs e destaques) */
-  --primary: #000000; /* indigo/azul da imagem */
-  --primary-foreground: #ffffff;
-  --secondary: #d1dfcc; /* neutro claro azulado da imagem */
-  --secondary-foreground: #0b0f0d;
-  --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
-  --muted-foreground: #525252; /* cinza-azulado para texto secundário */
-  --accent: #ee6243; /* verde vibrante da imagem */
-  --accent-foreground: #ffffff;
-  --destructive: #e5484d; /* erro (mantido) */
+  --primary: #356b5c;
+  --primary-foreground: #f4f7f4;
+  --secondary: #dce4e2;
+  --secondary-foreground: #1b1c1f;
+  --muted: #b7ccf4;
+  --muted-foreground: #44506a;
+  --accent: #f0f3a2;
+  --accent-foreground: #1b1c1f;
+  --destructive: #e5484d;
   --destructive-foreground: #ffffff;
 
-  /* Bordas/inputs/ring */
-  --border: #dbe0e6; /* borda suave em tom frio */
-  --input: #dbe0e6;
-  --ring: #000000; /* foco em indigo */
+  --border: #d9e4e3;
+  --input: #c4cfce;
+  --ring: #356b5c;
 
-  /* Paleta para gráficos (a partir da imagem) */
-  --chart-1: #0aeb8c; /* receita: verde */
-  --chart-2: #fe4a23; /* despesa: laranja solicitado */
-  --chart-3: #40468e; /* indigo escuro */
-  --chart-4: #5b15a1;
-  --chart-5: #af66f7;
-  --chart-6: #e4caff;
+  --chart-1: #7cee60;
+  --chart-2: #ff8b55;
+  --chart-3: #7c899c;
+  --chart-4: #356b5c;
+  --chart-5: #a19871;
+  --chart-6: #1b1c1f;
 
-  /* Tokens semânticos auxiliares */
-  --income: #00a963;
-  --expense: #e35333;
+  --income: #4c8f68;
+  --expense: #c56b3a;
 
-  /* Sidebar (autenticação / painéis) */
-  --sidebar: #ffffff;
-  --sidebar-foreground: #636363;
-  --sidebar-primary: #00c670; /* CTA com a cor primária */
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eff3a2;
-  --sidebar-accent-v2: #d8dde9;
-  --sidebar-accent-foreground: #000000;
-  --sidebar-border: #dbe0e6;
-  --sidebar-ring: #00c670;
+  --sidebar: #eef1ef;
+  --sidebar-foreground: #43514f;
+  --sidebar-primary: #356b5c;
+  --sidebar-primary-foreground: #f4f7f4;
+  --sidebar-accent: #b3d9a8;
+  --sidebar-accent-v2: #b7ccf4;
+  --sidebar-accent-foreground: #1b1c1f;
+  --sidebar-border: #c4cfce;
+  --sidebar-ring: #f0f3a2;
+
   --radius: 0.6rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -75,47 +70,48 @@
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #e5e7eb;
-  --card: #121212;
-  --card-foreground: #e5e7eb;
-  --popover: #121212;
-  --popover-foreground: #e5e7eb;
+  --background: #101314;
+  --foreground: #edf1ee;
+  --card: #161a1b;
+  --card-foreground: #edf1ee;
+  --popover: #161a1b;
+  --popover-foreground: #edf1ee;
 
-  --primary: #ffffff; /* mantém a identidade da imagem */
-  --primary-foreground: #000000;
-  --secondary: #152316; /* neutro escuro, frio */
-  --secondary-foreground: #e5ebe8;
-  --muted: #14221a;
-  --muted-foreground: #919b95;
-  --accent: #0aeb8c; /* verde vibrante contrastando no dark */
-  --accent-foreground: #0b0f0d;
+  --primary: #9bd3b1;
+  --primary-foreground: #10201b;
+  --secondary: #223237;
+  --secondary-foreground: #d5e6dd;
+  --muted: #2b3847;
+  --muted-foreground: #98a9bf;
+  --accent: #d1e57b;
+  --accent-foreground: #101314;
   --destructive: #e5484d;
   --destructive-foreground: #0b0f0d;
 
-  --border: #181b24;
-  --input: #232836;
-  --ring: #00c670;
+  --border: #2a3a3d;
+  --input: #2a3a3d;
+  --ring: #9bd3b1;
 
-  --chart-1: #0aeb8c; /* receita: verde */
-  --chart-2: #fe4a23; /* despesa: laranja */
-  --chart-3: #869cb6; /* azul-cinza médio para contraste no dark */
-  --chart-4: #5b15a1;
-  --chart-5: #af66f7;
-  --chart-6: #e4caff;
+  --chart-1: #d1e57b;
+  --chart-2: #9bd3b1;
+  --chart-3: #6a93c6;
+  --chart-4: #4a7c6a;
+  --chart-5: #d38b55;
+  --chart-6: #edf1ee;
 
-  --income: #0aeb8c;
-  --expense: #fe4a23;
+  --income: #9bd3b1;
+  --expense: #d38b55;
 
-  --sidebar: #121212;
-  --sidebar-foreground: #e5ebe8;
-  --sidebar-primary: #00c670;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #15231c;
-  --sidebar-accent-v2: #2c2d30;
-  --sidebar-accent-foreground: #e5e7eb;
-  --sidebar-border: #232836;
-  --sidebar-ring: #00c670;
+  --sidebar: #12191b;
+  --sidebar-foreground: #d5e6dd;
+  --sidebar-primary: #d1e57b;
+  --sidebar-primary-foreground: #101314;
+  --sidebar-accent: #223237;
+  --sidebar-accent-v2: #2f4247;
+  --sidebar-accent-foreground: #d0ddd6;
+  --sidebar-border: #2a3a3d;
+  --sidebar-ring: #9bd3b1;
+
   --radius: 0.6rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -202,7 +198,8 @@ body {
   }
 
   ::selection {
-    @apply bg-green-100 text-green-600;
+    background-color: color-mix(in srgb, var(--accent) 70%, transparent);
+    color: var(--accent-foreground);
   }
 }
 

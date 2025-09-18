@@ -6,7 +6,6 @@ import Script from "next/script";
 import { default_font } from "./fonts/font";
 import "./globals.css";
 import Providers from "./providers";
-import Topbar from "../components/topbar";
 
 export const metadata = {
   title: "opensheets",

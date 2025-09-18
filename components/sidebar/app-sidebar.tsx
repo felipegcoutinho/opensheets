@@ -47,7 +47,7 @@ export function AppSidebar({
     <Sidebar collapsible="offcanvas" {...props} variant="sidebar">
       <SidebarHeader className="pt-6 pb-5">
         <div className="flex justify-center">
-          <Link href="/">
+          <Link href="/dashboard">
             <Logo />
           </Link>
         </div>

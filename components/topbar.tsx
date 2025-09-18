@@ -2,7 +2,6 @@
 
 import { useEntityNameStore } from "@/components/entity-name-store";
 import { CalculatorDialogButton } from "@/components/topbar/calculator-dialog";
-import { FeedbackDialogButton } from "@/components/topbar/feedback-dialog";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -178,7 +177,6 @@ export default function Topbar() {
       </div>
       <div className="ml-auto flex items-center gap-2">
         <CalculatorDialogButton />
-        <FeedbackDialogButton />
       </div>
     </header>
   );

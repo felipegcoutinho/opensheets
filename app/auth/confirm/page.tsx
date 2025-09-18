@@ -17,7 +17,9 @@ export default async function ConfirmPage({
   const message = typeof sp.message === "string" ? sp.message : undefined;
   const error = typeof sp.error === "string" ? sp.error : undefined;
   const errorDescription =
-    typeof sp.error_description === "string" ? sp.error_description : undefined;
+    typeof sp.error_description === "string"
+      ? sp.error_description
+      : undefined;
   const status = typeof sp.status === "string" ? sp.status : undefined;
 
   let title = "Confirmação de alteração de e-mail";
@@ -25,8 +27,6 @@ export default async function ConfirmPage({
     "Siga as instruções abaixo para concluir a alteração.";
 
   if (code) {
-    // Não podemos modificar cookies em Server Components.
-    // Redireciona para o Route Handler que fará a troca de código por sessão.
     const params = new URLSearchParams();
     params.set("code", code);
     redirect(`/auth/confirm/complete?${params.toString()}`);
@@ -48,14 +48,13 @@ export default async function ConfirmPage({
     description = <p>Pronto! Sua alteração foi confirmada.</p>;
   } else if (error || errorDescription) {
     title = "Não foi possível confirmar";
-    description = errorDescription || error ||
-      "Falha ao validar o link de confirmação.";
+    description =
+      errorDescription || error || "Falha ao validar o link de confirmação.";
   }
 
   return (
     <div className="mx-auto mt-16 max-w-xl space-y-6">
       <Alert>
-        {/* Ícone opcional via CSS/slots se desejar */}
         <AlertTitle>{title}</AlertTitle>
         <AlertDescription>{description}</AlertDescription>
       </Alert>
@@ -66,13 +65,13 @@ export default async function ConfirmPage({
             <Link href="/dashboard">Ir para o dashboard</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/">Voltar para a página inicial</Link>
+            <Link href="/">Voltar para a tela de login</Link>
           </Button>
         </div>
       ) : (
         <div className="flex gap-3">
           <Button asChild>
-            <Link href="/">Voltar</Link>
+            <Link href="/">Voltar para a tela de login</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="/login">Fazer login</Link>

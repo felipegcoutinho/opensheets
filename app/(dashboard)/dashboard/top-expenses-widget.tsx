@@ -124,10 +124,6 @@ function TopExpensesWidget({
     return transactions.filter(Boolean) as TopExpense[];
   }, [transactions]);
 
-  if (normalizedTransactions.length === 0) {
-    return <EmptyCard />;
-  }
-
   const topAll = useMemo(
     () => normalizedTransactions.slice(0, 10),
     [normalizedTransactions],
@@ -142,6 +138,10 @@ function TopExpensesWidget({
   const emptyStateMessage = onlyCards
     ? "Sem despesas de cartões de crédito no período selecionado."
     : "Sem dados para exibir no período selecionado.";
+
+  if (normalizedTransactions.length === 0) {
+    return <EmptyCard message={emptyStateMessage} />;
+  }
 
   return (
     <div className="mb-4">
@@ -166,7 +166,6 @@ function TopExpensesWidget({
           />
         </div>
       </div>
-
       {displayedTransactions.length === 0 ? (
         <EmptyCard message={emptyStateMessage} />
       ) : (

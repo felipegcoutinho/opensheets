@@ -7,7 +7,7 @@ export const updateSession = async (request: NextRequest) => {
 
   // Rotas públicas; o restante requer sessão
   const publicPaths = new Set<string>([
-    "/", // landing
+    "/", // tela de login padrão
     "/login",
     "/login/signup",
     "/login/reset",
@@ -39,10 +39,12 @@ export const updateSession = async (request: NextRequest) => {
     const session = data?.claims;
 
     const currentPath = request.nextUrl.pathname;
-    const isPublic = publicPaths.has(normalize(currentPath));
+    const normalizedPath = normalize(currentPath);
+    const isPublic = publicPaths.has(normalizedPath);
+    const isAuthEntry = normalizedPath === "/" || normalizedPath === "/login";
 
     // Usuário já autenticado tentando acessar páginas públicas de auth → redireciona
-    if (session && normalize(currentPath) === "/login") {
+    if (session && isAuthEntry) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
