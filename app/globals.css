@@ -8,124 +8,111 @@
 }
 
 :root {
-  /* Paleta com mais saturação inspirada no layout: noite grafite, menta suave, azul acinzentado e amarelo neon. */
-  --background: #f6f7f6;
-  --foreground: #1b1c1f;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
   --card: #ffffff;
-  --card-foreground: #1b1c1f;
+  --card-foreground: #0a0a0a;
   --popover: #ffffff;
-  --popover-foreground: #1b1c1f;
-
-  --primary: #356b5c;
-  --primary-foreground: #f4f7f4;
-  --secondary: #dce4e2;
-  --secondary-foreground: #1b1c1f;
-  --muted: #b7ccf4;
-  --muted-foreground: #44506a;
-  --accent: #f0f3a2;
-  --accent-foreground: #1b1c1f;
-  --destructive: #e5484d;
+  --popover-foreground: #0a0a0a;
+  --primary: #171717;
+  --primary-foreground: #fafafa;
+  --secondary: #e8eee3;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #e7000b;
   --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #a1a1a1;
 
-  --border: #d9e4e3;
-  --input: #c4cfce;
-  --ring: #356b5c;
+  --income: #228948;
+  --expense: #c66734;
 
-  --chart-1: #7cee60;
-  --chart-2: #ff8b55;
-  --chart-3: #7c899c;
-  --chart-4: #356b5c;
-  --chart-5: #a19871;
-  --chart-6: #1b1c1f;
+  --chart-1: #228948;
+  --chart-2: #c66734;
+  --chart-3: #6213c8;
+  --chart-4: #9a37e6;
+  --chart-5: #cc8d19;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0a0a0a;
+  --sidebar-primary: #171717;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #e8eee3;
+  --sidebar-accent-foreground: #171717;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #a1a1a1;
 
-  --income: #4c8f68;
-  --expense: #c56b3a;
-
-  --sidebar: #eef1ef;
-  --sidebar-foreground: #43514f;
-  --sidebar-primary: #356b5c;
-  --sidebar-primary-foreground: #f4f7f4;
-  --sidebar-accent: #b3d9a8;
-  --sidebar-accent-v2: #b7ccf4;
-  --sidebar-accent-foreground: #1b1c1f;
-  --sidebar-border: #c4cfce;
-  --sidebar-ring: #f0f3a2;
-
-  --radius: 0.6rem;
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --radius: 0.625rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow-md:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
   --shadow-lg:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
 .dark {
-  --background: #101314;
-  --foreground: #edf1ee;
-  --card: #161a1b;
-  --card-foreground: #edf1ee;
-  --popover: #161a1b;
-  --popover-foreground: #edf1ee;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #171717;
+  --card-foreground: #fafafa;
+  --popover: #262626;
+  --popover-foreground: #fafafa;
+  --primary: #e5e5e5;
+  --primary-foreground: #171717;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #a1a1a1;
+  --accent: #404040;
+  --accent-foreground: #fafafa;
+  --destructive: #ff6467;
+  --destructive-foreground: #fafafa;
+  --border: #282828;
+  --input: #343434;
+  --ring: #737373;
 
-  --primary: #9bd3b1;
-  --primary-foreground: #10201b;
-  --secondary: #223237;
-  --secondary-foreground: #d5e6dd;
-  --muted: #2b3847;
-  --muted-foreground: #98a9bf;
-  --accent: #d1e57b;
-  --accent-foreground: #101314;
-  --destructive: #e5484d;
-  --destructive-foreground: #0b0f0d;
+  --income: #228948;
+  --expense: #c66734;
 
-  --border: #2a3a3d;
-  --input: #2a3a3d;
-  --ring: #9bd3b1;
+  --chart-1: #228948;
+  --chart-2: #c66734;
+  --chart-3: #6213c8;
+  --chart-4: #9a37e6;
+  --chart-5: #cc8d19;
+  --sidebar: #171717;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #1447e6;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #282828;
+  --sidebar-ring: #525252;
 
-  --chart-1: #d1e57b;
-  --chart-2: #9bd3b1;
-  --chart-3: #6a93c6;
-  --chart-4: #4a7c6a;
-  --chart-5: #d38b55;
-  --chart-6: #edf1ee;
-
-  --income: #9bd3b1;
-  --expense: #d38b55;
-
-  --sidebar: #12191b;
-  --sidebar-foreground: #d5e6dd;
-  --sidebar-primary: #d1e57b;
-  --sidebar-primary-foreground: #101314;
-  --sidebar-accent: #223237;
-  --sidebar-accent-v2: #2f4247;
-  --sidebar-accent-foreground: #d0ddd6;
-  --sidebar-border: #2a3a3d;
-  --sidebar-ring: #9bd3b1;
-
-  --radius: 0.6rem;
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --radius: 0.625rem;
+  --shadow-2xs: 0 1px 3px 0px hsla(0, 0%, 23%, 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow-md:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
   --shadow-lg:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
 
 @theme inline {
@@ -148,19 +135,20 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --color-income: var(--income);
+  --color-expense: var(--expense);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-income: var(--income);
-  --color-expense: var(--expense);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-v2: var(--sidebar-accent-v2);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -179,11 +167,6 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
 }
-
-body {
-  letter-spacing: var(--tracking-normal);
-}
-
 @layer base {
   html {
     /* Rolagem suave para âncoras */
@@ -208,7 +191,7 @@ section[id] {
   scroll-margin-top: 6rem;
 }
 
-/* Hero/banner clean: branco com acentos sutis (sem lilás pesado) */
+/* Hero/banner clean com vidro suave, highlights lavanda e verde néon pastel */
 @layer utilities {
   /* Tokens de tamanho para skeletons */
   :root {
@@ -229,6 +212,21 @@ section[id] {
     overflow: hidden;
     content-visibility: auto;
     will-change: transform, opacity;
+  }
+  .surface-glass {
+    background: var(--surface-raised);
+    border: 1px solid var(--surface-raised-border);
+    box-shadow: var(--shadow-xs);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+  .surface-contrast {
+    background: var(--surface-contrast);
+    border-radius: var(--radius-md);
+  }
+  .hero-panel {
+    background: var(--hero-gradient);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
   }
   .skeleton[data-animate="true"]::after {
     content: "";
