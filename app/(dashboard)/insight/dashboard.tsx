@@ -11,17 +11,15 @@ export default function Dashboard(props: AnalysisInputPayload) {
     useConsumptionAnalysis(props);
 
   return (
-    <main className="w-full max-w-4xl px-4 sm:px-6 lg:px-2">
-      <header className="bg-background/60 supports-[backdrop-filter]:bg-background/40 sticky top-0 z-10 -mx-4 mb-2 p-2 backdrop-blur">
-        <div className="flex items-center justify-between">
-          <AnalyzeButton onClick={analyze} loading={loading} />
-          {lastRunAt && (
-            <span className="text-muted-foreground ml-2 text-xs">
-              Última análise: {lastRunAt.toLocaleString()}
-            </span>
-          )}
-        </div>
-      </header>
+    <main className="w-full">
+      <div className="flex items-center justify-between">
+        <AnalyzeButton onClick={analyze} loading={loading} />
+        {lastRunAt && (
+          <span className="text-muted-foreground ml-2 text-xs">
+            Última análise: {lastRunAt.toLocaleString()}
+          </span>
+        )}
+      </div>
 
       <section className="space-y-2">
         {error && (
@@ -40,7 +38,9 @@ export default function Dashboard(props: AnalysisInputPayload) {
 
         {loading && (
           <Card>
-            <CardContent className="p-4 text-sm">Carregando análise…</CardContent>
+            <CardContent className="p-4 text-sm">
+              Carregando análise…
+            </CardContent>
           </Card>
         )}
 

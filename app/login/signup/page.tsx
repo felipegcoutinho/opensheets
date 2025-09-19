@@ -1,6 +1,6 @@
 import { signUpWithPassword } from "@/app/actions/auth/auth";
 import SignupFields from "@/components/auth/signup-fields";
-import { FormMessage } from "@/components/form-message";
+import { FormMessage, parseFormMessage } from "@/components/form-message";
 import {
   Card,
   CardContent,
@@ -13,6 +13,7 @@ import Link from "next/link";
 
 export default async function SignupPage(props) {
   const searchParams = await props.searchParams;
+  const message = parseFormMessage(searchParams);
 
   return (
     <div className="flex flex-col gap-6">
@@ -29,7 +30,7 @@ export default async function SignupPage(props) {
           </form>
 
           <div className="mt-4">
-            <FormMessage message={searchParams} />
+            <FormMessage message={message} />
           </div>
 
           <div className="mt-2 text-center">

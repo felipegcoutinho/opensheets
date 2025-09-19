@@ -1,4 +1,4 @@
-import { FormMessage } from "@/components/form-message";
+import { FormMessage, parseFormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import {
   Card,
@@ -18,6 +18,8 @@ type Props = {
 };
 
 export default function LoginScreen({ searchParams }: Props) {
+  const message = parseFormMessage(searchParams);
+
   return (
     <div className="flex flex-col gap-6">
       <Card>
@@ -75,7 +77,7 @@ export default function LoginScreen({ searchParams }: Props) {
           </form>
 
           <div className="mt-4">
-            <FormMessage message={searchParams} />
+            <FormMessage message={message} />
           </div>
         </CardContent>
       </Card>

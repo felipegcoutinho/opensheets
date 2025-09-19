@@ -112,7 +112,7 @@ export default function CategoryProgress({
                       )}
                     </div>
                   ) : (
-                    <div className="text-muted-foreground mt-1 text-xs italic">
+                    <div className="text-muted-foreground mt-2 text-xs italic">
                       Sem limite definido
                     </div>
                   )}

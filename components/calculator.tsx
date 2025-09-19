@@ -190,7 +190,7 @@ export default function Calculator() {
     Array<{
       label: string;
       onClick: () => void;
-      variant?: "default" | "secondary" | "outline" | "ghost";
+      variant?: "default" | "secondary" | "outline" | "ghost" | "destructive";
       colSpan?: number;
     }>
   > = [

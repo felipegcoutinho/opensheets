@@ -87,9 +87,10 @@ export default function CategoryPurchasesWidget({
   useEffect(() => {
     if (!categories.length) return;
     try {
-      const saved = typeof window !== "undefined"
-        ? window.sessionStorage.getItem("category-purchases-selected")
-        : null;
+      const saved =
+        typeof window !== "undefined"
+          ? window.sessionStorage.getItem("category-purchases-selected")
+          : null;
       const validSaved = categories.some((c) => c.id === saved);
       const initial = validSaved ? (saved as string) : categories[0].id;
       setSelected(initial);
@@ -145,7 +146,9 @@ export default function CategoryPurchasesWidget({
           >
             <div className="flex flex-col">
               <span>{item.descricao}</span>
-              <span className="text-xs">{DateFormat(item.data_compra)}</span>
+              <span className="text-muted-foreground text-xs">
+                {DateFormat(item.data_compra)}
+              </span>
             </div>
             <MoneyValues value={item.valor} />
           </div>

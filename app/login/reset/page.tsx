@@ -1,5 +1,5 @@
 import { sendPasswordResetEmailFromReset } from "@/app/actions/auth/reset_password";
-import { FormMessage } from "@/components/form-message";
+import { FormMessage, parseFormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import {
   Card,
@@ -15,6 +15,7 @@ import Link from "next/link";
 
 export default async function ResetPasswordPage(props) {
   const searchParams = await props.searchParams;
+  const message = parseFormMessage(searchParams);
 
   return (
     <div className="flex flex-col gap-6">
@@ -38,7 +39,7 @@ export default async function ResetPasswordPage(props) {
           </form>
 
           <div className="mt-4">
-            <FormMessage message={searchParams} />
+            <FormMessage message={message} />
           </div>
 
           <div className="mt-2 text-center">

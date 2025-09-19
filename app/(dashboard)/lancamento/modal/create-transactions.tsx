@@ -1,6 +1,7 @@
 "use client";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
+import { CalculatorDialogButton } from "@/components/topbar/calculator-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -41,7 +42,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpFill } from "@remixicon/react";
+import { RiCalculatorLine, RiThumbUpFill } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
@@ -380,10 +381,22 @@ export default function CreateTransactions({
               </div>
 
               <div className="w-1/2">
-                <Label htmlFor="valor">
-                  Valor <Required />
-                </Label>
-                <div className="*:not-first:mt-2">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="valor">
+                    Valor <Required />
+                  </Label>
+                  <CalculatorDialogButton
+                    variant="link"
+                    size="sm"
+                    className="h-auto p-0 text-xs font-medium text-muted-foreground hover:text-primary"
+                  >
+                    <span className="inline-flex items-center gap-1">
+                      <RiCalculatorLine className="h-3.5 w-3.5" />
+                      Calculadora
+                    </span>
+                  </CalculatorDialogButton>
+                </div>
+                <div className="mt-1 *:not-first:mt-2">
                   <div className="relative">
                     <MoneyInput
                       className="peer ps-8 pe-12"

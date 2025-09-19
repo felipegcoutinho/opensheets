@@ -28,7 +28,7 @@ export default async function Page(props: {
       <section>
         <KpisSection month={month} />
 
-        <div className="my-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <div className="my-2 grid grid-cols-1 gap-2 lg:grid-cols-3">
           <AccountsSection month={month} />
           <InvoicesSection month={month} />
           <BillsSection month={month} />
