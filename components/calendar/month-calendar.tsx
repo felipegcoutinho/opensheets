@@ -188,34 +188,37 @@ export default function MonthCalendar({
   }, [lancamentos, meta.m, meta.year, meta.start]);
 
   return (
-    <Card className="w-full border-none p-2">
-      <div className="text-muted-foreground grid grid-cols-7 gap-2 border-b pb-1 text-center text-xs font-bold">
-        {weekDays.map((w) => (
-          <div key={w} className="tracking-wide uppercase">
-            {w}
+    <Card className="w-full border-none p-2 sm:p-4">
+      <div className="overflow-x-auto">
+        <div className="min-w-[640px] space-y-2">
+          <div className="text-muted-foreground grid grid-cols-7 gap-2 border-b pb-1 text-center text-[11px] font-bold uppercase sm:text-xs">
+            {weekDays.map((w) => (
+              <div key={w} className="tracking-wide">
+                {w}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="mt-2 grid grid-cols-7 gap-2">
-        {grid.map((cell, idx) => (
-          <div
-            key={`${cell.date.toISOString()}-${idx}`}
-            className={cn(
-              "group flex h-36 w-full flex-col rounded-md border p-2 text-left transition outline-none",
-              !cell.isCurrentMonth && "opacity-40",
-              "hover:border-ring hover:ring-ring/40 hover:ring-2",
-              (() => {
-                const now = new Date();
-                return cell.date.getDate() === now.getDate() &&
-                  cell.date.getMonth() === now.getMonth() &&
-                  cell.date.getFullYear() === now.getFullYear()
-                  ? "border-primary bg-primary/5"
-                  : "";
-              })(),
-            )}
-            aria-label={`Dia ${cell.day}`}
-          >
+          <div className="grid grid-cols-7 gap-2">
+            {grid.map((cell, idx) => {
+              return (
+                <div
+                  key={`${cell.date.toISOString()}-${idx}`}
+                  className={cn(
+                    "group flex h-36 w-full flex-col rounded-md border p-2 text-left transition outline-none",
+                    !cell.isCurrentMonth && "opacity-40",
+                    "hover:border-ring hover:ring-ring/40 hover:ring-2",
+                    (() => {
+                      const now = new Date();
+                      return cell.date.getDate() === now.getDate() &&
+                        cell.date.getMonth() === now.getMonth() &&
+                        cell.date.getFullYear() === now.getFullYear()
+                        ? "border-primary bg-primary/5"
+                        : "";
+                    })(),
+                  )}
+                  aria-label={`Dia ${cell.day}`}
+                >
             <div className="mb-1 flex items-center justify-between">
               <span
                 className={cn(
@@ -368,7 +371,10 @@ export default function MonthCalendar({
               </CreateTransactions>
             </div>
           </div>
-        ))}
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
