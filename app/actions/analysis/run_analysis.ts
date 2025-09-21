@@ -285,7 +285,7 @@ export async function runConsumptionAnalysis(
     console.error("Erro ao gerar análise:", error);
     return {
       status: "error",
-      message: "Não foi possível gerar a análise no momento.",
+      message: error.message || "Erro desconhecido ao gerar análise.",
     };
   }
 }

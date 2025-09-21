@@ -82,8 +82,8 @@ function KpiCard({ item }: { item: KPI }) {
           )}
         </CardDescription>
       </CardHeader>
-      <CardFooter className="text-muted-foreground flex-col items-start gap-1 text-xs">
-        <span>Último mês</span>
+      <CardFooter className="flex-col items-start gap-1 text-xs">
+        <span>Último Mês</span>
         <MoneyValues value={item.previousValue} />
       </CardFooter>
     </Card>
