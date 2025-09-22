@@ -6,207 +6,196 @@ import {
 import { updateTransaction } from "@/app/actions/transactions/update_transactions";
 import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { useState } from "react"; // Removido useEffect não utilizado aqui
+import { useCallback, useState, type FormEvent } from "react";
 import { toast } from "sonner";
+
+type TransactionFormEvent = FormEvent<HTMLFormElement>;
+
+function normalizeCurrencyValue(value: FormDataEntryValue | null): string {
+  if (!value) return "";
+  return String(value)
+    .replace(/[R$\.\s]/g, "")
+    .replace(",", ".");
+}
+
+export function formatPeriodoLabel(itemPeriodo?: string | null) {
+  if (!itemPeriodo) return "";
+  const data = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
+  const formatted = format(data, "MMMM 'de' yyyy", { locale: ptBR });
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
+
+export function calcularMesFinal(
+  itemPeriodo?: string | null,
+  itemQtdeParcelas?: number,
+  itemParcelaAtual = 1,
+) {
+  if (!itemPeriodo || !itemQtdeParcelas) return "";
+  const dataInicial = parse(itemPeriodo, "MMMM-yyyy", new Date(), {
+    locale: ptBR,
+  });
+  const parcelasRestantes = itemQtdeParcelas - itemParcelaAtual + 1;
+  const dataFinal = addMonths(dataInicial, parcelasRestantes - 1);
+  const formatted = format(dataFinal, "MMMM 'de' yyyy", { locale: ptBR });
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+}
 
 export default function UtilitiesLancamento() {
   const [isOpen, setIsOpen] = useState(false);
   const [tipoTransacao, setTipoTransacao] = useState("");
+  const [condicao, setCondicao] = useState("vista");
   const [quantidadeParcelas, setQuantidadeParcelas] = useState("");
-  const [showParcelas, setShowParcelas] = useState(false);
-  const [showRecorrencia, setShowRecorrencia] = useState(false);
-  const [showConta, setShowConta] = useState(false);
-  const [showCartao, setShowCartao] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDividedChecked, setIsDividedChecked] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
   const [image, setImage] = useState<File | null>(null);
   const [removingImage, setRemovingImage] = useState(false);
-  const [formaPagamentoAtual, setFormaPagamentoAtual] = useState("");
 
-  const eBoletoSelecionado = formaPagamentoAtual === "boleto";
+  const isParcelado = condicao === "parcelado";
+  const isRecorrente = condicao === "recorrente";
+  const showConta = ["dinheiro", "pix", "cartão de débito", "boleto"].includes(
+    paymentMethod,
+  );
+  const showCartao = paymentMethod === "cartão de crédito";
+  const eBoletoSelecionado = paymentMethod === "boleto";
 
-  const handleCondicaoChange = (value: string) => {
-    setShowParcelas(value === "parcelado");
-    setShowRecorrencia(value === "recorrente");
+  const handleCondicaoChange = useCallback((value: string) => {
+    setCondicao(value);
     if (value !== "parcelado") {
       setQuantidadeParcelas("");
     }
-  };
+  }, []);
 
-  const handleTipoTransacaoChange = (value: string) => {
+  const handleTipoTransacaoChange = useCallback((value: string) => {
     setTipoTransacao(value);
-  };
+  }, []);
 
-  const handleFormaPagamentoChange = (value: string) => {
-    setFormaPagamentoAtual(value);
-    const isCartaoCredito = value === "cartão de crédito";
-    const isBoleto = value === "boleto";
-    const showContaInput = [
-      "dinheiro",
-      "pix",
-      "cartão de débito",
-      "boleto",
-    ].includes(value);
+  const handleFormaPagamentoChange = useCallback((value: string) => {
+    setPaymentMethod(value);
 
-    setShowConta(showContaInput);
-    setShowCartao(isCartaoCredito);
+    const exigeComprovante = value === "boleto" || value === "cartão de crédito";
+    setIsPaid(!exigeComprovante);
+  }, []);
 
-    if (isBoleto || isCartaoCredito) {
-      setIsPaid(false);
-    } else {
-      setIsPaid(true);
-    }
-  };
+  const handleDialogClose = useCallback(
+    (value: boolean) => {
+      setIsOpen(value);
+      if (!value) {
+        setIsDividedChecked(false);
+        setPaymentMethod("");
+        setCondicao("vista");
+        setQuantidadeParcelas("");
+        setIsPaid(true);
+        setImage(null);
+        setTipoTransacao("");
+      }
+    },
+    [],
+  );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleCreateSubmit = useCallback(
+    async (event: TransactionFormEvent) => {
+      event.preventDefault();
+      setLoading(true);
+
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const imageFile = formData.get("imagem_url");
+
+      if (!(imageFile instanceof File && imageFile.size > 0)) {
+        formData.delete("imagem_url");
+      }
+
+      formData.set("valor", normalizeCurrencyValue(formData.get("valor")));
+      formData.set("realizado", String(isPaid));
+
+      await createTransaction({ success: false, message: "" }, formData);
+      toast.success("Transação adicionada com sucesso!");
+
+      handleDialogClose(false);
+      setLoading(false);
+    },
+    [handleDialogClose, isPaid],
+  );
+
+  const handleUpdate = useCallback(async (event: TransactionFormEvent) => {
+    event.preventDefault();
     setLoading(true);
-    const formData = new FormData(e.target);
-    const imageFile = formData.get("imagem_url");
 
-    if (!(imageFile instanceof File && imageFile.size > 0)) {
-      formData.delete("imagem_url");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const condicaoSelecionada = String(formData.get("condicao") ?? "");
+
+    if (condicaoSelecionada !== "parcelado") {
+      formData.set("valor", normalizeCurrencyValue(formData.get("valor")));
     }
 
-    const valorRaw = String(formData.get("valor") ?? "");
-    const valorFormatado = valorRaw
-      .replace(/[R$\.\s]/g, "")
-      .replace(",", ".");
-    formData.set("valor", valorFormatado);
-
-    // if (eBoletoSelecionado) {
-    //   formData.set("data_compra", ""); // Data da compra nula para boleto
-    //   // O campo data_vencimento_boleto já estará no formData se visível
-    // }
-
-    // Garante que 'realizado' reflita o estado de 'isPaid'
-    // Para boleto, isPaid é false, então 'realizado' será "false"
-    formData.set("realizado", String(isPaid));
-
-    await createTransaction({ success: false, message: "" }, formData);
-    toast.success("Transação adicionada com sucesso!");
-    // Use o fechamento centralizado para garantir reset de estados internos
-    handleDialogClose(false);
-    setLoading(false);
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.target);
-    const condicao = String(formData.get("condicao") ?? "");
-    const forma_pagamento = String(formData.get("forma_pagamento") || "");
-
-    if (condicao !== "parcelado") {
-      const valorRaw = String(formData.get("valor") ?? "");
-      const valorFormatado = valorRaw
-        .replace(/[R$\.\s]/g, "")
-        .replace(",", ".");
-      formData.set("valor", valorFormatado);
-    }
-
-    // Removida a gestão de pagamento no modal de edição; TogglePaymentDialog cuida disso.
-    // Não enviar/alterar o campo 'realizado' aqui para não sobrescrever o status.
     formData.delete("realizado");
 
     await updateTransaction({ success: false, message: "" }, formData);
     toast.success("Transação atualizada com sucesso!");
     setIsOpen(false);
     setLoading(false);
-  };
+  }, []);
 
-  const handleDelete = (itemId) => async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("excluir", String(itemId));
-    await deleteTransaction({ success: false, message: "" }, formData);
-    toast.success("Transação removida com sucesso!");
-    setIsOpen(false);
-  };
+  const handleDelete = useCallback(
+    (itemId: number | string) =>
+      async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append("excluir", String(itemId));
+        await deleteTransaction({ success: false, message: "" }, formData);
+        toast.success("Transação removida com sucesso!");
+        setIsOpen(false);
+      },
+    [],
+  );
 
-  const handleRemoveImage = async (transactionId, imageUrl) => {
-    setRemovingImage(true);
-    try {
-      await removeImage(transactionId, imageUrl);
-      toast.success("Imagem removida com sucesso!");
-    } catch (error) {
-      toast.error("Erro ao remover a imagem");
-      console.error("Erro ao remover a imagem:", error);
-    }
-    setRemovingImage(false);
-  };
-
-  function MonthUppercase(itemPeriodo) {
-    if (!itemPeriodo) return "";
-    const data = parse(itemPeriodo, "MMMM-yyyy", new Date(), { locale: ptBR });
-    let periodoFormatado = format(data, "MMMM 'de' yyyy", { locale: ptBR }); // yyyy minúsculo
-    periodoFormatado =
-      periodoFormatado.charAt(0).toUpperCase() + periodoFormatado.slice(1);
-    return periodoFormatado;
-  }
-
-  function calcularMesFinal(
-    itemPeriodo,
-    itemQtdeParcelas,
-    itemParcelaAtual = 1,
-  ) {
-    if (!itemPeriodo) return "";
-    const dataInicial = parse(itemPeriodo, "MMMM-yyyy", new Date(), {
-      locale: ptBR,
-    });
-    const parcelasRestantes = itemQtdeParcelas - itemParcelaAtual + 1;
-    const dataFinal = addMonths(dataInicial, parcelasRestantes - 1);
-    let mesFinal = format(dataFinal, "MMMM 'de' yyyy", { locale: ptBR }); // yyyy minúsculo
-    mesFinal = mesFinal.charAt(0).toUpperCase() + mesFinal.slice(1);
-    return mesFinal;
-  }
-
-  const handleDialogClose = (val) => {
-    setIsOpen(val);
-    setIsDividedChecked(false);
-    setShowConta(false);
-    setShowCartao(false);
-    setShowParcelas(false);
-    setShowRecorrencia(false);
-    setIsPaid(true);
-    setFormaPagamentoAtual("");
-    setImage(null);
-    setTipoTransacao("");
-    setQuantidadeParcelas("");
-  };
+  const handleRemoveImage = useCallback(
+    async (transactionId: number | string, imageUrl: string) => {
+      setRemovingImage(true);
+      try {
+        await removeImage(Number(transactionId), imageUrl);
+        toast.success("Imagem removida com sucesso!");
+      } catch (error) {
+        toast.error("Erro ao remover a imagem");
+        console.error("Erro ao remover a imagem:", error);
+      }
+      setRemovingImage(false);
+    },
+    [],
+  );
 
   return {
     isOpen,
     setIsOpen,
     tipoTransacao,
     setTipoTransacao,
+    condicao,
+    setCondicao,
     quantidadeParcelas,
     setQuantidadeParcelas,
-    showParcelas,
-    showRecorrencia,
+    isParcelado,
+    isRecorrente,
     showConta,
     showCartao,
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
-    handleSubmit,
+    handleCreateSubmit,
     handleDelete,
     loading,
-    setLoading,
     handleUpdate,
     isDividedChecked,
     setIsDividedChecked,
     handleDialogClose,
     isPaid,
     setIsPaid,
-    MonthUppercase,
-    calcularMesFinal,
     setImage,
     image,
     handleRemoveImage,
     removingImage,
     eBoletoSelecionado,
-    formaPagamentoAtual,
   };
 }

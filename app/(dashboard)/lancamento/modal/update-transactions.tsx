@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 // Toggle removido: gestão de pagamento migrou para TogglePaymentDialog
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { CategoryCombobox } from "./category-combobox";
 
 export default function UpdateTransactions({
   itemId,
@@ -60,6 +60,9 @@ export default function UpdateTransactions({
   } = UtilitiesLancamento();
 
   const [imagePreview, setImagePreview] = useState(itemImagemURL);
+  const [categoriaId, setCategoriaId] = useState(() =>
+    itemCategoriaId ? itemCategoriaId.toString() : "",
+  );
 
   const { getMonthOptions } = UseDates();
 
@@ -99,6 +102,9 @@ export default function UpdateTransactions({
     role?: string | null;
     foto?: string | null;
   }[] = payersData?.data || [];
+  const categoriasFiltradas = (getCategorias ?? []).filter(
+    (categoria) => categoria.tipo_categoria === itemTipoTransacao,
+  );
 
   const resolveFotoSrc = (foto?: string | null) => {
     if (!foto) return undefined;
@@ -224,36 +230,12 @@ export default function UpdateTransactions({
                 Categoria
                 <Required />
               </Label>
-              <Select
-                defaultValue={itemCategoriaId.toString()}
+              <CategoryCombobox
+                categories={categoriasFiltradas}
                 name="categoria_id"
-              >
-                <SelectTrigger className="w-full capitalize">
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {getCategorias
-                    ?.filter(
-                      (categoria) =>
-                        categoria.tipo_categoria === itemTipoTransacao,
-                    )
-                    .map((item) => {
-                      const Icon = categoryIconsMap[item.icone];
-                      return (
-                        <SelectItem
-                          className="capitalize"
-                          key={item.id}
-                          value={item.id.toString()}
-                        >
-                          <span className="flex items-center gap-2">
-                            {Icon && <Icon className="h-4 w-4" />}
-                            {item.nome}
-                          </span>
-                        </SelectItem>
-                      );
-                    })}
-                </SelectContent>
-              </Select>
+                value={categoriaId}
+                onChange={setCategoriaId}
+              />
             </div>
           </div>
 

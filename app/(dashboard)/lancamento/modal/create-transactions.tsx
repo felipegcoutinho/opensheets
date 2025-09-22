@@ -6,15 +6,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
-import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -26,11 +17,6 @@ import {
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -40,12 +26,12 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { UseDates } from "@/hooks/use-dates";
 import { RiCalculatorLine, RiThumbUpFill } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { CategoryCombobox } from "./category-combobox";
 
 const fetchJSON = async (url: string) => {
   const res = await fetch(url);
@@ -72,14 +58,15 @@ export default function CreateTransactions({
     isOpen,
     tipoTransacao,
     quantidadeParcelas,
-    showParcelas,
-    showRecorrencia,
+    condicao,
+    isParcelado,
+    isRecorrente,
     showConta,
     showCartao,
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
-    handleSubmit,
+    handleCreateSubmit,
     loading,
     isDividedChecked,
     setIsDividedChecked,
@@ -92,6 +79,7 @@ export default function CreateTransactions({
   } = UtilitiesLancamento();
 
   const { getMonthOptions, formatted_current_month, optionsMeses } = UseDates();
+
   // Deriva mês/ano a partir da defaultDate (se fornecida) no formato "mês-ano" em pt-BR
   let month = formatted_current_month;
   let defaultDateStr: string | undefined;
@@ -170,8 +158,6 @@ export default function CreateTransactions({
 
   // Estado para categoria (combobox com busca)
   const [categoriaId, setCategoriaId] = useState<string | undefined>();
-  const [categoriaLabel, setCategoriaLabel] = useState<string | undefined>();
-  const [openCategoria, setOpenCategoria] = useState(false);
 
   // Ao fechar o modal, resetar categoria e pagador para o padrão
   const onDialogOpenChange = (val: boolean) => {
@@ -179,8 +165,6 @@ export default function CreateTransactions({
     if (!val) {
       // Reseta a categoria para o estado inicial (placeholder "Selecione")
       setCategoriaId(undefined);
-      setCategoriaLabel(undefined);
-      setOpenCategoria(false);
 
       // Reseta pagadores: volta para o padrão via useEffect (principal ou primeiro)
       setSelectedPayer(undefined);
@@ -207,11 +191,9 @@ export default function CreateTransactions({
           <form
             id="transaction-form"
             onSubmit={async (e) => {
-              await handleSubmit(e);
+              await handleCreateSubmit(e);
               // Após salvar e fechar o modal, reseta os estados locais
               setCategoriaId(undefined);
-              setCategoriaLabel(undefined);
-              setOpenCategoria(false);
               setSelectedPayer(undefined);
             }}
             className="space-y-2"
@@ -281,83 +263,12 @@ export default function CreateTransactions({
                 <Label htmlFor="categoria_id">
                   Categoria <Required />
                 </Label>
-                <input
-                  type="hidden"
+                <CategoryCombobox
+                  categories={getCategorias ?? []}
                   name="categoria_id"
-                  value={categoriaId || ""}
+                  value={categoriaId}
+                  onChange={setCategoriaId}
                 />
-                <Popover open={openCategoria} onOpenChange={setOpenCategoria}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={openCategoria}
-                      className="w-full justify-between capitalize"
-                    >
-                      {categoriaLabel || "Selecione"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                    <Command>
-                      <CommandInput placeholder="Buscar categoria..." />
-                      <CommandList
-                        className="max-h-96 overflow-y-auto overscroll-contain"
-                        onWheel={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <CommandEmpty>
-                          Nenhuma categoria encontrada.
-                        </CommandEmpty>
-                        <CommandGroup heading="Receitas">
-                          {getCategorias
-                            ?.filter((c) => c.tipo_categoria === "receita")
-                            .map((item) => {
-                              const Icon = categoryIconsMap[item.icone];
-                              return (
-                                <CommandItem
-                                  key={item.id}
-                                  value={item.nome}
-                                  onSelect={() => {
-                                    setCategoriaId(item.id.toString());
-                                    setCategoriaLabel(item.nome);
-                                    setOpenCategoria(false);
-                                  }}
-                                  className="cursor-pointer capitalize"
-                                >
-                                  {Icon && <Icon className="mr-2 h-4 w-4" />}
-                                  {item.nome}
-                                </CommandItem>
-                              );
-                            })}
-                        </CommandGroup>
-                        <CommandSeparator />
-                        <CommandGroup heading="Despesas">
-                          {getCategorias
-                            ?.filter((c) => c.tipo_categoria === "despesa")
-                            .map((item) => {
-                              const Icon = categoryIconsMap[item.icone];
-                              return (
-                                <CommandItem
-                                  key={item.id}
-                                  value={item.nome}
-                                  onSelect={() => {
-                                    setCategoriaId(item.id.toString());
-                                    setCategoriaLabel(item.nome);
-                                    setOpenCategoria(false);
-                                  }}
-                                  className="cursor-pointer capitalize"
-                                >
-                                  {Icon && <Icon className="mr-2 h-4 w-4" />}
-                                  {item.nome}
-                                </CommandItem>
-                              );
-                            })}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
               </div>
             </div>
 
@@ -549,9 +460,7 @@ export default function CreateTransactions({
                   <Select
                     required
                     name="forma_pagamento"
-                    onValueChange={(val) => {
-                      handleFormaPagamentoChange(val);
-                    }}
+                    onValueChange={handleFormaPagamentoChange}
                   >
                     <SelectTrigger id="forma_pagamento" className="w-full">
                       <SelectValue placeholder="Selecione" />
@@ -639,16 +548,12 @@ export default function CreateTransactions({
             </div>
 
             <div className="flex w-full gap-2">
-              <div
-                className={showParcelas || showRecorrencia ? "w-1/2" : "w-full"}
-              >
+              <div className={isParcelado || isRecorrente ? "w-1/2" : "w-full"}>
                 <Label htmlFor="condicao">Condição</Label>
                 <Select
                   name="condicao"
-                  onValueChange={(val) => {
-                    handleCondicaoChange(val);
-                  }}
-                  defaultValue="vista"
+                  value={condicao}
+                  onValueChange={handleCondicaoChange}
                   required
                 >
                   <SelectTrigger id="condicao" className="w-full">
@@ -661,7 +566,7 @@ export default function CreateTransactions({
                   </SelectContent>
                 </Select>
               </div>
-              {showParcelas && (
+              {isParcelado && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_parcela">Parcelado em</Label>
                   <Select
@@ -682,7 +587,7 @@ export default function CreateTransactions({
                   </Select>
                 </div>
               )}
-              {showRecorrencia && (
+              {isRecorrente && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
                   <Select name="qtde_recorrencia">
