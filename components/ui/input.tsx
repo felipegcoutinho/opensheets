@@ -101,7 +101,9 @@ function MoneyInput({
     (node: HTMLInputElement | null) => {
       inputRef.current = node;
       if (typeof getInputRef === "function") {
-        getInputRef(node);
+        if (node) {
+          getInputRef(node);
+        }
       } else if (getInputRef && typeof getInputRef === "object") {
         (getInputRef as React.MutableRefObject<HTMLInputElement | null>).current =
           node;
