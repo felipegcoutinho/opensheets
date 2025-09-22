@@ -381,19 +381,17 @@ export default function CreateTransactions({
               </div>
 
               <div className="w-1/2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center">
                   <Label htmlFor="valor">
                     Valor <Required />
                   </Label>
                   <CalculatorDialogButton
                     variant="link"
                     size="sm"
-                    className="h-auto p-0 text-xs font-medium text-muted-foreground hover:text-primary"
+                    className="text-muted-foreground hover:text-primary ms-auto h-auto p-0"
+                    aria-label="Abrir calculadora"
                   >
-                    <span className="inline-flex items-center gap-1">
-                      <RiCalculatorLine className="h-3.5 w-3.5" />
-                      Calculadora
-                    </span>
+                    <RiCalculatorLine className="h-4 w-4" />
                   </CalculatorDialogButton>
                 </div>
                 <div className="mt-1 *:not-first:mt-2">
@@ -402,7 +400,8 @@ export default function CreateTransactions({
                       className="peer ps-8 pe-12"
                       id="valor"
                       name="valor"
-                      placeholder="0.00"
+                      placeholder="0,00"
+                      withVirtualKeyboard
                     />
                     <span className="text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm peer-disabled:opacity-50">
                       R$

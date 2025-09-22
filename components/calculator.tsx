@@ -22,6 +22,36 @@ function formatNumber(value: number): string {
   return rounded.toString();
 }
 
+function formatLocaleValue(rawValue: string): string {
+  if (rawValue === "Erro") {
+    return rawValue;
+  }
+
+  const isNegative = rawValue.startsWith("-");
+  const unsignedValue = isNegative ? rawValue.slice(1) : rawValue;
+
+  if (unsignedValue === "") {
+    return isNegative ? "-0" : "0";
+  }
+
+  const hasDecimalSeparator = unsignedValue.includes(".");
+  const [integerPartRaw, decimalPartRaw] = unsignedValue.split(".");
+
+  const integerPart = integerPartRaw || "0";
+  const decimalPart = hasDecimalSeparator ? decimalPartRaw ?? "" : undefined;
+
+  const numericInteger = Number(integerPart);
+  const formattedInteger = Number.isFinite(numericInteger)
+    ? numericInteger.toLocaleString("pt-BR")
+    : integerPart;
+
+  if (decimalPart === undefined) {
+    return `${isNegative ? "-" : ""}${formattedInteger}`;
+  }
+
+  return `${isNegative ? "-" : ""}${formattedInteger},${decimalPart}`;
+}
+
 function performOperation(a: number, b: number, operator: Operator): number {
   switch (operator) {
     case "add":
@@ -128,7 +158,7 @@ export default function Calculator() {
     const left = formatNumber(accumulator);
     const right = formatNumber(value);
     const symbol = OPERATOR_SYMBOLS[operator];
-    const operation = `${left} ${symbol} ${right}`;
+    const operation = `${formatLocaleValue(left)} ${symbol} ${formatLocaleValue(right)}`;
     const result = performOperation(accumulator, value, operator);
     const formatted = formatNumber(result);
 
@@ -155,6 +185,29 @@ export default function Calculator() {
     }
   }, [overwrite]);
 
+  const deleteLastDigit = React.useCallback(() => {
+    setHistory(null);
+    setDisplay((prev) => {
+      if (prev === "Erro") {
+        setAccumulator(null);
+        setOperator(null);
+        setOverwrite(false);
+        return "0";
+      }
+
+      if (overwrite) {
+        setOverwrite(false);
+        return "0";
+      }
+
+      if (prev.length <= 1 || (prev.length === 2 && prev.startsWith("-"))) {
+        return "0";
+      }
+
+      return prev.slice(0, -1);
+    });
+  }, [overwrite]);
+
   const applyPercent = React.useCallback(() => {
     setDisplay((prev) => {
       if (prev === "Erro") {
@@ -174,16 +227,16 @@ export default function Calculator() {
 
     if (operator && accumulator !== null) {
       const symbol = OPERATOR_SYMBOLS[operator];
-      const left = formatNumber(accumulator);
+      const left = formatLocaleValue(formatNumber(accumulator));
 
       if (overwrite) {
         return `${left} ${symbol}`;
       }
 
-      return `${left} ${symbol} ${display}`;
+      return `${left} ${symbol} ${formatLocaleValue(display)}`;
     }
 
-    return display;
+    return formatLocaleValue(display);
   }, [display, operator, accumulator, overwrite]);
 
   const buttons: Array<
@@ -196,7 +249,7 @@ export default function Calculator() {
   > = [
     [
       { label: "C", onClick: reset, variant: "destructive" },
-      { label: "±", onClick: toggleSign, variant: "default" },
+      { label: "⌫", onClick: deleteLastDigit, variant: "default" },
       { label: "%", onClick: applyPercent, variant: "default" },
       {
         label: "÷",
@@ -231,8 +284,9 @@ export default function Calculator() {
       { label: "+", onClick: () => setNextOperator("add"), variant: "outline" },
     ],
     [
-      { label: "0", onClick: () => inputDigit("0"), colSpan: 2 },
-      { label: ".", onClick: inputDecimal },
+      { label: "±", onClick: toggleSign, variant: "default" },
+      { label: "0", onClick: () => inputDigit("0") },
+      { label: ",", onClick: inputDecimal },
       { label: "=", onClick: evaluate, variant: "default" },
     ],
   ];
