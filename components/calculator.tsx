@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { RiCheckLine, RiFileCopyLine } from "@remixicon/react";
 import * as React from "react";
 
 type Operator = "add" | "subtract" | "multiply" | "divide";
@@ -67,14 +68,127 @@ function performOperation(a: number, b: number, operator: Operator): number {
   }
 }
 
+// Trata colagem de valores com formatação brasileira (ponto para milhar, vírgula para decimal)
+// e variações simples em formato internacional.
+function normalizeClipboardNumber(rawValue: string): string | null {
+  const trimmed = rawValue.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const match = trimmed.match(/-?[\d.,\s]+/);
+  if (!match) {
+    return null;
+  }
+
+  let extracted = match[0].replace(/\s+/g, "");
+  if (!extracted) {
+    return null;
+  }
+
+  const isNegative = extracted.startsWith("-");
+  if (isNegative) {
+    extracted = extracted.slice(1);
+  }
+
+  extracted = extracted.replace(/[^\d.,]/g, "");
+  if (!extracted) {
+    return null;
+  }
+
+  const countOccurrences = (char: string) =>
+    (extracted.match(new RegExp(`\\${char}`, "g")) ?? []).length;
+
+  const hasComma = extracted.includes(",");
+  const hasDot = extracted.includes(".");
+
+  let decimalSeparator: "," | "." | null = null;
+
+  if (hasComma && hasDot) {
+    decimalSeparator =
+      extracted.lastIndexOf(",") > extracted.lastIndexOf(".") ? "," : ".";
+  } else if (hasComma) {
+    const commaCount = countOccurrences(",");
+    if (commaCount > 1) {
+      decimalSeparator = null;
+    } else {
+      const digitsAfterComma = extracted.length - extracted.lastIndexOf(",") - 1;
+      decimalSeparator = digitsAfterComma > 0 && digitsAfterComma <= 2 ? "," : null;
+    }
+  } else if (hasDot) {
+    const dotCount = countOccurrences(".");
+    if (dotCount > 1) {
+      decimalSeparator = null;
+    } else {
+      const digitsAfterDot = extracted.length - extracted.lastIndexOf(".") - 1;
+      const decimalCandidate = extracted.slice(extracted.lastIndexOf(".") + 1);
+      const allZeros = /^0+$/.test(decimalCandidate);
+      const shouldTreatAsDecimal =
+        digitsAfterDot > 0 && digitsAfterDot <= 3 && !(digitsAfterDot === 3 && allZeros);
+      decimalSeparator = shouldTreatAsDecimal ? "." : null;
+    }
+  }
+
+  let integerPart = extracted;
+  let decimalPart = "";
+
+  if (decimalSeparator) {
+    const decimalIndex = extracted.lastIndexOf(decimalSeparator);
+    integerPart = extracted.slice(0, decimalIndex);
+    decimalPart = extracted.slice(decimalIndex + 1);
+  }
+
+  integerPart = integerPart.replace(/[^\d]/g, "");
+  decimalPart = decimalPart.replace(/[^\d]/g, "");
+
+  if (!integerPart) {
+    integerPart = "0";
+  }
+
+  let normalized = integerPart;
+  if (decimalPart) {
+    normalized = `${integerPart}.${decimalPart}`;
+  }
+
+  if (isNegative && Number(normalized) !== 0) {
+    normalized = `-${normalized}`;
+  }
+
+  if (!/^(-?\d+(\.\d+)?)$/.test(normalized)) {
+    return null;
+  }
+
+  const numericValue = Number(normalized);
+  if (!Number.isFinite(numericValue)) {
+    return null;
+  }
+
+  return normalized;
+}
+
 export default function Calculator() {
   const [display, setDisplay] = React.useState("0");
   const [accumulator, setAccumulator] = React.useState<number | null>(null);
   const [operator, setOperator] = React.useState<Operator | null>(null);
   const [overwrite, setOverwrite] = React.useState(false);
   const [history, setHistory] = React.useState<string | null>(null);
+  const [copied, setCopied] = React.useState(false);
+  const resetCopiedTimeoutRef = React.useRef<number | undefined>(undefined);
 
   const currentValue = React.useMemo(() => Number(display), [display]);
+
+  const resultText = React.useMemo(() => {
+    if (display === "Erro") {
+      return null;
+    }
+
+    const normalized = formatNumber(currentValue);
+    if (normalized === "Erro") {
+      return null;
+    }
+
+    return formatLocaleValue(normalized);
+  }, [currentValue, display]);
 
   const reset = React.useCallback(() => {
     setDisplay("0");
@@ -291,14 +405,195 @@ export default function Calculator() {
     ],
   ];
 
+  const copyToClipboard = React.useCallback(async () => {
+    if (!resultText) {
+      return;
+    }
+
+    const handleCopiedFeedback = () => {
+      setCopied(true);
+      if (resetCopiedTimeoutRef.current !== undefined) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+      }
+      resetCopiedTimeoutRef.current = window.setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    };
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(resultText);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = resultText;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      handleCopiedFeedback();
+    } catch (error) {
+      console.error("Não foi possível copiar o resultado da calculadora.", error);
+    }
+  }, [resultText]);
+
+  const pasteFromClipboard = React.useCallback(async () => {
+    if (!navigator.clipboard?.readText) {
+      return;
+    }
+
+    try {
+      const rawValue = await navigator.clipboard.readText();
+      const normalized = normalizeClipboardNumber(rawValue);
+
+      if (!normalized) {
+        setDisplay("Erro");
+        setAccumulator(null);
+        setOperator(null);
+        setOverwrite(true);
+        setHistory(null);
+        return;
+      }
+
+      if (resetCopiedTimeoutRef.current !== undefined) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+        resetCopiedTimeoutRef.current = undefined;
+      }
+
+      setCopied(false);
+      setDisplay(normalized);
+      setAccumulator(null);
+      setOperator(null);
+      setOverwrite(false);
+      setHistory(null);
+    } catch (error) {
+      console.error("Não foi possível colar o valor na calculadora.", error);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      if (resetCopiedTimeoutRef.current !== undefined) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!resultText) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!(event.ctrlKey || event.metaKey)) {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      if (target) {
+        const tagName = target.tagName;
+        if (
+          tagName === "INPUT" ||
+          tagName === "TEXTAREA" ||
+          target.isContentEditable
+        ) {
+          return;
+        }
+      }
+
+      const key = event.key.toLowerCase();
+      if (key === "c") {
+        const selection = window.getSelection();
+        if (selection && selection.toString().trim().length > 0) {
+          return;
+        }
+
+        event.preventDefault();
+        void copyToClipboard();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [copyToClipboard, resultText]);
+
+  React.useEffect(() => {
+    const handlePasteShortcut = (event: KeyboardEvent) => {
+      if (!(event.ctrlKey || event.metaKey)) {
+        return;
+      }
+
+      if (event.key.toLowerCase() !== "v") {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      if (target) {
+        const tagName = target.tagName;
+        if (
+          tagName === "INPUT" ||
+          tagName === "TEXTAREA" ||
+          target.isContentEditable
+        ) {
+          return;
+        }
+      }
+
+      const selection = window.getSelection();
+      if (selection && selection.toString().trim().length > 0) {
+        return;
+      }
+
+      if (!navigator.clipboard?.readText) {
+        return;
+      }
+
+      event.preventDefault();
+      void pasteFromClipboard();
+    };
+
+    document.addEventListener("keydown", handlePasteShortcut);
+
+    return () => {
+      document.removeEventListener("keydown", handlePasteShortcut);
+    };
+  }, [pasteFromClipboard]);
+
   return (
     <div className="space-y-4">
       <div className="bg-muted/40 rounded-xl border px-4 py-5 text-right">
         {history ? (
           <div className="text-muted-foreground text-sm">{history}</div>
         ) : null}
-        <div className="font-mono text-3xl font-semibold tracking-tight tabular-nums">
-          {expression}
+        <div className="flex items-center justify-end gap-2">
+          <div className="font-mono text-3xl font-semibold tracking-tight tabular-nums text-right">
+            {expression}
+          </div>
+          {resultText ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={() => void copyToClipboard()}
+              className="h-7 w-7 flex-shrink-0 rounded-full p-0 text-muted-foreground hover:text-foreground"
+            >
+              {copied ? (
+                <RiCheckLine className="h-4 w-4" />
+              ) : (
+                <RiFileCopyLine className="h-4 w-4" />
+              )}
+              <span className="sr-only">
+                {copied ? "Resultado copiado" : "Copiar resultado"}
+              </span>
+            </Button>
+          ) : null}
         </div>
       </div>
       <div className="grid grid-cols-4 gap-2">

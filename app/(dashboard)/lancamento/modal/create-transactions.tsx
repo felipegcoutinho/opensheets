@@ -274,7 +274,9 @@ export default function CreateTransactions({
 
             <div className="flex gap-2">
               <div className="w-1/2">
-                <Label htmlFor="tipo_transacao">Tipo de Transação</Label>
+                <Label htmlFor="tipo_transacao">
+                  Tipo de Transação <Required />
+                </Label>
                 <Select
                   required
                   name="tipo_transacao"
@@ -298,14 +300,14 @@ export default function CreateTransactions({
                   </Label>
                   <CalculatorDialogButton
                     variant="link"
-                    size="sm"
+                    size="icon"
                     className="text-muted-foreground hover:text-primary ms-auto h-auto p-0"
                     aria-label="Abrir calculadora"
                   >
-                    <RiCalculatorLine className="h-4 w-4" />
+                    <RiCalculatorLine />
                   </CalculatorDialogButton>
                 </div>
-                <div className="mt-1 *:not-first:mt-2">
+                <div className="*:not-first:mt-2">
                   <div className="relative">
                     <MoneyInput
                       className="peer ps-8 pe-12"

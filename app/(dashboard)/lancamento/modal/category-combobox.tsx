@@ -42,6 +42,7 @@ export function CategoryCombobox({
   disabled = false,
 }: CategoryComboboxProps) {
   const [open, setOpen] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const selectedCategory = React.useMemo(
     () => categories.find((categoria) => String(categoria.id) === value),
@@ -67,11 +68,28 @@ export function CategoryCombobox({
     [onChange],
   );
 
+  React.useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const raf = window.requestAnimationFrame(() => {
+      if (inputRef.current) {
+        inputRef.current.value = "";
+        inputRef.current.focus({ preventScroll: true });
+      }
+    });
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+    };
+  }, [open]);
+
   return (
     <div className="w-full">
       <input type="hidden" name={name} value={value ?? ""} />
 
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen} modal>
         <PopoverTrigger asChild>
           <Button
             type="button"
@@ -84,10 +102,18 @@ export function CategoryCombobox({
             {selectedCategory?.nome ?? placeholder}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+        <PopoverContent
+          sideOffset={6}
+          className="w-[--radix-popover-trigger-width] p-0"
+          onOpenAutoFocus={(event) => event.preventDefault()}
+        >
           <Command>
-            <CommandInput placeholder="Buscar categoria..." />
-            <CommandList className="max-h-96 overflow-y-auto overscroll-contain">
+            <CommandInput
+              ref={inputRef}
+              autoFocus
+              placeholder="Buscar categoria..."
+            />
+            <CommandList className="max-h-72 overflow-y-auto overscroll-contain">
               <CommandEmpty>Nenhuma categoria encontrada.</CommandEmpty>
               {grouped.receitas.length ? (
                 <CommandGroup heading="Receitas">

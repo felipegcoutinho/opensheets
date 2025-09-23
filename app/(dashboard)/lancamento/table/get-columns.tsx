@@ -23,14 +23,13 @@ import {
 import UseStyles from "@/hooks/use-styles";
 import {
   RiAttachment2,
-  RiAttachmentLine,
   RiBankCardLine,
   RiBankLine,
   RiCalendarCheckFill,
   RiCheckboxCircleFill,
   RiGroupLine,
   RiMessage2Line,
-  RiMoreLine,
+  RiMoreLine
 } from "@remixicon/react";
 import Link from "next/link";
 import DeleteTransactions from "../modal/delete-transactions";

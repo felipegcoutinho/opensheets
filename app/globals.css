@@ -16,7 +16,7 @@
   --popover-foreground: #0a0a0a;
   --primary: #232323;
   --primary-foreground: #fafafa;
-  --secondary: #e8eee3;
+  --secondary: #ebf2e0;
   --secondary-foreground: #171717;
   --muted: #f5f5f5;
   --muted-foreground: #838383;
@@ -40,12 +40,12 @@
   --sidebar-foreground: #0a0a0a;
   --sidebar-primary: #171717;
   --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #e8eee3;
+  --sidebar-accent: #e5d3f5;
   --sidebar-accent-foreground: #171717;
   --sidebar-border: #e5e5e5;
   --sidebar-ring: #a1a1a1;
 
-  --radius: 0.5rem;
+  --radius: 0.3rem;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
@@ -65,13 +65,13 @@
 .dark {
   --background: #0a0a0a;
   --foreground: #fafafa;
-  --card: #171717;
+  --card: #151816;
   --card-foreground: #fafafa;
-  --popover: #262626;
+  --popover: #0f1110;
   --popover-foreground: #fafafa;
   --primary: #e5e5e5;
-  --primary-foreground: #171717;
-  --secondary: #262626;
+  --primary-foreground: #151816;
+  --secondary: #252b1d;
   --secondary-foreground: #fafafa;
   --muted: #262626;
   --muted-foreground: #a1a1a1;
@@ -91,16 +91,16 @@
   --chart-3: #36a960;
   --chart-4: #d97757;
   --chart-5: #657fe8;
-  --sidebar: #171717;
+  --sidebar: #151816;
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #1447e6;
   --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #262626;
+  --sidebar-accent: #252b1d;
   --sidebar-accent-foreground: #fafafa;
   --sidebar-border: #282828;
   --sidebar-ring: #525252;
 
-  --radius: 0.5rem;
+  --radius: 0.3rem;
   --shadow-2xs: 0 1px 3px 0px hsla(0, 0%, 23%, 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
@@ -169,7 +169,6 @@
 }
 @layer base {
   html {
-    /* Rolagem suave para âncoras */
     scroll-behavior: smooth;
   }
   * {
@@ -181,8 +180,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--accent) 70%, transparent);
-    color: var(--accent-foreground);
+    @apply text-background bg-emerald-500;
   }
 }
 
