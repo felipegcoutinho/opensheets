@@ -53,7 +53,9 @@ export default async function InstallmentsWidget({ month }: Props) {
             >
               <div className="flex items-center justify-between gap-3">
                 <p className="truncate text-sm">
-                  {t.descricao}
+                  <span className="items-start gap-1 py-2 text-sm font-semibold capitalize">
+                    {t.descricao}
+                  </span>
                   <span className="text-muted-foreground ml-1 text-xs">
                     {atual}/{qtde}
                   </span>

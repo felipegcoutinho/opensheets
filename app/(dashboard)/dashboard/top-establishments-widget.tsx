@@ -26,16 +26,18 @@ export default function TopEstablishmentsWidget({ items }: { items: Item[] }) {
             {item.sample ? (
               <PaymentMethodLogo
                 url_name={`/logos/${getLogo(item.sample)}`}
-                height={32}
-                width={32}
+                height={28}
+                width={28}
               />
             ) : null}
-            <div className="flex flex-col items-start py-2">
+            <div className="flex flex-col items-start gap-1 py-2 text-sm font-semibold capitalize">
               {item.descricao}
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground">{item.count}x</span>
+            <span className="text-muted-foreground text-xs">
+              {item.count} lançamento{item.count > 1 ? "s" : ""}
+            </span>
             <MoneyValues value={item.total} />
           </div>
         </div>

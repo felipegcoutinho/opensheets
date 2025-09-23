@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --spacing-custom-height-1: 27rem;
+  --spacing-custom-height-1: 28rem;
 }
 
 :root {

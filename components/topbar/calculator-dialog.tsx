@@ -30,13 +30,12 @@ export function CalculatorDialogButton({
   children,
 }: CalculatorDialogButtonProps) {
   const [open, setOpen] = React.useState(false);
-  const label =
-    children ?? (
-      <span className="inline-flex items-center gap-2">
-        <RiCalculatorLine className="h-4 w-4" />
-        Calculadora
-      </span>
-    );
+  const label = children ?? (
+    <span className="inline-flex items-center gap-2">
+      <RiCalculatorLine className="h-4 w-4" />
+      Calculadora
+    </span>
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -49,7 +48,7 @@ export function CalculatorDialogButton({
           {label}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="p-4 sm:max-w-sm">
         <DialogHeader className="space-y-1.5">
           <DialogTitle className="flex items-center gap-2 text-lg">
             <RiCalculatorLine className="h-5 w-5" />

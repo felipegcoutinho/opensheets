@@ -29,7 +29,15 @@ $function$
 ;
 
 CREATE OR REPLACE FUNCTION public.get_faturas(month text)
- RETURNS TABLE(cartao_id uuid, descricao text, dt_vencimento text, logo_image text, status_pagamento text, total_valor numeric)
+ RETURNS TABLE(
+  cartao_id uuid,
+  descricao text,
+  dt_vencimento text,
+  logo_image text,
+  status_pagamento text,
+  total_valor numeric,
+  responsaveis jsonb
+)
  LANGUAGE plpgsql
 SET search_path TO ''
 AS $function$BEGIN
@@ -44,25 +52,48 @@ AS $function$BEGIN
         WHERE
             f.periodo = month
     ),
-    lancamentos_mes AS (
+    lancamentos_por_pagador AS (
         SELECT
             t.cartao_id,
-            SUM(t.valor)::numeric AS valor_responsavel
+            t.pagador_id,
+            SUM(t.valor)::numeric AS valor_pagador
         FROM
             public.lancamentos t
         WHERE
             t.periodo = month
+            AND t.cartao_id IS NOT NULL
         GROUP BY
-            t.cartao_id
+            t.cartao_id,
+            t.pagador_id
     ),
     total_por_cartao AS (
         SELECT
-            tm.cartao_id,
-            SUM(tm.valor_responsavel) AS total_valor
+            lp.cartao_id,
+            SUM(lp.valor_pagador) AS total_valor
         FROM
-            lancamentos_mes tm
+            lancamentos_por_pagador lp
         GROUP BY
-            tm.cartao_id
+            lp.cartao_id
+    ),
+    responsaveis_por_cartao AS (
+        SELECT
+            lp.cartao_id,
+            jsonb_agg(
+                jsonb_build_object(
+                    'id', lp.pagador_id,
+                    'nome', COALESCE(p.nome, 'Sem responsável'),
+                    'role', p.role,
+                    'foto', p.foto,
+                    'valor', lp.valor_pagador
+                )
+                ORDER BY COALESCE(p.nome, 'Sem responsável')
+            ) AS responsaveis
+        FROM
+            lancamentos_por_pagador lp
+        LEFT JOIN
+            public.pagadores p ON p.id = lp.pagador_id
+        GROUP BY
+            lp.cartao_id
     )
     SELECT
         c.id AS cartao_id,
@@ -70,13 +101,16 @@ AS $function$BEGIN
         c.dt_vencimento,
         c.logo_image,
         COALESCE(fs.status_pagamento, 'pendente') AS status_pagamento,
-        tpc.total_valor
+        tpc.total_valor,
+        COALESCE(rpc.responsaveis, '[]'::jsonb) AS responsaveis
     FROM
         total_por_cartao tpc
     JOIN
         public.cartoes c ON c.id = tpc.cartao_id
     LEFT JOIN
         faturas_status fs ON fs.cartao_id = tpc.cartao_id
+    LEFT JOIN
+        responsaveis_por_cartao rpc ON rpc.cartao_id = tpc.cartao_id
     ORDER BY
         c.descricao;
 END;$function$

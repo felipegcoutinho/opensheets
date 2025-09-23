@@ -1,4 +1,5 @@
 "use client";
+import { createNote } from "@/app/actions/notes/create_notes";
 import Required from "@/components/required-on-forms";
 import TasksInput from "@/components/tasks-input";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { UseDates } from "@/hooks/use-dates";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { createNote } from "@/app/actions/notes/create_notes";
 import type { ActionResponse } from "./form-schema";
 
 type MonthOption = {
