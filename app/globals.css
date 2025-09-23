@@ -28,6 +28,7 @@
   --input: #e5e5e5;
   --ring: #a1a1a1;
 
+  --description: #e3eeff;
   --income: #36a960;
   --expense: #d97757;
 
@@ -83,6 +84,7 @@
   --input: #343434;
   --ring: #737373;
 
+  --description: #3d301f;
   --income: #36a960;
   --expense: #d97757;
 
@@ -136,6 +138,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-description: var(--description);
   --color-income: var(--income);
   --color-expense: var(--expense);
 
