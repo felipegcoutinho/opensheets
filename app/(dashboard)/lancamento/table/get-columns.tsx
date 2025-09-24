@@ -29,7 +29,7 @@ import {
   RiCheckboxCircleFill,
   RiGroupLine,
   RiMessage2Line,
-  RiMoreLine
+  RiMoreLine,
 } from "@remixicon/react";
 import Link from "next/link";
 import DeleteTransactions from "../modal/delete-transactions";
@@ -153,7 +153,7 @@ export const getColumns = (
   {
     accessorKey: "tipo_transacao",
     header: ({ column }) => {
-      return <span>Transação</span>;
+      return "Transação";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -169,7 +169,7 @@ export const getColumns = (
   {
     accessorKey: "valor",
     header: ({ column }) => {
-      return <span>Valor</span>;
+      return "Valor";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -183,7 +183,7 @@ export const getColumns = (
   {
     accessorKey: "condicao",
     header: ({ column }) => {
-      return <span>Condição</span>;
+      return "Condição";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -199,7 +199,7 @@ export const getColumns = (
   {
     accessorKey: "forma_pagamento",
     header: ({ column }) => {
-      return <span>Forma de Pagamento</span>;
+      return "Forma de Pagamento";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -215,7 +215,7 @@ export const getColumns = (
   {
     accessorKey: "responsavel",
     accessorFn: (row) => row.pagadores?.nome,
-    header: () => <span>Pagador</span>,
+    header: () => "Pagador",
     cell: ({ row }) => {
       const item = row.original;
       const pagador = item.pagadores;
@@ -270,7 +270,7 @@ export const getColumns = (
   {
     id: "conta_cartao",
     accessorFn: (row) => getDescricao(row),
-    header: () => <span>Conta/Cartão</span>,
+    header: () => "Conta/Cartão",
     cell: ({ row }) => {
       const item = row.original;
       const descricao = getDescricao(item);
@@ -318,7 +318,7 @@ export const getColumns = (
 
   {
     id: "actions",
-    header: () => <span>Ações</span>,
+    header: () => "Ações",
     cell: ({ row }) => {
       const item = row.original;
 

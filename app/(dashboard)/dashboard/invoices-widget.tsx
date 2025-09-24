@@ -43,9 +43,7 @@ function resolveFotoSrc(foto?: string | null) {
   return `/avatars/${foto}`;
 }
 
-function normalizarResponsaveis(
-  item: InvoiceWidgetItem,
-): InvoiceResponsible[] {
+function normalizarResponsaveis(item: InvoiceWidgetItem): InvoiceResponsible[] {
   const totalValor = Number(item.total_valor ?? 0);
 
   const lista = Array.isArray(item.responsaveis)
@@ -57,7 +55,10 @@ function normalizarResponsaveis(
           foto: responsavel?.foto ?? null,
           valor: Number(responsavel?.valor ?? 0),
         }))
-        .filter((responsavel) => Number.isFinite(responsavel.valor) && responsavel.valor !== 0)
+        .filter(
+          (responsavel) =>
+            Number.isFinite(responsavel.valor) && responsavel.valor !== 0,
+        )
     : [];
 
   const somaResponsaveis = lista.reduce(
@@ -65,7 +66,9 @@ function normalizarResponsaveis(
     0,
   );
 
-  const residual = Number.parseFloat((totalValor - somaResponsaveis).toFixed(2));
+  const residual = Number.parseFloat(
+    (totalValor - somaResponsaveis).toFixed(2),
+  );
 
   if (residual > 0.01 || residual < -0.01) {
     lista.push({
@@ -80,7 +83,10 @@ function normalizarResponsaveis(
   return lista;
 }
 
-export default async function InvoiceWidget({ data, month }: InvoiceWidgetProps) {
+export default async function InvoiceWidget({
+  data,
+  month,
+}: InvoiceWidgetProps) {
   const { DateFormat } = UseDates();
 
   if (!data || data.length === 0) return <EmptyCard />;
@@ -105,7 +111,12 @@ export default async function InvoiceWidget({ data, month }: InvoiceWidgetProps)
         const totalValor = Number(item.total_valor ?? 0);
         const responsaveis = normalizarResponsaveis(item);
         const basePercentual =
-          totalValor !== 0 ? Math.abs(totalValor) : responsaveis.reduce((acc, responsavel) => acc + Math.abs(responsavel.valor), 0);
+          totalValor !== 0
+            ? Math.abs(totalValor)
+            : responsaveis.reduce(
+                (acc, responsavel) => acc + Math.abs(responsavel.valor),
+                0,
+              );
 
         // Obter o status da fatura do mapa pré-buscado
         const fatura_status = faturaStatusMap.get(item.cartao_id) || [];
@@ -139,9 +150,12 @@ export default async function InvoiceWidget({ data, month }: InvoiceWidgetProps)
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80 space-y-4">
                     <div className="space-y-1">
-                      <p className="text-sm font-semibold">Distribuição por pagador</p>
-                      <p className="text-xs text-muted-foreground">
-                        Total do cartão: <MoneyValues value={totalValor} animated={false} />
+                      <p className="text-sm font-semibold">
+                        Distribuição por pagador
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Total do cartão:{" "}
+                        <MoneyValues value={totalValor} animated={false} />
                       </p>
                     </div>
                     {responsaveis.length ? (
@@ -149,16 +163,28 @@ export default async function InvoiceWidget({ data, month }: InvoiceWidgetProps)
                         {responsaveis.map((responsavel) => {
                           const valor = Number(responsavel.valor ?? 0);
                           const percentualBase =
-                            basePercentual !== 0 ? Math.abs(valor) / basePercentual : 0;
-                          const percentual = Math.min(Math.max(percentualBase * 100, 0), 100);
-                          const formatado = percentual >= 10 ? percentual.toFixed(0) : percentual.toFixed(1);
+                            basePercentual !== 0
+                              ? Math.abs(valor) / basePercentual
+                              : 0;
+                          const percentual = Math.min(
+                            Math.max(percentualBase * 100, 0),
+                            100,
+                          );
+                          const formatado =
+                            percentual >= 10
+                              ? percentual.toFixed(0)
+                              : percentual.toFixed(1);
                           const percentualTexto = `${formatado.replace(/\.0$/, "")}% do total`;
                           const nome = responsavel.nome ?? "Sem responsável";
                           const fotoSrc = resolveFotoSrc(responsavel.foto);
-                          const fallback = nome.trim().charAt(0).toUpperCase() || "?";
+                          const fallback =
+                            nome.trim().charAt(0).toUpperCase() || "?";
 
                           return (
-                            <li key={`${responsavel.id ?? "sem-id"}-${nome}`} className="flex items-start gap-3">
+                            <li
+                              key={`${responsavel.id ?? "sem-id"}-${nome}`}
+                              className="flex items-start gap-3"
+                            >
                               <Avatar className="size-8">
                                 {fotoSrc ? (
                                   <AvatarImage src={fotoSrc} alt={nome} />
@@ -167,19 +193,19 @@ export default async function InvoiceWidget({ data, month }: InvoiceWidgetProps)
                               </Avatar>
                               <div className="flex flex-1 flex-col gap-1">
                                 <div className="flex items-center justify-between gap-2">
-                                  <span className="text-sm font-medium capitalize leading-tight">
+                                  <span className="text-sm leading-tight font-medium capitalize">
                                     {nome}
                                   </span>
                                   <MoneyValues
                                     value={valor}
                                     animated={false}
-                                    className="text-sm font-semibold"
+                                    className="text-sm"
                                   />
                                 </div>
-                                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                                <div className="text-muted-foreground flex items-center justify-between text-xs">
                                   <span>{percentualTexto}</span>
                                   {responsavel.role ? (
-                                    <span className="bg-muted/60 text-muted-foreground/80 rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wide">
+                                    <span className="bg-muted/60 text-muted-foreground/80 rounded-full px-2 py-0.5 text-[10px] tracking-wide uppercase">
                                       {responsavel.role}
                                     </span>
                                   ) : null}
@@ -190,8 +216,9 @@ export default async function InvoiceWidget({ data, month }: InvoiceWidgetProps)
                         })}
                       </ul>
                     ) : (
-                      <p className="text-xs text-muted-foreground">
-                        Nenhum pagador associado às transações deste cartão neste período.
+                      <p className="text-muted-foreground text-xs">
+                        Nenhum pagador associado às transações deste cartão
+                        neste período.
                       </p>
                     )}
                   </HoverCardContent>
