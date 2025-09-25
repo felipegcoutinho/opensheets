@@ -19,6 +19,8 @@ export async function createTransaction(
   _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
+  const regraTipo = formData.get("regra_502030_tipo");
+
   const rawData: TransactionFormData = {
     descricao: String(formData.get("descricao")),
     valor: String(formData.get("valor")),
@@ -37,6 +39,8 @@ export async function createTransaction(
     anotacao: (formData.get("anotacao") as string) || "",
     dividir_lancamento: (formData.get("dividir_lancamento") as string) || "",
     realizado: (formData.get("realizado") as string) || "",
+    regra_502030_tipo:
+      typeof regraTipo === "string" && regraTipo ? regraTipo : undefined,
   };
 
   const validated = transactionSchema.omit({ id: true }).safeParse(rawData);
@@ -50,6 +54,24 @@ export async function createTransaction(
   }
 
   const supabase = createClient();
+
+  const { data: regraConfig, error: regraError } = await supabase
+    .from("orcamento_regra_502030")
+    .select("ativada")
+    .maybeSingle();
+
+  if (regraError) {
+    console.error("Erro ao verificar estado da regra 50/30/20:", regraError);
+  }
+
+  const isExpense = validated.data.tipo_transacao === "despesa";
+  if (regraConfig?.ativada && isExpense && !validated.data.regra_502030_tipo) {
+    return {
+      success: false,
+      message: "Selecione em qual faixa da regra 50/30/20 o lançamento se encaixa.",
+      errors: { regra_502030_tipo: ["Obrigatório quando a regra está ativa"] },
+    };
+  }
 
   try {
     const dados = await parseFormData(formData);

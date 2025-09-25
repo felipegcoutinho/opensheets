@@ -1,5 +1,6 @@
 "use client";
 
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,6 +18,7 @@ export const NavProjects = memo(function NavProjects({
   cartoes,
   contas,
   categorias,
+  budgetRule,
 }: {
   groups: {
     title: string;
@@ -29,6 +31,7 @@ export const NavProjects = memo(function NavProjects({
   cartoes: any;
   contas: any;
   categorias: any;
+  budgetRule: BudgetRuleConfig;
 }) {
   const pathname = usePathname();
 
@@ -58,6 +61,7 @@ export const NavProjects = memo(function NavProjects({
                         categorias={categorias}
                         item={item}
                         isActive={isActive}
+                        budgetRule={budgetRule}
                       />
                     </div>
                   </SidebarMenuButton>

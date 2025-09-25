@@ -1,8 +1,11 @@
 "use client";
 
+import type { BudgetRuleBucket } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import { formatBucketLabel } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import MoneyValues from "@/components/money-values";
-import Timeline from "@/components/timeline-orders";
 import BadgeSystem from "@/components/payer-badge";
+import Timeline from "@/components/timeline-orders";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,7 +29,6 @@ import UtilitiesLancamento, {
   formatPeriodoLabel,
 } from "../utilities-lancamento";
 import ViewImage from "./view-image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type TransactionCondition =
   | "vista"
@@ -56,6 +58,7 @@ type DetailsTransactionsProps = {
   itemPaid: boolean;
   itemImagemURL?: string | null;
   itemCategoriaId?: string | null;
+  itemRegra502030Tipo?: string | null;
   children?: React.ReactNode;
 };
 
@@ -80,6 +83,7 @@ export default function DetailsTransactions({
   itemPaid,
   itemImagemURL,
   itemCategoriaId,
+  itemRegra502030Tipo,
   children,
 }: DetailsTransactionsProps) {
   const { isOpen, setIsOpen } = UtilitiesLancamento();
@@ -160,6 +164,19 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">Categoria</span>
                   <span className="capitalize">{itemCategoriaId ?? "—"}</span>
                 </li>
+
+                {itemRegra502030Tipo ? (
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Regra 50/30/20
+                    </span>
+                    <span className="capitalize">
+                      {formatBucketLabel(
+                        itemRegra502030Tipo as BudgetRuleBucket,
+                      )}
+                    </span>
+                  </li>
+                ) : null}
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">

@@ -1,4 +1,8 @@
 "use client";
+import type {
+  BudgetRuleBucket,
+  BudgetRuleConfig,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
 import { CalculatorDialogButton } from "@/components/topbar/calculator-dialog";
@@ -26,11 +30,22 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { UseDates } from "@/hooks/use-dates";
-import { RiCalculatorLine, RiThumbUpFill } from "@remixicon/react";
+import {
+  RiCalculatorLine,
+  RiQuestionLine,
+  RiThumbUpFill,
+} from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { BudgetRuleSelect } from "./budget-rule-select";
 import { CategoryCombobox } from "./category-combobox";
 
 const fetchJSON = async (url: string) => {
@@ -45,6 +60,7 @@ type CreateTransactionsProps = {
   getCategorias: any;
   children: React.ReactNode;
   defaultDate?: Date | string;
+  budgetRule: BudgetRuleConfig;
 };
 
 export default function CreateTransactions({
@@ -53,6 +69,7 @@ export default function CreateTransactions({
   getCategorias,
   children,
   defaultDate,
+  budgetRule,
 }: CreateTransactionsProps) {
   const {
     isOpen,
@@ -158,6 +175,13 @@ export default function CreateTransactions({
 
   // Estado para categoria (combobox com busca)
   const [categoriaId, setCategoriaId] = useState<string | undefined>();
+  const [ruleBucket, setRuleBucket] = useState<BudgetRuleBucket | undefined>();
+
+  useEffect(() => {
+    if (tipoTransacao !== "despesa" && ruleBucket) {
+      setRuleBucket(undefined);
+    }
+  }, [tipoTransacao, ruleBucket]);
 
   // Ao fechar o modal, resetar categoria e pagador para o padrão
   const onDialogOpenChange = (val: boolean) => {
@@ -168,6 +192,7 @@ export default function CreateTransactions({
 
       // Reseta pagadores: volta para o padrão via useEffect (principal ou primeiro)
       setSelectedPayer(undefined);
+      setRuleBucket(undefined);
     }
   };
 
@@ -195,6 +220,7 @@ export default function CreateTransactions({
               // Após salvar e fechar o modal, reseta os estados locais
               setCategoriaId(undefined);
               setSelectedPayer(undefined);
+              setRuleBucket(undefined);
             }}
             className="space-y-2"
           >
@@ -326,6 +352,47 @@ export default function CreateTransactions({
                 </div>
               </div>
             </div>
+
+            {budgetRule.ativada && tipoTransacao === "despesa" && (
+              <div>
+                <div className="flex items-center gap-1">
+                  <Label
+                    htmlFor="regra_502030_tipo"
+                    className="flex items-center gap-1"
+                  >
+                    Regra 50/30/20 <Required />
+                  </Label>
+                  <TooltipProvider delayDuration={200}>
+                    <Tooltip>
+                      <TooltipTrigger
+                        type="button"
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        <RiQuestionLine className="size-4" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs text-xs">
+                        Escolha se o lançamento representa Necessidades, Desejos
+                        ou Objetivos conforme a regra 50/30/20 configurada em
+                        Orçamentos.
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+                <BudgetRuleSelect
+                  id="regra_502030_tipo"
+                  name="regra_502030_tipo"
+                  value={ruleBucket}
+                  onValueChange={setRuleBucket}
+                  percentages={budgetRule.percentuais}
+                  required
+                />
+              </div>
+            )}
+            <input
+              type="hidden"
+              name="regra_502030_tipo"
+              value={tipoTransacao === "despesa" ? (ruleBucket ?? "") : ""}
+            />
 
             <div className="flex w-full gap-2">
               <Card

@@ -1,14 +1,15 @@
 "use client";
 
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
 import { getColumns } from "./get-columns";
-import { useTransactionTableLogic } from "./utilities-table";
-import { TransactionTableHeaderCard } from "./transaction-table-header";
 import { TransactionTableCore } from "./transaction-table-core";
-import { TransactionTablePagination } from "./transaction-table-pagination";
 import { TransactionTableFilters } from "./transaction-table-filters";
-import { UseDates } from "@/hooks/use-dates";
+import { TransactionTableHeaderCard } from "./transaction-table-header";
+import { TransactionTablePagination } from "./transaction-table-pagination";
+import { useTransactionTableLogic } from "./utilities-table";
 
 interface Transaction {
   id: string | number; // ou o tipo do seu ID
@@ -32,6 +33,7 @@ interface TableTransactionProps {
   getCards: any;
   getCategorias: any;
   hidden?: boolean;
+  budgetRule: BudgetRuleConfig;
 }
 
 export function TableTransaction({
@@ -40,6 +42,7 @@ export function TableTransaction({
   getCards,
   getCategorias,
   hidden,
+  budgetRule,
 }: TableTransactionProps) {
   const { getDescricao } = UseStyles();
 
@@ -69,6 +72,7 @@ export function TableTransaction({
       getCategorias,
       DateFormat,
       hidden,
+      budgetRule,
     ),
     getDescricao,
   });
@@ -91,6 +95,7 @@ export function TableTransaction({
         responsavelOptions={responsavelOptions}
         categoriaOptions={categoriaOptions}
         contaCartaoOptions={contaCartaoOptions}
+        budgetRule={budgetRule}
       />
 
       <Card>

@@ -3,13 +3,15 @@ import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getTransactionsByPayer } from "@/app/actions/transactions/fetch_transactions";
+import { getBudgetRule } from "@/app/actions/orcamentos/fetch_budget_rule";
 
 export default async function PayerTableSection({ id, month }: { id: string; month: string }) {
-  const [contas, categorias, cards, transactions] = await Promise.all([
+  const [contas, categorias, cards, transactions, budgetRule] = await Promise.all([
     getAccount(),
     getCategorias(),
     getCards(),
     getTransactionsByPayer(month, id),
+    getBudgetRule(),
   ]);
 
   const list = Array.isArray(transactions) ? transactions : [];
@@ -21,7 +23,7 @@ export default async function PayerTableSection({ id, month }: { id: string; mon
       getCards={cards}
       getCategorias={categorias}
       hidden={false}
+      budgetRule={budgetRule}
     />
   );
 }
-

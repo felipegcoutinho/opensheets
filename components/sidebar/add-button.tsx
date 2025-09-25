@@ -2,6 +2,7 @@
 
 import CreateNotes from "@/app/(dashboard)/anotacao/modal/create-notes";
 import CreateTransactions from "@/app/(dashboard)/lancamento/modal/create-transactions";
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { RiAddCircleLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 
@@ -11,12 +12,14 @@ function AddButton({
   contas,
   categorias,
   isActive,
+  budgetRule,
 }: {
   item: any;
   cartoes: any;
   contas: any;
   categorias: any;
   isActive?: boolean;
+  budgetRule: BudgetRuleConfig;
 }) {
   return (
     <>
@@ -25,6 +28,7 @@ function AddButton({
           getCards={cartoes}
           getAccount={contas}
           getCategorias={categorias}
+          budgetRule={budgetRule}
         >
           <Button
             className="transition-all hover:scale-110"

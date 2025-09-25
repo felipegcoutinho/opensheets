@@ -1,5 +1,6 @@
 "use client";
 
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,7 @@ interface TransactionTableFiltersProps<TData> {
   responsavelOptions: string[];
   categoriaOptions: string[];
   contaCartaoOptions: string[];
+  budgetRule: BudgetRuleConfig;
 }
 
 export function TransactionTableFilters<TData>({
@@ -50,6 +52,7 @@ export function TransactionTableFilters<TData>({
   responsavelOptions,
   categoriaOptions,
   contaCartaoOptions,
+  budgetRule,
 }: TransactionTableFiltersProps<TData>) {
   if (hidden) {
     return null;
@@ -181,6 +184,7 @@ export function TransactionTableFilters<TData>({
         getCards={getCards}
         getAccount={getAccount}
         getCategorias={getCategorias}
+        budgetRule={budgetRule}
       >
         <Button
           variant="default"

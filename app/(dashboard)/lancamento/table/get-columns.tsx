@@ -1,4 +1,5 @@
 "use client";
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import MoneyValues from "@/components/money-values";
 import BadgeSystem from "@/components/payer-badge";
 import PaymentMethodLogo from "@/components/payment-method-logo";
@@ -54,6 +55,7 @@ export const getColumns = (
   getCategorias,
   DateFormat,
   hidden,
+  budgetRule: BudgetRuleConfig,
 ) => [
   {
     id: "selection",
@@ -357,6 +359,7 @@ export const getColumns = (
                   itemImagemURL={item.imagem_url}
                   itemCategoriaId={item.categorias?.nome}
                   itemPeriodo={item.periodo}
+                  itemRegra502030Tipo={item.regra_502030_tipo}
                 />
               </DropdownMenuItem>
 
@@ -381,6 +384,7 @@ export const getColumns = (
                     itemResponsavel={item.pagadores?.nome}
                     getCards={getCardsMap}
                     getAccount={getAccountMap}
+                    budgetRule={budgetRule}
                   />
                 </DropdownMenuItem>
               )}

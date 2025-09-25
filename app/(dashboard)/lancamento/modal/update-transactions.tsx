@@ -22,11 +22,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 // Toggle removido: gestão de pagamento migrou para TogglePaymentDialog
+import {
+  BUDGET_RULE_BUCKETS,
+  type BudgetRuleBucket,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { UseDates } from "@/hooks/use-dates";
+import { RiQuestionLine } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { BudgetRuleSelect } from "./budget-rule-select";
 import { CategoryCombobox } from "./category-combobox";
 
 export default function UpdateTransactions({
@@ -48,6 +60,7 @@ export default function UpdateTransactions({
   getCards,
   getAccount,
   item,
+  budgetRule,
 }) {
   const {
     isOpen,
@@ -62,6 +75,17 @@ export default function UpdateTransactions({
   const [imagePreview, setImagePreview] = useState(itemImagemURL);
   const [categoriaId, setCategoriaId] = useState(() =>
     itemCategoriaId ? itemCategoriaId.toString() : "",
+  );
+  const rawRuleBucket = item?.regra_502030_tipo
+    ? String(item.regra_502030_tipo)
+    : undefined;
+  const initialRuleBucket =
+    rawRuleBucket &&
+    (BUDGET_RULE_BUCKETS as readonly string[]).includes(rawRuleBucket)
+      ? (rawRuleBucket as BudgetRuleBucket)
+      : undefined;
+  const [ruleBucket, setRuleBucket] = useState<BudgetRuleBucket | undefined>(
+    initialRuleBucket,
   );
 
   const { getMonthOptions } = UseDates();
@@ -121,6 +145,7 @@ export default function UpdateTransactions({
     setIsOpen(val);
     if (!val) {
       setImagePreview(itemImagemURL);
+      setRuleBucket(initialRuleBucket);
     }
   };
 
@@ -238,6 +263,47 @@ export default function UpdateTransactions({
               />
             </div>
           </div>
+
+          {budgetRule.ativada && itemTipoTransacao === "despesa" && (
+            <div className="mb-2">
+              <div className="flex items-center gap-1">
+                <Label
+                  htmlFor="regra_502030_tipo"
+                  className="flex items-center gap-1"
+                >
+                  Regra 50/30/20 <Required />
+                </Label>
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger
+                      type="button"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      <RiQuestionLine className="size-4" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs text-xs">
+                      Escolha se o lançamento representa Necessidades, Desejos
+                      ou Objetivos conforme a regra 50/30/20 configurada em
+                      Orçamentos.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              <BudgetRuleSelect
+                id="regra_502030_tipo"
+                name="regra_502030_tipo"
+                value={ruleBucket}
+                onValueChange={setRuleBucket}
+                percentages={budgetRule.percentuais}
+                required
+              />
+            </div>
+          )}
+          <input
+            type="hidden"
+            name="regra_502030_tipo"
+            value={itemTipoTransacao === "despesa" ? (ruleBucket ?? "") : ""}
+          />
 
           <div className="mb-2 w-full">
             <Label>

@@ -8,6 +8,14 @@ export async function updateTransaction(
   formData: FormData,
 ): Promise<ActionResponse> {
   const supabase = createClient();
+  const { data: regraConfig, error: regraError } = await supabase
+    .from("orcamento_regra_502030")
+    .select("ativada")
+    .maybeSingle();
+
+  if (regraError) {
+    console.error("Erro ao verificar estado da regra 50/30/20:", regraError);
+  }
   const {
     id,
     data_compra,
@@ -29,6 +37,7 @@ export async function updateTransaction(
     conta_id,
     dividir_lancamento,
     imagem_url_atual, // URL da imagem existente
+    regra_502030_tipo,
   } = Object.fromEntries(formData.entries());
 
   // Normaliza booleanos vindos do FormData
@@ -119,6 +128,19 @@ export async function updateTransaction(
         typeof dt_pagamento_boleto === "string" && dt_pagamento_boleto.trim()
           ? dt_pagamento_boleto
           : null;
+    }
+    if (formData.has("regra_502030_tipo")) {
+      updatePayload.regra_502030_tipo =
+        typeof regra_502030_tipo === "string" && regra_502030_tipo
+          ? regra_502030_tipo
+          : null;
+    }
+    const isExpense = typeof tipo_transacao === "string" && tipo_transacao === "despesa";
+    if (regraConfig?.ativada && isExpense && !updatePayload.regra_502030_tipo) {
+      return {
+        success: false,
+        message: "Selecione a faixa da regra 50/30/20 antes de salvar.",
+      };
     }
 
     const { error } = await supabase

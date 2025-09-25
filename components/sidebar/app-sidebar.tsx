@@ -1,4 +1,5 @@
 "use client";
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { NavProjects } from "@/components/sidebar/nav-projects";
 import { NavUser } from "@/components/sidebar/nav-user";
 import {
@@ -27,6 +28,7 @@ export function AppSidebar({
   cartoes,
   contas,
   categorias,
+  budgetRule,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
   username: string;
@@ -35,6 +37,7 @@ export function AppSidebar({
   cartoes: any;
   contas: any;
   categorias: any;
+  budgetRule: BudgetRuleConfig;
 }) {
   const searchParams = useSearchParams();
   const { formatted_current_month } = UseDates();
@@ -59,6 +62,7 @@ export function AppSidebar({
             cartoes={cartoes}
             contas={contas}
             categorias={categorias}
+            budgetRule={budgetRule}
           />
         </SidebarContent>
       </SidebarContent>

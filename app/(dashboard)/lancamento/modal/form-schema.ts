@@ -1,3 +1,4 @@
+import { BUDGET_RULE_BUCKETS } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import * as z from "zod";
 
 export interface TransactionFormData {
@@ -20,6 +21,7 @@ export interface TransactionFormData {
   anotacao?: string;
   dividir_lancamento?: string;
   realizado?: string;
+  regra_502030_tipo?: string;
 }
 
 export interface ActionResponse<T = TransactionFormData> {
@@ -48,4 +50,7 @@ export const transactionSchema = z.object({
   anotacao: z.string().optional(),
   dividir_lancamento: z.string().optional(),
   realizado: z.string().optional(),
+  regra_502030_tipo: z
+    .enum(BUDGET_RULE_BUCKETS as [string, ...string[]])
+    .optional(),
 });

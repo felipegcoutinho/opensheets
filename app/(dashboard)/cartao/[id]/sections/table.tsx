@@ -3,6 +3,7 @@ import { getAccount } from "@/app/actions/accounts/fetch_accounts";
 import { getCards } from "@/app/actions/cards/fetch_cards";
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getCardInvoice } from "@/app/actions/transactions/fetch_transactions";
+import { getBudgetRule } from "@/app/actions/orcamentos/fetch_budget_rule";
 
 export default async function CardTableSection({
   id,
@@ -11,11 +12,12 @@ export default async function CardTableSection({
   id: string;
   month: string;
 }) {
-  const [contas, categorias, cards, cardInvoice] = await Promise.all([
+  const [contas, categorias, cards, cardInvoice, budgetRule] = await Promise.all([
     getAccount(),
     getCategorias(),
     getCards(),
     getCardInvoice(month, id),
+    getBudgetRule(),
   ]);
 
   return (
@@ -25,6 +27,7 @@ export default async function CardTableSection({
       getCards={cards ?? []}
       getCategorias={categorias ?? []}
       hidden={false}
+      budgetRule={budgetRule}
     />
   );
 }

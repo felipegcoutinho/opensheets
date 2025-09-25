@@ -1,6 +1,7 @@
 "use client";
 import CreateTransactions from "@/app/(dashboard)/lancamento/modal/create-transactions";
 import DetailsTransactions from "@/app/(dashboard)/lancamento/modal/details-transactions";
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import MoneyValues from "@/components/money-values";
 import { Card } from "@/components/ui/card";
 import {
@@ -23,6 +24,7 @@ type Props = {
   getCards: AnyRecord[] | null;
   getAccount: AnyRecord[] | null;
   getCategorias: AnyRecord[] | null;
+  budgetRule: BudgetRuleConfig;
 };
 
 type DayData = {
@@ -75,6 +77,7 @@ export default function MonthCalendar({
   getCards,
   getAccount,
   getCategorias,
+  budgetRule,
 }: Props) {
   const meta = useMemo(() => monthMeta(month), [month]);
   const [open, setOpen] = useState(false);
@@ -219,158 +222,164 @@ export default function MonthCalendar({
                   )}
                   aria-label={`Dia ${cell.day}`}
                 >
-            <div className="mb-1 flex items-center justify-between">
-              <span
-                className={cn(
-                  "text-sm font-semibold",
-                  (() => {
-                    const now = new Date();
-                    return cell.date.getDate() === now.getDate() &&
-                      cell.date.getMonth() === now.getMonth() &&
-                      cell.date.getFullYear() === now.getFullYear()
-                      ? "text-primary"
-                      : "";
-                  })(),
-                )}
-              >
-                {cell.day}
-              </span>
-              {(() => {
-                const itemsCount = cell.items.length;
-                const hasCardDue = (cardsByDay.get(cell.day)?.length ?? 0) > 0;
-                // Ativa "Ver mais" quando:
-                // - houver mais de 3 lançamentos; ou
-                // - houver vencimento de cartão e pelo menos 3 lançamentos no dia
-                return itemsCount > 3 || (hasCardDue && itemsCount >= 3);
-              })() && (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelected({ date: cell.date, items: cell.items });
-                    setOpen(true);
-                  }}
-                  className="text-primary cursor-pointer text-[10px] hover:underline"
-                  aria-label={`Ver todos os lançamentos do dia ${cell.day}`}
-                >
-                  Ver mais
-                </button>
-              )}
-            </div>
-            {/* Badges de vencimentos (cartões e boletos) */}
-            {cell.isCurrentMonth &&
-              ((cardsByDay.get(cell.day)?.length ?? 0) > 0 ||
-                (billsByDay.get(cell.day)?.length ?? 0) > 0) && (
-                <ul className="mb-1 flex flex-wrap gap-1">
-                  {/* Cartões */}
-                  {(cardsByDay.get(cell.day) ?? []).slice(0, 2).map((c) => (
-                    <li
-                      key={`card-${c.id}`}
-                      className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
-                      title={`Vencimento do cartão ${c?.descricao ?? ""}`}
-                    >
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-500" />
-                      <PaymentMethodLogo
-                        url_name={`/logos/${c.logo_image}`}
-                        width={14}
-                        height={14}
-                        descricao={c?.descricao ?? "Cartão"}
-                      />
-                    </li>
-                  ))}
-                  {(cardsByDay.get(cell.day) ?? []).length > 2 && (
-                    <li className="text-[10px] text-neutral-600">
-                      +{(cardsByDay.get(cell.day) ?? []).length - 2}
-                    </li>
-                  )}
-                  {/* Boletos */}
-                  {(billsByDay.get(cell.day) ?? []).slice(0, 2).map((b, i) => (
-                    <li
-                      key={`bill-${b.id ?? i}`}
-                      className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
-                      title={`Vencimento do boleto: ${b?.descricao ?? "Boleto"}`}
-                    >
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
-                      {b?.descricao}
-                    </li>
-                  ))}
-                  {(billsByDay.get(cell.day) ?? []).length > 2 && (
-                    <li className="text-[10px] text-neutral-600">
-                      +{(billsByDay.get(cell.day) ?? []).length - 2}
-                    </li>
-                  )}
-                </ul>
-              )}
-            <ul className="flex-1 overflow-hidden">
-              {cell.items.slice(0, 3).map((t, i) => (
-                <li key={t.id ?? i}>
-                  <DetailsTransactions
-                    itemId={t.id}
-                    itemNotas={t.anotacao}
-                    itemDate={t.data_compra}
-                    itemDescricao={t.descricao}
-                    itemCondicao={t.condicao}
-                    itemResponsavel={t.pagadores?.nome}
-                    itemResponsavelRole={t.pagadores?.role}
-                    itemResponsavelFoto={t.pagadores?.foto}
-                    itemTipoTransacao={t.tipo_transacao}
-                    itemValor={parseFloat(t.valor)}
-                    itemFormaPagamento={t.forma_pagamento}
-                    itemQtdeParcelas={t.qtde_parcela}
-                    itemParcelaAtual={t.parcela_atual}
-                    itemQtdeRecorrencia={t.qtde_recorrencia}
-                    itemCartao={t.cartoes?.descricao}
-                    itemConta={t.contas?.descricao}
-                    itemPaid={t.realizado}
-                    itemImagemURL={t.imagem_url}
-                    itemCategoriaId={t.categorias?.nome}
-                    itemPeriodo={t.periodo}
-                  >
-                    <button
-                      type="button"
+                  <div className="mb-1 flex items-center justify-between">
+                    <span
                       className={cn(
-                        "w-full truncate rounded-sm px-1 py-0.5 text-left text-xs",
-                        t?.tipo_transacao === "receita"
-                          ? "bg-income/15 text-income dark:bg-income/25 dark:text-white"
-                          : "bg-expense/15 text-expense dark:bg-expense/25 dark:text-white",
+                        "text-sm font-semibold",
+                        (() => {
+                          const now = new Date();
+                          return cell.date.getDate() === now.getDate() &&
+                            cell.date.getMonth() === now.getMonth() &&
+                            cell.date.getFullYear() === now.getFullYear()
+                            ? "text-primary"
+                            : "";
+                        })(),
                       )}
-                      title={`${t?.descricao ?? ""}`}
                     >
-                      <span className="mr-1">{t?.descricao ?? "—"}</span>
-                      {typeof t?.valor !== "undefined" && (
-                        <span className="font-medium">
-                          <MoneyValues
-                            animated={false}
-                            value={parseFloat(t.valor)}
-                          />
-                        </span>
-                      )}
-                    </button>
-                  </DetailsTransactions>
-                </li>
-              ))}
-              {cell.items.length === 0 && (
-                <li className="text-muted-foreground text-[11px]">
-                  Sem lançamentos
-                </li>
-              )}
-            </ul>
-            <div className="text-primary invisible mt-1 text-right text-[10px] group-hover:visible">
-              <CreateTransactions
-                getCards={getCards}
-                getAccount={getAccount}
-                getCategorias={getCategorias}
-                defaultDate={cell.date}
-              >
-                <button
-                  type="button"
-                  className="cursor-pointer hover:underline"
-                >
-                  Novo lançamento
-                </button>
-              </CreateTransactions>
-            </div>
-          </div>
+                      {cell.day}
+                    </span>
+                    {(() => {
+                      const itemsCount = cell.items.length;
+                      const hasCardDue =
+                        (cardsByDay.get(cell.day)?.length ?? 0) > 0;
+                      // Ativa "Ver mais" quando:
+                      // - houver mais de 3 lançamentos; ou
+                      // - houver vencimento de cartão e pelo menos 3 lançamentos no dia
+                      return itemsCount > 3 || (hasCardDue && itemsCount >= 3);
+                    })() && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelected({ date: cell.date, items: cell.items });
+                          setOpen(true);
+                        }}
+                        className="text-primary cursor-pointer text-[10px] hover:underline"
+                        aria-label={`Ver todos os lançamentos do dia ${cell.day}`}
+                      >
+                        Ver mais
+                      </button>
+                    )}
+                  </div>
+                  {/* Badges de vencimentos (cartões e boletos) */}
+                  {cell.isCurrentMonth &&
+                    ((cardsByDay.get(cell.day)?.length ?? 0) > 0 ||
+                      (billsByDay.get(cell.day)?.length ?? 0) > 0) && (
+                      <ul className="mb-1 flex flex-wrap gap-1">
+                        {/* Cartões */}
+                        {(cardsByDay.get(cell.day) ?? [])
+                          .slice(0, 2)
+                          .map((c) => (
+                            <li
+                              key={`card-${c.id}`}
+                              className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
+                              title={`Vencimento do cartão ${c?.descricao ?? ""}`}
+                            >
+                              <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-500" />
+                              <PaymentMethodLogo
+                                url_name={`/logos/${c.logo_image}`}
+                                width={14}
+                                height={14}
+                                descricao={c?.descricao ?? "Cartão"}
+                              />
+                            </li>
+                          ))}
+                        {(cardsByDay.get(cell.day) ?? []).length > 2 && (
+                          <li className="text-[10px] text-neutral-600">
+                            +{(cardsByDay.get(cell.day) ?? []).length - 2}
+                          </li>
+                        )}
+                        {/* Boletos */}
+                        {(billsByDay.get(cell.day) ?? [])
+                          .slice(0, 2)
+                          .map((b, i) => (
+                            <li
+                              key={`bill-${b.id ?? i}`}
+                              className="flex items-center gap-1 rounded-full border bg-white/70 px-2 py-0.5 text-[10px] text-neutral-800"
+                              title={`Vencimento do boleto: ${b?.descricao ?? "Boleto"}`}
+                            >
+                              <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
+                              {b?.descricao}
+                            </li>
+                          ))}
+                        {(billsByDay.get(cell.day) ?? []).length > 2 && (
+                          <li className="text-[10px] text-neutral-600">
+                            +{(billsByDay.get(cell.day) ?? []).length - 2}
+                          </li>
+                        )}
+                      </ul>
+                    )}
+                  <ul className="flex-1 overflow-hidden">
+                    {cell.items.slice(0, 3).map((t, i) => (
+                      <li key={t.id ?? i}>
+                        <DetailsTransactions
+                          itemId={t.id}
+                          itemNotas={t.anotacao}
+                          itemDate={t.data_compra}
+                          itemDescricao={t.descricao}
+                          itemCondicao={t.condicao}
+                          itemResponsavel={t.pagadores?.nome}
+                          itemResponsavelRole={t.pagadores?.role}
+                          itemResponsavelFoto={t.pagadores?.foto}
+                          itemTipoTransacao={t.tipo_transacao}
+                          itemValor={parseFloat(t.valor)}
+                          itemFormaPagamento={t.forma_pagamento}
+                          itemQtdeParcelas={t.qtde_parcela}
+                          itemParcelaAtual={t.parcela_atual}
+                          itemQtdeRecorrencia={t.qtde_recorrencia}
+                          itemCartao={t.cartoes?.descricao}
+                          itemConta={t.contas?.descricao}
+                          itemPaid={t.realizado}
+                          itemImagemURL={t.imagem_url}
+                          itemCategoriaId={t.categorias?.nome}
+                          itemPeriodo={t.periodo}
+                        >
+                          <button
+                            type="button"
+                            className={cn(
+                              "w-full truncate rounded-sm px-1 py-0.5 text-left text-xs",
+                              t?.tipo_transacao === "receita"
+                                ? "bg-income/15 text-income dark:bg-income/25 dark:text-white"
+                                : "bg-expense/15 text-expense dark:bg-expense/25 dark:text-white",
+                            )}
+                            title={`${t?.descricao ?? ""}`}
+                          >
+                            <span className="mr-1">{t?.descricao ?? "—"}</span>
+                            {typeof t?.valor !== "undefined" && (
+                              <span className="font-medium">
+                                <MoneyValues
+                                  animated={false}
+                                  value={parseFloat(t.valor)}
+                                />
+                              </span>
+                            )}
+                          </button>
+                        </DetailsTransactions>
+                      </li>
+                    ))}
+                    {cell.items.length === 0 && (
+                      <li className="text-muted-foreground text-[11px]">
+                        Sem lançamentos
+                      </li>
+                    )}
+                  </ul>
+                  <div className="text-primary invisible mt-1 text-right text-[10px] group-hover:visible">
+                    <CreateTransactions
+                      getCards={getCards}
+                      getAccount={getAccount}
+                      getCategorias={getCategorias}
+                      budgetRule={budgetRule}
+                      defaultDate={cell.date}
+                    >
+                      <button
+                        type="button"
+                        className="cursor-pointer hover:underline"
+                      >
+                        Novo lançamento
+                      </button>
+                    </CreateTransactions>
+                  </div>
+                </div>
               );
             })}
           </div>

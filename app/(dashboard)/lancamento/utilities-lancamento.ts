@@ -1,3 +1,5 @@
+"use client";
+
 import { createTransaction } from "@/app/actions/transactions/create_transactions";
 import {
   deleteTransaction,
@@ -74,25 +76,23 @@ export default function UtilitiesLancamento() {
   const handleFormaPagamentoChange = useCallback((value: string) => {
     setPaymentMethod(value);
 
-    const exigeComprovante = value === "boleto" || value === "cartão de crédito";
+    const exigeComprovante =
+      value === "boleto" || value === "cartão de crédito";
     setIsPaid(!exigeComprovante);
   }, []);
 
-  const handleDialogClose = useCallback(
-    (value: boolean) => {
-      setIsOpen(value);
-      if (!value) {
-        setIsDividedChecked(false);
-        setPaymentMethod("");
-        setCondicao("vista");
-        setQuantidadeParcelas("");
-        setIsPaid(true);
-        setImage(null);
-        setTipoTransacao("");
-      }
-    },
-    [],
-  );
+  const handleDialogClose = useCallback((value: boolean) => {
+    setIsOpen(value);
+    if (!value) {
+      setIsDividedChecked(false);
+      setPaymentMethod("");
+      setCondicao("vista");
+      setQuantidadeParcelas("");
+      setIsPaid(true);
+      setImage(null);
+      setTipoTransacao("");
+    }
+  }, []);
 
   const handleCreateSubmit = useCallback(
     async (event: TransactionFormEvent) => {
@@ -110,8 +110,18 @@ export default function UtilitiesLancamento() {
       formData.set("valor", normalizeCurrencyValue(formData.get("valor")));
       formData.set("realizado", String(isPaid));
 
-      await createTransaction({ success: false, message: "" }, formData);
-      toast.success("Transação adicionada com sucesso!");
+      const result = await createTransaction(
+        { success: false, message: "" },
+        formData,
+      );
+
+      if (!result.success) {
+        toast.error(result.message || "Erro ao adicionar lançamento.");
+        setLoading(false);
+        return;
+      }
+
+      toast.success(result.message || "Transação adicionada com sucesso!");
 
       handleDialogClose(false);
       setLoading(false);
@@ -133,22 +143,31 @@ export default function UtilitiesLancamento() {
 
     formData.delete("realizado");
 
-    await updateTransaction({ success: false, message: "" }, formData);
-    toast.success("Transação atualizada com sucesso!");
+    const result = await updateTransaction(
+      { success: false, message: "" },
+      formData,
+    );
+
+    if (!result.success) {
+      toast.error(result.message || "Erro ao atualizar a transação.");
+      setLoading(false);
+      return;
+    }
+
+    toast.success(result.message || "Transação atualizada com sucesso!");
     setIsOpen(false);
     setLoading(false);
   }, []);
 
   const handleDelete = useCallback(
-    (itemId: number | string) =>
-      async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("excluir", String(itemId));
-        await deleteTransaction({ success: false, message: "" }, formData);
-        toast.success("Transação removida com sucesso!");
-        setIsOpen(false);
-      },
+    (itemId: number | string) => async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("excluir", String(itemId));
+      await deleteTransaction({ success: false, message: "" }, formData);
+      toast.success("Transação removida com sucesso!");
+      setIsOpen(false);
+    },
     [],
   );
 

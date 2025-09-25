@@ -1,3 +1,4 @@
+import type { BudgetRuleBucket } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { parse } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 
@@ -21,6 +22,7 @@ export interface DadosFormulario {
   conta_id?: string;
   dividir_lancamento: boolean;
   dataInicial: Date;
+  regra502030Tipo?: BudgetRuleBucket | null;
 }
 
 export async function parseFormData(
@@ -32,6 +34,7 @@ export async function parseFormData(
   const valor = String(formData.get("valor") ?? "0");
   const data_compra = formData.get("data_compra");
   const data_vencimento = formData.get("data_vencimento");
+  const regraTipo = formData.get("regra_502030_tipo");
 
   const parcelas = parseInt(qtde_parcela || "1", 10);
   const recorrencias = parseInt(qtde_recorrencia || "1", 10);
@@ -62,6 +65,10 @@ export async function parseFormData(
     recorrencias,
     valorNumerico,
     periodo: periodo || "",
+    regra502030Tipo:
+      typeof regraTipo === "string" && regraTipo
+        ? (regraTipo as BudgetRuleBucket)
+        : null,
     dataCompra:
       typeof data_compra === "string" && data_compra
         ? new Date(data_compra).toISOString().split("T")[0]

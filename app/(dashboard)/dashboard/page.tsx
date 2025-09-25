@@ -7,13 +7,13 @@ import CategoriesDespesaSection from "./sections/categories-despesa";
 import CategoriesReceitaSection from "./sections/categories-receita";
 import CategoryPurchasesSection from "./sections/category-purchases";
 import ChartSection from "./sections/chart";
-import ConditionsSection from "./sections/conditions";
 import InstallmentsSection from "./sections/installments";
 import InvoicesSection from "./sections/invoices";
 import KpisSection from "./sections/kpis";
-import PaymentFormsSection from "./sections/payment-forms";
+import PaymentsOverviewSection from "./sections/payments-overview";
 import RecentSection from "./sections/recent";
 import RecurrentsSection from "./sections/recurrents";
+import RuleOverviewSection from "./sections/rule-overview";
 import StatusSection from "./sections/status";
 import TopEstablishmentsSection from "./sections/top-establishments";
 import TopExpensesSection from "./sections/top-expenses";
@@ -35,10 +35,10 @@ export default async function Page(props: {
 
           <StatusSection month={month} />
           <ChartSection month={month} />
-          <RecentSection month={month} />
+          <RuleOverviewSection month={month} />
 
-          <PaymentFormsSection month={month} />
-          <ConditionsSection month={month} />
+          <RecentSection month={month} />
+          <PaymentsOverviewSection month={month} />
           <RecurrentsSection month={month} />
 
           <InstallmentsSection month={month} />

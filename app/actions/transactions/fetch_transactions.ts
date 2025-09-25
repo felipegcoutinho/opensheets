@@ -337,7 +337,7 @@ export async function getTransactions(month: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, dt_pagamento_boleto,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -377,7 +377,7 @@ export async function getTransactionsForCalendar(month: string) {
     .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao,
-      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
+      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, regra_502030_tipo,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     // Apenas pagador principal
@@ -426,7 +426,7 @@ export async function getTransactionsByConditions(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, dt_pagamento_boleto,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
     )
 
     .eq("periodo", month)
@@ -454,7 +454,7 @@ export async function getCardInvoice(month: string, cartao_id: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
     )
     .eq("cartao_id", cartao_id)
     .eq("periodo", month)
@@ -507,7 +507,7 @@ export async function getCategoria(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome), pagadores!inner(role, nome, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome), pagadores!inner(role, nome, foto)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -569,7 +569,7 @@ export async function getAccountInvoice(month: string, conta_id: string) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, data_vencimento, dt_pagamento_boleto, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)",
+      "id, data_compra, data_vencimento, dt_pagamento_boleto, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)",
     )
     .eq("periodo", month)
     .eq("conta_id", conta_id)
@@ -842,7 +842,7 @@ export async function getTransactionsByPayer(month: string, id: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     .eq("periodo", month)
     .eq("pagador_id", id)
