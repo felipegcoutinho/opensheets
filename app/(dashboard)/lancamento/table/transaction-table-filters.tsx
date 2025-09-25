@@ -1,6 +1,10 @@
 "use client";
 
 import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import {
+  BUDGET_RULE_BUCKETS,
+  formatBucketLabel,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,6 +77,7 @@ export function TransactionTableFilters<TData>({
       responsavel: "responsavel",
       categoria: "categoria",
       conta_cartao: "conta_cartao",
+      regra_502030_tipo: "regra_502030_tipo",
       q: "q", // busca global
     }),
     [],
@@ -98,6 +103,7 @@ export function TransactionTableFilters<TData>({
     maybeSet("responsavel", filterParamKeys.responsavel);
     maybeSet("categoria", filterParamKeys.categoria);
     maybeSet("conta_cartao", filterParamKeys.conta_cartao);
+    maybeSet("regra_502030_tipo", filterParamKeys.regra_502030_tipo);
 
     const q = params.get(filterParamKeys.q);
     if (q) setGlobalFilter(q);
@@ -112,6 +118,7 @@ export function TransactionTableFilters<TData>({
     responsavel: getColumnFilterValue("responsavel"),
     categoria: getColumnFilterValue("categoria"),
     conta_cartao: getColumnFilterValue("conta_cartao"),
+    regra_502030_tipo: getColumnFilterValue("regra_502030_tipo"),
     q: globalFilter,
   };
 
@@ -134,6 +141,10 @@ export function TransactionTableFilters<TData>({
     setOrDelete(filterParamKeys.responsavel, currentFilters.responsavel);
     setOrDelete(filterParamKeys.categoria, currentFilters.categoria);
     setOrDelete(filterParamKeys.conta_cartao, currentFilters.conta_cartao);
+    setOrDelete(
+      filterParamKeys.regra_502030_tipo,
+      currentFilters.regra_502030_tipo,
+    );
     setOrDelete(filterParamKeys.q, currentFilters.q);
 
     const qs = params.toString();
@@ -146,6 +157,7 @@ export function TransactionTableFilters<TData>({
     currentFilters.responsavel,
     currentFilters.categoria,
     currentFilters.conta_cartao,
+    currentFilters.regra_502030_tipo,
     currentFilters.q,
     pathname,
   ]);
@@ -170,6 +182,7 @@ export function TransactionTableFilters<TData>({
     setIfChanged("responsavel", filterParamKeys.responsavel);
     setIfChanged("categoria", filterParamKeys.categoria);
     setIfChanged("conta_cartao", filterParamKeys.conta_cartao);
+    setIfChanged("regra_502030_tipo", filterParamKeys.regra_502030_tipo);
 
     const urlQ = params.get(filterParamKeys.q) || "";
     if ((urlQ || globalFilter) && urlQ !== globalFilter) {
@@ -298,6 +311,34 @@ export function TransactionTableFilters<TData>({
             {responsavelOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 <span className="capitalize">{option}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={getColumnFilterValue("regra_502030_tipo")}
+          onValueChange={(value) =>
+            setColumnFilterValue("regra_502030_tipo", value)
+          }
+        >
+          <SelectTrigger
+            className={`border- w-ful border-dashed shadow-none sm:w-[160px] ${
+              getColumnFilterValue("regra_502030_tipo") &&
+              getColumnFilterValue("regra_502030_tipo") !== "all"
+                ? "ring-primary bg-primary/10 font-bold ring-1"
+                : ""
+            }`}
+          >
+            <SelectValue placeholder="Regra 50/30/20" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">
+              <span className="capitalize">Todas</span>
+            </SelectItem>
+            {BUDGET_RULE_BUCKETS.map((bucket) => (
+              <SelectItem key={bucket} value={bucket}>
+                <span className="capitalize">{formatBucketLabel(bucket)}</span>
               </SelectItem>
             ))}
           </SelectContent>

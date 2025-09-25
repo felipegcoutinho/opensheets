@@ -161,6 +161,100 @@ export async function updateTransaction(
   }
 }
 
+export async function bulkUpdateTransactions(
+  _prev: ActionResponse,
+  formData: FormData,
+): Promise<ActionResponse> {
+  const supabase = createClient();
+
+  const idsValue = formData.get("ids");
+
+  if (typeof idsValue !== "string" || idsValue.trim() === "") {
+    return {
+      success: false,
+      message: "Nenhum lançamento selecionado para atualização.",
+    };
+  }
+
+  const ids = idsValue
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+
+  if (!ids.length) {
+    return {
+      success: false,
+      message: "Nenhum lançamento selecionado para atualização.",
+    };
+  }
+
+  const updates: Record<string, unknown> = {};
+
+  const categoriaId = formData.get("categoria_id");
+  if (typeof categoriaId === "string" && categoriaId.trim() !== "") {
+    updates.categoria_id = categoriaId.trim();
+  }
+
+  const periodo = formData.get("periodo");
+  if (typeof periodo === "string" && periodo.trim() !== "") {
+    updates.periodo = periodo.trim();
+  }
+
+  const regra = formData.get("regra_502030_tipo");
+  if (typeof regra === "string") {
+    if (regra === "__clear__") {
+      updates.regra_502030_tipo = null;
+    } else if (regra.trim() !== "") {
+      updates.regra_502030_tipo = regra.trim();
+    }
+  }
+
+  const pagadorId = formData.get("pagador_id");
+  if (typeof pagadorId === "string") {
+    if (pagadorId === "__clear__") {
+      updates.pagador_id = null;
+    } else if (pagadorId.trim() !== "") {
+      updates.pagador_id = pagadorId.trim();
+    }
+  }
+
+  if (Object.keys(updates).length === 0) {
+    return {
+      success: false,
+      message: "Selecione ao menos uma alteração para aplicar.",
+    };
+  }
+
+  try {
+    const { error } = await supabase
+      .from("lancamentos")
+      .update(updates)
+      .in("id", ids);
+
+    if (error) {
+      console.error("Erro ao atualizar lançamentos em massa:", error);
+      return {
+        success: false,
+        message: "Erro ao atualizar lançamentos selecionados.",
+      };
+    }
+
+    revalidatePath("/lancamentos");
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      message: "Lançamentos atualizados com sucesso!",
+    };
+  } catch (error) {
+    console.error("Erro ao atualizar lançamentos em massa:", error);
+    return {
+      success: false,
+      message: "Erro ao atualizar lançamentos selecionados.",
+    };
+  }
+}
+
 export async function togglePagamento(id: string, realizadoAtual: boolean) {
   const supabase = createClient();
   const { data, error } = await supabase

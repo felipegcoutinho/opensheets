@@ -7,6 +7,7 @@ export async function GET() {
     const payload = (data || [])
       .filter((p) => !!p?.nome)
       .map((p) => ({
+        id: p.id as string,
         nome: p.nome as string,
         role: p.role as string | null,
         foto: p.foto as string | null,

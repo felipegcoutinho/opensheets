@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import Widget from "@/components/widget";
 import { cn } from "@/lib/utils";
 import { RiPieChart2Line } from "@remixicon/react";
+import Link from "next/link";
 
 function formatPercent(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -72,6 +73,8 @@ export default async function RuleOverviewSection({
               const progress =
                 expected > 0 ? Math.min((spent / expected) * 100, 100) : 0;
               const colors = BUDGET_RULE_COLORS[bucket];
+              const bucketLabel = formatBucketLabel(bucket);
+              const detailHref = `/lancamento?periodo=${encodeURIComponent(month)}&regra_502030_tipo=${bucket}`;
 
               return (
                 <div
@@ -80,22 +83,26 @@ export default async function RuleOverviewSection({
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="space-y-1">
-                      <p
+                      <Link
+                        href={detailHref}
                         className={cn(
-                          "text-sm font-semibold capitalize",
+                          "focus-visible:ring-primary text-sm font-bold capitalize transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
                           colors.text,
                         )}
+                        aria-label={`Ver lançamentos de ${bucketLabel} no período ${formattedMonth}`}
                       >
-                        {formatBucketLabel(bucket)}
-                      </p>
+                        {bucketLabel}
+                      </Link>
                       <p className="text-muted-foreground text-xs">
                         Meta {formatPercent(targetPercent)}% •{" "}
                         {formatPercent(percentOfIncome)}% usado
                       </p>
                     </div>
-                    <p className="text-sm font-semibold">
-                      <MoneyValues value={spent} />
-                    </p>
+                    <div className="text-right">
+                      <p className="text-base font-medium">
+                        <MoneyValues value={spent} />
+                      </p>
+                    </div>
                   </div>
 
                   <div className="mt-2">
@@ -103,7 +110,7 @@ export default async function RuleOverviewSection({
                       value={progress}
                       primary_color={colors.primary}
                       secondary_color={colors.secondary}
-                      className="h-2W"
+                      className="h-1"
                       aria-label={`Consumo de ${formatBucketLabel(bucket)}`}
                     />
                   </div>
@@ -129,7 +136,7 @@ export default async function RuleOverviewSection({
             })}
 
             {snapshot.unclassified > 0 ? (
-              <div className="text-muted-foreground rounded-md border border-dashed p-3 text-xs">
+              <div className="text-muted-foreground rounded border border-dashed p-2 text-xs">
                 <p className="flex flex-wrap items-center gap-1">
                   <strong>
                     <MoneyValues value={snapshot.unclassified} />

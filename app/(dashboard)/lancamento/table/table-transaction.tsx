@@ -1,9 +1,12 @@
 "use client";
 
 import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import { DEFAULT_BUDGET_RULE } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
+import { useMemo, useState } from "react";
+import { BulkEditTransactionsModal } from "../modal/bulk-edit-transactions-modal";
 import { getColumns } from "./get-columns";
 import { TransactionTableCore } from "./transaction-table-core";
 import { TransactionTableFilters } from "./transaction-table-filters";
@@ -48,6 +51,8 @@ export function TableTransaction({
 
   const { DateFormat } = UseDates();
 
+  const [isBulkEditOpen, setIsBulkEditOpen] = useState(false);
+
   const {
     table,
     globalFilter,
@@ -77,8 +82,36 @@ export function TableTransaction({
     getDescricao,
   });
 
+  const selectedTransactions = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original as Transaction);
+
+  const categoriesList = useMemo(
+    () => (Array.isArray(getCategorias) ? getCategorias : []),
+    [getCategorias],
+  );
+
+  const safeBudgetRule = budgetRule ?? DEFAULT_BUDGET_RULE;
+
+  const handleBulkComplete = () => {
+    table.resetRowSelection();
+  };
+
+  const bulkModalOpen = isBulkEditOpen && selectedTransactions.length > 0;
+
   return (
     <div className="mt-2 w-full">
+      <BulkEditTransactionsModal
+        open={bulkModalOpen}
+        onOpenChange={setIsBulkEditOpen}
+        selectedTransactions={selectedTransactions}
+        categories={categoriesList}
+        budgetRule={safeBudgetRule}
+        onComplete={() => {
+          handleBulkComplete();
+        }}
+      />
+
       <TransactionTableFilters
         table={table}
         globalFilter={globalFilter}
@@ -106,6 +139,7 @@ export function TableTransaction({
             selectedTransactionSum={selectedTransactionSum}
             onClearFilters={clearAllFilters}
             rowSelection={rowSelection}
+            onOpenBulkEdit={() => setIsBulkEditOpen(true)}
           />
         </CardHeader>
 

@@ -21,6 +21,62 @@ export async function deleteTransaction(
   }
 }
 
+export async function bulkDeleteTransactions(
+  _prev: ActionResponse,
+  formData: FormData,
+): Promise<ActionResponse> {
+  const idsValue = formData.get("ids");
+  if (typeof idsValue !== "string" || idsValue.trim() === "") {
+    return {
+      success: false,
+      message: "Nenhum lançamento selecionado para remoção.",
+    };
+  }
+
+  const ids = idsValue
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+
+  if (!ids.length) {
+    return {
+      success: false,
+      message: "Nenhum lançamento selecionado para remoção.",
+    };
+  }
+
+  const supabase = createClient();
+
+  try {
+    const { error } = await supabase
+      .from("lancamentos")
+      .delete()
+      .in("id", ids);
+
+    if (error) {
+      console.error("Erro ao remover lançamentos em massa:", error);
+      return {
+        success: false,
+        message: "Erro ao remover lançamentos selecionados.",
+      };
+    }
+
+    revalidatePath("/lancamentos");
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      message: "Lançamentos removidos com sucesso!",
+    };
+  } catch (error) {
+    console.error("Erro ao remover lançamentos em massa:", error);
+    return {
+      success: false,
+      message: "Erro ao remover lançamentos selecionados.",
+    };
+  }
+}
+
 export async function removeImage(transactionId: number, imageUrl: string) {
   const supabase = createClient();
   const filePath = decodeURIComponent(

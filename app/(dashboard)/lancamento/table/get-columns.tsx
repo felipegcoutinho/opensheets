@@ -1,5 +1,12 @@
 "use client";
-import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import type {
+  BudgetRuleBucket,
+  BudgetRuleConfig,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import {
+  BUDGET_RULE_COLORS,
+  formatBucketLabel,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import MoneyValues from "@/components/money-values";
 import BadgeSystem from "@/components/payer-badge";
 import PaymentMethodLogo from "@/components/payment-method-logo";
@@ -22,6 +29,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
+import { cn } from "@/lib/utils";
 import {
   RiAttachment2,
   RiBankCardLine,
@@ -31,6 +39,7 @@ import {
   RiGroupLine,
   RiMessage2Line,
   RiMoreLine,
+  RiPriceTag3Fill,
 } from "@remixicon/react";
 import Link from "next/link";
 import DeleteTransactions from "../modal/delete-transactions";
@@ -323,90 +332,103 @@ export const getColumns = (
     header: () => "Ações",
     cell: ({ row }) => {
       const item = row.original;
+      const ruleBucket = item.regra_502030_tipo as
+        | BudgetRuleBucket
+        | null
+        | undefined;
+      const ruleTooltipLabel = ruleBucket
+        ? formatBucketLabel(ruleBucket)
+        : "Sem classificação na Regra 50/30/20";
+      const ruleIconClass = cn(
+        "size-4",
+        ruleBucket
+          ? BUDGET_RULE_COLORS[ruleBucket].text
+          : "text-muted-foreground opacity-50",
+      );
 
       return (
-        <div className="flex items-center gap-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="data-[state=open]:bg-muted flex"
-              >
-                <RiMoreLine size={16} />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[160px]">
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <DetailsTransactions
-                  itemId={item.id}
-                  itemNotas={item.anotacao}
-                  itemDate={item.data_compra}
-                  itemDescricao={item.descricao}
-                  itemCondicao={item.condicao}
-                  itemResponsavel={item.pagadores?.nome}
-                  itemResponsavelRole={item.pagadores?.role}
-                  itemResponsavelFoto={item.pagadores?.foto}
-                  itemTipoTransacao={item.tipo_transacao}
-                  itemValor={item.valor}
-                  itemFormaPagamento={item.forma_pagamento}
-                  itemQtdeParcelas={item.qtde_parcela}
-                  itemParcelaAtual={item.parcela_atual}
-                  itemQtdeRecorrencia={item.qtde_recorrencia}
-                  itemCartao={item.cartoes?.descricao}
-                  itemConta={item.contas?.descricao}
-                  itemPaid={item.realizado}
-                  itemImagemURL={item.imagem_url}
-                  itemCategoriaId={item.categorias?.nome}
-                  itemPeriodo={item.periodo}
-                  itemRegra502030Tipo={item.regra_502030_tipo}
-                />
-              </DropdownMenuItem>
-
-              {item.pagadores?.role != "sistema" && (
+        <TooltipProvider delayDuration={300}>
+          <div className="flex items-center gap-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="data-[state=open]:bg-muted flex"
+                >
+                  <RiMoreLine size={16} />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[160px]">
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <UpdateTransactions
-                    item={item}
+                  <DetailsTransactions
                     itemId={item.id}
-                    itemPeriodo={item.periodo}
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
+                    itemCondicao={item.condicao}
+                    itemResponsavel={item.pagadores?.nome}
+                    itemResponsavelRole={item.pagadores?.role}
+                    itemResponsavelFoto={item.pagadores?.foto}
                     itemTipoTransacao={item.tipo_transacao}
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
+                    itemQtdeParcelas={item.qtde_parcela}
+                    itemParcelaAtual={item.parcela_atual}
+                    itemQtdeRecorrencia={item.qtde_recorrencia}
+                    itemCartao={item.cartoes?.descricao}
+                    itemConta={item.contas?.descricao}
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}
-                    itemCategoriaId={item.categorias?.id}
-                    getCategorias={getCategorias}
-                    itemCartaoId={item.cartoes?.id}
-                    itemContaId={item.contas?.id}
-                    itemResponsavel={item.pagadores?.nome}
-                    getCards={getCardsMap}
-                    getAccount={getAccountMap}
-                    budgetRule={budgetRule}
+                    itemCategoriaId={item.categorias?.nome}
+                    itemPeriodo={item.periodo}
+                    itemRegra502030Tipo={item.regra_502030_tipo}
                   />
                 </DropdownMenuItem>
-              )}
 
-              {item.pagadores?.role != "sistema" && (
-                <>
-                  <DropdownMenuSeparator />
+                {item.pagadores?.role != "sistema" && (
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <DeleteTransactions itemId={item.id} />
+                    <UpdateTransactions
+                      item={item}
+                      itemId={item.id}
+                      itemPeriodo={item.periodo}
+                      itemNotas={item.anotacao}
+                      itemDate={item.data_compra}
+                      itemDescricao={item.descricao}
+                      itemTipoTransacao={item.tipo_transacao}
+                      itemValor={item.valor}
+                      itemFormaPagamento={item.forma_pagamento}
+                      itemPaid={item.realizado}
+                      itemImagemURL={item.imagem_url}
+                      itemCategoriaId={item.categorias?.id}
+                      getCategorias={getCategorias}
+                      itemCartaoId={item.cartoes?.id}
+                      itemContaId={item.contas?.id}
+                      itemResponsavel={item.pagadores?.nome}
+                      getCards={getCardsMap}
+                      getAccount={getAccountMap}
+                      budgetRule={budgetRule}
+                    />
                   </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                )}
 
-          {item.pagadores?.role === "sistema" ? (
-            <RiCheckboxCircleFill
-              className="text-muted-foreground opacity-40"
-              size={16}
-            />
-          ) : (
-            <TooltipProvider delayDuration={300}>
+                {item.pagadores?.role != "sistema" && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                      <DeleteTransactions itemId={item.id} />
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {item.pagadores?.role === "sistema" ? (
+              <RiCheckboxCircleFill
+                className="text-muted-foreground opacity-40"
+                size={16}
+              />
+            ) : (
               <Tooltip>
                 <TooltipTrigger>
                   <TogglePaymentDialog
@@ -428,15 +450,29 @@ export const getColumns = (
                   )}
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
-          )}
+            )}
 
-          {item.imagem_url && (
-            <div className="flex text-center">
-              <RiAttachment2 size={16} />
-            </div>
-          )}
-        </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span
+                  tabIndex={0}
+                  aria-label={`Classificação na Regra 50/30/20: ${ruleTooltipLabel}`}
+                >
+                  <RiPriceTag3Fill className={ruleIconClass} />
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{ruleTooltipLabel}</span>
+              </TooltipContent>
+            </Tooltip>
+
+            {item.imagem_url && (
+              <div className="flex text-center">
+                <RiAttachment2 size={16} />
+              </div>
+            )}
+          </div>
+        </TooltipProvider>
       );
     },
   },
