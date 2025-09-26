@@ -5,8 +5,8 @@ import MonthPicker from "@/components/month-picker/month-picker";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import { getMonth } from "@/hooks/get-month";
 import { RiBankCardLine, RiBarcodeLine, RiPixLine } from "@remixicon/react";
-import PayerHeaderSection from "./sections/header";
-import PayerTableSection from "./sections/table";
+import PayerHeaderSection from "./components/header";
+import PayerTableSection from "./components/table";
 import EntityNameSetter from "@/components/entity-name-setter";
 
 // Tipagens auxiliares

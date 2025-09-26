@@ -1,22 +1,22 @@
 import { getMonth } from "@/hooks/get-month";
 import { Suspense } from "react";
 import Loading from "./loading";
-import AccountsSection from "./sections/accounts";
-import BillsSection from "./sections/bills";
-import CategoriesDespesaSection from "./sections/categories-despesa";
-import CategoriesReceitaSection from "./sections/categories-receita";
-import CategoryPurchasesSection from "./sections/category-purchases";
-import ChartSection from "./sections/chart";
-import InstallmentsSection from "./sections/installments";
-import InvoicesSection from "./sections/invoices";
-import KpisSection from "./sections/kpis";
-import PaymentsOverviewSection from "./sections/payments-overview";
-import RecentSection from "./sections/recent";
-import RecurrentsSection from "./sections/recurrents";
-import RuleOverviewSection from "./sections/rule-overview";
-import StatusSection from "./sections/status";
-import TopEstablishmentsSection from "./sections/top-establishments";
-import TopExpensesSection from "./sections/top-expenses";
+import AccountsSection from "./components/accounts";
+import BillsSection from "./components/bills";
+import CategoriesDespesaSection from "./components/categories-despesa";
+import CategoriesReceitaSection from "./components/categories-receita";
+import CategoryPurchasesSection from "./components/category-purchases";
+import ChartSection from "./components/chart";
+import InstallmentsSection from "./components/installments";
+import InvoicesSection from "./components/invoices";
+import KpisSection from "./components/kpis";
+import PaymentsOverviewSection from "./components/payments-overview";
+import RecentSection from "./components/recent";
+import RecurrentsSection from "./components/recurrents";
+import RuleOverviewSection from "./components/rule-overview";
+import StatusSection from "./components/status";
+import TopEstablishmentsSection from "./components/top-establishments";
+import TopExpensesSection from "./components/top-expenses";
 
 export default async function Page(props: {
   searchParams?: { periodo?: string };

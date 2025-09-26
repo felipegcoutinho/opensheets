@@ -2,8 +2,8 @@ import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getMonth } from "@/hooks/get-month";
 import CreateAccount from "./modal/create-accounts";
-import ActiveAccountsSection from "./sections/active-accounts";
-import InactiveAccountsSection from "./sections/inactive-accounts";
+import ActiveAccountsSection from "./components/active-accounts";
+import InactiveAccountsSection from "./components/inactive-accounts";
 
 async function page({ searchParams }: { searchParams?: { periodo?: string } }) {
   const month = await getMonth({ searchParams });

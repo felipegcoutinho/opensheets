@@ -1,8 +1,8 @@
 import MonthPicker from "@/components/month-picker/month-picker";
 import EntityNameSetter from "@/components/entity-name-setter";
 import { getMonth } from "@/hooks/get-month";
-import CategoryHeaderSection from "./sections/header";
-import CategoryTableSection from "./sections/table";
+import CategoryHeaderSection from "./components/header";
+import CategoryTableSection from "./components/table";
 
 export default async function page({
   params,

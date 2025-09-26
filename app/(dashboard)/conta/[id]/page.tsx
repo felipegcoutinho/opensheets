@@ -1,7 +1,7 @@
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
-import AccountHeaderSection from "./sections/header";
-import AccountTableSection from "./sections/table";
+import AccountHeaderSection from "./components/header";
+import AccountTableSection from "./components/table";
 import { getAccountDetails } from "@/app/actions/accounts/fetch_accounts";
 import EntityNameSetter from "@/components/entity-name-setter";
 

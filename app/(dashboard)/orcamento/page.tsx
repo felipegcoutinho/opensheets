@@ -1,9 +1,9 @@
+import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import MonthPicker from "@/components/month-picker/month-picker";
 import { getMonth } from "@/hooks/get-month";
 import CreateBudget from "./modal/create-budget";
-import BudgetsSection from "./sections/budgets";
-import { getCategorias } from "@/app/actions/categories/fetch_categorias";
-import Rule502030Section from "./sections/rule-502030";
+import BudgetsSection from "./components/budgets";
+import Rule502030Section from "./components/rule-502030";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default async function page({ searchParams }: { searchParams?: { periodo?: string } }) {

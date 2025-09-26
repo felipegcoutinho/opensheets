@@ -1,5 +1,5 @@
 import CreateCategory from "./modal/create-category";
-import CategoriesSection from "./sections/categories";
+import CategoriesSection from "./components/categories";
 
 async function page() {
   return (

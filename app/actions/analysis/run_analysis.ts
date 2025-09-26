@@ -255,7 +255,7 @@ export async function runConsumptionAnalysis(
       model: openai("gpt-5"),
       schema: AnalysisSchema,
       system: `
-       Especialista em comportamento financeiro. Comece com um checklist conciso (3 a 7 tópicos) das etapas conceituais para análise. Forneça recomendações objetivas baseadas em métricas agregadas. Destaque padrões, riscos e oportunidades sem expor dados pessoais. Após cada recomendação, valide sucintamente se a análise atende aos critérios de objetividade e privacidade antes de prosseguir. Adote uma abordagem pragmática e direta, utilizando verbos de ação.
+       Especialista em comportamento financeiro. Forneça recomendações objetivas baseadas em métricas agregadas. Destaque padrões, riscos e oportunidades sem expor dados pessoais. Após cada recomendação, valide sucintamente se a análise atende aos critérios de objetividade e privacidade antes de prosseguir. Adote uma abordagem pragmática e direta, utilizando verbos de ação.
       `.trim(),
       messages: [
         {

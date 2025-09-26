@@ -41,9 +41,6 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
       {/* Dados principais */}
       <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
         <Card className="gap-0 p-4">
-          <span>Tipo do Cartão</span>
-          <span className="font-bold capitalize">{item.tipo}</span>
-
           <p className="text-muted-foreground mt-2 text-xs uppercase">
             Fechamento
           </p>
@@ -53,16 +50,16 @@ export default function CardInfo({ item, cardSum, fatura_status, month }) {
             Vencimento
           </p>
           <span className="font-bold">Dia {item.dt_vencimento}</span>
+
+          <p className="text-muted-foreground mt-2 text-xs uppercase">
+            Limite Total
+          </p>
+          <span>
+            <MoneyValues value={item.limite} />
+          </span>
         </Card>
 
         <Card className="gap-0 p-4">
-          <p className="text-muted-foreground text-xs uppercase">
-            Limite Total
-          </p>
-          <span className="font-bold">
-            <MoneyValues value={item.limite} />
-          </span>
-
           <p className="text-muted-foreground mt-2 text-xs uppercase">
             Conta Padrão
           </p>
