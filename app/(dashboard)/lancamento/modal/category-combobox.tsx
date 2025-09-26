@@ -18,10 +18,10 @@ import { categoryIconsMap } from "@/hooks/use-category-icons";
 import * as React from "react";
 
 type Category = {
-  id: number;
+  id: number | string;
   nome: string;
   tipo_categoria: string;
-  icone: string;
+  icone?: string | null;
 };
 
 type CategoryComboboxProps = {
@@ -118,9 +118,10 @@ export function CategoryCombobox({
               {grouped.receitas.length ? (
                 <CommandGroup heading="Receitas">
                   {grouped.receitas.map((categoria) => {
-                    const Icon = categoryIconsMap[
-                      categoria.icone as keyof typeof categoryIconsMap
-                    ];
+                    const Icon =
+                      categoryIconsMap[
+                        categoria.icone as keyof typeof categoryIconsMap
+                      ];
                     return (
                       <CommandItem
                         key={categoria.id}
@@ -138,9 +139,10 @@ export function CategoryCombobox({
               {grouped.despesas.length ? (
                 <CommandGroup heading="Despesas">
                   {grouped.despesas.map((categoria) => {
-                    const Icon = categoryIconsMap[
-                      categoria.icone as keyof typeof categoryIconsMap
-                    ];
+                    const Icon =
+                      categoryIconsMap[
+                        categoria.icone as keyof typeof categoryIconsMap
+                      ];
                     return (
                       <CommandItem
                         key={categoria.id}

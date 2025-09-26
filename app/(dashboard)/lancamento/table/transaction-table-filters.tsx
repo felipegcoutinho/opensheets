@@ -201,13 +201,13 @@ export function TransactionTableFilters<TData>({
       >
         <Button
           variant="default"
-          className="w-full transition-all hover:scale-110 sm:w-auto"
+          className="w-fulll transition-all hover:scale-110 sm:w-auto"
         >
           Novo Lançamento
         </Button>
       </CreateTransactions>
 
-      <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center">
+      <div className="w-fulll flex flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center">
         <Select
           value={getColumnFilterValue("tipo_transacao")}
           onValueChange={(value) =>
@@ -215,7 +215,7 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`w-full border border-dashed shadow-none sm:w-[140px] ${
+            className={`w-fulll border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("tipo_transacao") &&
               getColumnFilterValue("tipo_transacao") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -241,7 +241,7 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("condicao", value)}
         >
           <SelectTrigger
-            className={`w-full border border-dashed shadow-none sm:w-[140px] ${
+            className={`w-fulll border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("condicao") &&
               getColumnFilterValue("condicao") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -269,7 +269,7 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`border- w-ful border-dashed shadow-none sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("forma_pagamento") &&
               getColumnFilterValue("forma_pagamento") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -295,7 +295,7 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("responsavel", value)}
         >
           <SelectTrigger
-            className={`border- w-ful border-dashed shadow-none sm:w-[140px] ${
+            className={`w-fulll border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("responsavel") &&
               getColumnFilterValue("responsavel") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -323,14 +323,14 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`border- w-ful border-dashed shadow-none sm:w-[160px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("regra_502030_tipo") &&
               getColumnFilterValue("regra_502030_tipo") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
                 : ""
             }`}
           >
-            <SelectValue placeholder="Regra 50/30/20" />
+            <SelectValue placeholder="Regra" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">
@@ -383,7 +383,7 @@ export function TransactionTableFilters<TData>({
           placeholder="Pesquisar"
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="w-full shadow-none sm:w-[160px]"
+          className="w-fulll shadow-none sm:w-[110px]"
         />
       </div>
     </div>

@@ -36,7 +36,7 @@ import {
 import { UseDates } from "@/hooks/use-dates";
 import { RiQuestionLine } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { BudgetRuleSelect } from "./budget-rule-select";
 import { CategoryCombobox } from "./category-combobox";
@@ -130,6 +130,16 @@ export default function UpdateTransactions({
     (categoria) => categoria.tipo_categoria === itemTipoTransacao,
   );
 
+  const normalize = (s: string) =>
+    (s || "")
+      .toLocaleLowerCase("pt-BR")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+
+  const [selectedPayer, setSelectedPayer] = useState<string>(
+    () => itemResponsavel ?? "",
+  );
+
   const resolveFotoSrc = (foto?: string | null) => {
     if (!foto) return undefined;
     if (foto.startsWith("http")) return foto;
@@ -141,11 +151,36 @@ export default function UpdateTransactions({
     // Removido controle de "realizado" do modal de edição
   }, [itemPaid]);
 
+  useEffect(() => {
+    if (!selectedPayer && payersOptions.length > 0) {
+      const principal = payersOptions.find((p) =>
+        normalize(p.role || "").includes("principal"),
+      );
+      setSelectedPayer(principal?.nome || payersOptions[0]?.nome || "");
+    }
+  }, [payersOptions, selectedPayer]);
+
+  const selectedPayerInfo = useMemo(
+    () => payersOptions.find((p) => p.nome === selectedPayer),
+    [payersOptions, selectedPayer],
+  );
+
+  const isSelectedPayerPrincipal = normalize(
+    selectedPayerInfo?.role || "",
+  ).includes("principal");
+
+  useEffect(() => {
+    if (!isSelectedPayerPrincipal && ruleBucket) {
+      setRuleBucket(undefined);
+    }
+  }, [isSelectedPayerPrincipal, ruleBucket]);
+
   const handleDialogClose = (val) => {
     setIsOpen(val);
     if (!val) {
       setImagePreview(itemImagemURL);
       setRuleBucket(initialRuleBucket);
+      setSelectedPayer(itemResponsavel ?? "");
     }
   };
 
@@ -264,7 +299,9 @@ export default function UpdateTransactions({
             </div>
           </div>
 
-          {budgetRule.ativada && itemTipoTransacao === "despesa" && (
+          {budgetRule.ativada &&
+            itemTipoTransacao === "despesa" &&
+            isSelectedPayerPrincipal && (
             <div className="mb-2">
               <div className="flex items-center gap-1">
                 <Label
@@ -302,7 +339,11 @@ export default function UpdateTransactions({
           <input
             type="hidden"
             name="regra_502030_tipo"
-            value={itemTipoTransacao === "despesa" ? (ruleBucket ?? "") : ""}
+            value={
+              itemTipoTransacao === "despesa" && isSelectedPayerPrincipal
+                ? ruleBucket ?? ""
+                : ""
+            }
           />
 
           <div className="mb-2 w-full">
@@ -421,7 +462,11 @@ export default function UpdateTransactions({
               Pagador
               <Required />
             </Label>
-            <Select name="pagador_id" defaultValue={itemResponsavel}>
+            <Select
+              name="pagador_id"
+              value={selectedPayer}
+              onValueChange={setSelectedPayer}
+            >
               <SelectTrigger className="w-full py-6 capitalize">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>

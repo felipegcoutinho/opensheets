@@ -124,7 +124,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
   });
 
   const isAnyFilterActive =
-    globalFilter.trim() !== "" || columnFilters.length > 0 || ruleBucketFilter;
+    globalFilter.trim() !== "" || columnFilters.length > 0 || !!ruleBucketFilter;
 
   const selectedTransactionSum = useMemo(() => {
     return filteredData

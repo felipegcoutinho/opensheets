@@ -318,8 +318,8 @@ export const getColumns = (
           <PaymentMethodLogo
             url_name={`/logos/${logo}`}
             descricao={descricao}
-            height={32}
-            width={32}
+            height={28}
+            width={28}
           />
           {Icon && <Icon size={18} className="size-3.5" />}
         </Link>

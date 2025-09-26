@@ -15,6 +15,14 @@ import {
   sendNewTransactionsEmail,
 } from "@/app/actions/emails/send_new_transactions";
 
+const normalizeRole = (role: unknown): string =>
+  typeof role === "string"
+    ? role
+        .toLocaleLowerCase("pt-BR")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+    : "";
+
 export async function createTransaction(
   _prev: ActionResponse,
   formData: FormData,
@@ -55,6 +63,11 @@ export async function createTransaction(
 
   const supabase = createClient();
 
+  const pagadorNome = String(formData.get("pagador_id") || "").trim();
+  if (!pagadorNome) {
+    return { success: false, message: "Selecione um pagador." };
+  }
+
   const { data: regraConfig, error: regraError } = await supabase
     .from("orcamento_regra_502030")
     .select("ativada")
@@ -64,26 +77,12 @@ export async function createTransaction(
     console.error("Erro ao verificar estado da regra 50/30/20:", regraError);
   }
 
-  const isExpense = validated.data.tipo_transacao === "despesa";
-  if (regraConfig?.ativada && isExpense && !validated.data.regra_502030_tipo) {
-    return {
-      success: false,
-      message: "Selecione em qual faixa da regra 50/30/20 o lançamento se encaixa.",
-      errors: { regra_502030_tipo: ["Obrigatório quando a regra está ativa"] },
-    };
-  }
-
   try {
     const dados = await parseFormData(formData);
-    // Resolver o campo 'pagador_id' do formulário (que contém o NOME) para o UUID real
-    const pagadorNome = String(formData.get("pagador_id") || "").trim();
-    if (!pagadorNome) {
-      return { success: false, message: "Selecione um pagador." };
-    }
 
     const { data: payerRow, error: payerError } = await supabase
       .from("pagadores")
-      .select("id, nome")
+      .select("id, nome, role")
       .eq("nome", pagadorNome)
       .single();
 
@@ -92,7 +91,30 @@ export async function createTransaction(
       return { success: false, message: "Pagador inválido." };
     }
 
+    const isPrincipalPayer = normalizeRole(payerRow.role).includes("principal");
+    const isExpense = validated.data.tipo_transacao === "despesa";
+
+    if (
+      regraConfig?.ativada &&
+      isExpense &&
+      isPrincipalPayer &&
+      !validated.data.regra_502030_tipo
+    ) {
+      return {
+        success: false,
+        message:
+          "Selecione em qual faixa da regra 50/30/20 o lançamento se encaixa.",
+        errors: {
+          regra_502030_tipo: ["Obrigatório quando a regra está ativa"],
+        },
+      };
+    }
+
     dados.pagador_id = payerRow.id as unknown as string;
+
+    if (!isPrincipalPayer) {
+      dados.regra502030Tipo = null;
+    }
 
     // Se for dividido e tiver um segundo pagador (nome), resolver UUID
     const segundoNome = String(formData.get("segundo_pagador_id") || "").trim();

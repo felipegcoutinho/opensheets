@@ -43,7 +43,7 @@ import {
   RiThumbUpFill,
 } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
 import { BudgetRuleSelect } from "./budget-rule-select";
 import { CategoryCombobox } from "./category-combobox";
@@ -144,12 +144,18 @@ export default function CreateTransactions({
     foto?: string | null;
   }[] = payersData?.data || [];
 
+  const normalize = (s: string) =>
+    (s || "")
+      .toLocaleLowerCase("pt-BR")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+
   // Estado do pagador selecionado e default para role "principal"
   const [selectedPayer, setSelectedPayer] = useState<string | undefined>();
   useEffect(() => {
     if (!selectedPayer && pagadoresOptions.length > 0) {
       const principal = pagadoresOptions.find(
-        (p) => (p.role || "").toLowerCase() === "principal",
+        (p) => normalize(p.role || "").includes("principal"),
       );
       setSelectedPayer(principal?.nome || pagadoresOptions[0]?.nome);
     }
@@ -164,14 +170,16 @@ export default function CreateTransactions({
 
   // Sem preview fora do select; estados de seleção não são necessários aqui
 
-  const normalize = (s: string) =>
-    (s || "")
-      .toLocaleLowerCase("pt-BR")
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "");
-  const secondPayers = pagadoresOptions.filter(
-    (p) => normalize(p.role || "") === "secundario",
+  const secondPayers = pagadoresOptions.filter((p) =>
+    normalize(p.role || "").includes("secundario"),
   );
+
+  const selectedPayerInfo = useMemo(
+    () => pagadoresOptions.find((p) => p.nome === selectedPayer),
+    [pagadoresOptions, selectedPayer],
+  );
+  const isSelectedPayerPrincipal =
+    normalize(selectedPayerInfo?.role || "").includes("principal");
 
   // Estado para categoria (combobox com busca)
   const [categoriaId, setCategoriaId] = useState<string | undefined>();
@@ -182,6 +190,12 @@ export default function CreateTransactions({
       setRuleBucket(undefined);
     }
   }, [tipoTransacao, ruleBucket]);
+
+  useEffect(() => {
+    if (!isSelectedPayerPrincipal && ruleBucket) {
+      setRuleBucket(undefined);
+    }
+  }, [isSelectedPayerPrincipal, ruleBucket]);
 
   // Ao fechar o modal, resetar categoria e pagador para o padrão
   const onDialogOpenChange = (val: boolean) => {
@@ -353,7 +367,9 @@ export default function CreateTransactions({
               </div>
             </div>
 
-            {budgetRule.ativada && tipoTransacao === "despesa" && (
+            {budgetRule.ativada &&
+              tipoTransacao === "despesa" &&
+              isSelectedPayerPrincipal && (
               <div>
                 <div className="flex items-center gap-1">
                   <Label
@@ -391,7 +407,11 @@ export default function CreateTransactions({
             <input
               type="hidden"
               name="regra_502030_tipo"
-              value={tipoTransacao === "despesa" ? (ruleBucket ?? "") : ""}
+              value={
+                tipoTransacao === "despesa" && isSelectedPayerPrincipal
+                  ? ruleBucket ?? ""
+                  : ""
+              }
             />
 
             <div className="flex w-full gap-2">

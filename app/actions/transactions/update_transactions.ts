@@ -3,6 +3,14 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/lancamento/modal/form-schema";
 
+const normalizeRole = (role: unknown): string =>
+  typeof role === "string"
+    ? role
+        .toLocaleLowerCase("pt-BR")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+    : "";
+
 export async function updateTransaction(
   _prev: ActionResponse,
   formData: FormData,
@@ -87,15 +95,17 @@ export async function updateTransaction(
   try {
     // Mapear nome do pagador (enviado no campo 'pagador_id' do form) para UUID real
     let pagador_id: string | null = null;
+    let pagadorRole: string | null = null;
     const pagadorNomeForm = formData.get("pagador_id");
     if (typeof pagadorNomeForm === "string" && pagadorNomeForm.trim()) {
       const { data: payerRow, error: payerError } = await supabase
         .from("pagadores")
-        .select("id, nome")
+        .select("id, nome, role")
         .eq("nome", pagadorNomeForm.trim())
         .single();
       if (!payerError && payerRow) {
         pagador_id = (payerRow.id as unknown as string) || null;
+        pagadorRole = (payerRow.role as string | null) ?? null;
       }
     }
 
@@ -135,8 +145,21 @@ export async function updateTransaction(
           ? regra_502030_tipo
           : null;
     }
-    const isExpense = typeof tipo_transacao === "string" && tipo_transacao === "despesa";
-    if (regraConfig?.ativada && isExpense && !updatePayload.regra_502030_tipo) {
+
+    const isExpense =
+      typeof tipo_transacao === "string" && tipo_transacao === "despesa";
+    const isPrincipalPayer = normalizeRole(pagadorRole).includes("principal");
+
+    if (!isPrincipalPayer) {
+      updatePayload.regra_502030_tipo = null;
+    }
+
+    if (
+      regraConfig?.ativada &&
+      isExpense &&
+      isPrincipalPayer &&
+      !updatePayload.regra_502030_tipo
+    ) {
       return {
         success: false,
         message: "Selecione a faixa da regra 50/30/20 antes de salvar.",
