@@ -75,14 +75,3 @@ export function formatBucketLabel(bucket: BudgetRuleBucket) {
       return bucket;
   }
 }
-
-export function normalizePercent(value: number): number {
-  return Number.isFinite(value) ? Math.round(value * 100) / 100 : 0;
-}
-
-export function clampPercent(value: number): number {
-  if (!Number.isFinite(value)) return 0;
-  if (value < 0) return 0;
-  if (value > 100) return 100;
-  return value;
-}

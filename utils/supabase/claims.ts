@@ -1,5 +1,5 @@
-import { createClient } from "@/utils/supabase/server";
 import { decodeAccessToken, type JwtClaims } from "@/utils/supabase/jwt";
+import { createClient } from "@/utils/supabase/server";
 
 export type AuthClaims = {
   id: string;
