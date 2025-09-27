@@ -39,7 +39,7 @@ export default async function InactiveAccountsSection() {
                 <Link href={`/conta/${item.id}`}>extrato</Link>
               </Button>
               <UpdateCard item={item} />
-              <DeleteAccount itemId={item.id} />
+              <DeleteAccount itemId={item.id} itemNome={item.descricao} />
             </div>
           </CardContent>
         </Card>

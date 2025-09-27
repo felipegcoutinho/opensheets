@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateCard from "./modal/update-cards";
+import DeleteCard from "./modal/delete-cards";
 
 type Props = {
   item: any;
@@ -15,9 +16,12 @@ type Props = {
   showDelete?: boolean;
 };
 
-import DeleteCard from "./modal/delete-cards";
-
-export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete = false }: Props) {
+export default function UiCard({
+  item,
+  getAccountMap,
+  mostrarLimites,
+  showDelete = false,
+}: Props) {
   return (
     <Card key={item.id} className="gap-2">
       <CardContent className="space-y-2">
@@ -93,7 +97,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete
 
         {showDelete && (
           <div className="ml-auto">
-            <DeleteCard itemId={item.id} />
+            <DeleteCard itemId={item.id} itemNome={item.descricao} />
           </div>
         )}
       </CardFooter>

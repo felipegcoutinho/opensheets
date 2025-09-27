@@ -118,6 +118,7 @@ export default function CardsBudgets({
                 />
                 <DeleteBudget
                   itemId={item.id}
+                  itemNome={item.descricao}
                   trigger={
                     <Button
                       variant="link"

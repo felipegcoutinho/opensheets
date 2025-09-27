@@ -23,10 +23,7 @@ const initialState: ActionResponse = { success: false, message: "" };
 
 export default function DeleteCard({ itemId, itemNome }: DeleteCardProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [state, action, isPending] = useActionState(
-    deleteCards,
-    initialState,
-  );
+  const [state, action, isPending] = useActionState(deleteCards, initialState);
 
   useEffect(() => {
     if (isPending) return;
