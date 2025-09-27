@@ -13,7 +13,7 @@ export default async function InstallmentsSection({
       subtitle="Progresso das parcelas e término"
       information="Baseado no período selecionado"
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiLoader2Fill className="size-4" />
         </span>
       }

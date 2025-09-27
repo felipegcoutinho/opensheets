@@ -8,15 +8,16 @@ export async function deleteCards(
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");
-
   const supabase = createClient();
 
-  try {
-    await supabase.from("cartoes").delete().eq("id", excluir);
-    revalidatePath("/cartao");
-    return { success: true, message: "Cartão removido!" };
-  } catch (error) {
-    console.error("Erro ao deletar cartao:", error);
+  const { error } = await supabase.from("cartoes").delete().eq("id", excluir);
+
+  revalidatePath("/cartao");
+
+  if (error) {
+    console.error("Erro ao remover cartão:", error);
     return { success: false, message: "Erro ao remover Cartão" };
   }
+
+  return { success: true, message: "Cartão removido com sucesso!" };
 }

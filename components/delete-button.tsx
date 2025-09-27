@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { ReactNode, useState } from "react";
 
 type Props = {
-  handleDelete: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  handleDelete: (e?: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
   loading?: boolean;
   trigger?: ReactNode;
   isOpen?: boolean;

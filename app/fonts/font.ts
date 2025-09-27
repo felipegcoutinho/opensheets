@@ -1,43 +1,28 @@
 import { Oswald } from "next/font/google";
 import localFont from "next/font/local";
 
-const oswald = Oswald({
-  weight: ["400"],
-  subsets: ["latin"],
-});
-
-const sofascore = localFont({
+const aeonik = localFont({
   src: [
     {
-      path: "../fonts/SofaSans-Regular.woff2",
+      path: "../fonts/AeonikFono-Regular.otf",
       weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/SofaSans-Bold.woff2",
-      weight: "700",
       style: "normal",
     },
   ],
 });
 
-const waldernburg = localFont({
+const aeonik_extended = localFont({
   src: [
     {
-      path: "../fonts/Waldenburg-Regular-subset.woff2",
+      path: "../fonts/aeonikextended.woff2",
       weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/Waldenburg-Bold-subset.woff2",
-      weight: "700",
       style: "normal",
     },
   ],
 });
 
-const default_font = sofascore;
-const money_values = waldernburg;
-const title_font = oswald;
+const default_font = aeonik;
+const money_values = aeonik;
+const title_font = aeonik_extended;
 
 export { default_font, money_values, title_font };

@@ -15,9 +15,9 @@ export default function BannerDescription({
 }: BannerDescriptionProps) {
   return (
     <div>
-      <Card className="bg-description mb-2 border-none p-8">
-        <p className="max-w-2xl text-sm">
-          <RiInformation2Line size={24} className="mr-2 inline-block" />
+      <Card className="bg-description mb-2 border-none p-6">
+        <p className="max-w-3xl text-sm">
+          <RiInformation2Line size={20} className="mr-2 inline-block" />
           {subtitle}
         </p>
       </Card>

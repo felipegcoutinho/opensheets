@@ -11,7 +11,7 @@ export default async function InvoicesSection({ month }: { month: string }) {
       subtitle="faturas deste mês"
       information="Valor referente a transações de todos os responsáveis"
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiBankCardLine className="size-4" />
         </span>
       }

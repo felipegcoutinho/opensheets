@@ -39,7 +39,7 @@ function formatLocaleValue(rawValue: string): string {
   const [integerPartRaw, decimalPartRaw] = unsignedValue.split(".");
 
   const integerPart = integerPartRaw || "0";
-  const decimalPart = hasDecimalSeparator ? decimalPartRaw ?? "" : undefined;
+  const decimalPart = hasDecimalSeparator ? (decimalPartRaw ?? "") : undefined;
 
   const numericInteger = Number(integerPart);
   const formattedInteger = Number.isFinite(numericInteger)
@@ -112,8 +112,10 @@ function normalizeClipboardNumber(rawValue: string): string | null {
     if (commaCount > 1) {
       decimalSeparator = null;
     } else {
-      const digitsAfterComma = extracted.length - extracted.lastIndexOf(",") - 1;
-      decimalSeparator = digitsAfterComma > 0 && digitsAfterComma <= 2 ? "," : null;
+      const digitsAfterComma =
+        extracted.length - extracted.lastIndexOf(",") - 1;
+      decimalSeparator =
+        digitsAfterComma > 0 && digitsAfterComma <= 2 ? "," : null;
     }
   } else if (hasDot) {
     const dotCount = countOccurrences(".");
@@ -124,7 +126,9 @@ function normalizeClipboardNumber(rawValue: string): string | null {
       const decimalCandidate = extracted.slice(extracted.lastIndexOf(".") + 1);
       const allZeros = /^0+$/.test(decimalCandidate);
       const shouldTreatAsDecimal =
-        digitsAfterDot > 0 && digitsAfterDot <= 3 && !(digitsAfterDot === 3 && allZeros);
+        digitsAfterDot > 0 &&
+        digitsAfterDot <= 3 &&
+        !(digitsAfterDot === 3 && allZeros);
       decimalSeparator = shouldTreatAsDecimal ? "." : null;
     }
   }
@@ -437,7 +441,10 @@ export default function Calculator() {
 
       handleCopiedFeedback();
     } catch (error) {
-      console.error("Não foi possível copiar o resultado da calculadora.", error);
+      console.error(
+        "Não foi possível copiar o resultado da calculadora.",
+        error,
+      );
     }
   }, [resultText]);
 
@@ -573,7 +580,7 @@ export default function Calculator() {
           <div className="text-muted-foreground text-sm">{history}</div>
         ) : null}
         <div className="flex items-center justify-end gap-2">
-          <div className="font-mono text-3xl font-semibold tracking-tight tabular-nums text-right">
+          <div className="text-right text-3xl font-semibold tracking-tight tabular-nums">
             {expression}
           </div>
           {resultText ? (
@@ -582,7 +589,7 @@ export default function Calculator() {
               variant="ghost"
               size="icon"
               onClick={() => void copyToClipboard()}
-              className="h-7 w-7 flex-shrink-0 rounded-full p-0 text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground h-7 w-7 flex-shrink-0 rounded-full p-0"
             >
               {copied ? (
                 <RiCheckLine className="h-4 w-4" />
@@ -601,7 +608,7 @@ export default function Calculator() {
           <Button
             key={`${btn.label}-${index}`}
             type="button"
-            variant={btn.variant ?? "secondary"}
+            variant={btn.variant ?? "outline"}
             onClick={btn.onClick}
             className={cn(
               "h-12 text-base font-semibold",

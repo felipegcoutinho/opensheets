@@ -188,7 +188,6 @@ export function TransactionTableFilters<TData>({
     if ((urlQ || globalFilter) && urlQ !== globalFilter) {
       setGlobalFilter(urlQ);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams?.toString()]);
 
   return (
@@ -201,13 +200,13 @@ export function TransactionTableFilters<TData>({
       >
         <Button
           variant="default"
-          className="w-fulll transition-all hover:scale-110 sm:w-auto"
+          className="w-full transition-all hover:scale-110 sm:w-auto"
         >
           Novo Lançamento
         </Button>
       </CreateTransactions>
 
-      <div className="w-fulll flex flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center">
+      <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center">
         <Select
           value={getColumnFilterValue("tipo_transacao")}
           onValueChange={(value) =>
@@ -215,7 +214,7 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`w-fulll border border-dashed shadow-none sm:w-[130px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("tipo_transacao") &&
               getColumnFilterValue("tipo_transacao") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -241,7 +240,7 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("condicao", value)}
         >
           <SelectTrigger
-            className={`w-fulll border border-dashed shadow-none sm:w-[130px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("condicao") &&
               getColumnFilterValue("condicao") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -295,7 +294,7 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("responsavel", value)}
         >
           <SelectTrigger
-            className={`w-fulll border border-dashed shadow-none sm:w-[130px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("responsavel") &&
               getColumnFilterValue("responsavel") !== "all"
                 ? "ring-primary bg-primary/10 font-bold ring-1"
@@ -383,7 +382,7 @@ export function TransactionTableFilters<TData>({
           placeholder="Pesquisar"
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="w-fulll shadow-none sm:w-[110px]"
+          className="w-full shadow-none sm:w-[110px]"
         />
       </div>
     </div>

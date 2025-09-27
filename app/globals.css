@@ -7,42 +7,46 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #232323;
-  --primary-foreground: #fafafa;
-  --secondary: #ebf2e0;
+  --background: #f7f6f5;
+  --foreground: #0c0b0b;
+  --card: #f3f2f0;
+  --card-foreground: #0c0b0b;
+  --popover: #f3f2f0;
+  --popover-foreground: #0c0b0b;
+  --primary: #fe671c;
+  --primary-foreground: #f1f0ed;
+  --secondary: #d0c9c3;
   --secondary-foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #838383;
-  --accent: #f5f5f5;
+  --muted: #eae8e6;
+  --muted-foreground: #8c877c;
+  --accent: #eae8e6;
   --accent-foreground: #171717;
   --destructive: #e7000b;
-  --destructive-foreground: #ffffff;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
+  --destructive-foreground: #f3f2f0;
+  --border: #d0c9c3;
+  --input: #d0c9c3;
   --ring: #a1a1a1;
 
-  --description: #e3eeff;
+  --banner-background: #fe671c;
+  --banner-foreground: #f1f0ed;
+  --month-picker: #45403e;
+  --month-picker-foreground: #f1f0ed;
+  --description: #c2ebc3;
   --income: #36a960;
   --expense: #d97757;
 
-  --chart-1: #36a960;
+  --chart-1: #b9d47e;
   --chart-2: #d97757;
-  --chart-3: #36a960;
+  --chart-3: #b9d47e;
   --chart-4: #d97757;
   --chart-5: #3a5ade;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #0a0a0a;
-  --sidebar-primary: #171717;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #e5d3f5;
-  --sidebar-accent-foreground: #171717;
-  --sidebar-border: #e5e5e5;
+  --sidebar: #f7f6f5;
+  --sidebar-foreground: #0c0b0b;
+  --sidebar-primary: #45403e;
+  --sidebar-primary-foreground: #f1f0ed;
+  --sidebar-accent: #45403e;
+  --sidebar-accent-foreground: #f7f6f5;
+  --sidebar-border: #d0c9c3;
   --sidebar-ring: #a1a1a1;
 
   --radius: 0.4rem;
@@ -63,41 +67,45 @@
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #151816;
-  --card-foreground: #fafafa;
+  --background: #0c0c0c;
+  --foreground: #8d877c;
+  --card: #1c1a19;
+  --card-foreground: #f1f0ed;
   --popover: #0f1110;
-  --popover-foreground: #fafafa;
-  --primary: #e5e5e5;
+  --popover-foreground: #f1f0ed;
+  --primary: #fe671c;
   --primary-foreground: #151816;
-  --secondary: #252b1d;
-  --secondary-foreground: #fafafa;
+  --secondary: #45403e;
+  --secondary-foreground: #f1f0ed;
   --muted: #262626;
-  --muted-foreground: #a1a1a1;
+  --muted-foreground: #8c877d;
   --accent: #404040;
-  --accent-foreground: #fafafa;
+  --accent-foreground: #f1f0ed;
   --destructive: #ff6467;
-  --destructive-foreground: #fafafa;
-  --border: #282828;
+  --destructive-foreground: #f1f0ed;
+  --border: #312e2c;
   --input: #343434;
   --ring: #737373;
 
-  --description: #361f3d;
-  --income: #36a960;
+  --banner-background: #fe671c;
+  --banner-foreground: #0c0c0c;
+  --month-picker: #45403e;
+  --month-picker-foreground: #e6e6e6;
+  --description: #bc822e;
+  --income: #b9d47e;
   --expense: #d97757;
 
-  --chart-1: #36a960;
+  --chart-1: #b9d47e;
   --chart-2: #d97757;
-  --chart-3: #36a960;
+  --chart-3: #b9d47e;
   --chart-4: #d97757;
   --chart-5: #657fe8;
-  --sidebar: #151816;
-  --sidebar-foreground: #fafafa;
+  --sidebar: #1c1a19;
+  --sidebar-foreground: #f1f0ed;
   --sidebar-primary: #1447e6;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #252b1d;
-  --sidebar-accent-foreground: #fafafa;
+  --sidebar-primary-foreground: #f1f0ed;
+  --sidebar-accent: #3d3937;
+  --sidebar-accent-foreground: #f1f0ed;
   --sidebar-border: #282828;
   --sidebar-ring: #525252;
 
@@ -137,6 +145,10 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-banner-background: var(--banner-background);
+  --color-banner-foreground: var(--banner-foreground);
+  --color-month-picker: var(--month-picker);
+  --color-month-picker-foreground: var(--month-picker-foreground);
   --color-description: var(--description);
   --color-income: var(--income);
   --color-expense: var(--expense);
@@ -182,7 +194,7 @@
   }
 
   ::selection {
-    @apply text-background bg-emerald-500;
+    @apply text-foreground bg-chart-1;
   }
 }
 

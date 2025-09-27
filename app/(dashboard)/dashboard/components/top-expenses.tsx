@@ -11,7 +11,7 @@ export default async function TopExpensesSection({ month }: { month: string }) {
       subtitle="Top 10 Despesas"
       information="Apenas transações do usuário"
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiArrowDownLine className="size-4" />
         </span>
       }

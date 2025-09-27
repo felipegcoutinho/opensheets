@@ -148,8 +148,8 @@ function TopExpensesWidget({
       <div className="flex flex-wrap items-center justify-between gap-y-2 pb-3">
         <span className="text-muted-foreground text-xs">
           {onlyCards
-            ? "Exibindo apenas despesas pagas com cartões."
-            : "Exibindo despesas com boletos e cartões."}
+            ? "Apenas despesas pagas com cartões."
+            : "Despesas com boletos e cartões."}
         </span>
         <div className="flex items-center gap-2">
           <label

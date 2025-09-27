@@ -15,7 +15,7 @@ export default async function TopEstablishmentsSection({
       subtitle="Top 10 por estabelecimento"
       information="Agrupa por descrição do lançamento (Você)"
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiStore2Line className="size-4" />
         </span>
       }
@@ -24,4 +24,3 @@ export default async function TopEstablishmentsSection({
     </Widget>
   );
 }
-

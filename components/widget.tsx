@@ -86,7 +86,7 @@ export default function Widget({
               className={`${title_font.className} flex items-center gap-1`}
             >
               {icon}
-              {title}
+              <span>{title}</span>
               {information && (
                 <Tooltip>
                   <TooltipTrigger>
@@ -96,7 +96,7 @@ export default function Widget({
                     />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="ml-1">{information}</p>
+                    <span className="ml-1">{information}</span>
                   </TooltipContent>
                 </Tooltip>
               )}

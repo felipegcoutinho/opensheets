@@ -15,7 +15,7 @@ export default async function CategoriesDespesaSection({
       subtitle="Principais categorias"
       information="Apenas transações do usuário"
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiFileList2Line className="size-4" />
         </span>
       }

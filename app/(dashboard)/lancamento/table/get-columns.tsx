@@ -111,19 +111,19 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <Badge variant={"outline"} className="italic">
+            <span className="text-muted-foreground ml-1 text-xs italic underline">
               Venc. {DateFormat(item.data_vencimento)}
-            </Badge>
+            </span>
           )}
 
           {item.condicao === "parcelado" && (
-            <Badge variant={"outline"} className="italic">
+            <span className="text-muted-foreground ml-1 text-xs italic underline">
               {item.parcela_atual} de {item.qtde_parcela}
-            </Badge>
+            </span>
           )}
 
           {item.pagadores?.role === "sistema" && (
-            <span className="text-emerald-700">
+            <span className="text-green-700">
               <RiCheckboxCircleFill size={14} />
             </span>
           )}
@@ -237,23 +237,9 @@ export const getColumns = (
 
       const nome = pagador.nome ?? "";
       const role = pagador.role ?? "";
-      const foto = pagador.foto as string | undefined;
-
-      const resolveFotoSrc = (f?: string) => {
-        if (!f) return undefined;
-        if (f.startsWith("http")) return f;
-        if (f.startsWith("/")) return f;
-        return `/avatars/${f}`;
-      };
-
-      const src = resolveFotoSrc(foto);
 
       const content = (
         <span className="flex items-center gap-1">
-          <Avatar className="size-6">
-            {src ? <AvatarImage src={src} alt={nome || "Pagador"} /> : null}
-            <AvatarFallback>{(nome?.[0] || "P").toUpperCase()}</AvatarFallback>
-          </Avatar>
           <BadgeSystem label={nome} color={getPayerRoleBadgeColor(role)} />
         </span>
       );
@@ -263,19 +249,11 @@ export const getColumns = (
       }
 
       return (
-        <Link href={`/pagador/${pagador.id}`} className="hover:underline">
+        <Link href={`/pagador/${pagador.id}`} className="underline">
           {content}
         </Link>
       );
     },
-  },
-
-  {
-    id: "categoria",
-    accessorFn: (row) => row.categorias?.nome,
-    header: "Categoria",
-    enableHiding: true,
-    cell: () => null,
   },
 
   {
@@ -314,7 +292,7 @@ export const getColumns = (
       }
 
       return (
-        <Link href={href} className="flex items-center gap-2 hover:underline">
+        <Link href={href} className="flex items-center gap-2 underline">
           <PaymentMethodLogo
             url_name={`/logos/${logo}`}
             descricao={descricao}

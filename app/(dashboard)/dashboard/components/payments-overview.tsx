@@ -18,7 +18,7 @@ export default async function PaymentsOverviewSection({
       subtitle={`Formas e condições no período`}
       information="Considera os lançamentos do usuário no mês selecionado."
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiWalletLine className="size-4" />
         </span>
       }

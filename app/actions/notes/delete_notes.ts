@@ -10,12 +10,14 @@ export async function deleteNote(
   const excluir = formData.get("excluir");
   const supabase = createClient();
 
-  try {
-    await supabase.from("anotacoes").delete().eq("id", excluir);
-    revalidatePath("/anotacao");
-    return { success: true, message: "Anotação excluída com sucesso!" };
-  } catch (error) {
+  const { error } = await supabase.from("anotacoes").delete().eq("id", excluir);
+
+  revalidatePath("/anotacao");
+
+  if (error) {
     console.error("Erro ao excluir anotação:", error);
     return { success: false, message: "Erro ao excluir anotação!" };
   }
+
+  return { success: true, message: "Anotação excluída com sucesso!" };
 }

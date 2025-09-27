@@ -27,7 +27,6 @@ export function TransactionTableHeaderCard({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <CardTitle className="flex items-center gap-4" hidden={hidden}>
-        Lançamentos
         {selectedCount > 0 && !hidden && (
           <Badge variant={"outline"} className="py-0">
             Total Selecionado:

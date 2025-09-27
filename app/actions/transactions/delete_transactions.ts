@@ -9,14 +9,34 @@ export async function deleteTransaction(
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");
+  if (excluir === null) {
+    return { success: false, message: "Lançamento inválido para remoção" };
+  }
+
+  const id = excluir.toString();
   const supabase = createClient();
+
   try {
-    await supabase.from("lancamentos").delete().eq("id", excluir);
-    revalidatePath("/lancamentos");
+    const { data, error } = await supabase
+      .from("lancamentos")
+      .delete()
+      .eq("id", id)
+      .select("id");
+
+    if (error) {
+      console.error("Erro ao deletar transação:", error);
+      return { success: false, message: "Erro ao remover Lançamento" };
+    }
+
+    if (!data?.length) {
+      return { success: false, message: "Lançamento não encontrado para remoção" };
+    }
+
+    revalidatePath("/lancamento");
     revalidatePath("/dashboard");
     return { success: true, message: "Lançamento removido com sucesso!" };
   } catch (error) {
-    console.error("Erro ao deletar transação:", error);
+    console.error("Erro inesperado ao deletar transação:", error);
     return { success: false, message: "Erro ao remover Lançamento" };
   }
 }
@@ -48,10 +68,11 @@ export async function bulkDeleteTransactions(
   const supabase = createClient();
 
   try {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("lancamentos")
       .delete()
-      .in("id", ids);
+      .in("id", ids)
+      .select("id");
 
     if (error) {
       console.error("Erro ao remover lançamentos em massa:", error);
@@ -61,7 +82,14 @@ export async function bulkDeleteTransactions(
       };
     }
 
-    revalidatePath("/lancamentos");
+    if (!data?.length) {
+      return {
+        success: false,
+        message: "Nenhum lançamento válido encontrado para remoção.",
+      };
+    }
+
+    revalidatePath("/lancamento");
     revalidatePath("/dashboard");
 
     return {

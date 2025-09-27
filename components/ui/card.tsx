@@ -9,7 +9,7 @@ const Card = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
         ref={ref}
         data-slot="card"
         className={cn(
-          "bg-card text-card-foreground flex flex-col gap-6 rounded-lg border py-6 ",
+          "bg-card text-card-foreground flex flex-col gap-6 rounded-lg border py-6",
           className,
         )}
         {...props}
@@ -93,5 +93,5 @@ export {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 };

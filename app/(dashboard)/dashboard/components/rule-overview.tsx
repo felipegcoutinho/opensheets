@@ -46,7 +46,7 @@ export default async function RuleOverviewSection({
       }
       information="Os cálculos consideram apenas lançamentos do pagador principal no período selecionado."
       icon={
-        <span className="bg-secondary text-primary mr-2 inline-flex items-center justify-center rounded-md p-1">
+        <span className="text-foreground inline-flex items-center justify-center rounded-md p-1">
           <RiPieChart2Line className="size-4" />
         </span>
       }
