@@ -22,12 +22,13 @@ interface DeleteNoteProps {
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function DeleteNotes({ itemId, itemNome, trigger }: DeleteNoteProps) {
+export default function DeleteNotes({
+  itemId,
+  itemNome,
+  trigger,
+}: DeleteNoteProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [state, action, isPending] = useActionState(
-    deleteNote,
-    initialState,
-  );
+  const [state, action, isPending] = useActionState(deleteNote, initialState);
 
   useEffect(() => {
     if (isPending) return;
@@ -43,7 +44,11 @@ export default function DeleteNotes({ itemId, itemNome, trigger }: DeleteNotePro
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        {trigger || <Button variant="outline" size="sm">Excluir</Button>}
+        {trigger || (
+          <Button className="p-0" variant="link">
+            remover
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent className="max-w-sm">

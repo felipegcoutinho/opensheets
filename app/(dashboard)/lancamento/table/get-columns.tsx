@@ -257,6 +257,14 @@ export const getColumns = (
   },
 
   {
+    id: "categoria",
+    accessorFn: (row) => row.categorias?.nome,
+    header: "Categoria",
+    enableHiding: true,
+    cell: () => null,
+  },
+
+  {
     id: "conta_cartao",
     accessorFn: (row) => getDescricao(row),
     header: () => "Conta/Cartão",

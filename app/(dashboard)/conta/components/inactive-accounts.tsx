@@ -35,7 +35,7 @@ export default async function InactiveAccountsSection() {
           </CardHeader>
           <CardContent className="pt-4">
             <div className="mt-6 flex items-center gap-3">
-              <Button asChild variant="link" size="sm">
+              <Button asChild variant="link" className="p-0">
                 <Link href={`/conta/${item.id}`}>extrato</Link>
               </Button>
               <UpdateCard item={item} />

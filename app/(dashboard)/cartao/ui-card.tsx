@@ -96,9 +96,7 @@ export default function UiCard({
         </Button>
 
         {showDelete && (
-          <div className="ml-auto">
-            <DeleteCard itemId={item.id} itemNome={item.descricao} />
-          </div>
+          <DeleteCard itemId={item.id} itemNome={item.descricao} />
         )}
       </CardFooter>
     </Card>

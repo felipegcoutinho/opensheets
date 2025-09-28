@@ -49,11 +49,7 @@ export default async function ActiveAccountsSection({
                   height={42}
                 />
               </div>
-              <CardTitle className="capitalize">
-                <Link href={`/conta/${item.id}`} className="hover:underline">
-                  {item.descricao}
-                </Link>
-              </CardTitle>
+              <CardTitle className="capitalize">{item.descricao}</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
@@ -66,6 +62,9 @@ export default async function ActiveAccountsSection({
             </div>
 
             <div className="mt-6 flex items-center gap-6">
+              <Button asChild variant="link" className="p-0">
+                <Link href={`/conta/${item.id}`}>extrato</Link>
+              </Button>
               <UpdateCard item={item} />
             </div>
           </CardContent>

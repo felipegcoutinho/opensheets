@@ -27,7 +27,7 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
       </div>
 
       {/* Barra de progresso */}
-      <div className="mb-4 flex h-4 w-full overflow-hidden rounded">
+      <div className="mb-4 flex h-1 w-full overflow-hidden rounded">
         {total > 0 ? (
           values.map((value, index) => (
             <div

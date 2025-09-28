@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { RiPriceTag3Fill } from "@remixicon/react";
 import {
   useActionState,
   useEffect,
@@ -117,15 +118,15 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
       ? `Faltam ${deviationLabel}% para alcançar 100%.`
       : `Excedeu ${deviationLabel}% acima do ideal.`;
   const distributionColor = totalOk
-    ? "text-emerald-600"
+    ? "text-[#2F6A3A]"
     : deviation < 0
-      ? "text-amber-600"
-      : "text-destructive";
+      ? "text-[#1F4A69]"
+      : "text-[#EC622B]";
   const progressPrimaryColor = totalOk
-    ? "bg-emerald-500"
+    ? "bg-[#CAEAC5]"
     : deviation < 0
-      ? "bg-amber-500"
-      : "bg-destructive";
+      ? "bg-[#BDDFEE]"
+      : "bg-[#EC622B]";
   const progressValue = Math.min(Math.max(total, 0), 100);
 
   const handleToggle = (value: boolean) => {
@@ -239,12 +240,15 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between gap-2">
-                        <Label
-                          htmlFor={bucket}
-                          className={cn("text-base font-semibold", colors.text)}
-                        >
-                          {label}
-                        </Label>
+                        <div className="flex items-center gap-2">
+                          <RiPriceTag3Fill
+                            aria-hidden="true"
+                            className={cn("size-4", colors.text)}
+                          />
+                          <Label htmlFor={bucket} className="text-base font-semibold">
+                            {label}
+                          </Label>
+                        </div>
                         <span
                           className={cn(
                             "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm",

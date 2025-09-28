@@ -131,7 +131,7 @@ export function TableTransaction({
         budgetRule={budgetRule}
       />
 
-      <Card>
+      <div>
         <CardHeader>
           <TransactionTableHeaderCard
             hidden={hidden}
@@ -146,7 +146,7 @@ export function TableTransaction({
         <CardContent className="px-4">
           <TransactionTableCore table={table} columns={table.options.columns} />
         </CardContent>
-      </Card>
+      </div>
 
       <TransactionTablePagination table={table} />
     </div>

@@ -379,10 +379,10 @@ export function TransactionTableFilters<TData>({
         />
 
         <Input
-          placeholder="Pesquisar"
+          placeholder="Buscar..."
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="w-full shadow-none sm:w-[110px]"
+          className="w-full shadow-none sm:w-[120px]"
         />
       </div>
     </div>

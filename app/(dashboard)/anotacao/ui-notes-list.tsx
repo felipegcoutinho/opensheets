@@ -59,7 +59,7 @@ export default function NotesList({ notes }: { notes: any[] }) {
             })()}
           </CardContent>
           <CardFooter className="shrink-0">
-            <div className="flex gap-4 text-sm">
+            <div className="flex gap-3 text-sm">
               <UpdateNotes item={item} />
               <ViewNoteModal item={item} />
               <DeleteNotes itemId={item.id} itemNome={item.descricao} />

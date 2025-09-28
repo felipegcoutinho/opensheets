@@ -44,7 +44,7 @@ export function ComboboxFilter({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "border-input text-muted-foreground w-full justify-between truncate border-dashed shadow-none lg:w-[140px]",
+            "border-input text-muted-foreground w-full justify-between truncate border-dashed shadow-none lg:w-[150px]",
             value &&
               value !== "all" &&
               "ring-primary bg-primary/10 font-bold ring-1",

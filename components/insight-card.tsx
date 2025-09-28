@@ -48,7 +48,7 @@ export default function InsightCard({
       <Badge className={clsx("text-sm", palette.badge)}>{title}</Badge>
       <ul
         className={clsx(
-          "text-primary list-disc pl-4 text-sm leading-snug",
+          "text-foreground list-disc pl-4 text-sm leading-snug",
           palette.bullet,
         )}
       >

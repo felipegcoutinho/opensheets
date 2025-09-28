@@ -21,7 +21,10 @@ interface DeleteAccountProps {
 
 const initialState: ActionResponse = { success: false, message: "" };
 
-export default function DeleteAccount({ itemId, itemNome }: DeleteAccountProps) {
+export default function DeleteAccount({
+  itemId,
+  itemNome,
+}: DeleteAccountProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [state, action, isPending] = useActionState(
     deleteAccount,
@@ -42,8 +45,8 @@ export default function DeleteAccount({ itemId, itemNome }: DeleteAccountProps) 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          Excluir
+        <Button variant="link" className="p-0">
+          remover
         </Button>
       </DialogTrigger>
 

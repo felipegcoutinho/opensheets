@@ -39,8 +39,8 @@ export default function DeleteCard({ itemId, itemNome }: DeleteCardProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          Excluir
+        <Button variant="link" className="p-0">
+          remover
         </Button>
       </DialogTrigger>
 

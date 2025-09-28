@@ -8,7 +8,7 @@ import MoneyValues from "@/components/money-values";
 import { Progress } from "@/components/ui/progress";
 import Widget from "@/components/widget";
 import { cn } from "@/lib/utils";
-import { RiPieChart2Line } from "@remixicon/react";
+import { RiPieChart2Line, RiPriceTag3Fill } from "@remixicon/react";
 import Link from "next/link";
 
 function formatPercent(value: number) {
@@ -87,11 +87,16 @@ export default async function RuleOverviewSection({
                         href={detailHref}
                         className={cn(
                           "focus-visible:ring-primary text-sm font-bold capitalize transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
-                          colors.text,
                         )}
                         aria-label={`Ver lançamentos de ${bucketLabel} no período ${formattedMonth}`}
                       >
-                        {bucketLabel}
+                        <span className="flex items-center gap-2">
+                          <RiPriceTag3Fill
+                            aria-hidden="true"
+                            className={cn("size-4", colors.text)}
+                          />
+                          <span>{bucketLabel}</span>
+                        </span>
                       </Link>
                       <p className="text-muted-foreground text-xs">
                         Meta {formatPercent(targetPercent)}% •{" "}
@@ -123,8 +128,8 @@ export default async function RuleOverviewSection({
                       className={cn(
                         "font-medium",
                         remaining >= 0
-                          ? "text-emerald-600"
-                          : "text-destructive",
+                          ? "text-[#2F6A3A]"
+                          : "text-[#EC622B]",
                       )}
                     >
                       {remaining >= 0 ? "Disponível" : "Excedente"}:{" "}
