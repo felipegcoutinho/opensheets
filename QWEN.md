@@ -1,4 +1,4 @@
-- Responda sempre em português do brasil. Não traduza o conteúdo do código, apenas o contexto e a descrição.
+- Responda sempre em português do brasil. Não traduza o conteúdo do código, apenas o contexto, pensamentos e a descrição.
 - Novos arquivos precisam seguir o modelo Kebab case (ex: meu-arquivo-exemplo.ts)
 - Evite usar useEffects sempre que possível.
 - Use SWR ou React Query para busca de dados no cliente

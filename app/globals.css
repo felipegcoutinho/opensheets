@@ -36,17 +36,17 @@
   --expense: #dd602d;
 
   --bg-necessidade: #bbf7d0;
-  --bg-necessidade-foreground: #166534;
+  --bg-necessidade-foreground: #147e3d;
   --bg-desejo: #bae6fd;
   --bg-desejo-foreground: #0284c7;
   --bg-objetivo: #d8b4fe;
-  --bg-objetivo-foreground: #7e22ce;
+  --bg-objetivo-foreground: #8c21ea;
 
   --chart-1: #ee622a;
   --chart-2: #dd602d;
-  --chart-3: #574a45;
-  --chart-4: #565353;
-  --chart-5: #c3b3b6;
+  --chart-3: #19d05f;
+  --chart-4: #f66f51;
+  --chart-5: #a333ee;
   --sidebar: #f8f6f4;
   --sidebar-foreground: #352a27;
   --sidebar-primary: #574a45;
@@ -111,9 +111,9 @@
 
   --chart-1: #ee622a;
   --chart-2: #dd602d;
-  --chart-3: #574a45;
-  --chart-4: #565353;
-  --chart-5: #c3b3b6;
+  --chart-3: #19d05f;
+  --chart-4: #f66f51;
+  --chart-5: #a333ee;
   --sidebar: #221d1c;
   --sidebar-foreground: #fff7f2;
   --sidebar-primary: #dd602d;
@@ -208,7 +208,7 @@
   }
 
   ::selection {
-    @apply text-foreground bg-chart-1;
+    @apply text-foreground bg-emerald-500;
   }
 }
 

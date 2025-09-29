@@ -191,7 +191,13 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
               </div>
               <Progress
                 value={progressValue}
-                primary_color={totalOk ? '--bg-necessidade-foreground' : deviation < 0 ? '--bg-desejo-foreground' : '--bg-objetivo-foreground'}
+                primary_color={
+                  totalOk
+                    ? "--bg-necessidade-foreground"
+                    : deviation < 0
+                      ? "--bg-desejo-foreground"
+                      : "--bg-objetivo-foreground"
+                }
                 secondary_color="--muted"
                 className="h-2"
               />
@@ -210,9 +216,6 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                   mantendo equilíbrio financeiro.
                 </p>
               </div>
-              <span className="text-muted-foreground inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide uppercase">
-                Meta total 100%
-              </span>
             </div>
 
             <div className="grid gap-4 lg:grid-cols-3">
@@ -223,11 +226,19 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                 const colors = BUDGET_RULE_COLORS[bucket];
                 const bucketValue = Number(percentuais[bucket] ?? 0);
                 const displayValue = bucketValue.toFixed(1);
-                
-                const cssVarBackground = bucket === 'necessidades' ? 'var(--bg-necessidade)' : 
-                                       bucket === 'desejos' ? 'var(--bg-desejo)' : 'var(--bg-objetivo)';
-                const cssVarForeground = bucket === 'necessidades' ? 'var(--bg-necessidade-foreground)' : 
-                                        bucket === 'desejos' ? 'var(--bg-desejo-foreground)' : 'var(--bg-objetivo-foreground)';
+
+                const cssVarBackground =
+                  bucket === "necessidades"
+                    ? "var(--bg-necessidade)"
+                    : bucket === "desejos"
+                      ? "var(--bg-desejo)"
+                      : "var(--bg-objetivo)";
+                const cssVarForeground =
+                  bucket === "necessidades"
+                    ? "var(--bg-necessidade-foreground)"
+                    : bucket === "desejos"
+                      ? "var(--bg-desejo-foreground)"
+                      : "var(--bg-objetivo-foreground)";
 
                 return (
                   <div
@@ -246,12 +257,15 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                             className="size-4"
                             style={{ color: cssVarForeground }}
                           />
-                          <Label htmlFor={bucket} className="text-base font-semibold">
+                          <Label
+                            htmlFor={bucket}
+                            className="text-base font-semibold"
+                          >
                             {label}
                           </Label>
                         </div>
                         <span
-                          className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm"
+                          className="inline-flex items-center rounded-full px-2 py-0.5 text-xs"
                           style={{
                             backgroundColor: cssVarBackground,
                             color: cssVarForeground,
