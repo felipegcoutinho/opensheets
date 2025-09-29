@@ -154,8 +154,8 @@ export default function CreateTransactions({
   const [selectedPayer, setSelectedPayer] = useState<string | undefined>();
   useEffect(() => {
     if (!selectedPayer && pagadoresOptions.length > 0) {
-      const principal = pagadoresOptions.find(
-        (p) => normalize(p.role || "").includes("principal"),
+      const principal = pagadoresOptions.find((p) =>
+        normalize(p.role || "").includes("principal"),
       );
       setSelectedPayer(principal?.nome || pagadoresOptions[0]?.nome);
     }
@@ -178,8 +178,9 @@ export default function CreateTransactions({
     () => pagadoresOptions.find((p) => p.nome === selectedPayer),
     [pagadoresOptions, selectedPayer],
   );
-  const isSelectedPayerPrincipal =
-    normalize(selectedPayerInfo?.role || "").includes("principal");
+  const isSelectedPayerPrincipal = normalize(
+    selectedPayerInfo?.role || "",
+  ).includes("principal");
 
   // Estado para categoria (combobox com busca)
   const [categoriaId, setCategoriaId] = useState<string | undefined>();
@@ -370,53 +371,53 @@ export default function CreateTransactions({
             {budgetRule.ativada &&
               tipoTransacao === "despesa" &&
               isSelectedPayerPrincipal && (
-              <div>
-                <div className="flex items-center gap-1">
-                  <Label
-                    htmlFor="regra_502030_tipo"
-                    className="flex items-center gap-1"
-                  >
-                    Regra 50/30/20 <Required />
-                  </Label>
-                  <TooltipProvider delayDuration={200}>
-                    <Tooltip>
-                      <TooltipTrigger
-                        type="button"
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        <RiQuestionLine className="size-4" />
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs text-xs">
-                        Escolha se o lançamento representa Necessidades, Desejos
-                        ou Objetivos conforme a regra 50/30/20 configurada em
-                        Orçamentos.
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                <div>
+                  <div className="flex items-center gap-1">
+                    <Label
+                      htmlFor="regra_502030_tipo"
+                      className="flex items-center gap-1"
+                    >
+                      Regra 50/30/20 <Required />
+                    </Label>
+                    <TooltipProvider delayDuration={200}>
+                      <Tooltip>
+                        <TooltipTrigger
+                          type="button"
+                          className="text-muted-foreground hover:text-foreground"
+                        >
+                          <RiQuestionLine className="size-4" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs text-xs">
+                          Escolha se o lançamento representa Necessidades,
+                          Desejos ou Objetivos conforme a regra 50/30/20
+                          configurada em Orçamentos.
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <BudgetRuleSelect
+                    id="regra_502030_tipo"
+                    name="regra_502030_tipo"
+                    value={ruleBucket}
+                    onValueChange={setRuleBucket}
+                    percentages={budgetRule.percentuais}
+                    required
+                  />
                 </div>
-                <BudgetRuleSelect
-                  id="regra_502030_tipo"
-                  name="regra_502030_tipo"
-                  value={ruleBucket}
-                  onValueChange={setRuleBucket}
-                  percentages={budgetRule.percentuais}
-                  required
-                />
-              </div>
-            )}
+              )}
             <input
               type="hidden"
               name="regra_502030_tipo"
               value={
                 tipoTransacao === "despesa" && isSelectedPayerPrincipal
-                  ? ruleBucket ?? ""
+                  ? (ruleBucket ?? "")
                   : ""
               }
             />
 
             <div className="flex w-full gap-2">
               <Card
-                className={`flex-row p-4 ${
+                className={`flex-row bg-transparent p-4 ${
                   showCartao || eBoletoSelecionado ? "w-full" : "w-1/2"
                 } `}
               >
@@ -436,7 +437,7 @@ export default function CreateTransactions({
               </Card>
 
               {!(showCartao || eBoletoSelecionado) && (
-                <Card className="w-1/2 flex-row p-4">
+                <Card className="w-1/2 flex-row bg-transparent p-4">
                   <div className="flex-col">
                     <Label>Status do Lançamento</Label>
                     <p className="text-muted-foreground text-xs leading-snug">
@@ -448,9 +449,9 @@ export default function CreateTransactions({
                       onPressedChange={setIsPaid}
                       pressed={isPaid}
                       name="realizado_toggle"
-                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-700"
+                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-600"
                     >
-                      <RiThumbUpFill strokeWidth={2} />
+                      <RiThumbUpFill className="size-5" />
                     </Toggle>
                   </div>
                 </Card>

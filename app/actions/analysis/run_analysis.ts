@@ -3,8 +3,6 @@
 import type { Analysis } from "@/components/analysis/analysis";
 import { hashPayload } from "@/lib/hash";
 import { createClient } from "@/utils/supabase/server";
-import { openai } from "@ai-sdk/openai";
-import { generateObject } from "ai";
 import { z } from "zod";
 
 const InputSchema = z.object({
@@ -22,6 +20,35 @@ const AnalysisSchema = z.object({
   recomendações_práticas: z.array(z.string()).default([]),
   melhorias_sugeridas: z.array(z.string()).default([]),
 });
+
+const analysisJsonSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    comportamentos_observados: {
+      type: "array",
+      items: { type: "string" },
+    },
+    gatilhos_de_consumo: {
+      type: "array",
+      items: { type: "string" },
+    },
+    recomendações_práticas: {
+      type: "array",
+      items: { type: "string" },
+    },
+    melhorias_sugeridas: {
+      type: "array",
+      items: { type: "string" },
+    },
+  },
+  required: [
+    "comportamentos_observados",
+    "gatilhos_de_consumo",
+    "recomendações_práticas",
+    "melhorias_sugeridas",
+  ],
+} as const;
 
 type Snapshot = ReturnType<typeof buildSnapshot>;
 
@@ -193,6 +220,102 @@ type AnalysisResult =
   | { status: "unchanged"; fingerprint: string }
   | { status: "error"; message: string };
 
+const OPENROUTER_API_URL =
+  process.env.OPENROUTER_API_URL ?? "https://openrouter.ai/api/v1";
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL ?? "openrouter/auto";
+
+async function requestAnalysisFromOpenRouter(snapshot: Snapshot) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+
+  if (!apiKey) {
+    throw new Error(
+      "OPENROUTER_API_KEY não configurada. Defina a variável no ambiente do servidor.",
+    );
+  }
+
+  const systemPrompt = `
+Especialista em comportamento financeiro. Forneça recomendações objetivas baseadas em métricas agregadas. Destaque padrões, riscos e oportunidades sem expor dados pessoais. Após cada recomendação, valide sucintamente se a análise atende aos critérios de objetividade e privacidade antes de prosseguir, mas não precisa exibir se está ok ou não. Adote uma abordagem pragmática e direta, utilizando verbos de ação, mas sem linguajar muito rebuscado, simplifique a comunicação. Responda exclusivamente com um JSON válido que siga exatamente o esquema especificado.`.trim();
+
+  const userPayload = {
+    referencia: snapshot.month,
+    totais: snapshot.totals,
+    contagens: snapshot.counts,
+    medias: snapshot.averages,
+    proporcoes: snapshot.ratios,
+    categorias: snapshot.categoryBreakdown,
+    pagamentos: snapshot.paymentBreakdown,
+    condicoes: snapshot.conditionBreakdown,
+    credito: snapshot.credit,
+    destaques: snapshot.highlights,
+  } satisfies Record<string, unknown>;
+
+  const response = await fetch(`${OPENROUTER_API_URL}/chat/completions`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+      "HTTP-Referer":
+        process.env.OPENROUTER_REFERER ?? "https://opensheets.app",
+      "X-Title": process.env.OPENROUTER_TITLE ?? "OpenSheets",
+    },
+
+    body: JSON.stringify({
+      model: OPENROUTER_MODEL,
+      temperature: 0.5,
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "consumption_analysis",
+          schema: analysisJsonSchema,
+          strict: true,
+        },
+      },
+      messages: [
+        { role: "system", content: systemPrompt },
+        {
+          role: "user",
+          content: `Analise o snapshot financeiro abaixo e devolva um JSON que respeite exatamente o esquema fornecido. Dados de entrada: ${JSON.stringify(userPayload)}`,
+        },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const errorPayload = await response.text();
+    throw new Error(
+      `Falha ao consultar a OpenRouter (${response.status}): ${errorPayload}`,
+    );
+  }
+
+  const result = await response.json();
+  const rawContent = result?.choices?.[0]?.message?.content;
+
+  if (!rawContent) {
+    throw new Error("A OpenRouter não retornou conteúdo utilizável.");
+  }
+
+  const contentText = Array.isArray(rawContent)
+    ? rawContent
+        .map((part: { type?: string; text?: string; content?: string }) =>
+          typeof part === "string" ? part : (part?.text ?? part?.content ?? ""),
+        )
+        .join("")
+    : String(rawContent);
+
+  const normalized = contentText.trim();
+  const jsonStart = normalized.indexOf("{");
+  const jsonEnd = normalized.lastIndexOf("}");
+
+  if (jsonStart === -1 || jsonEnd === -1 || jsonEnd <= jsonStart) {
+    throw new Error("Não foi possível localizar um JSON válido na resposta.");
+  }
+
+  const parsed = JSON.parse(normalized.slice(jsonStart, jsonEnd + 1));
+  const analysis = AnalysisSchema.parse(parsed) as Analysis;
+
+  return analysis;
+}
+
 export async function runConsumptionAnalysis(
   payload: z.input<typeof InputSchema>,
 ): Promise<AnalysisResult> {
@@ -251,32 +374,7 @@ export async function runConsumptionAnalysis(
   }
 
   try {
-    const result = await generateObject({
-      model: openai("gpt-5"),
-      schema: AnalysisSchema,
-      system: `
-       Especialista em comportamento financeiro. Forneça recomendações objetivas baseadas em métricas agregadas. Destaque padrões, riscos e oportunidades sem expor dados pessoais. Após cada recomendação, valide sucintamente se a análise atende aos critérios de objetividade e privacidade antes de prosseguir, mas não precisa exibir se está ok ou não. Adote uma abordagem pragmática e direta, utilizando verbos de ação, mas sem linguajar muito rebuscado, simplifique a comunicação.
-      `.trim(),
-      messages: [
-        {
-          role: "user",
-          content: JSON.stringify({
-            referencia: snapshot.month,
-            totais: snapshot.totals,
-            contagens: snapshot.counts,
-            medias: snapshot.averages,
-            proporcoes: snapshot.ratios,
-            categorias: snapshot.categoryBreakdown,
-            pagamentos: snapshot.paymentBreakdown,
-            condicoes: snapshot.conditionBreakdown,
-            credito: snapshot.credit,
-            destaques: snapshot.highlights,
-          }),
-        },
-      ],
-    });
-
-    const analysis = result.object satisfies Analysis;
+    const analysis = await requestAnalysisFromOpenRouter(snapshot);
     return { status: "ok", analysis, fingerprint };
   } catch (error) {
     console.error("Erro ao gerar análise:", error);
