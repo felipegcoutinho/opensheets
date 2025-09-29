@@ -9,27 +9,26 @@ export async function deleteTransaction(
   formData: FormData,
 ): Promise<ActionResponse> {
   const excluir = formData.get("excluir");
-  if (excluir === null) {
+  if (excluir === null || excluir === undefined) {
     return { success: false, message: "Lançamento inválido para remoção" };
   }
 
-  const id = excluir.toString();
+  const rawId = typeof excluir === "string" ? excluir.trim() : excluir;
+  if (rawId === "" || rawId === null) {
+    return { success: false, message: "ID inválido para remoção" };
+  }
+
   const supabase = createClient();
 
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("lancamentos")
       .delete()
-      .eq("id", id)
-      .select("id");
+      .eq("id", rawId);
 
     if (error) {
       console.error("Erro ao deletar transação:", error);
       return { success: false, message: "Erro ao remover Lançamento" };
-    }
-
-    if (!data?.length) {
-      return { success: false, message: "Lançamento não encontrado para remoção" };
     }
 
     revalidatePath("/lancamento");
@@ -56,7 +55,7 @@ export async function bulkDeleteTransactions(
   const ids = idsValue
     .split(",")
     .map((id) => id.trim())
-    .filter(Boolean);
+    .filter((id) => id.length > 0);
 
   if (!ids.length) {
     return {
@@ -68,24 +67,13 @@ export async function bulkDeleteTransactions(
   const supabase = createClient();
 
   try {
-    const { data, error } = await supabase
-      .from("lancamentos")
-      .delete()
-      .in("id", ids)
-      .select("id");
+    const { error } = await supabase.from("lancamentos").delete().in("id", ids);
 
     if (error) {
       console.error("Erro ao remover lançamentos em massa:", error);
       return {
         success: false,
         message: "Erro ao remover lançamentos selecionados.",
-      };
-    }
-
-    if (!data?.length) {
-      return {
-        success: false,
-        message: "Nenhum lançamento válido encontrado para remoção.",
       };
     }
 

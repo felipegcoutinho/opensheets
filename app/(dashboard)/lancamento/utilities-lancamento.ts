@@ -1,10 +1,7 @@
 "use client";
 
 import { createTransaction } from "@/app/actions/transactions/create_transactions";
-import {
-  deleteTransaction,
-  removeImage,
-} from "@/app/actions/transactions/delete_transactions";
+import { removeImage } from "@/app/actions/transactions/delete_transactions";
 import { updateTransaction } from "@/app/actions/transactions/update_transactions";
 import { addMonths, format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -159,18 +156,6 @@ export default function UtilitiesLancamento() {
     setLoading(false);
   }, []);
 
-  const handleDelete = useCallback(
-    (itemId: number | string) => async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const formData = new FormData();
-      formData.append("excluir", String(itemId));
-      await deleteTransaction({ success: false, message: "" }, formData);
-      toast.success("Transação removida com sucesso!");
-      setIsOpen(false);
-    },
-    [],
-  );
-
   const handleRemoveImage = useCallback(
     async (transactionId: number | string, imageUrl: string) => {
       setRemovingImage(true);
@@ -203,7 +188,6 @@ export default function UtilitiesLancamento() {
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
     handleCreateSubmit,
-    handleDelete,
     loading,
     handleUpdate,
     isDividedChecked,

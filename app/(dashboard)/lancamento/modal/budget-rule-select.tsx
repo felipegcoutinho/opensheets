@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { RiPriceTag3Fill } from "@remixicon/react";
 
 const BUCKET_TRIGGER_STYLES: Record<BudgetRuleBucket, string> = {
   necessidades:
@@ -37,21 +38,21 @@ const BUCKET_OPTION_STYLES: Record<
 > = {
   necessidades: {
     option:
-      "text-emerald-700 data-[highlighted]:bg-emerald-500/10 data-[state=checked]:bg-emerald-500/20 data-[state=checked]:text-emerald-900 dark:text-emerald-200 dark:data-[highlighted]:bg-emerald-500/20 dark:data-[state=checked]:bg-emerald-500/30 dark:data-[state=checked]:text-emerald-100",
+      "text-emerald-700 data-[highlighted]:bg-emerald-500/10 data-[highlighted]:text-emerald-700 data-[state=checked]:bg-emerald-500/20 data-[state=checked]:text-emerald-900 dark:text-emerald-200 dark:data-[highlighted]:bg-emerald-500/20 dark:data-[highlighted]:text-emerald-200 dark:data-[state=checked]:bg-emerald-500/30 dark:data-[state=checked]:text-emerald-100",
     indicator: "bg-emerald-500",
     valueText: "text-emerald-700 dark:text-emerald-200",
     percentText: "text-emerald-600 dark:text-emerald-300",
   },
   desejos: {
     option:
-      "text-sky-700 data-[highlighted]:bg-sky-500/10 data-[state=checked]:bg-sky-500/20 data-[state=checked]:text-sky-900 dark:text-sky-200 dark:data-[highlighted]:bg-sky-500/20 dark:data-[state=checked]:bg-sky-500/30 dark:data-[state=checked]:text-sky-100",
+      "text-sky-700 data-[highlighted]:bg-sky-500/10 data-[highlighted]:text-sky-700 data-[state=checked]:bg-sky-500/20 data-[state=checked]:text-sky-900 dark:text-sky-200 dark:data-[highlighted]:bg-sky-500/20 dark:data-[highlighted]:text-sky-200 dark:data-[state=checked]:bg-sky-500/30 dark:data-[state=checked]:text-sky-100",
     indicator: "bg-sky-500",
     valueText: "text-sky-700 dark:text-sky-200",
     percentText: "text-sky-600 dark:text-sky-300",
   },
   objetivos: {
     option:
-      "text-purple-700 data-[highlighted]:bg-purple-500/10 data-[state=checked]:bg-purple-500/20 data-[state=checked]:text-purple-900 dark:text-purple-200 dark:data-[highlighted]:bg-purple-500/20 dark:data-[state=checked]:bg-purple-500/30 dark:data-[state=checked]:text-purple-100",
+      "text-purple-700 data-[highlighted]:bg-purple-500/10 data-[highlighted]:text-purple-700 data-[state=checked]:bg-purple-500/20 data-[state=checked]:text-purple-900 dark:text-purple-200 dark:data-[highlighted]:bg-purple-500/20 dark:data-[highlighted]:text-purple-200 dark:data-[state=checked]:bg-purple-500/30 dark:data-[state=checked]:text-purple-100",
     indicator: "bg-purple-500",
     valueText: "text-purple-700 dark:text-purple-200",
     percentText: "text-purple-600 dark:text-purple-300",
@@ -105,10 +106,10 @@ export function BudgetRuleSelect({
         {value ? (
           <span className="flex w-full items-center justify-between gap-2">
             <span className="flex items-center gap-2">
-              <span
+              <RiPriceTag3Fill
                 className={cn(
-                  "size-2.5 rounded-full",
-                  BUCKET_OPTION_STYLES[value].indicator,
+                  "size-4",
+                  BUCKET_OPTION_STYLES[value].valueText,
                 )}
               />
               <span
@@ -144,10 +145,10 @@ export function BudgetRuleSelect({
             )}
           >
             <span className="flex items-center gap-2">
-              <span
+              <RiPriceTag3Fill
                 className={cn(
-                  "size-2.5 rounded-full",
-                  BUCKET_OPTION_STYLES[bucket].indicator,
+                  "size-4",
+                  BUCKET_OPTION_STYLES[bucket].valueText,
                 )}
               />
               <span className="font-medium">{formatBucketLabel(bucket)}</span>

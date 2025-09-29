@@ -35,6 +35,13 @@
   --income: #574a45;
   --expense: #dd602d;
 
+  --bg-necessidade: #bbf7d0;
+  --bg-necessidade-foreground: #166534;
+  --bg-desejo: #bae6fd;
+  --bg-desejo-foreground: #0284c7;
+  --bg-objetivo: #d8b4fe;
+  --bg-objetivo-foreground: #7e22ce;
+
   --chart-1: #ee622a;
   --chart-2: #dd602d;
   --chart-3: #574a45;
@@ -94,6 +101,13 @@
   --description: #dd602d;
   --income: #ee622a;
   --expense: #dd602d;
+
+  --bg-necessidade: #15803d;
+  --bg-necessidade-foreground: #a7f3d0;
+  --bg-desejo: #0369a1;
+  --bg-desejo-foreground: #bae6fd;
+  --bg-objetivo: #701a75;
+  --bg-objetivo-foreground: #d8b4fe;
 
   --chart-1: #ee622a;
   --chart-2: #dd602d;

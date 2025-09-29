@@ -118,15 +118,10 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
       ? `Faltam ${deviationLabel}% para alcançar 100%.`
       : `Excedeu ${deviationLabel}% acima do ideal.`;
   const distributionColor = totalOk
-    ? "text-[#2F6A3A]"
+    ? "text-[var(--bg-necessidade-foreground)]"
     : deviation < 0
-      ? "text-[#1F4A69]"
-      : "text-[#EC622B]";
-  const progressPrimaryColor = totalOk
-    ? "bg-[#CAEAC5]"
-    : deviation < 0
-      ? "bg-[#BDDFEE]"
-      : "bg-[#EC622B]";
+      ? "text-[var(--bg-desejo-foreground)]"
+      : "text-[var(--bg-objetivo-foreground)]";
   const progressValue = Math.min(Math.max(total, 0), 100);
 
   const handleToggle = (value: boolean) => {
@@ -196,8 +191,8 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
               </div>
               <Progress
                 value={progressValue}
-                primary_color={progressPrimaryColor}
-                secondary_color="bg-muted"
+                primary_color={totalOk ? '--bg-necessidade-foreground' : deviation < 0 ? '--bg-desejo-foreground' : '--bg-objetivo-foreground'}
+                secondary_color="--muted"
                 className="h-2"
               />
               <p className={cn("text-xs", distributionColor)}>
@@ -228,32 +223,39 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                 const colors = BUDGET_RULE_COLORS[bucket];
                 const bucketValue = Number(percentuais[bucket] ?? 0);
                 const displayValue = bucketValue.toFixed(1);
+                
+                const cssVarBackground = bucket === 'necessidades' ? 'var(--bg-necessidade)' : 
+                                       bucket === 'desejos' ? 'var(--bg-desejo)' : 'var(--bg-objetivo)';
+                const cssVarForeground = bucket === 'necessidades' ? 'var(--bg-necessidade-foreground)' : 
+                                        bucket === 'desejos' ? 'var(--bg-desejo-foreground)' : 'var(--bg-objetivo-foreground)';
 
                 return (
                   <div
                     key={bucket}
-                    className={cn(
-                      "bg-background flex h-full flex-col justify-between gap-4 rounded-2xl border p-5 shadow-sm transition-colors",
-                      colors.surface,
-                      colors.border,
-                    )}
+                    className="bg-background flex h-full flex-col justify-between gap-4 rounded-2xl border p-5 shadow-sm transition-colors"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${cssVarBackground} 15%, transparent)`,
+                      borderColor: cssVarForeground,
+                    }}
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <RiPriceTag3Fill
                             aria-hidden="true"
-                            className={cn("size-4", colors.text)}
+                            className="size-4"
+                            style={{ color: cssVarForeground }}
                           />
                           <Label htmlFor={bucket} className="text-base font-semibold">
                             {label}
                           </Label>
                         </div>
                         <span
-                          className={cn(
-                            "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm",
-                            colors.badge,
-                          )}
+                          className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm"
+                          style={{
+                            backgroundColor: cssVarBackground,
+                            color: cssVarForeground,
+                          }}
                         >
                           {displayValue}%
                         </span>
@@ -304,10 +306,8 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                         {detail.examples.map((example) => (
                           <li key={example} className="flex items-center gap-2">
                             <span
-                              className={cn(
-                                "h-2 w-2 flex-none rounded-full",
-                                colors.primary,
-                              )}
+                              className="h-2 w-2 flex-none rounded-full"
+                              style={{ backgroundColor: cssVarBackground }}
                             />
                             <span className="leading-5">{example}</span>
                           </li>

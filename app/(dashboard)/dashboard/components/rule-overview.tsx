@@ -73,6 +73,18 @@ export default async function RuleOverviewSection({
               const progress =
                 expected > 0 ? Math.min((spent / expected) * 100, 100) : 0;
               const colors = BUDGET_RULE_COLORS[bucket];
+              const cssVarPrimary =
+                bucket === "necessidades"
+                  ? "--bg-necessidade-foreground"
+                  : bucket === "desejos"
+                    ? "--bg-desejo-foreground"
+                    : "--bg-objetivo-foreground";
+              const cssVarSecondary =
+                bucket === "necessidades"
+                  ? "--bg-necessidade"
+                  : bucket === "desejos"
+                    ? "--bg-desejo"
+                    : "--bg-objetivo";
               const bucketLabel = formatBucketLabel(bucket);
               const detailHref = `/lancamento?periodo=${encodeURIComponent(month)}&regra_502030_tipo=${bucket}`;
 
@@ -113,8 +125,8 @@ export default async function RuleOverviewSection({
                   <div className="mt-2">
                     <Progress
                       value={progress}
-                      primary_color={colors.primary}
-                      secondary_color={colors.secondary}
+                      primary_color={cssVarPrimary}
+                      secondary_color={cssVarSecondary}
                       className="h-1"
                       aria-label={`Consumo de ${formatBucketLabel(bucket)}`}
                     />
@@ -127,9 +139,7 @@ export default async function RuleOverviewSection({
                     <span
                       className={cn(
                         "font-medium",
-                        remaining >= 0
-                          ? "text-[#2F6A3A]"
-                          : "text-[#EC622B]",
+                        remaining >= 0 ? "text-green-600" : "text-orange-600",
                       )}
                     >
                       {remaining >= 0 ? "Disponível" : "Excedente"}:{" "}

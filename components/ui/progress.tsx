@@ -22,17 +22,21 @@ function Progress({
     <ProgressPrimitive.Root
       data-slot="progress"
       className={cn(
-        `${secondary_color} relative h-2 w-full overflow-hidden rounded-full`,
+        "relative h-2 w-full overflow-hidden rounded-full",
         className,
       )}
+      style={{
+        backgroundColor: secondary_color ? `var(${secondary_color})` : undefined,
+      }}
       {...props}
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className={`${primary_color} h-full w-full flex-1 transition-transform`}
+        className="h-full w-full flex-1 transition-transform bg-transparent"
         style={{
           transform: `translateX(-${100 - (value || 0)}%)`,
           willChange: "transform",
+          backgroundColor: primary_color ? `var(${primary_color})` : undefined,
         }}
       />
     </ProgressPrimitive.Root>

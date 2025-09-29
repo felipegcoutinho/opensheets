@@ -328,7 +328,11 @@ export const getColumns = (
       const ruleIconClass = cn(
         "size-4",
         ruleBucket
-          ? BUDGET_RULE_COLORS[ruleBucket].text
+          ? ruleBucket === "necessidades" 
+            ? "text-[var(--bg-necessidade-foreground)] dark:text-[var(--bg-necessidade-foreground)]"
+            : ruleBucket === "desejos"
+            ? "text-[var(--bg-desejo-foreground)] dark:text-[var(--bg-desejo-foreground)]"
+            : "text-[var(--bg-objetivo-foreground)] dark:text-[var(--bg-objetivo-foreground)]"
           : "text-muted-foreground opacity-50",
       );
 
@@ -402,7 +406,10 @@ export const getColumns = (
                   <>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                      <DeleteTransactions itemId={item.id} />
+                      <DeleteTransactions
+                        itemId={item.id}
+                        itemDescricao={item.descricao}
+                      />
                     </DropdownMenuItem>
                   </>
                 )}
