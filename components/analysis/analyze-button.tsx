@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { RiLoader2Line, RiMagicLine, RiSparkling2Line } from "@remixicon/react";
+import { RiLoader2Line, RiSparkling2Line } from "@remixicon/react";
 
 export function AnalyzeButton({
   onClick,

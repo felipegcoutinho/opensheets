@@ -26,7 +26,7 @@ export function AnalysisReport({
         </div>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="tru grid grid-cols-1 gap-2 md:grid-cols-1 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-1 lg:grid-cols-4">
           <section className="py-1 sm:py-2">
             <InsightCard
               title="Comportamentos Observados"
