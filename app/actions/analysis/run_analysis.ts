@@ -255,7 +255,7 @@ export async function runConsumptionAnalysis(
       model: openai("gpt-5"),
       schema: AnalysisSchema,
       system: `
-       Especialista em comportamento financeiro. Forneça recomendações objetivas baseadas em métricas agregadas. Destaque padrões, riscos e oportunidades sem expor dados pessoais. Após cada recomendação, valide sucintamente se a análise atende aos critérios de objetividade e privacidade antes de prosseguir. Adote uma abordagem pragmática e direta, utilizando verbos de ação.
+       Especialista em comportamento financeiro. Forneça recomendações objetivas baseadas em métricas agregadas. Destaque padrões, riscos e oportunidades sem expor dados pessoais. Após cada recomendação, valide sucintamente se a análise atende aos critérios de objetividade e privacidade antes de prosseguir, mas não precisa exibir se está ok ou não. Adote uma abordagem pragmática e direta, utilizando verbos de ação, mas sem linguajar muito rebuscado, simplifique a comunicação.
       `.trim(),
       messages: [
         {

@@ -4,6 +4,11 @@ import { AnalysisReport } from "@/components/analysis/analysis-report";
 import { AnalyzeButton } from "@/components/analysis/analyze-button";
 import EmptyCard from "@/components/empty-card";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  AnimatedSpan,
+  Terminal,
+  TypingAnimation,
+} from "@/components/ui/terminal";
 import { useConsumptionAnalysis } from "@/hooks/use-consumption-analysis";
 
 export default function Dashboard(props: AnalysisInputPayload) {
@@ -38,8 +43,51 @@ export default function Dashboard(props: AnalysisInputPayload) {
 
         {loading && (
           <Card>
-            <CardContent className="p-4 text-sm">
-              Carregando análise…
+            <CardContent className="space-y-4 p-4">
+              <div className="text-muted-foreground flex items-center gap-2 text-xs sm:text-sm">
+                <Terminal>
+                  <TypingAnimation>
+                    Iniciando a análise do seu perfil financeiro 🚀
+                  </TypingAnimation>
+                  <TypingAnimation>
+                    Carregando seus dados com todo cuidado 🔒
+                  </TypingAnimation>
+                  <AnimatedSpan className="text-green-600">
+                    ✅ Feito
+                  </AnimatedSpan>
+                  <TypingAnimation>
+                    Observando como você ganha e gasta 💸
+                  </TypingAnimation>
+                  <AnimatedSpan className="text-green-600">
+                    ✅ Feito
+                  </AnimatedSpan>
+                  <TypingAnimation>
+                    Procurando formas de economizar sem perder qualidade de vida
+                    🌱
+                  </TypingAnimation>
+                  <AnimatedSpan className="text-green-600">
+                    ✅ Feito
+                  </AnimatedSpan>
+                  <TypingAnimation>
+                    Caçando boas oportunidades para investir no futuro 📈
+                  </TypingAnimation>
+                  <AnimatedSpan className="text-green-600">
+                    ✅ Feito
+                  </AnimatedSpan>
+                  <TypingAnimation>
+                    Preparando recomendações que combinam com o seu jeito ✨
+                  </TypingAnimation>
+                  <AnimatedSpan className="text-green-600">
+                    ✅ Feito
+                  </AnimatedSpan>
+                  <TypingAnimation>
+                    Estamos quase lá… montando seu relatório especial 📊
+                  </TypingAnimation>
+                  <TypingAnimation>
+                    Finalizando a análise, só mais um instante ⏳
+                  </TypingAnimation>
+                </Terminal>
+              </div>
             </CardContent>
           </Card>
         )}

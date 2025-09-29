@@ -1,7 +1,7 @@
 import { getUserName } from "@/app/actions/users/fetch_users";
 import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
-import { HyperText } from "./magicui/hyper-text";
+import { HyperText } from "./hyper-text";
 
 const basePatterns = [
   "***::",
