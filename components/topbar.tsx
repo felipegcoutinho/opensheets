@@ -135,7 +135,7 @@ export default function Topbar() {
   });
 
   return (
-    <header className="bg-background/70 supports-[backdrop-filter]:bg-background/70 sticky top-0 z-10 mb-4 flex h-16 items-center gap-2 border-b px-4 backdrop-blur-xs">
+    <header className="bg-background/70 supports-[backdrop-filter]:bg-background/70 sticky top-0 z-10 mb-0 flex h-16 items-center gap-2 px-4 backdrop-blur-xs">
       <div className="flex min-w-0 flex-col">
         <Breadcrumb>
           <BreadcrumbList>

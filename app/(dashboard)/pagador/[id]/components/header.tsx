@@ -4,6 +4,7 @@ import {
   getTransactionsByPayer,
 } from "@/app/actions/transactions/fetch_transactions";
 import MoneyValues from "@/components/money-values";
+import Ping from "@/components/ping-icon";
 import { Card } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import {
@@ -116,11 +117,7 @@ export default async function PayerHeaderSection({
               <RiVerifiedBadgeFill className="text-blue-500" size={16} />
             )}
             {payer?.is_auto_send && (
-              <RiMailSendLine
-                size={16}
-                className="text-primary"
-                aria-hidden
-              />
+              <RiMailSendLine size={16} className="text-primary" aria-hidden />
             )}
           </div>
           {payerEmail ? (
@@ -152,9 +149,13 @@ export default async function PayerHeaderSection({
       </Card>
 
       <Card className="col-span-4 p-4 sm:col-span-2 lg:col-span-2">
-        <div className="text-muted-foreground text-xs">Total no mês</div>
-        <div className="mt-2 text-3xl leading-tight font-bold">
-          <MoneyValues value={totalGeral} />
+        <div className="text-muted-foreground flex items-center justify-between text-xs">
+          <span className="flex items-center gap-1">
+            <span>Total no mês</span>
+          </span>
+          <span className="text-xl font-semibold">
+            <MoneyValues value={totalGeral} />
+          </span>
         </div>
 
         <div className="mt-3">
@@ -183,13 +184,16 @@ export default async function PayerHeaderSection({
             )}
           </div>
           <div className="text-muted-foreground mt-2 flex flex-wrap gap-3 text-xs">
-            <span>
+            <span className="flex items-center gap-1">
+              <Ping color="bg-indigo-500" />
               Cartão: <MoneyValues value={cardsTotal} />
             </span>
-            <span>
+            <span className="flex items-center gap-1">
+              <Ping color="bg-amber-500" />
               Boleto: <MoneyValues value={boletosTotal} />
             </span>
-            <span>
+            <span className="flex items-center gap-1">
+              <Ping color="bg-emerald-500" />
               Pix/Dinheiro/Débito: <MoneyValues value={outrosTotal} />
             </span>
           </div>
