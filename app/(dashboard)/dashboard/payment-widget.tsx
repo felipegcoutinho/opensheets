@@ -33,7 +33,7 @@ export async function PaymentWidget({
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1">
                   {getPaymentIcon(item.forma_pagamento)}
-                  <span className="gap-1 text-sm font-semibold capitalize">
+                  <span className="gap-1 text-sm capitalize">
                     {item.forma_pagamento}
                   </span>
                 </span>

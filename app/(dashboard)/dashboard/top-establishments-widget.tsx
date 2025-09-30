@@ -30,13 +30,13 @@ export default function TopEstablishmentsWidget({ items }: { items: Item[] }) {
                 width={28}
               />
             ) : null}
-            <div className="flex flex-col items-start gap-1 py-2 text-sm font-semibold capitalize">
+            <div className="flex flex-col items-start gap-1 py-2 text-sm capitalize">
               {item.descricao}
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-xs">
-              {item.count} lançamento{item.count > 1 ? "s" : ""}
+              {item.count} lançamento{item.count > 1 ? "s" : ""} •
             </span>
             <MoneyValues value={item.total} />
           </div>

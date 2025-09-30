@@ -98,7 +98,7 @@ export default async function RuleOverviewSection({
                       <Link
                         href={detailHref}
                         className={cn(
-                          "focus-visible:ring-primary text-sm font-bold capitalize transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
+                          "focus-visible:ring-primary text-sm capitalize transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
                         )}
                         aria-label={`Ver lançamentos de ${bucketLabel} no período ${formattedMonth}`}
                       >

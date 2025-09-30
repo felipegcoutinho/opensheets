@@ -83,7 +83,7 @@ export default function CategoryProgress({
                       <IconComp className={`h-4 w-4 ${item.color}`} />
                     )}
 
-                    <span className="text-sm font-semibold">{item.name}</span>
+                    <span className="text-sm">{item.name}</span>
                     <RiArrowRightSFill className="text-muted-foreground -ml-1 h-4 w-4" />
                   </Link>
 

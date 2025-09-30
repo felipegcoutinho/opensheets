@@ -145,9 +145,7 @@ export default function CategoryPurchasesWidget({
             className="flex items-center justify-between border-b border-dashed pb-2 last:border-0"
           >
             <div className="flex flex-col">
-              <span className="text-sm font-semibold capitalize">
-                {item.descricao}
-              </span>
+              <span className="text-sm capitalize">{item.descricao}</span>
               <span className="text-muted-foreground text-xs">
                 {DateFormat(item.data_compra)}
               </span>

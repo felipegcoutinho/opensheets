@@ -24,7 +24,7 @@ function RecentesTransactions({ transactions }) {
               width={40}
             />
 
-            <div className="flex flex-col items-start gap-1 py-2 text-sm font-semibold capitalize">
+            <div className="flex flex-col items-start gap-1 py-2 text-sm capitalize">
               {item.descricao}
               <span className="text-muted-foreground text-xs font-normal">
                 {DateFormat(item.data_compra)}

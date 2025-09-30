@@ -53,7 +53,7 @@ export default async function InstallmentsWidget({ month }: Props) {
             >
               <div className="flex items-center justify-between gap-3">
                 <p className="truncate text-sm">
-                  <span className="items-start gap-1 py-2 text-sm font-semibold capitalize">
+                  <span className="items-start gap-1 py-2 text-sm capitalize">
                     {t.descricao}
                   </span>
                   <span className="text-muted-foreground ml-1 text-xs">
@@ -85,7 +85,7 @@ export default async function InstallmentsWidget({ month }: Props) {
                 />
               </div>
 
-              <div className="text-muted-foreground mt-1 text-xs">
+              <div className="text-muted-foreground mt-1 py-1 text-xs">
                 Restantes {restantes} • Termina em {terminaEm}{" "}
                 {qtde > 1 ? (
                   <span>
