@@ -3,14 +3,7 @@ import { UseDates } from "@/hooks/use-dates";
 import Banner from "./banner-card";
 import { HyperText } from "./hyper-text";
 
-const basePatterns = [
-  "***::",
-  "=/+-%",
-  "OPENSHEETS:::",
-  "%+/=+",
-  "-/*+=",
-  "/=+-%",
-];
+const basePatterns = [" .-'", " _.-'", " `-._", " `-._", " .-'", " _.-'"];
 
 const asciiBackdrop = Array.from({ length: 48 }, (_, row) => {
   const motif = basePatterns[row % basePatterns.length];
@@ -29,7 +22,7 @@ export default async function BannerData() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden"
       >
-        <pre className="text-banner-foreground/15 h-full w-full leading-4 whitespace-pre">
+        <pre className="text-banner-foreground/20 h-full w-full leading-4 whitespace-pre">
           {asciiBackdrop}
         </pre>
       </div>

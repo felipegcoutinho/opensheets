@@ -321,7 +321,7 @@ export function BudgetRuleCard({ initialRule }: BudgetRuleCardProps) {
                           <li key={example} className="flex items-center gap-2">
                             <span
                               className="h-2 w-2 flex-none rounded-full"
-                              style={{ backgroundColor: cssVarBackground }}
+                              style={{ backgroundColor: cssVarForeground }}
                             />
                             <span className="leading-5">{example}</span>
                           </li>
