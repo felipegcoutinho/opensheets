@@ -1,18 +1,14 @@
 "use client";
+import type {
+  BudgetRuleBucket,
+  BudgetRuleConfig,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import Required from "@/components/required-on-forms";
+import { CalculatorDialogButton } from "@/components/topbar/calculator-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
 import {
   Dialog,
   DialogClose,
@@ -25,11 +21,6 @@ import {
 import { Input, MoneyInput } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -39,12 +30,23 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Toggle } from "@/components/ui/toggle";
-import { categoryIconsMap } from "@/hooks/use-category-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { UseDates } from "@/hooks/use-dates";
-import { RiThumbUpFill } from "@remixicon/react";
+import {
+  RiCalculatorLine,
+  RiQuestionLine,
+  RiThumbUpFill,
+} from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import UtilitiesLancamento from "../utilities-lancamento";
+import { BudgetRuleSelect } from "./budget-rule-select";
+import { CategoryCombobox } from "./category-combobox";
 
 const fetchJSON = async (url: string) => {
   const res = await fetch(url);
@@ -58,6 +60,7 @@ type CreateTransactionsProps = {
   getCategorias: any;
   children: React.ReactNode;
   defaultDate?: Date | string;
+  budgetRule: BudgetRuleConfig;
 };
 
 export default function CreateTransactions({
@@ -66,19 +69,21 @@ export default function CreateTransactions({
   getCategorias,
   children,
   defaultDate,
+  budgetRule,
 }: CreateTransactionsProps) {
   const {
     isOpen,
     tipoTransacao,
     quantidadeParcelas,
-    showParcelas,
-    showRecorrencia,
+    condicao,
+    isParcelado,
+    isRecorrente,
     showConta,
     showCartao,
     handleCondicaoChange,
     handleTipoTransacaoChange,
     handleFormaPagamentoChange,
-    handleSubmit,
+    handleCreateSubmit,
     loading,
     isDividedChecked,
     setIsDividedChecked,
@@ -91,6 +96,7 @@ export default function CreateTransactions({
   } = UtilitiesLancamento();
 
   const { getMonthOptions, formatted_current_month, optionsMeses } = UseDates();
+
   // Deriva mês/ano a partir da defaultDate (se fornecida) no formato "mês-ano" em pt-BR
   let month = formatted_current_month;
   let defaultDateStr: string | undefined;
@@ -138,12 +144,18 @@ export default function CreateTransactions({
     foto?: string | null;
   }[] = payersData?.data || [];
 
+  const normalize = (s: string) =>
+    (s || "")
+      .toLocaleLowerCase("pt-BR")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+
   // Estado do pagador selecionado e default para role "principal"
   const [selectedPayer, setSelectedPayer] = useState<string | undefined>();
   useEffect(() => {
     if (!selectedPayer && pagadoresOptions.length > 0) {
-      const principal = pagadoresOptions.find(
-        (p) => (p.role || "").toLowerCase() === "principal",
+      const principal = pagadoresOptions.find((p) =>
+        normalize(p.role || "").includes("principal"),
       );
       setSelectedPayer(principal?.nome || pagadoresOptions[0]?.nome);
     }
@@ -158,19 +170,33 @@ export default function CreateTransactions({
 
   // Sem preview fora do select; estados de seleção não são necessários aqui
 
-  const normalize = (s: string) =>
-    (s || "")
-      .toLocaleLowerCase("pt-BR")
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "");
-  const secondPayers = pagadoresOptions.filter(
-    (p) => normalize(p.role || "") === "secundario",
+  const secondPayers = pagadoresOptions.filter((p) =>
+    normalize(p.role || "").includes("secundario"),
   );
+
+  const selectedPayerInfo = useMemo(
+    () => pagadoresOptions.find((p) => p.nome === selectedPayer),
+    [pagadoresOptions, selectedPayer],
+  );
+  const isSelectedPayerPrincipal = normalize(
+    selectedPayerInfo?.role || "",
+  ).includes("principal");
 
   // Estado para categoria (combobox com busca)
   const [categoriaId, setCategoriaId] = useState<string | undefined>();
-  const [categoriaLabel, setCategoriaLabel] = useState<string | undefined>();
-  const [openCategoria, setOpenCategoria] = useState(false);
+  const [ruleBucket, setRuleBucket] = useState<BudgetRuleBucket | undefined>();
+
+  useEffect(() => {
+    if (tipoTransacao !== "despesa" && ruleBucket) {
+      setRuleBucket(undefined);
+    }
+  }, [tipoTransacao, ruleBucket]);
+
+  useEffect(() => {
+    if (!isSelectedPayerPrincipal && ruleBucket) {
+      setRuleBucket(undefined);
+    }
+  }, [isSelectedPayerPrincipal, ruleBucket]);
 
   // Ao fechar o modal, resetar categoria e pagador para o padrão
   const onDialogOpenChange = (val: boolean) => {
@@ -178,11 +204,10 @@ export default function CreateTransactions({
     if (!val) {
       // Reseta a categoria para o estado inicial (placeholder "Selecione")
       setCategoriaId(undefined);
-      setCategoriaLabel(undefined);
-      setOpenCategoria(false);
 
       // Reseta pagadores: volta para o padrão via useEffect (principal ou primeiro)
       setSelectedPayer(undefined);
+      setRuleBucket(undefined);
     }
   };
 
@@ -205,7 +230,13 @@ export default function CreateTransactions({
         <div className="-mx-6 max-h-[530px] overflow-y-auto px-6">
           <form
             id="transaction-form"
-            onSubmit={handleSubmit}
+            onSubmit={async (e) => {
+              await handleCreateSubmit(e);
+              // Após salvar e fechar o modal, reseta os estados locais
+              setCategoriaId(undefined);
+              setSelectedPayer(undefined);
+              setRuleBucket(undefined);
+            }}
             className="space-y-2"
           >
             <div className="flex gap-2">
@@ -273,89 +304,20 @@ export default function CreateTransactions({
                 <Label htmlFor="categoria_id">
                   Categoria <Required />
                 </Label>
-                <input
-                  type="hidden"
+                <CategoryCombobox
+                  categories={getCategorias ?? []}
                   name="categoria_id"
-                  value={categoriaId || ""}
+                  value={categoriaId}
+                  onChange={setCategoriaId}
                 />
-                <Popover open={openCategoria} onOpenChange={setOpenCategoria}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={openCategoria}
-                      className="w-full justify-between capitalize"
-                    >
-                      {categoriaLabel || "Selecione"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                    <Command>
-                      <CommandInput placeholder="Buscar categoria..." />
-                      <CommandList
-                        className="max-h-96 overflow-y-auto overscroll-contain"
-                        onWheel={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <CommandEmpty>
-                          Nenhuma categoria encontrada.
-                        </CommandEmpty>
-                        <CommandGroup heading="Receitas">
-                          {getCategorias
-                            ?.filter((c) => c.tipo_categoria === "receita")
-                            .map((item) => {
-                              const Icon = categoryIconsMap[item.icone];
-                              return (
-                                <CommandItem
-                                  key={item.id}
-                                  value={item.nome}
-                                  onSelect={() => {
-                                    setCategoriaId(item.id.toString());
-                                    setCategoriaLabel(item.nome);
-                                    setOpenCategoria(false);
-                                  }}
-                                  className="cursor-pointer capitalize"
-                                >
-                                  {Icon && <Icon className="mr-2 h-4 w-4" />}
-                                  {item.nome}
-                                </CommandItem>
-                              );
-                            })}
-                        </CommandGroup>
-                        <CommandSeparator />
-                        <CommandGroup heading="Despesas">
-                          {getCategorias
-                            ?.filter((c) => c.tipo_categoria === "despesa")
-                            .map((item) => {
-                              const Icon = categoryIconsMap[item.icone];
-                              return (
-                                <CommandItem
-                                  key={item.id}
-                                  value={item.nome}
-                                  onSelect={() => {
-                                    setCategoriaId(item.id.toString());
-                                    setCategoriaLabel(item.nome);
-                                    setOpenCategoria(false);
-                                  }}
-                                  className="cursor-pointer capitalize"
-                                >
-                                  {Icon && <Icon className="mr-2 h-4 w-4" />}
-                                  {item.nome}
-                                </CommandItem>
-                              );
-                            })}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
               </div>
             </div>
 
             <div className="flex gap-2">
               <div className="w-1/2">
-                <Label htmlFor="tipo_transacao">Tipo de Transação</Label>
+                <Label htmlFor="tipo_transacao">
+                  Tipo de Transação <Required />
+                </Label>
                 <Select
                   required
                   name="tipo_transacao"
@@ -373,16 +335,27 @@ export default function CreateTransactions({
               </div>
 
               <div className="w-1/2">
-                <Label htmlFor="valor">
-                  Valor <Required />
-                </Label>
+                <div className="flex items-center">
+                  <Label htmlFor="valor">
+                    Valor <Required />
+                  </Label>
+                  <CalculatorDialogButton
+                    variant="link"
+                    size="icon"
+                    className="text-muted-foreground hover:text-primary ms-auto h-auto p-0"
+                    aria-label="Abrir calculadora"
+                  >
+                    <RiCalculatorLine />
+                  </CalculatorDialogButton>
+                </div>
                 <div className="*:not-first:mt-2">
                   <div className="relative">
                     <MoneyInput
                       className="peer ps-8 pe-12"
                       id="valor"
                       name="valor"
-                      placeholder="0.00"
+                      placeholder="0,00"
+                      withVirtualKeyboard
                     />
                     <span className="text-muted-foreground pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-sm peer-disabled:opacity-50">
                       R$
@@ -395,9 +368,56 @@ export default function CreateTransactions({
               </div>
             </div>
 
+            {budgetRule.ativada &&
+              tipoTransacao === "despesa" &&
+              isSelectedPayerPrincipal && (
+                <div>
+                  <div className="flex items-center gap-1">
+                    <Label
+                      htmlFor="regra_502030_tipo"
+                      className="flex items-center gap-1"
+                    >
+                      Regra 50/30/20 <Required />
+                    </Label>
+                    <TooltipProvider delayDuration={200}>
+                      <Tooltip>
+                        <TooltipTrigger
+                          type="button"
+                          className="text-muted-foreground hover:text-foreground"
+                        >
+                          <RiQuestionLine className="size-4" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs text-xs">
+                          Escolha se o lançamento representa Necessidades,
+                          Desejos ou Objetivos conforme a regra 50/30/20
+                          configurada em Orçamentos.
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <BudgetRuleSelect
+                    id="regra_502030_tipo"
+                    name="regra_502030_tipo"
+                    value={ruleBucket}
+                    onValueChange={setRuleBucket}
+                    percentages={budgetRule.percentuais}
+                    required
+                  />
+                </div>
+              )}
+            <input
+              type="hidden"
+              name="regra_502030_tipo"
+              value={
+                tipoTransacao === "despesa" && isSelectedPayerPrincipal
+                  ? (ruleBucket ?? "")
+                  : ""
+              }
+            />
+
             <div className="flex w-full gap-2">
               <Card
-                className={`flex-row p-4 ${
+                className={`flex-row bg-transparent p-4 ${
                   showCartao || eBoletoSelecionado ? "w-full" : "w-1/2"
                 } `}
               >
@@ -417,7 +437,7 @@ export default function CreateTransactions({
               </Card>
 
               {!(showCartao || eBoletoSelecionado) && (
-                <Card className="w-1/2 flex-row p-4">
+                <Card className="w-1/2 flex-row bg-transparent p-4">
                   <div className="flex-col">
                     <Label>Status do Lançamento</Label>
                     <p className="text-muted-foreground text-xs leading-snug">
@@ -429,9 +449,9 @@ export default function CreateTransactions({
                       onPressedChange={setIsPaid}
                       pressed={isPaid}
                       name="realizado_toggle"
-                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-emerald-700"
+                      className="hover:bg-transparent data-[state=off]:text-zinc-400 data-[state=on]:bg-transparent data-[state=on]:text-green-600"
                     >
-                      <RiThumbUpFill strokeWidth={2} />
+                      <RiThumbUpFill className="size-5" />
                     </Toggle>
                   </div>
                 </Card>
@@ -530,9 +550,7 @@ export default function CreateTransactions({
                   <Select
                     required
                     name="forma_pagamento"
-                    onValueChange={(val) => {
-                      handleFormaPagamentoChange(val);
-                    }}
+                    onValueChange={handleFormaPagamentoChange}
                   >
                     <SelectTrigger id="forma_pagamento" className="w-full">
                       <SelectValue placeholder="Selecione" />
@@ -620,16 +638,12 @@ export default function CreateTransactions({
             </div>
 
             <div className="flex w-full gap-2">
-              <div
-                className={showParcelas || showRecorrencia ? "w-1/2" : "w-full"}
-              >
+              <div className={isParcelado || isRecorrente ? "w-1/2" : "w-full"}>
                 <Label htmlFor="condicao">Condição</Label>
                 <Select
                   name="condicao"
-                  onValueChange={(val) => {
-                    handleCondicaoChange(val);
-                  }}
-                  defaultValue="vista"
+                  value={condicao}
+                  onValueChange={handleCondicaoChange}
                   required
                 >
                   <SelectTrigger id="condicao" className="w-full">
@@ -642,7 +656,7 @@ export default function CreateTransactions({
                   </SelectContent>
                 </Select>
               </div>
-              {showParcelas && (
+              {isParcelado && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_parcela">Parcelado em</Label>
                   <Select
@@ -663,7 +677,7 @@ export default function CreateTransactions({
                   </Select>
                 </div>
               )}
-              {showRecorrencia && (
+              {isRecorrente && (
                 <div className="w-1/2">
                   <Label htmlFor="qtde_recorrencia">Lançamento fixo</Label>
                   <Select name="qtde_recorrencia">

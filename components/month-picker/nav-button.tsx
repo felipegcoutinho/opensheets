@@ -22,7 +22,7 @@ const NavigationButton = React.memo(
           prefetch
           scroll={false}
           onClick={onClick}
-          className="text-foreground cursor-pointer focus:outline-hidden disabled:opacity-50"
+          className="text-month-picker-foreground cursor-pointer focus:outline-hidden disabled:opacity-50"
           aria-disabled={false}
         >
           <Icon size={16} />
@@ -33,7 +33,7 @@ const NavigationButton = React.memo(
     return (
       <button
         onClick={onClick}
-        className="text-foreground cursor-pointer focus:outline-hidden disabled:opacity-50"
+        className="text-month-picker-foreground cursor-pointer focus:outline-hidden disabled:opacity-50"
         disabled={disabled}
       >
         <Icon size={16} />

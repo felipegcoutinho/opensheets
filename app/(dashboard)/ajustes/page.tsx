@@ -3,7 +3,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RiErrorWarningLine } from "@remixicon/react";
 import DeleteUserForm from "./delete-user-form";
-import FeedbackForm from "./feedback-form";
 import UpdateEmailForm from "./update-email-form";
 import UpdateNameForm from "./update-name-form";
 import UpdatePasswordForm from "./update-password-form";
@@ -17,7 +16,6 @@ export default async function AjustesPage() {
         <TabsTrigger value="name">Altere seu nome</TabsTrigger>
         <TabsTrigger value="password">Alterar senha</TabsTrigger>
         <TabsTrigger value="email">Alterar e-mail</TabsTrigger>
-        <TabsTrigger value="feedback">Feedback</TabsTrigger>
         <TabsTrigger value="delete">
           <span className="text-red-500">Deletar conta</span>
         </TabsTrigger>
@@ -57,21 +55,6 @@ export default async function AjustesPage() {
             </p>
           </div>
           <UpdateEmailForm defaultEmail={email ?? ""} />
-        </div>
-      </TabsContent>
-      <TabsContent value="feedback">
-        <div className="max-w-xl space-y-4">
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold">Envie seu feedback</h3>
-            <p className="text-muted-foreground text-sm">
-              Conte como podemos melhorar o OpenSheets. Seja específico:
-              descreva o que aconteceu, quais passos você realizou, o que
-              esperava que acontecesse e o que aconteceu de fato. Se for
-              sugestão, explique o problema que deseja resolver e como imagina a
-              solução.
-            </p>
-          </div>
-          <FeedbackForm />
         </div>
       </TabsContent>
       <TabsContent value="delete">

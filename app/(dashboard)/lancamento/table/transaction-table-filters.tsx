@@ -1,5 +1,10 @@
 "use client";
 
+import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import {
+  BUDGET_RULE_BUCKETS,
+  formatBucketLabel,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import PaymentMethodLogo from "@/components/payment-method-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +38,7 @@ interface TransactionTableFiltersProps<TData> {
   responsavelOptions: string[];
   categoriaOptions: string[];
   contaCartaoOptions: string[];
+  budgetRule: BudgetRuleConfig;
 }
 
 export function TransactionTableFilters<TData>({
@@ -50,6 +56,7 @@ export function TransactionTableFilters<TData>({
   responsavelOptions,
   categoriaOptions,
   contaCartaoOptions,
+  budgetRule,
 }: TransactionTableFiltersProps<TData>) {
   if (hidden) {
     return null;
@@ -70,6 +77,7 @@ export function TransactionTableFilters<TData>({
       responsavel: "responsavel",
       categoria: "categoria",
       conta_cartao: "conta_cartao",
+      regra_502030_tipo: "regra_502030_tipo",
       q: "q", // busca global
     }),
     [],
@@ -95,6 +103,7 @@ export function TransactionTableFilters<TData>({
     maybeSet("responsavel", filterParamKeys.responsavel);
     maybeSet("categoria", filterParamKeys.categoria);
     maybeSet("conta_cartao", filterParamKeys.conta_cartao);
+    maybeSet("regra_502030_tipo", filterParamKeys.regra_502030_tipo);
 
     const q = params.get(filterParamKeys.q);
     if (q) setGlobalFilter(q);
@@ -109,6 +118,7 @@ export function TransactionTableFilters<TData>({
     responsavel: getColumnFilterValue("responsavel"),
     categoria: getColumnFilterValue("categoria"),
     conta_cartao: getColumnFilterValue("conta_cartao"),
+    regra_502030_tipo: getColumnFilterValue("regra_502030_tipo"),
     q: globalFilter,
   };
 
@@ -131,6 +141,10 @@ export function TransactionTableFilters<TData>({
     setOrDelete(filterParamKeys.responsavel, currentFilters.responsavel);
     setOrDelete(filterParamKeys.categoria, currentFilters.categoria);
     setOrDelete(filterParamKeys.conta_cartao, currentFilters.conta_cartao);
+    setOrDelete(
+      filterParamKeys.regra_502030_tipo,
+      currentFilters.regra_502030_tipo,
+    );
     setOrDelete(filterParamKeys.q, currentFilters.q);
 
     const qs = params.toString();
@@ -143,6 +157,7 @@ export function TransactionTableFilters<TData>({
     currentFilters.responsavel,
     currentFilters.categoria,
     currentFilters.conta_cartao,
+    currentFilters.regra_502030_tipo,
     currentFilters.q,
     pathname,
   ]);
@@ -167,12 +182,12 @@ export function TransactionTableFilters<TData>({
     setIfChanged("responsavel", filterParamKeys.responsavel);
     setIfChanged("categoria", filterParamKeys.categoria);
     setIfChanged("conta_cartao", filterParamKeys.conta_cartao);
+    setIfChanged("regra_502030_tipo", filterParamKeys.regra_502030_tipo);
 
     const urlQ = params.get(filterParamKeys.q) || "";
     if ((urlQ || globalFilter) && urlQ !== globalFilter) {
       setGlobalFilter(urlQ);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams?.toString()]);
 
   return (
@@ -181,6 +196,7 @@ export function TransactionTableFilters<TData>({
         getCards={getCards}
         getAccount={getAccount}
         getCategorias={getCategorias}
+        budgetRule={budgetRule}
       >
         <Button
           variant="default"
@@ -198,10 +214,10 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`w-full border-dashed sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("tipo_transacao") &&
               getColumnFilterValue("tipo_transacao") !== "all"
-                ? "ring-primary bg-primary/20 font-bold ring-1"
+                ? "ring-primary bg-primary/10 font-bold ring-1"
                 : ""
             }`}
           >
@@ -224,10 +240,10 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("condicao", value)}
         >
           <SelectTrigger
-            className={`w-full border-dashed sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("condicao") &&
               getColumnFilterValue("condicao") !== "all"
-                ? "ring-primary bg-primary/20 font-bold ring-1"
+                ? "ring-primary bg-primary/10 font-bold ring-1"
                 : ""
             }`}
           >
@@ -252,10 +268,10 @@ export function TransactionTableFilters<TData>({
           }
         >
           <SelectTrigger
-            className={`w-full border-dashed sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("forma_pagamento") &&
               getColumnFilterValue("forma_pagamento") !== "all"
-                ? "ring-primary bg-primary/20 font-bold ring-1"
+                ? "ring-primary bg-primary/10 font-bold ring-1"
                 : ""
             }`}
           >
@@ -278,10 +294,10 @@ export function TransactionTableFilters<TData>({
           onValueChange={(value) => setColumnFilterValue("responsavel", value)}
         >
           <SelectTrigger
-            className={`w-full border-dashed sm:w-[140px] ${
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
               getColumnFilterValue("responsavel") &&
               getColumnFilterValue("responsavel") !== "all"
-                ? "ring-primary bg-primary/20 font-bold ring-1"
+                ? "ring-primary bg-primary/10 font-bold ring-1"
                 : ""
             }`}
           >
@@ -294,6 +310,34 @@ export function TransactionTableFilters<TData>({
             {responsavelOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 <span className="capitalize">{option}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={getColumnFilterValue("regra_502030_tipo")}
+          onValueChange={(value) =>
+            setColumnFilterValue("regra_502030_tipo", value)
+          }
+        >
+          <SelectTrigger
+            className={`w-full border border-dashed shadow-none sm:w-[130px] ${
+              getColumnFilterValue("regra_502030_tipo") &&
+              getColumnFilterValue("regra_502030_tipo") !== "all"
+                ? "ring-primary bg-primary/10 font-bold ring-1"
+                : ""
+            }`}
+          >
+            <SelectValue placeholder="Regra" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">
+              <span className="capitalize">Todas</span>
+            </SelectItem>
+            {BUDGET_RULE_BUCKETS.map((bucket) => (
+              <SelectItem key={bucket} value={bucket}>
+                <span className="capitalize">{formatBucketLabel(bucket)}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -335,10 +379,10 @@ export function TransactionTableFilters<TData>({
         />
 
         <Input
-          placeholder="Pesquisar"
+          placeholder="Buscar..."
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="bg-muted/40 w-full sm:w-[160px]"
+          className="w-full shadow-none sm:w-[120px]"
         />
       </div>
     </div>

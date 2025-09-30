@@ -24,6 +24,7 @@ interface TransactionData {
   tipo_transacao?: string;
   valor: number;
   categorias?: { nome?: string };
+  regra_502030_tipo?: string | null;
   // Adicione outras propriedades que são usadas por getDescricao
   [key: string]: any;
 }
@@ -59,6 +60,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
       item.tipo_transacao?.toLowerCase().includes(searchValue) ||
       item.valor?.toString().toLowerCase().includes(searchValue) ||
       item.categorias?.nome?.toLowerCase().includes(searchValue) ||
+      item.regra_502030_tipo?.toLowerCase().includes(searchValue) ||
       descricaoContaCartao.includes(searchValue)
     );
   };
@@ -70,6 +72,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     categoria: false, // Exemplo, ajuste conforme necessário
   });
   const [rowSelection, setRowSelection] = useState({});
+  const [ruleBucketFilter, setRuleBucketFilter] = useState<string>("");
   // Inicializa paginação a partir da URL (page 1-based na URL)
   const initialPagination = useMemo(() => {
     const p = Number(searchParams?.get("page") || "");
@@ -84,8 +87,19 @@ export function useTransactionTableLogic<TData extends TransactionData>({
     initialPagination,
   );
 
+  const filteredData = useMemo(() => {
+    if (!ruleBucketFilter) {
+      return data;
+    }
+
+    return data.filter((item) => {
+      const bucket = (item.regra_502030_tipo || "").toString().toLowerCase();
+      return bucket === ruleBucketFilter.toLowerCase();
+    });
+  }, [data, ruleBucketFilter]);
+
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     state: {
       sorting,
@@ -110,13 +124,13 @@ export function useTransactionTableLogic<TData extends TransactionData>({
   });
 
   const isAnyFilterActive =
-    globalFilter.trim() !== "" || columnFilters.length > 0;
+    globalFilter.trim() !== "" || columnFilters.length > 0 || !!ruleBucketFilter;
 
   const selectedTransactionSum = useMemo(() => {
-    return data
+    return filteredData
       .filter((_, index) => rowSelection[index])
       .reduce((sum, rowData) => sum + rowData.valor, 0);
-  }, [data, rowSelection]);
+  }, [filteredData, rowSelection]);
 
   const tipoTransacaoOptions = useMemo(() => {
     const values = new Set(
@@ -159,11 +173,26 @@ export function useTransactionTableLogic<TData extends TransactionData>({
   }, [data, getDescricao]);
 
   const getColumnFilterValue = (columnId: string) => {
+    if (columnId === "regra_502030_tipo") {
+      return ruleBucketFilter;
+    }
     const filter = columnFilters.find((f) => f.id === columnId);
     return filter ? (filter.value as string) : "";
   };
 
   const setColumnFilterValue = (columnId: string, value: string) => {
+    if (columnId === "regra_502030_tipo") {
+      const normalized = value?.trim().toLowerCase();
+      const effectiveValue =
+        normalized && normalized !== "all" && normalized !== "todas"
+          ? normalized
+          : "";
+
+      setRuleBucketFilter(effectiveValue);
+      setColumnFilters((prev) => prev.filter((f) => f.id !== columnId));
+      return;
+    }
+
     const newColumnFilters = columnFilters.filter((f) => f.id !== columnId);
     if (
       value &&
@@ -178,6 +207,7 @@ export function useTransactionTableLogic<TData extends TransactionData>({
   const clearAllFilters = () => {
     setGlobalFilter("");
     setColumnFilters([]);
+    setRuleBucketFilter("");
   };
 
   // Atualiza URL quando paginação muda

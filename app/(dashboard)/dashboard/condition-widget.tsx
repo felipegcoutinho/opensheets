@@ -35,14 +35,14 @@ export async function ConditionWidget({
             >
               <span className="flex items-center gap-1">
                 {getConditionIcon(item.condicao)}
-                <span className="lowercase">
+                <span className="flex items-center gap-1 text-sm font-semibold capitalize">
                   {item.condicao === "vista" ? "à vista" : item.condicao}
                 </span>
               </span>
               <RiArrowRightSFill className="text-muted-foreground" size={12} />
             </Link>
 
-            <MoneyValues value={-Math.abs(item.sum)} />
+            <MoneyValues value={item.sum} />
           </div>
         </CardContent>
       ))}

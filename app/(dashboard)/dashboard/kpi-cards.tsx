@@ -27,7 +27,7 @@ type KPI = {
 
 export default function KpiCards({ items }: { items: KPI[] }) {
   return (
-    <div className="my-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="my-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((item) => (
         <KpiCard key={item.title} item={item} />
       ))}
@@ -44,7 +44,7 @@ function KpiCard({ item }: { item: KPI }) {
   const isPositive = diffPercent >= 0;
 
   return (
-    <Card className="gap-3">
+    <Card className="gap-2">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-1">
@@ -82,8 +82,8 @@ function KpiCard({ item }: { item: KPI }) {
           )}
         </CardDescription>
       </CardHeader>
-      <CardFooter className="text-muted-foreground flex-col items-start gap-1 text-xs">
-        <span>Último mês</span>
+      <CardFooter className="flex-col items-start gap-1 text-xs">
+        <span>Último Mês</span>
         <MoneyValues value={item.previousValue} />
       </CardFooter>
     </Card>

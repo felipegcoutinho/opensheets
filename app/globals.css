@@ -1,133 +1,143 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --spacing-custom-height-1: 27rem;
+  --spacing-custom-height-1: 28rem;
 }
 
 :root {
-  /* Diretriz: paleta baseada na imagem (azul/indigo, verde, aquas e neutros claros) */
-  /* Neutros claros / superfícies */
-  --background: #ffffff; /* canvas branco */
-  --foreground: #0b0f0d; /* texto principal quase preto */
-  --card: #ffffff; /* cartões/brancos puros */
-  --card-foreground: #0b0f0d;
-  --popover: #ffffff;
-  --popover-foreground: #0b0f0d;
+  --background: #f8f6f4;
+  --foreground: #352a27;
+  --card: #f4efee;
+  --card-foreground: #352a27;
+  --popover: #f4efee;
+  --popover-foreground: #352a27;
+  --primary: #ef6429;
+  --primary-foreground: #fff7f2;
+  --secondary: #c3b3b6;
+  --secondary-foreground: #574a45;
+  --muted: #cfbec1;
+  --muted-foreground: #665954;
+  --accent: #ef6429;
+  --accent-foreground: #f8f6f4;
+  --destructive: #d84a3a;
+  --destructive-foreground: #fff7f2;
+  --border: #cfbec1;
+  --input: #cfbec1;
+  --ring: #ef6429;
 
-  /* Marca e acentos (CTAs e destaques) */
-  --primary: #00c670; /* indigo/azul da imagem */
-  --primary-foreground: #ffffff;
-  --secondary: #eaf4f2; /* neutro claro azulado da imagem */
-  --secondary-foreground: #0b0f0d;
-  --muted: #f1f9f6; /* sutil próximo dos neutros da paleta */
-  --muted-foreground: #5b6b83; /* cinza-azulado para texto secundário */
-  --accent: #ee6243; /* verde vibrante da imagem */
-  --accent-foreground: #ffffff;
-  --destructive: #e5484d; /* erro (mantido) */
-  --destructive-foreground: #ffffff;
+  --banner-background: #ef6429;
+  --banner-foreground: #fff7f2;
+  --month-picker: #574a45;
+  --month-picker-foreground: #fdf9f7;
+  --description: #bcd1ca;
+  --description-foreground: #322e2c;
+  --income: #574a45;
+  --expense: #ef6429;
 
-  /* Bordas/inputs/ring */
-  --border: #dbe0e6; /* borda suave em tom frio */
-  --input: #dbe0e6;
-  --ring: #00c670; /* foco em indigo */
+  --bg-necessidade: #bbf7d0;
+  --bg-necessidade-foreground: #147e3d;
+  --bg-desejo: #bae6fd;
+  --bg-desejo-foreground: #0284c7;
+  --bg-objetivo: #d8b4fe;
+  --bg-objetivo-foreground: #8c21ea;
 
-  /* Paleta para gráficos (a partir da imagem) */
-  --chart-1: #0aeb8c; /* receita: verde */
-  --chart-2: #fe4a23; /* despesa: laranja solicitado */
-  --chart-3: #40468e; /* indigo escuro */
-  --chart-4: #5b15a1;
-  --chart-5: #af66f7;
-  --chart-6: #e4caff;
+  --chart-1: #ef6429;
+  --chart-2: #ef6429;
+  --chart-3: #45ce79;
+  --chart-4: #d46147;
+  --chart-5: #9d58cb;
+  --sidebar: #f8f6f4;
+  --sidebar-foreground: #352a27;
+  --sidebar-primary: #574a45;
+  --sidebar-primary-foreground: #fff7f2;
+  --sidebar-accent: #ef6429;
+  --sidebar-accent-foreground: #f8f6f4;
+  --sidebar-border: #c3b3b6;
+  --sidebar-ring: #ef6429;
 
-  /* Tokens semânticos auxiliares */
-  --income: #00a963;
-  --expense: #e35333;
-
-  /* Sidebar (autenticação / painéis) */
-  --sidebar: #ffffff;
-  --sidebar-foreground: #0b0f0d;
-  --sidebar-primary: #00c670; /* CTA com a cor primária */
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eaf4f2; /* blocos sutis no tom da paleta */
-  --sidebar-accent-foreground: #0b0f0d;
-  --sidebar-border: #dbe0e6;
-  --sidebar-ring: #00c670;
-  --radius: 0.6rem;
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --radius: 0.4rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow-md:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
   --shadow-lg:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #e5e7eb;
-  --card: #121212;
-  --card-foreground: #e5e7eb;
-  --popover: #121212;
-  --popover-foreground: #e5e7eb;
+  --background: #1c1817;
+  --foreground: #e6dedd;
+  --card: #221d1c;
+  --card-foreground: #fff7f2;
+  --popover: #1f1a19;
+  --popover-foreground: #fff7f2;
+  --primary: #ef6429;
+  --primary-foreground: #1b100d;
+  --secondary: #574a45;
+  --secondary-foreground: #fff7f2;
+  --muted: #2b2524;
+  --muted-foreground: #c3b3b6;
+  --accent: #ef6429;
+  --accent-foreground: #fff7f2;
+  --destructive: #d84a3a;
+  --description-foreground: #322e2c;
+  --destructive-foreground: #fff7f2;
+  --border: #2e2726;
+  --input: #2e2726;
+  --ring: #ef6429;
 
-  --primary: #087c4a; /* mantém a identidade da imagem */
-  --primary-foreground: #ffffff;
-  --secondary: #152316; /* neutro escuro, frio */
-  --secondary-foreground: #e5ebe8;
-  --muted: #14221a;
-  --muted-foreground: #919b95;
-  --accent: #0aeb8c; /* verde vibrante contrastando no dark */
-  --accent-foreground: #0b0f0d;
-  --destructive: #e5484d;
-  --destructive-foreground: #0b0f0d;
+  --banner-background: #ef6429;
+  --banner-foreground: #1c1817;
+  --month-picker: #574a45;
+  --month-picker-foreground: #f7efed;
+  --description: #cbcadb;
+  --income: #ef6429;
+  --expense: #ef6429;
 
-  --border: #181b24;
-  --input: #232836;
-  --ring: #00c670;
+  --bg-necessidade: #15803d;
+  --bg-necessidade-foreground: #a7f3d0;
+  --bg-desejo: #0369a1;
+  --bg-desejo-foreground: #bae6fd;
+  --bg-objetivo: #701a75;
+  --bg-objetivo-foreground: #d8b4fe;
 
-  --chart-1: #0aeb8c; /* receita: verde */
-  --chart-2: #fe4a23; /* despesa: laranja */
-  --chart-3: #869cb6; /* azul-cinza médio para contraste no dark */
-  --chart-4: #5b15a1;
-  --chart-5: #af66f7;
-  --chart-6: #e4caff;
+  --chart-1: #ef6429;
+  --chart-2: #ef6429;
+  --chart-3: #45ce79;
+  --chart-4: #d46147;
+  --chart-5: #9d58cb;
+  --sidebar: #221d1c;
+  --sidebar-foreground: #fff7f2;
+  --sidebar-primary: #ef6429;
+  --sidebar-primary-foreground: #fff7f2;
+  --sidebar-accent: #ef6429;
+  --sidebar-accent-foreground: #fff7f2;
+  --sidebar-border: #2e2726;
+  --sidebar-ring: #ef6429;
 
-  --income: #0aeb8c;
-  --expense: #fe4a23;
-
-  --sidebar: #121212;
-  --sidebar-foreground: #e5ebe8;
-  --sidebar-primary: #00c670;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #15231c;
-  --sidebar-accent-foreground: #e5e7eb;
-  --sidebar-border: #232836;
-  --sidebar-ring: #00c670;
-  --radius: 0.6rem;
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --radius: 0.4rem;
+  --shadow-2xs: 0 1px 3px 0px hsla(0, 0%, 23%, 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow-md:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
   --shadow-lg:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
 
 @theme inline {
@@ -150,13 +160,21 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --color-banner-background: var(--banner-background);
+  --color-banner-foreground: var(--banner-foreground);
+  --color-month-picker: var(--month-picker);
+  --color-month-picker-foreground: var(--month-picker-foreground);
+  --color-description: var(--description);
+  --color-description-foreground: var(--description-foreground);
+  --color-income: var(--income);
+  --color-expense: var(--expense);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-income: var(--income);
-  --color-expense: var(--expense);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -181,13 +199,30 @@
   --shadow-2xl: var(--shadow-2xl);
 }
 
-body {
-  letter-spacing: var(--tracking-normal);
+.noisy-surface {
+  position: relative;
+  isolation: isolate;
 }
 
+.noisy-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8' numOctaves='6' stitchTiles='stitch'/%3E%3CfeBlend mode='screen'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.7'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.9;
+  z-index: 0;
+}
+
+.noisy-surface > * {
+  position: relative;
+  z-index: 1;
+}
 @layer base {
   html {
-    /* Rolagem suave para âncoras */
     scroll-behavior: smooth;
   }
   * {
@@ -199,7 +234,7 @@ body {
   }
 
   ::selection {
-    @apply bg-green-100 text-green-600;
+    @apply text-foreground bg-emerald-500;
   }
 }
 
@@ -208,7 +243,7 @@ section[id] {
   scroll-margin-top: 6rem;
 }
 
-/* Hero/banner clean: branco com acentos sutis (sem lilás pesado) */
+/* Hero/banner clean com vidro suave, highlights lavanda e verde néon pastel */
 @layer utilities {
   /* Tokens de tamanho para skeletons */
   :root {
@@ -229,6 +264,21 @@ section[id] {
     overflow: hidden;
     content-visibility: auto;
     will-change: transform, opacity;
+  }
+  .surface-glass {
+    background: var(--surface-raised);
+    border: 1px solid var(--surface-raised-border);
+    box-shadow: var(--shadow-xs);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+  .surface-contrast {
+    background: var(--surface-contrast);
+    border-radius: var(--radius-md);
+  }
+  .hero-panel {
+    background: var(--hero-gradient);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
   }
   .skeleton[data-animate="true"]::after {
     content: "";

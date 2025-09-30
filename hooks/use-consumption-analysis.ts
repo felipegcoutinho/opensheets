@@ -1,25 +1,13 @@
 "use client";
-import type {
-  Analysis,
-  AnalysisInputPayload,
-} from "@/components/analysis/analysis";
-import { hashPayload } from "@/lib/hash";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-function coerceAnalysis(json: unknown): Analysis {
-  const safe = (arr: unknown): string[] =>
-    Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : [];
-  const obj = (typeof json === "string" ? JSON.parse(json) : json) as Record<
-    string,
-    unknown
-  >;
-  return {
-    comportamentos_observados: safe(obj?.comportamentos_observados),
-    gatilhos_de_consumo: safe(obj?.gatilhos_de_consumo),
-    recomendações_práticas: safe(obj?.recomendações_práticas),
-    melhorias_sugeridas: safe(obj?.melhorias_sugeridas),
-  };
-}
+import type { Analysis, AnalysisInputPayload } from "@/components/analysis/analysis";
+import { runConsumptionAnalysis } from "@/actions/analysis/run_analysis";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+type AnalysisCache = Map<
+  string,
+  { fingerprint: string; analysis: Analysis; generatedAt: Date }
+>;
 
 export function useConsumptionAnalysis(payload: AnalysisInputPayload) {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
@@ -27,73 +15,73 @@ export function useConsumptionAnalysis(payload: AnalysisInputPayload) {
   const [error, setError] = useState<string | null>(null);
   const [lastRunAt, setLastRunAt] = useState<Date | null>(null);
 
-  const cacheRef = useRef<Map<string, Analysis>>(new Map());
-  const abortRef = useRef<AbortController | null>(null);
-
-  const cacheKey = useMemo(
-    () => `${payload.month}:${hashPayload(payload)}`,
-    [payload],
-  );
+  const cacheRef = useRef<AnalysisCache>(new Map());
+  const fingerprintRef = useRef<Map<string, string>>(new Map());
 
   useEffect(() => {
-    setAnalysis(null);
     setError(null);
-    abortRef.current?.abort();
-    abortRef.current = null;
-  }, [cacheKey]);
+    setAnalysis(null);
+    setLastRunAt(null);
+    // mantém fingerprint para reaproveitar cache ao alternar meses
+  }, [payload.month]);
 
   const analyze = useCallback(async () => {
     if (loading) return;
 
-    const cached = cacheRef.current.get(cacheKey);
-    if (cached) {
-      setAnalysis(cached);
-      setError(null);
-      setLastRunAt(new Date());
-      return;
-    }
-
     setLoading(true);
     setError(null);
-    setAnalysis(null);
 
-    abortRef.current?.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
+    const currentFingerprint = fingerprintRef.current.get(payload.month);
+
+    if (currentFingerprint) {
+      const cached = cacheRef.current.get(currentFingerprint);
+      if (cached) {
+        setAnalysis(cached.analysis);
+        setLastRunAt(cached.generatedAt);
+      }
+    }
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [
-            { role: "user", content: JSON.stringify(payload.lancamentos) },
-            { role: "user", content: JSON.stringify(payload.cartoes) },
-            { role: "user", content: JSON.stringify(payload.categorias ?? []) },
-          ],
-        }),
-        signal: controller.signal,
+      const result = await runConsumptionAnalysis({
+        month: payload.month,
+        fingerprint: currentFingerprint,
       });
 
-      if (!response.ok) throw new Error(`API respondeu ${response.status}`);
+      if (result.status === "error") {
+        setAnalysis(null);
+        setError(result.message);
+        return;
+      }
 
-      const data = await response.json();
-      const parsed = coerceAnalysis(data?.analysis);
+      if (result.status === "unchanged") {
+        if (currentFingerprint) {
+          const cached = cacheRef.current.get(currentFingerprint);
+          if (cached) {
+            setAnalysis(cached.analysis);
+            setLastRunAt(cached.generatedAt);
+          }
+        }
+        return;
+      }
 
-      cacheRef.current.set(cacheKey, parsed);
-      setAnalysis(parsed);
+      cacheRef.current.set(result.fingerprint, {
+        fingerprint: result.fingerprint,
+        analysis: result.analysis,
+        generatedAt: new Date(),
+      });
+      fingerprintRef.current.set(payload.month, result.fingerprint);
+      setAnalysis(result.analysis);
       setLastRunAt(new Date());
-    } catch (err: unknown) {
-      if ((err as Error)?.name === "AbortError") return;
-      console.error("Erro ao buscar análise:", err);
+    } catch (err) {
+      console.error("Erro ao gerar análise:", err);
+      setAnalysis(null);
       setError(
         "Não foi possível gerar a análise agora. Tente novamente em alguns segundos.",
       );
-      setAnalysis(null);
     } finally {
       setLoading(false);
     }
-  }, [cacheKey, loading, payload]);
+  }, [loading, payload.month]);
 
   return { analysis, loading, error, lastRunAt, analyze } as const;
 }

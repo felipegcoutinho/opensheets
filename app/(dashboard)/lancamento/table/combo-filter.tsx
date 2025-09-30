@@ -8,6 +8,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -43,65 +44,71 @@ export function ComboboxFilter({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "border-input w-full justify-between truncate border-dashed font-normal lg:w-[160px]",
+            "border-input text-muted-foreground w-full justify-between truncate border-dashed shadow-none lg:w-[150px]",
             value &&
               value !== "all" &&
-              "ring-primary bg-primary/20 font-bold ring-1",
+              "ring-primary bg-primary/10 font-bold ring-1",
           )}
         >
           {value && value !== "all" ? value : placeholder}
           <RiArrowUpDownLine className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit p-0">
+      <PopoverContent
+        align="start"
+        sideOffset={6}
+        className="w-[--radix-popover-trigger-width] overflow-hidden p-0"
+      >
         <Command>
           <CommandInput
             placeholder={`Buscar ${placeholder.toLowerCase()}...`}
           />
-          <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
-          <CommandGroup>
-            <CommandItem
-              onSelect={() => {
-                onChange("all");
-                setOpen(false);
-              }}
-              className={cn(
-                "cursor-pointer",
-                value === "all" && "bg-accent text-foreground font-bold",
-              )}
-            >
-              <RiCheckLine
-                className={cn(
-                  "mr-2 h-4 w-4",
-                  value === "all" ? "opacity-100" : "opacity-0",
-                )}
-              />
-              Todas
-            </CommandItem>
-
-            {options.map((option) => (
+          <CommandList className="max-h-80 overflow-y-auto">
+            <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+            <CommandGroup>
               <CommandItem
-                key={option}
                 onSelect={() => {
-                  onChange(option);
+                  onChange("all");
                   setOpen(false);
                 }}
                 className={cn(
-                  "cursor-pointer capitalize",
-                  value === option && "bg-accent text-foreground font-bold",
+                  "cursor-pointer",
+                  value === "all" && "bg-accent text-foreground font-bold",
                 )}
               >
                 <RiCheckLine
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === option ? "opacity-100" : "opacity-0",
+                    value === "all" ? "opacity-100" : "opacity-0",
                   )}
                 />
-                {getIcon?.(option)}
-                {option}
+                Todas
               </CommandItem>
-            ))}
-          </CommandGroup>
+
+              {options.map((option) => (
+                <CommandItem
+                  key={option}
+                  onSelect={() => {
+                    onChange(option);
+                    setOpen(false);
+                  }}
+                  className={cn(
+                    "cursor-pointer capitalize",
+                    value === option && "bg-accent text-foreground font-bold",
+                  )}
+                >
+                  <RiCheckLine
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === option ? "opacity-100" : "opacity-0",
+                    )}
+                  />
+                  {getIcon?.(option)}
+                  {option}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

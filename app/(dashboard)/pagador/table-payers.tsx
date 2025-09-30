@@ -62,7 +62,11 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
                     <RiVerifiedBadgeFill className="text-blue-500" size={16} />
                   )}
                   {item.is_auto_send && (
-                    <RiMailSendLine size={16} className="text-primary" aria-hidden />
+                    <RiMailSendLine
+                      size={16}
+                      className="text-primary"
+                      aria-hidden
+                    />
                   )}
                 </div>
               </div>
@@ -73,7 +77,7 @@ export default function TablePayers({ pagadores, avatars = [] as string[] }) {
 
               <Link
                 href={`/pagador/${item.id}?periodo=${month}`}
-                className="bg-secondary mt-1 inline-flex rounded-md px-3 py-1 text-xs font-medium hover:brightness-95"
+                className="bg-secondary mt-1 inline-flex rounded px-3 py-1 text-xs font-medium"
               >
                 Detalhes
               </Link>

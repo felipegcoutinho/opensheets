@@ -11,14 +11,14 @@ export function AnalysisReport({
   month: string;
 }) {
   return (
-    <Card className="w-full border-none bg-transparent">
-      <CardHeader className="p-0">
-        <CardTitle className="text-2xl">
+    <Card className="w-full px-2 sm:px-4">
+      <CardHeader className="px-2">
+        <CardTitle className="text-xl">
           Relatório de Comportamento de Consumo
         </CardTitle>
         <div className="text-muted-foreground mt-2">
           <p>
-            No período selecionado (<span className="font-medium">{month}</span>
+            No período selecionado (<span className="font-bold">{month}</span>
             ), identificamos os principais comportamentos e gatilhos que
             impactaram seu padrão de consumo.
           </p>
@@ -26,33 +26,33 @@ export function AnalysisReport({
         </div>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="grid gap-4 sm:gap-2">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-1 lg:grid-cols-4">
           <section className="py-1 sm:py-2">
             <InsightCard
               title="Comportamentos Observados"
               analysis={analysis.comportamentos_observados}
-              color="bg-amber-200"
+              tone="amber"
             />
           </section>
           <section className="py-1 sm:py-2">
             <InsightCard
               title="Gatilhos de Consumo"
               analysis={analysis.gatilhos_de_consumo}
-              color="bg-red-200"
+              tone="lavender"
             />
           </section>
           <section className="py-1 sm:py-2">
             <InsightCard
               title="Recomendações Práticas"
               analysis={analysis.recomendações_práticas}
-              color="bg-emerald-200"
+              tone="mint"
             />
           </section>
           <section className="py-1 sm:py-2">
             <InsightCard
               title="Melhorias Sugeridas"
               analysis={analysis.melhorias_sugeridas}
-              color="bg-purple-200"
+              tone="violet"
             />
           </section>
         </div>

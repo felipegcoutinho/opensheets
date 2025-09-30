@@ -25,7 +25,7 @@ export default async function InstallmentsWidget({ month }: Props) {
   if (!transactions?.length) return <EmptyCard />;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       {[...transactions]
         .sort((a: any, b: any) => {
           const qa = Number(a.qtde_parcela) || 0;
@@ -43,42 +43,35 @@ export default async function InstallmentsWidget({ month }: Props) {
             qtde > 0 ? Math.min(100, Math.max(0, (atual / qtde) * 100)) : 0;
           const terminaEm = calcularMesFinal(t.periodo, qtde, atual);
           const valorParcela = Number(t.valor) || 0;
-          const totalCompra = valorParcela * qtde;
           const restantes = Math.max(qtde - atual, 0);
           const valorRestante = restantes * valorParcela;
 
           return (
             <div
               key={t.id}
-              className="border-b border-dashed py-2 last:border-0"
+              className="border-b border-dashed py-1 last:border-0"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">
+              <div className="flex items-center justify-between gap-3">
+                <p className="truncate text-sm">
+                  <span className="items-start gap-1 py-2 text-sm font-semibold capitalize">
                     {t.descricao}
-                    {restantes === 0 && (
-                      <RiCalendarCheckFill
-                        color="green"
-                        className="ml-1 inline h-3.5 w-3.5"
-                      />
-                    )}
-                  </p>
-                  <p className="text-muted-foreground mt-0.5 text-xs">
-                    Parcela {atual}/{qtde} •{" "}
-                    <span className="font-bold">Restantes {restantes}</span> •
-                    Termina em {terminaEm}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <div className="text-muted-foreground text-xs">Parcela</div>
-                  <div className="text-sm leading-none">
+                  </span>
+                  <span className="text-muted-foreground ml-1 text-xs">
+                    {atual}/{qtde}
+                  </span>
+
+                  {restantes === 0 && (
+                    <RiCalendarCheckFill
+                      color="green"
+                      size={14}
+                      className="ml-1 inline"
+                    />
+                  )}
+                </p>
+                <div className="flex items-center gap-2">
+                  <span>
                     <MoneyValues value={valorParcela} />
-                  </div>
-                  {qtde > 1 ? (
-                    <div className="text-muted-foreground mt-0.5 text-xs">
-                      Restante <MoneyValues value={valorRestante} />
-                    </div>
-                  ) : null}
+                  </span>
                 </div>
               </div>
 
@@ -87,9 +80,18 @@ export default async function InstallmentsWidget({ month }: Props) {
                   value={perc}
                   primary_color="bg-chart-2"
                   secondary_color="bg-chart-2/20"
-                  className="h-2 rounded"
+                  className="h-1 rounded"
                   aria-label={`Progresso: ${atual} de ${qtde}`}
                 />
+              </div>
+
+              <div className="text-muted-foreground mt-1 text-xs">
+                Restantes {restantes} • Termina em {terminaEm}{" "}
+                {qtde > 1 ? (
+                  <span>
+                    • Restante <MoneyValues value={valorRestante} />
+                  </span>
+                ) : null}
               </div>
             </div>
           );

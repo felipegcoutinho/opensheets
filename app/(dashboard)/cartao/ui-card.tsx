@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteCard from "./modal/delete-cards";
 import UpdateCard from "./modal/update-cards";
 
 type Props = {
@@ -15,9 +16,12 @@ type Props = {
   showDelete?: boolean;
 };
 
-import DeleteCard from "./modal/delete-cards";
-
-export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete = false }: Props) {
+export default function UiCard({
+  item,
+  getAccountMap,
+  mostrarLimites,
+  showDelete = false,
+}: Props) {
   return (
     <Card key={item.id} className="gap-2">
       <CardContent className="space-y-2">
@@ -48,7 +52,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete
         </div>
 
         {mostrarLimites && item.limites && (
-          <div className="border-y py-4">
+          <div className="border-y border-dashed py-4">
             <div className="mb-2 flex justify-between text-base">
               <div className="text-left">
                 <p className="text-muted-foreground text-sm">Limite Total</p>
@@ -58,7 +62,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete
               <div className="text-center">
                 <p className="text-muted-foreground text-sm">Em Uso</p>
                 <span className="flex items-center gap-1">
-                  <Ping color="bg-chart-2" />
+                  <Ping color="bg-primary" />
                   <MoneyValues value={item.limites.limiteEmUso} />
                 </span>
               </div>
@@ -73,12 +77,12 @@ export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete
             </div>
 
             <Progress
-              primary_color="bg-chart-2"
+              primary_color="bg-primary"
               secondary_color="bg-secondary"
               value={
                 (item.limites.limiteEmUso / item.limites.limiteTotal) * 100
               }
-              className="h-3 rounded"
+              className="h-2 rounded"
             />
           </div>
         )}
@@ -92,9 +96,7 @@ export default function UiCard({ item, getAccountMap, mostrarLimites, showDelete
         </Button>
 
         {showDelete && (
-          <div className="ml-auto">
-            <DeleteCard itemId={item.id} />
-          </div>
+          <DeleteCard itemId={item.id} itemNome={item.descricao} />
         )}
       </CardFooter>
     </Card>

@@ -6,8 +6,5 @@ export interface Analysis {
 }
 
 export interface AnalysisInputPayload {
-  lancamentos: unknown[];
-  cartoes: unknown[];
-  categorias?: unknown[];
   month: string;
 }

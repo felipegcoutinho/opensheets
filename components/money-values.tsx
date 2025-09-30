@@ -43,8 +43,7 @@ function MoneyValues({ value, animated = true, className }: Props) {
   return (
     <span
       className={`${money_values.className} font-normal tracking-tighter ${
-        estado &&
-        "blur-[6px] brightness-200 transition-all duration-200 hover:blur-none"
+        estado && "blur-sm transition-all duration-200 hover:blur-none"
       } ${className ?? ""}`}
     >
       {displayValue.toLocaleString("pt-BR", {

@@ -3,7 +3,33 @@ export type Message =
   | { error: string }
   | { message: string };
 
-export function FormMessage({ message }: { message: Message }) {
+export function parseFormMessage(
+  searchParams?: Record<string, string | string[] | undefined>,
+): Message | null {
+  if (!searchParams) return null;
+
+  const pick = (key: string) => {
+    const value = searchParams[key];
+    if (!value) return null;
+    const normalized = Array.isArray(value) ? value[0] : value;
+    return normalized ? String(normalized) : null;
+  };
+
+  const error = pick("error");
+  if (error) return { error };
+
+  const success = pick("success");
+  if (success) return { success };
+
+  const message = pick("message");
+  if (message) return { message };
+
+  return null;
+}
+
+export function FormMessage({ message }: { message?: Message | null }) {
+  if (!message) return null;
+
   return (
     <div className="flex w-full max-w-md flex-col gap-2 text-sm">
       {"success" in message && (

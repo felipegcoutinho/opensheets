@@ -40,9 +40,10 @@ export default async function AccountWidget({
               width={40}
               height={40}
             />
+
             <div>
               <Link
-                className="flex items-center font-medium hover:underline"
+                className="flex items-center gap-1 text-sm font-semibold capitalize hover:underline"
                 href={`/conta/${item.id}`}
               >
                 {item.descricao}

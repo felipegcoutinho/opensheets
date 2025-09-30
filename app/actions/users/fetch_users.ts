@@ -52,11 +52,3 @@ export async function getUserSession() {
   // Mantém compatibilidade: retorna objeto com id/email/user_metadata
   return claims;
 }
-
-export async function getAuthProviders(): Promise<string[]> {
-  const claims = await getClaims();
-  const providers = (claims?.app_metadata as any)?.providers;
-  if (Array.isArray(providers)) return providers as string[];
-  if (typeof providers === "string") return [providers];
-  return [];
-}

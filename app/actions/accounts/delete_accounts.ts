@@ -10,12 +10,14 @@ export async function deleteAccount(
   const excluir = formData.get("excluir");
   const supabase = createClient();
 
-  try {
-    await supabase.from("contas").delete().eq("id", excluir);
-    revalidatePath("/conta");
-    return { success: true, message: "Conta removida!" };
-  } catch (error) {
-    console.error("Erro ao deletar conta:", error);
+  const { error } = await supabase.from("contas").delete().eq("id", excluir);
+
+  revalidatePath("/conta");
+
+  if (error) {
+    console.error("Erro ao remover conta:", error);
     return { success: false, message: "Erro ao remover Conta" };
   }
+
+  return { success: true, message: "Conta removida com sucesso!" };
 }

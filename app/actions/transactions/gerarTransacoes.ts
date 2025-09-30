@@ -1,3 +1,4 @@
+import type { BudgetRuleBucket } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { addMonths, format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { DadosFormulario } from "./parseFormData";
@@ -23,6 +24,7 @@ interface Transacao {
   categoria_id?: string | null;
   conta_id?: string | null;
   dividir_lancamento: boolean;
+  regra_502030_tipo?: BudgetRuleBucket | null;
 }
 
 export function gerarTransacoes(
@@ -86,6 +88,7 @@ export function gerarTransacoes(
       categoria_id: dados.categoria_id || null,
       conta_id: dados.conta_id || null,
       dividir_lancamento: dados.dividir_lancamento,
+      regra_502030_tipo: dados.regra502030Tipo ?? null,
     });
   }
 

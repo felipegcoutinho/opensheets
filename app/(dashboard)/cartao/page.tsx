@@ -1,8 +1,8 @@
 import Ping from "@/components/ping-icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CreateCardSection from "./sections/create-card";
-import ActiveCardsSection from "./sections/active-cards";
-import InactiveCardsSection from "./sections/inactive-cards";
+import CreateCardSection from "./components/create-card";
+import ActiveCardsSection from "./components/active-cards";
+import InactiveCardsSection from "./components/inactive-cards";
 
 export default async function page() {
   return (

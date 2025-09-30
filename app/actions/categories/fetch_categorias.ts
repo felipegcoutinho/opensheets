@@ -11,5 +11,9 @@ export async function getCategorias() {
 
   if (error) throw error;
 
-  return data;
+  return (data ?? []).slice().sort((a, b) => {
+    return a.nome.localeCompare(b.nome, "pt-BR", {
+      sensitivity: "base",
+    });
+  });
 }

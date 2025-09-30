@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categoryIconOptions } from "@/hooks/use-category-icons";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
@@ -45,6 +45,14 @@ export default function UpdateCategory({
     message: "",
   });
 
+  // Bloqueia edição para a categoria "pagamentos" do tipo "despesa"
+  const isProtected = useMemo(() => {
+    return (
+      (itemNome || "").trim().toLowerCase() === "pagamentos" &&
+      (itemTipoCategoria || "").trim().toLowerCase() === "despesa"
+    );
+  }, [itemNome, itemTipoCategoria]);
+
   useEffect(() => {
     if (!state.message) return;
     if (state.success) {
@@ -57,7 +65,17 @@ export default function UpdateCategory({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>editar</DialogTrigger>
+      <DialogTrigger asChild>
+        <Button
+          onClick={(e) => e.stopPropagation()}
+          variant="link"
+          size="sm"
+          className="p-0"
+          disabled={isProtected}
+        >
+          editar
+        </Button>
+      </DialogTrigger>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Atualizar Categoria</DialogTitle>

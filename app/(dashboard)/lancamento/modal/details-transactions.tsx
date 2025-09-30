@@ -1,8 +1,11 @@
 "use client";
 
+import type { BudgetRuleBucket } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import { formatBucketLabel } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import MoneyValues from "@/components/money-values";
-import Timeline from "@/components/timeline-orders";
 import BadgeSystem from "@/components/payer-badge";
+import Timeline from "@/components/timeline-orders";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,9 +24,43 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
-import UtilitiesLancamento from "../utilities-lancamento";
+import UtilitiesLancamento, {
+  calcularMesFinal,
+  formatPeriodoLabel,
+} from "../utilities-lancamento";
 import ViewImage from "./view-image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+type TransactionCondition =
+  | "vista"
+  | "parcelado"
+  | "recorrente"
+  | (string & {});
+type TransactionType = "receita" | "despesa" | (string & {});
+
+type DetailsTransactionsProps = {
+  itemId: number | string;
+  itemCondicao: TransactionCondition;
+  itemDescricao: string;
+  itemNotas?: string | null;
+  itemDate: string;
+  itemResponsavel?: string | null;
+  itemResponsavelRole?: string | null;
+  itemResponsavelFoto?: string | null;
+  itemTipoTransacao: TransactionType;
+  itemValor: number | string;
+  itemFormaPagamento: string;
+  itemCartao?: string | null;
+  itemConta?: string | null;
+  itemQtdeParcelas?: number | null;
+  itemParcelaAtual?: number | null;
+  itemPeriodo?: string | null;
+  itemQtdeRecorrencia?: number | null;
+  itemPaid: boolean;
+  itemImagemURL?: string | null;
+  itemCategoriaId?: string | null;
+  itemRegra502030Tipo?: string | null;
+  children?: React.ReactNode;
+};
 
 export default function DetailsTransactions({
   itemId,
@@ -46,43 +83,26 @@ export default function DetailsTransactions({
   itemPaid,
   itemImagemURL,
   itemCategoriaId,
+  itemRegra502030Tipo,
   children,
-}: {
-  itemId: any;
-  itemCondicao: any;
-  itemDescricao: any;
-  itemNotas: any;
-  itemDate: any;
-  itemResponsavel: any;
-  itemResponsavelRole: any;
-  itemResponsavelFoto?: string | null;
-  itemTipoTransacao: any;
-  itemValor: any;
-  itemFormaPagamento: any;
-  itemCartao: any;
-  itemConta: any;
-  itemQtdeParcelas: any;
-  itemParcelaAtual: any;
-  itemPeriodo: any;
-  itemQtdeRecorrencia: any;
-  itemPaid: any;
-  itemImagemURL: any;
-  itemCategoriaId: any;
-  children?: React.ReactNode;
-}) {
-  const { isOpen, setIsOpen, MonthUppercase, calcularMesFinal } =
-    UtilitiesLancamento();
+}: DetailsTransactionsProps) {
+  const { isOpen, setIsOpen } = UtilitiesLancamento();
 
   const { DateFormat } = UseDates();
 
   const { getPaymentIcon, getPayerRoleBadgeColor, getTransactionBadgeColor } =
     UseStyles();
 
-  const handleDialogClose = (val) => {
+  const handleDialogClose = (val: boolean) => {
     setIsOpen(val);
   };
 
-  const parcelaRestante = itemValor * (itemQtdeParcelas - itemParcelaAtual);
+  const valorNumerico = Number(itemValor) || 0;
+  const totalParcelas = Number(itemQtdeParcelas ?? 0);
+  const parcelaAtual = Number(itemParcelaAtual ?? 0);
+  const parcelasRestantes = Math.max(totalParcelas - parcelaAtual, 0);
+  const parcelaRestante =
+    itemCondicao === "parcelado" ? valorNumerico * parcelasRestantes : 0;
 
   const resolveFotoSrc = (f?: string | null) => {
     if (!f) return undefined;
@@ -118,7 +138,7 @@ export default function DetailsTransactions({
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Período</span>
                   <span className="capitalize">
-                    {MonthUppercase(itemPeriodo)}
+                    {formatPeriodoLabel(itemPeriodo)}
                   </span>
                 </li>
 
@@ -142,8 +162,21 @@ export default function DetailsTransactions({
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Categoria</span>
-                  <span className="capitalize">{itemCategoriaId}</span>
+                  <span className="capitalize">{itemCategoriaId ?? "—"}</span>
                 </li>
+
+                {itemRegra502030Tipo ? (
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Regra 50/30/20
+                    </span>
+                    <span className="capitalize">
+                      {formatBucketLabel(
+                        itemRegra502030Tipo as BudgetRuleBucket,
+                      )}
+                    </span>
+                  </li>
+                ) : null}
 
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
@@ -169,16 +202,18 @@ export default function DetailsTransactions({
                       {resolveFotoSrc(itemResponsavelFoto) ? (
                         <AvatarImage
                           src={resolveFotoSrc(itemResponsavelFoto)}
-                          alt={itemResponsavel || "Pagador"}
+                          alt={itemResponsavel ?? "Pagador"}
                         />
                       ) : null}
                       <AvatarFallback>
-                        {(itemResponsavel?.[0] || "P").toUpperCase()}
+                        {(itemResponsavel?.[0] ?? "P").toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <BadgeSystem
-                      label={itemResponsavel}
-                      color={getPayerRoleBadgeColor(itemResponsavelRole)}
+                      label={itemResponsavel ?? "Não informado"}
+                      color={getPayerRoleBadgeColor(
+                        itemResponsavelRole ?? undefined,
+                      )}
                     />
                   </span>
                 </li>
@@ -204,12 +239,12 @@ export default function DetailsTransactions({
                 {itemCondicao === "parcelado" && (
                   <Timeline
                     DataCompra={itemDate}
-                    ParcelaAtual={itemParcelaAtual}
-                    QtdeParcela={itemQtdeParcelas}
+                    ParcelaAtual={parcelaAtual}
+                    QtdeParcela={totalParcelas}
                     DataFim={calcularMesFinal(
                       itemPeriodo,
-                      itemQtdeParcelas,
-                      itemParcelaAtual,
+                      totalParcelas,
+                      parcelaAtual,
                     )}
                   />
                 )}
@@ -221,7 +256,7 @@ export default function DetailsTransactions({
                     Valor {itemCondicao === "parcelado" && "da Parcela"}
                   </span>
                   <span>
-                    <MoneyValues value={itemValor} />
+                    <MoneyValues value={valorNumerico} />
                   </span>
                 </li>
                 {itemCondicao === "parcelado" && (
@@ -240,7 +275,7 @@ export default function DetailsTransactions({
                       Quantidade de Recorrências
                     </span>
                     <span className="capitalize">
-                      {itemQtdeRecorrencia} meses
+                      {itemQtdeRecorrencia ?? 0} meses
                     </span>
                   </li>
                 )}
@@ -249,9 +284,9 @@ export default function DetailsTransactions({
                   <span className="text-muted-foreground">Total da Compra</span>
                   <span className="text-lg">
                     {itemCondicao === "parcelado" ? (
-                      <MoneyValues value={itemValor * itemQtdeParcelas} />
+                      <MoneyValues value={valorNumerico * totalParcelas} />
                     ) : (
-                      <MoneyValues value={itemValor} />
+                      <MoneyValues value={valorNumerico} />
                     )}
                   </span>
                 </li>

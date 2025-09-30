@@ -17,7 +17,7 @@ export default function PaymentMethodLogo({
     <div className="flex items-center gap-1">
       <Image
         src={`${url_name}`}
-        className="rounded-lg transition-transform hover:scale-105"
+        className="rounded transition-transform hover:scale-105"
         width={width}
         height={height}
         alt="Logo do cartão ou conta"

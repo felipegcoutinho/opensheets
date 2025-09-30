@@ -2,11 +2,7 @@ import BillPaymentDialog from "@/components/bill-payment-dialog";
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { UseDates } from "@/hooks/use-dates";
-import {
-  RiBarcodeLine,
-  RiCheckboxCircleFill,
-  RiCheckLine,
-} from "@remixicon/react";
+import { RiBarcodeLine } from "@remixicon/react";
 
 export default async function BillsWidget({ month, data }) {
   const { DateFormat } = UseDates();
@@ -24,7 +20,9 @@ export default async function BillsWidget({ month, data }) {
         <RiBarcodeLine size={28} />
 
         <div>
-          <p className="font-medium capitalize">{item.descricao}</p>
+          <p className="flex items-center gap-1 text-sm font-semibold capitalize">
+            {item.descricao}
+          </p>
           {(() => {
             if (item.realizado) {
               const dt = item.dt_pagamento_boleto as string | null;

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { RiLoader2Line, RiMagicLine } from "@remixicon/react";
+import { RiLoader2Line, RiSparkling2Line } from "@remixicon/react";
 
 export function AnalyzeButton({
   onClick,
@@ -24,8 +24,8 @@ export function AnalyzeButton({
           </>
         ) : (
           <>
-            <RiMagicLine className="h-4 w-4" />
-            <span>Analisar minhas finanças com IA</span>
+            <RiSparkling2Line className="h-4 w-4" />
+            <span>Analisar minhas finanças com inteligência</span>
           </>
         )}
       </div>

@@ -16,53 +16,6 @@ function periodoToDate(periodo: string): Date | null {
   return new Date(ano, monthIndex, 1);
 }
 
-export async function getIncome(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("lancamentos")
-    .select("valor, categoria_id!inner(id, nome), pagadores!inner(role)")
-    .eq("tipo_transacao", "receita")
-    .eq("periodo", month)
-    .eq("pagadores.role", "principal")
-    .neq("categoria_id.nome", "saldo anterior");
-
-  if (error) throw error;
-
-  return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
-}
-
-export async function getExpense(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("lancamentos")
-    .select("valor, pagadores!inner(role)")
-    .eq("tipo_transacao", "despesa")
-    .eq("periodo", month)
-    .eq("pagadores.role", "principal");
-
-  if (error) throw error;
-
-  return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
-}
-
-export async function getPaidExpense(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("lancamentos")
-    .select("valor")
-    .eq("tipo_transacao", "despesa")
-    .neq("forma_pagamento", "cartão de crédito")
-    .eq("periodo", month)
-    .eq("realizado", true);
-
-  if (error) throw error;
-
-  return data.reduce((sum, item) => sum + parseFloat(item.valor), 0);
-}
-
 export async function getConditions(month: string) {
   const supabase = createClient();
 
@@ -165,6 +118,70 @@ export async function getRecentTransactions(month: string) {
   return data;
 }
 
+// Maiores gastos do mês (top N despesas por valor)
+export async function getTopExpenses(month: string, limit = 10) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      "id, data_compra, tipo_transacao, data_vencimento, descricao, valor, forma_pagamento, cartoes (id, logo_image), contas (id, logo_image), pagadores!inner(role)",
+    )
+    .eq("tipo_transacao", "despesa")
+    .eq("pagadores.role", "principal")
+    .eq("periodo", month)
+    .order("valor", { ascending: false })
+    .limit(limit);
+
+  if (error) throw error;
+
+  return data;
+}
+
+// Top Estabelecimentos (agrupa por descricao) com contagem e soma
+export async function getTopEstablishments(month: string, limit = 10) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select(
+      // Inclui contas/cartoes para permitir resolução de logo no widget
+      "id, descricao, valor, contas (id, descricao, logo_image), cartoes (id, descricao, logo_image), pagadores!inner(role)",
+    )
+    .eq("tipo_transacao", "despesa")
+    .eq("pagadores.role", "principal")
+    .eq("periodo", month);
+
+  if (error) throw error;
+
+  // Agrupa em memória por descricao
+  const map = new Map<
+    string,
+    { descricao: string; count: number; total: number; sample: any }
+  >();
+  for (const item of data || []) {
+    const key = String(item.descricao || "—");
+    const valor = Number(item.valor) || 0;
+    const agg = map.get(key) || {
+      descricao: key,
+      count: 0,
+      total: 0,
+      sample: null,
+    };
+    agg.count += 1;
+    agg.total += valor;
+    if (!agg.sample) agg.sample = item;
+    map.set(key, agg);
+  }
+
+  // Ordena por total (desc) e retorna top N
+  const result = Array.from(map.values())
+    .sort((a, b) => b.total - a.total)
+    .slice(0, limit);
+
+  return result;
+}
+
 // Retorna somatórios de receitas e despesas por período em uma única consulta
 export async function getIncomeExpenseByPeriods(periods: string[]) {
   const supabase = createClient();
@@ -231,48 +248,6 @@ export async function getPayerExpenseTotalsByPeriods(
   return periods.map((periodo) => ({ periodo, total: map.get(periodo)! }));
 }
 
-export async function getSumPaidExpense(month: string) {
-  const supabase = createClient();
-
-  const { error, data } = await supabase
-    .from("lancamentos")
-    .select("valor, pagadores!inner(role)")
-    .eq("periodo", month)
-    .eq("tipo_transacao", "despesa")
-    .eq("realizado", true)
-    .eq("pagadores.role", "principal");
-
-  if (error) throw error;
-
-  const sumAccountExpensePaid = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return sumAccountExpensePaid;
-}
-
-export async function getSumPaidIncome(month: string) {
-  const supabase = createClient();
-
-  const { error, data } = await supabase
-    .from("lancamentos")
-    .select("valor, pagadores!inner(role)")
-    .eq("periodo", month)
-    .eq("tipo_transacao", "receita")
-    .eq("realizado", true)
-    .eq("pagadores.role", "principal");
-
-  if (error) throw error;
-
-  const sumAccountIncomePaid = data.reduce(
-    (sum, item) => sum + parseFloat(item.valor),
-    0,
-  );
-
-  return sumAccountIncomePaid;
-}
-
 export async function getTransactions(month: string) {
   const supabase = createClient();
 
@@ -281,7 +256,7 @@ export async function getTransactions(month: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, dt_pagamento_boleto,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     .order("tipo_transacao", { ascending: true })
     .order("data_compra", { ascending: false })
@@ -321,7 +296,7 @@ export async function getTransactionsForCalendar(month: string) {
     .from("lancamentos")
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao,
-      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
+      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, regra_502030_tipo,
       qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     // Apenas pagador principal
@@ -370,7 +345,7 @@ export async function getTransactionsByConditions(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, dt_pagamento_boleto,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
     )
 
     .eq("periodo", month)
@@ -398,7 +373,7 @@ export async function getCardInvoice(month: string, cartao_id: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)`,
     )
     .eq("cartao_id", cartao_id)
     .eq("periodo", month)
@@ -451,7 +426,7 @@ export async function getCategoria(
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome), pagadores!inner(role, nome, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), categoria_id!inner(id, nome), pagadores!inner(role, nome, foto)`,
     )
     .order("data_compra", { ascending: false })
     .eq("periodo", month)
@@ -513,7 +488,7 @@ export async function getAccountInvoice(month: string, conta_id: string) {
   const { data, error } = await supabase
     .from("lancamentos")
     .select(
-      "id, data_compra, data_vencimento, dt_pagamento_boleto, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)",
+      "id, data_compra, data_vencimento, dt_pagamento_boleto, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual, qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores!inner(role, nome, foto)",
     )
     .eq("periodo", month)
     .eq("conta_id", conta_id)
@@ -709,32 +684,6 @@ export async function getAccountsBalancesToDate(
   return Object.fromEntries(balances.entries()) as Record<string, number>;
 }
 
-// Funções específicas da página "responsáveis" foram removidas.
-
-export async function getTransactionsRoleOwner(month: string) {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("lancamentos")
-    .select(
-      `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, realizado, condicao, 
-      forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, categorias ( id, nome ), cartoes (id, descricao), contas (id, descricao), pagadores!inner(role)`,
-    )
-    .order("tipo_transacao", { ascending: true })
-    .order("data_compra", { ascending: false })
-    .order("created_at", { ascending: false })
-    .eq("pagadores.role", "principal")
-    .eq("periodo", month);
-
-  if (error) {
-    console.error("Erro ao buscar Lançamentos:", error);
-    return [];
-  }
-
-  return data;
-}
-
 // Retorna lista de descricoes unicas para um periodo
 export async function getDescriptionsList(month: string) {
   const supabase = createClient();
@@ -786,7 +735,7 @@ export async function getTransactionsByPayer(month: string, id: string) {
     .select(
       `id, data_compra, data_vencimento, periodo, descricao, tipo_transacao, imagem_url, realizado, condicao, 
       forma_pagamento, anotacao, valor, qtde_parcela, parcela_atual,
-      qtde_recorrencia, dividir_lancamento, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
+      qtde_recorrencia, dividir_lancamento, regra_502030_tipo, cartoes (id, descricao, logo_image), contas (id, descricao, logo_image), categorias (id, nome), pagadores (id, nome, role, foto)`,
     )
     .eq("periodo", month)
     .eq("pagador_id", id)

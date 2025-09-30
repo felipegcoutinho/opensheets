@@ -1,7 +1,7 @@
 import { fetchAllData } from "@/app/actions/fetch-all-data";
 import {
-  getIncomeExpenseByPeriods,
   getCategoryTotals,
+  getIncomeExpenseByPeriods,
 } from "@/app/actions/transactions/fetch_transactions";
 import { cache } from "react";
 
@@ -30,6 +30,13 @@ export type PainelData = {
   bills: any;
   invoices: any;
   recentTransactions: any[];
+  topExpenses: any[];
+  topEstablishments: {
+    descricao: string;
+    count: number;
+    total: number;
+    sample?: any;
+  }[];
   account: any[];
   budgets: any[];
   transactionsByCategory: any[];
@@ -50,6 +57,8 @@ export const buildPainelData = cache(
       bills,
       invoiceList,
       recentTransactions,
+      topExpenses,
+      topEstablishments,
       sumPaidExpense,
       sumPaidIncome,
       sixmonth,
@@ -137,6 +146,8 @@ export const buildPainelData = cache(
       bills,
       invoices: invoiceList,
       recentTransactions,
+      topExpenses,
+      topEstablishments,
       account,
       budgets,
       transactionsByCategory,
@@ -146,5 +157,3 @@ export const buildPainelData = cache(
     };
   },
 );
-
-export default buildPainelData;

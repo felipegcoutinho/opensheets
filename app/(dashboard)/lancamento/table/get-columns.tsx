@@ -1,4 +1,12 @@
 "use client";
+import type {
+  BudgetRuleBucket,
+  BudgetRuleConfig,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import {
+  BUDGET_RULE_COLORS,
+  formatBucketLabel,
+} from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import MoneyValues from "@/components/money-values";
 import BadgeSystem from "@/components/payer-badge";
 import PaymentMethodLogo from "@/components/payment-method-logo";
@@ -21,9 +29,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UseStyles from "@/hooks/use-styles";
+import { cn } from "@/lib/utils";
 import {
   RiAttachment2,
-  RiAttachmentLine,
   RiBankCardLine,
   RiBankLine,
   RiCalendarCheckFill,
@@ -31,6 +39,7 @@ import {
   RiGroupLine,
   RiMessage2Line,
   RiMoreLine,
+  RiPriceTag3Fill,
 } from "@remixicon/react";
 import Link from "next/link";
 import DeleteTransactions from "../modal/delete-transactions";
@@ -55,6 +64,7 @@ export const getColumns = (
   getCategorias,
   DateFormat,
   hidden,
+  budgetRule: BudgetRuleConfig,
 ) => [
   {
     id: "selection",
@@ -101,19 +111,19 @@ export const getColumns = (
           </span>
 
           {item.forma_pagamento === "boleto" && (
-            <Badge variant={"outline"} className="italic">
+            <span className="text-muted-foreground ml-1 text-xs italic underline">
               Venc. {DateFormat(item.data_vencimento)}
-            </Badge>
+            </span>
           )}
 
           {item.condicao === "parcelado" && (
-            <Badge variant={"outline"} className="italic">
+            <span className="text-muted-foreground ml-1 text-xs italic underline">
               {item.parcela_atual} de {item.qtde_parcela}
-            </Badge>
+            </span>
           )}
 
           {item.pagadores?.role === "sistema" && (
-            <span className="text-emerald-700">
+            <span className="text-green-700">
               <RiCheckboxCircleFill size={14} />
             </span>
           )}
@@ -154,7 +164,7 @@ export const getColumns = (
   {
     accessorKey: "tipo_transacao",
     header: ({ column }) => {
-      return <span>Transação</span>;
+      return "Transação";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -170,7 +180,7 @@ export const getColumns = (
   {
     accessorKey: "valor",
     header: ({ column }) => {
-      return <span>Valor</span>;
+      return "Valor";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -184,7 +194,7 @@ export const getColumns = (
   {
     accessorKey: "condicao",
     header: ({ column }) => {
-      return <span>Condição</span>;
+      return "Condição";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -200,7 +210,7 @@ export const getColumns = (
   {
     accessorKey: "forma_pagamento",
     header: ({ column }) => {
-      return <span>Forma de Pagamento</span>;
+      return "Forma de Pagamento";
     },
     cell: ({ row }) => {
       const item = row.original;
@@ -216,7 +226,7 @@ export const getColumns = (
   {
     accessorKey: "responsavel",
     accessorFn: (row) => row.pagadores?.nome,
-    header: () => <span>Pagador</span>,
+    header: () => "Pagador",
     cell: ({ row }) => {
       const item = row.original;
       const pagador = item.pagadores;
@@ -227,23 +237,9 @@ export const getColumns = (
 
       const nome = pagador.nome ?? "";
       const role = pagador.role ?? "";
-      const foto = pagador.foto as string | undefined;
-
-      const resolveFotoSrc = (f?: string) => {
-        if (!f) return undefined;
-        if (f.startsWith("http")) return f;
-        if (f.startsWith("/")) return f;
-        return `/avatars/${f}`;
-      };
-
-      const src = resolveFotoSrc(foto);
 
       const content = (
         <span className="flex items-center gap-1">
-          <Avatar className="size-6">
-            {src ? <AvatarImage src={src} alt={nome || "Pagador"} /> : null}
-            <AvatarFallback>{(nome?.[0] || "P").toUpperCase()}</AvatarFallback>
-          </Avatar>
           <BadgeSystem label={nome} color={getPayerRoleBadgeColor(role)} />
         </span>
       );
@@ -253,7 +249,7 @@ export const getColumns = (
       }
 
       return (
-        <Link href={`/pagador/${pagador.id}`} className="hover:underline">
+        <Link href={`/pagador/${pagador.id}`} className="underline">
           {content}
         </Link>
       );
@@ -271,7 +267,7 @@ export const getColumns = (
   {
     id: "conta_cartao",
     accessorFn: (row) => getDescricao(row),
-    header: () => <span>Conta/Cartão</span>,
+    header: () => "Conta/Cartão",
     cell: ({ row }) => {
       const item = row.original;
       const descricao = getDescricao(item);
@@ -304,12 +300,12 @@ export const getColumns = (
       }
 
       return (
-        <Link href={href} className="flex items-center gap-2 hover:underline">
+        <Link href={href} className="flex items-center gap-2 underline">
           <PaymentMethodLogo
             url_name={`/logos/${logo}`}
             descricao={descricao}
-            height={32}
-            width={32}
+            height={28}
+            width={28}
           />
           {Icon && <Icon size={18} className="size-3.5" />}
         </Link>
@@ -319,91 +315,113 @@ export const getColumns = (
 
   {
     id: "actions",
-    header: () => <span>Ações</span>,
+    header: () => "Ações",
     cell: ({ row }) => {
       const item = row.original;
+      const ruleBucket = item.regra_502030_tipo as
+        | BudgetRuleBucket
+        | null
+        | undefined;
+      const ruleTooltipLabel = ruleBucket
+        ? formatBucketLabel(ruleBucket)
+        : "Sem classificação na Regra 50/30/20";
+      const ruleIconClass = cn(
+        "size-4",
+        ruleBucket
+          ? ruleBucket === "necessidades" 
+            ? "text-[var(--bg-necessidade-foreground)] dark:text-[var(--bg-necessidade-foreground)]"
+            : ruleBucket === "desejos"
+            ? "text-[var(--bg-desejo-foreground)] dark:text-[var(--bg-desejo-foreground)]"
+            : "text-[var(--bg-objetivo-foreground)] dark:text-[var(--bg-objetivo-foreground)]"
+          : "text-muted-foreground opacity-50",
+      );
 
       return (
-        <div className="flex items-center gap-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="data-[state=open]:bg-muted flex"
-              >
-                <RiMoreLine size={16} />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[160px]">
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <DetailsTransactions
-                  itemId={item.id}
-                  itemNotas={item.anotacao}
-                  itemDate={item.data_compra}
-                  itemDescricao={item.descricao}
-                  itemCondicao={item.condicao}
-                  itemResponsavel={item.pagadores?.nome}
-                  itemResponsavelRole={item.pagadores?.role}
-                  itemResponsavelFoto={item.pagadores?.foto}
-                  itemTipoTransacao={item.tipo_transacao}
-                  itemValor={item.valor}
-                  itemFormaPagamento={item.forma_pagamento}
-                  itemQtdeParcelas={item.qtde_parcela}
-                  itemParcelaAtual={item.parcela_atual}
-                  itemQtdeRecorrencia={item.qtde_recorrencia}
-                  itemCartao={item.cartoes?.descricao}
-                  itemConta={item.contas?.descricao}
-                  itemPaid={item.realizado}
-                  itemImagemURL={item.imagem_url}
-                  itemCategoriaId={item.categorias?.nome}
-                  itemPeriodo={item.periodo}
-                />
-              </DropdownMenuItem>
-
-              {item.pagadores?.role != "sistema" && (
+        <TooltipProvider delayDuration={300}>
+          <div className="flex items-center gap-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="data-[state=open]:bg-muted flex"
+                >
+                  <RiMoreLine size={16} />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[160px]">
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  <UpdateTransactions
-                    item={item}
+                  <DetailsTransactions
                     itemId={item.id}
-                    itemPeriodo={item.periodo}
                     itemNotas={item.anotacao}
                     itemDate={item.data_compra}
                     itemDescricao={item.descricao}
+                    itemCondicao={item.condicao}
+                    itemResponsavel={item.pagadores?.nome}
+                    itemResponsavelRole={item.pagadores?.role}
+                    itemResponsavelFoto={item.pagadores?.foto}
                     itemTipoTransacao={item.tipo_transacao}
                     itemValor={item.valor}
                     itemFormaPagamento={item.forma_pagamento}
+                    itemQtdeParcelas={item.qtde_parcela}
+                    itemParcelaAtual={item.parcela_atual}
+                    itemQtdeRecorrencia={item.qtde_recorrencia}
+                    itemCartao={item.cartoes?.descricao}
+                    itemConta={item.contas?.descricao}
                     itemPaid={item.realizado}
                     itemImagemURL={item.imagem_url}
-                    itemCategoriaId={item.categorias?.id}
-                    getCategorias={getCategorias}
-                    itemCartaoId={item.cartoes?.id}
-                    itemContaId={item.contas?.id}
-                    itemResponsavel={item.pagadores?.nome}
-                    getCards={getCardsMap}
-                    getAccount={getAccountMap}
+                    itemCategoriaId={item.categorias?.nome}
+                    itemPeriodo={item.periodo}
+                    itemRegra502030Tipo={item.regra_502030_tipo}
                   />
                 </DropdownMenuItem>
-              )}
 
-              {item.pagadores?.role != "sistema" && (
-                <>
-                  <DropdownMenuSeparator />
+                {item.pagadores?.role != "sistema" && (
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <DeleteTransactions itemId={item.id} />
+                    <UpdateTransactions
+                      item={item}
+                      itemId={item.id}
+                      itemPeriodo={item.periodo}
+                      itemNotas={item.anotacao}
+                      itemDate={item.data_compra}
+                      itemDescricao={item.descricao}
+                      itemTipoTransacao={item.tipo_transacao}
+                      itemValor={item.valor}
+                      itemFormaPagamento={item.forma_pagamento}
+                      itemPaid={item.realizado}
+                      itemImagemURL={item.imagem_url}
+                      itemCategoriaId={item.categorias?.id}
+                      getCategorias={getCategorias}
+                      itemCartaoId={item.cartoes?.id}
+                      itemContaId={item.contas?.id}
+                      itemResponsavel={item.pagadores?.nome}
+                      getCards={getCardsMap}
+                      getAccount={getAccountMap}
+                      budgetRule={budgetRule}
+                    />
                   </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                )}
 
-          {item.pagadores?.role === "sistema" ? (
-            <RiCheckboxCircleFill
-              className="text-muted-foreground opacity-40"
-              size={16}
-            />
-          ) : (
-            <TooltipProvider delayDuration={300}>
+                {item.pagadores?.role != "sistema" && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                      <DeleteTransactions
+                        itemId={item.id}
+                        itemDescricao={item.descricao}
+                      />
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {item.pagadores?.role === "sistema" ? (
+              <RiCheckboxCircleFill
+                className="text-muted-foreground opacity-40"
+                size={16}
+              />
+            ) : (
               <Tooltip>
                 <TooltipTrigger>
                   <TogglePaymentDialog
@@ -425,15 +443,29 @@ export const getColumns = (
                   )}
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
-          )}
+            )}
 
-          {item.imagem_url && (
-            <div className="flex text-center">
-              <RiAttachment2 size={16} />
-            </div>
-          )}
-        </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span
+                  tabIndex={0}
+                  aria-label={`Classificação na Regra 50/30/20: ${ruleTooltipLabel}`}
+                >
+                  <RiPriceTag3Fill className={ruleIconClass} />
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{ruleTooltipLabel}</span>
+              </TooltipContent>
+            </Tooltip>
+
+            {item.imagem_url && (
+              <div className="flex text-center">
+                <RiAttachment2 size={16} />
+              </div>
+            )}
+          </div>
+        </TooltipProvider>
       );
     },
   },

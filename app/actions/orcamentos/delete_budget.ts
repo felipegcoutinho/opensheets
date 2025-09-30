@@ -11,12 +11,9 @@ export async function deleteBudget(
   const excluir = formData.get("excluir");
   const supabase = createClient();
 
-  const { error } = await supabase
-    .from("orcamentos")
-    .delete()
-    .eq("id", excluir);
+  const { error } = await supabase.from("orcamentos").delete().eq("id", excluir);
 
-  revalidatePath("/orcamentos");
+  revalidatePath("/orcamento");
 
   if (error) {
     console.error("Erro ao excluir orçamento:", error);

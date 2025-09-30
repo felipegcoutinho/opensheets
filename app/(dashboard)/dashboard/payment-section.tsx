@@ -23,13 +23,11 @@ export function PaymentSection({ title, total, values }: PaymentSectionProps) {
     <div>
       <div className="mb-1 flex items-center justify-between">
         <h1 className="text-muted-foreground mb-1 text-sm">{title}</h1>
-        <span className="text-xl">
-          <MoneyValues value={total} />
-        </span>
+        <MoneyValues value={total} />
       </div>
 
       {/* Barra de progresso */}
-      <div className="mb-4 flex h-4 w-full overflow-hidden rounded">
+      <div className="mb-4 flex h-1 w-full overflow-hidden rounded">
         {total > 0 ? (
           values.map((value, index) => (
             <div

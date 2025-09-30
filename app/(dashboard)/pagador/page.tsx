@@ -1,5 +1,5 @@
 import CreatePayer from "./modal/create-payer";
-import PayersSection from "./sections/payers";
+import PayersSection from "./components/payers";
 import { promises as fs } from "fs";
 import path from "path";
 

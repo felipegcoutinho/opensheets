@@ -15,23 +15,6 @@ export function UseDates() {
     "dezembro",
   ];
 
-  // Lista dos anos
-  const optionsAnos = [
-    "2023",
-    "2024",
-    "2025",
-    "2026",
-    "2027",
-    "2028",
-    "2029",
-    "2030",
-    "2031",
-    "2032",
-    "2033",
-    "2034",
-    "2035",
-  ];
-
   // Lista dos nomes dos dias da semana
   const diasDaSemana = [
     "Domingo",
@@ -154,8 +137,6 @@ export function UseDates() {
     currentMonthName,
     formatted_current_month,
     optionsMeses,
-    optionsAnos,
-    diasDaSemana,
     getPreviousMonth,
     getLastSixMonths,
     DateFormat,

@@ -1,0 +1,25 @@
+-- Indexes
+CREATE UNIQUE INDEX IF NOT EXISTS anotacoes_pkey ON public.anotacoes USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_anotacoes_auth_id ON public.anotacoes USING btree (auth_id);
+CREATE UNIQUE INDEX IF NOT EXISTS cartoes_pkey ON public.cartoes USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_cartoes_auth_id ON public.cartoes USING btree (auth_id);
+CREATE INDEX IF NOT EXISTS idx_cartoes_conta_id ON public.cartoes USING btree (conta_id);
+CREATE UNIQUE INDEX IF NOT EXISTS categorias_pkey ON public.categorias USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_categorias_auth_id ON public.categorias USING btree (auth_id);
+CREATE UNIQUE INDEX IF NOT EXISTS contas_pkey ON public.contas USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_contas_auth_id ON public.contas USING btree (auth_id);
+CREATE UNIQUE INDEX IF NOT EXISTS faturas_pkey ON public.faturas USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_faturas_auth_id ON public.faturas USING btree (auth_id);
+CREATE INDEX IF NOT EXISTS idx_faturas_cartao_id ON public.faturas USING btree (cartao_id);
+CREATE INDEX IF NOT EXISTS idx_lancamentos_cartao_id ON public.lancamentos USING btree (cartao_id);
+CREATE INDEX IF NOT EXISTS idx_lancamentos_categoria_id ON public.lancamentos USING btree (categoria_id);
+CREATE INDEX IF NOT EXISTS idx_lancamentos_conta_id ON public.lancamentos USING btree (conta_id);
+CREATE INDEX IF NOT EXISTS idx_lancamentos_pagador_id ON public.lancamentos USING btree (pagador_id);
+CREATE INDEX IF NOT EXISTS lancamentos_teste_auth_id_idx ON public.lancamentos USING btree (auth_id);
+CREATE UNIQUE INDEX IF NOT EXISTS lancamentos_teste_pkey ON public.lancamentos USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_orcamentos_auth_id ON public.orcamentos USING btree (auth_id);
+CREATE INDEX IF NOT EXISTS idx_orcamentos_categoria_id ON public.orcamentos USING btree (categoria_id);
+CREATE UNIQUE INDEX IF NOT EXISTS orcamentos_pkey ON public.orcamentos USING btree (id);
+CREATE INDEX IF NOT EXISTS idx_pagadores_auth_id ON public.pagadores USING btree (auth_id);
+CREATE UNIQUE INDEX IF NOT EXISTS pagadores_pkey ON public.pagadores USING btree (id);
+CREATE UNIQUE INDEX IF NOT EXISTS profiles_pkey ON public.profiles USING btree (id);

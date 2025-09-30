@@ -1,12 +1,12 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { title_font } from "../../app/fonts/font";
 import Helper from "./helper";
 import LoadingSpinner from "./loading-spinner";
 import NavigationButton from "./nav-button";
 import ReturnButton from "./return-button";
-import { useEffect, useState } from "react";
-import { title_font } from "../../app/fonts/font";
 
 export default function MonthPicker() {
   const {
@@ -40,7 +40,7 @@ export default function MonthPicker() {
 
   return (
     <Card
-      className={`${title_font.className} bg-secondary my-3 flex-row border-none p-5`}
+      className={`${title_font.className} bg-month-picker text-month-picker-foreground supports-[backdrop-filter]:bg-month-picker/90 sticky top-16 z-30 my-3 w-full flex-row border-none p-5 backdrop-blur-sm transition-all duration-200 ease-out`}
     >
       <div className="flex items-center">
         <NavigationButton

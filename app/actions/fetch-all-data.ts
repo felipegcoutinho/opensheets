@@ -10,6 +10,7 @@ import {
   getIncomeExpenseByPeriods,
   getSumPaidByType,
 } from "@/app/actions/transactions/fetch_transactions";
+import { getTopExpenses, getTopEstablishments } from "@/app/actions/transactions/fetch_transactions";
 import { UseDates } from "@/hooks/use-dates";
 import { cache } from "react";
 import { getUserSession } from "./users/fetch_users";
@@ -24,6 +25,8 @@ type FetchAllDataReturn = {
   payment: any;
   transactionsByCategory: any;
   recentTransactions: any;
+  topExpenses: any;
+  topEstablishments: any;
   sumPaidExpense: number | null;
   sumPaidIncome: number | null;
   invoiceList: any;
@@ -55,6 +58,8 @@ export const fetchAllData = cache(
       payment: aggPromise.then((r) => r.payments),
       transactionsByCategory: getTransactionsByCategory(month),
       recentTransactions: getRecentTransactions(month),
+      topExpenses: getTopExpenses(month, 30),
+      topEstablishments: getTopEstablishments(month),
       sumPaidExpense: paidAgg.then((r) => r.expense),
       sumPaidIncome: paidAgg.then((r) => r.income),
       invoiceList: getInvoiceList(month),

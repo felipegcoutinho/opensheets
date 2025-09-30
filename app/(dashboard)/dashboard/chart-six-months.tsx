@@ -17,9 +17,9 @@ type Props = {
 
 export default function ChartSixMonths({ data }: Props) {
   const chartConfig = {
-    incomes: { label: "Receita", color: "var(--chart-4)" },
-    expenses: { label: "Despesa", color: "var(--chart-5)" },
-    balanco: { label: "Balanço", color: "var(--chart-6)" },
+    incomes: { label: "Receita", color: "var(--chart-3)" },
+    expenses: { label: "Despesa", color: "var(--chart-4)" },
+    balanco: { label: "Balanço", color: "var(--chart-5)" },
   } as const;
 
   const formatCurrency = (value: number) =>
@@ -29,7 +29,7 @@ export default function ChartSixMonths({ data }: Props) {
 
   return (
     <CardContent className="p-0">
-      <ChartContainer className="my-8" config={chartConfig as any}>
+      <ChartContainer config={chartConfig as any}>
         <BarChart
           data={data}
           margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
@@ -47,7 +47,12 @@ export default function ChartSixMonths({ data }: Props) {
               />
             }
           />
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            verticalAlign="top"
+            align="center"
+            wrapperStyle={{ paddingBottom: 12 }}
+            content={<ChartLegendContent verticalAlign="top" />}
+          />
 
           <Bar
             dataKey="incomes"

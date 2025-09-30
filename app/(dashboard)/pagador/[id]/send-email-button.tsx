@@ -111,7 +111,7 @@ export default function SendEmailButton({
             {preview.length > 0 ? (
               <div className="rounded-md border p-2">
                 <ul className="max-h-48 space-y-1 overflow-auto text-sm">
-                  {preview.slice(0, 5).map((t, idx) => (
+                  {preview.slice(0, 10).map((t, idx) => (
                     <li
                       key={idx}
                       className="flex items-center justify-between gap-2"

@@ -6,6 +6,7 @@ import { getTransactionsByConditions } from "@/app/actions/transactions/fetch_tr
 import MoneyValues from "@/components/money-values";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getMonth } from "@/hooks/get-month";
+import { getBudgetRule } from "@/app/actions/orcamentos/fetch_budget_rule";
 
 export default async function page({ params, searchParams }) {
   const month = await getMonth({ searchParams });
@@ -15,6 +16,7 @@ export default async function page({ params, searchParams }) {
   const contas = await getAccount();
   const categorias = await getCategorias();
   const transactions = await getTransactionsByConditions(condicao, month);
+  const budgetRule = await getBudgetRule();
 
   const valorTotal = transactions.reduce((acc, item) => acc + item.valor, 0);
 
@@ -41,6 +43,7 @@ export default async function page({ params, searchParams }) {
         getCards={cartoes}
         getCategorias={categorias}
         hidden={false}
+        budgetRule={budgetRule}
       />
     </div>
   );

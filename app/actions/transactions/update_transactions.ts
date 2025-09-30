@@ -3,11 +3,27 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { ActionResponse } from "../../(dashboard)/lancamento/modal/form-schema";
 
+const normalizeRole = (role: unknown): string =>
+  typeof role === "string"
+    ? role
+        .toLocaleLowerCase("pt-BR")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+    : "";
+
 export async function updateTransaction(
   _prev: ActionResponse,
   formData: FormData,
 ): Promise<ActionResponse> {
   const supabase = createClient();
+  const { data: regraConfig, error: regraError } = await supabase
+    .from("orcamento_regra_502030")
+    .select("ativada")
+    .maybeSingle();
+
+  if (regraError) {
+    console.error("Erro ao verificar estado da regra 50/30/20:", regraError);
+  }
   const {
     id,
     data_compra,
@@ -29,6 +45,7 @@ export async function updateTransaction(
     conta_id,
     dividir_lancamento,
     imagem_url_atual, // URL da imagem existente
+    regra_502030_tipo,
   } = Object.fromEntries(formData.entries());
 
   // Normaliza booleanos vindos do FormData
@@ -78,15 +95,17 @@ export async function updateTransaction(
   try {
     // Mapear nome do pagador (enviado no campo 'pagador_id' do form) para UUID real
     let pagador_id: string | null = null;
+    let pagadorRole: string | null = null;
     const pagadorNomeForm = formData.get("pagador_id");
     if (typeof pagadorNomeForm === "string" && pagadorNomeForm.trim()) {
       const { data: payerRow, error: payerError } = await supabase
         .from("pagadores")
-        .select("id, nome")
+        .select("id, nome, role")
         .eq("nome", pagadorNomeForm.trim())
         .single();
       if (!payerError && payerRow) {
         pagador_id = (payerRow.id as unknown as string) || null;
+        pagadorRole = (payerRow.role as string | null) ?? null;
       }
     }
 
@@ -120,6 +139,32 @@ export async function updateTransaction(
           ? dt_pagamento_boleto
           : null;
     }
+    if (formData.has("regra_502030_tipo")) {
+      updatePayload.regra_502030_tipo =
+        typeof regra_502030_tipo === "string" && regra_502030_tipo
+          ? regra_502030_tipo
+          : null;
+    }
+
+    const isExpense =
+      typeof tipo_transacao === "string" && tipo_transacao === "despesa";
+    const isPrincipalPayer = normalizeRole(pagadorRole).includes("principal");
+
+    if (!isPrincipalPayer) {
+      updatePayload.regra_502030_tipo = null;
+    }
+
+    if (
+      regraConfig?.ativada &&
+      isExpense &&
+      isPrincipalPayer &&
+      !updatePayload.regra_502030_tipo
+    ) {
+      return {
+        success: false,
+        message: "Selecione a faixa da regra 50/30/20 antes de salvar.",
+      };
+    }
 
     const { error } = await supabase
       .from("lancamentos")
@@ -136,6 +181,100 @@ export async function updateTransaction(
   } catch (error) {
     console.error("Erro ao atualizar a transação:", error);
     return { success: false, message: "Erro ao atualizar a transação" };
+  }
+}
+
+export async function bulkUpdateTransactions(
+  _prev: ActionResponse,
+  formData: FormData,
+): Promise<ActionResponse> {
+  const supabase = createClient();
+
+  const idsValue = formData.get("ids");
+
+  if (typeof idsValue !== "string" || idsValue.trim() === "") {
+    return {
+      success: false,
+      message: "Nenhum lançamento selecionado para atualização.",
+    };
+  }
+
+  const ids = idsValue
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+
+  if (!ids.length) {
+    return {
+      success: false,
+      message: "Nenhum lançamento selecionado para atualização.",
+    };
+  }
+
+  const updates: Record<string, unknown> = {};
+
+  const categoriaId = formData.get("categoria_id");
+  if (typeof categoriaId === "string" && categoriaId.trim() !== "") {
+    updates.categoria_id = categoriaId.trim();
+  }
+
+  const periodo = formData.get("periodo");
+  if (typeof periodo === "string" && periodo.trim() !== "") {
+    updates.periodo = periodo.trim();
+  }
+
+  const regra = formData.get("regra_502030_tipo");
+  if (typeof regra === "string") {
+    if (regra === "__clear__") {
+      updates.regra_502030_tipo = null;
+    } else if (regra.trim() !== "") {
+      updates.regra_502030_tipo = regra.trim();
+    }
+  }
+
+  const pagadorId = formData.get("pagador_id");
+  if (typeof pagadorId === "string") {
+    if (pagadorId === "__clear__") {
+      updates.pagador_id = null;
+    } else if (pagadorId.trim() !== "") {
+      updates.pagador_id = pagadorId.trim();
+    }
+  }
+
+  if (Object.keys(updates).length === 0) {
+    return {
+      success: false,
+      message: "Selecione ao menos uma alteração para aplicar.",
+    };
+  }
+
+  try {
+    const { error } = await supabase
+      .from("lancamentos")
+      .update(updates)
+      .in("id", ids);
+
+    if (error) {
+      console.error("Erro ao atualizar lançamentos em massa:", error);
+      return {
+        success: false,
+        message: "Erro ao atualizar lançamentos selecionados.",
+      };
+    }
+
+    revalidatePath("/lancamentos");
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      message: "Lançamentos atualizados com sucesso!",
+    };
+  } catch (error) {
+    console.error("Erro ao atualizar lançamentos em massa:", error);
+    return {
+      success: false,
+      message: "Erro ao atualizar lançamentos selecionados.",
+    };
   }
 }
 
