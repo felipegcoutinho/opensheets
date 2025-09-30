@@ -21,15 +21,50 @@ export default async function UpcomingPaymentsBanner() {
 
   const nextPeriod = getNextPeriod(formatted_current_month);
 
-  const [billsCurrent, billsNext, invoices] = await Promise.all([
-    getBills(formatted_current_month),
-    getBills(nextPeriod),
-    getInvoiceList(formatted_current_month),
-  ]);
+  const [billsCurrent, billsNext, invoicesCurrent, invoicesNext] =
+    await Promise.all([
+      getBills(formatted_current_month),
+      getBills(nextPeriod),
+      getInvoiceList(formatted_current_month),
+      getInvoiceList(nextPeriod),
+    ]);
 
   const today = new Date();
 
   const bills = [...(billsCurrent || []), ...(billsNext || [])];
+
+  const invoices = [
+    ...(Array.isArray(invoicesCurrent) ? invoicesCurrent : []),
+    ...(Array.isArray(invoicesNext) ? invoicesNext : []),
+  ];
+
+  const buildUpcomingDateFromDay = (day: number) => {
+    const upcoming = new Date(today.getFullYear(), today.getMonth(), day);
+    if (upcoming < today) {
+      upcoming.setMonth(upcoming.getMonth() + 1);
+    }
+    return upcoming;
+  };
+
+  const parseInvoiceDueDate = (rawDue: unknown) => {
+    if (typeof rawDue === "number") {
+      return buildUpcomingDateFromDay(rawDue);
+    }
+
+    if (typeof rawDue === "string") {
+      const numericDue = Number(rawDue);
+      if (!Number.isNaN(numericDue)) {
+        return buildUpcomingDateFromDay(numericDue);
+      }
+
+      const parsed = new Date(rawDue);
+      if (!Number.isNaN(parsed.getTime())) {
+        return parsed;
+      }
+    }
+
+    return null;
+  };
 
   const dueBills = bills.filter((bill) => {
     const dueDate = new Date(bill.data_vencimento);
@@ -38,9 +73,8 @@ export default async function UpcomingPaymentsBanner() {
   });
 
   const dueInvoices = invoices.filter((invoice) => {
-    const invoiceDue = new Date(today);
-    invoiceDue.setDate(Number(invoice.dt_vencimento));
-    if (invoiceDue < today) invoiceDue.setMonth(invoiceDue.getMonth() + 1);
+    const invoiceDue = parseInvoiceDueDate(invoice.dt_vencimento);
+    if (!invoiceDue) return false;
     const diff = differenceInCalendarDays(invoiceDue, today);
     return diff >= 0 && diff <= 5 && invoice.status_pagamento !== "pago";
   });
@@ -50,18 +84,18 @@ export default async function UpcomingPaymentsBanner() {
   if (totalDue === 0) return null;
 
   return (
-    <Banner className="to-secondary from-expense/5 bg-gradient-to-r from-5%">
+    <Banner className="bg-primary/10">
       <div className="flex items-center gap-2 text-left">
-        <span className="inline-flex items-center justify-center text-expense">
-          <RiAlarmWarningFill size={20} />
+        <span className="text-expense inline-flex items-center justify-center">
+          <RiAlarmWarningFill size={20} color="red" />
         </span>
-        <p className="text-sm">
-          <strong>Atenção:</strong> Você possui{" "}
+        <span className="text-sm">
+          <strong>Atenção!</strong> Você possui{" "}
           <strong>
             {totalDue} pagamento{totalDue > 1 ? "s" : ""}
           </strong>{" "}
           com vencimento nos próximos <strong>5 dias.</strong>
-        </p>
+        </span>
       </div>
     </Banner>
   );
