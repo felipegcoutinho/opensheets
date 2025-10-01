@@ -1,3 +1,4 @@
+import { signInWithPassword } from "@/app/actions/auth/auth";
 import { FormMessage, parseFormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import {
@@ -11,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import Link from "next/link";
-import { signInWithPassword } from "@/app/actions/auth/auth";
 
 type Props = {
   searchParams?: Record<string, string | string[] | undefined>;

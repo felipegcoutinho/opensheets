@@ -68,16 +68,14 @@ function KpiCard({ item }: { item: KPI }) {
           <MoneyValues value={item.value} />
           {showDelta && (
             <span
-              className={`flex items-center ${isPositive ? "text-emerald-700" : "text-red-700"}`}
+              className={`flex items-center ${isPositive ? "text-emerald-600" : "text-red-600"}`}
             >
               {isPositive ? (
-                <RiArrowUpLine size={12} />
+                <RiArrowUpLine size={10} />
               ) : (
-                <RiArrowDownLine size={12} />
+                <RiArrowDownLine size={10} />
               )}
-              <span className="text-xs font-bold">
-                {diffPercent.toFixed(0)}%
-              </span>
+              <span className="text-xs">{diffPercent.toFixed(0)}%</span>
             </span>
           )}
         </CardDescription>

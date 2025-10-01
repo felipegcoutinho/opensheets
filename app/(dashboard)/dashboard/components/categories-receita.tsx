@@ -22,6 +22,7 @@ export default async function CategoriesReceitaSection({
     >
       <CategoryWidget
         data={data.categoryData}
+        previousData={data.previousCategoryData}
         tipo="receita"
         total={data.incomes}
         month={data.month}

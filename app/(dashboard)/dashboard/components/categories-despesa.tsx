@@ -22,6 +22,7 @@ export default async function CategoriesDespesaSection({
     >
       <CategoryWidget
         data={data.categoryData}
+        previousData={data.previousCategoryData}
         tipo="despesa"
         total={data.expenses}
         month={data.month}
