@@ -25,16 +25,16 @@ export default async function PaymentsOverviewSection({
     >
       <Tabs defaultValue="formas" className="w-full">
         <TabsList className="grid grid-cols-2">
-          <TabsTrigger value="formas">Formas de Pagamento</TabsTrigger>
           <TabsTrigger value="condicoes">Condições de Pagamento</TabsTrigger>
+          <TabsTrigger value="formas">Formas de Pagamento</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="formas" className="mt-4 space-y-2">
-          <PaymentWidget month={data.month} data={data.payment} />
-        </TabsContent>
 
         <TabsContent value="condicoes" className="mt-4 space-y-2">
           <ConditionWidget month={data.month} data={data.conditions} />
+        </TabsContent>
+
+        <TabsContent value="formas" className="mt-4 space-y-2">
+          <PaymentWidget month={data.month} data={data.payment} />
         </TabsContent>
       </Tabs>
     </WidgetCard>

@@ -8,12 +8,7 @@ const nextConfig = {
   images: {
     qualities: [75, 100],
   },
-  // transpilePackages: ["import-in-the-middle"],
-  // experimental: {
-  //   serverActions: {
-  //     bodySizeLimit: "10mb",
-  //   },
-  // },
+
   images: {
     remotePatterns: [
       {
@@ -26,4 +21,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-

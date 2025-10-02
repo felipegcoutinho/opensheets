@@ -38,7 +38,7 @@ export default function VariationIndicator({
       <TooltipTrigger asChild>
         <span
           className={cn(
-            "inline-flex items-center gap-1 text-xs font-semibold",
+            "inline-flex items-center gap-1 text-xs",
             variationClass,
             className,
           )}
