@@ -23,7 +23,7 @@ export default async function PaymentsOverviewSection({
         </span>
       }
     >
-      <Tabs defaultValue="formas" className="w-full">
+      <Tabs defaultValue="condicoes" className="w-full">
         <TabsList className="grid grid-cols-2">
           <TabsTrigger value="condicoes">Condições de Pagamento</TabsTrigger>
           <TabsTrigger value="formas">Formas de Pagamento</TabsTrigger>

@@ -64,7 +64,11 @@ export default function CreateTransactions({
       }
     }
 
-    return { month: currentMonth, defaultDateStr: dateStr, injectedLabel: label };
+    return {
+      month: currentMonth,
+      defaultDateStr: dateStr,
+      injectedLabel: label,
+    };
   }, [defaultDate, formatted_current_month, optionsMeses]);
 
   const {
@@ -107,11 +111,12 @@ export default function CreateTransactions({
         {(isLoadingDesc || isLoadingPayers) && <p>Carregando opções...</p>}
         {(descError || payersError) && (
           <p className="text-red-600">
-            Erro ao carregar opções: {descError?.message || payersError?.message}
+            Erro ao carregar opções:{" "}
+            {descError?.message || payersError?.message}
           </p>
         )}
 
-        <div className="-mx-6 max-h-[530px] overflow-y-auto px-6">
+        <div className="-mx-6 max-h-[80vh] overflow-y-auto px-6">
           <CreateTransactionForm
             controller={controller}
             descricaoOptions={descricaoOptions}
