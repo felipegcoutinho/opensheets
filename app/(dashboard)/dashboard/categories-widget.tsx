@@ -2,12 +2,9 @@
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
+import VariationIndicator from "@/components/variation-indicator";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
-import {
-  RiArrowDownLine,
-  RiArrowRightSFill,
-  RiArrowUpLine,
-} from "@remixicon/react";
+import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -91,22 +88,6 @@ export default function CategoryProgress({
               ? 0
               : 100;
           const variation = Number.isFinite(rawVariation) ? rawVariation : 0;
-          const VariationIcon =
-            variation > 0
-              ? RiArrowUpLine
-              : variation < 0
-                ? RiArrowDownLine
-                : null;
-          const variationClass =
-            variation > 0
-              ? "text-emerald-600"
-              : variation < 0
-                ? "text-red-600"
-                : "text-muted-foreground";
-          const formattedVariation = `${
-            variation > 0 ? "+" : variation < 0 ? "" : ""
-          }${variation.toFixed(1)}%`;
-
           const url = `/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
 
           return (
@@ -158,13 +139,8 @@ export default function CategoryProgress({
 
                 <div className="text-right">
                   <div className="flex items-center justify-end gap-2">
-                    <span
-                      className={`inline-flex items-center gap-1 text-xs ${variationClass}`}
-                    >
-                      {VariationIcon ? <VariationIcon size={10} /> : null}
-                      {formattedVariation}
-                    </span>
                     <MoneyValues value={item.spent} />
+                    <VariationIndicator variation={variation} />
                   </div>
                   <div>
                     <Badge variant="outline" className="mt-1">

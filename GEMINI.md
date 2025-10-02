@@ -3,7 +3,9 @@
 - Evite usar useEffects sempre que possível.
 - Use SWR ou React Query para busca de dados no cliente
 - Sempre que possível, utilize recursos nativos do Next.js
-- Prefira usar React Hooks ao invés de classes
+- Prefira usar React Hooks ao invés de classes.
+- Utilize padrões modernos de JavaScript/TypeScript.
+- Utilize padroes de projeto como o SOLID.
 - Use as instruções de código a seguir para guiar suas respostas:
 
 TITLE: React Form Component with Server-Side Error Display
