@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiFileList2Line } from "@remixicon/react";
 import CategoryPurchasesWidget from "../category-purchases-widget";
 import { buildPainelData } from "../utils";
@@ -10,7 +10,7 @@ export default async function CategoryPurchasesSection({
 }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Compras por Categoria"
       subtitle="Selecione uma categoria"
       information="Apenas transações do usuário"
@@ -21,6 +21,6 @@ export default async function CategoryPurchasesSection({
       }
     >
       <CategoryPurchasesWidget data={data.transactionsByCategory} />
-    </Widget>
+    </WidgetCard>
   );
 }

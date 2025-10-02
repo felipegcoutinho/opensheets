@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiBarChartBoxLine } from "@remixicon/react";
 import AccountWidget from "../accounts-widget";
 import { buildPainelData } from "../utils";
@@ -6,7 +6,7 @@ import { buildPainelData } from "../utils";
 export default async function AccountsSection({ month }: { month: string }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Minhas Contas"
       subtitle="Contas e Saldos"
       information="Resumo de contas e saldos – apenas contas do usuário"
@@ -23,6 +23,6 @@ export default async function AccountsSection({ month }: { month: string }) {
         data={data.account}
         previstoAnterior={data.previstoAnterior}
       />
-    </Widget>
+    </WidgetCard>
   );
 }

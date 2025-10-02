@@ -1,8 +1,8 @@
-import Widget from "@/components/widget";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import WidgetCard from "@/components/widget-card";
 import { RiWalletLine } from "@remixicon/react";
-import { PaymentWidget } from "../payment-widget";
 import { ConditionWidget } from "../condition-widget";
+import { PaymentWidget } from "../payment-widget";
 import { buildPainelData } from "../utils";
 
 export default async function PaymentsOverviewSection({
@@ -13,7 +13,7 @@ export default async function PaymentsOverviewSection({
   const data = await buildPainelData(month);
 
   return (
-    <Widget
+    <WidgetCard
       title="Pagamentos"
       subtitle={`Formas e condições no período`}
       information="Considera os lançamentos do usuário no mês selecionado."
@@ -37,6 +37,6 @@ export default async function PaymentsOverviewSection({
           <ConditionWidget month={data.month} data={data.conditions} />
         </TabsContent>
       </Tabs>
-    </Widget>
+    </WidgetCard>
   );
 }

@@ -1,5 +1,5 @@
 import { getBudgetRuleSnapshot } from "@/app/actions/orcamentos/get_rule_snapshot";
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiPieChart2Line } from "@remixicon/react";
 import RulesWidget from "../rules-widget";
 
@@ -28,7 +28,7 @@ export default async function RuleOverviewSection({
   const showBuckets = snapshot.rule.ativada;
 
   return (
-    <Widget
+    <WidgetCard
       title="Regra 50/30/20"
       subtitle={
         showBuckets
@@ -47,6 +47,6 @@ export default async function RuleOverviewSection({
         formatPercent={formatPercent}
         humanizePeriod={humanizePeriod}
       />
-    </Widget>
+    </WidgetCard>
   );
 }

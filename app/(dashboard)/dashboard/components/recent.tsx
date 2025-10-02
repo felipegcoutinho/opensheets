@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiArrowUpDownLine } from "@remixicon/react";
 import RecentesTransactions from "../recents-transactions-widget";
 import { buildPainelData } from "../utils";
@@ -6,7 +6,7 @@ import { buildPainelData } from "../utils";
 export default async function RecentSection({ month }: { month: string }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Lançamentos Recentes"
       subtitle="Últimos 5 Lançamentos"
       information="Apenas transações do usuário"
@@ -17,6 +17,6 @@ export default async function RecentSection({ month }: { month: string }) {
       }
     >
       <RecentesTransactions transactions={data.recentTransactions} />
-    </Widget>
+    </WidgetCard>
   );
 }

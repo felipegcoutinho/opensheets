@@ -34,7 +34,7 @@ type WidgetProps = {
   saldo?: number;
 };
 
-export default function Widget({
+export default function WidgetCard({
   title,
   subtitle,
   icon,

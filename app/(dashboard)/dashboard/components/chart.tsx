@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiBarChartBoxLine } from "@remixicon/react";
 import ChartSixMonths from "../chart-six-months";
 import { buildPainelData } from "../utils";
@@ -6,7 +6,7 @@ import { buildPainelData } from "../utils";
 export default async function ChartSection({ month }: { month: string }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Receita, Despesa e Balanço"
       subtitle="Últimos 6 Meses"
       information="Apenas transações do usuário"
@@ -17,6 +17,6 @@ export default async function ChartSection({ month }: { month: string }) {
       }
     >
       <ChartSixMonths data={data.chart} />
-    </Widget>
+    </WidgetCard>
   );
 }
