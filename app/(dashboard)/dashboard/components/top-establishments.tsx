@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiStore2Line } from "@remixicon/react";
 import TopEstablishmentsWidget from "../top-establishments-widget";
 import { buildPainelData } from "../utils";
@@ -10,7 +10,7 @@ export default async function TopEstablishmentsSection({
 }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Top Estabelecimentos"
       subtitle="Top 10 por estabelecimento"
       information="Agrupa por descrição do lançamento (Você)"
@@ -21,6 +21,6 @@ export default async function TopEstablishmentsSection({
       }
     >
       <TopEstablishmentsWidget items={data.topEstablishments} />
-    </Widget>
+    </WidgetCard>
   );
 }

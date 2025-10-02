@@ -3,6 +3,7 @@ import {
   getCategoryTotals,
   getIncomeExpenseByPeriods,
 } from "@/app/actions/transactions/fetch_transactions";
+import { UseDates } from "@/hooks/use-dates";
 import { cache } from "react";
 
 type ChartPoint = {
@@ -47,12 +48,21 @@ export type PainelData = {
     id: string;
     icone?: string;
   }[];
+  previousCategoryData: {
+    tipo_transacao: string;
+    categoria: string;
+    total: number;
+    id: string;
+    icone?: string;
+  }[];
   conditions: any[];
   payment: any[];
 };
 
 export const buildPainelData = cache(
   async (month: string): Promise<PainelData> => {
+    const { getPreviousMonth } = UseDates();
+    const previousMonth = getPreviousMonth(month);
     const {
       bills,
       invoiceList,
@@ -132,6 +142,7 @@ export const buildPainelData = cache(
 
     // Totais por categoria via consulta agregada (reduz carga e latência)
     const categoryData = await getCategoryTotals(month);
+    const previousCategoryData = await getCategoryTotals(previousMonth);
 
     return {
       month,
@@ -152,6 +163,7 @@ export const buildPainelData = cache(
       budgets,
       transactionsByCategory,
       categoryData,
+      previousCategoryData,
       conditions,
       payment,
     };

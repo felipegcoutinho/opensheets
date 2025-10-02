@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiArrowDownLine } from "@remixicon/react";
 import TopExpensesWidget from "../top-expenses-widget";
 import { buildPainelData } from "../utils";
@@ -6,7 +6,7 @@ import { buildPainelData } from "../utils";
 export default async function TopExpensesSection({ month }: { month: string }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Maiores Gastos do Mês"
       subtitle="Top 10 Despesas"
       information="Apenas transações do usuário"
@@ -17,6 +17,6 @@ export default async function TopExpensesSection({ month }: { month: string }) {
       }
     >
       <TopExpensesWidget transactions={data.topExpenses} />
-    </Widget>
+    </WidgetCard>
   );
 }

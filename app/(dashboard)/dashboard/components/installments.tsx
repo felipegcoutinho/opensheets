@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiLoader2Fill } from "@remixicon/react";
 import InstallmentsWidget from "../installments-widget";
 
@@ -8,7 +8,7 @@ export default async function InstallmentsSection({
   month: string;
 }) {
   return (
-    <Widget
+    <WidgetCard
       title="Lançamentos Parcelados"
       subtitle="Progresso das parcelas e término"
       information="Baseado no período selecionado"
@@ -19,6 +19,6 @@ export default async function InstallmentsSection({
       }
     >
       <InstallmentsWidget month={month} />
-    </Widget>
+    </WidgetCard>
   );
 }

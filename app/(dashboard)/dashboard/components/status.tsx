@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiWalletLine } from "@remixicon/react";
 import PaymentStatusWidget from "../payment-status-widget";
 import { buildPainelData } from "../utils";
@@ -6,7 +6,7 @@ import { buildPainelData } from "../utils";
 export default async function StatusSection({ month }: { month: string }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Status de Pagamento"
       subtitle="Valores confirmados e pendentes"
       information="Apenas transações do usuário"
@@ -22,6 +22,6 @@ export default async function StatusSection({ month }: { month: string }) {
         sumPaidExpense={data.sumPaidExpense}
         sumPaidIncome={data.sumPaidIncome}
       />
-    </Widget>
+    </WidgetCard>
   );
 }

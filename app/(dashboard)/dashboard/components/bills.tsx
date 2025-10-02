@@ -1,4 +1,4 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiBarcodeLine } from "@remixicon/react";
 import BillsWidget from "../bills-widget";
 import { buildPainelData } from "../utils";
@@ -6,7 +6,7 @@ import { buildPainelData } from "../utils";
 export default async function BillsSection({ month }: { month: string }) {
   const data = await buildPainelData(month);
   return (
-    <Widget
+    <WidgetCard
       title="Boletos"
       subtitle="boletos deste mês"
       information="Resumo de boletos – apenas transações do usuário"
@@ -17,6 +17,6 @@ export default async function BillsSection({ month }: { month: string }) {
       }
     >
       <BillsWidget month={data.month} data={data.bills} />
-    </Widget>
+    </WidgetCard>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
+import { CalculatorDialogButton } from "@/components/calculator/calculator-dialog";
 import { useEntityNameStore } from "@/components/entity-name-store";
-import { CalculatorDialogButton } from "@/components/topbar/calculator-dialog";
 import {
   Breadcrumb,
   BreadcrumbItem,

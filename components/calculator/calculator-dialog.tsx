@@ -1,6 +1,6 @@
 "use client";
 
-import Calculator from "@/components/calculator";
+import Calculator from "@/components/calculator/calculator";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

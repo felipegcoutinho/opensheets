@@ -138,7 +138,7 @@ export default async function InvoiceWidget({
                   <HoverCardTrigger asChild>
                     <Link
                       href={`/cartao/${item.cartao_id}/?periodo=${month}`}
-                      className="flex items-center gap-1 text-sm font-semibold hover:underline"
+                      className="flex items-center gap-1 text-sm hover:underline"
                     >
                       {item.descricao}
                       <RiArrowRightSFill

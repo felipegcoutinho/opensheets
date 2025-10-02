@@ -1,6 +1,5 @@
 import { getMonth } from "@/hooks/get-month";
 import { Suspense } from "react";
-import Loading from "./loading";
 import AccountsSection from "./components/accounts";
 import BillsSection from "./components/bills";
 import CategoriesDespesaSection from "./components/categories-despesa";
@@ -17,6 +16,7 @@ import RuleOverviewSection from "./components/rule-overview";
 import StatusSection from "./components/status";
 import TopEstablishmentsSection from "./components/top-establishments";
 import TopExpensesSection from "./components/top-expenses";
+import Loading from "./loading";
 
 export default async function Page(props: {
   searchParams?: { periodo?: string };

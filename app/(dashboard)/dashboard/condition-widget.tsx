@@ -35,7 +35,7 @@ export async function ConditionWidget({
             >
               <span className="flex items-center gap-1">
                 {getConditionIcon(item.condicao)}
-                <span className="flex items-center gap-1 text-sm font-semibold capitalize">
+                <span className="flex items-center gap-1 text-sm capitalize">
                   {item.condicao === "vista" ? "à vista" : item.condicao}
                 </span>
               </span>

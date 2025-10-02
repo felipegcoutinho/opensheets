@@ -20,7 +20,7 @@ export default async function BillsWidget({ month, data }) {
         <RiBarcodeLine size={28} />
 
         <div>
-          <p className="flex items-center gap-1 text-sm font-semibold capitalize">
+          <p className="flex items-center gap-1 text-sm capitalize">
             {item.descricao}
           </p>
           {(() => {

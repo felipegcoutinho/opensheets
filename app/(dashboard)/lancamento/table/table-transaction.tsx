@@ -2,10 +2,12 @@
 
 import type { BudgetRuleConfig } from "@/app/(dashboard)/orcamento/rule/budget-rule";
 import { DEFAULT_BUDGET_RULE } from "@/app/(dashboard)/orcamento/rule/budget-rule";
+import { bulkDeleteTransactions } from "@/app/actions/transactions/delete_transactions";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { UseDates } from "@/hooks/use-dates";
 import UseStyles from "@/hooks/use-styles";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
+import { toast } from "sonner";
 import { BulkEditTransactionsModal } from "../modal/bulk-edit-transactions-modal";
 import { getColumns } from "./get-columns";
 import { TransactionTableCore } from "./transaction-table-core";
@@ -52,6 +54,7 @@ export function TableTransaction({
   const { DateFormat } = UseDates();
 
   const [isBulkEditOpen, setIsBulkEditOpen] = useState(false);
+  const [isDeleteTransition, startDeleteTransition] = useTransition();
 
   const {
     table,
@@ -99,6 +102,42 @@ export function TableTransaction({
 
   const bulkModalOpen = isBulkEditOpen && selectedTransactions.length > 0;
 
+  const handleBulkDelete = () => {
+    if (selectedTransactions.length === 0) {
+      toast.error("Nenhum lançamento selecionado.");
+      return;
+    }
+
+    const selectedIds = selectedTransactions
+      .map((transaction) => String(transaction.id))
+      .filter(Boolean);
+
+    const selectedIdsValue = selectedIds.join(",");
+
+    if (!selectedIdsValue) {
+      toast.error("Nenhum lançamento selecionado.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.set("ids", selectedIdsValue);
+
+    startDeleteTransition(async () => {
+      const result = await bulkDeleteTransactions(
+        { success: false, message: "" },
+        formData,
+      );
+
+      if (!result.success) {
+        toast.error(result.message || "Erro ao remover lançamentos.");
+        return;
+      }
+
+      toast.success(result.message || "Lançamentos removidos com sucesso!");
+      handleBulkComplete();
+    });
+  };
+
   return (
     <div className="mt-2 w-full">
       <BulkEditTransactionsModal
@@ -140,6 +179,8 @@ export function TableTransaction({
             onClearFilters={clearAllFilters}
             rowSelection={rowSelection}
             onOpenBulkEdit={() => setIsBulkEditOpen(true)}
+            onBulkDelete={handleBulkDelete}
+            isDeleteTransition={isDeleteTransition}
           />
         </CardHeader>
 

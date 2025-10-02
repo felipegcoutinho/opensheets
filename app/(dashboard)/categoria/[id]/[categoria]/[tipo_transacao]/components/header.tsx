@@ -1,9 +1,13 @@
 import { getCategorias } from "@/app/actions/categories/fetch_categorias";
 import { getCategoria } from "@/app/actions/transactions/fetch_transactions";
+
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
+import { UseDates } from "@/hooks/use-dates";
+
+import VariationIndicator from "@/components/variation-indicator";
 
 export default async function CategoryHeaderSection({
   id,
@@ -16,12 +20,29 @@ export default async function CategoryHeaderSection({
   tipo_transacao: string;
   month: string;
 }) {
-  const categorias = await getCategorias();
+  const { getPreviousMonth } = UseDates();
+  const previousMonth = getPreviousMonth(month);
+
+  const [categorias, transacoes, previousTransacoes] = await Promise.all([
+    getCategorias(),
+    getCategoria(month, categoria, tipo_transacao),
+    getCategoria(previousMonth, categoria, tipo_transacao),
+  ]);
+
   const iconName = categorias.find((c) => c.id.toString() === id)?.icone;
   const Icon = iconName ? categoryIconsMap[iconName] : undefined;
 
-  const transacoes = await getCategoria(month, categoria, tipo_transacao);
-  const totalTransacoes = transacoes?.reduce((acc, item) => acc + item.valor, 0) || 0;
+  const totalTransacoes =
+    transacoes?.reduce((acc, item) => acc + Number(item.valor ?? 0), 0) || 0;
+  const totalAnterior =
+    previousTransacoes?.reduce((acc, item) => acc + Number(item.valor ?? 0), 0) || 0;
+
+  const rawVariation = totalAnterior
+    ? ((totalTransacoes - totalAnterior) / totalAnterior) * 100
+    : totalTransacoes === 0
+      ? 0
+      : 100;
+  const variation = Number.isFinite(rawVariation) ? rawVariation : 0;
 
   return (
     <Card className="mt-2">
@@ -39,8 +60,9 @@ export default async function CategoryHeaderSection({
       </CardHeader>
 
       <CardContent>
-        <div className="text-3xl font-bold">
+        <div className="text-3xl font-bold flex items-center gap-3">
           <MoneyValues value={totalTransacoes} />
+          <VariationIndicator variation={variation} className="text-sm" />
         </div>
         <div className="text-muted-foreground mt-2 text-sm">
           Valor total somando os lançamentos por categoria

@@ -32,13 +32,13 @@ export default async function RecurrentsWidget({ month }: Props) {
                   height={28}
                   width={28}
                 />
-                <p className="flex items-center gap-1 truncate text-sm font-semibold capitalize">
+                <p className="flex items-center gap-1 truncate text-sm capitalize">
                   {t.descricao}
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-sm">
-                  {recorrencias} meses
+                <span className="text-muted-foreground text-xs">
+                  {recorrencias} meses •
                 </span>
                 <MoneyValues value={valorMensal} />
               </div>

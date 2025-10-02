@@ -2,9 +2,11 @@
 import EmptyCard from "@/components/empty-card";
 import MoneyValues from "@/components/money-values";
 import { Badge } from "@/components/ui/badge";
+import VariationIndicator from "@/components/variation-indicator";
 import { categoryIconsMap } from "@/hooks/use-category-icons";
 import { RiArrowRightSFill } from "@remixicon/react";
 import Link from "next/link";
+import { useMemo } from "react";
 
 type CombinedData = {
   tipo_transacao: string;
@@ -21,6 +23,7 @@ type BudgetData = {
 
 interface CategoryProgressProps {
   data: CombinedData[];
+  previousData?: CombinedData[];
   budgets?: BudgetData[];
   tipo: "despesa" | "receita";
   total?: number;
@@ -29,6 +32,7 @@ interface CategoryProgressProps {
 
 export default function CategoryProgress({
   data,
+  previousData = [],
   budgets = [],
   tipo,
   total,
@@ -54,6 +58,15 @@ export default function CategoryProgress({
 
   const sortedData = categories.sort((a, b) => b.spent - a.spent);
   const totalSpent = categories.reduce((sum, cat) => sum + cat.spent, 0);
+  const previousTotals = useMemo(() => {
+    const map = new Map<string, number>();
+    previousData
+      .filter((item) => item.tipo_transacao === tipo)
+      .forEach((item) => {
+        map.set(item.id.toString(), Number(item.total) || 0);
+      });
+    return map;
+  }, [previousData, tipo]);
 
   if (!sortedData.length && !totalSpent) return <EmptyCard />;
 
@@ -68,7 +81,13 @@ export default function CategoryProgress({
           const IconComp = item.icone
             ? categoryIconsMap[item.icone]
             : undefined;
-
+          const previousValue = previousTotals.get(item.id.toString()) ?? 0;
+          const rawVariation = previousValue
+            ? ((item.spent - previousValue) / previousValue) * 100
+            : item.spent === 0
+              ? 0
+              : 100;
+          const variation = Number.isFinite(rawVariation) ? rawVariation : 0;
           const url = `/categoria/${encodeURIComponent(item.id)}/${encodeURIComponent(item.name)}/${encodeURIComponent(item.tipo)}?periodo=${month}`;
 
           return (
@@ -83,7 +102,7 @@ export default function CategoryProgress({
                       <IconComp className={`h-4 w-4 ${item.color}`} />
                     )}
 
-                    <span className="text-sm font-semibold">{item.name}</span>
+                    <span className="text-sm">{item.name}</span>
                     <RiArrowRightSFill className="text-muted-foreground -ml-1 h-4 w-4" />
                   </Link>
 
@@ -119,7 +138,10 @@ export default function CategoryProgress({
                 </div>
 
                 <div className="text-right">
-                  <MoneyValues value={item.spent} />
+                  <div className="flex items-center justify-end gap-2">
+                    <MoneyValues value={item.spent} />
+                    <VariationIndicator variation={variation} />
+                  </div>
                   <div>
                     <Badge variant="outline" className="mt-1">
                       {categoryProgressPercentage.toFixed(1)}%{" "}

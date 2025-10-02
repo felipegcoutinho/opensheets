@@ -1,10 +1,10 @@
-import Widget from "@/components/widget";
+import WidgetCard from "@/components/widget-card";
 import { RiRefreshLine } from "@remixicon/react";
 import RecurrentsWidget from "../recurrents-widget";
 
 export default async function RecurrentsSection({ month }: { month: string }) {
   return (
-    <Widget
+    <WidgetCard
       title="Lançamentos Recorrentes"
       subtitle="Assinaturas e despesas fixas"
       information="Baseado no período selecionado"
@@ -15,6 +15,6 @@ export default async function RecurrentsSection({ month }: { month: string }) {
       }
     >
       <RecurrentsWidget month={month} />
-    </Widget>
+    </WidgetCard>
   );
 }
