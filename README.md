@@ -87,24 +87,19 @@ Este repositório mantém toda a estrutura do banco (tabelas, funções, policie
 
 ## 1. Instalação do Supabase CLI
 
-O Supabase CLI é necessário para interagir com o projeto remoto. Instale a versão mais recente usando um dos métodos abaixo:
+O Supabase CLI é necessário para interagir com o projeto remoto. Instale a versão mais recente usando um dos métodos abaixo: Recomendo o Homebrew no macOS/Linux para facilidade de atualização.
 
-```bash
-# macOS (Homebrew)
+Veja como instalar o homebrew: https://brew.sh/
+
+````bash
+# macOS/Linux (Homebrew)
 brew install supabase/tap/supabase
-
-# macOS/Linux (npm)
-npm install -g supabase
-
-# macOS/Linux (curl) - verifica se há release mais recente na documentação
-curl -fsSL https://supabase.io/install | sh
-```
 
 Confirme se a instalação funcionou:
 
 ```bash
 supabase --version
-```
+````
 
 ## 2. Autenticação
 

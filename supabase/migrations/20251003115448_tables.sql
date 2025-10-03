@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
 );
 
 CREATE TABLE IF NOT EXISTS public.orcamento_regra_502030 (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
   auth_id uuid NOT NULL DEFAULT auth.uid(),
   ativada boolean NOT NULL DEFAULT false,
   percentual_necessidades numeric(5,2) NOT NULL DEFAULT 50,
@@ -122,8 +122,7 @@ CREATE TABLE IF NOT EXISTS public.orcamento_regra_502030 (
     percentual_desejos >= 0 AND
     percentual_objetivos >= 0 AND
     percentual_necessidades + percentual_desejos + percentual_objetivos = 100
-  ),
-  CONSTRAINT orcamento_regra_502030_auth_unique UNIQUE (auth_id)
+  )
 );
 
 -- Sequences

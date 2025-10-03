@@ -28,3 +28,4 @@ ALTER TABLE public.orcamentos ADD CONSTRAINT orcamentos_categoria_id_fkey FOREIG
 ALTER TABLE public.pagadores ADD CONSTRAINT pagadores_auth_id_fkey FOREIGN KEY (auth_id) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE public.profiles ADD CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE;
 ALTER TABLE public.orcamento_regra_502030 ADD CONSTRAINT orcamento_regra_502030_auth_id_fkey FOREIGN KEY (auth_id) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE public.orcamento_regra_502030 ADD CONSTRAINT orcamento_regra_502030_auth_unique UNIQUE (auth_id);

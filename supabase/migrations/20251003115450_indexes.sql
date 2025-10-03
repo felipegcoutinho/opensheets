@@ -21,7 +21,6 @@ CREATE INDEX IF NOT EXISTS idx_orcamentos_auth_id ON public.orcamentos USING btr
 CREATE INDEX IF NOT EXISTS idx_orcamentos_categoria_id ON public.orcamentos USING btree (categoria_id);
 CREATE UNIQUE INDEX IF NOT EXISTS orcamentos_pkey ON public.orcamentos USING btree (id);
 CREATE UNIQUE INDEX IF NOT EXISTS orcamento_regra_502030_pkey ON public.orcamento_regra_502030 USING btree (id);
-CREATE UNIQUE INDEX IF NOT EXISTS orcamento_regra_502030_auth_unique ON public.orcamento_regra_502030 USING btree (auth_id);
 CREATE INDEX IF NOT EXISTS idx_pagadores_auth_id ON public.pagadores USING btree (auth_id);
 CREATE UNIQUE INDEX IF NOT EXISTS pagadores_pkey ON public.pagadores USING btree (id);
 CREATE UNIQUE INDEX IF NOT EXISTS profiles_pkey ON public.profiles USING btree (id);
