@@ -14,13 +14,14 @@ export default async function CategoryTableSection({
   categoria: string;
   tipo_transacao: string;
 }) {
-  const [cartoes, contas, categorias, transacoes, budgetRule] = await Promise.all([
-    getCards(),
-    getAccount(),
-    getCategorias(),
-    getCategoria(month, categoria, tipo_transacao),
-    getBudgetRule(),
-  ]);
+  const [cartoes, contas, categorias, transacoes, budgetRule] =
+    await Promise.all([
+      getCards(),
+      getAccount(),
+      getCategorias(),
+      getCategoria(month, categoria, tipo_transacao),
+      getBudgetRule(),
+    ]);
 
   return (
     <TableTransaction
