@@ -17,7 +17,15 @@ import UtilitiesComponents from "./utilities-components";
 import { toast } from "sonner";
 import { RiEdit2Line } from "@remixicon/react";
 
-export default function RemovePaymentButton({ fatura_status }) {
+export default function RemovePaymentButton({
+  fatura_status,
+}: {
+  fatura_status: {
+    id: string;
+    status_pagamento: string;
+    created_at: string | null;
+  }[];
+}) {
   const { isPending, startTransition } = UtilitiesComponents();
 
   const handleDeleteInvoice = (e, id) => {

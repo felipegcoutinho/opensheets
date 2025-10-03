@@ -53,7 +53,7 @@ ALTER TABLE public.orcamento_regra_502030 ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can view their own budget rule" ON public.orcamento_regra_502030
   FOR SELECT TO authenticated
-  USING (auth_id = auth.uid());
+  USING ((( SELECT auth.uid() AS uid) = auth_id));
 
 CREATE POLICY "Users can insert their own budget rule" ON public.orcamento_regra_502030
   FOR INSERT TO authenticated
@@ -61,9 +61,9 @@ CREATE POLICY "Users can insert their own budget rule" ON public.orcamento_regra
 
 CREATE POLICY "Users can update their own budget rule" ON public.orcamento_regra_502030
   FOR UPDATE TO authenticated
-  USING (auth_id = auth.uid())
-  WITH CHECK (auth_id = auth.uid());
+  USING ((( SELECT auth.uid() AS uid) = auth_id));
+  WITH CHECK ((( SELECT auth.uid() AS uid) = auth_id));
 
 CREATE POLICY "Users can delete their own budget rule" ON public.orcamento_regra_502030
   FOR DELETE TO authenticated
-  USING (auth_id = auth.uid());
+  USING ((( SELECT auth.uid() AS uid) = auth_id));
