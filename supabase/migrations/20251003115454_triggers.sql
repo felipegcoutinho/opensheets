@@ -6,5 +6,4 @@ CREATE TRIGGER trigger_reverter_transacoes AFTER DELETE ON faturas FOR EACH ROW 
 CREATE TRIGGER on_profile_deleted AFTER DELETE ON profiles FOR EACH ROW EXECUTE FUNCTION delete_user_from_auth();
 CREATE TRIGGER profiles_updated_at BEFORE UPDATE ON profiles FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 create trigger on_auth_user_created after insert on auth.users for each row execute procedure public.handle_new_user();
-DROP TRIGGER IF EXISTS trg_orcamento_regra_502030_updated_at ON public.orcamento_regra_502030;
 CREATE TRIGGER trg_orcamento_regra_502030_updated_at BEFORE UPDATE ON public.orcamento_regra_502030 FOR EACH ROW EXECUTE FUNCTION public.trg_orcamento_regra_502030_updated_at();
