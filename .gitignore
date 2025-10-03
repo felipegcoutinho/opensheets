@@ -40,9 +40,18 @@ certificates
 # Supabase
 /supabase/.temp
 
+# Editor
 /.vscode
-/.qwen
 
-QWEN.md
+# AI agents
+/.qwen
+/.claude
+/.gemini
+/.deepseek
 AGENTS.md
 GEMINI.md
+QWEN.md
+CLAUDE.md
+DEEPSEEK.md
+ai-agent-logs/
+ai-agent-history/
