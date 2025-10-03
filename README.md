@@ -1,3 +1,80 @@
+# OpenSheets: Seu Gerenciador Financeiro Open Source
+
+O OpenSheets é uma aplicação web moderna e de código aberto, construída para ajudar você a ter um controle claro e objetivo sobre suas finanças pessoais. Com uma interface intuitiva e poderosa, o projeto visa substituir planilhas complexas por uma experiência de usuário fluida e centralizada.
+
+## ✨ Principais Funcionalidades
+
+A estrutura do projeto indica o desenvolvimento das seguintes funcionalidades:
+
+*   **Dashboard Intuitivo:** Uma visão geral e consolidada da sua saúde financeira.
+*   **Gerenciamento de Transações:** Adicione, edite e categorize suas despesas e receitas (`lancamentos`).
+*   **Controle de Contas e Cartões:** Gerencie múltiplas contas bancárias e cartões de crédito.
+*   **Orçamentos:** Crie e acompanhe orçamentos mensais para diferentes categorias.
+*   **Categorização Inteligente:** Organize suas finanças com categorias personalizáveis.
+*   **Calendário Financeiro:** Visualize seus pagamentos e recebimentos futuros.
+*   **Insights e Análises:** Obtenha relatórios sobre seus padrões de consumo.
+*   **Autenticação Segura:** Gerenciamento de usuários com login, cadastro e recuperação de senha.
+*   **Modo Claro e Escuro:** Interface adaptável à sua preferência visual.
+
+## 🚀 Tecnologias Utilizadas
+
+O OpenSheets é construído com um stack de tecnologias moderno e escalável:
+
+*   **Framework:** [Next.js](https://nextjs.org/) (com App Router)
+*   **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+*   **Backend e Banco de Dados:** [Supabase](https://supabase.com/)
+*   **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+*   **Componentes UI:** [shadcn/ui](https://ui.shadcn.com/)
+*   **Gerenciador de Pacotes:** [pnpm](https://pnpm.io/)
+
+## 🏁 Como Começar
+
+Para executar o projeto localmente, siga os passos abaixo:
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/seu-usuario/opensheets.git
+    cd opensheets
+    ```
+
+2.  **Instale as dependências:**
+    ```bash
+    pnpm install
+    ```
+
+3.  **Configure as variáveis de ambiente:**
+    Crie um arquivo `.env.local` na raiz do projeto e adicione suas chaves do Supabase:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=URL_DO_SEU_PROJETO_SUPABASE
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=SUA_CHAVE_ANON_SUPABASE
+    ```
+
+4.  **Execute o servidor de desenvolvimento:**
+    ```bash
+    pnpm run dev
+    ```
+
+    Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
+
+## 📂 Estrutura de Pastas
+
+A organização do projeto segue as convenções do Next.js App Router:
+
+*   `app/`: Contém todas as rotas, páginas e layouts da aplicação.
+*   `components/`: Componentes React reutilizáveis (UI, widgets, etc.).
+*   `hooks/`: Hooks React customizados para lógicas específicas.
+*   `lib/`: Funções utilitárias e configurações.
+*   `actions/`: Server Actions do Next.js para interações com o backend.
+*   `supabase/`: Migrações e configurações do banco de dados Supabase.
+
+## 🤝 Como Contribuir
+
+Este é um projeto de código aberto e contribuições são bem-vindas! Sinta-se à vontade para abrir *issues* ou enviar *pull requests*.
+
+## 📄 Licença
+
+Este projeto é licenciado sob a licença MIT.
+
 # Configuração do Supabase
 
 Este repositório mantém toda a estrutura do banco (tabelas, funções, policies, views etc.) dentro da pasta `supabase/migrations`. As etapas abaixo explicam como preparar o ambiente, autenticar o CLI, aplicar as migrações existentes e manter o projeto remoto sincronizado.
