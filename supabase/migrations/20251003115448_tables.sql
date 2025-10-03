@@ -73,7 +73,8 @@ CREATE TABLE IF NOT EXISTS public.lancamentos (
   categoria_id uuid,
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   pagador_id uuid,
-  dt_pagamento_boleto date
+  dt_pagamento_boleto date,
+  regra_502030_tipo text CHECK (regra_502030_tipo IN ('necessidades', 'desejos', 'objetivos'))
 );
 
 CREATE TABLE IF NOT EXISTS public.orcamentos (
@@ -105,6 +106,24 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at timestamp with time zone DEFAULT now(),
   first_name text,
   last_name text
+);
+
+CREATE TABLE IF NOT EXISTS public.orcamento_regra_502030 (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  auth_id uuid NOT NULL DEFAULT auth.uid(),
+  ativada boolean NOT NULL DEFAULT false,
+  percentual_necessidades numeric(5,2) NOT NULL DEFAULT 50,
+  percentual_desejos numeric(5,2) NOT NULL DEFAULT 30,
+  percentual_objetivos numeric(5,2) NOT NULL DEFAULT 20,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT orcamento_regra_502030_percent_check CHECK (
+    percentual_necessidades >= 0 AND
+    percentual_desejos >= 0 AND
+    percentual_objetivos >= 0 AND
+    percentual_necessidades + percentual_desejos + percentual_objetivos = 100
+  ),
+  CONSTRAINT orcamento_regra_502030_auth_unique UNIQUE (auth_id)
 );
 
 -- Sequences

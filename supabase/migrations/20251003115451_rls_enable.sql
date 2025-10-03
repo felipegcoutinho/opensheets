@@ -8,5 +8,6 @@ ALTER TABLE public.contas ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.categorias ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.orcamentos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.orcamento_regra_502030 ENABLE ROW LEVEL SECURITY;
 ALTER ROLE authenticator SET pgrst.db_aggregates_enabled = 'true';
 NOTIFY pgrst, 'reload config';

@@ -41,6 +41,12 @@ CREATE POLICY "Users can insert their own orcamentos" ON public.orcamentos FOR I
 CREATE POLICY "Users can update their own orcamentos" ON public.orcamentos FOR UPDATE TO authenticated USING ((auth_id = ( SELECT auth.uid() AS uid))) WITH CHECK ((auth_id = ( SELECT auth.uid() AS uid)));
 CREATE POLICY "Users can view their own orcamentos" ON public.orcamentos FOR SELECT TO authenticated USING ((auth_id = ( SELECT auth.uid() AS uid)));
 
+-- orcamento_regra_502030
+CREATE POLICY "Users can delete their own budget rule" ON public.orcamento_regra_502030 FOR DELETE TO authenticated USING ((( SELECT auth.uid() AS uid) = auth_id));
+CREATE POLICY "Users can insert their own budget rule" ON public.orcamento_regra_502030 FOR INSERT TO authenticated WITH CHECK ((( SELECT auth.uid() AS uid) = auth_id));
+CREATE POLICY "Users can update their own budget rule" ON public.orcamento_regra_502030 FOR UPDATE TO authenticated USING ((( SELECT auth.uid() AS uid) = auth_id)) WITH CHECK ((( SELECT auth.uid() AS uid) = auth_id));
+CREATE POLICY "Users can view their own budget rule" ON public.orcamento_regra_502030 FOR SELECT TO authenticated USING ((( SELECT auth.uid() AS uid) = auth_id));
+
 -- pagadores
 CREATE POLICY "Users can delete their own pagadores" ON public.pagadores FOR DELETE TO authenticated USING ((( SELECT auth.uid() AS uid) = auth_id));
 CREATE POLICY "Users can insert their own pagadores" ON public.pagadores FOR INSERT TO authenticated WITH CHECK ((( SELECT auth.uid() AS uid) = auth_id));

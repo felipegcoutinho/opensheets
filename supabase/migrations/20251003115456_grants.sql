@@ -33,6 +33,11 @@ GRANT ALL PRIVILEGES ON TABLE public.orcamentos TO anon;
 GRANT ALL PRIVILEGES ON TABLE public.orcamentos TO authenticated;
 GRANT ALL PRIVILEGES ON TABLE public.orcamentos TO service_role;
 
+GRANT ALL PRIVILEGES ON TABLE public.orcamento_regra_502030 TO postgres;
+GRANT ALL PRIVILEGES ON TABLE public.orcamento_regra_502030 TO anon;
+GRANT ALL PRIVILEGES ON TABLE public.orcamento_regra_502030 TO authenticated;
+GRANT ALL PRIVILEGES ON TABLE public.orcamento_regra_502030 TO service_role;
+
 GRANT ALL PRIVILEGES ON TABLE public.pagadores TO postgres;
 GRANT ALL PRIVILEGES ON TABLE public.pagadores TO anon;
 GRANT ALL PRIVILEGES ON TABLE public.pagadores TO authenticated;

@@ -8,6 +8,7 @@ ALTER TABLE public.lancamentos ADD CONSTRAINT lancamentos_teste_pkey PRIMARY KEY
 ALTER TABLE public.orcamentos ADD CONSTRAINT orcamentos_pkey PRIMARY KEY (id);
 ALTER TABLE public.pagadores ADD CONSTRAINT pagadores_pkey PRIMARY KEY (id);
 ALTER TABLE public.profiles ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+ALTER TABLE public.orcamento_regra_502030 ADD CONSTRAINT orcamento_regra_502030_pkey PRIMARY KEY (id);
 
 -- Foreign keys
 ALTER TABLE public.anotacoes ADD CONSTRAINT anotacoes_auth_id_fkey FOREIGN KEY (auth_id) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE;
@@ -26,3 +27,4 @@ ALTER TABLE public.orcamentos ADD CONSTRAINT orcamentos_auth_id_fkey FOREIGN KEY
 ALTER TABLE public.orcamentos ADD CONSTRAINT orcamentos_categoria_id_fkey FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE public.pagadores ADD CONSTRAINT pagadores_auth_id_fkey FOREIGN KEY (auth_id) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE public.profiles ADD CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE;
+ALTER TABLE public.orcamento_regra_502030 ADD CONSTRAINT orcamento_regra_502030_auth_id_fkey FOREIGN KEY (auth_id) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE;
