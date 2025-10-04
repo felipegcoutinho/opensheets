@@ -13,28 +13,28 @@
   --card-foreground: #352a27;
   --popover: #f4efee;
   --popover-foreground: #352a27;
-  --primary: #ef6429;
+  --primary: #dc5c35;
   --primary-foreground: #fff7f2;
   --secondary: #c3b3b6;
-  --secondary-foreground: #574a45;
+  --secondary-foreground: #004d43;
   --muted: #cfbec1;
   --muted-foreground: #665954;
-  --accent: #ef6429;
+  --accent: #dc5c35;
   --accent-foreground: #f8f6f4;
   --destructive: #d84a3a;
   --destructive-foreground: #fff7f2;
   --border: #cfbec1;
   --input: #cfbec1;
-  --ring: #ef6429;
+  --ring: #dc5c35;
 
-  --banner-background: #ef6429;
+  --banner-background: #dc5c35;
   --banner-foreground: #fff7f2;
-  --month-picker: #574a45;
+  --month-picker: #004d43;
   --month-picker-foreground: #fdf9f7;
-  --description: #bcd1ca;
+  --description: #d6f095;
   --description-foreground: #322e2c;
-  --income: #574a45;
-  --expense: #ef6429;
+  --income: #004d43;
+  --expense: #dc5c35;
 
   --bg-necessidade: #bbf7d0;
   --bg-necessidade-foreground: #147e3d;
@@ -43,19 +43,19 @@
   --bg-objetivo: #d8b4fe;
   --bg-objetivo-foreground: #8c21ea;
 
-  --chart-1: #ef6429;
-  --chart-2: #ef6429;
+  --chart-1: #dc5c35;
+  --chart-2: #dc5c35;
   --chart-3: #45ce79;
   --chart-4: #d46147;
   --chart-5: #9d58cb;
   --sidebar: #f8f6f4;
   --sidebar-foreground: #352a27;
-  --sidebar-primary: #574a45;
+  --sidebar-primary: #004d43;
   --sidebar-primary-foreground: #fff7f2;
-  --sidebar-accent: #ef6429;
+  --sidebar-accent: #dc5c35;
   --sidebar-accent-foreground: #f8f6f4;
   --sidebar-border: #c3b3b6;
-  --sidebar-ring: #ef6429;
+  --sidebar-ring: #dc5c35;
 
   --radius: 0.4rem;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
@@ -81,28 +81,28 @@
   --card-foreground: #fff7f2;
   --popover: #1f1a19;
   --popover-foreground: #fff7f2;
-  --primary: #ef6429;
+  --primary: #dc5c35;
   --primary-foreground: #1b100d;
-  --secondary: #574a45;
+  --secondary: #352a27;
   --secondary-foreground: #fff7f2;
   --muted: #2b2524;
   --muted-foreground: #c3b3b6;
-  --accent: #ef6429;
+  --accent: #dc5c35;
   --accent-foreground: #fff7f2;
   --destructive: #d84a3a;
-  --description-foreground: #322e2c;
   --destructive-foreground: #fff7f2;
   --border: #2e2726;
   --input: #2e2726;
-  --ring: #ef6429;
+  --ring: #dc5c35;
 
-  --banner-background: #ef6429;
-  --banner-foreground: #1c1817;
-  --month-picker: #574a45;
-  --month-picker-foreground: #f7efed;
-  --description: #cbcadb;
-  --income: #ef6429;
-  --expense: #ef6429;
+  --banner-background: #544a48;
+  --banner-foreground: #e6dedd;
+  --month-picker: #352f2e;
+  --month-picker-foreground: #e6dedd;
+  --description: #544a48;
+  --description-foreground: #e6dedd;
+  --income: #dc5c35;
+  --expense: #dc5c35;
 
   --bg-necessidade: #15803d;
   --bg-necessidade-foreground: #a7f3d0;
@@ -111,19 +111,19 @@
   --bg-objetivo: #701a75;
   --bg-objetivo-foreground: #d8b4fe;
 
-  --chart-1: #ef6429;
-  --chart-2: #ef6429;
+  --chart-1: #dc5c35;
+  --chart-2: #dc5c35;
   --chart-3: #45ce79;
   --chart-4: #d46147;
   --chart-5: #9d58cb;
   --sidebar: #221d1c;
   --sidebar-foreground: #fff7f2;
-  --sidebar-primary: #ef6429;
+  --sidebar-primary: #dc5c35;
   --sidebar-primary-foreground: #fff7f2;
-  --sidebar-accent: #ef6429;
+  --sidebar-accent: #544a48;
   --sidebar-accent-foreground: #fff7f2;
   --sidebar-border: #2e2726;
-  --sidebar-ring: #ef6429;
+  --sidebar-ring: #dc5c35;
 
   --radius: 0.4rem;
   --shadow-2xs: 0 1px 3px 0px hsla(0, 0%, 23%, 0.05);
@@ -199,28 +199,6 @@
   --shadow-2xl: var(--shadow-2xl);
 }
 
-.noisy-surface {
-  position: relative;
-  isolation: isolate;
-}
-
-.noisy-surface::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8' numOctaves='6' stitchTiles='stitch'/%3E%3CfeBlend mode='screen'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.7'/%3E%3C/svg%3E");
-  background-size: 300px 300px;
-  background-repeat: repeat;
-  mix-blend-mode: soft-light;
-  opacity: 0.9;
-  z-index: 0;
-}
-
-.noisy-surface > * {
-  position: relative;
-  z-index: 1;
-}
 @layer base {
   html {
     scroll-behavior: smooth;

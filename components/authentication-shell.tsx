@@ -9,7 +9,7 @@ export default function AuthenticationShell({
 }) {
   return (
     <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
-      <aside className="bg-banner-background text-banner-foreground noisy-surface relative hidden flex-col overflow-hidden p-10 lg:flex">
+      <aside className="bg-banner-background text-banner-foreground hidden flex-col p-10 lg:flex">
         <div className="relative z-10 flex h-full flex-col">
           <div className="flex items-center gap-3">
             <Link href="/">
