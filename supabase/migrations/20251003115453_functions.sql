@@ -368,8 +368,8 @@ begin
   -- 3) Pagadores
   insert into public.pagadores (nome, email, role, status, foto, anotacao, is_hidden, is_auto_send, auth_id)
   values
-    (new.raw_user_meta_data ->> 'first_name', new.email, 'principal', 'ativo', 'undraw_finance-guy-avatar_vhop.svg', null, false, false, new.id),
-    ('Sistema', null, 'sistema', 'ativo', 'undraw_finance-guy-avatar_vhop.svg', null, true, false, new.id);
+    (new.raw_user_meta_data ->> 'first_name', new.email, 'principal', 'ativo', 'avatar_010.svg', null, false, false, new.id),
+    ('Sistema', null, 'sistema', 'ativo', 'avatar_014.svg', null, true, false, new.id);
 
   -- 4) Conta padrão
   INSERT INTO public.contas (descricao, tipo_conta, logo_image, anotacao, status, is_ignored, auth_id)
