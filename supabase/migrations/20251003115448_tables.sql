@@ -127,3 +127,8 @@ CREATE TABLE IF NOT EXISTS public.orcamento_regra_502030 (
 
 -- Sequences
 CREATE SEQUENCE IF NOT EXISTS public.numeric_id_seq;
+
+-- Create storage bucket for comprovantes
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('comprovantes', 'comprovantes', false)
+ON CONFLICT (id) DO NOTHING;
